@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra -Wno-unused-parameter -pedantic -fPIC -Os -fPIC -O3 -DNDEBUG  -rdynamic CMakeFiles/uPoke.dir/main.cpp.o  -o ../../../bin/uPoke  /home/jharbin/source/undersea/moos-ivp/MOOS/MOOSCore/lib/libMOOS.a -lpthread -lm 
