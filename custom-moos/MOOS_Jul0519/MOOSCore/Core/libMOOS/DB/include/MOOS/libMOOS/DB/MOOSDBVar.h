@@ -67,6 +67,9 @@ public:
     double m_dfVal;
     double m_dfWriteFreq;
     double m_dfWrittenTime;
+
+    double m_dfOverrideTime = -1.0;
+
     string m_sVal;
     string m_sWhoChangedMe;
     string m_sSrcAux;

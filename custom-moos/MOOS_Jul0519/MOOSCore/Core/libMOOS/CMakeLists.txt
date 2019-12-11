@@ -109,8 +109,9 @@ set(INCLUDE_ROOTS
 )
 
 include_directories(SYSTEM /usr/local/include/activemq-cpp-3.9.5 /usr/include/apr-1)
-include_directories(SYSTEM /home/userfs/j/jrh512/source/activemq-cpp-install/include/activemq-cpp-3.9.5/)
-include_directories(SYSTEM /usr/include/activemq-cpp-3.9.5/)
+include_directories(SYSTEM /home/userfs/j/jrh512/source/activemq-cpp-install/include/activemq-cpp-3.9.5)
+include_directories(SYSTEM /home/userfs/j/jrh512/source/apr-install/include/apr-1)
+include_directories(SYSTEM /usr/include/activemq-cpp-3.9.5)
 
 # MOOS_INCLUDE_DIRS global variable gets used in top level CMakeLists.txt to
 # configure the MOOSConfig.cmake file.

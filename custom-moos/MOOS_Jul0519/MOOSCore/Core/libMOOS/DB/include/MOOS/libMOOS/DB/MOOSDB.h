@@ -103,6 +103,8 @@ public:
 
 protected:
 
+    bool faultInEffect(CMOOSDBVar &rVar);
+
     bool OnClearRequested(CMOOSMsg & Msg, MOOSMSG_LIST & MsgTxList);
     void Var2Msg(CMOOSDBVar & Var, CMOOSMsg &Msg);
     bool AddMessageToClientBox(const std::string &sClient,CMOOSMsg & Msg);

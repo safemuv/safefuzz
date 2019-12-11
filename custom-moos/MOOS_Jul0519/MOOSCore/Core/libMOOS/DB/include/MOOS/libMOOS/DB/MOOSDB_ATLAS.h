@@ -39,6 +39,7 @@ public:
     bool fromMQ(CMOOSMsg &Msg, double overrideTimeEnd);
     bool fromMQ(CMOOSMsg &Msg);
 
+    bool faultInEffect(CMOOSDBVar &rVar);
 
 private:
     bool sendMsgOut = true;

@@ -701,6 +701,9 @@ bool CMOOSDB::ProcessMsg(CMOOSMsg &MsgRx,MOOSMSG_LIST & MsgListTx)
     return true;
 }
 
+bool CMOOSDB::faultInEffect(CMOOSDBVar &rVar) {
+        return false;
+}
 
 /** called when the in focus client is telling us something
 has changed. Ie this is a notify packet */
@@ -743,15 +746,17 @@ bool CMOOSDB::OnNotify(CMOOSMsg &Msg)
     
     if(rVar.m_cDataType==Msg.m_cDataType)
     {
-        
-        rVar.m_dfWrittenTime = dfTimeNow;
-        
-        rVar.m_dfTime        = Msg.m_dfTime;
-        
-        rVar.m_sWhoChangedMe = Msg.m_sSrc;
-        
-        rVar.m_sSrcAux       = Msg.m_sSrcAux; // Added by mikerb 5-29-12
-        
+            // JRH: Added change for ATLAS to check the message is not
+            // overriden by a fault
+            if (!faultInEffect(rVar)) {
+                    rVar.m_dfWrittenTime = dfTimeNow;
+                    rVar.m_dfTime        = Msg.m_dfTime;
+                    rVar.m_sWhoChangedMe = Msg.m_sSrc;
+                    rVar.m_sSrcAux       = Msg.m_sSrcAux; // Added by mikerb 5-29-12
+            } else {
+                    MOOSTrace("Update to variable ignored as fault was in effect");
+            }
+
         if(Msg.m_sOriginatingCommunity.empty())
         {
             //we are the server in the originating community
@@ -763,7 +768,7 @@ bool CMOOSDB::OnNotify(CMOOSMsg &Msg)
             //this message came from another community
             rVar.m_sOriginatingCommunity = Msg.m_sOriginatingCommunity;
         }
-        
+
         switch(rVar.m_cDataType)
         {
         case MOOS_DOUBLE:
@@ -774,10 +779,10 @@ bool CMOOSDB::OnNotify(CMOOSMsg &Msg)
             rVar.m_sVal = Msg.m_sVal;
             break;
         }
-        
+
         //record sSrc as a writer of this data
         rVar.m_Writers.insert(Msg.m_sSrc);
-        
+
         //increment the number of times we have written to this variable
         rVar.m_nWrittenTo++;
         

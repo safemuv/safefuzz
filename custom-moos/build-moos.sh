@@ -74,7 +74,7 @@ cmake -DENABLE_EXPORT=ON                                       \
       -DCMAKE_CXX_FLAGS="${MOOS_CXX_FLAGS}"                    \
       "${MOOS_SRC_DIR}/MOOSCore"                               \
   && echo "" && echo "Invoking make..." `pwd` && echo ""       \
-  && make  ${CMD_ARGS}
+  && make  ${CMD_ARGS} VERBOSE=1
 
 if [ $? -ne 0 ] ; then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"

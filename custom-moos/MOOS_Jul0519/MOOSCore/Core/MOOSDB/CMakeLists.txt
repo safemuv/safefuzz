@@ -1,5 +1,6 @@
-# set(ActiveMQ_LIBRARY "/home/userfs/j/jrh512/source/activemq-cpp-install/lib/libactivemq-cpp.so")
-set(ActiveMQ_LIBRARY "/usr/local/lib64/libactivemq-cpp.so")
+set(ActiveMQ_LIBRARY "/home/userfs/j/jrh512/source/activemq-cpp-install/lib/libactivemq-cpp.so")
+# set(ActiveMQ_LIBRARY "/usr/local/lib64/libactivemq-cpp.so")
+
 
 set(EXECNAME MOOSDB)
 

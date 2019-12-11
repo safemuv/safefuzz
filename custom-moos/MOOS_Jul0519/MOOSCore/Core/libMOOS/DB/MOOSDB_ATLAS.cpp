@@ -57,6 +57,11 @@ bool CMOOSDB_ATLAS::OnNotify(CMOOSMsg &Msg) {
 }
 */
 
+bool CMOOSDB_ATLAS::faultInEffect(CMOOSDBVar &rVar) {
+        double dfTimeNow = HPMOOSTime();
+        return (rVar.m_dfOverrideTime > dfTimeNow);
+}
+
 bool CMOOSDB_ATLAS::fromMQ(CMOOSMsg &Msg) {
     cout << "Message over ActiveMQ: no time registered" << endl;
     // When a message notification comes in from the ActiveMQ,
@@ -71,8 +76,8 @@ bool CMOOSDB_ATLAS::fromMQ(CMOOSMsg &Msg, double overrideTimeEnd) {
     // always handle it as a standard notification
     bool res = CMOOSDB::OnNotify(Msg);
     // Need to set an override on this message
-    // rVar.m_dfOverrideTime = overrideTimeEnd;
-    // Return the original result from the notify call
+    rVar.m_dfOverrideTime = overrideTimeEnd;
+    // CHECK: need to verify that this has correctly changed the variable value
     return res;
 }
 
