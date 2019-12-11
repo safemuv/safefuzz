@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wno-unused-parameter -pedantic -fPIC -Os -fPIC -O3 -DNDEBUG  -rdynamic CMakeFiles/pLogger.dir/MOOSLogger.cpp.o CMakeFiles/pLogger.dir/pLoggerMain.cpp.o CMakeFiles/pLogger.dir/Zipper.cpp.o  -o /home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/bin/pLogger  /home/jharbin/source/undersea/moos-ivp/MOOS/MOOSCore/lib/libMOOS.a -lpthread -lm -lz 

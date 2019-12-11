@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wno-unused-parameter -pedantic -fPIC -Os -fPIC -O3 -DNDEBUG  -rdynamic CMakeFiles/pAntler.dir/AntlerMain.cpp.o CMakeFiles/pAntler.dir/Antler.cpp.o  -o /home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/bin/pAntler  /home/jharbin/source/undersea/moos-ivp/MOOS/MOOSCore/lib/libMOOS.a -lpthread -lm 

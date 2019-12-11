@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wno-unused-parameter -pedantic -fPIC -Os -O3 -DNDEBUG  -rdynamic CMakeFiles/binding_test.dir/BindingTest.cpp.o  -o /home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/bin/tests/lib/binding_test  ../../../lib/libMOOS.a -pthread -lm 

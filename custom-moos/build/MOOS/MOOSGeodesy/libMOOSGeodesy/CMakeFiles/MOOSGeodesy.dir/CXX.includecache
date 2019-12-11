@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/MOOS/MOOSGeodesy/libMOOSGeodesy/MOOSGeodesy.cpp
+MOOS/libMOOSGeodesy/MOOSGeodesy.h
+/home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/MOOS/MOOSGeodesy/libMOOSGeodesy/MOOS/libMOOSGeodesy/MOOSGeodesy.h
+math.h
+-
+stdio.h
+-
+stdlib.h
+-
+cstring
+-
+float.h
+-
+
+/home/jharbin/academic/atlas/git/atlas-middleware/custom-moos/MOOS/MOOSGeodesy/libMOOSGeodesy/include/MOOS/libMOOSGeodesy/MOOSGeodesy.h
+
