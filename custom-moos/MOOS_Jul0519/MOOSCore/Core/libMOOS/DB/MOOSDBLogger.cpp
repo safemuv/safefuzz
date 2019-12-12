@@ -5,7 +5,7 @@
  *      Author: pnewman
  */
 
-#include<string>
+#include <string>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
