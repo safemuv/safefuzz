@@ -7,6 +7,9 @@
 
 #ifndef MOOSDBLOGGER_H_
 #define MOOSDBLOGGER_H_
+
+#include <string>
+
 namespace MOOS
 {
 class MOOSDBLogger {
@@ -15,8 +18,8 @@ public:
     virtual ~MOOSDBLogger();
 
     bool AddEvent(const std::string & sEvent,
-                const std::string & sClient,
-                const std::string & sDetails);
+                  const std::string & sClient,
+                  const std::string & sDetails);
 
 
     bool Run(const std::string & sLogFileName);

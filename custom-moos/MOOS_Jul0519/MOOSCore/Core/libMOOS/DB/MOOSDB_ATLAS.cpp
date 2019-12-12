@@ -10,6 +10,8 @@
 using namespace std;
 
 CMOOSDB_ATLAS::CMOOSDB_ATLAS(int port, string mission_file) {
+    starting_moos_time = HPMOOSTime();
+    cout << "starting_moos_time = " << starting_moos_time << endl;
     debug_output.open("/tmp/af_debug" + mission_file + ".log");
     debug_output << "MOOSDB_ATLAS debug" << endl;
 
@@ -30,35 +32,9 @@ CMOOSDB_ATLAS::CMOOSDB_ATLAS(int port, string mission_file) {
     cout << "ActiveMQ connection completed!" << endl;
 }
 
-/*
-bool CMOOSDB_ATLAS::OnNotify(CMOOSMsg &Msg) {
-  cout << "CMOOSDB_ATLAS::OnNotify" << endl;
-  double dfTimeNow = HPMOOSTime();
-  CMOOSDBVar &rVar = GetOrMakeVar(Msg);
-
-  // If problems, check the value of this variable, in
-  // cases in which overrides are still in effect
-  bool res = false;
-
-  // If we have not overriden this variable,
-  // override time will be less than the current time.
-  // This is always true since it begins as -1.0
-  if (rVar.m_dfOverrideTime < dfTimeNow) {
-    // In this case, handle notification normally
-    // by calling the superclass method
-    res = CMOOSDB::OnNotify(Msg);
-    // Reset the override
-    rVar.m_dfOverrideTime = -1.0;
-  } else {
-    // Override is still in the future
-    cout << "Ignored msg due to override" << endl;
-  }
-  return res;
-}
-*/
-
 bool CMOOSDB_ATLAS::faultInEffect(CMOOSDBVar &rVar) {
-        double dfTimeNow = HPMOOSTime();
+        double dfTimeNow = HPMOOSTime() - starting_moos_time;
+        cout << "timeNow = " << dfTimeNow << endl;
         return (rVar.m_dfOverrideTime > dfTimeNow);
 }
 
@@ -77,6 +53,9 @@ bool CMOOSDB_ATLAS::fromMQ(CMOOSMsg &Msg, double overrideTimeEnd) {
     bool res = CMOOSDB::OnNotify(Msg);
     // Need to set an override on this message
     rVar.m_dfOverrideTime = overrideTimeEnd;
+
+    CMOOSDBVar &rVar2 = GetOrMakeVar(Msg);
+    cout << "rVar.m_dfOverrideTime set to " << rVar2.m_dfOverrideTime << endl;
     // CHECK: need to verify that this has correctly changed the variable value
     return res;
 }

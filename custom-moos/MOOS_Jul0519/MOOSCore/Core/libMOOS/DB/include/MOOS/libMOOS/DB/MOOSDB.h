@@ -103,7 +103,7 @@ public:
 
 protected:
 
-    bool faultInEffect(CMOOSDBVar &rVar);
+    virtual bool faultInEffect(CMOOSDBVar &rVar);
 
     bool OnClearRequested(CMOOSMsg & Msg, MOOSMSG_LIST & MsgTxList);
     void Var2Msg(CMOOSDBVar & Var, CMOOSMsg &Msg);

@@ -42,6 +42,7 @@ public:
     bool faultInEffect(CMOOSDBVar &rVar);
 
 private:
+    double starting_moos_time;
     bool sendMsgOut = true;
 
     ofstream debug_output;
