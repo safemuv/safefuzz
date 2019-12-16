@@ -1,7 +1,7 @@
 package moosmapping;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MOOSFiles {
 	private String baseDirectory;
@@ -9,8 +9,8 @@ public class MOOSFiles {
 	public MOOSFiles(String baseDirectory) {
 		this.baseDirectory = baseDirectory;
 	}
-	public FileOutputStream createOpenFile(String fileName) throws FileNotFoundException {
+	public FileWriter createOpenFile(String fileName) throws IOException {
 		String filePathName = baseDirectory + "/" + fileName;
-		return new FileOutputStream(filePathName);
+		return new FileWriter(filePathName);
 	}
 }

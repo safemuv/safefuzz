@@ -13,4 +13,12 @@ public class MOOSCommunity {
 			p.generateCode(mf);
 		}
 	}
+	
+	public int getDBPort() {
+		return dbPort;
+	}
+	
+	public String getCommunityName() {
+		return communityName;
+	}
 }

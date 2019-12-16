@@ -2,26 +2,36 @@ package moosmapping;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class MOOSProcess extends MOOSElement {
 	private List<MOOSBehaviour> behaviours;
 	
-	String processName; 
+	MOOSCommunity parent;
+	String processName;
 	
-	private void generateBehaviourFile(MOOSFiles fs) {
-		// Create a new file for the MOOS process behaviours
-		// open it as file_stream
-		
-		FileOutputStream file_stream;
-		
+	private void generateMission(FileWriter f) {
 		try {
-			
-			file_stream = fs.createOpenFile(processName + ".bhv");
+			f.write("ServerPort = " + parent.getDBPort());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void generateBehaviourFile(MOOSFiles mf) {	
+		FileWriter bhvFile, missionFile;
+		try {
+			bhvFile = mf.createOpenFile(processName + ".bhv");
+			missionFile = mf.createOpenFile(processName + ".moos");
+			generateMission(missionFile);
 			for (MOOSBehaviour b : behaviours)
-				b.generateCode(file_stream);			
+				// Need to put the basic code here 
+				b.generateCode(bhvFile);
 			
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
