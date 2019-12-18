@@ -15,6 +15,8 @@ public class MOOSSimulation implements CARSMapping {
 		ls.generateScript(mf);
 		
 		for (MOOSCommunity c : communities) { 
+			// This generates the code for every MOOS vehicle 
+			// in the simulation
 			c.generateCode(mf);
 		}
 		

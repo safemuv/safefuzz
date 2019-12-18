@@ -14,13 +14,15 @@ public class MOOSFiles {
 		this.baseDirectory = baseDirectory;
 	}
 	
-	public FileWriter createOpenFile(String fileName) throws IOException {
-		String filePathName = baseDirectory + "/" + fileName;
-		FileWriter f = new FileWriter(filePathName);
-		f.write("Test");
-		f.flush();
-		files.put(fileName, f);
-		return f;
+	public FileWriter getOpenFile(String fileName) throws IOException {
+		if (!files.containsKey(fileName)) {
+			String filePathName = baseDirectory + "/" + fileName;
+			FileWriter f = new FileWriter(filePathName);
+			files.put(fileName, f);
+			return f;
+		} else {
+			return files.get(fileName); 
+		}
 	}
 	
 	public void closeAllFiles() {

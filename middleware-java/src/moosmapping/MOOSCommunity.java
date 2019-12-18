@@ -1,5 +1,7 @@
 package moosmapping;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +11,38 @@ public class MOOSCommunity {
 	private int dbPort = dbCounter++;
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
 	
+	private void genBasicMissionParams(FileWriter missionFile) throws IOException {
+		missionFile.write("ServerHost = localhost\n");
+		missionFile.write("ServerPort = " + dbPort + "\n");
+		missionFile.write("Simulator = true");
+		missionFile.write("community = " + communityName);
+	}
+	
+	private void genANTLRBlock(FileWriter missionFile) throws IOException {
+		missionFile.write("ProcessConfig = ANTLR \n{\n");
+		for (MOOSProcess p : processes) {
+			missionFile.write("Run = " + p.processName + "\n");
+		}
+		missionFile.write("}\n");
+	}
+	
 	public void generateCode(MOOSFiles mf) {
 		// Generate a base mission file
-		for (MOOSProcess p : processes) {
-			p.generateCode(mf);
+				
+		String missionFileName = "targ_" + communityName + ".moos";
+		try {
+			FileWriter missionFile = mf.getOpenFile(missionFileName);
+			genBasicMissionParams(missionFile);
+			genANTLRBlock(missionFile);
+			
+			for (MOOSProcess p : processes) {
+				p.generateConfigBlock(missionFile);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 	
 	public int getDBPort() {

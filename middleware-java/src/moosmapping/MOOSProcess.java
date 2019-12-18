@@ -18,37 +18,19 @@ public class MOOSProcess extends MOOSElement {
 	MOOSCommunity parent;
 	String processName;
 	
-	private void generateMission(FileWriter f) {
-		try {
-			f.write("ServerPort = " + parent.getDBPort());
-			f.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void generateConfigBlock(FileWriter missionFile) throws IOException {
+		missionFile.write("ProcessConfig = " + processName + "\n{\n");
+		// TODO: generate all the properties here!
+		missionFile.write("...TODO: properties here...");
+		missionFile.write("}\n");
 	}
 	
-	private void generateFiles(MOOSFiles mf) {	
-		FileWriter bhvFile, missionFile;
-		try {
-			bhvFile = mf.createOpenFile(processName + ".bhv");
-			missionFile = mf.createOpenFile(processName + ".moos");
-			generateMission(missionFile);
-			for (MOOSBehaviour b : behaviours)
-				// Need to put the basic code here 
-				b.generateCode(bhvFile);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void generateBehavioursForProcess(FileWriter behaviourFile) throws IOException {	
+		for (MOOSBehaviour b : behaviours)
+			b.generateCode(behaviourFile);
 	}
 	
 	public void addBehaviour(MOOSBehaviour b) {
 		behaviours.add(b);
-	}
-	
-	public void generateCode(MOOSFiles fs) {
-		generateFiles(fs);
-		//generateBehaviourFile(fs);
 	}
 }

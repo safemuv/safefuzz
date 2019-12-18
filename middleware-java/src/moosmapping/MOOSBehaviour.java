@@ -7,12 +7,9 @@ public class MOOSBehaviour extends MOOSElement {
 	private String name;
 	private MOOSProcess parentProcess;
 	
-	public void generateCode(FileWriter fs) {
-		try {
-			fs.write("Behaviour = " + name);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void generateCode(FileWriter bhv) throws IOException {
+		bhv.write("Behaviour = " + name + " {\n");
+		bhv.write("");
+		bhv.write("}\n");
 	}
 }
