@@ -1,16 +1,31 @@
 package moosmapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import carsmapping.CARSMapping;
 
 public class MOOSSimulation implements CARSMapping {
-	MOOSCommunity s;
+	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
 	MOOSLaunchScript ls;
 	
 	public void generateCARSInterface(String baseDirectory) {
 		MOOSFiles mf = new MOOSFiles(baseDirectory);
 		// Set up the launch script
 		ls.generateScript(mf);
-		s.generateCode(mf);
 		
+		for (MOOSCommunity c : communities) { 
+			c.generateCode(mf);
+		}
+		
+		mf.closeAllFiles();
+	}
+	
+	public MOOSSimulation() {
+		ls = new MOOSLaunchScript();
+	}
+	
+	public void addCommunity(MOOSCommunity c) {
+		communities.add(c);
 	}
 }

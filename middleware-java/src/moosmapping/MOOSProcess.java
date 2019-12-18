@@ -4,10 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MOOSProcess extends MOOSElement {
-	private List<MOOSBehaviour> behaviours;
+	private List<MOOSBehaviour> behaviours = new ArrayList<MOOSBehaviour>();
+	
+	public MOOSProcess(String processName, MOOSCommunity parent) {
+		this.parent = parent;
+		this.processName = processName;
+	}
 	
 	MOOSCommunity parent;
 	String processName;
@@ -15,13 +21,14 @@ public class MOOSProcess extends MOOSElement {
 	private void generateMission(FileWriter f) {
 		try {
 			f.write("ServerPort = " + parent.getDBPort());
+			f.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void generateBehaviourFile(MOOSFiles mf) {	
+	private void generateFiles(MOOSFiles mf) {	
 		FileWriter bhvFile, missionFile;
 		try {
 			bhvFile = mf.createOpenFile(processName + ".bhv");
@@ -36,12 +43,12 @@ public class MOOSProcess extends MOOSElement {
 		}
 	}
 	
-	private void generateMissionFile(MOOSFiles fs) {
-		// The process will generate a plugin in the core file?
+	public void addBehaviour(MOOSBehaviour b) {
+		behaviours.add(b);
 	}
 	
 	public void generateCode(MOOSFiles fs) {
-		generateMissionFile(fs);
-		generateBehaviourFile(fs);
+		generateFiles(fs);
+		//generateBehaviourFile(fs);
 	}
 }
