@@ -14,30 +14,45 @@ public class MOOSCommunity {
 	private void genBasicMissionParams(FileWriter missionFile) throws IOException {
 		missionFile.write("ServerHost = localhost\n");
 		missionFile.write("ServerPort = " + dbPort + "\n");
-		missionFile.write("Simulator = true");
-		missionFile.write("community = " + communityName);
+		missionFile.write("Simulator = true\n");
+		missionFile.write("community = " + communityName + "\n");
+		// maybe other things e.g. "MOOSTimeWarp" etc here
 	}
 	
-	private void genANTLRBlock(FileWriter missionFile) throws IOException {
-		missionFile.write("ProcessConfig = ANTLR \n{\n");
+	private void genANTLERBlock(FileWriter missionFile) throws IOException {
+		missionFile.write("\nProcessConfig = ANTLER {\n");
+		String consoleStatus = " @ NewConsole = false";
 		for (MOOSProcess p : processes) {
-			missionFile.write("Run = " + p.processName + "\n");
+			missionFile.write("Run = " + p.processName + consoleStatus + "\n");
 		}
-		missionFile.write("}\n");
+		missionFile.write("}\n\n");
+	}
+	
+	private void generateMissionFile(FileWriter missionFile) throws IOException {
+		genBasicMissionParams(missionFile);
+		genANTLERBlock(missionFile);
+		for (MOOSProcess p : processes) {
+			p.generateConfigBlock(missionFile);
+		}
+	}
+	
+	private void generateBehaviourFile(FileWriter behaviourFile) throws IOException {
+		for (MOOSProcess p : processes) {
+			p.generateBehavioursForProcess(behaviourFile);
+		}
 	}
 	
 	public void generateCode(MOOSFiles mf) {
 		// Generate a base mission file
 				
 		String missionFileName = "targ_" + communityName + ".moos";
+		String behaviourFileName = "targ_" + communityName + ".bhv";
 		try {
 			FileWriter missionFile = mf.getOpenFile(missionFileName);
-			genBasicMissionParams(missionFile);
-			genANTLRBlock(missionFile);
+			generateMissionFile(missionFile);
+			FileWriter behaviourFile = mf.getOpenFile(behaviourFileName);
+			generateBehaviourFile(behaviourFile);
 			
-			for (MOOSProcess p : processes) {
-				p.generateConfigBlock(missionFile);
-			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,5 +79,4 @@ public class MOOSCommunity {
 	public void addProcess(MOOSProcess p) {
 		processes.add(p);
 	}
-	
 }

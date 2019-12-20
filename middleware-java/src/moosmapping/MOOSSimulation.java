@@ -1,5 +1,7 @@
 package moosmapping;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +9,21 @@ import carsmapping.CARSMapping;
 
 public class MOOSSimulation implements CARSMapping {
 	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
-	MOOSLaunchScript ls;
+	
+	private void generateLaunchScript(MOOSFiles mf) throws IOException {
+		FileWriter missionFile = mf.getOpenFile("launch.sh");
+		missionFile.write("#!/bin/sh");
+	}
 	
 	public void generateCARSInterface(String baseDirectory) {
 		MOOSFiles mf = new MOOSFiles(baseDirectory);
-		// Set up the launch script
-		ls.generateScript(mf);
+		
+		try {
+			generateLaunchScript(mf);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		for (MOOSCommunity c : communities) { 
 			// This generates the code for every MOOS vehicle 
@@ -24,7 +35,7 @@ public class MOOSSimulation implements CARSMapping {
 	}
 	
 	public MOOSSimulation() {
-		ls = new MOOSLaunchScript();
+		
 	}
 	
 	public void addCommunity(MOOSCommunity c) {
