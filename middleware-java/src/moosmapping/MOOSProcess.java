@@ -1,13 +1,9 @@
 package moosmapping;
 
-import moosmapping.*;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MOOSProcess extends MOOSElement {
 	private List<MOOSBehaviour> behaviours = new ArrayList<MOOSBehaviour>();

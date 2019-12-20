@@ -15,6 +15,14 @@ public class MOOSBehaviour extends MOOSElement {
 	
 	public MOOSBehaviour(String name, MOOSProcess parentProcess) {
 		this.name = name;
+		this.setParentProcess(parentProcess);
+	}
+
+	public MOOSProcess getParentProcess() {
+		return parentProcess;
+	}
+
+	public void setParentProcess(MOOSProcess parentProcess) {
 		this.parentProcess = parentProcess;
 	}
 }
