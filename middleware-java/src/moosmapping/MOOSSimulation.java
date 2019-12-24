@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import carsmapping.CARSMapping;
+import carsmapping.*;
 
-public class MOOSSimulation implements CARSMapping {
+public class MOOSSimulation implements CARSSimulation {
 	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
 	
 	private void generateLaunchScript(MOOSFiles mf) throws IOException {

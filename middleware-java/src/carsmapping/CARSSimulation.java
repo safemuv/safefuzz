@@ -1,6 +1,5 @@
-// REDUNDANT - DELETE FROM GIT
 package carsmapping;
 
-public abstract interface CARSMapping {
+public abstract interface CARSSimulation {
 	public abstract void generateCARSInterface(String baseDirectory);
 }
