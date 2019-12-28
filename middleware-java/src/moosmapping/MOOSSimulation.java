@@ -41,4 +41,8 @@ public class MOOSSimulation implements CARSSimulation {
 	public void addCommunity(MOOSCommunity c) {
 		communities.add(c);
 	}
+
+	public List<MOOSCommunity> getAllCommunities() {
+		return communities;
+	}
 }

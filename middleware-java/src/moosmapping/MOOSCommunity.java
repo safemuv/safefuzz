@@ -10,6 +10,7 @@ public class MOOSCommunity {
 	private String communityName;
 	private int dbPort = dbCounter++;
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
+	private List<String> sharedVars = new ArrayList<String>();
 	
 	private void genBasicMissionParams(FileWriter missionFile) throws IOException {
 		missionFile.write("ServerHost = localhost\n");
@@ -78,5 +79,14 @@ public class MOOSCommunity {
 	
 	public void addProcess(MOOSProcess p) {
 		processes.add(p);
+	}
+	
+	public void registerSharedVar(String varName) {
+		sharedVars.add(varName);
+	}
+	
+	public void registerSharedVars(List<String> varNames) {
+		for (String v : varNames) 
+			registerSharedVar(v);
 	}
 }

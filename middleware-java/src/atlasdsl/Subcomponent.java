@@ -1,5 +1,5 @@
 package atlasdsl;
 
-public class Subcomponent {
+public class Subcomponent extends Component {
 
 }

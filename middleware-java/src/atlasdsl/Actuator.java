@@ -1,5 +1,5 @@
 package atlasdsl;
 
-public class Actuator {
+public class Actuator extends Subcomponent {
 
 }

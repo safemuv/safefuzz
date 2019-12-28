@@ -1,5 +1,8 @@
 package atlasdsl;
 
-public class Component {
+import java.util.ArrayList;
 
+public class Component {
+	private String name;
+	private ArrayList<ComponentProperty> properties;
 }

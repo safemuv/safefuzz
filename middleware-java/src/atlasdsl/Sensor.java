@@ -1,5 +1,5 @@
 package atlasdsl;
 
-public class Sensor {
+public class Sensor extends Subcomponent {
 
 }
