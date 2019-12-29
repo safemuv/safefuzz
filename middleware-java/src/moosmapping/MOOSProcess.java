@@ -13,7 +13,6 @@ public class MOOSProcess extends MOOSElement {
 	public MOOSProcess(String processName, MOOSCommunity parent) {
 		this.parent = parent;
 		this.processName = processName;
-		// Set standard properties, e.g. APPTick
 		this.setProperty("AppTick", defaultAppTick);
 		this.setProperty("CommsTick", defaultCommsTick);
 	}

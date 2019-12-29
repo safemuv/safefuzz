@@ -13,7 +13,7 @@ import atlasdsl.*;
 public class MOOSCodeGen extends CARSCodeGen {
 	// TODO: how to specify the start coordinates of robots in the DSL structure?
 	// TODO: how to specify the sensor behaviour
-	MOOSCodeGen(Mission m) {
+	public MOOSCodeGen(Mission m) {
 		super(m);
 	}
 	
@@ -85,6 +85,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 			// For now, just notify all communities of all messages
 			// TODO: think about restricting pShare message transfer
 			c.registerSharedVars(moosSharedVars);
+			
+			// Do we also have to register NodeBroker here?
 			
 			// ATLASDBWatch process must be created in the each community 
 			// to watch the given variables for the middleware

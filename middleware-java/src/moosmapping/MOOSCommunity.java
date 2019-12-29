@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MOOSCommunity {
 	private static int dbCounter = 9000;
-	private String communityName;
+	protected String communityName;
 	private int dbPort = dbCounter++;
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
 	private List<String> sharedVars = new ArrayList<String>();
@@ -43,15 +43,20 @@ public class MOOSCommunity {
 		}
 	}
 	
+	public String getMissionFileName() {
+		return "targ_" + communityName + ".moos";
+	}
+	
+	public String getBehaviourFileName() {
+		return "targ_" + communityName + ".bhv";
+	}
+	
 	public void generateCode(MOOSFiles mf) {
-		// Generate a base mission file
-				
-		String missionFileName = "targ_" + communityName + ".moos";
-		String behaviourFileName = "targ_" + communityName + ".bhv";
+		// Generate mission and behaviour files
 		try {
-			FileWriter missionFile = mf.getOpenFile(missionFileName);
+			FileWriter missionFile = mf.getOpenFile(getMissionFileName());
 			generateMissionFile(missionFile);
-			FileWriter behaviourFile = mf.getOpenFile(behaviourFileName);
+			FileWriter behaviourFile = mf.getOpenFile(getBehaviourFileName());
 			generateBehaviourFile(behaviourFile);
 			
 		} catch (IOException e) {
@@ -69,13 +74,25 @@ public class MOOSCommunity {
 		return communityName;
 	}
 	
+	private void addProcessWatch() {
+		addProcess(new UProcessWatch(this));
+	}
+	
 	public MOOSCommunity(String communityName) {
 		this.communityName = communityName;
+		addProcessWatch();
 	}
+	
 	public MOOSCommunity(String communityName, int dbPort) {
 		this.communityName = communityName;
 		this.dbPort = dbPort;
+		addProcessWatch();
 	}
+	
+	public MOOSCommunity(String communityName, int dbPort, boolean watchProcess) {
+		addProcessWatch();
+	}
+	
 	
 	public void addProcess(MOOSProcess p) {
 		processes.add(p);
