@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MOOSCommunity {
+	// TODO: assigning a dbPort should be managed by the MOOSSimulation by default
 	private static int dbCounter = 9000;
 	protected String communityName;
 	private int dbPort = dbCounter++;

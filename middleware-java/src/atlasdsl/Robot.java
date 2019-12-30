@@ -1,10 +1,11 @@
 package atlasdsl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Robot extends Component {
 	private String robotname;
-	private List<Subcomponent> contains;
+	private List<Subcomponent> contains = new ArrayList<Subcomponent>();
 	
 	public Robot(String robotname) {
 		this.robotname = robotname;

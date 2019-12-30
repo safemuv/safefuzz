@@ -7,7 +7,7 @@ public class RobotCommunity extends MOOSCommunity {
 	private int defaultMinSpeed = 5;
 	private int defaultMaxSpeed = 26;
 	
-	private void createRobotProcesses() {
+	private void createRobotProcesses(String robotName) {
 		// All Robots include a Logger...
 		addProcess(new PLoggerProcess(this, "LOG_" + communityName, false));
 		// and uSimMarine and Helm
@@ -15,7 +15,7 @@ public class RobotCommunity extends MOOSCommunity {
 		addProcess(new USimMarineProcess(this));
 		addProcess(new PMarinePIDProcess(this));
 		
-		addProcess(new PHelmIvpProcess(this, defaultMinSpeed, defaultMaxSpeed));
+		addProcess(new PHelmIvpProcess(this, robotName, defaultMinSpeed, defaultMaxSpeed));
 		addProcess(new PHostinfoProcess(this));
 		addProcess(new PBasicContactMgrProcess(this));
 		addProcess(new PNodeReporterProcess(this));
@@ -23,6 +23,6 @@ public class RobotCommunity extends MOOSCommunity {
 	
 	public RobotCommunity(String robotName) {
 		super(robotName);
-		createRobotProcesses();
+		createRobotProcesses(robotName);
 	}
 }

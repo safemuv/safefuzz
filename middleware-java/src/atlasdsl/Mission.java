@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mission {
-	private List<Component> participants = new ArrayList<Component>();
+	// TODO: change to DSL, propagate back into spec
+	private List<Robot> robots = new ArrayList<Robot>();
+	private List<Computer> computers = new ArrayList<Computer>();
 	
 	public List<Robot> getAllRobots() {
-		return new ArrayList<Robot>();
+		return robots;
 	}
 	
 	public boolean includesComputer() {
-		return true;
+		return (computers.size() > 0); 
 	}
 	
 	public void addRobot(Robot r) {
-		participants.add(r);
+		robots.add(r);
 	}
 }

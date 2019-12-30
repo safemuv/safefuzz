@@ -65,6 +65,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 		for (Robot r : mission.getAllRobots()) {
 			MOOSCommunity rprocess = new RobotCommunity(r.getName());
 			moossim.addCommunity(rprocess);
+			System.out.println("Adding community for " + r.getName());
+			//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
 		}
 		
 		// This currently encodes the assumption of one shoreside computer

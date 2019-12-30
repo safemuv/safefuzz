@@ -2,6 +2,7 @@ package moosmapping.test;
 import moosmapping.*;
 import atlascarsgenerator.MOOSCodeGen;
 import atlasdsl.*;
+import carsmapping.CARSSimulation;
 
 public class TestMapping {
 	public static void testCodeGeneration1(String code_dir) {
@@ -24,7 +25,7 @@ public class TestMapping {
 	// Test function that represents a robot added with a sonar sensor
 	public static void addRobotWithSonar(Mission m, String robotName, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
 		Robot r = new Robot(robotName);
-		Sensor s = new Sensor(SENSE_SONAR);
+		Sensor s = new Sensor(Sensor.SENSE_SONAR);
 		s.setIntComponentProperty("sensorRange", sensorRange);
 		s.setDoubleComponentProperty("detectionProb", detectionProb);
 		s.setDoubleComponentProperty("falsePos", falsePos);
@@ -42,7 +43,10 @@ public class TestMapping {
 		addRobotWithSonar(m, "ella", 50, 0.2, 0.03, 0.06);
 		
 		MOOSCodeGen gen = new MOOSCodeGen(m);
-		gen.convertDSL(m);
+		System.out.println("Converting DSL to MOOS representation...");
+		CARSSimulation moossim = gen.convertDSL(m);
+		System.out.println("DSL conversion completed");
+		moossim.generateCARSInterface(code_dir);
 	}
 	
 	public static void main(String [] args) {
