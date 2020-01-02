@@ -7,4 +7,8 @@ public class IntProperty extends ComponentProperty {
 		this.name = name;
 		this.value = value;
 	}
+	
+	public int getValue() {
+		return value;
+	}
 }

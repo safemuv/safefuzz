@@ -1,5 +1,7 @@
 package moosmapping;
 
+import atlasdsl.*;
+
 public class RobotCommunity extends MOOSCommunity {
 	// TODO: Add custom behaviours in constructor - must include a Waypoint for each
 	// robot to be updated by the collective intelligence
@@ -7,7 +9,9 @@ public class RobotCommunity extends MOOSCommunity {
 	private int defaultMinSpeed = 5;
 	private int defaultMaxSpeed = 26;
 	
-	private void createRobotProcesses(String robotName) {
+	public RobotCommunity(MOOSSimulation sim, String robotName, Point startPos) {
+		super(sim,robotName);
+		
 		// All Robots include a Logger...
 		addProcess(new PLoggerProcess(this, "LOG_" + communityName, false));
 		// and uSimMarine and Helm
@@ -15,14 +19,9 @@ public class RobotCommunity extends MOOSCommunity {
 		addProcess(new USimMarineProcess(this));
 		addProcess(new PMarinePIDProcess(this));
 		
-		addProcess(new PHelmIvpProcess(this, robotName, defaultMinSpeed, defaultMaxSpeed));
+		addProcess(new PHelmIvpProcess(this, startPos, robotName, defaultMinSpeed, defaultMaxSpeed));
 		addProcess(new PHostinfoProcess(this));
 		addProcess(new PBasicContactMgrProcess(this));
 		addProcess(new PNodeReporterProcess(this));
-	}
-	
-	public RobotCommunity(String robotName) {
-		super(robotName);
-		createRobotProcesses(robotName);
 	}
 }

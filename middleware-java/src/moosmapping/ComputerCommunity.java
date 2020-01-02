@@ -1,7 +1,7 @@
 package moosmapping;
 
 public class ComputerCommunity extends MOOSCommunity {
-	public ComputerCommunity(String robotName) {
-		super(robotName);
+	public ComputerCommunity(MOOSSimulation sim, String robotName) {
+		super(sim,robotName);
 	}
 }

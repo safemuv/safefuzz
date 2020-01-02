@@ -7,4 +7,8 @@ public class DoubleProperty extends ComponentProperty {
 		this.name = name;
 		this.value = v;
 	}
+
+	public double getValue() {
+		return value;
+	}
 }

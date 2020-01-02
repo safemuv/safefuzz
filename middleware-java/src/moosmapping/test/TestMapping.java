@@ -1,5 +1,6 @@
 package moosmapping.test;
 import moosmapping.*;
+import atlascarsgenerator.ConversionFailed;
 import atlascarsgenerator.MOOSCodeGen;
 import atlasdsl.*;
 import carsmapping.CARSSimulation;
@@ -8,7 +9,7 @@ public class TestMapping {
 	public static void testCodeGeneration1(String code_dir) {
 		MOOSSimulation testSim = new MOOSSimulation();
 
-		MOOSCommunity gilda = new MOOSCommunity("gilda");
+		MOOSCommunity gilda = new MOOSCommunity(testSim, "gilda");
 		MOOSProcess ivpHelm = new MOOSProcess("pIvpHelm", gilda);
 		testSim.addCommunity(gilda);
 		gilda.addProcess(ivpHelm);
@@ -23,30 +24,39 @@ public class TestMapping {
 	}
 	
 	// Test function that represents a robot added with a sonar sensor
-	public static void addRobotWithSonar(Mission m, String robotName, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
+	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
 		Robot r = new Robot(robotName);
-		Sensor s = new Sensor(Sensor.SENSE_SONAR);
+		Sensor s = new Sensor(SensorType.SONAR);
 		s.setIntComponentProperty("sensorRange", sensorRange);
 		s.setDoubleComponentProperty("detectionProb", detectionProb);
 		s.setDoubleComponentProperty("falsePos", falsePos);
 		s.setDoubleComponentProperty("falseNeg", falseNeg);
 		r.addSubcomponent(s);
+		r.setPointComponentProperty("startLocation", startLocation);
 		m.addRobot(r);
 	}
 	
 	public static void testCodeGeneration2(String code_dir) {
 		// TODO: get these consistent with the values in the report object diagram
-		Mission m = new Mission();
-		addRobotWithSonar(m, "gilda", 50, 0.9, 0.01, 0.05);
-		addRobotWithSonar(m, "henry", 50, 0.8, 0.03, 0.07);
-		addRobotWithSonar(m, "frank", 50, 0.2, 0.03, 0.02);
-		addRobotWithSonar(m, "ella", 50, 0.2, 0.03, 0.06);
+		Mission mission = new Mission();
+		addRobotWithSonar(mission, "gilda", new Point(190.0, 180.0), 50, 0.9, 0.01, 0.05);
+		addRobotWithSonar(mission, "henry", new Point(200.0, 200.0), 50, 0.8, 0.03, 0.07);
+		addRobotWithSonar(mission, "frank", new Point(250.0, 250.0), 50, 0.2, 0.03, 0.02);
+		addRobotWithSonar(mission, "ella",  new Point(250.0, 251.0), 50, 0.2, 0.03, 0.06);
 		
-		MOOSCodeGen gen = new MOOSCodeGen(m);
+		Computer c = new Computer("shoreside");
+		mission.addComputer(c);
+		
+		MOOSCodeGen gen = new MOOSCodeGen(mission );
 		System.out.println("Converting DSL to MOOS representation...");
-		CARSSimulation moossim = gen.convertDSL(m);
-		System.out.println("DSL conversion completed");
-		moossim.generateCARSInterface(code_dir);
+		try {
+			CARSSimulation moossim = gen.convertDSL(mission );
+			System.out.println("DSL conversion completed");
+			moossim.generateCARSInterface(code_dir);
+			System.out.println("Code generation completed");
+		} catch (ConversionFailed cf) {
+			System.out.println("ERROR: DSL conversion to MOOS representation failed");
+		}
 	}
 	
 	public static void main(String [] args) {
@@ -58,6 +68,5 @@ public class TestMapping {
 		outputCodeDir = System.getProperty("user.dir") + "/codegen-test2/";
 		System.out.println("Generating code from DSL in: " + outputCodeDir);
 		testCodeGeneration2(outputCodeDir);
-		System.out.println("Code generation completed");
 	}
 }

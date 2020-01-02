@@ -9,8 +9,11 @@ import java.util.Map;
 
 public class MOOSProcess extends MOOSElement {
 	private List<MOOSBehaviour> behaviours = new ArrayList<MOOSBehaviour>();
-	// Used to generate the initialize lines at start of behaviour file
-	private Map<String,Object> moosBehaviourInitVals = new HashMap<String,Object>();
+	// Used to generate the initialise lines at start of behaviour file
+	protected Map<String,Object> moosBehaviourInitVals = new HashMap<String,Object>();
+	
+	protected Map<String,MOOSSetModeDetails> setModeProperties = new HashMap<String,MOOSSetModeDetails>();
+
 	
 	
 	private static int defaultCommsTick = 2;
@@ -33,13 +36,16 @@ public class MOOSProcess extends MOOSElement {
 	}
 	
 	private void generateBehaviourInitSection(FileWriter bhvFile) throws IOException {
-		// Generate the initialization values
+		// Generate the initialisation values
 		for (Map.Entry<String,Object> entry : moosBehaviourInitVals.entrySet()) {
 			String name = entry.getKey();
 			Object value = entry.getValue();
-			bhvFile.write("initialize " + name + " = " + value);
+			bhvFile.write("initialize " + name + " = " + value + "\n");
 		}
-		// TODO: mapping between modes and variables
+		
+		for (Map.Entry<String, MOOSSetModeDetails> setModeEntry : setModeProperties.entrySet()) {
+			setModeEntry.getValue().generate(bhvFile);
+		}
 	}
 	
 	public void generateBehavioursForProcess(FileWriter behaviourFile) throws IOException {	

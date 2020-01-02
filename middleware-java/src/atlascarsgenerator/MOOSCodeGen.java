@@ -11,7 +11,6 @@ import atlasdsl.*;
 // FIX: maybe move to MOOSSimulation?
 
 public class MOOSCodeGen extends CARSCodeGen {
-	// TODO: how to specify the start coordinates of robots in the DSL structure?
 	// TODO: how to specify the sensor behaviour
 	public MOOSCodeGen(Mission m) {
 		super(m);
@@ -51,21 +50,23 @@ public class MOOSCodeGen extends CARSCodeGen {
 		
 	}
 	
-	public CARSSimulation convertDSL(Mission mission) {
+	public CARSSimulation convertDSL(Mission mission) throws ConversionFailed {
 		// Names of variables to be shared via pShare
 		List<String> moosSharedVars = new ArrayList<String>();
 		List<String> middlewareVars = varsForMissionGoals(mission);
 		List<String> collectiveIntelVars = varsForCI(mission); 
 		
 		int atlasPort = 61613;
+		try {
 		
-		MOOSSimulation moossim = new MOOSSimulation();
-		// This performs the translation from DSL objects to a MOOS mission definition
+			MOOSSimulation moossim = new MOOSSimulation();
+			// This performs the translation from DSL objects to a MOOS mission definition
 		// Firstly: for each Robot, generate a MOOSCommunity
 		for (Robot r : mission.getAllRobots()) {
-			MOOSCommunity rprocess = new RobotCommunity(r.getName());
+			Point startPos = r.getPointComponentProperty("startLocation");
+			MOOSCommunity rprocess = new RobotCommunity(moossim, r.getName(), startPos);
 			moossim.addCommunity(rprocess);
-			System.out.println("Adding community for " + r.getName());
+			System.out.println("Adding community for robot: " + r.getName());
 			//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
 		}
 		
@@ -74,8 +75,9 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// TODO: Should be made more flexible - we could have multiple
 		// computers involved
 		if (mission.includesComputer()) {
-			MOOSCommunity shoreside = new ComputerCommunity("shoreside");
+			MOOSCommunity shoreside = new ComputerCommunity(moossim,"shoreside");
 			moossim.addCommunity(shoreside);
+			System.out.println("Adding community for fixed computer");
 		}
 				
 		// Setup the sensors and actuators
@@ -98,5 +100,12 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// TODO: this returns a MOOS community without any faults
 		// There will be a later stage to modify the community to inject faults.
 		return moossim;
+		
+		} catch (MissingProperty mp) {
+			System.out.println("Conversion failed: component " + mp.getComponent() + " is missing property " + mp.getPropertyName() + "...");
+			mp.printStackTrace();
+			throw new ConversionFailed();
+		}
+		
 	}
 }

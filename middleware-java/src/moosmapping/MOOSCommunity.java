@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MOOSCommunity {
-	// TODO: assigning a dbPort should be managed by the MOOSSimulation by default
-	private static int dbCounter = 9000;
 	protected String communityName;
-	private int dbPort = dbCounter++;
+	private int dbPort;
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
 	private List<String> sharedVars = new ArrayList<String>();
 	
@@ -61,7 +59,6 @@ public class MOOSCommunity {
 			generateBehaviourFile(behaviourFile);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -79,19 +76,25 @@ public class MOOSCommunity {
 		addProcess(new UProcessWatch(this));
 	}
 	
-	public MOOSCommunity(String communityName) {
+	public MOOSCommunity(MOOSSimulation sim, String communityName) {
 		this.communityName = communityName;
+		this.dbPort = sim.nextDBPortCounter();
 		addProcessWatch();
 	}
 	
-	public MOOSCommunity(String communityName, int dbPort) {
+	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort) {
 		this.communityName = communityName;
 		this.dbPort = dbPort;
 		addProcessWatch();
 	}
 	
-	public MOOSCommunity(String communityName, int dbPort, boolean watchProcess) {
+	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort, boolean watchProcess) {
+		this.communityName = communityName;
+		this.dbPort = dbPort;
 		addProcessWatch();
+		if (watchProcess) {
+			addProcessWatch();
+		}
 	}
 	
 	

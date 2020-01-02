@@ -1,0 +1,2 @@
+src/atlasdsl/Mission.java 7: change to DSL for separate robots and computers, propagate back into spec
+Components have separate properties for every type, needs to be reflected in DSL

@@ -23,4 +23,8 @@ public abstract class MOOSElement {
 	public void setProperty(String key, Object val) {
 		properties.put(key, val);
 	}
+	
+	public Object getProperty(String key) {
+		return properties.get(key);
+	}
 }

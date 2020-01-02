@@ -8,11 +8,20 @@ import java.util.List;
 import carsmapping.*;
 
 public class MOOSSimulation implements CARSSimulation {
+	private static int dbPortCounter = 9000;
+	
 	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
 	
 	private void generateLaunchScript(MOOSFiles mf) throws IOException {
 		FileWriter missionFile = mf.getOpenFile("launch.sh");
-		missionFile.write("#!/bin/sh");
+		missionFile.write("#!/bin/sh\n\n");
+		for (MOOSCommunity c : communities) {
+			missionFile.write("pAntler " + c.getMissionFileName() + "\n");
+		}
+	}
+	
+	public int nextDBPortCounter() {
+		return dbPortCounter++;
 	}
 	
 	public void generateCARSInterface(String baseDirectory) {
@@ -21,7 +30,6 @@ public class MOOSSimulation implements CARSSimulation {
 		try {
 			generateLaunchScript(mf);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
