@@ -61,7 +61,6 @@ public class MOOSCommunity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public int getDBPort() {
@@ -96,7 +95,6 @@ public class MOOSCommunity {
 			addProcessWatch();
 		}
 	}
-	
 	
 	public void addProcess(MOOSProcess p) {
 		processes.add(p);

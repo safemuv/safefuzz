@@ -1,8 +1,16 @@
 package moosmapping;
+import atlasdsl.*;
 
 public class PNodeReporterProcess extends MOOSProcess {
-	public PNodeReporterProcess(MOOSCommunity parent) {
+	// This is currently the default from the 
+	// Setting vtype in the parent robot can override it
+	private String defaultVehicleType = "KAYAK";
+	
+	public PNodeReporterProcess(MOOSCommunity parent, Robot robot) {
 		super("pNodeReporter", parent);
-		// TODO: properties here
+		
+		String vehicleType = defaultVehicleType;
+		vehicleType = robot.vehicleTypeAsString();
+		setProperty("VESSEL_TYPE", vehicleType);
 	}
 }

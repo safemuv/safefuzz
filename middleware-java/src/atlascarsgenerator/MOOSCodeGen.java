@@ -64,7 +64,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// Firstly: for each Robot, generate a MOOSCommunity
 		for (Robot r : mission.getAllRobots()) {
 			Point startPos = r.getPointComponentProperty("startLocation");
-			MOOSCommunity rprocess = new RobotCommunity(moossim, r.getName(), startPos);
+			MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
 			moossim.addCommunity(rprocess);
 			System.out.println("Adding community for robot: " + r.getName());
 			//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists

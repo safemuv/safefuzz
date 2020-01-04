@@ -9,19 +9,17 @@ public class RobotCommunity extends MOOSCommunity {
 	private int defaultMinSpeed = 5;
 	private int defaultMaxSpeed = 26;
 	
-	public RobotCommunity(MOOSSimulation sim, String robotName, Point startPos) {
-		super(sim,robotName);
+	public RobotCommunity(MOOSSimulation sim, Robot robot, Point startPos) {
+		super(sim,robot.getName());
 		
 		// All Robots include a Logger...
 		addProcess(new PLoggerProcess(this, "LOG_" + communityName, false));
 		// and uSimMarine and Helm
-		// TODO: check parameters for the processes
 		addProcess(new USimMarineProcess(this));
+		addProcess(new PHelmIvpProcess(this, startPos, robot.getName(), defaultMinSpeed, defaultMaxSpeed));
 		addProcess(new PMarinePIDProcess(this));
-		
-		addProcess(new PHelmIvpProcess(this, startPos, robotName, defaultMinSpeed, defaultMaxSpeed));
 		addProcess(new PHostinfoProcess(this));
 		addProcess(new PBasicContactMgrProcess(this));
-		addProcess(new PNodeReporterProcess(this));
+		addProcess(new PNodeReporterProcess(this, robot));
 	}
 }

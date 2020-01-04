@@ -60,8 +60,6 @@ public class PHelmIvpProcess extends MOOSProcess {
 
 	
 	private void setupBehaviours(String vehicleName, String startPos) {
-		//String defaultLoiterPos = "x=1,y=1";
-		//String defaultStartPos = "x=100,y=100";
 		double loiterSpeed = 1.0;
 		double loiterRadius = 5.0;
 		double loiterNMRadius = 10.0;

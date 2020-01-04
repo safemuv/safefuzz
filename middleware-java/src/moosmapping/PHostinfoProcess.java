@@ -1,8 +1,11 @@
 package moosmapping;
 
 public class PHostinfoProcess extends MOOSProcess {
+	private String defaultHostIP = "localhost";
+	// ASSUMPTION: the system is always running upon localhost
+	
 	public PHostinfoProcess(MOOSCommunity parent) {
 		super("pHostInfo", parent);
-		// TODO: properties here
+		setProperty("DEFAULT_HOSTIP", defaultHostIP);
 	}
 }
