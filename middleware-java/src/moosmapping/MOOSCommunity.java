@@ -20,7 +20,8 @@ public class MOOSCommunity {
 	}
 	
 	private void genANTLERBlock(FileWriter missionFile) throws IOException {
-		missionFile.write("\nProcessConfig = ANTLER {\n");
+		missionFile.write("\nProcessconfig = ANTLER\n{\n");
+		missionFile.write("MSBetweenLaunches = 100\n");
 		String consoleStatus = " @ NewConsole = false";
 		for (MOOSProcess p : processes) {
 			missionFile.write("Run = " + p.processName + consoleStatus + "\n");
@@ -75,22 +76,28 @@ public class MOOSCommunity {
 		addProcess(new UProcessWatch(this));
 	}
 	
+	private void addMOOSDB() {
+		addProcess(new MOOSDBProcess(this));
+	}
+	
 	public MOOSCommunity(MOOSSimulation sim, String communityName) {
 		this.communityName = communityName;
 		this.dbPort = sim.nextDBPortCounter();
 		addProcessWatch();
+		addMOOSDB();
 	}
 	
 	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort) {
 		this.communityName = communityName;
 		this.dbPort = dbPort;
 		addProcessWatch();
+		addMOOSDB();
 	}
 	
 	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort, boolean watchProcess) {
 		this.communityName = communityName;
 		this.dbPort = dbPort;
-		addProcessWatch();
+		addMOOSDB();
 		if (watchProcess) {
 			addProcessWatch();
 		}
