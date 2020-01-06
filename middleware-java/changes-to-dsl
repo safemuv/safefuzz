@@ -1,2 +1,4 @@
 src/atlasdsl/Mission.java 7: change to DSL for separate robots and computers, propagate back into spec
 Components have separate properties for every type, needs to be reflected in DSL
+Geometric basis properties should be part of the Region layer of the DSL? At the moment the coordinate origin is hardcoded into MOOSCommunity.genBasicMissionParams()
+Speed limit in PHelmIvpProcess. Should be configured in the DSL for the robots

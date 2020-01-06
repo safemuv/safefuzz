@@ -2,6 +2,7 @@ package moosmapping;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class MOOSSetModeDetails extends MOOSElement {
@@ -19,10 +20,14 @@ public class MOOSSetModeDetails extends MOOSElement {
 	
 	protected void generate(FileWriter stream) throws IOException {
 		stream.write("set MODE = " + modeName + " {\n");
-		for (Map.Entry<String,Object> entry : properties.entrySet()) {
+		
+		for (Map.Entry<String,List<Object>> entry : properties.entrySet()) {
 			String name = entry.getKey();
-			Object value = entry.getValue();
-			stream.write(name + " = " + value.toString() + "\n");
+			List<Object> values = entry.getValue();
+			
+			for (Object v : values) {
+				stream.write(name + " = " + v.toString() + "\n");
+			}
 		}
 		stream.write("} " + extraTag + "\n\n");
 	}

@@ -13,10 +13,12 @@ public class MOOSSimulation implements CARSSimulation {
 	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
 	
 	private void generateLaunchScript(MOOSFiles mf) throws IOException {
+		// Append a string with ampersand to launch all processes simultaneously
+		String launchSeperatelyStr = " &";
 		FileWriter missionFile = mf.getOpenFile("launch.sh");
 		missionFile.write("#!/bin/sh\n\n");
 		for (MOOSCommunity c : communities) {
-			missionFile.write("pAntler " + c.getMissionFileName() + "\n");
+			missionFile.write("pAntler " + c.getMissionFileName() + launchSeperatelyStr + "\n");
 		}
 	}
 	

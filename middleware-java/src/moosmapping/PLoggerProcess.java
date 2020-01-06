@@ -4,8 +4,8 @@ public class PLoggerProcess extends MOOSProcess {
 	public PLoggerProcess(MOOSCommunity parent, String loggerFilename, Boolean isShoreside) {
 		super("pLogger", parent);
 		
-		setProperty("AppTick", 10);
-		setProperty("CommsTick", 10);
+		resetProperty("AppTick", 10);
+		resetProperty("CommsTick", 10);
 		setProperty("File", loggerFilename);
 		
 		setProperty("Path", "./");

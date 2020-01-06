@@ -8,7 +8,7 @@ public class MOOSBehaviour extends MOOSElement {
 	private MOOSProcess parentProcess;
 	
 	public void generateCode(FileWriter bhvFile) throws IOException {
-		bhvFile.write("Behaviour = " + name + " \n{\n");
+		bhvFile.write("Behavior = " + name + " \n{\n");
 		writePropertiesDefault(bhvFile);
 		bhvFile.write("}\n\n");
 	}

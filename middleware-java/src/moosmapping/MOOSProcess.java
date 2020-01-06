@@ -14,8 +14,6 @@ public class MOOSProcess extends MOOSElement {
 	
 	protected Map<String,MOOSSetModeDetails> setModeProperties = new HashMap<String,MOOSSetModeDetails>();
 
-	
-	
 	private static int defaultCommsTick = 2;
 	private static int defaultAppTick = 2;
 	

@@ -9,8 +9,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 			
 		// Links the Helm process to its behaviour file
 		String parentBHVFile = parent.getBehaviourFileName();
-		setProperty("AppTick", 4);
-		setProperty("CommsTick", 4);
+		resetProperty("AppTick", 4);
+		resetProperty("CommsTick", 4);
 		setProperty("Behaviors", parentBHVFile);
 		setProperty("Verbose", "false");
 		setProperty("Domain", "course:0:359:360");
@@ -20,13 +20,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		setupBehaviours(vehicleName, pointAsString);
 		setupBehaviourVars();
 		
-		// TODO: this encodes a speed limit. This should be factored out and set in the DSL
-		// for the robot
-		// Check these properties
 		setProperty("Domain", "speed:0:" + minSpeed.toString() + ":" + maxSpeed.toString());
-		//Domain       = speed:0:5:26
-		
-		
 	}
 	
 	private void setupBehaviourVars() {

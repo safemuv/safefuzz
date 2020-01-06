@@ -8,6 +8,7 @@ import java.util.List;
 public class MOOSCommunity {
 	protected String communityName;
 	private int dbPort;
+	
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
 	private List<String> sharedVars = new ArrayList<String>();
 	
@@ -16,7 +17,11 @@ public class MOOSCommunity {
 		missionFile.write("ServerPort = " + dbPort + "\n");
 		missionFile.write("Simulator = true\n");
 		missionFile.write("community = " + communityName + "\n");
-		// maybe other things e.g. "MOOSTimeWarp" etc here
+		
+		missionFile.write("MOOSTimeWarp = 1\n");
+		
+		missionFile.write("LatOrigin = 43.825300\n");
+		missionFile.write("LongOrigin = -70.330400\n");
 	}
 	
 	private void genANTLERBlock(FileWriter missionFile) throws IOException {
