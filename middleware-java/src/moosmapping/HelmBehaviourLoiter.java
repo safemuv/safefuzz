@@ -2,6 +2,7 @@ package moosmapping;
 
 public class HelmBehaviourLoiter extends MOOSBehaviour {
 	// loiterPos should be e.g. "x=1,y=1"
+	// TODO: convert loiterPos to Point type here for consistency
 	public HelmBehaviourLoiter(MOOSProcess parent, String vehicleName, String loiterPos, double loiterSpeed, double radius, double nm_radius) {
 		super("BHV_Loiter", parent);
 		setProperty("name", "loiter");

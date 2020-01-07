@@ -60,47 +60,45 @@ public class MOOSCodeGen extends CARSCodeGen {
 		try {
 		
 			MOOSSimulation moossim = new MOOSSimulation();
+			
+			// This currently encodes the assumption of one shoreside computer
+			// performing system monitoring/management of CI
+			// TODO: Should be made more flexible - we could have multiple
+			// computers involved
+			if (mission.includesComputer()) {
+				MOOSCommunity shoreside = new ComputerCommunity(moossim,"shoreside");
+				moossim.addCommunity(shoreside);
+				System.out.println("Adding community for fixed computer");
+			}
+			
 			// This performs the translation from DSL objects to a MOOS mission definition
-		// Firstly: for each Robot, generate a MOOSCommunity
-		for (Robot r : mission.getAllRobots()) {
-			Point startPos = r.getPointComponentProperty("startLocation");
-			MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
-			moossim.addCommunity(rprocess);
-			System.out.println("Adding community for robot: " + r.getName());
-			//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
-		}
+			// Firstly: for each Robot, generate a MOOSCommunity
+			for (Robot r : mission.getAllRobots()) {
+				Point startPos = r.getPointComponentProperty("startLocation");
+				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
+				moossim.addCommunity(rprocess);
+				System.out.println("Adding community for robot: " + r.getName());
+				//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
+			}
 		
-		// This currently encodes the assumption of one shoreside computer
-		// performing system monitoring/management of CI
-		// TODO: Should be made more flexible - we could have multiple
-		// computers involved
-		if (mission.includesComputer()) {
-			MOOSCommunity shoreside = new ComputerCommunity(moossim,"shoreside");
-			moossim.addCommunity(shoreside);
-			System.out.println("Adding community for fixed computer");
-		}
-				
-		// Setup the sensors and actuators
-		setupSensors(mission, moossim, moosSharedVars);
-		setupActuators(mission, moossim, moosSharedVars);	
+			// Setup the sensors and actuators
+			setupSensors(mission, moossim, moosSharedVars);
+			setupActuators(mission, moossim, moosSharedVars);	
 
-		for (MOOSCommunity c : moossim.getAllCommunities()) {
-			// pShare component must be notified if any messages are interchanged
-			// For now, just notify all communities of all messages
-			// TODO: think about restricting pShare message transfer
-			c.registerSharedVars(moosSharedVars);
+			for (MOOSCommunity c : moossim.getAllCommunities()) {
+				// TODO: NodeBroker components must be notified if messages are interchanged
+				c.registerSharedVars(moosSharedVars);
 			
-			// Do we also have to register NodeBroker here?
+				// Do we also have to register NodeBroker here?
 			
-			// ATLASDBWatch process must be created in the each community 
-			// to watch the given variables for the middleware
-			createATLASLink(c, middlewareVars, atlasPort);
-		}
+				// ATLASDBWatch process must be created in the each community 
+				// to watch the given variables for the middleware
+				createATLASLink(c, middlewareVars, atlasPort);
+			}
 		
-		// TODO: this returns a MOOS community without any faults
-		// There will be a later stage to modify the community to inject faults.
-		return moossim;
-		
+			// This returns a MOOS community without any faults
+			// There will be a later stage to modify the community to inject faults.
+			return moossim;
 		} catch (MissingProperty mp) {
 			System.out.println("Conversion failed: component " + mp.getComponent() + " is missing property " + mp.getPropertyName() + "...");
 			mp.printStackTrace();

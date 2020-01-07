@@ -3,16 +3,16 @@ package moosmapping;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MOOSProcess extends MOOSElement {
 	private List<MOOSBehaviour> behaviours = new ArrayList<MOOSBehaviour>();
 	// Used to generate the initialise lines at start of behaviour file
-	protected Map<String,Object> moosBehaviourInitVals = new HashMap<String,Object>();
+	protected Map<String,Object> moosBehaviourInitVals = new LinkedHashMap<String,Object>();
 	
-	protected Map<String,MOOSSetModeDetails> setModeProperties = new HashMap<String,MOOSSetModeDetails>();
+	protected Map<String,MOOSSetModeDetails> setModeProperties = new LinkedHashMap<String,MOOSSetModeDetails>();
 
 	private static int defaultCommsTick = 2;
 	private static int defaultAppTick = 2;

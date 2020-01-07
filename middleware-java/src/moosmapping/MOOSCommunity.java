@@ -7,14 +7,15 @@ import java.util.List;
 
 public class MOOSCommunity {
 	protected String communityName;
-	private int dbPort;
+	private static int dbPortBase = 9000;
+	protected int dbPortOffset;
 	
 	private List<MOOSProcess> processes = new ArrayList<MOOSProcess>();
 	private List<String> sharedVars = new ArrayList<String>();
 	
 	private void genBasicMissionParams(FileWriter missionFile) throws IOException {
 		missionFile.write("ServerHost = localhost\n");
-		missionFile.write("ServerPort = " + dbPort + "\n");
+		missionFile.write("ServerPort = " + (dbPortBase + dbPortOffset) + "\n");
 		missionFile.write("Simulator = true\n");
 		missionFile.write("community = " + communityName + "\n");
 		
@@ -70,7 +71,7 @@ public class MOOSCommunity {
 	}
 	
 	public int getDBPort() {
-		return dbPort;
+		return dbPortBase + dbPortOffset;
 	}
 	
 	public String getCommunityName() {
@@ -87,21 +88,21 @@ public class MOOSCommunity {
 	
 	public MOOSCommunity(MOOSSimulation sim, String communityName) {
 		this.communityName = communityName;
-		this.dbPort = sim.nextDBPortCounter();
-		addProcessWatch();
+		this.dbPortOffset = sim.nextPortOffsetCounter();
 		addMOOSDB();
+		addProcessWatch();
 	}
 	
-	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort) {
+	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPortOffset) {
 		this.communityName = communityName;
-		this.dbPort = dbPort;
-		addProcessWatch();
+		this.dbPortOffset = dbPortOffset;
 		addMOOSDB();
+		addProcessWatch();
 	}
 	
-	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPort, boolean watchProcess) {
+	public MOOSCommunity(MOOSSimulation sim, String communityName, int dbPortOffset, boolean watchProcess) {
 		this.communityName = communityName;
-		this.dbPort = dbPort;
+		this.dbPortOffset = dbPortOffset;
 		addMOOSDB();
 		if (watchProcess) {
 			addProcessWatch();

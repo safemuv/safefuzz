@@ -12,14 +12,14 @@ public class RobotCommunity extends MOOSCommunity {
 	public RobotCommunity(MOOSSimulation sim, Robot robot, Point startPos) {
 		super(sim,robot.getName());
 		
-		// All Robots include a Logger...
+		addProcess(new PShareProcess(this, dbPortOffset));
+		addProcess(new USimMarineProcess(this, startPos));
 		addProcess(new PLoggerProcess(this, "LOG_" + communityName, false));
-		// and uSimMarine and Helm
-		addProcess(new USimMarineProcess(this));
-		addProcess(new PHelmIvpProcess(this, startPos, robot.getName(), defaultMinSpeed, defaultMaxSpeed));
-		addProcess(new PMarinePIDProcess(this));
-		addProcess(new PHostinfoProcess(this));
-		addProcess(new PBasicContactMgrProcess(this));
 		addProcess(new PNodeReporterProcess(this, robot));
+		addProcess(new PMarinePIDProcess(this));
+		addProcess(new PHelmIvpProcess(this, startPos, robot.getName(), defaultMinSpeed, defaultMaxSpeed));
+		addProcess(new PBasicContactMgrProcess(this));	
+		addProcess(new PHostinfoProcess(this));
+		addProcess(new UFldNodeBrokerProcess(this));
 	}
 }

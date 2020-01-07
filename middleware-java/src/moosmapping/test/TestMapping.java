@@ -39,18 +39,18 @@ public class TestMapping {
 	public static void testCodeGeneration2(String code_dir) {
 		// TODO: get these consistent with the values in the report object diagram
 		Mission mission = new Mission();
-		addRobotWithSonar(mission, "gilda", new Point(190.0, 180.0), 50, 0.9, 0.01, 0.05);
-		addRobotWithSonar(mission, "henry", new Point(200.0, 200.0), 50, 0.8, 0.03, 0.07);
-		addRobotWithSonar(mission, "frank", new Point(250.0, 250.0), 50, 0.2, 0.03, 0.02);
-		addRobotWithSonar(mission, "ella",  new Point(250.0, 251.0), 50, 0.2, 0.03, 0.06);
-		
 		Computer c = new Computer("shoreside");
 		mission.addComputer(c);
+		
+		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0), 50, 0.9, 0.01, 0.05);
+		addRobotWithSonar(mission, "henry", new Point(10.0, 0.0), 50, 0.8, 0.03, 0.07);
+		addRobotWithSonar(mission, "frank", new Point(20.0, 0.0), 50, 0.2, 0.03, 0.02);
+		addRobotWithSonar(mission, "ella",  new Point(30.0, 0.0), 50, 0.2, 0.03, 0.06);
 		
 		MOOSCodeGen gen = new MOOSCodeGen(mission );
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
-			CARSSimulation moossim = gen.convertDSL(mission );
+			CARSSimulation moossim = gen.convertDSL(mission);
 			System.out.println("DSL conversion completed");
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");

@@ -4,21 +4,21 @@ import atlasdsl.*;
 
 public class PHelmIvpProcess extends MOOSProcess {
 	
+	private boolean verboseHelm = true;
+	
 	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, Integer minSpeed, Integer maxSpeed) {
-		super("pHelmIvp", parent);
+		super("pHelmIvP", parent);
 			
 		// Links the Helm process to its behaviour file
 		String parentBHVFile = parent.getBehaviourFileName();
 		resetProperty("AppTick", 4);
 		resetProperty("CommsTick", 4);
 		setProperty("Behaviors", parentBHVFile);
-		setProperty("Verbose", "false");
+		setProperty("Verbose", verboseHelm);
 		setProperty("Domain", "course:0:359:360");
 		
-		String pointAsString = startPos.toString();
-		
-		setupBehaviours(vehicleName, pointAsString);
-		setupBehaviourVars();
+		setupBehaviours(vehicleName, startPos);
+		//setupBehaviourVars();
 		
 		setProperty("Domain", "speed:0:" + minSpeed.toString() + ":" + maxSpeed.toString());
 	}
@@ -53,7 +53,9 @@ public class PHelmIvpProcess extends MOOSProcess {
 	}
 
 	
-	private void setupBehaviours(String vehicleName, String startPos) {
+	private void setupBehaviours(String vehicleName, Point startPos) {
+		String startPosAsString = startPos.toString();
+		
 		double loiterSpeed = 1.0;
 		double loiterRadius = 5.0;
 		double loiterNMRadius = 10.0;
@@ -62,8 +64,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 		double waypointRadius = 3.0;
 		double waypointNMRadius = 15.0;
 		
-		addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPos, loiterSpeed, loiterRadius, loiterNMRadius));
+		//addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
 		addBehaviour(new HelmBehaviourStationKeep(this));
-		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
+		//addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 	}
 }

@@ -19,4 +19,8 @@ public class Point {
 	public String toString() {
 		return "x=" + x + ",y=" + y;
 	}
+	
+	public String toStringBareCSV() {
+		return x + "," + y;
+	}
 }

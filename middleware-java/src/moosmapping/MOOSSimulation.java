@@ -8,7 +8,7 @@ import java.util.List;
 import carsmapping.*;
 
 public class MOOSSimulation implements CARSSimulation {
-	private int dbPortCounter = 9000;
+	private int portOffsetCounter = 0;
 	
 	private List<MOOSCommunity> communities = new ArrayList<MOOSCommunity>();
 	
@@ -22,8 +22,8 @@ public class MOOSSimulation implements CARSSimulation {
 		}
 	}
 	
-	public int nextDBPortCounter() {
-		return dbPortCounter++;
+	public int nextPortOffsetCounter() {
+		return portOffsetCounter++;
 	}
 	
 	public void generateCARSInterface(String baseDirectory) {

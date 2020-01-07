@@ -11,7 +11,7 @@ public class PMarineViewerProcess extends MOOSProcess {
 		setProperty("vehicles_name_viewable","names");
 		setProperty("appcast_viewable", true);
 		setProperty("appcast_color_scheme","indigo");
-		setProperty("SCOPE", "ODE_BROKER_PING");
+		setProperty("SCOPE", "NODE_BROKER_PING");
 		setProperty("SCOPE", "DEPLOY_ALL");
 		setProperty("SCOPE", "CONTACT_INFO");
 		setProperty("ACTION","PERMUTING = true");
