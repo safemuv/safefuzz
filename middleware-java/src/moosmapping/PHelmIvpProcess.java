@@ -18,7 +18,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		setProperty("Domain", "course:0:359:360");
 		
 		setupBehaviours(vehicleName, startPos);
-		//setupBehaviourVars();
+		setupBehaviourVars();
 		
 		setProperty("Domain", "speed:0:" + minSpeed.toString() + ":" + maxSpeed.toString());
 	}
@@ -64,8 +64,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 		double waypointRadius = 3.0;
 		double waypointNMRadius = 15.0;
 		
-		//addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
+		addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
 		addBehaviour(new HelmBehaviourStationKeep(this));
-		//addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
+		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 	}
 }
