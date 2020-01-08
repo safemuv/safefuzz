@@ -33,6 +33,19 @@ public class MOOSProcess extends MOOSElement {
 		missionFile.write("}\n\n");
 	}
 	
+	// If the process has any extra code to for example, set properties based on its
+	// parent community, they can be placed here in subclasses
+	public void prepareAdditionalProperties() {
+		
+	}
+	
+	// If the process has any extra code to for example, generate custom files, 
+	// this is the place in which to put it. Normally, it is a empty, but subclasses
+	// such as UFldHazardSensorProcess may use it to generate hazards.txt 
+	public void generateCustomCode(MOOSFiles mf) throws IOException {
+		
+	}
+	
 	private void generateBehaviourInitSection(FileWriter bhvFile) throws IOException {
 		// Generate the initialisation values
 		for (Map.Entry<String,Object> entry : moosBehaviourInitVals.entrySet()) {

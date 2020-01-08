@@ -24,6 +24,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// Shoreside or other monitoring computers have to have uFldHazardSensor
 		// variables have to be added
 		// if an unexpected sensor is present, raise an exception?
+		
 	}
 	
 	// This performs the necessary processing to set up actuators
@@ -65,32 +66,67 @@ public class MOOSCodeGen extends CARSCodeGen {
 			// performing system monitoring/management of CI
 			// TODO: Should be made more flexible - we could have multiple
 			// computers involved
+			MOOSCommunity shoreside = null;
 			if (mission.includesComputer()) {
-				MOOSCommunity shoreside = new ComputerCommunity(moossim,"shoreside");
+				shoreside = new ComputerCommunity(moossim,"shoreside");
 				moossim.addCommunity(shoreside);
 				System.out.println("Adding community for fixed computer");
 			}
 			
 			// This performs the translation from DSL objects to a MOOS mission definition
 			// Firstly: for each Robot, generate a MOOSCommunity
+			
+			boolean shoresideSonar = false;
 			for (Robot r : mission.getAllRobots()) {
 				Point startPos = r.getPointComponentProperty("startLocation");
 				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
+				
 				//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
+				
+				Sensor s;
+				// Check for particular sensors and add the necessary processes
+				if ((s = (r.getSensor(SensorType.SONAR))) != null) {
+					int sensorWidth = s.getIntComponentProperty("swathWidth");
+					double detectionProb = s.getDoubleComponentProperty("detectionProb");
+					MOOSProcess sonar_proc = new UFldHazardMgrProcess(rprocess, r.getName(), sensorWidth, detectionProb); 
+					rprocess.addProcess(sonar_proc);
+					shoresideSonar = true;
+				}
 			}
-		
-			// Setup the sensors and actuators
-			setupSensors(mission, moossim, moosSharedVars);
+			
+			// If there is a sonar sensor anywhere, then the shoreside needs to include a HazardSensor process
+			if (shoresideSonar) {
+				
+				moosSharedVars.add("UHZ_SENSOR_CONFIG");
+				moosSharedVars.add("UHZ_CONFIG_REQUEST");
+				moosSharedVars.add("UHZ_SENSOR_REQUEST");
+				moosSharedVars.add("HAZARDSET_REPORT");
+				
+				if (shoreside == null) {
+					throw new ConversionFailed(ConversionFailedReason.NO_SHORESIDE);
+				} else {
+					UFldHazardSensorProcess shoreside_sonar_proc = new UFldHazardSensorProcess(shoreside);
+
+					// The shoreside_sonar_proc holds all the objects to find
+					for (EnvironmentalObject eo : mission.getEnvironmentalObjects()) {
+						shoreside_sonar_proc.addObject(eo);
+					}					
+					shoreside.addProcess(shoreside_sonar_proc);
+					// TODO: add these lines to the shoreside's uFldShoreBroker
+					// bridge =  src=UHZ_CONFIG_ACK_$V,       alias=UHZ_CONFIG_ACK
+					// bridge =  src=UHZ_DETECTION_REPORT_$V, alias=UHZ_DETECTION_REPORT
+					// bridge =  src=HAZARDSET_REQUEST_$V,    alias=HAZARDSET_REQUEST
+
+				}
+			}
+			
 			setupActuators(mission, moossim, moosSharedVars);	
 
 			for (MOOSCommunity c : moossim.getAllCommunities()) {
-				// TODO: NodeBroker components must be notified if messages are interchanged
 				c.registerSharedVars(moosSharedVars);
-			
-				// Do we also have to register NodeBroker here?
-			
+				
 				// ATLASDBWatch process must be created in the each community 
 				// to watch the given variables for the middleware
 				createATLASLink(c, middlewareVars, atlasPort);
@@ -102,8 +138,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		} catch (MissingProperty mp) {
 			System.out.println("Conversion failed: component " + mp.getComponent() + " is missing property " + mp.getPropertyName() + "...");
 			mp.printStackTrace();
-			throw new ConversionFailed();
-		}
-		
+			throw new ConversionFailed(ConversionFailedReason.MISSING_PROPERTY);
+		}	
 	}
 }

@@ -22,4 +22,8 @@ public class RobotCommunity extends MOOSCommunity {
 		addProcess(new PHostinfoProcess(this));
 		addProcess(new UFldNodeBrokerProcess(this));
 	}
+	
+	public void addSonarSensors() {
+		
+	}
 }

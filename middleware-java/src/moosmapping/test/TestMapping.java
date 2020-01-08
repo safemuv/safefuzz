@@ -28,6 +28,7 @@ public class TestMapping {
 		Robot r = new Robot(robotName);
 		Sensor s = new Sensor(SensorType.SONAR);
 		s.setIntComponentProperty("sensorRange", sensorRange);
+		s.setIntComponentProperty("swathWidth", sensorRange);
 		s.setDoubleComponentProperty("detectionProb", detectionProb);
 		s.setDoubleComponentProperty("falsePos", falsePos);
 		s.setDoubleComponentProperty("falseNeg", falseNeg);
@@ -47,7 +48,12 @@ public class TestMapping {
 		addRobotWithSonar(mission, "frank", new Point(20.0, 0.0), 50, 0.2, 0.03, 0.02);
 		addRobotWithSonar(mission, "ella",  new Point(30.0, 0.0), 50, 0.2, 0.03, 0.06);
 		
-		MOOSCodeGen gen = new MOOSCodeGen(mission );
+		// Add objects to the environment - hazards/benign objects for the robots to find
+		mission.addObject(new EnvironmentalObject(new Point(46.0, -23.0), false));
+		mission.addObject(new EnvironmentalObject(new Point(36.0, -13.0), true));
+		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
+		
+		MOOSCodeGen gen = new MOOSCodeGen(mission);
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
 			CARSSimulation moossim = gen.convertDSL(mission);

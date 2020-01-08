@@ -1,5 +1,7 @@
 package moosmapping;
 
+import java.util.List;
+
 public class UFldNodeBrokerProcess extends MOOSProcess {
 	public UFldNodeBrokerProcess(MOOSCommunity parent) {
 		super("uFldNodeBroker", parent);
@@ -15,12 +17,14 @@ public class UFldNodeBrokerProcess extends MOOSProcess {
 		setProperty("BRIDGE", "src=APPCAST");
 		setProperty("BRIDGE", "src=NODE_REPORT_LOCAL,  alias=NODE_REPORT");
 		setProperty("BRIDGE", "src=NODE_MESSAGE_LOCAL, alias=NODE_MESSAGE");
-
-		// TODO: these should be setup when sonar sensor is present 
-		// Bridges from Vehicle to Shoreside - in uFldNodeBroker configuration
-		//bridge =  src=UHZ_SENSOR_CONFIG
-		//bridge =  src=UHZ_CONFIG_REQUEST
-		//bridge =  src=UHZ_SENSOR_REQUEST
-		//bridge =  src=HAZARDSET_REPORT
+	}
+	
+	public void prepareAdditionalProperties() {
+		// Add additional properties from the shared variables registered on the
+		// parent MOOSCommunity
+		List<String> sharedVars = parent.getSharedVars();
+		for (String sv : sharedVars) {
+			setProperty("BRIDGE", "src=" + sv);
+		}
 	}
 }

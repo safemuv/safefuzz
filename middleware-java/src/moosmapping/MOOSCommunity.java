@@ -49,6 +49,18 @@ public class MOOSCommunity {
 		}
 	}
 	
+	private void generateCustomCode(MOOSFiles mf) throws IOException {
+		for (MOOSProcess p : processes) {
+			p.generateCustomCode(mf);
+		}
+	}
+	
+	private void prepareAdditionalProperties() {
+		for (MOOSProcess p : processes) {
+			p.prepareAdditionalProperties();
+		}
+	}
+	
 	public String getMissionFileName() {
 		return "targ_" + communityName + ".moos";
 	}
@@ -60,10 +72,12 @@ public class MOOSCommunity {
 	public void generateCode(MOOSFiles mf) {
 		// Generate mission and behaviour files
 		try {
+			prepareAdditionalProperties();
 			FileWriter missionFile = mf.getOpenFile(getMissionFileName());
 			generateMissionFile(missionFile);
 			FileWriter behaviourFile = mf.getOpenFile(getBehaviourFileName());
 			generateBehaviourFile(behaviourFile);
+			generateCustomCode(mf);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,6 +129,10 @@ public class MOOSCommunity {
 	
 	public void registerSharedVar(String varName) {
 		sharedVars.add(varName);
+	}
+	
+	public List<String> getSharedVars() {
+		return sharedVars;
 	}
 	
 	public void registerSharedVars(List<String> varNames) {
