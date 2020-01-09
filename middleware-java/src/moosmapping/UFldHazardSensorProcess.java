@@ -15,6 +15,7 @@ public class UFldHazardSensorProcess extends MOOSProcess {
 		setProperty("hazard_file", "hazards.txt");
 		
 		// TODO: factor these out into the DSL
+		// These represent a curve which is used to configure detection probabilities
 		setProperty("sensor_config", "width=25, exp=4, pclass=0.80");
 		setProperty("sensor_config", "width=50, exp=2, pclass=0.60");
 		setProperty("sensor_config", "width=10, exp=6, pclass=0.93");
@@ -26,9 +27,7 @@ public class UFldHazardSensorProcess extends MOOSProcess {
 	
 	public void generateCustomCode(MOOSFiles mf) throws IOException {
 		FileWriter fw = mf.getOpenFile("hazards.txt");
-		System.out.println("opening hazards.txt");
 		for (EnvironmentalObject eo : objects) {
-			System.out.println("DEBUG: adding line to hazards.txt");
 			fw.write(eo.toString() + "\n");
 		}
 	}

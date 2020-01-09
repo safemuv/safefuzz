@@ -109,15 +109,17 @@ public class MOOSCodeGen extends CARSCodeGen {
 				} else {
 					UFldHazardSensorProcess shoreside_sonar_proc = new UFldHazardSensorProcess(shoreside);
 
-					// The shoreside_sonar_proc holds all the objects to find
+					// The shoreside_sonar_proc must be told of all the objects to find
 					for (EnvironmentalObject eo : mission.getEnvironmentalObjects()) {
 						shoreside_sonar_proc.addObject(eo);
 					}					
 					shoreside.addProcess(shoreside_sonar_proc);
-					// TODO: add these lines to the shoreside's uFldShoreBroker
-					// bridge =  src=UHZ_CONFIG_ACK_$V,       alias=UHZ_CONFIG_ACK
-					// bridge =  src=UHZ_DETECTION_REPORT_$V, alias=UHZ_DETECTION_REPORT
-					// bridge =  src=HAZARDSET_REQUEST_$V,    alias=HAZARDSET_REQUEST
+					
+					// For sensor communications to work, we must add these lines to the shoreside's uFldShoreBroker
+					MOOSProcess shoreBroker = shoreside.getProcess("uFldShoreBroker");
+					shoreBroker.setProperty("bridge", "src=UHZ_CONFIG_ACK_$V,       alias=UHZ_CONFIG_ACK");
+					shoreBroker.setProperty("bridge", "src=UHZ_DETECTION_REPORT_$V, alias=UHZ_DETECTION_REPORT");
+					shoreBroker.setProperty("bridge", "src=HAZARDSET_REQUEST_$V,    alias=HAZARDSET_REQUEST");
 
 				}
 			}

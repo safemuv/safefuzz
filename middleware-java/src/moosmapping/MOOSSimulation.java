@@ -36,8 +36,6 @@ public class MOOSSimulation implements CARSSimulation {
 		}
 		
 		for (MOOSCommunity c : communities) { 
-			// This generates the code for every MOOS vehicle 
-			// in the simulation
 			c.generateCode(mf);
 		}
 		
