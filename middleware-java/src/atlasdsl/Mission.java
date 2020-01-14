@@ -1,15 +1,24 @@
 package atlasdsl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Mission {
-	private List<Robot> robots = new ArrayList<Robot>();
-	private List<Computer> computers = new ArrayList<Computer>();
+	private Map<String,Robot> robots = new LinkedHashMap<String,Robot>();
+	private Map<String,Computer> computers = new LinkedHashMap<String,Computer>();
 	private List<EnvironmentalObject> objects = new ArrayList<EnvironmentalObject>();
 	
+	private List<Message> messages = new ArrayList<Message>();
+	
 	public List<Robot> getAllRobots() {
-		return robots;
+		return new ArrayList<Robot>(robots.values());
+	}
+	
+	public Robot getRobot(String name) {
+		return robots.get(name);
 	}
 	
 	public boolean includesComputer() {
@@ -17,7 +26,11 @@ public class Mission {
 	}
 	
 	public void addRobot(Robot r) {
-		robots.add(r);
+		robots.put(r.getName(), r);
+	}
+	
+	public void addMessage(Message m) {
+		messages.add(m);
 	}
 	
 	//TODO: setters for the other geometric regions as well
@@ -26,10 +39,38 @@ public class Mission {
 	}
 	
 	public void addComputer(Computer c) {
-		computers.add(c);
+		computers.put(c.name, c);
 	}
 
 	public List<EnvironmentalObject> getEnvironmentalObjects() {
 		return objects;
+	}
+	
+	public List<Message> messagesToComponent(Component c) {
+        List<Message> res = messages.stream()
+                .filter(msg -> msg.isTo(c))
+                .collect(Collectors.toList());
+        return res;
+	}
+	
+	public List<Message> messagesFromComponent(Component c) {
+        List<Message> res = messages.stream()
+                .filter(msg -> msg.isFrom(c))
+                .collect(Collectors.toList());
+        return res;
+	}
+	
+	public List<Message> messagesToAnyComponent(List<Component> cs) {
+        List<Message> res = messages.stream()
+                .filter(msg -> cs.contains(msg.getTo()))
+                .collect(Collectors.toList());
+        return res;
+	}
+	
+	public List<Message> messagesFromAnyComponent(List<Component> cs) {
+        List<Message> res = messages.stream()
+                .filter(msg -> cs.contains(msg.getFrom()))
+                .collect(Collectors.toList());
+        return res;
 	}
 }

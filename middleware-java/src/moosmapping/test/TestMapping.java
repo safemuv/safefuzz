@@ -1,7 +1,11 @@
 package moosmapping.test;
+
 import moosmapping.*;
 import atlascarsgenerator.ConversionFailed;
 import atlascarsgenerator.MOOSCodeGen;
+
+import atlascollectiveintgenerator.*;
+
 import atlasdsl.*;
 import carsmapping.CARSSimulation;
 
@@ -40,8 +44,8 @@ public class TestMapping {
 	public static void testCodeGeneration2(String code_dir) {
 		// TODO: get these consistent with the values in the report object diagram
 		Mission mission = new Mission();
-		Computer c = new Computer("shoreside");
-		mission.addComputer(c);
+		Computer shoreside = new Computer("shoreside");
+		mission.addComputer(shoreside);
 		
 		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0), 50, 0.9, 0.01, 0.05);
 		addRobotWithSonar(mission, "henry", new Point(10.0, 0.0), 50, 0.8, 0.03, 0.07);
@@ -53,13 +57,22 @@ public class TestMapping {
 		mission.addObject(new EnvironmentalObject(new Point(36.0, -13.0), true));
 		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
 		
+		// A test message here
+		mission.addMessage(new Message("detectionGilda", mission.getRobot("gilda"), shoreside));
+		
 		MOOSCodeGen gen = new MOOSCodeGen(mission);
+		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);
+		
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
 			CARSSimulation moossim = gen.convertDSL(mission);
 			System.out.println("DSL conversion completed");
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");
+			
+			javaCI.generateCollectiveIntStub("/tmp/robot_ci.java", CollectiveIntGenTypes.ALL_ROBOTS);
+			//javaCI.generateCollectiveIntStub("shoreside_ci.java", CollectiveIntGenTypes.ALL_COMPUTERS);
+			
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed");
 		}
