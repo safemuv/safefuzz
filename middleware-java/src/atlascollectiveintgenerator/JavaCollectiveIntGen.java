@@ -58,6 +58,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		List<Message> msgs = findRelevantMessages(cgt);
 		for (Message m : msgs) {
 			String msgMethodName = m.getName() + "Hook";
+			System.out.println("adding method - " + msgMethodName);
 			MethodSpec hook = MethodSpec.methodBuilder(msgMethodName)
 						.addModifiers(Modifier.PRIVATE)
 						.returns(void.class)
@@ -76,6 +77,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			// TODO: step 3. generate a method from each sensor notification
 			JavaFile javaFile = JavaFile.builder("collectiveint", ciClass.build()).build();
 			javaFile.writeTo(fw);
+			javaFile.writeTo(System.out);
 			// TODO: step 4. generate topics with ActiveMQ for every needed reception - build up a list of all 
 			// topics needed and subscription code to connect to them over ActiveMQ
 			fw.close();

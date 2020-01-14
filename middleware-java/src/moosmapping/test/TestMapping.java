@@ -71,7 +71,7 @@ public class TestMapping {
 			System.out.println("Code generation completed");
 			
 			javaCI.generateCollectiveIntStub("/tmp/robot_ci.java", CollectiveIntGenTypes.ALL_ROBOTS);
-			//javaCI.generateCollectiveIntStub("shoreside_ci.java", CollectiveIntGenTypes.ALL_COMPUTERS);
+			javaCI.generateCollectiveIntStub("/tmp/shoreside_ci.java", CollectiveIntGenTypes.ALL_COMPUTERS);
 			
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed");
