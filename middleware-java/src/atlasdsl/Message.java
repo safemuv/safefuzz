@@ -1,19 +1,42 @@
 package atlasdsl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
 	private String name;
-	private Component from;
-	private Component to;
+	private List<Component> from = new ArrayList<Component>();
+	private List<Component> to = new ArrayList<Component>();
 	private double minFrequency;
 	private double maxFrequency;
 	private List<MessageField> fields;
 	
-	public Message(String name, Component from, Component to) {
+	public Message(String name) {
 		this.name = name;
-		this.from = from;
-		this.to = to;
+	}
+	
+	public Message(String name, Component fromSingle, Component toSingle) {
+		this(name);
+		this.from.add(fromSingle);
+		this.to.add(toSingle);
+	}
+	
+	public Message(String name, List<Component> fromMultiple, Component toSingle) {
+		this(name);
+		this.from.addAll(fromMultiple);
+		this.to.add(toSingle);
+	}
+	
+	public Message(String name, List<Component> fromMultiple, List<Component> toMultiple) {
+		this(name);
+		this.from.addAll(fromMultiple);
+		this.to.addAll(toMultiple);
+	}
+	
+	public Message(String name, Component fromSingle, List<Component> toMultiple) {
+		this(name);
+		this.from.add(fromSingle);
+		this.to.addAll(toMultiple);
 	}
 	
 	public boolean isTo(Component c) {
@@ -24,11 +47,11 @@ public class Message {
 		return (this.from == c);
 	}
 	
-	public Component getTo() {
+	public List<Component> getTo() {
 		return to;
 	}
 	
-	public Component getFrom() {
+	public List<Component> getFrom() {
 		return from;
 	}
 	

@@ -9,5 +9,5 @@ public abstract class CollectiveIntGen {
 		this.mission = m;
 	}
 	
-	public abstract void generateCollectiveIntStub(String filename, CollectiveIntGenTypes cg);
+	public abstract void generateCollectiveIntFiles(String baseDir, CollectiveIntGenTypes cg);
 }

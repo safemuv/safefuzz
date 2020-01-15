@@ -58,7 +58,10 @@ public class TestMapping {
 		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
 		
 		// A test message here
-		mission.addMessage(new Message("detectionGilda", mission.getRobot("gilda"), shoreside));
+		mission.addMessage(new Message("detectionGilda", shoreside, mission.getRobot("gilda")));
+		mission.addMessage(new Message("detectionHenry", shoreside, mission.getRobot("henry")));
+		mission.addMessage(new Message("detectionFrank", shoreside, mission.getRobot("frank")));
+		mission.addMessage(new Message("detectionElla",  shoreside, mission.getRobot("ella")));
 		
 		MOOSCodeGen gen = new MOOSCodeGen(mission);
 		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);
@@ -70,8 +73,8 @@ public class TestMapping {
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");
 			
-			javaCI.generateCollectiveIntStub("/tmp/robot_ci.java", CollectiveIntGenTypes.ALL_ROBOTS);
-			javaCI.generateCollectiveIntStub("/tmp/shoreside_ci.java", CollectiveIntGenTypes.ALL_COMPUTERS);
+			javaCI.generateCollectiveIntFiles("collectiveint-gen", CollectiveIntGenTypes.ALL_ROBOTS);
+			//javaCI.generateCollectiveIntStub("/tmp/shoreside_ci.java", CollectiveIntGenTypes.ALL_COMPUTERS);
 			
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed");
