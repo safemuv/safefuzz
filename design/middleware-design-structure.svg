@@ -1,0 +1,2451 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="middleware-design-structure.svg"
+   inkscape:version="1.0beta2 (2b71d25d45, 2019-12-03)"
+   id="svg1207"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs1201">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker17307"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path17305"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker16807"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path16805"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker15659"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path15657"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker14459"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path14457"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker13589"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path13587"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <rect
+       id="rect13575"
+       height="6.1990869"
+       width="25.032683"
+       y="1005.2004"
+       x="-16.464569" />
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="DiamondL"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DiamondL">
+      <path
+         transform="scale(0.8)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
+         id="path12976" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker10641"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path10639"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker9039"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path9037"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker8441"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path8439"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4896"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4894"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker3013"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3011"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1437"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1435"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1427"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1425"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker19187"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path19185"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker19177"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path19175"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker18197"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path18195"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker18187"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path18185"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker17271"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path17269"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker17261"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path17259"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker16893"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path16891"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker16883"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path16881"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker16103"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path16101"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker12909"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path12907"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker11053"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path11051"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker9698"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path9696"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker8438"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#0000fe;fill-opacity:1;fill-rule:evenodd;stroke:#0000fe;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path8436"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker8248"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#0000fe;fill-opacity:1;fill-rule:evenodd;stroke:#0000fe;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path8246"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <rect
+       id="rect6794"
+       height="23.916449"
+       width="96.07111"
+       y="925.29942"
+       x="257.01813" />
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4286"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4284"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4276"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4274"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4266"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4264"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4256"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4254"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4246"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4244" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4236"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4234"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4226"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4224"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4216"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4214"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4206"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4204"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4196"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4194"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4186"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4184" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4176"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path4174"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1772"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1770"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1820"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1818"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6815"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path6813"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6897"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path6895"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker19841"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path19839"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker20127"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path20125"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1794"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1792" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1842"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1840" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1804"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1802"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1852"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1850"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker24283"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path24281"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker24629"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path24627"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1437-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1435-0"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker1437-9-6"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1435-0-0"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-maximized="0"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:window-height="1055"
+     inkscape:window-width="1912"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="3751.088"
+     inkscape:cx="794.85016"
+     inkscape:zoom="1.4"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base">
+    <inkscape:grid
+       id="grid12293"
+       type="xygrid" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1204">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <rect
+       y="935.65363"
+       x="374.55023"
+       height="6.0898824"
+       width="31.444218"
+       id="rect2989"
+       style="fill:#ffaaaa;fill-opacity:0.673554;stroke:#000000;stroke-width:0.302244;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       y="950.05829"
+       x="405.21561"
+       height="6.1465273"
+       width="20.571215"
+       id="rect17291"
+       style="fill:#a80000;fill-opacity:0.264463;stroke:#000000;stroke-width:0.2456;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,329.26744,883.74932)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot17299"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion17295"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect17293" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara17297">MOOSDB</flowPara></flowRoot>
+    <rect
+       y="935.69116"
+       x="413.62991"
+       height="6.1221485"
+       width="24.956783"
+       id="rect17311"
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.269978;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,336.73409,869.23638)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot17319"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion17315"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect17313" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara17317">pSimMarine</flowPara></flowRoot>
+    <g
+       transform="translate(308.43309,62.659813)"
+       id="g2987">
+      <rect
+         y="887.75177"
+         x="60.5485"
+         height="6.1624656"
+         width="17.94132"
+         id="rect17321"
+         style="opacity:1;fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.229661;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,-15.391753,821.45074)"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot17329"
+         xml:space="preserve"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           id="flowRegion17325"><rect
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+             y="255.73396"
+             x="295.35715"
+             height="36.785713"
+             width="114.28571"
+             id="rect17323" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+           id="flowPara17327">pShare</flowPara></flowRoot>
+    </g>
+    <rect
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.335291;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17331"
+       width="23.505337"
+       height="10.025586"
+       x="439.03064"
+       y="947.93256" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot17341"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,363.2266,880.82279)"><flowRegion
+         id="flowRegion17335"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect17333"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara17337"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">uFldHazard</flowPara><flowPara
+         id="flowPara17339"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">Mgr</flowPara></flowRoot>
+    <rect
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.250263;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect17343"
+       width="21.565454"
+       height="6.0878854"
+       x="374.90915"
+       y="965.37518" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot17351"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,297.84638,898.90329)"><flowRegion
+         id="flowRegion17347"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect17345"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara17349"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pHelmIvP</flowPara></flowRoot>
+    <rect
+       y="975.13055"
+       x="376.64914"
+       height="6.0878854"
+       width="19.691814"
+       id="rect17353"
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.239145;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,300.51907,908.39137)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot17361"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion17357"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect17355" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara17359">pLogger</flowPara></flowRoot>
+    <rect
+       y="968.05487"
+       x="406.57135"
+       height="6.0739803"
+       width="34.931225"
+       id="rect17363"
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.318146;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,329.65144,901.57599)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot17371"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion17367"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="35.270493"
+           width="123.88216"
+           id="rect17365" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara17369">uFldNodeComms</flowPara></flowRoot>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1772);marker-end:url(#marker1820)"
+       d="m 418.50993,949.75745 6.74715,-7.52609"
+       id="path17385"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path17387"
+       d="m 426.83204,953.01318 11.08061,0.0927"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker6815);marker-end:url(#marker6897)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker19841);marker-end:url(#marker20127)"
+       d="m 387.72111,953.48628 16.65207,0.0769"
+       id="path17389"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path17391"
+       d="m 396.47462,965.37523 8.741,-9.1704"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.204;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1794);marker-end:url(#marker1842)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1804);marker-end:url(#marker1852)"
+       d="M 396.34098,975.13056 406.6856,956.80619"
+       id="path17393"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path17395"
+       d="m 426.12581,968.12476 -7.23127,-11.33182"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker24283);marker-end:url(#marker24629)"
+       sodipodi:nodetypes="cc" />
+    <g
+       style="fill:#ff0000"
+       transform="translate(-31.587521,-34.866066)"
+       id="g10142">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot2997"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,262.49004,863.29226)"><flowRegion
+           id="flowRegion2993"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"><rect
+             id="rect2991"
+             width="264.97021"
+             height="65.602226"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000" /></flowRegion><flowPara
+           id="flowPara2995"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">MOOS internal variable updates:</flowPara><flowPara
+           id="flowPara10146"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">UHZ_NODE_DETECTION</flowPara><flowPara
+           id="flowPara10144"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">NODE_REPORT_$VNAME</flowPara></flowRoot>
+    </g>
+    <rect
+       style="fill:#ffaaaa;fill-opacity:0.673554;stroke:#000000;stroke-width:0.302244;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4076"
+       width="31.444218"
+       height="6.0898824"
+       x="373.31839"
+       y="994.52765" />
+    <rect
+       style="fill:#cf0000;fill-opacity:0.264463;stroke:#000000;stroke-width:0.2456;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4078"
+       width="20.571215"
+       height="6.1465273"
+       x="403.98376"
+       y="1008.9323" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4086"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,328.03558,942.62336)"><flowRegion
+         id="flowRegion4082"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect4080"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara4084"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">MOOSDB</flowPara></flowRoot>
+    <rect
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.269978;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4088"
+       width="24.956783"
+       height="6.1221485"
+       x="412.39807"
+       y="994.56519" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4096"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,335.50223,928.11042)"><flowRegion
+         id="flowRegion4092"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect4090"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara4094"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pSimMarine</flowPara></flowRoot>
+    <g
+       transform="translate(307.20123,121.53385)"
+       id="g4108">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.229661;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4098"
+         width="17.94132"
+         height="6.1624656"
+         x="60.5485"
+         y="887.75177" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4106"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,-15.391753,821.45074)"><flowRegion
+           id="flowRegion4102"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+             id="rect4100"
+             width="114.28571"
+             height="36.785713"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+           id="flowPara4104"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pShare</flowPara></flowRoot>
+    </g>
+    <rect
+       y="1006.8066"
+       x="437.79877"
+       height="10.025586"
+       width="23.505337"
+       id="rect4110"
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.335291;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,361.99474,939.69683)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4120"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion4114"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect4112" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara4116">uFldHazard</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara4118">Mgr</flowPara></flowRoot>
+    <rect
+       y="1024.2493"
+       x="373.67731"
+       height="6.0878854"
+       width="21.565454"
+       id="rect4122"
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.250263;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,296.61452,957.77733)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4130"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion4126"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect4124" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara4128">pHelmIvP</flowPara></flowRoot>
+    <rect
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.239145;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4132"
+       width="19.691814"
+       height="6.0878854"
+       x="375.4173"
+       y="1034.0046" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4140"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,299.28721,967.26541)"><flowRegion
+         id="flowRegion4136"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect4134"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara4138"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pLogger</flowPara></flowRoot>
+    <rect
+       style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.318146;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4142"
+       width="34.931225"
+       height="6.0739803"
+       x="405.33951"
+       y="1026.929" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4150"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,328.41958,960.45003)"><flowRegion
+         id="flowRegion4146"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect4144"
+           width="123.88216"
+           height="35.270493"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara4148"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">uFldNodeComms</flowPara></flowRoot>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4152"
+       d="m 417.27807,1008.6315 6.74715,-7.5261"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4176);marker-end:url(#marker4236)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4186);marker-end:url(#marker4246)"
+       d="m 425.60018,1011.8872 11.08061,0.093"
+       id="path4154"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4156"
+       d="m 386.48925,1012.3603 16.65207,0.077"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4196);marker-end:url(#marker4256)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.204;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4206);marker-end:url(#marker4266)"
+       d="m 395.24276,1024.2493 8.741,-9.1704"
+       id="path4158"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4160"
+       d="m 395.10912,1034.0046 10.34462,-18.3244"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4216);marker-end:url(#marker4276)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker4226);marker-end:url(#marker4286)"
+       d="m 424.89395,1026.9988 -7.23127,-11.3318"
+       id="path4162"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4170"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,297.34184,928.1903)"><flowRegion
+         id="flowRegion4166"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000"><rect
+           id="rect4164"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000;" /></flowRegion><flowPara
+         id="flowPara4168"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>
+    <path
+       inkscape:connector-curvature="0"
+       id="path6790"
+       d="M 355.64909,987.0757 H 489.54225"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.231638px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       transform="translate(202.36458,65.43618)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text6792"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Vehicles (x4)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text6800"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(205.72475,51.348327)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Shoreside</tspan></tspan></text>
+    <path
+       sodipodi:nodetypes="czc"
+       inkscape:connector-curvature="0"
+       id="path8244"
+       d="m 367.96484,1009.2856 c 0,0 -8.39105,-8.5185 -8.69608,-27.55603 -0.30504,-19.03749 9.71283,-25.15552 9.71283,-25.15552"
+       style="fill:none;fill-rule:evenodd;stroke:#0000fe;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker8438);marker-end:url(#marker8248)" />
+    <text
+       xml:space="preserve"
+       id="text8910"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#0000fa;fill-opacity:1;stroke:#0000ff;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(103.68304,54.007761)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold';fill:#0000fa;fill-opacity:1;stroke:#0000ff;stroke-opacity:1">UDP</tspan></tspan></text>
+    <g
+       id="g10589">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect9692"
+         width="63.156017"
+         height="154.63554"
+         x="230.20149"
+         y="885.99457" />
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path9694"
+       d="M 374.55023,935.65363 C 294.634,906.00489 294.634,906.00489 294.634,906.00489"
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.276281;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker9698)" />
+    <g
+       transform="translate(34.801092,-59.031947)"
+       id="g10424">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot10418"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,263.12907,928.3135)"><flowRegion
+           id="flowRegion10414"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000"><rect
+             id="rect10412"
+             width="114.28571"
+             height="36.785713"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000;" /></flowRegion><flowPara
+           id="flowPara10416"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>
+    </g>
+    <g
+       transform="matrix(1.1190076,0,0,0.99951161,-97.9774,0.46311978)"
+       id="g10593">
+      <rect
+         y="885.99457"
+         x="230.20149"
+         height="154.63554"
+         width="63.156017"
+         id="rect10591"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <g
+       id="g10597"
+       transform="matrix(2.1656807,0,0,0.28107783,-545.8072,646.35282)">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect10595"
+         width="63.156017"
+         height="154.63554"
+         x="230.20149"
+         y="885.99457" />
+    </g>
+    <text
+       transform="translate(-21.648197,-62.627797)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text10601"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">MOOS internal part of </tspan><tspan
+           dx="1.3942299"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">middleware</tspan><tspan
+           dx="2.5295582"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">(auto-generated from DSL)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text10605"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-88.683175,-63.730524)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">ATLAS simulator </tspan><tspan
+           dx="1.3942299"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">generic state/management </tspan><tspan
+           dx="1.3942299"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">code</tspan><tspan
+           dx="2.5295587"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan></text>
+    <text
+       transform="translate(-275.84179,-55.478239)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text10939"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Collective </tspan><tspan
+           dx="1.394228"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">intelligence stub</tspan><tspan
+           dx="2.6639175"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">(auto-generated)</tspan></tspan></text>
+    <g
+       transform="matrix(1.0037083,0,0,0.28155438,-68.575953,813.36878)"
+       id="g10951">
+      <rect
+         y="885.99457"
+         x="230.20149"
+         height="154.63554"
+         width="63.156017"
+         id="rect10949"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <text
+       xml:space="preserve"
+       id="text10957"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-82.925509,127.85117)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Mission monitoring</tspan></tspan></text>
+    <g
+       id="g10971"
+       transform="matrix(1.3786334,0,0,0.28125897,-86.299339,813.95084)">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect10969"
+         width="63.156017"
+         height="154.63554"
+         x="230.20149"
+         y="885.99457" />
+    </g>
+    <text
+       transform="matrix(1,0,0,1.1126402,-4.5266277,23.724948)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text10975"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Logging</tspan></tspan></text>
+    <rect
+       y="956.58722"
+       x="368.99475"
+       height="6.0615735"
+       width="26.452833"
+       id="rect10977"
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.276575;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       transform="matrix(0.26458333,0,0,0.26458333,291.91882,890.10214)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot10985"
+       xml:space="preserve"><flowRegion
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+         id="flowRegion10981"><rect
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"
+           y="255.73396"
+           x="295.35715"
+           height="36.785713"
+           width="114.28571"
+           id="rect10979" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
+         id="flowPara10983">pNodeBroker</flowPara></flowRoot>
+    <rect
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.276575;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect10999"
+       width="26.452833"
+       height="6.0615735"
+       x="367.74973"
+       y="1015.4481" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot11007"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,290.67381,948.96295)"><flowRegion
+         id="flowRegion11003"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'"><rect
+           id="rect11001"
+           width="114.28571"
+           height="36.785713"
+           x="295.35715"
+           y="255.73396"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
+         id="flowPara11005"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pNodeBroker</flowPara></flowRoot>
+    <g
+       id="g11041"
+       transform="translate(-49.417724,60.73804)"
+       style="fill:#ff0000">
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,271.50875,862.70337)"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';text-align:end;letter-spacing:0.75px;word-spacing:0px;text-anchor:end;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot11039"
+         xml:space="preserve"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';text-align:end;text-anchor:end;fill:#ff0000"
+           id="flowRegion11031"><rect
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000;text-anchor:end;text-align:end"
+             y="255.73396"
+             x="295.35715"
+             height="65.602226"
+             width="264.97021"
+             id="rect11029" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000"
+           id="flowPara11033">MOOS navigation updates</flowPara><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000"
+           id="flowPara11037">UP_LOITER=&lt;...&gt;</flowPara></flowRoot>
+    </g>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.220689;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker11053)"
+       d="m 297.94189,958.18688 c 25.26278,17.80104 50.70752,44.08002 106.2017,51.13082"
+       id="path11049"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.348022;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker16103)"
+       d="m 294.634,906.00489 c 74.34759,50.56916 74.34759,50.56916 74.34759,50.56916"
+       id="path16099"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path16879"
+       d="m 418.50993,949.75745 6.74715,-7.52609"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker16883);marker-end:url(#marker16893)"
+       sodipodi:nodetypes="cc" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path17257"
+       d="m 405.21561,950.05829 -5.62765,-7.85795"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.146923;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker17261);marker-end:url(#marker17271)"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.146923;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker18187);marker-end:url(#marker18197)"
+       d="m 407.90232,1008.8558 -5.62765,-7.858"
+       id="path18183"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g19137"
+       transform="matrix(1.0037083,0,0,0.28155438,-215.61518,738.13215)">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect19135"
+         width="63.156017"
+         height="154.63554"
+         x="230.20149"
+         y="885.99457" />
+    </g>
+    <text
+       transform="translate(-227.82658,54.218161)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text19141"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Fault generator</tspan></tspan></text>
+    <g
+       style="fill:#ff0000"
+       transform="rotate(39.44403,346.99275,872.06587)"
+       id="g19153">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot19151"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';text-align:end;letter-spacing:0.75px;word-spacing:0px;text-anchor:end;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,271.50875,862.70337)"><flowRegion
+           id="flowRegion19145"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';text-align:end;text-anchor:end;fill:#ff0000"><rect
+             id="rect19143"
+             width="264.97021"
+             height="65.602226"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000;text-anchor:end;text-align:end" /></flowRegion><flowPara
+           id="flowPara19147"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000">Interference updates:</flowPara><flowPara
+           id="flowPara19149"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000">BREAK_CONNECTION_TO=$VNAME</flowPara></flowRoot>
+    </g>
+    <text
+       id="text20527"
+       y="884.19342"
+       x="234.47931"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="884.19342"
+         x="234.47931"
+         id="tspan20525"
+         sodipodi:role="line">MOOSMiddlewareLink.java</tspan></text>
+    <g
+       transform="translate(-3.0197602,25.940579)"
+       id="g4808">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:0.264463;stroke:#000000;stroke-width:0.274395;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect20523"
+         width="44.054115"
+         height="24.462566"
+         x="235.66263"
+         y="892.36316" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.24048px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 235.75596,899.50874 h 43.8042"
+         id="path20529"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text20527-9"
+         y="897.31946"
+         x="237.91611"
+         style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+           y="897.31946"
+           x="237.91611"
+           id="tspan20525-8"
+           sodipodi:role="line">MOOSVariableUpdate</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="237.43935"
+         y="903.41638"
+         id="text20527-9-3"><tspan
+           sodipodi:role="line"
+           id="tspan20525-8-6"
+           x="237.43935"
+           y="903.41638"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">vname : string</tspan><tspan
+           sodipodi:role="line"
+           x="237.43935"
+           y="908.52002"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+           id="tspan1366">stringvalue : string</tspan><tspan
+           sodipodi:role="line"
+           x="237.43935"
+           y="913.62366"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+           id="tspan1368">time : MOOStime</tspan><tspan
+           sodipodi:role="line"
+           x="237.43935"
+           y="918.72729"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+           id="tspan1364" /></text>
+    </g>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.329402;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1437)"
+       d="m 278.77017,907.37238 0.4063,167.96812"
+       id="path1423"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       id="text2969"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-21.081277,149.58748)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">logMOOSUpdate(MOOSVarUpdate mvu)</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="234.56308"
+       y="1061.6328"
+       id="text2977"><tspan
+         sodipodi:role="line"
+         id="tspan2975"
+         x="234.56308"
+         y="1061.6328"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">Log.java</tspan></text>
+    <rect
+       y="900.9986"
+       x="160.76955"
+       height="24.451719"
+       width="47.62685"
+       id="rect2979"
+       style="fill:none;fill-opacity:0.264463;stroke:#000000;stroke-width:0.285241;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2981"
+       d="m 160.85747,908.13875 h 47.54435"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.250537px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="163.01759"
+       y="905.94946"
+       id="text2985"><tspan
+         sodipodi:role="line"
+         id="tspan2983"
+         x="163.01759"
+         y="905.94946"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">Robot</tspan></text>
+    <text
+       id="text2995"
+       y="912.04639"
+       x="162.54085"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="912.04639"
+         x="162.54085"
+         id="tspan2987"
+         sodipodi:role="line">name : string</tspan><tspan
+         id="tspan2989"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="917.15002"
+         x="162.54085"
+         sodipodi:role="line">position: pos</tspan><tspan
+         id="tspan2991"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="922.25366"
+         x="162.54085"
+         sodipodi:role="line">subcomponents : ...</tspan><tspan
+         id="tspan2993"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="927.3573"
+         x="162.54085"
+         sodipodi:role="line" /></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.218236;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker3013)"
+       d="m 78.766779,987.82108 c 77.922151,26.66602 77.922151,26.66602 77.922151,26.66602"
+       id="path3009"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="translate(-201.23052,-25.627981)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text3759"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">activeMQNotify()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text4229"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="matrix(1.6058971,0,0,2.2779158,-20.907122,-1197.1567)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">MOOS simulation</tspan></tspan></text>
+    <text
+       transform="translate(-302.30268,-28.232433)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text4884"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">notifySonarDetection(Robot r, SensorDetection d) </tspan></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">{</tspan><tspan
+           dx="2.3884821"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="944.45713"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">}</tspan></tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path4892"
+       d="m 156.83368,916.23018 -78.718317,0.66228"
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.276825;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4896)" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="164.59016"
+       y="883.67206"
+       id="text7021"><tspan
+         sodipodi:role="line"
+         id="tspan7019"
+         x="164.59016"
+         y="883.67206"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">ATLASCore.java</tspan></text>
+    <text
+       id="text7025"
+       y="890.09766"
+       x="165.53511"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="890.09766"
+         x="165.53511"
+         id="tspan7023"
+         sodipodi:role="line">(stores simulation objects)</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path1423-6"
+       d="m 275.83909,908.90256 -60.48826,0.038"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.380934;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1437-9)"
+       sodipodi:nodetypes="cc" />
+    <text
+       transform="scale(0.26458333)"
+       y="9.8769436"
+       x="-0.78076094"
+       xml:space="preserve"
+       id="text3759-8"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.749998px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.84017"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier';stroke-width:0.999999px">activeMQNoti</tspan></tspan></text>
+    <text
+       transform="scale(0.26458333)"
+       y="9.8769436"
+       x="-0.78076094"
+       xml:space="preserve"
+       id="text3759-7"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.749998px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.84017"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier';stroke-width:0.999999px">activeMQNoti</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text7918"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-40.879465,-27.177374)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">robot.updateLocation(pos)</tspan></tspan></text>
+    <text
+       transform="scale(0.26458333)"
+       y="9.8769436"
+       x="-0.64746028"
+       xml:space="preserve"
+       id="text10939-9"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.749998px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.84017"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold';stroke-width:0.999999px">Collective </tspan><tspan
+           dx="5.2695312" /></tspan></text>
+    <text
+       transform="scale(0.26458333)"
+       y="9.8769436"
+       x="-0.64746028"
+       xml:space="preserve"
+       id="text10939-0"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.749998px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.84017"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold';stroke-width:0.999999px">Collective </tspan><tspan
+           dx="5.2695312" /></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text7988"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-204.60304,-54.644775)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Collective </tspan><tspan
+           dx="1.394228"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">intelligence</tspan><tspan
+           dx="2.5295582"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">ActiveMQ</tspan><tspan
+           dx="3.1207371"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="944.45713"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">bridge</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text7992"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-283.23979,-36.557457)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">shoresideCollectiveInt.java</tspan></tspan></text>
+    <text
+       transform="scale(0.26458333)"
+       y="9.8769436"
+       x="-0.78076094"
+       xml:space="preserve"
+       id="text3759-3"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.749998px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.999999px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.84017"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier';stroke-width:0.999999px">activeMQNoti</tspan></tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path8026"
+       d="m 52.564496,895.93386 c 0,43.07578 0,43.07578 0,43.07578"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <g
+       id="g8046"
+       transform="translate(-31.587521,-34.866066)"
+       style="fill:#ff0000">
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,262.49004,863.29226)"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot8044"
+         xml:space="preserve"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"
+           id="flowRegion8036"><rect
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"
+             y="255.73396"
+             x="295.35715"
+             height="65.602226"
+             width="264.97021"
+             id="rect8034" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
+           id="flowPara8038">MOOS internal variable updates:</flowPara><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
+           id="flowPara8040">UHZ_NODE_DETECTION</flowPara><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
+           id="flowPara8042">NODE_REPORT_$VNAME</flowPara></flowRoot>
+    </g>
+    <text
+       transform="translate(-11.355628,-35.097843)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text8050"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">activeMQListener(msg)</tspan></tspan></text>
+    <g
+       style="fill:#ff0000"
+       transform="translate(-244.97631,-23.319671)"
+       id="g8046-3">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot8044-3"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,262.49004,863.29226)"><flowRegion
+           id="flowRegion8036-7"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"><rect
+             id="rect8034-3"
+             width="264.97021"
+             height="65.602226"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000" /></flowRegion><flowPara
+           id="flowPara8042-5"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">serialised representation </flowPara><flowPara
+           id="flowPara8372"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">of SensorDetections</flowPara></flowRoot>
+    </g>
+    <rect
+       style="fill:none;fill-opacity:0.264463;stroke:#000000;stroke-width:0.285241;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect8378"
+       width="47.62685"
+       height="24.451719"
+       x="172.12109"
+       y="959.89191" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.250537px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 172.20902,967.03206 h 47.54435"
+       id="path8380"
+       inkscape:connector-curvature="0" />
+    <text
+       id="text8384"
+       y="964.84277"
+       x="174.36914"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="964.84277"
+         x="174.36914"
+         id="tspan8382"
+         sodipodi:role="line">SensorDetection</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="173.8924"
+       y="970.9397"
+       id="text8394"><tspan
+         sodipodi:role="line"
+         id="tspan8386"
+         x="173.8924"
+         y="970.9397"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">component : Robot *</tspan><tspan
+         sodipodi:role="line"
+         x="173.8924"
+         y="976.04333"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         id="tspan8390">sensor : Sensor</tspan><tspan
+         id="tspan15647"
+         sodipodi:role="line"
+         x="173.8924"
+         y="981.14697"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">values : SensorValue ...</tspan><tspan
+         sodipodi:role="line"
+         x="173.8924"
+         y="986.25061"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         id="tspan8392" /></text>
+    <rect
+       y="933.66284"
+       x="163.63855"
+       height="16.939899"
+       width="47.674553"
+       id="rect8396"
+       style="fill:none;fill-opacity:0.264463;stroke:#000000;stroke-width:0.237536;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path8398"
+       d="m 163.75033,940.82682 h 47.54435"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.250537px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="165.91045"
+       y="938.63757"
+       id="text8402"><tspan
+         sodipodi:role="line"
+         id="tspan8400"
+         x="165.91045"
+         y="938.63757"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">SensorDetectionHistory</tspan></text>
+    <text
+       id="text8412"
+       y="944.7345"
+       x="165.4337"
+       style="font-weight:bold;font-size:2.11666667px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan8408"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1;"
+         y="944.7345"
+         x="165.4337"
+         sodipodi:role="line">detections : SensorDetection array</tspan><tspan
+         id="tspan8410"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1;"
+         y="949.83813"
+         x="165.4337"
+         sodipodi:role="line" /></text>
+    <text
+       xml:space="preserve"
+       id="text8428"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-302.63145,-7.9118238)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">notifyPositionUpdate(Robot r, Position pos) {</tspan><tspan
+           dx="2.3884888"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="939.3535"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">}</tspan></tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.419589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker8441)"
+       d="m 56.202668,906.63737 -79.60899,0.035"
+       id="path8437"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path9035"
+       d="m 71.699692,908.52725 -0.247485,20.41972 -53.920105,-0.36898 -19.9022475,0.009 -19.9022475,0.009"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.419589;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker9039)"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.342283;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker10641)"
+       d="m 82.618543,925.61233 70.444877,67.23998"
+       id="path10637"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g11789"
+       transform="translate(-238.29457,2.8727425)"
+       style="fill:#ff0000">
+      <flowRoot
+         transform="matrix(0.26458333,0,0,0.26458333,262.49004,863.29226)"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot11787"
+         xml:space="preserve"><flowRegion
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"
+           id="flowRegion11781"><rect
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"
+             y="255.73396"
+             x="295.35715"
+             height="65.602226"
+             width="264.97021"
+             id="rect11779" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
+           id="flowPara11783">serialised representation </flowPara><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
+           id="flowPara11785">of BehaviourCommands</flowPara></flowRoot>
+    </g>
+    <g
+       style="fill:#ff0000"
+       transform="translate(-253.82702,78.165815)"
+       id="g11789-2">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot11787-6"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13px;line-height:125%;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';letter-spacing:0.75px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.26458333,0,0,0.26458333,262.49004,863.29226)"><flowRegion
+           id="flowRegion11781-5"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000"><rect
+             id="rect11779-8"
+             width="264.97021"
+             height="65.602226"
+             x="295.35715"
+             y="255.73396"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#ff0000" /></flowRegion><flowPara
+           id="flowPara11783-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">serialised representation </flowPara><flowPara
+           id="flowPara11785-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">of FaultInstance</flowPara><flowPara
+           id="flowPara12073"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">(Fault from DSL plus </flowPara><flowPara
+           id="flowPara12075"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">additional info)</flowPara></flowRoot>
+    </g>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.380934;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1437-9-6)"
+       d="m 276.69698,950.70383 -60.48826,0.038"
+       id="path1423-6-4"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="translate(-33.319941,28.007149)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text12788"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">storeSensorDetection(pos)</tspan><tspan
+           dx="1.5420227"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="934.24986"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">sendOutActiveMQ(...)</tspan><tspan
+           dx="1.5420227"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path12895"
+       d="m 166.85131,947.25729 v 16.7017 h 3.9926"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.20606px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#DiamondL)" />
+    <rect
+       y="997.12421"
+       x="-40.240555"
+       height="15.07617"
+       width="29.16367"
+       id="rect13563"
+       style="opacity:1;fill:#001e39;fill-opacity:1;stroke:#f90000;stroke-width:0.210087;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       id="text13567"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-288.45016,62.903798)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">GUI</tspan></tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#f90000;stroke-width:0.162986;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect13569"
+       width="22.218204"
+       height="11.910473"
+       x="-36.838768"
+       y="999.15601" />
+    <rect
+       style="opacity:1;fill:#001e39;fill-opacity:1;stroke:#f90000;stroke-width:0.0983812;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect13571"
+       width="16.802162"
+       height="5.7384706"
+       x="-34.248787"
+       y="1011.1995" />
+    <text
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:0.26458333px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Ann;font-style:normal;font-weight:bold;font-size:3.43958333px;line-height:125%;letter-spacing:0.1984375px;word-spacing:0px;-inkscape-font-specification:'Ann Bold';font-stretch:normal;font-variant:normal;shape-inside:url(#rect13575);white-space:pre;"
+       id="text13573"
+       xml:space="preserve" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path13585"
+       d="m -8.8090269,1004.6837 38.1747969,0.035"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.290557;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker13589)"
+       sodipodi:nodetypes="cc" />
+    <g
+       transform="matrix(0.41027455,0,0,0.16232259,-133.16991,814.03123)"
+       id="g14447">
+      <rect
+         y="885.99457"
+         x="230.20149"
+         height="154.63554"
+         width="63.156017"
+         id="rect14445"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+    <path
+       sodipodi:nodetypes="cc"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.233534;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker14459)"
+       d="M 15.433698,987.57568 -9.8301027,970.1717"
+       id="path14455"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="translate(-299.50924,26.048265)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text15265"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           dx="0 0 0 0 0 0 0 0 0 -0.19843701 0.19843575 0 0 0 0 0 0 0 -0.19843701 0.19843766"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Fault definition file</tspan></tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path15267"
+       d="m -35.39945,962.42551 c 19.22967,0 19.22967,0.37796 19.22967,0.37796"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -35.39945,968.09515 c 19.22967,0 19.22967,0.37796 19.22967,0.37796"
+       id="path15269"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path15271"
+       d="m -35.210462,973.00884 c 19.22967,0 19.22967,0.37796 19.22967,0.37796"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       id="text15551"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       transform="translate(-263.31933,81.286823)"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">onClick()</tspan></tspan></text>
+    <text
+       transform="translate(-258.49664,42.750265)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text15643"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           dx="0 0 0 0 0 0 0 -0.19843701 0.19843742"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">readDefinition()</tspan></tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path15655"
+       d="m 276.76999,992.94624 -17.11854,0.009 -17.11854,0.009 -26.18997,-0.36898 1.43948,78.07964"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.398174;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker15659)"
+       sodipodi:nodetypes="ccccc" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="174.36914"
+       y="964.84277"
+       id="text16749"><tspan
+         sodipodi:role="line"
+         id="tspan16747"
+         x="174.36914"
+         y="964.84277"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1">SensorDetection</tspan></text>
+    <text
+       id="text16753"
+       y="992.81604"
+       x="163.01027"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="992.81604"
+         x="163.01027"
+         id="tspan16751"
+         sodipodi:role="line">need behaviour </tspan><tspan
+         id="tspan16755"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="997.91968"
+         x="163.01027"
+         sodipodi:role="line">command layer:</tspan><tspan
+         id="tspan16757"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1003.0233"
+         x="163.01027"
+         sodipodi:role="line">ActiveBehaviour, </tspan><tspan
+         id="tspan16759"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1008.127"
+         x="163.01027"
+         sodipodi:role="line">UpdateBehaviourParam</tspan><tspan
+         id="tspan16761"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1013.2307"
+         x="163.01027"
+         sodipodi:role="line">DeactiveBehaviour etc</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="165.88576"
+       y="1070.4126"
+       id="text16773"><tspan
+         sodipodi:role="line"
+         x="165.88576"
+         y="1070.4126"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         id="tspan16771">Mission layer from DSL</tspan></text>
+    <text
+       id="text16791"
+       y="1079.295"
+       x="165.88576"
+       style="font-weight:bold;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan16789"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1079.295"
+         x="165.88576"
+         sodipodi:role="line">Predicate functions per </tspan><tspan
+         id="tspan16793"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1084.3987"
+         x="165.88576"
+         sodipodi:role="line">goal</tspan><tspan
+         id="tspan16795"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-opacity:1"
+         y="1089.5023"
+         x="165.88576"
+         sodipodi:role="line" /></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path17303"
+       d="m 200.93945,1085.4194 34.4856,1.0538"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.304837;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker17307)"
+       sodipodi:nodetypes="cc" />
+    <text
+       transform="translate(-20.892289,160.92677)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43958px;line-height:125%;font-family:Ann;-inkscape-font-specification:'Ann Bold';letter-spacing:0.198437px;word-spacing:0px;white-space:pre;shape-inside:url(#rect6794);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+       id="text18239"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         x="257.01758"
+         y="929.14622"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">logMissionStatus(Goal status, bool success)</tspan></tspan></text>
+  </g>
+</svg>

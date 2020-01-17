@@ -1,0 +1,89 @@
+MOOS specific side of the middleware - MOOSMiddleware
+--------------------------------------------------------------------------------
+This side is custom generated according to the translation between MOOS objects and
+standard ATLAS representation - using the information from the DSL
+
+Define translation rules between DSL objects and the respective MOOS variables -
+use this to generate the code
+
+Represented as a conversion class - MOOSMiddlewareLink.java
+
+It has initialize() method:
+Registers for notifications coming in from the MOOSDB
+On receiving them via activeMQNotify(), translate them into ATLAS general representation
+
+Notifications get transformed into updates to Sensor properties - appended to SensorHistory?
+Actual positions get translated into updates to Robot properties
+
+Registers for notifications from internal ATLAS middleware
+Translates general ATLAS behaviour/fault requests into MOOS low-level commands
+Translates them into either:
+MOOSDB variable overrides
+Notifications directed to a custom MOOS component (e.g. modified uFldNodeBroker)
+
+FaultInstance can be translated into the necessary MOOS notifications
+
+Things we need to subscribe to MOOSDBs for:
+VAR_X (objective position for all robots)
+VAR_Y (objective position for all robots)
+Sensor notifications for all robots UHZ_DETECTION_REPORT
+
+--------------------------------------------------------------------------------
+ATLAS internal notification representation
+--------------------------------------------------------------------------------
+
+The internal representation
+
+SensorNotification - contains the Sensor object, the type of detection and any params
+Time of detection
+Subclasses e.g SensorNotificationSensor
+
+The stream of notifications
+
+There is a SensorDetection which represents the sensor and the associated update values
+
+Faults - represented by objects as a subclass of Fault
+But need to associate this with specific messages?
+FaultInstance - fault and a tag indicating which specific messages?
+
+Need to check over the report and all the information that it contains
+
+--------------------------------------------------------------------------------
+Middleware core
+================================================================================
+Translates the internal representations into calls to the collective intelligence
+Calls the logger with the MOOSVariable update
+Notifies the collective intelligence if the update is relevant
+Notifies the mission monitoring
+
+--------------------------------------------------------------------------------
+Collective intelligence
+================================================================================
+
+The CI is driven by sensor reported position knowledge - sensor reported location
+All robots need to have a position sensor to report to the CI
+Internal ATLAS notifications are translated by middleware into calls upon the ATLAS methods
+
+
+Need a Behaviour layer to describe the actions
+Activate/deactive a specific behaviour
+Behaviours have parameter updates which can be described
+
+--------------------------------------------------------------------------------
+Questions outstanding
+--------------------------------------------------------------------------------
+
+How to specify the object locations as part of the DSL? Currently we have EnvironmentObjects
+which are part of the Region layer
+
+What are we doing for a parser for the language - concrete syntax representation to
+translate it into objects
+
+Coupling between the components - all of it flows over ActiveMQ? Or
+multithreaded components on the Java side?
+If multithreading is chosen, make sure that the objects are immutable (should be OK then)
+
+Topology structure - currently all interfacing of detections is via the
+
+Check what additional components are required in order to implement the faults
+specified in the first reports
