@@ -1,3 +1,15 @@
 * DONE pShare/nodebroker/nodecomms need to be set up to see vehicles on pMarineViewer
 * DONE Helm is coming up in the state MALCONFIG - crashes approximately 12.5 seconds later? Behaviour problems?
   CLOSED: [2020-01-07 Tue 18:55]
+
+* TODO Read through the proposal again and check I'm on the right track
+* TODO CI code generator - how does it have to be structured, one CI class per robot?
+* TODO Generate a superclass per robot and subclass for each particular robot identity - allowing
+behaviour customisation per individual robots
+* TODO Also a CI class for the shoreside
+** TODO CI hooks - need to define how the CI will operate - e.g. what calls can it make?
+*** 
+
+* TODO Middleware has to convert MOOS notifications into an general ATLAS form
+* TODO Draw a full diagram interpreation
+* TODO Assumptions that are hardcoded into the MOOS code generation have to be questioned
