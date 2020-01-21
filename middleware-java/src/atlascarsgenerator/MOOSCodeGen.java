@@ -48,11 +48,13 @@ public class MOOSCodeGen extends CARSCodeGen {
 	
 	// Creates an ATLASDBWatch component to watch the given variables
 	private void createATLASLink(MOOSCommunity c, List<String> middleWareVars, int port) {
+		System.out.println("createATLASLink");
 		ATLASWatchProcess dbwatch = new ATLASWatchProcess(c, c.getCommunityName());
-		c.addProcess(dbwatch);
 		for (String v : middleWareVars) {
+			System.out.println("add watch var" + v);
 			dbwatch.addWatchVariable(v);
 		}
+		c.addProcess(dbwatch);
 	}
 	
 	public CARSSimulation convertDSL(Mission mission) throws ConversionFailed {
@@ -82,7 +84,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			
 			boolean shoresideSonar = false;
 			for (Robot r : mission.getAllRobots()) {
-				moosSharedVars.add("NODE_REPORT_" + r.getName().toUpperCase());
+				middlewareVars.add("NODE_REPORT_" + r.getName().toUpperCase());
 				Point startPos = r.getPointComponentProperty("startLocation");
 				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
 				moossim.addCommunity(rprocess);
@@ -108,7 +110,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 				moosSharedVars.add("UHZ_CONFIG_REQUEST");
 				moosSharedVars.add("UHZ_SENSOR_REQUEST");
 				moosSharedVars.add("HAZARDSET_REPORT");
-				moosSharedVars.add("UHZ_DETECTION_REPORT");
+				
+				middlewareVars.add("UHZ_DETECTION_REPORT");
 				
 				if (shoreside == null) {
 					throw new ConversionFailed(ConversionFailedReason.NO_SHORESIDE);
