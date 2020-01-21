@@ -17,6 +17,10 @@ public class Mission {
 		return new ArrayList<Robot>(robots.values());
 	}
 	
+	public List<Computer> getAllComputers() {
+		return new ArrayList<Computer>(computers.values());
+	}
+	
 	public Robot getRobot(String name) {
 		return robots.get(name);
 	}

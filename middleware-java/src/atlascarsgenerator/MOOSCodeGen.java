@@ -48,7 +48,11 @@ public class MOOSCodeGen extends CARSCodeGen {
 	
 	// Creates an ATLASDBWatch component to watch the given variables
 	private void createATLASLink(MOOSCommunity c, List<String> middleWareVars, int port) {
-		
+		ATLASWatchProcess dbwatch = new ATLASWatchProcess(c, c.getCommunityName());
+		c.addProcess(dbwatch);
+		for (String v : middleWareVars) {
+			dbwatch.addWatchVariable(v);
+		}
 	}
 	
 	public CARSSimulation convertDSL(Mission mission) throws ConversionFailed {
@@ -78,6 +82,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			
 			boolean shoresideSonar = false;
 			for (Robot r : mission.getAllRobots()) {
+				moosSharedVars.add("NODE_REPORT_" + r.getName().toUpperCase());
 				Point startPos = r.getPointComponentProperty("startLocation");
 				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
 				moossim.addCommunity(rprocess);
@@ -103,6 +108,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				moosSharedVars.add("UHZ_CONFIG_REQUEST");
 				moosSharedVars.add("UHZ_SENSOR_REQUEST");
 				moosSharedVars.add("HAZARDSET_REPORT");
+				moosSharedVars.add("UHZ_DETECTION_REPORT");
 				
 				if (shoreside == null) {
 					throw new ConversionFailed(ConversionFailedReason.NO_SHORESIDE);
@@ -120,7 +126,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 					shoreBroker.setProperty("bridge", "src=UHZ_CONFIG_ACK_$V,       alias=UHZ_CONFIG_ACK");
 					shoreBroker.setProperty("bridge", "src=UHZ_DETECTION_REPORT_$V, alias=UHZ_DETECTION_REPORT");
 					shoreBroker.setProperty("bridge", "src=HAZARDSET_REQUEST_$V,    alias=HAZARDSET_REQUEST");
-
 				}
 			}
 			

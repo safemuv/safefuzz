@@ -13,6 +13,11 @@ public class ATLASCore {
 	private List<ActiveMQConsumer> activeConsumers = new ArrayList<ActiveMQConsumer>();
 	private Mission mission;
 	
+	private enum consumerSimEntity {
+		ROBOT,
+		SHORESIDE
+	}
+	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
 	}
@@ -23,7 +28,7 @@ public class ATLASCore {
         brokerThread.start();
     }
     
-    public void setupAction(ActiveMQConsumer consumer) {
+    public void setupAction(ActiveMQConsumer consumer, consumerSimEntity type) {
     	
     }
 	
@@ -35,10 +40,20 @@ public class ATLASCore {
     				// TODO: either this class will be custom-generated, or 
     				// various generated hooks with be added at code generation time
     				// TODO: change to ActiveMQRobotConsumer?
-    				ActiveMQConsumer consumer = new ActiveMQConsumer("MIDDLEWARE-from-" + r.getName());
+    				ActiveMQConsumer consumer = new ActiveMQConsumer("MIDDLEWARE-watch-" + r.getName());
     				// This is a no-op, but will be redefined in a custom modified class
-    				setupAction(consumer);
-    				
+    				setupAction(consumer, consumerSimEntity.ROBOT);
+    				activeConsumers.add(consumer);
+    				startThread(consumer, false);
+    			}
+    			
+    			for (Computer c : mission.getAllComputers()) {
+    				// TODO: either this class will be custom-generated, or 
+    				// various generated hooks with be added at code generation time
+    				// TODO: change to ActiveMQRobotConsumer?
+    				ActiveMQConsumer consumer = new ActiveMQConsumer("MIDDLEWARE-watch-" + c.getName());
+    				// This is a no-op, but will be redefined in a custom modified class
+    				setupAction(consumer, consumerSimEntity.SHORESIDE);
     				activeConsumers.add(consumer);
     				startThread(consumer, false);
     			}

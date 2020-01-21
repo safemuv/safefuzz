@@ -10,4 +10,8 @@ public class Computer extends Component {
 	public Computer(String computername) {
 		this.computername = computername;
 	}
+	
+	public String getName() {
+		return computername;
+	}
 }
