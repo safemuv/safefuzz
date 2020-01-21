@@ -14,11 +14,15 @@ import middleware.logging.ATLASLog;
 
 public class ActiveMQConsumer implements Runnable, ExceptionListener {
 	private String queueName;
+	private String vehicleName;
 	private boolean mqListen = true;
 	private int pollInterval = 1000;
+	private CARSEventQueue<MOOSEvent> carsQueue;
 	
-	public ActiveMQConsumer(String queueName) {
+	public ActiveMQConsumer(String vehicleName, String queueName, CARSEventQueue carsQueue) {
 		this.queueName = queueName;
+		this.carsQueue = carsQueue;
+		this.vehicleName = vehicleName;
 	}
 	
     public void handleMessage(Message m) {
@@ -26,7 +30,10 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
             if (m instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) m;
                 String text = textMessage.getText();
+                MOOSEvent e = (MOOSEvent)new MOOSVariableUpdate(vehicleName, text, 0.0);
+                carsQueue.add(e);
                 ATLASLog.logActiveMQInbound(queueName, text);
+                
             } else {
                 System.out.println("Received: " + m);
             }
@@ -39,7 +46,6 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
     public void run() {
         try {
             // Create a ConnectionFactory
-            //ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost");
         	ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("failover:(tcp://localhost:61616)");
             // Create a Connection
             Connection connection = connectionFactory.createConnection();
@@ -51,8 +57,8 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             // Create the destination (Topic or Queue)
-            // TODO: decide an appropriate naming scheme for the queues
-            Destination destination = session.createQueue(queueName);
+            // TODO: decide an appropriate scheme for the queues - Should we use Topics or Queues for ActiveMQ connections?
+            Destination destination = session.createTopic(queueName);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
             MessageConsumer consumer = session.createConsumer(destination);
