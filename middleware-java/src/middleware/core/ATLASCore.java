@@ -64,20 +64,17 @@ public abstract class ATLASCore {
     				startThread(consumer, false);
     			}
     			
-    			// The message consumers on the MOOS side need to do the following
-    			
     			while (continueLoop) {
+    				// Check for MOOS events
     				CARSEvent e = (CARSEvent)carsIncoming.poll();
-    				if (e != null)
+    				if (e != null) {
     					handleCARSEvent(e);
-    			}
+    					// TODO: put logger calls here for the new event
+    				}
     				
-    			// Get from the MOOS translator a list of the specific variables to watch
-    			
-    			
-    			// On message from ActiveMQ for the collective intelligence side
-    			// Work out the command from the CI behaviour request
-    			
-    			// On a fault generation message - FaultInstance
+		   			// TODO: On message from ActiveMQ for the collective intelligence side
+    			    // Work out the command from the CI behaviour request
+    				// TODO: On a fault generation message - FaultInstance
+    			}
     }
 }

@@ -6,28 +6,41 @@ public class MOOSVariableUpdate extends MOOSEvent {
 	private String key;
 	double time;
 	
-	private void setExtractedKeyAndValue(String updateText) {
-		// TODO: split at first equals
-		this.key = "K";
-		this.value = "V";
+	public class VariableInvalid extends Exception {
+		private static final long serialVersionUID = 1L;
 	}
 	
-	public MOOSVariableUpdate(String vehicleName, String updateText, double time) {
+	private void setExtractedKeyAndValue(String updateText) throws VariableInvalid {
+		String [] contents = updateText.split("=");
+		if (contents.length > 1) {
+		this.key = contents[0];
+		int valpos = updateText.indexOf("=");
+		this.value = updateText.substring(valpos+1);
+		} else {
+			throw new VariableInvalid();
+		}
+	}
+	
+	public MOOSVariableUpdate(String vehicleName, String updateText, double time) throws VariableInvalid {
 		this.vehicleName = vehicleName;
 		this.time = time;
 		setExtractedKeyAndValue(updateText);
 	}
 
-	public boolean matchesKeyStart(String target) {
-		// TODO: if the given string is contained in the start of the key
-		return false;
+	public boolean keyMatches(String target) {
+		return target.equals(key);
 	}
 	
-	public boolean matchesKey(String target) {
-		return key.equals(target);
+	public boolean keyStartMatches(String target) {
+		int len = target.length();
+		return target.equals(key.substring(0,len));
 	}
 
 	public String getValue() {
 		return value;
+	}
+	
+	public String getVehicleName() {
+		return vehicleName;
 	}
 }

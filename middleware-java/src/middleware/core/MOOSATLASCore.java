@@ -19,9 +19,13 @@ public class MOOSATLASCore extends ATLASCore {
 		if (e instanceof MOOSVariableUpdate) {
 			MOOSVariableUpdate mup = (MOOSVariableUpdate)e;
 			String eventValue = mup.getValue();
-			if (mup.matchesKeyStart("NODE_REPORT")) {
+			if (mup.keyStartMatches("NODE_REPORT")) {
 			// Extract the x,y coordinates from the contents
-			System.out.println("debug - NODE_REPORT found");
+			System.out.println("debug - NODE_REPORT found for vehicle " + mup.getVehicleName() + ": " + mup.getValue());
+			} 
+			
+			if (mup.keyStartMatches("UHZ_DETECTION_REPORT")) {
+				
 			}
 		} else {
 			// TODO: log a warning of an incompatible message
