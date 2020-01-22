@@ -9,9 +9,14 @@ public class ATLASMain {
 		// On initialisation, read the DSL concrete syntax file and construct the appropriate ATLAS objects here
 		// TODO: replace with a real loader once the concrete syntax is ready
 		DSLLoader dslloader = new StubDSLLoader();
-		
 		Mission mission = dslloader.loadMission();
+		
 		MOOSATLASCore core = new MOOSATLASCore(mission);
-		core.runMiddleware();
+		try {
+			core.runMiddleware();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

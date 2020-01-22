@@ -8,10 +8,9 @@ import atlasdsl.*;
 // This code will be combined with the simulator-specific code
 // during code generation
 public abstract class ATLASCore {
-	
 	private List<ActiveMQConsumer> activeConsumers = new ArrayList<ActiveMQConsumer>();
 	protected CARSEventQueue carsIncoming;
-	private Mission mission;
+	protected Mission mission;
 	
 	private enum consumerSimEntity {
 		ROBOT,
@@ -36,7 +35,7 @@ public abstract class ATLASCore {
     // TODO: fix: superclass should not have dependency upon MOOS
     public abstract void handleCARSEvent(CARSEvent e);
 	
-    public void runMiddleware() {
+    public void runMiddleware() throws InterruptedException {
     	boolean continueLoop = true;
     	// Setup the ActiveMQ connection for the simulation side
     			
@@ -65,13 +64,16 @@ public abstract class ATLASCore {
     			}
     			
     			while (continueLoop) {
-    				// Check for MOOS events
-    				CARSEvent e = (CARSEvent)carsIncoming.poll();
-    				if (e != null) {
-    					handleCARSEvent(e);
-    					// TODO: put logger calls here for the new event
-    				}
-    				
+    				try {
+    					// Check for MOOS events
+    					CARSEvent e = (CARSEvent)carsIncoming.take();
+    					if (e != null) {
+    						handleCARSEvent(e);
+    						// TODO: put logger calls here for the new event
+    					}
+    				} catch (InterruptedException e) {
+    					e.printStackTrace();
+    				}	
 		   			// TODO: On message from ActiveMQ for the collective intelligence side
     			    // Work out the command from the CI behaviour request
     				// TODO: On a fault generation message - FaultInstance

@@ -33,7 +33,9 @@ public class MOOSVariableUpdate extends MOOSEvent {
 	
 	public boolean keyStartMatches(String target) {
 		int len = target.length();
-		return target.equals(key.substring(0,len));
+		if (len <= key.length()) {
+			return target.equals(key.substring(0,len));
+		} else return false;
 	}
 
 	public String getValue() {

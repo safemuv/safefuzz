@@ -20,6 +20,7 @@ public class StubDSLLoader implements DSLLoader {
 		s.setDoubleComponentProperty("falseNeg", falseNeg);
 		r.addSubcomponent(s);
 		r.setPointComponentProperty("startLocation", startLocation);
+		r.setPointComponentProperty("location", startLocation);
 		m.addRobot(r);
 	}
 	
