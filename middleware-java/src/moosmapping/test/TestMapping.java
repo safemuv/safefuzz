@@ -1,6 +1,7 @@
 package moosmapping.test;
 
 import moosmapping.*;
+
 import atlascarsgenerator.ConversionFailed;
 import atlascarsgenerator.MOOSCodeGen;
 
@@ -30,8 +31,6 @@ public class TestMapping {
 	}
 	
 	// Test function that represents a robot added with a sonar sensor
-
-	
 	public static void testCodeGeneration2(String code_dir) {
 		DSLLoader dslloader = new StubDSLLoader();
 		Mission mission = dslloader.loadMission();

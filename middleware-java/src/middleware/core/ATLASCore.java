@@ -31,6 +31,10 @@ public abstract class ATLASCore {
     	
     }
     
+    public void afterAction() {
+    	
+    }
+    
     // This method will have to be added to the middleware during code generation
     // TODO: fix: superclass should not have dependency upon MOOS
     public abstract void handleCARSEvent(CARSEvent e);
@@ -71,6 +75,8 @@ public abstract class ATLASCore {
     						handleCARSEvent(e);
     						// TODO: put logger calls here for the new event
     					}
+    					
+    					afterAction();
     				} catch (InterruptedException e) {
     					e.printStackTrace();
     				}	

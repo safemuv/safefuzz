@@ -1,5 +1,6 @@
 package atlasdsl;
 
+import atlasdsl.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,12 +18,22 @@ public class Mission {
 		return new ArrayList<Robot>(robots.values());
 	}
 	
+	public EnvironmentalObject getEnvironmentalObject(int label) {
+		EnvironmentalObject eo = objects.get(label);
+		if (eo.getLabel() == label)	return eo;
+		else return null;
+	}
+	
 	public List<Computer> getAllComputers() {
 		return new ArrayList<Computer>(computers.values());
 	}
 	
 	public Robot getRobot(String name) {
 		return robots.get(name);
+	}
+	
+	public Computer getComputer(String name) {
+		return computers.get(name);
 	}
 	
 	public boolean includesComputer() {

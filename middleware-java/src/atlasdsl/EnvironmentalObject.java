@@ -21,6 +21,10 @@ public class EnvironmentalObject extends Point {
 		}
 	}
 	
+	public int getLabel() {
+		return label;
+	}
+	
 	public String toString() {
 		String typeStr = "benign";
 		if (isHazard) typeStr = "hazard";

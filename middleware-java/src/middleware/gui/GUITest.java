@@ -16,7 +16,6 @@ public class GUITest {
     private void setupLabels() {
     	int y = 0;
     	for (Robot r : mission.getAllRobots()) {
-			System.out.println("adding label");
 	    	JLabel l = new JLabel(labelText(r));
 	    	l.setVisible(true);
 	    	robotLabels.put(r, l);
@@ -37,7 +36,9 @@ public class GUITest {
     	for (Map.Entry<Robot, JLabel> entry : robotLabels.entrySet()) {
     		JLabel l = entry.getValue();
     		Robot r = entry.getKey();
-    		l.setText(labelText(r));
+    		String text = labelText(r);
+    		l.setText(text);
+    		l.repaint();
     	}
     }
     
@@ -45,7 +46,7 @@ public class GUITest {
     	this.mission = mission;
     	
     	f=new JFrame();//creating instance of JFrame
-    	f.setLayout(new FlowLayout());
+    	f.setLayout(new FlowLayout(FlowLayout.RIGHT));
     	setupLabels();
               
     	JButton b=new JButton("click");//creating instance of JButton  
@@ -53,20 +54,17 @@ public class GUITest {
               
     	f.add(b);//adding button in JFrame  
               
-    	f.setSize(400,500);//400 width and 500 height  
+    	f.setSize(200,500);//400 width and 500 height  
     	f.setVisible(true);//making the frame visible
     	f.repaint();
-    	
-    	Thread t = new Thread(() -> {
-    		while (true) {
+    }
+    
+    public void updateGUI() {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
     			updateLabels();
-    			try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-    		}
-    	});
+    			f.repaint();
+			}
+		});
     }
 }

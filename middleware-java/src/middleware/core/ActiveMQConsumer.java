@@ -32,7 +32,7 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
                 String text = textMessage.getText();
                 MOOSEvent e = (MOOSEvent)new MOOSVariableUpdate(vehicleName, text, 0.0);
                 carsQueue.add(e);
-                ATLASLog.logActiveMQInbound(queueName, text);
+                ATLASLog.logCARSInbound(queueName, text);
                 
             } else {
                 System.out.println("Received: " + m);
