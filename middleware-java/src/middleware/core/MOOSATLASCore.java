@@ -20,7 +20,6 @@ public class MOOSATLASCore extends ATLASCore {
 	
 	public MOOSATLASCore(Mission mission) {
 		super(mission);
-		
 		outputToCI = new ActiveMQProducer("MIDDLEWARE-TO_CI", ActiveMQProducer.QueueOrTopic.TOPIC);
 		carsIncoming = new MOOSEventQueue(MOOS_QUEUE_CAPACITY);
 		setupForCARSEvents();
@@ -29,7 +28,6 @@ public class MOOSATLASCore extends ATLASCore {
 	
 	public void setupForCARSEvents() {
 		// TODO: move these scanners out into general utility library?
-		//nodeReportScanner = Pattern.compile("X=[+-]?([0-9]*[.])?[0-9]+,Y=[+-]?([0-9]*[.])?[0-9]+");
 		nodeReportScanner = Pattern.compile("NAME=([^,]+),X=([^,]+),Y=([^,]+)");
 		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,+])");
 	}
@@ -38,7 +36,7 @@ public class MOOSATLASCore extends ATLASCore {
 		gui.updateGUI();
 	}
 	
-	// TODO: This has to be auto-generated to produce a decoders for the specific messages
+	// TODO: This has to be auto-generated to produce decoders for the specific messages
 	// once the test code below is working
 	public void handleCARSEvent(CARSEvent e) {
 		// Need to first check it's a MOOS event
@@ -68,6 +66,7 @@ public class MOOSATLASCore extends ATLASCore {
 				}
 			}
 			
+			// Handle sonar detection report events
 			if (mup.keyStartMatches("UHZ_DETECTION_REPORT")) {
 				System.out.println("SENSOR DETECTION REPORT");
 				String val = mup.getValue();

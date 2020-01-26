@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 public class Mission {
 	private Map<String,Robot> robots = new LinkedHashMap<String,Robot>();
 	private Map<String,Computer> computers = new LinkedHashMap<String,Computer>();
+	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
 	private List<EnvironmentalObject> objects = new ArrayList<EnvironmentalObject>();
+	private List<Goal> goals = new ArrayList<Goal>();
 	
 	private List<Message> messages = new ArrayList<Message>();
 	
@@ -87,5 +89,9 @@ public class Mission {
                 .filter(msg -> cs.contains(msg.getFrom()))
                 .collect(Collectors.toList());
         return res;
+	}
+
+	public List<Goal> getGoals() {
+		return goals;
 	}
 }
