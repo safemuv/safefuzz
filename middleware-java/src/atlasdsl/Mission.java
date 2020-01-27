@@ -2,16 +2,18 @@ package atlasdsl;
 
 import atlasdsl.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Mission {
 	private Map<String,Robot> robots = new LinkedHashMap<String,Robot>();
 	private Map<String,Computer> computers = new LinkedHashMap<String,Computer>();
 	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
-	private List<EnvironmentalObject> objects = new ArrayList<EnvironmentalObject>();
+	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
 	private List<Goal> goals = new ArrayList<Goal>();
 	
 	private List<Message> messages = new ArrayList<Message>();
@@ -20,10 +22,10 @@ public class Mission {
 		return new ArrayList<Robot>(robots.values());
 	}
 	
-	public EnvironmentalObject getEnvironmentalObject(int label) {
+	public Optional<EnvironmentalObject> getEnvironmentalObject(int label) {
 		EnvironmentalObject eo = objects.get(label);
-		if (eo.getLabel() == label)	return eo;
-		else return null;
+		if (eo == null) return Optional.empty();
+		else return Optional.of(eo);
 	}
 	
 	public void addGoal(Goal g) {
@@ -56,15 +58,15 @@ public class Mission {
 	
 	//TODO: setters for the other geometric regions as well
 	public void addObject(EnvironmentalObject eo) {
-		objects.add(eo);
+		objects.put(eo.getLabel(), eo);
 	}
 	
 	public void addComputer(Computer c) {
 		computers.put(c.name, c);
 	}
 
-	public List<EnvironmentalObject> getEnvironmentalObjects() {
-		return objects;
+	public Collection<EnvironmentalObject> getEnvironmentalObjects() {
+		return objects.values();
 	}
 	
 	public List<Message> messagesToComponent(Component c) {

@@ -18,28 +18,6 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		super(m);
 	}
 	
-	// TEST CODE for javapoet - remove when finished
-	public void testJavaPoet(FileWriter fw) throws IOException {
-	MethodSpec main = MethodSpec.methodBuilder("main")
-		    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-		    .returns(void.class)
-		    .addParameter(String[].class, "args")
-		    .addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
-		    .build();
-
-		TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
-		    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-		    .addMethod(main)
-		    .build();
-
-		JavaFile javaFile = JavaFile.builder("com.example.helloworld", helloWorld)
-		    .build();
-
-		javaFile.writeTo(fw);
-		System.out.println("testJavaPoet...");
-		javaFile.writeTo(System.out);
-	}
-	
 	//find all the messages relevant for this match this code generation type/component
 	private List<Message> findRelevantMessages(CollectiveIntGenTypes cg) {
 		if (cg == CollectiveIntGenTypes.ALL_ROBOTS) {

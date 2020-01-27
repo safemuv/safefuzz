@@ -1,7 +1,6 @@
 package atlasdsl.loader;
 
 import java.util.Optional;
-
 import atlasdsl.*;
 
 public class StubDSLLoader implements DSLLoader {
@@ -25,14 +24,14 @@ public class StubDSLLoader implements DSLLoader {
 		Computer shoreside = new Computer("shoreside");
 		mission.addComputer(shoreside);
 		
-		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0), 50, 0.9, 0.01, 0.05);
-		addRobotWithSonar(mission, "henry", new Point(10.0, 0.0), 50, 0.8, 0.03, 0.07);
-		addRobotWithSonar(mission, "frank", new Point(20.0, 0.0), 50, 0.2, 0.03, 0.02);
-		addRobotWithSonar(mission, "ella",  new Point(30.0, 0.0), 50, 0.2, 0.03, 0.06);
+		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0), 50, 0.99, 0.01, 0.05);
+		addRobotWithSonar(mission, "henry", new Point(10.0, 0.0), 50, 0.99, 0.03, 0.07);
+		addRobotWithSonar(mission, "frank", new Point(20.0, 0.0), 50, 0.99, 0.03, 0.02);
+		addRobotWithSonar(mission, "ella",  new Point(30.0, 0.0), 50, 0.99, 0.03, 0.06);
 		
 		// Add objects to the environment - hazards/benign objects for the robots to find
 		mission.addObject(new EnvironmentalObject(new Point(46.0, -23.0), false));
-		mission.addObject(new EnvironmentalObject(new Point(36.0, -13.0), true));
+		mission.addObject(new EnvironmentalObject(new Point(36.0, -26.0), true));
 		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
 
 		// Define the mission layer

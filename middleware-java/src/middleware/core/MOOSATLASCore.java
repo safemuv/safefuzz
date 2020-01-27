@@ -1,10 +1,12 @@
 package middleware.core;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.jms.JMSException;
 
+import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 import middleware.core.MOOSVariableUpdate;
 import middleware.gui.GUITest;
@@ -20,7 +22,8 @@ public class MOOSATLASCore extends ATLASCore {
 	
 	public MOOSATLASCore(Mission mission) {
 		super(mission);
-		outputToCI = new ActiveMQProducer("MIDDLEWARE-TO_CI", ActiveMQProducer.QueueOrTopic.TOPIC);
+		outputToCI = new ActiveMQProducer(PortMappings.portForCI("shoreside"), ActiveMQProducer.QueueOrTopic.TOPIC);
+		outputToCI.run();
 		carsIncoming = new MOOSEventQueue(MOOS_QUEUE_CAPACITY);
 		setupForCARSEvents();
 		gui = new GUITest(mission);
@@ -29,7 +32,7 @@ public class MOOSATLASCore extends ATLASCore {
 	public void setupForCARSEvents() {
 		// TODO: move these scanners out into general utility library?
 		nodeReportScanner = Pattern.compile("NAME=([^,]+),X=([^,]+),Y=([^,]+)");
-		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,+])");
+		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,]+)");
 	}
 	
 	public void afterAction() {
@@ -77,22 +80,23 @@ public class MOOSATLASCore extends ATLASCore {
 					Integer label = Integer.parseInt(m.group(3));
 					String vname = m.group(4);
 					Robot r = mission.getRobot(vname);
-					EnvironmentalObject eo = mission.getEnvironmentalObject(label);
+					Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(label);
 					if (r == null) {
 						System.out.println("DEBUG: robot not found for detection report: " + vname + "full update: " + val);	
 					} else {
-						if (eo == null) {
+						if (!eo.isPresent()) {
 							System.out.println("DEBUG: detected object not registered in environment " + label + "full update " + val);	
 						} else {
 							System.out.println("INFO: sending out sensor detection");
-							SensorDetection d = new SensorDetection(new Point(x,y),r,eo);
+							SensorDetection d = new SensorDetection(new Point(x,y),r,eo.get());
 							try {
+								// TODO: serialisation
 								outputToCI.sendMessage(d.toString());
 							} catch (JMSException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							} 
-						}	
+							}
+						}
 					}
 				}
 			}

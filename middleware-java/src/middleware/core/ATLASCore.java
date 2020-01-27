@@ -3,6 +3,7 @@ package middleware.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
 // This code will be combined with the simulator-specific code
@@ -49,7 +50,7 @@ public abstract class ATLASCore {
     				// various generated hooks with be added at code generation time
     				// TODO: change to ActiveMQRobotConsumer?
     				String robotName = r.getName();
-    				ActiveMQConsumer consumer = new ActiveMQConsumer(robotName, "MIDDLEWARE-watch-" + robotName, carsIncoming);
+    				ActiveMQConsumer consumer = new ActiveMQConsumer(robotName, (PortMappings.portForMOOSWatch(robotName)), carsIncoming);
     				// This is a no-op, but will be redefined in a custom modified class
     				setupAction(consumer, consumerSimEntity.ROBOT);
     				activeConsumers.add(consumer);
@@ -60,7 +61,7 @@ public abstract class ATLASCore {
     				// TODO: either this class will be custom-generated, or 
     				// various generated hooks with be added at code generation time
     				// TODO: change to ActiveMQRobotConsumer?
-    				ActiveMQConsumer consumer = new ActiveMQConsumer(c.getName(), "MIDDLEWARE-watch-" + c.getName(), carsIncoming);
+    				ActiveMQConsumer consumer = new ActiveMQConsumer(c.getName(), (PortMappings.portForMOOSWatch(c.getName())), carsIncoming);
     				// This is a no-op, but will be redefined in a custom modified class
     				setupAction(consumer, consumerSimEntity.SHORESIDE);
     				activeConsumers.add(consumer);
