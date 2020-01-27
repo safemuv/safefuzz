@@ -26,6 +26,10 @@ public class Mission {
 		else return null;
 	}
 	
+	public void addGoal(Goal g) {
+		goals.add(g);
+	}
+	
 	public List<Computer> getAllComputers() {
 		return new ArrayList<Computer>(computers.values());
 	}

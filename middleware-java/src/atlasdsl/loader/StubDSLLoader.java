@@ -1,13 +1,8 @@
 package atlasdsl.loader;
 
-import atlasdsl.Computer;
-import atlasdsl.EnvironmentalObject;
-import atlasdsl.Message;
-import atlasdsl.Mission;
-import atlasdsl.Point;
-import atlasdsl.Robot;
-import atlasdsl.Sensor;
-import atlasdsl.SensorType;
+import java.util.Optional;
+
+import atlasdsl.*;
 
 public class StubDSLLoader implements DSLLoader {
 	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
@@ -39,8 +34,27 @@ public class StubDSLLoader implements DSLLoader {
 		mission.addObject(new EnvironmentalObject(new Point(46.0, -23.0), false));
 		mission.addObject(new EnvironmentalObject(new Point(36.0, -13.0), true));
 		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
+
+		// Define the mission layer
+		double MISSION_END_TIME = 1000.0;
 		
-		// A test message here
+		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
+		Goal mutualAvoidance = new Goal(entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers());
+		Goal primarySensorSweep = new Goal(entireMissionTime, allRobots, Optional.empty(), new CollectiveSensorCover(10.0, SensorType.SONAR));
+		
+		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
+		
+		double verifySweepRange = 30.0;
+		Goal verifySensor = new Goal(entireMissionTime, rp, 
+				Optional.of(new DynamicGoalRegion(primarySensorSweep, "DETECTION_COORD", verifySweepRange)),
+				new SensorCover(20.0, SensorType.SONAR));
+		
+		mission.addGoal(mutualAvoidance);
+		mission.addGoal(primarySensorSweep);
+		primarySensorSweep.addSubgoal(verifySensor);
+		
+		// Add more message definitions here
 		mission.addMessage(new Message("detectionGilda", shoreside, mission.getRobot("gilda")));
 		mission.addMessage(new Message("detectionHenry", shoreside, mission.getRobot("henry")));
 		mission.addMessage(new Message("detectionFrank", shoreside, mission.getRobot("frank")));

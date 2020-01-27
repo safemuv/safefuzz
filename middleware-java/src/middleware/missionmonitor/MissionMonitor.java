@@ -16,7 +16,8 @@ public class MissionMonitor {
 	}
 	
 	public void reportDetection(SensorDetection sd) {
-		// Needs to update the internal state of any sensor coverage goals here
+		// Needs to update the internal state of any sensor coverage goals 
+		// which are relevant to this type of sensor
 	}
 	
 	// TODO: needs to handle the subgoals as well here, recurse down to
@@ -31,19 +32,10 @@ public class MissionMonitor {
 				g.setStatus(GoalStatus.MISSED);
 			} else {
 				Optional<GoalResult> res = g.test();
-				
-			}
-		}
-	}
-	
-	// Test all the goals and verify their status
-	// TODO: needs to handle the subgoals as well here, recurse down to
-	// handle them
-	public void assessObjectives() {
-		for (Goal g : mission.getGoals()) {
-			// If a goal is started, we need to 
-			if (g.getStatus() == GoalStatus.STARTED) {
-				
+				if (res.isPresent()) {
+					g.setStatus(GoalStatus.COMPLETED);
+					// This status will need to be referenced by dependent goals somehow
+				}
 			}
 		}
 	}
