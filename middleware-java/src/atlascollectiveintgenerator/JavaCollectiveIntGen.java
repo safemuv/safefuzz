@@ -4,16 +4,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.lang.model.element.Modifier;
 
 import com.squareup.javapoet.*;
 
 import atlasdsl.*;
+import middleware.core.SensorDetection;
 
 public class JavaCollectiveIntGen extends CollectiveIntGen {
-	
 	public JavaCollectiveIntGen(Mission m) {
 		super(m);
 	}
@@ -60,8 +60,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	// Generates a general set of hooks for all robots
 	// Message arrivals
 	// Sensors, with a second parameter indicating the identity
-	public void generateRobotCI(CIFiles cif, Robot robot) {
-		String className = "robotCollectiveIntelligence";
+	public void generateRobotCI(MethodSpec.Builder activeMQHooks, CIFiles cif, Robot robot) {
+		String className = "RobotCI";
 		if (robot != null) {
 			className = className + robot.getName();
 		}
@@ -69,7 +69,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		TypeSpec.Builder ciClass = TypeSpec.classBuilder(className);
 		if (robot != null) {
 			// TODO: store the parent class generated
-			ciClass.superclass(cif.getClass("robotCollectiveIntelligence").class);
+			//ciClass.superclass(cif.getClass("robotCollectiveIntelligence").class);
 		}
 		
 		// Need to find all the potential hooks for ANY robot
@@ -77,7 +77,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		
 		List<Message> msgs = findRelevantMessages(CollectiveIntGenTypes.ALL_ROBOTS);
 		for (Message m : msgs) {
-			String hookName = m.getName() + "Hook";
+			String hookName = m.getName() + "MessageHook";
 			System.out.println("adding method - " + hookName);
 			MethodSpec hook = MethodSpec.methodBuilder(hookName)
 						.addModifiers(Modifier.PRIVATE)
@@ -98,34 +98,99 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
-	// Generates a general file for all computers
-	public void generateGeneralComputerCI(CIFiles cif) {
-		TypeSpec.Builder ciClass = TypeSpec.classBuilder("computerCollectiveIntelligence");
+	public void generateComputerCI(MethodSpec.Builder activeMQHooks, CIFiles cif, Computer c) {
+		String className = "ComputerCI";
+		if (c != null) {
+			className = className + c.getName();
+		}
+		
+		TypeSpec.Builder ciClass = TypeSpec.classBuilder(className);
+		
+		// Need to find all the potential hooks for ANY robot
+		// and need to know which robot the hooks came from?
+		List<Message> msgs = findRelevantMessages(CollectiveIntGenTypes.ALL_COMPUTERS);
+		for (Message m : msgs) {
+			String hookName = m.getName() + "MessageHook";
+			System.out.println("DEBUG: adding method - " + hookName);
+			MethodSpec hook = MethodSpec.methodBuilder(hookName)
+						.addModifiers(Modifier.PRIVATE)
+						.returns(void.class)
+						.addParameter(Message.class, m.getName())
+						.addParameter(Component.class, "from")
+						.addParameter(Component.class, "to")
+						.build();
+			
+			ciClass.addMethod(hook);
+
+        };
+	
+		// Generate a hook for any possible sensor notification 
+		// on any robot in the system
+		for (Map.Entry<SensorType, Robot> sr : mission.getAllSensorTypesOnVehicles().entrySet()) {
+			// should be sensor types?
+			SensorType st = sr.getKey();
+			Robot r = sr.getValue();
+			String sensorTypeName = Sensor.sensorTypeToString(st).toUpperCase();
+			
+			System.out.println("DEBUG: adding method stub for sensor " + r.getClass());
+			String hookName = st.toString() + "DetectionHook";
+			MethodSpec hook = MethodSpec.methodBuilder(hookName)
+							.addModifiers(Modifier.PRIVATE)
+							.returns(void.class)
+							.addParameter(SensorDetection.class, "detection")
+							.addParameter(Robot.class, "robot")
+							.build();
+			ciClass.addMethod(hook);
+			
+			activeMQHooks.addCode("if (d.getSensorType() == SensorType." + sensorTypeName +") {\n"
+					   + "ComputerCIShoreside." + sensorTypeName + "DetectionHook(d,d.getRobot());\n"
+					   + "}\n"); 
+		}
+		
+		try {
+			FileWriter robotOut = cif.getOpenFile("computerCI.java");
+			JavaFile javaFile = JavaFile.builder("collectiveint.user", ciClass.build()).build();
+			javaFile.writeTo(robotOut);
+			robotOut.flush();
+			robotOut.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	// Generates a general file for all computers
+	//public void generateGeneralComputerCI(CIFiles cif) {
+	//	TypeSpec.Builder ciClass = TypeSpec.classBuilder("computerCollectiveIntelligence");
+	//}
 	
 	public void generateCollectiveIntFiles(String baseDir, CollectiveIntGenTypes cgt) {
 			CIFiles cif = new CIFiles(baseDir);
-			// First generate the general robot CI
-			generateGeneralRobotCI(cif, null);
+			
+			
+			TypeSpec.Builder activeMQLink = TypeSpec.classBuilder("ActiveMQLink");
+			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("addMQHooks");
+			
 						
 			for (Robot r : mission.getAllRobots()) {
+				generateRobotCI(addMQHooks, cif, r);
 			}
 			
-			//FileWriter fw = new FileWriter(fileName);
-			//TypeSpec.Builder ciClass = TypeSpec.classBuilder("robotCollectiveIntelligence");
-			// Generate a method for the reception of each message
-			//generateStandardHooks(ciClass);
-			//generateMessageReceptionHooks(ciClass, cgt);
-			// TODO: step 3. generate a method from each sensor notification
-			//JavaFile javaFile = JavaFile.builder("collectiveint", ciClass.build()).build();
-			//javaFile.writeTo(fw);
-			//javaFile.writeTo(System.out);
-			// TODO: step 4. generate topics with ActiveMQ for every needed reception - build up a list of all 
+			for (Computer c : mission.getAllComputers()) {
+				generateComputerCI(addMQHooks, cif,c);
+			}
+			
+			activeMQLink.addMethod(addMQHooks.build());
+			JavaFile activeMQLinkFile = JavaFile.builder("collectiveint.user", activeMQLink.build()).build();
+			try {
+				FileWriter mqFileOut = cif.getOpenFile("CollectiveIntRunnerCustom.java");
+				activeMQLinkFile.writeTo(mqFileOut);
+				mqFileOut.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			// TODO: step 4. map subscriptions to topics with ActiveMQ for every needed reception - build up a list of all 
 			// topics needed and subscription code to connect to them over ActiveMQ
-			//fw.close();
-		//} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		//}
 	}
 }

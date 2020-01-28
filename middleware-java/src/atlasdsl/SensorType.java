@@ -1,5 +1,6 @@
 package atlasdsl;
 
 public enum SensorType {
-	SONAR;
+	SONAR,
+	GPS_POSITION
 }

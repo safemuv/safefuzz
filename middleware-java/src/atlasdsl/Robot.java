@@ -37,4 +37,11 @@ public class Robot extends Component {
 			return (Sensor) sensors.get(0);
 		} else return null;
 	}
+	
+	public List<Sensor> getAllSensors() {
+		return (List<Sensor>)(contains.stream()
+				.filter(sc -> sc instanceof Sensor)
+				.map(sc -> (Sensor)sc)
+				.collect(Collectors.toList()));
+	}
 }

@@ -14,6 +14,7 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import atlasdsl.Mission;
+import atlasdsl.SensorType;
 import middleware.core.CARSEventQueue;
 import middleware.core.MOOSEvent;
 import middleware.core.MOOSVariableUpdate;
@@ -24,12 +25,14 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
 	private String vehicleName;
 	private boolean mqListen = true;
 	private int pollInterval = 1000;
+	private CollectiveInt ci;
 	
 	Mission mission;
 	
-	public CollectiveIntActiveMQConsumer(String vehicleName, Mission mission) {
+	public CollectiveIntActiveMQConsumer(String vehicleName, Mission mission, CollectiveInt ci) {
 		this.vehicleName = vehicleName;
 		this.mission = mission;
+		this.ci = ci;
 	}
 	
     public void handleMessage(Message m) {
@@ -37,10 +40,17 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
             if (m instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) m;
                 String text = textMessage.getText();
-                Optional<SensorDetection> d = SensorDetection.parse(text, mission);
-                if (d.isPresent()) {
-                	System.out.println("");
-                	// TODO: call relevant hooks for the sensor detection here
+                Optional<SensorDetection> d_o = SensorDetection.parse(text, mission);
+               
+                if (d_o.isPresent()) {
+                	SensorDetection d = d_o.get();
+                	System.out.println("Received valid detection object - decoded as " + d.toString());
+                	ci.handleMessage(d);
+                	
+                	
+
+                	
+                	// TODO: add relevant hooks for the sensor detection here
                 }
                 
                 CollectiveIntLog.logCIInbound(vehicleName, text);

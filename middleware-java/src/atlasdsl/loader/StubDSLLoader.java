@@ -7,6 +7,7 @@ public class StubDSLLoader implements DSLLoader {
 	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
 		Robot r = new Robot(robotName);
 		Sensor s = new Sensor(SensorType.SONAR);
+		
 		s.setIntComponentProperty("sensorRange", sensorRange);
 		s.setIntComponentProperty("swathWidth", sensorRange);
 		s.setDoubleComponentProperty("detectionProb", detectionProb);
@@ -31,7 +32,7 @@ public class StubDSLLoader implements DSLLoader {
 		
 		// Add objects to the environment - hazards/benign objects for the robots to find
 		mission.addObject(new EnvironmentalObject(new Point(46.0, -23.0), false));
-		mission.addObject(new EnvironmentalObject(new Point(36.0, -26.0), true));
+		mission.addObject(new EnvironmentalObject(new Point(-7.0, 17.0), true));
 		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
 
 		// Define the mission layer

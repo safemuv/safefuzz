@@ -17,9 +17,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-/**
- * Hello world!
- */
 public class ATLASMiddlewareTest {
 
     public static void main(String[] args) throws Exception {

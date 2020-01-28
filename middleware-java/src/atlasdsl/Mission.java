@@ -100,4 +100,15 @@ public class Mission {
 	public List<Goal> getGoals() {
 		return goals;
 	}
+	
+	public Map<SensorType,Robot> getAllSensorTypesOnVehicles() {
+		Map<SensorType,Robot> res = new LinkedHashMap<SensorType,Robot>();
+		for (Robot r : robots.values()) {
+			for (Sensor s : r.getAllSensors()) {
+				SensorType t = s.getType();
+				res.put(t, r);
+			}
+		}
+		return res;
+	}
 }

@@ -10,17 +10,27 @@ public class SensorDetection {
 	private Point detectionLocation;
 	private Robot detectingVehicle;
 	private EnvironmentalObject object;
+	private SensorType type;
 	
-	private static Pattern scanner = Pattern.compile("SENSORDETECTION-([^,]+),([^,]+),([^,]+)"); 
+	private static Pattern scanner = Pattern.compile("SENSORDETECTION-SONAR-([^,]+),([^,]+),([^,]+),([^,]+)"); 
 	
 	public SensorDetection(Point detectionLocation, Robot detectingVehicle, EnvironmentalObject object) {
 		this.detectionLocation = detectionLocation;
 		this.detectingVehicle = detectingVehicle;
 		this.object = object;
+		this.type = SensorType.SONAR;
 	}
 	
 	public String toString() {
-		return "SENSORDETECTION-" + detectionLocation.toStringBareCSV() + "," + detectingVehicle.getName() + "," + Integer.toString(object.getLabel());
+		return "SENSORDETECTION-SONAR-" + detectionLocation.toStringBareCSV() + "," + detectingVehicle.getName() + "," + Integer.toString(object.getLabel());
+	}
+	
+	public SensorType getSensorType() {
+		return type;
+	}
+	
+	public Robot getRobot() {
+		return detectingVehicle;
 	}
 	
 	public static Optional<SensorDetection> parse(String text, Mission mission) {

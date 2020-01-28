@@ -8,6 +8,6 @@ public class PortMappings {
 	}
 	
 	public static String portForMOOSWatch(String vehicleName) {
-		return "MIDDLEWARE-watch" + vehicleName.toString();
+		return "MIDDLEWARE-watch-" + vehicleName.toString();
 	}
 }
