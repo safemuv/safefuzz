@@ -6,14 +6,18 @@ import atlasdsl.*;
 public class StubDSLLoader implements DSLLoader {
 	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
 		Robot r = new Robot(robotName);
-		Sensor s = new Sensor(SensorType.SONAR);
+		Sensor sonar = new Sensor(SensorType.SONAR);
+		Sensor gps = new Sensor(SensorType.GPS_POSITION);
 		
-		s.setIntComponentProperty("sensorRange", sensorRange);
-		s.setIntComponentProperty("swathWidth", sensorRange);
-		s.setDoubleComponentProperty("detectionProb", detectionProb);
-		s.setDoubleComponentProperty("falsePos", falsePos);
-		s.setDoubleComponentProperty("falseNeg", falseNeg);
-		r.addSubcomponent(s);
+		sonar.setIntComponentProperty("sensorRange", sensorRange);
+		sonar.setIntComponentProperty("swathWidth", sensorRange);
+		sonar.setDoubleComponentProperty("detectionProb", detectionProb);
+		sonar.setDoubleComponentProperty("falsePos", falsePos);
+		sonar.setDoubleComponentProperty("falseNeg", falseNeg);
+		r.addSubcomponent(sonar);
+		// TODO: properties for the GPS sensor?
+		r.addSubcomponent(gps);	
+		
 		r.setPointComponentProperty("startLocation", startLocation);
 		r.setPointComponentProperty("location", startLocation);
 		m.addRobot(r);

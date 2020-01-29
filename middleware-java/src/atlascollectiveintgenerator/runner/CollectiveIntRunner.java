@@ -1,10 +1,10 @@
 package atlascollectiveintgenerator.runner;
 
-import atlascollectiveintgenerator.CollectiveInt;
+import atlascollectiveint.custom.*;
 
 public class CollectiveIntRunner {
 	public static void main(String [] args) {
-		CollectiveInt c = new CollectiveInt();
+		CollectiveInt c = new CustomCollectiveInt();
 		c.startCI();
 	}
 }

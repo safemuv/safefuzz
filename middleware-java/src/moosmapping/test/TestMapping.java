@@ -47,7 +47,7 @@ public class TestMapping {
 			
 			//javaCI.generateCollectiveIntFiles("collectiveint-gen", CollectiveIntGenTypes.ALL_ROBOTS);
 			// Need to currently generate collective intelligence for the shoreside here
-			javaCI.generateCollectiveIntFiles("collectiveint-gen", CollectiveIntGenTypes.ALL_COMPUTERS);
+			javaCI.generateCollectiveIntFiles("src/atlascollectiveint/custom", CollectiveIntGenTypes.ALL_COMPUTERS);
 			
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed");

@@ -77,18 +77,18 @@ public class MOOSATLASCore extends ATLASCore {
 				if (m.find()) {
 					double x = Double.parseDouble(m.group(1));
 					double y = Double.parseDouble(m.group(2));
-					Integer label = Integer.parseInt(m.group(3));
+					Integer objectID = Integer.parseInt(m.group(3));
 					String vname = m.group(4);
 					Robot r = mission.getRobot(vname);
-					Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(label);
+					Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(objectID);
 					if (r == null) {
 						System.out.println("DEBUG: robot not found for detection report: " + vname + "full update: " + val);	
 					} else {
 						if (!eo.isPresent()) {
-							System.out.println("DEBUG: detected object not registered in environment " + label + "full update " + val);	
+							System.out.println("DEBUG: detected object not registered in environment " + objectID + "full update " + val);	
 						} else {
 							System.out.println("INFO: sending out sensor detection");
-							SensorDetection d = new SensorDetection(new Point(x,y),r,eo.get());
+							SensorDetection d = new SensorDetection(new Point(x,y),vname,objectID);
 							try {
 								// TODO: serialisation
 								outputToCI.sendMessage(d.toString());

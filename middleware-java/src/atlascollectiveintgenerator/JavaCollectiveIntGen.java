@@ -125,7 +125,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
         };
 	
 		// Generate a hook for any possible sensor notification 
-		// on any robot in the system
+		// on any robot in the system - since the computers process
+        // all the notifications via pShare
 		for (Map.Entry<SensorType, Robot> sr : mission.getAllSensorTypesOnVehicles().entrySet()) {
 			// should be sensor types?
 			SensorType st = sr.getKey();
@@ -167,9 +168,11 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			CIFiles cif = new CIFiles(baseDir);
 			
 			
-			TypeSpec.Builder activeMQLink = TypeSpec.classBuilder("ActiveMQLink");
-			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("addMQHooks");
+			TypeSpec.Builder activeMQLink = TypeSpec.classBuilder("CustomCollectiveInt");
+			activeMQLink.superclass(CollectiveInt.class);
 			
+			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("handleDetction");
+			addMQHooks.addParameter(SensorDetection.class, "d");
 						
 			for (Robot r : mission.getAllRobots()) {
 				generateRobotCI(addMQHooks, cif, r);
@@ -182,7 +185,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			activeMQLink.addMethod(addMQHooks.build());
 			JavaFile activeMQLinkFile = JavaFile.builder("collectiveint.user", activeMQLink.build()).build();
 			try {
-				FileWriter mqFileOut = cif.getOpenFile("CollectiveIntRunnerCustom.java");
+				FileWriter mqFileOut = cif.getOpenFile("CustomCollectiveInt.java");
 				activeMQLinkFile.writeTo(mqFileOut);
 				mqFileOut.close();
 			} catch (IOException e) {

@@ -2,14 +2,21 @@
 * DONE Helm is coming up in the state MALCONFIG - crashes approximately 12.5 seconds later? Behaviour problems?
   CLOSED: [2020-01-07 Tue 18:55]
 
-* TODO Read through the proposal again and check I'm on the right track
-* TODO CI code generator - how does it have to be structured, one CI class per robot?
-* TODO Generate a superclass per robot and subclass for each particular robot identity - allowing
+* DONE Read through the proposal again and check I'm on the right track
+* TODO CI code generator - how does it have to be structured, one CI class per robot? Check with Nikos
+* DONE Generate a superclass per robot and subclass for each particular robot identity - allowing
+  CLOSED: [2020-01-29 Wed 00:38]
 behaviour customisation per individual robots
-* TODO Also a CI class for the shoreside
+* DONE Also a CI class for the shoreside
+  CLOSED: [2020-01-29 Wed 00:38]
 ** TODO CI hooks - need to define how the CI will operate - e.g. what calls can it make?
 *** 
 
-* TODO Middleware has to convert MOOS notifications into an general ATLAS form
-* TODO Draw a full diagram interpreation
-* TODO Assumptions that are hardcoded into the MOOS code generation have to be questioned
+* TODO Middleware has to convert MOOS notifications into an general ATLAS form - SensorDetection
+* TODO MOOS topologies have to contain position sensor component - to report to the CI as a sensor
+* DONE Draw a full diagram interpretation
+* TODO Assumptions that are hardcoded into the MOOS code generation have to be checked
+* TODO Proper object serialisation between the middleware and CI
+* TODO CI behaviour layer to specify the CI responses independently - for now the developer can inject MOOS var changes directly
+* TODO Threading behaviour with a central queue for receptions from the MOOS side
+* TODO MOOS-specific side of middleware needs to be "lifted" to use generated code
