@@ -1,7 +1,8 @@
 package atlascollectiveintgenerator;
 
 import atlasdsl.loader.*;
-import middleware.core.SensorDetection;
+import atlassharedclasses.ATLASSharedResult;
+import atlassharedclasses.SonarDetection;
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
@@ -9,7 +10,7 @@ public class CollectiveInt {
 	private Mission mission;
 	private CollectiveIntActiveMQConsumer consumer;
 	
-	void handleMessage(SensorDetection d) {
+	void handleMessage(ATLASSharedResult a) {
 		System.out.println("CollectiveInt.handleMessage called");
 	}
 	

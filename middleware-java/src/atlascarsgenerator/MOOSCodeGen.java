@@ -51,7 +51,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 		System.out.println("createATLASLink");
 		ATLASWatchProcess dbwatch = new ATLASWatchProcess(c, c.getCommunityName());
 		for (String v : middleWareVars) {
-			System.out.println("add watch var" + v);
 			dbwatch.addWatchVariable(v);
 		}
 		c.addProcess(dbwatch);

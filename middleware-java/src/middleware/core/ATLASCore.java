@@ -5,6 +5,7 @@ import java.util.List;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
+import atlassharedclasses.ATLASObjectMapper;
 
 // This code will be combined with the simulator-specific code
 // during code generation
@@ -12,6 +13,7 @@ public abstract class ATLASCore {
 	private List<ActiveMQConsumer> activeConsumers = new ArrayList<ActiveMQConsumer>();
 	protected CARSEventQueue carsIncoming;
 	protected Mission mission;
+	protected ATLASObjectMapper atlasOMapper;
 	
 	private enum consumerSimEntity {
 		ROBOT,
@@ -20,6 +22,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
+		ATLASObjectMapper atlasOMapper = new ATLASObjectMapper();
 	}
 	
     public static void startThread(Runnable runnable, boolean daemon) {

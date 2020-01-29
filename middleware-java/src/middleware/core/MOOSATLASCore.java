@@ -6,8 +6,11 @@ import java.util.regex.Pattern;
 
 import javax.jms.JMSException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
+import atlassharedclasses.SonarDetection;
 import middleware.core.MOOSVariableUpdate;
 import middleware.gui.GUITest;
 
@@ -88,11 +91,15 @@ public class MOOSATLASCore extends ATLASCore {
 							System.out.println("DEBUG: detected object not registered in environment " + objectID + "full update " + val);	
 						} else {
 							System.out.println("INFO: sending out sensor detection");
-							SensorDetection d = new SensorDetection(new Point(x,y),vname,objectID);
+							SonarDetection d = new SonarDetection(new Point(x,y),vname,objectID);
 							try {
-								// TODO: serialisation
-								outputToCI.sendMessage(d.toString());
+								String msg = atlasOMapper.serialise(d);
+								System.out.println("DEBUG: serialised message " + msg);
+								outputToCI.sendMessage(msg);
 							} catch (JMSException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (JsonProcessingException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}

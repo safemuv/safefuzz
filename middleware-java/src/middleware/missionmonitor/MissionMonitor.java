@@ -3,6 +3,7 @@ package middleware.missionmonitor;
 import java.util.Optional;
 
 import atlasdsl.*;
+import atlassharedclasses.SonarDetection;
 import middleware.core.*;
 
 public class MissionMonitor {
@@ -15,7 +16,7 @@ public class MissionMonitor {
 		scanGoals();
 	}
 	
-	public void reportDetection(SensorDetection sd) {
+	public void reportDetection(SonarDetection sd) {
 		// Needs to update the internal state of any sensor coverage goals 
 		// which are relevant to this type of sensor
 	}

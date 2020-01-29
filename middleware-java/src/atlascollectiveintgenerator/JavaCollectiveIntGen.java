@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 import com.squareup.javapoet.*;
 
 import atlasdsl.*;
-import middleware.core.SensorDetection;
+import atlassharedclasses.ATLASSharedResult;
+import atlassharedclasses.SonarDetection;
 
 public class JavaCollectiveIntGen extends CollectiveIntGen {
 	public JavaCollectiveIntGen(Mission m) {
@@ -67,6 +69,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 			
 		TypeSpec.Builder ciClass = TypeSpec.classBuilder(className);
+		generateStandardHooks(ciClass);
 		if (robot != null) {
 			// TODO: store the parent class generated
 			//ciClass.superclass(cif.getClass("robotCollectiveIntelligence").class);
@@ -80,7 +83,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			String hookName = m.getName() + "MessageHook";
 			System.out.println("adding method - " + hookName);
 			MethodSpec hook = MethodSpec.methodBuilder(hookName)
-						.addModifiers(Modifier.PRIVATE)
+						.addModifiers(Modifier.PUBLIC)
 						.returns(void.class)
 						.addParameter(Message.class, m.getName())
 						.addParameter(Component.class, "from")
@@ -90,7 +93,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 		
 		try {
-			FileWriter robotOut = cif.getOpenFile("robotCI.java");
+			FileWriter robotOut = cif.getOpenFile(className + ".java");
 			JavaFile javaFile = JavaFile.builder("collectiveint", ciClass.build()).build();
 			javaFile.writeTo(robotOut);
 		} catch (IOException e) {
@@ -98,13 +101,65 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
+	private String activeMQcodeForSensorType(SensorType st) {
+		switch (st) {
+		case SONAR:
+			return "if (a.getContentsClass() == SonarDetection.class) {\n" + 
+			"		  Optional<SonarDetection> d_o = a.getSonarDetection();\n" + 
+			"		  if (d_o.isPresent()) {\n" + 
+			"			  SonarDetection d = d_o.get();\n" + 
+			"			  ComputerCIshoreside.SONARDetectionHook(d_o.get(), d.getRobotName());\n" + 
+			"		  }\n" + 
+			"	  }";
+			
+		case GPS_POSITION:
+			return "if (a.getContentsClass() == GPSPositionReading.class) {\n" + 
+					"		  Optional<GPSPositionReading> r_o = a.getGPSPositionReading();\n" + 
+					"		  if (r_o.isPresent()) {\n" + 
+					"			  GPSPositionReading r = r_o.get();\n" + 
+					"			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY());\n" + 
+					"		  }\n" + 
+					"	  }";
+		default:
+			return "";
+		}
+	}
+	
+	private void addMethodHookForSensorType(TypeSpec.Builder ciClass, SensorType st, String hookName) {
+		MethodSpec.Builder m = null;
+		switch (st) {
+			case SONAR:
+				m = MethodSpec.methodBuilder(hookName)
+					.addModifiers(Modifier.PUBLIC)
+					.addModifiers(Modifier.STATIC)
+					.returns(void.class)
+					.addParameter(SonarDetection.class, "detection")
+					.addParameter(String.class, "robotName");
+				ciClass.addMethod(m.build());
+				break;
+			
+			case GPS_POSITION:
+				m = MethodSpec.methodBuilder(hookName)
+					.addModifiers(Modifier.PUBLIC)
+					.addModifiers(Modifier.STATIC)
+					.returns(void.class)
+					.addParameter(Double.class, "x")
+					.addParameter(Double.class, "y");
+				ciClass.addMethod(m.build());
+				break;
+		}
+	}
+	
 	public void generateComputerCI(MethodSpec.Builder activeMQHooks, CIFiles cif, Computer c) {
+		// TODO: need to import atlassharedclasses.* into the generated code
+		// and Optional
 		String className = "ComputerCI";
 		if (c != null) {
 			className = className + c.getName();
 		}
 		
 		TypeSpec.Builder ciClass = TypeSpec.classBuilder(className);
+		generateStandardHooks(ciClass);
 		
 		// Need to find all the potential hooks for ANY robot
 		// and need to know which robot the hooks came from?
@@ -113,7 +168,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			String hookName = m.getName() + "MessageHook";
 			System.out.println("DEBUG: adding method - " + hookName);
 			MethodSpec hook = MethodSpec.methodBuilder(hookName)
-						.addModifiers(Modifier.PRIVATE)
+						.addModifiers(Modifier.PUBLIC)
+						.addModifiers(Modifier.STATIC)
 						.returns(void.class)
 						.addParameter(Message.class, m.getName())
 						.addParameter(Component.class, "from")
@@ -126,31 +182,27 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	
 		// Generate a hook for any possible sensor notification 
 		// on any robot in the system - since the computers process
-        // all the notifications via pShare
+        // all the notifications via pShare, this is done at the 
+        // shoreside
 		for (Map.Entry<SensorType, Robot> sr : mission.getAllSensorTypesOnVehicles().entrySet()) {
 			// should be sensor types?
 			SensorType st = sr.getKey();
 			Robot r = sr.getValue();
 			String sensorTypeName = Sensor.sensorTypeToString(st).toUpperCase();
 			
-			System.out.println("DEBUG: adding method stub for sensor " + r.getClass());
+			// TODO: Need to create a different hook depending on the sensor type, and these
+			// notifications must match the call parameters defined above in
+			// activeMQcodeForSensorType
+			System.out.println("DEBUG: adding method stub for sensor " + sensorTypeName);
 			String hookName = st.toString() + "DetectionHook";
-			MethodSpec hook = MethodSpec.methodBuilder(hookName)
-							.addModifiers(Modifier.PRIVATE)
-							.returns(void.class)
-							.addParameter(SensorDetection.class, "detection")
-							.addParameter(Robot.class, "robot")
-							.build();
-			ciClass.addMethod(hook);
 			
-			activeMQHooks.addCode("if (d.getSensorType() == SensorType." + sensorTypeName +") {\n"
-					   + "ComputerCIShoreside." + sensorTypeName + "DetectionHook(d,d.getRobot());\n"
-					   + "}\n"); 
+			addMethodHookForSensorType(ciClass, st, hookName);
+			activeMQHooks.addCode(activeMQcodeForSensorType(st));
 		}
 		
 		try {
-			FileWriter robotOut = cif.getOpenFile("computerCI.java");
-			JavaFile javaFile = JavaFile.builder("collectiveint.user", ciClass.build()).build();
+			FileWriter robotOut = cif.getOpenFile(className + ".java");
+			JavaFile javaFile = JavaFile.builder("atlascollectiveint.custom", ciClass.build()).build();
 			javaFile.writeTo(robotOut);
 			robotOut.flush();
 			robotOut.close();
@@ -159,34 +211,32 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
-	// Generates a general file for all computers
-	//public void generateGeneralComputerCI(CIFiles cif) {
-	//	TypeSpec.Builder ciClass = TypeSpec.classBuilder("computerCollectiveIntelligence");
-	//}
-	
 	public void generateCollectiveIntFiles(String baseDir, CollectiveIntGenTypes cgt) {
 			CIFiles cif = new CIFiles(baseDir);
 			
-			
 			TypeSpec.Builder activeMQLink = TypeSpec.classBuilder("CustomCollectiveInt");
 			activeMQLink.superclass(CollectiveInt.class);
+			activeMQLink.addModifiers(Modifier.PUBLIC);
 			
-			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("handleDetction");
-			addMQHooks.addParameter(SensorDetection.class, "d");
+			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("handleMessage");
+			addMQHooks.addParameter(ATLASSharedResult.class, "a");
 						
 			for (Robot r : mission.getAllRobots()) {
 				generateRobotCI(addMQHooks, cif, r);
 			}
 			
 			for (Computer c : mission.getAllComputers()) {
-				generateComputerCI(addMQHooks, cif,c);
+				generateComputerCI(addMQHooks, cif, c);
 			}
 			
 			activeMQLink.addMethod(addMQHooks.build());
-			JavaFile activeMQLinkFile = JavaFile.builder("collectiveint.user", activeMQLink.build()).build();
+			JavaFile.Builder activeMQLinkFile = JavaFile.builder("atlascollectiveint.custom", activeMQLink.build());
+			activeMQLinkFile.addStaticImport(Optional.class, "*");
+			// "import atlassharedclasses.*;"
+			
 			try {
 				FileWriter mqFileOut = cif.getOpenFile("CustomCollectiveInt.java");
-				activeMQLinkFile.writeTo(mqFileOut);
+				activeMQLinkFile.build().writeTo(mqFileOut);
 				mqFileOut.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -15,17 +15,14 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import atlasdsl.Mission;
 import atlasdsl.SensorType;
-import middleware.core.CARSEventQueue;
-import middleware.core.MOOSEvent;
-import middleware.core.MOOSVariableUpdate;
-import middleware.core.SensorDetection;
-import middleware.logging.ATLASLog;
+import atlassharedclasses.*;
 
 public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListener {
 	private String vehicleName;
 	private boolean mqListen = true;
 	private int pollInterval = 1000;
 	private CollectiveInt ci;
+	private ATLASObjectMapper atlasObjMapper;
 	
 	Mission mission;
 	
@@ -33,6 +30,7 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
 		this.vehicleName = vehicleName;
 		this.mission = mission;
 		this.ci = ci;
+		atlasObjMapper = new ATLASObjectMapper();
 	}
 	
     public void handleMessage(Message m) {
@@ -40,19 +38,9 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
             if (m instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) m;
                 String text = textMessage.getText();
-                Optional<SensorDetection> d_o = SensorDetection.parse(text, mission);
-               
-                if (d_o.isPresent()) {
-                	SensorDetection d = d_o.get();
-                	System.out.println("Received valid detection object - decoded as " + d.toString());
-                	ci.handleMessage(d);
-                	
-                	
-
-                	
-                	// TODO: add relevant hooks for the sensor detection here
-                }
-                
+                // TODO: deserialise the messages here
+                ATLASSharedResult msg = atlasObjMapper.deserialise(text);
+                ci.handleMessage(msg);
                 CollectiveIntLog.logCIInbound(vehicleName, text);
                 
             } else {
