@@ -1,3 +1,5 @@
+* DONE Have the requests from MOOS flowing over ActiveMQ to the CI - CI custom hooks are being called
+
 * DONE pShare/nodebroker/nodecomms need to be set up to see vehicles on pMarineViewer
 * DONE Helm is coming up in the state MALCONFIG - crashes approximately 12.5 seconds later? Behaviour problems?
   CLOSED: [2020-01-07 Tue 18:55]
@@ -10,7 +12,7 @@ behaviour customisation per individual robots
 * DONE Also a CI class for the shoreside
   CLOSED: [2020-01-29 Wed 00:38]
 ** TODO CI hooks - need to define how the CI will operate - e.g. what calls can it make?
-*** 
+*** Just for now send MOOS commands directly
 
 * DONE Middleware has to convert MOOS notifications into an general ATLAS form - SensorDetection or GPSPositionLocation
   CLOSED: [2020-01-30 Thu 15:13]
@@ -18,7 +20,8 @@ behaviour customisation per individual robots
        for now I have converted it so the true robot position updates from MOOS are reported to the CI as notifications
 * DONE Draw a full diagram interpretation
 * TODO Assumptions that are hardcoded into the MOOS code generation have to be checked
-* TODO Proper object serialisation between the middleware and CI
+* DONE Proper object serialisation between the middleware and CI
+  CLOSED: [2020-01-30 Thu 16:43]
 * TODO CI behaviour layer to specify the CI responses independently - for now the developer can inject MOOS var changes directly
 * TODO Threading behaviour with a central queue for receptions from the MOOS side
 * TODO MOOS-specific side of middleware needs to be "lifted" to use generated code
@@ -49,3 +52,8 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 	at atlascollectiveintgenerator.CollectiveIntActiveMQConsumer.run(CollectiveIntActiveMQConsumer.java:79)
 	at atlascollectiveintgenerator.CollectiveInt.startCI(CollectiveInt.java:22)
 	at atlascollectiveintgenerator.runner.CollectiveIntRunner.main(CollectiveIntRunner.java:9)
+
+* TODO Need to get the CI implemented for next week
+* TODO Reverse channel from the CI to MOOSDB for variable updates
+* TODO Timers for the CI
+* TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now

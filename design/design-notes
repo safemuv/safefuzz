@@ -83,7 +83,5 @@ Coupling between the components - all of it flows over ActiveMQ? Or
 multithreaded components on the Java side?
 If multithreading is chosen, make sure that the objects are immutable (should be OK then)
 
-Topology structure - currently all interfacing of detections is via the
-
 Check what additional components are required in order to implement the faults
 specified in the first reports

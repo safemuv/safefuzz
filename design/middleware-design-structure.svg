@@ -11,7 +11,7 @@
    inkscape:export-xdpi="187.744"
    inkscape:export-filename="/home/jharbin/academic/atlas/git/atlas-middleware/design/middleware-design-structure.png"
    sodipodi:docname="middleware-design-structure.svg"
-   inkscape:version="1.0beta2 (2b71d25d45, 2019-12-03)"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
    id="svg1207"
    version="1.1"
    viewBox="0 0 210 297"
@@ -851,20 +851,36 @@
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
          transform="matrix(-0.8,0,0,-0.8,-10,0)" />
     </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker3013-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#f90000;fill-opacity:1;fill-rule:evenodd;stroke:#f90000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3011-6"
+         inkscape:connector-curvature="0" />
+    </marker>
   </defs>
   <sodipodi:namedview
      inkscape:window-maximized="0"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:window-height="1055"
-     inkscape:window-width="1912"
+     inkscape:window-height="800"
+     inkscape:window-width="1280"
      showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="3751.088"
-     inkscape:cx="794.85016"
-     inkscape:zoom="0.175"
+     inkscape:cy="-2644.9835"
+     inkscape:cx="683.3895"
+     inkscape:zoom="0.7"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -883,7 +899,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -925,8 +941,7 @@
            width="114.28571"
            id="rect17293" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara17297">MOOSDB</flowPara></flowRoot>
-    <rect
+         id="flowPara17297">MOOSDB</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        y="935.69116"
@@ -951,8 +966,7 @@
            width="114.28571"
            id="rect17313" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara17317">pSimMarine</flowPara></flowRoot>
-    <g
+         id="flowPara17317">pSimMarine</flowPara></flowRoot>    <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        transform="translate(308.43309,62.659813)"
@@ -978,8 +992,7 @@
              width="114.28571"
              id="rect17323" /></flowRegion><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-           id="flowPara17327">pShare</flowPara></flowRoot>
-    </g>
+           id="flowPara17327">pShare</flowPara></flowRoot>    </g>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1007,8 +1020,7 @@
          id="flowPara17337"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">uFldHazard</flowPara><flowPara
          id="flowPara17339"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">Mgr</flowPara></flowRoot>
-    <rect
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">Mgr</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.250263;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -1033,8 +1045,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara17349"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pHelmIvP</flowPara></flowRoot>
-    <rect
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pHelmIvP</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        y="975.13055"
@@ -1059,8 +1070,7 @@
            width="114.28571"
            id="rect17355" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara17359">pLogger</flowPara></flowRoot>
-    <rect
+         id="flowPara17359">pLogger</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        y="968.05487"
@@ -1085,8 +1095,7 @@
            width="123.88216"
            id="rect17365" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara17369">uFldNodeComms</flowPara></flowRoot>
-    <path
+         id="flowPara17369">uFldNodeComms</flowPara></flowRoot>    <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        sodipodi:nodetypes="cc"
@@ -1158,8 +1167,7 @@
            id="flowPara10146"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">UHZ_NODE_DETECTION</flowPara><flowPara
            id="flowPara10144"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">NODE_REPORT_$VNAME</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">NODE_REPORT_$VNAME</flowPara></flowRoot>    </g>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1194,8 +1202,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara4084"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">MOOSDB</flowPara></flowRoot>
-    <rect
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">MOOSDB</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.269978;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -1220,8 +1227,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara4094"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pSimMarine</flowPara></flowRoot>
-    <g
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pSimMarine</flowPara></flowRoot>    <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        transform="translate(307.20123,121.53385)"
@@ -1247,8 +1253,7 @@
              y="255.73396"
              style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
            id="flowPara4104"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pShare</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pShare</flowPara></flowRoot>    </g>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1276,8 +1281,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
          id="flowPara4116">uFldHazard</flowPara><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara4118">Mgr</flowPara></flowRoot>
-    <rect
+         id="flowPara4118">Mgr</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        y="1024.2493"
@@ -1302,8 +1306,7 @@
            width="114.28571"
            id="rect4124" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara4128">pHelmIvP</flowPara></flowRoot>
-    <rect
+         id="flowPara4128">pHelmIvP</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.239145;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -1328,8 +1331,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara4138"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pLogger</flowPara></flowRoot>
-    <rect
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pLogger</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        style="fill:none;fill-opacity:0.673554;stroke:#000000;stroke-width:0.318146;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -1354,8 +1356,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara4148"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">uFldNodeComms</flowPara></flowRoot>
-    <path
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">uFldNodeComms</flowPara></flowRoot>    <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        inkscape:connector-curvature="0"
@@ -1419,8 +1420,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000;" /></flowRegion><flowPara
          id="flowPara4168"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>
-    <path
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>    <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        inkscape:connector-curvature="0"
@@ -1436,8 +1436,10 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Vehicles (x4)</tspan></tspan></text>
+         y="929.14622"
+         id="tspan216"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan214">Vehicles (x4)</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1447,8 +1449,10 @@
        transform="translate(205.72475,51.348327)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Shoreside</tspan></tspan></text>
+         y="929.14622"
+         id="tspan221"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan219">Shoreside</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1466,8 +1470,10 @@
        transform="translate(103.68304,54.007761)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold';fill:#0000fa;fill-opacity:1;stroke:#0000ff;stroke-opacity:1">UDP</tspan></tspan></text>
+         y="929.14622"
+         id="tspan227"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold';fill:#0000fa;fill-opacity:1;stroke:#0000ff;stroke-opacity:1"
+           id="tspan225">UDP</tspan></tspan></text>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1506,8 +1512,7 @@
              y="255.73396"
              style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold';fill:#000000;" /></flowRegion><flowPara
            id="flowPara10416"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#000000">ATLASDBWatch</flowPara></flowRoot>    </g>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1543,20 +1548,28 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">MOOS internal part of </tspan><tspan
+         y="929.14622"
+         id="tspan246"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan242">MOOS internal part of </tspan><tspan
            dx="1.3942299"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan244" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">middleware</tspan><tspan
+         y="934.24986"
+         id="tspan252"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan248">middleware</tspan><tspan
            dx="2.5295582"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan250" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">(auto-generated from DSL)</tspan></tspan></text>
+         y="939.3535"
+         id="tspan256"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan254">(auto-generated from DSL)</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1566,22 +1579,31 @@
        transform="translate(-88.683175,-63.730524)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">ATLAS simulator </tspan><tspan
+         y="929.14622"
+         id="tspan263"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan259">ATLAS simulator </tspan><tspan
            dx="1.3942299"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan261" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">generic state/management </tspan><tspan
+         y="934.24986"
+         id="tspan269"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan265">generic state/management </tspan><tspan
            dx="1.3942299"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan267" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">code</tspan><tspan
+         y="939.3535"
+         id="tspan275"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan271">code</tspan><tspan
            dx="2.5295587"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan273" /></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1591,20 +1613,28 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Collective </tspan><tspan
+         y="929.14622"
+         id="tspan282"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan278">Collective </tspan><tspan
            dx="1.394228"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan280" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">intelligence stub</tspan><tspan
+         y="934.24986"
+         id="tspan288"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan284">intelligence stub</tspan><tspan
            dx="2.6639175"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan286" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">(auto-generated)</tspan></tspan></text>
+         y="939.3535"
+         id="tspan292"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan290">(auto-generated)</tspan></tspan></text>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1627,8 +1657,10 @@
        transform="translate(-82.925509,127.85117)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Mission monitoring</tspan></tspan></text>
+         y="929.14622"
+         id="tspan299"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan297">Mission monitoring</tspan></tspan></text>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1651,8 +1683,10 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Logging</tspan></tspan></text>
+         y="929.14622"
+         id="tspan306"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan304">Logging</tspan></tspan></text>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1678,8 +1712,7 @@
            width="114.28571"
            id="rect10979" /></flowRegion><flowPara
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'"
-         id="flowPara10983">pNodeBroker</flowPara></flowRoot>
-    <rect
+         id="flowPara10983">pNodeBroker</flowPara></flowRoot>    <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:0.276575;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -1704,8 +1737,7 @@
            y="255.73396"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe New Century Schoolbook';-inkscape-font-specification:'Adobe New Century Schoolbook Bold'" /></flowRegion><flowPara
          id="flowPara11005"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pNodeBroker</flowPara></flowRoot>
-    <g
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica'">pNodeBroker</flowPara></flowRoot>    <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
        id="g11041"
@@ -1727,8 +1759,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000"
            id="flowPara11033">MOOS navigation updates</flowPara><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000"
-           id="flowPara11037">UP_LOITER=&lt;...&gt;</flowPara></flowRoot>
-    </g>
+           id="flowPara11037">UP_LOITER=&lt;...&gt;</flowPara></flowRoot>    </g>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1790,8 +1821,10 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Fault generator</tspan></tspan></text>
+         y="929.14622"
+         id="tspan334"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan332">Fault generator</tspan></tspan></text>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1814,8 +1847,7 @@
            id="flowPara19147"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000">Interference updates:</flowPara><flowPara
            id="flowPara19149"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000">BREAK_CONNECTION_TO=$VNAME</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';text-align:start;text-anchor:start;fill:#ff0000">BREAK_CONNECTION_TO=$VNAME</flowPara></flowRoot>    </g>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1901,8 +1933,10 @@
        transform="translate(-21.081277,149.58748)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">logMOOSUpdate(MOOSVarUpdate mvu)</tspan></tspan></text>
+         y="929.14622"
+         id="tspan358"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan356">logMOOSUpdate(MOOSVarUpdate mvu)</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -1989,8 +2023,10 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">activeMQNotify()</tspan></tspan></text>
+         y="929.14622"
+         id="tspan375"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan373">activeMQNotify()</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2000,8 +2036,10 @@
        transform="matrix(1.6058971,0,0,2.2779158,-20.907122,-1197.1567)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">MOOS simulation</tspan></tspan></text>
+         y="929.14622"
+         id="tspan380"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan378">MOOS simulation</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2011,22 +2049,31 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">notifySonarDetection(Robot r, SensorDetection d) </tspan></tspan><tspan
+         y="929.14622"
+         id="tspan385"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan383">notifySonarDetection(Robot r, SensorDetection d) </tspan></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">{</tspan><tspan
+         y="934.24986"
+         id="tspan391"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan387">{</tspan><tspan
            dx="2.3884821"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan389" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         y="939.3535"
+         id="tspan395"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan393" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="944.45713"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">}</tspan></tspan></text>
+         y="944.45713"
+         id="tspan399"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan397">}</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2078,8 +2125,10 @@
        transform="translate(-40.879465,-27.177374)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">robot.updateLocation(pos)</tspan></tspan></text>
+         y="929.14622"
+         id="tspan410"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan408">robot.updateLocation(pos)</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2089,26 +2138,37 @@
        transform="translate(-204.60304,-54.644775)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Collective </tspan><tspan
+         y="929.14622"
+         id="tspan417"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan413">Collective </tspan><tspan
            dx="1.394228"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan415" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">intelligence</tspan><tspan
+         y="934.24986"
+         id="tspan423"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan419">intelligence</tspan><tspan
            dx="2.5295582"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan421" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">ActiveMQ</tspan><tspan
+         y="939.3535"
+         id="tspan429"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan425">ActiveMQ</tspan><tspan
            dx="3.1207371"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan427" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="944.45713"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">bridge</tspan></tspan></text>
+         y="944.45713"
+         id="tspan433"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan431">bridge</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2118,8 +2178,10 @@
        transform="translate(-283.23979,-36.557457)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">shoresideCollectiveInt.java</tspan></tspan></text>
+         y="929.14622"
+         id="tspan438"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan436">shoresideCollectiveInt.java</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2151,8 +2213,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
            id="flowPara8040">UHZ_NODE_DETECTION</flowPara><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
-           id="flowPara8042">NODE_REPORT_$VNAME</flowPara></flowRoot>
-    </g>
+           id="flowPara8042">NODE_REPORT_$VNAME</flowPara></flowRoot>    </g>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2162,8 +2223,10 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">activeMQListener(msg)</tspan></tspan></text>
+         y="929.14622"
+         id="tspan451"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan449">activeMQListener(msg)</tspan></tspan></text>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2186,8 +2249,7 @@
            id="flowPara8042-5"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">serialised representation </flowPara><flowPara
            id="flowPara8372"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">of SensorDetections</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">of SensorDetections</flowPara></flowRoot>    </g>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2301,18 +2363,25 @@
        transform="translate(-302.63145,-7.9118238)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">notifyPositionUpdate(Robot r, Position pos) {</tspan><tspan
+         y="929.14622"
+         id="tspan480"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan476">notifyPositionUpdate(Robot r, Position pos) {</tspan><tspan
            dx="2.3884888"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan478" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+         y="934.24986"
+         id="tspan484"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan482" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="939.3535"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">}</tspan></tspan></text>
+         y="939.3535"
+         id="tspan488"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan486">}</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2359,8 +2428,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
            id="flowPara11783">serialised representation </flowPara><flowPara
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000"
-           id="flowPara11785">of BehaviourCommands</flowPara></flowRoot>
-    </g>
+           id="flowPara11785">of BehaviourCommands</flowPara></flowRoot>    </g>
     <g
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2387,8 +2455,7 @@
            id="flowPara12073"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">(Fault from DSL plus </flowPara><flowPara
            id="flowPara12075"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">additional info)</flowPara></flowRoot>
-    </g>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Helvetica';-inkscape-font-specification:'Adobe Helvetica';fill:#ff0000">additional info)</flowPara></flowRoot>    </g>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2406,16 +2473,22 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">storeSensorDetection(pos)</tspan><tspan
+         y="929.14622"
+         id="tspan513"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan509">storeSensorDetection(pos)</tspan><tspan
            dx="1.5420227"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan511" /></tspan><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="934.24986"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">sendOutActiveMQ(...)</tspan><tspan
+         y="934.24986"
+         id="tspan519"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan515">sendOutActiveMQ(...)</tspan><tspan
            dx="1.5420227"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'" /></tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan517" /></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2441,8 +2514,10 @@
        transform="translate(-288.45016,62.903798)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">GUI</tspan></tspan></text>
+         y="929.14622"
+         id="tspan526"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan524">GUI</tspan></tspan></text>
     <rect
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2503,9 +2578,11 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
+         y="929.14622"
+         id="tspan538"><tspan
            dx="0 0 0 0 0 0 0 0 0 -0.19843701 0.19843575 0 0 0 0 0 0 0 -0.19843701 0.19843766"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'">Fault definition file</tspan></tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier Bold'"
+           id="tspan536">Fault definition file</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2536,8 +2613,10 @@
        transform="translate(-263.31933,81.286823)"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">onClick()</tspan></tspan></text>
+         y="929.14622"
+         id="tspan546"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan544">onClick()</tspan></tspan></text>
     <text
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2547,9 +2626,11 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
+         y="929.14622"
+         id="tspan551"><tspan
            dx="0 0 0 0 0 0 0 -0.19843701 0.19843742"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">readDefinition()</tspan></tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan549">readDefinition()</tspan></tspan></text>
     <path
        inkscape:export-ydpi="187.744"
        inkscape:export-xdpi="187.744"
@@ -2657,7 +2738,16 @@
        xml:space="preserve"><tspan
          sodipodi:role="line"
          x="257.01758"
-         y="929.14622"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'">logMissionStatus(Goal status, bool success)</tspan></tspan></text>
+         y="929.14622"
+         id="tspan572"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Adobe Courier';-inkscape-font-specification:'Adobe Courier'"
+           id="tspan570">logMissionStatus(Goal status, bool success)</tspan></tspan></text>
+    <path
+       inkscape:export-ydpi="187.744"
+       inkscape:export-xdpi="187.744"
+       style="fill:none;fill-rule:evenodd;stroke:#f90000;stroke-width:0.218236;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker3013-3)"
+       d="m 375.4173,1040.0925 c -58.41356,58.0586 -58.41356,58.0586 -58.41356,58.0586"
+       id="path3009-7"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
