@@ -7,5 +7,6 @@ public class CollectiveIntRunner {
 	public static void main(String [] args) {
 		CollectiveInt c = new CustomCollectiveInt();
 		c.startCI();
+		c.init();
 	}
 }

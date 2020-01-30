@@ -10,7 +10,7 @@ public class CollectiveInt {
 	private Mission mission;
 	private CollectiveIntActiveMQConsumer consumer;
 	
-	void handleMessage(ATLASSharedResult a) {
+	protected void handleMessage(ATLASSharedResult a) {
 		System.out.println("CollectiveInt.handleMessage called");
 	}
 	
@@ -20,5 +20,9 @@ public class CollectiveInt {
 		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
 		// Start the CI listening over ActiveMQ
 		consumer.run();
+	}
+
+	public void init() {
+		
 	}
 }

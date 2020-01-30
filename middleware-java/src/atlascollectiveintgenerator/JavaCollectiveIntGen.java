@@ -38,7 +38,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	
 	private void generateStandardHooks(TypeSpec.Builder ciClass) {
 		MethodSpec hook = MethodSpec.methodBuilder("init")
-				.addModifiers(Modifier.PRIVATE)
+				.addModifiers(Modifier.PUBLIC)
+				.addModifiers(Modifier.STATIC)
 				.returns(void.class)
 				.build();
 		ciClass.addMethod(hook);
@@ -150,7 +151,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
-	public void generateComputerCI(MethodSpec.Builder activeMQHooks, CIFiles cif, Computer c) {
+	public void generateComputerCI(MethodSpec.Builder activeMQHooks, MethodSpec.Builder initHooks, CIFiles cif, Computer c) {
 		// TODO: need to import atlassharedclasses.* into the generated code
 		// and Optional
 		String className = "ComputerCI";
@@ -200,6 +201,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			activeMQHooks.addCode(activeMQcodeForSensorType(st));
 		}
 		
+		initHooks.addCode(className + ".init();");
+		
 		try {
 			FileWriter robotOut = cif.getOpenFile(className + ".java");
 			JavaFile javaFile = JavaFile.builder("atlascollectiveint.custom", ciClass.build()).build();
@@ -211,6 +214,24 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
+	// temp fix for https://github.com/square/javapoet/issues/512
+	public String injectImports(JavaFile javaFile, List<String> imports) {
+		    String rawSource = javaFile.toString();
+
+		    List<String> result = new ArrayList<>();
+		    for (String s : rawSource.split("\n", -1)) {
+		      result.add(s);
+		      if (s.startsWith("package ")) {
+		        result.add("");
+		        for (String i : imports) {
+		          result.add("import " + i + ";");
+		        }
+		      }
+		    }
+		    return String.join("\n", result);
+	}
+	
+	
 	public void generateCollectiveIntFiles(String baseDir, CollectiveIntGenTypes cgt) {
 			CIFiles cif = new CIFiles(baseDir);
 			
@@ -218,25 +239,35 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			activeMQLink.superclass(CollectiveInt.class);
 			activeMQLink.addModifiers(Modifier.PUBLIC);
 			
+			MethodSpec.Builder initHooks = MethodSpec.methodBuilder("init");
+			initHooks.addModifiers(Modifier.PUBLIC);
+			
 			MethodSpec.Builder addMQHooks = MethodSpec.methodBuilder("handleMessage");
+			addMQHooks.addModifiers(Modifier.PROTECTED);
 			addMQHooks.addParameter(ATLASSharedResult.class, "a");
 						
 			for (Robot r : mission.getAllRobots()) {
+				// TODO: add initHooks to the generateRobotCI too
 				generateRobotCI(addMQHooks, cif, r);
 			}
 			
 			for (Computer c : mission.getAllComputers()) {
-				generateComputerCI(addMQHooks, cif, c);
+				generateComputerCI(addMQHooks, initHooks, cif, c);
 			}
 			
 			activeMQLink.addMethod(addMQHooks.build());
-			JavaFile.Builder activeMQLinkFile = JavaFile.builder("atlascollectiveint.custom", activeMQLink.build());
-			activeMQLinkFile.addStaticImport(Optional.class, "*");
-			// "import atlassharedclasses.*;"
+			activeMQLink.addMethod(initHooks.build());
+			
+			// Use additional imports https://github.com/square/javapoet/issues/512
+			List<String> customImports = new ArrayList<String>();
+			customImports.add("atlassharedclasses.*");
+			customImports.add("java.util.Optional");
 			
 			try {
 				FileWriter mqFileOut = cif.getOpenFile("CustomCollectiveInt.java");
-				activeMQLinkFile.build().writeTo(mqFileOut);
+				JavaFile mqFile = JavaFile.builder("atlascollectiveint.custom", activeMQLink.build()).build();
+				String modified = injectImports(mqFile, customImports);
+				mqFileOut.write(modified);
 				mqFileOut.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -1,12 +1,13 @@
 package atlascollectiveint.custom;
 
+import atlassharedclasses.*;
 import java.util.Optional;
 
 import atlascollectiveintgenerator.CollectiveInt;
-import atlassharedclasses.*;
+import atlassharedclasses.ATLASSharedResult;
 
 public class CustomCollectiveInt extends CollectiveInt {
-  void handleMessage(ATLASSharedResult a) {
+  protected void handleMessage(ATLASSharedResult a) {
     if (a.getContentsClass() == SonarDetection.class) {
     		  Optional<SonarDetection> d_o = a.getSonarDetection();
     		  if (d_o.isPresent()) {
@@ -20,5 +21,9 @@ public class CustomCollectiveInt extends CollectiveInt {
     			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY());
     		  }
     	  }
+  }
+
+  public void init() {
+    ComputerCIshoreside.init();
   }
 }

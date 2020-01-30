@@ -5,7 +5,7 @@ import java.lang.Double;
 import java.lang.String;
 
 class ComputerCIshoreside {
-  private void init() {
+  public static void init() {
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
