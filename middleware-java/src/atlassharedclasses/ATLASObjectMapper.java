@@ -24,7 +24,7 @@ public class ATLASObjectMapper {
 	
 	private Pattern msgScanner = Pattern.compile("([^,]+),(.+)");
 	// FIX: for some reason jackson is inserting additional fields into the
-	// sonar sensor detections. This should remove them
+	// sonar sensor detections. This should work around this
 	// https://www.baeldung.com/jackson-deserialize-json-unknown-properties
 	private ObjectMapper objMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	
