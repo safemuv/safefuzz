@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ATLASObjectMapper {
@@ -22,14 +23,16 @@ public class ATLASObjectMapper {
 	}
 	
 	private Pattern msgScanner = Pattern.compile("([^,]+),(.+)");
-	private ObjectMapper objMapper = new ObjectMapper();
+	// FIX: for some reason jackson is inserting additional fields into the
+	// sonar sensor detections. This should remove them
+	// https://www.baeldung.com/jackson-deserialize-json-unknown-properties
+	private ObjectMapper objMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	
 	public String serialise(Object msg) throws JsonProcessingException {
 		String className = msg.getClass().getName();
 		return className + "," + objMapper.writeValueAsString(msg);
 	}
 	
-	// TODO: need some way to tell what the type is?
 	public ATLASSharedResult deserialise(String msgText) throws ATLASFormatError {
 		Matcher m = msgScanner.matcher(msgText);
 		if (m.find()) {
@@ -37,6 +40,7 @@ public class ATLASObjectMapper {
 			String objText = m.group(2);
 			try {
 				Class<?> msgClass = Class.forName(className);
+				System.out.println("DEBUG: deserialise - className = " + className + " raw json = " + objText);
 				Object msg = objMapper.readValue(objText, msgClass);
 				return new ATLASSharedResult(msg, msgClass);
 			} catch (JsonProcessingException e) {

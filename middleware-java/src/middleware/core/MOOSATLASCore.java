@@ -77,7 +77,6 @@ public class MOOSATLASCore extends ATLASCore {
 						e1.printStackTrace();
 					}
 					
-					
 					// Find the corresponding robot object and update its location parameters
 					Robot r = mission.getRobot(entityName);
 					if (r != null) {

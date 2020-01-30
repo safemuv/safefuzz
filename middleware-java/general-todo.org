@@ -12,11 +12,40 @@ behaviour customisation per individual robots
 ** TODO CI hooks - need to define how the CI will operate - e.g. what calls can it make?
 *** 
 
-* TODO Middleware has to convert MOOS notifications into an general ATLAS form - SensorDetection
-* TODO MOOS topologies have to contain position sensor component - to report to the CI as a sensor
+* DONE Middleware has to convert MOOS notifications into an general ATLAS form - SensorDetection or GPSPositionLocation
+  CLOSED: [2020-01-30 Thu 15:13]
+* TODO MOOS topologies have to contain position sensor component - to report to the CI as a sensor - 
+       for now I have converted it so the true robot position updates from MOOS are reported to the CI as notifications
 * DONE Draw a full diagram interpretation
 * TODO Assumptions that are hardcoded into the MOOS code generation have to be checked
 * TODO Proper object serialisation between the middleware and CI
 * TODO CI behaviour layer to specify the CI responses independently - for now the developer can inject MOOS var changes directly
 * TODO Threading behaviour with a central queue for receptions from the MOOS side
 * TODO MOOS-specific side of middleware needs to be "lifted" to use generated code
+
+* TODO Error report from deserialising on the CI side - not a valid field?
+DEBUG: deserialise - className = atlassharedclasses.SonarDetection raw json = {"robotName":"ella"}
+com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "robotName" (class atlassharedclasses.SonarDetection), not marked as ignorable (0 known properties: ])
+ at [Source: (String)"{"robotName":"gilda"}"; line: 1, column: 15] (through reference chain: atlassharedclasses.SonarDetection["robotName"])
+handleMessage caught: atlassharedclasses.ATLASObjectMapper$ATLASFormatError
+	at com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException.from(UnrecognizedPropertyException.java:61)
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnknownProperty(DeserializationContext.java:840)
+	at com.fasterxml.jackson.databind.deser.std.StdDeserializer.handleUnknownProperty(StdDeserializer.java:1206)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownProperty(BeanDeserializerBase.java:1592)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.handleUnknownVanilla(BeanDeserializerBase.java:1570)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.vanillaDeserialize(BeanDeserializer.java:294)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:151)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4202)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3205)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3173)
+	at atlassharedclasses.ATLASObjectMapper.deserialise(ATLASObjectMapper.java:40)
+	at atlascollectiveintgenerator.CollectiveIntActiveMQConsumer.handleMessage(CollectiveIntActiveMQConsumer.java:42)
+	at atlascollectiveintgenerator.CollectiveIntActiveMQConsumer.run(CollectiveIntActiveMQConsumer.java:79)
+	at atlascollectiveintgenerator.CollectiveInt.startCI(CollectiveInt.java:22)
+	at atlascollectiveintgenerator.runner.CollectiveIntRunner.main(CollectiveIntRunner.java:9)
+atlassharedclasses.ATLASObjectMapper$ATLASFormatError
+	at atlassharedclasses.ATLASObjectMapper.deserialise(ATLASObjectMapper.java:44)
+	at atlascollectiveintgenerator.CollectiveIntActiveMQConsumer.handleMessage(CollectiveIntActiveMQConsumer.java:42)
+	at atlascollectiveintgenerator.CollectiveIntActiveMQConsumer.run(CollectiveIntActiveMQConsumer.java:79)
+	at atlascollectiveintgenerator.CollectiveInt.startCI(CollectiveInt.java:22)
+	at atlascollectiveintgenerator.runner.CollectiveIntRunner.main(CollectiveIntRunner.java:9)

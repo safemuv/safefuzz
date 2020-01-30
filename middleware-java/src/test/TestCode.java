@@ -1,14 +1,16 @@
 package test;
 
+import atlasdsl.*;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TestCode {
-	
+import atlassharedclasses.SonarDetection;
 
+public class TestCode {
 	
 	private static Pattern nodeReportScanner = Pattern.compile("X=([^,]+),Y=([^,]+)");
 	
@@ -41,12 +43,25 @@ public class TestCode {
 			}
 
 		//JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
-		//XmlMapper mapper = new XmlMapper();
+		//XmlMapper mapper = new XmlMapper(); 
 		//mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		//mapper.registerModule(jaxbAnnotationModule);
 		//mapper.registerModule(new GuavaModule());
 		//String xml = mapper.writeValueAsString(customer);
 		//System.out.println(xml);
+	}
+	
+	public static void testSerialiseSonarDetection() {
+		ObjectMapper om = new ObjectMapper();
+		SonarDetection sd = new SonarDetection(new Point(4.2, 5.7), "ella", 3);
+		String msg;
+		try {
+			msg = om.writeValueAsString(sd);
+			System.out.println("sd = " + msg);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String args []) {
@@ -57,5 +72,6 @@ public class TestCode {
 		testMatch("T=121,X=122.,Y=-4.21");
 		
 		testSerialise();
+		testSerialiseSonarDetection();
 	}
 }

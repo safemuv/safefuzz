@@ -22,7 +22,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
-		ATLASObjectMapper atlasOMapper = new ATLASObjectMapper();
+		atlasOMapper = new ATLASObjectMapper();
 	}
 	
     public static void startThread(Runnable runnable, boolean daemon) {

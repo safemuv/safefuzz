@@ -8,6 +8,7 @@ import atlassharedclasses.ATLASSharedResult;
 
 public class CustomCollectiveInt extends CollectiveInt {
   protected void handleMessage(ATLASSharedResult a) {
+	System.out.println("handleMessage");
     if (a.getContentsClass() == SonarDetection.class) {
     		  Optional<SonarDetection> d_o = a.getSonarDetection();
     		  if (d_o.isPresent()) {
