@@ -152,8 +152,6 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	}
 	
 	public void generateComputerCI(MethodSpec.Builder activeMQHooks, MethodSpec.Builder initHooks, CIFiles cif, Computer c) {
-		// TODO: need to import atlassharedclasses.* into the generated code
-		// and Optional
 		String className = "ComputerCI";
 		if (c != null) {
 			className = className + c.getName();
@@ -205,8 +203,12 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		
 		try {
 			FileWriter robotOut = cif.getOpenFile(className + ".java");
+			List<String> customImports = new ArrayList<String>();
+			customImports.add("atlascollectiveint.api.*");
+			System.out.println("Adding custom imports");
 			JavaFile javaFile = JavaFile.builder("atlascollectiveint.custom", ciClass.build()).build();
-			javaFile.writeTo(robotOut);
+			String output = injectImports(javaFile, customImports);
+			robotOut.write(output);
 			robotOut.flush();
 			robotOut.close();
 		} catch (IOException e) {
@@ -216,6 +218,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	
 	// temp fix for https://github.com/square/javapoet/issues/512
 	public String injectImports(JavaFile javaFile, List<String> imports) {
+			System.out.println("injectImports");
 		    String rawSource = javaFile.toString();
 
 		    List<String> result = new ArrayList<>();
@@ -258,7 +261,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			activeMQLink.addMethod(addMQHooks.build());
 			activeMQLink.addMethod(initHooks.build());
 			
-			// Use additional imports https://github.com/square/javapoet/issues/512
+			// Use additional imports: https://github.com/square/javapoet/issues/512
 			List<String> customImports = new ArrayList<String>();
 			customImports.add("atlassharedclasses.*");
 			customImports.add("java.util.Optional");

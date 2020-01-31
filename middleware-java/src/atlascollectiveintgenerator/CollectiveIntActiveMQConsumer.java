@@ -36,7 +36,7 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
     public void handleMessage(Message m) {
         try {
             if (m instanceof TextMessage) {
-                TextMessage textMessage = (TextMessage) m;
+                TextMessage textMessage = (TextMessage)m;
                 String text = textMessage.getText();
                 // TODO: deserialise the messages here
                 ATLASSharedResult msg = atlasObjMapper.deserialise(text);

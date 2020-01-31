@@ -41,7 +41,7 @@ class ComputerCIshoreside {
 
   public static void GPS_POSITIONDetectionHook(Double x, Double y) {
 	  // Update the robot position notification
-	  // TODO: Need the robotname in this hook!
+	  // Need the robotname in here!
 	  robotLocations.put(robotName, new PointCI(x,y));
   }
 }
