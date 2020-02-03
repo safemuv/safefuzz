@@ -10,6 +10,7 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import atlascollectiveint.logging.CollectiveIntLog;
 import middleware.core.ActiveMQProducer.QueueOrTopic;
 import middleware.logging.ATLASLog;
 
@@ -73,7 +74,7 @@ public class CollectiveIntActiveMQProducer {
 
 	public void sendMessage(String msg) throws JMSException {
 		TextMessage message = session.createTextMessage(msg);
-		ATLASLog.logActiveMQOutbound(queueName, msg);
+		CollectiveIntLog.logCIMessage("OUTBOUND: " + msg);
 		producer.send(message);
 	}
 }
