@@ -63,7 +63,7 @@ public class MOOSATLASCore extends ATLASCore {
 					
 					// TODO: for now, assume the position sensor updates are provided directly 
 					// by base position
-					GPSPositionReading gps = new GPSPositionReading(x,y);
+					GPSPositionReading gps = new GPSPositionReading(x,y, entityName);
 					
 					try {
 						String msg = atlasOMapper.serialise(gps);

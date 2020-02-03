@@ -13,6 +13,7 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import atlascollectiveint.logging.CollectiveIntLog;
 import atlasdsl.Mission;
 import atlasdsl.SensorType;
 import atlassharedclasses.*;
@@ -41,7 +42,7 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
                 // TODO: deserialise the messages here
                 ATLASSharedResult msg = atlasObjMapper.deserialise(text);
                 ci.handleMessage(msg);
-                CollectiveIntLog.logCIInbound(vehicleName, text);
+                CollectiveIntLog.logCIMessage(vehicleName, text);
                 
             } else {
                 System.out.println("Received: " + m);

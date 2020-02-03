@@ -1,7 +1,7 @@
 package atlascollectiveint.custom;
 
 import atlascollectiveint.api.*;
-import atlascollectiveintgenerator.CollectiveIntLog;
+import atlascollectiveint.logging.CollectiveIntLog;
 import atlassharedclasses.*;
 
 import java.lang.Double;
@@ -84,7 +84,7 @@ class ComputerCIshoreside {
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
-		  Behaviours.setRegion(robot, region);
+		  RobotBehaviours.setSweepRegion(robot, region);
 	  }
 	  
       // divide up the rect region amongst the robots
@@ -108,7 +108,7 @@ class ComputerCIshoreside {
         Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
-            Behaviours.setRegionAroundPoint(rName, loc, SWEEP_RADIUS);
+            RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS);
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack
             // will need to track the robot active regions on some sort of per-robot stack?

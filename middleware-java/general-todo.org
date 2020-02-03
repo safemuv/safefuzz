@@ -26,7 +26,8 @@ behaviour customisation per individual robots
 * TODO Threading behaviour with a central queue for receptions from the MOOS side
 * TODO MOOS-specific side of middleware needs to be "lifted" to use generated code
 
-* TODO Error report from deserialising on the CI side - not a valid field?
+* DONE Error report from deserialising on the CI side - not a valid field?
+  CLOSED: [2020-02-03 Mon 14:24] - worked around with changes to jackson to ignore extra fields
 DEBUG: deserialise - className = atlassharedclasses.SonarDetection raw json = {"robotName":"ella"}
 com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException: Unrecognized field "robotName" (class atlassharedclasses.SonarDetection), not marked as ignorable (0 known properties: ])
  at [Source: (String)"{"robotName":"gilda"}"; line: 1, column: 15] (through reference chain: atlassharedclasses.SonarDetection["robotName"])
@@ -54,6 +55,10 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 	at atlascollectiveintgenerator.runner.CollectiveIntRunner.main(CollectiveIntRunner.java:9)
 
 * TODO Need to get the CI implemented for next week
-* TODO Reverse channel from the CI to MOOSDB for variable updates
-* TODO Timers for the CI
-* TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
+** DONE Collective intelligence logging in CILog 
+   CLOSED: [2020-02-03 Mon 15:29]
+** TODO Ensure the CI code is backed up regularly to Github to avoid deletion
+** TODO How to handle the robot definitions in the CI - for now, they are just encoded with the identity as assumed in the test case
+** TODO Reverse channel from the CI to MOOSDB for variable updates
+** TODO Timers for the CI
+** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
