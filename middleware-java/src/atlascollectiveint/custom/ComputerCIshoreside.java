@@ -23,6 +23,7 @@ class ComputerCIshoreside {
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
+	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
 	
     private static boolean freshDetection(int label) {
     	Integer c = detectionCounts.get(label);
@@ -72,8 +73,23 @@ class ComputerCIshoreside {
   }
   
   public static Map<String,Region> staticRegionSplit(Region fullRegion, List<String> robots) {
-	  return new HashMap<String,Region>();
-	  // TODO: implement region division for the robots
+	  HashMap<String,Region> assignments = new HashMap<String,Region>();
+	  
+	  int count = robots.size();
+	  int hcount = count / 2;
+	  int vcount = VERTICAL_ROWS_STATIC_SPLIT;
+	  double subwidth = fullRegion.width() / hcount;
+	  double subheight = fullRegion.height() / vcount;
+	  for (int i=1;i<=count;i++) {
+		  String robot = robots.get(i);
+		  // TODO: fix these expressions
+		  double xl = fullRegion.left() + i % hcount * subwidth;
+		  double yb = fullRegion.bottom() + i % vcount * subheight;
+		  Region subr = new Region(xl,yb,xl+subwidth, yb+subheight);
+		  assignments.put(robot, subr);
+	  }
+	
+	  return assignments;	  
   }
     
   public static void init() {

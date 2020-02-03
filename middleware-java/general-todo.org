@@ -60,5 +60,6 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 ** TODO Ensure the CI code is backed up regularly to Github to avoid deletion
 ** TODO How to handle the robot definitions in the CI - for now, they are just encoded with the identity as assumed in the test case
 ** TODO Reverse channel from the CI to MOOSDB for variable updates
-** TODO Timers for the CI
+** TODO Timers for the CI - for now, the timers will be triggered at the next event polling
+** TODO Need to exclude any robots which are currently confirming from participating in the confirmation
 ** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
