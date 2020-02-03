@@ -1,6 +1,7 @@
 package moosmapping;
 
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 public class HelmBehaviourWaypoint extends MOOSBehaviour {
 	// startPos should be e.g. "x=1,y=1"

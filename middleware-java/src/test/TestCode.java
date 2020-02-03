@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import atlassharedclasses.Point;
 import atlassharedclasses.SonarDetection;
 
 public class TestCode {

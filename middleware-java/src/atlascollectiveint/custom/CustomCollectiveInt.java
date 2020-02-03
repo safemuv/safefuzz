@@ -18,7 +18,7 @@ public class CustomCollectiveInt extends CollectiveInt {
     		  Optional<GPSPositionReading> r_o = a.getGPSPositionReading();
     		  if (r_o.isPresent()) {
     			  GPSPositionReading r = r_o.get();
-    			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY());
+    			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY(), r.getRobotName());
     		  }
     	  }
   }

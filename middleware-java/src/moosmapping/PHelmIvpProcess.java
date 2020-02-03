@@ -1,6 +1,7 @@
 package moosmapping;
 
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 public class PHelmIvpProcess extends MOOSProcess {
 	

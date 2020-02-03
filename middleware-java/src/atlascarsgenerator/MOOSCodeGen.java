@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 // FIX: maybe move to MOOSSimulation?
 

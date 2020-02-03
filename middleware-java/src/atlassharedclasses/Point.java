@@ -1,4 +1,4 @@
-package atlasdsl;
+package atlassharedclasses;
 
 public class Point {
 	private double x;
@@ -40,5 +40,13 @@ public class Point {
 	
 	public String toStringBareCSV() {
 		return x + "," + y;
+	}
+	
+	public double distanceSqrTo(Point other) {
+		return Math.pow((other.x - this.x),2.0) + Math.pow((other.y - this.y),2.0); 
+	}
+	
+	public double distanceTo(Point other) {
+		return Math.sqrt(distanceSqrTo(other));
 	}
 }

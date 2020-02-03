@@ -1,5 +1,7 @@
 package atlasdsl;
 
+import atlassharedclasses.Point;
+
 public class PointProperty extends ComponentProperty {
 	private Point value;
 	

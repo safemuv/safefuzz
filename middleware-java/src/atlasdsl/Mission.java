@@ -1,6 +1,8 @@
 package atlasdsl;
 
 import atlasdsl.*;
+import atlassharedclasses.Region;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;

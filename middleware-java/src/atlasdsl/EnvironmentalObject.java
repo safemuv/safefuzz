@@ -1,5 +1,7 @@
 package atlasdsl;
 
+import atlassharedclasses.Point;
+
 // This should be part of the Region layer
 public class EnvironmentalObject extends Point {
 	private static int labelCounter = 1;

@@ -2,6 +2,7 @@ package atlasdsl.loader;
 
 import java.util.Optional;
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 public class StubDSLLoader implements DSLLoader {
 	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, int sensorRange, double detectionProb, double falsePos, double falseNeg) {

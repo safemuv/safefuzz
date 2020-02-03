@@ -3,6 +3,8 @@ package atlasdsl;
 import java.util.HashMap;
 import java.util.Map;
 
+import atlassharedclasses.Point;
+
 public class Component {
 	protected String name;
 	

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.swing.*;
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 public class GUITest {  
     JFrame f;

@@ -1,6 +1,7 @@
 package moosmapping;
 
 import atlasdsl.*;
+import atlassharedclasses.Point;
 
 public class RobotCommunity extends MOOSCommunity {
 	// TODO: Add custom behaviours in constructor - must include a Waypoint for each

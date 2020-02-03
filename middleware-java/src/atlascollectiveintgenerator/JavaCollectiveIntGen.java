@@ -118,7 +118,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 					"		  Optional<GPSPositionReading> r_o = a.getGPSPositionReading();\n" + 
 					"		  if (r_o.isPresent()) {\n" + 
 					"			  GPSPositionReading r = r_o.get();\n" + 
-					"			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY());\n" + 
+					"			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY(), r.getRobotName());\n" + 
 					"		  }\n" + 
 					"	  }";
 		default:
@@ -145,7 +145,9 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 					.addModifiers(Modifier.STATIC)
 					.returns(void.class)
 					.addParameter(Double.class, "x")
-					.addParameter(Double.class, "y");
+					.addParameter(Double.class, "y")
+					.addParameter(String.class, "robotName");
+				    
 				ciClass.addMethod(m.build());
 				break;
 		}
