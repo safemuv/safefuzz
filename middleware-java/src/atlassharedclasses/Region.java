@@ -8,6 +8,11 @@ public class Region {
 		this.point1 = new Point(a,b);
 		this.point2 = new Point(c,d);
 	}
+	
+	public Region(Point p1, Point p2) {
+		this.point1 = p1;
+		this.point2 = p2;
+	}
 
 	public double width() {
 		return Math.abs(point1.getX() - point2.getX());
@@ -31,5 +36,15 @@ public class Region {
 	
 	public double top() {
 		return Math.min(point1.getY(), point2.getY());
+	}
+
+	public static Region squareAroundPoint(Point p, double size) {
+		double halfsize = size/2;
+		double l = p.getX() - halfsize;
+		double r = p.getX() + halfsize;
+		double b = p.getY() - halfsize;
+		double t = p.getY() + halfsize;
+		return new Region(new Point(l,b), new Point(r,t)); 
+				
 	}
 }

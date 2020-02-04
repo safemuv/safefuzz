@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
 public class RobotBehaviours {
+	private static CollectiveIntActiveMQProducer prod;
+	
 	private static List<Point> translateRegionToCoordsList(Region r) {
 		List<Point> coords = new ArrayList<Point>();
 		
@@ -39,13 +42,16 @@ public class RobotBehaviours {
 		String polyUpdate = "polygon=" + pointListToPolyString(coords);
 		// TODO: translate the region encoding into MOOS variable update
 		// need to get a reference to the ActiveMQ producer here from somewhere
-		CollectiveIntActiveMQProducer.sendMOOSUpdate(robotName, "UP_LOITER=" + polyUpdate);
+		prod.sendMOOSUpdate(robotName, "UP_LOITER=" + polyUpdate);
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double radius) {
 		// TODO: construct a region then use setSweepRegion
-		Region r = Region.sqaureAroundPoint(p, radius);
+		Region r = Region.squareAroundPoint(p, radius);
 		
-		
+	}
+	
+	public static void setProducer(CollectiveIntActiveMQProducer producer) {
+		prod = producer;
 	}
 }

@@ -8,6 +8,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import atlasdsl.*;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -28,12 +30,12 @@ public class CollectiveIntActiveMQProducer {
 		TOPIC
 	}
 	
-	CollectiveIntActiveMQProducer(String queueName, QueueOrTopic type) {
+	CollectiveIntActiveMQProducer(String queueName, Mission mission) {
 		this.queueName = queueName;
-		this.type = type;
+		this.type = QueueOrTopic.TOPIC;
 	}
 	
-	public void run() {
+	public void setupConnection() {
 		try {
 			// Create a ConnectionFactory
 			connectionFactory = new ActiveMQConnectionFactory("failover:(tcp://localhost:61616)");
@@ -72,9 +74,20 @@ public class CollectiveIntActiveMQProducer {
 		}
 	}
 
-	public void sendMessage(String msg) throws JMSException {
-		TextMessage message = session.createTextMessage(msg);
-		CollectiveIntLog.logCIMessage("OUTBOUND: " + msg);
-		producer.send(message);
+	public void sendMessage(String msg) {
+		try {
+			TextMessage message = session.createTextMessage(msg);
+			CollectiveIntLog.logCIMessage(this.queueName, "OUTBOUND: " + msg);
+			producer.send(message);
+		} catch (JMSException e) {
+			CollectiveIntLog.logCIExceptions(e);
+		}
+	}
+	
+	// TODO: this should be pushed into the middleware and
+	// behaviour translation to the low-level components should
+	// be done there
+	public void sendMOOSUpdate(String robotName, String value) {
+		sendMessage(robotName + "=" + value);
 	}
 }

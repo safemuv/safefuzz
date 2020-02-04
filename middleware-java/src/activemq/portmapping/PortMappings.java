@@ -7,6 +7,10 @@ public class PortMappings {
 		return "MIDDLEWARE-CI-" + vehicleName.toString();
 	}
 	
+	public static String portForCIReverse(String vehicleName) {
+		return "CI-MIDDLEWARE-" + vehicleName.toString();
+	}
+	
 	public static String portForMOOSWatch(String vehicleName) {
 		return "MIDDLEWARE-watch-" + vehicleName.toString();
 	}
