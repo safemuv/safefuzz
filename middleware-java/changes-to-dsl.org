@@ -1,0 +1,8 @@
+* TODO src/atlasdsl/Mission.java 7: change to DSL for separate robots and computers, propagate back into spec
+  Mission has Robots, Computers and Regions and EnvironmentalObjects
+* TODO Components have separate properties for every type, needs to be reflected in DSL
+  intProperties, doubleProperties, pointProperties, stringProperties
+* TODO Geometric basis properties should be part of the Region layer of the DSL? At the moment the coordinate origin is hardcoded into MOOSCommunity.genBasicMissionParams()
+  geometric base of coordinates - should be specified for a Region?
+* TODO Changes to the Mission layer - need to propagate back into DSL
+  
