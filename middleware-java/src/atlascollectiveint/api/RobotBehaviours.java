@@ -35,11 +35,13 @@ public class RobotBehaviours {
 	}
 		
 	public static void setSweepRegion(String robotName, Region r, double stepSize) {
+		Double endTime = 1000000.0;
+
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		String polyUpdate = "polygon=" + pointListToPolyString(coords);
 		// TODO: translate the region encoding into MOOS variable update
 		// need to get a reference to the ActiveMQ producer here from somewhere
-		prod.sendMOOSUpdate(robotName, "UP_LOITER=" + polyUpdate);
+		prod.sendMOOSUpdate(robotName, (endTime.toString() + "|UP_LOITER=" + polyUpdate));
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
