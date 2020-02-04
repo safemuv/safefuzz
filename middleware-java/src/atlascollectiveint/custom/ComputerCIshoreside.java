@@ -23,6 +23,8 @@ class ComputerCIshoreside {
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
+	private static final double VERTICAL_STEP_SIZE_INITIAL_SWEEP = 30;
+	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
 	
     private static boolean freshDetection(int label) {
@@ -100,7 +102,7 @@ class ComputerCIshoreside {
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
-		  RobotBehaviours.setSweepRegion(robot, region);
+		  RobotBehaviours.setSweepRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
 	  }
 	  
       // divide up the rect region amongst the robots
@@ -124,7 +126,7 @@ class ComputerCIshoreside {
         Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
-            RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS);
+            RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack
             // will need to track the robot active regions on some sort of per-robot stack?

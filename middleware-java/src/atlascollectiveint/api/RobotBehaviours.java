@@ -10,21 +10,18 @@ import atlassharedclasses.*;
 public class RobotBehaviours {
 	private static CollectiveIntActiveMQProducer prod;
 	
-	private static List<Point> translateRegionToCoordsList(Region r) {
+	private static List<Point> translateRegionToCoordsList(Region r, double stepSize) {
 		List<Point> coords = new ArrayList<Point>();
-		
 		double left = r.left();
 		double right = r.right();
 		double top = r.top();
 		double bottom = r.bottom();
 		
-		double step = 5;
-		
-		for (double y = bottom; y < top; y+=2*step) {
+		for (double y = bottom; y < top; y+=2*stepSize) {
 			coords.add(new Point(left,y));
 			coords.add(new Point(right,y));
-			coords.add(new Point(right,y+step));
-			coords.add(new Point(left,y+step));
+			coords.add(new Point(right,y+stepSize));
+			coords.add(new Point(left,y+stepSize));
 		}
 		Collections.reverse(coords);
 		return coords;
@@ -37,18 +34,18 @@ public class RobotBehaviours {
 		return b.toString();
 	}
 		
-	public static void setSweepRegion(String robotName, Region r) {
-		List<Point> coords = translateRegionToCoordsList(r);
+	public static void setSweepRegion(String robotName, Region r, double stepSize) {
+		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		String polyUpdate = "polygon=" + pointListToPolyString(coords);
 		// TODO: translate the region encoding into MOOS variable update
 		// need to get a reference to the ActiveMQ producer here from somewhere
 		prod.sendMOOSUpdate(robotName, "UP_LOITER=" + polyUpdate);
 	}
 	
-	public static void setSweepAroundPoint(String robotName, Point p, double radius) {
+	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
 		// TODO: construct a region then use setSweepRegion
-		Region r = Region.squareAroundPoint(p, radius);
-		
+		Region r = Region.squareAroundPoint(p, size);
+		setSweepRegion(robotName, r, stepSize);
 	}
 	
 	public static void setProducer(CollectiveIntActiveMQProducer producer) {
