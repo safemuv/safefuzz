@@ -63,3 +63,5 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 ** TODO Timers for the CI - for now, the timers will be triggered at the next event polling
 ** TODO Need to exclude any robots which are currently confirming from participating in the confirmation
 ** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
+* TODO Generate a stub loader using EGL which produces the Java objects
+* TODO Metamodels for the other languages
