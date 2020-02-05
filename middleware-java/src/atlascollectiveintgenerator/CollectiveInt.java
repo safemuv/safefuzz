@@ -22,9 +22,11 @@ public class CollectiveInt {
 		// TODO: fix, this port is hardcoded to just send to Shoreside
 		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
 		producer = new CollectiveIntActiveMQProducer(PortMappings.portForCIReverse("shoreside"), mission);
-		// Start the CI listening over ActiveMQ
-		consumer.run();
 		RobotBehaviours.setProducer(producer);
+		// Setup the interface over ActiveMQ
+		producer.setupConnection();
+		consumer.run();
+		
 	}
 
 	public void init() {

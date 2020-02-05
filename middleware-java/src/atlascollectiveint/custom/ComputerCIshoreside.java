@@ -49,12 +49,15 @@ class ComputerCIshoreside {
     
     // The shoreside chooses a robot to use to confirm detections, 
     // excluding the detecting one obviously!
+    
+    // TODO: have to exclude any robots which are currently active confirming the 
+    // detections
     private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {
     	// sort them all relative to distances from the location
     	Map<String,Double> dists = robotDistancesTo(loc);
     	Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
     			.filter(e -> e.getKey() != excludeRobot)
-    			.sorted()
+    			.sorted(Map.Entry.comparingByValue())
     			.findFirst();
     	// TODO: check the sort order here!
     	

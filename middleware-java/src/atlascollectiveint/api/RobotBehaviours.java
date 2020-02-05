@@ -3,7 +3,6 @@ package atlascollectiveint.api;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
@@ -29,7 +28,7 @@ public class RobotBehaviours {
 	
 	private static String pointListToPolyString(List<Point> coords) {
 		StringBuilder b = new StringBuilder();
-		for (Point c : coords) 
+		for (Point c : coords)
 			b.append(c.toStringBareCSV());
 		return b.toString();
 	}
@@ -52,5 +51,6 @@ public class RobotBehaviours {
 	
 	public static void setProducer(CollectiveIntActiveMQProducer producer) {
 		prod = producer;
+		System.out.println("producer reference set");
 	}
 }
