@@ -24,6 +24,7 @@ public class CustomCollectiveInt extends CollectiveInt {
   }
 
   public void init() {
+	  System.out.println("CustomCollectiveInt.init() called");
     ComputerCIshoreside.init();
   }
 }

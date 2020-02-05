@@ -51,6 +51,5 @@ public class RobotBehaviours {
 	
 	public static void setProducer(CollectiveIntActiveMQProducer producer) {
 		prod = producer;
-		System.out.println("producer reference set");
 	}
 }

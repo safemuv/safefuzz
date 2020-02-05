@@ -98,14 +98,17 @@ class ComputerCIshoreside {
   }
     
   public static void init() {
+	  System.out.println("init");
       // TODO: load the robot definition names - or should this be part of generated code?
 	  // for now, hardcode it statically
 	  setRobotNamesAndRegion();
 	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,robots);
+	  CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
 		  RobotBehaviours.setSweepRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
+		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
       // divide up the rect region amongst the robots
@@ -130,11 +133,12 @@ class ComputerCIshoreside {
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
             RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
+            CollectiveIntLog.logCI("Setting robot " + rName + " to confirm sweep");
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack
             // will need to track the robot active regions on some sort of per-robot stack?
         } else {
-        	CollectiveIntLog.logCI("No other robots defined to confirm the detection");
+        	CollectiveIntLog.logCI("ERROR: No other robots avaiable to confirm the detection");
         }
     }
   }

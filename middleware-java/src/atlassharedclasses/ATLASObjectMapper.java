@@ -40,7 +40,7 @@ public class ATLASObjectMapper {
 			String objText = m.group(2);
 			try {
 				Class<?> msgClass = Class.forName(className);
-				System.out.println("DEBUG: deserialise - className = " + className + " raw json = " + objText);
+				//System.out.println("DEBUG: deserialise - className = " + className + " raw json = " + objText);
 				Object msg = objMapper.readValue(objText, msgClass);
 				return new ATLASSharedResult(msg, msgClass);
 			} catch (JsonProcessingException e) {

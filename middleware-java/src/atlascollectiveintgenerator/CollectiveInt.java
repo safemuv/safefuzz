@@ -21,7 +21,8 @@ public class CollectiveInt {
 		mission = l.loadMission();
 		// TODO: fix, this port is hardcoded to just send to Shoreside
 		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
-		producer = new CollectiveIntActiveMQProducer(PortMappings.portForCIReverse("shoreside"), mission);
+		// TODO: Currently the CI is sending directly to the shoreside MOOSDB
+		producer = new CollectiveIntActiveMQProducer("FAULTS-SIM-TO-ATLAS-targ_shoreside.moos", mission);
 		RobotBehaviours.setProducer(producer);
 		// Setup the interface over ActiveMQ
 		producer.setupConnection();

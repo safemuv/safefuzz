@@ -77,7 +77,7 @@ public class CollectiveIntActiveMQProducer {
 	public void sendMessage(String msg) {
 		try {
 			TextMessage message = session.createTextMessage(msg);
-			CollectiveIntLog.logCIMessage(this.queueName, "OUTBOUND: " + msg);
+			CollectiveIntLog.logCIGeneration(this.queueName, msg);
 			producer.send(message);
 		} catch (JMSException e) {
 			CollectiveIntLog.logCIExceptions(e);

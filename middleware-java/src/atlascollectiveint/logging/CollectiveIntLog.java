@@ -34,6 +34,8 @@ public class CollectiveIntLog {
 	public static synchronized void logCI(String text) {
 		try {
 			getLog().algorithmLog.write(text + "\n");
+			System.out.println(text+"\n");
+			getLog().algorithmLog.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,7 +44,7 @@ public class CollectiveIntLog {
 	
 	public static synchronized void logCIMessage(String queueName, String text) {
 		try {
-			getLog().messagesLog.write("ActiveMQProducer.send on " + queueName + " received textMessage: " + text + "\n");
+			getLog().messagesLog.write("CI consumer on " + queueName + " received: " + text + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +52,7 @@ public class CollectiveIntLog {
 	
 	public static synchronized void logCIGeneration(String queueName, String text) {
 		try {
-			getLog().generationLog.write("ActiveMQProducer.send on " + queueName + " received textMessage: " + text + "\n");
+			getLog().generationLog.write("CI producer on " + queueName + " sent: " + text + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
