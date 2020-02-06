@@ -85,7 +85,7 @@ class ComputerCIshoreside {
 	  int vcount = VERTICAL_ROWS_STATIC_SPLIT;
 	  double subwidth = fullRegion.width() / hcount;
 	  double subheight = fullRegion.height() / vcount;
-	  for (int i=1;i<=count;i++) {
+	  for (int i=0;i<count;i++) {
 		  String robot = robots.get(i);
 		  // TODO: fix these expressions
 		  double xl = fullRegion.left() + i % hcount * subwidth;

@@ -34,6 +34,8 @@ public class RobotBehaviours {
 	}
 		
 	public static void setSweepRegion(String robotName, Region r, double stepSize) {
+		// TODO: do something about the end time here
+		// maybe a message format encoding for MOOS which doesn't require it
 		Double endTime = 1000000.0;
 
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
