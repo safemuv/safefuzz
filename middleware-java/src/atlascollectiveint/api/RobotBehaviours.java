@@ -2,12 +2,13 @@ package atlascollectiveint.api;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
 public class RobotBehaviours {
-	private static CollectiveIntActiveMQProducer prod;
+	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	
 	private static List<Point> translateRegionToCoordsList(Region r, double stepSize) {
 		List<Point> coords = new ArrayList<Point>();
@@ -32,6 +33,10 @@ public class RobotBehaviours {
 			b.append(c.toStringBareCSV());
 		return b.toString();
 	}
+	
+	private static CollectiveIntActiveMQProducer getProducerFor(String robotName) {
+		return producers.get(robotName);
+	}
 		
 	public static void setSweepRegion(String robotName, Region r, double stepSize) {
 		// TODO: do something about the end time here
@@ -42,7 +47,9 @@ public class RobotBehaviours {
 		String polyUpdate = "polygon=" + pointListToPolyString(coords);
 		// TODO: translate the region encoding into MOOS variable update
 		// need to get a reference to the ActiveMQ producer here from somewhere
-		prod.sendMOOSUpdate(robotName, (endTime.toString() + "|UP_LOITER=" + polyUpdate));
+		
+		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
+		prod.sendMOOSUpdate(endTime, "UP_LOITER", polyUpdate);
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
@@ -51,7 +58,7 @@ public class RobotBehaviours {
 		setSweepRegion(robotName, r, stepSize);
 	}
 	
-	public static void setProducer(CollectiveIntActiveMQProducer producer) {
-		prod = producer;
+	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {
+		producers.put(communityName, producer);
 	}
 }

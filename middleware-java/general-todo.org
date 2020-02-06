@@ -69,3 +69,5 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 ** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
 * TODO Generate a stub loader using EGL which produces the Java objects
 * TODO Metamodels for the other languages
+* TODO Obtaining the time from the DB updates? - ensuring it is updated properly?
+* TODO Polygon is empty - why?

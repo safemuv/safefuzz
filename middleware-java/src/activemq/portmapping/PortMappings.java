@@ -14,4 +14,8 @@ public class PortMappings {
 	public static String portForMOOSWatch(String vehicleName) {
 		return "MIDDLEWARE-watch-" + vehicleName.toString();
 	}
+	
+	public static String portForMOOSDB(String moosCommunityName) {
+		return "FAULTS-SIM-TO-ATLAS-targ_" + moosCommunityName + ".moos";
+	}
 }

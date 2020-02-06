@@ -45,6 +45,9 @@ public class Region {
 		double b = p.getY() - halfsize;
 		double t = p.getY() + halfsize;
 		return new Region(new Point(l,b), new Point(r,t)); 
-				
+	}
+	
+	public String toString() {
+		return super.toString() + point1.toString() + "-" + point2.toString();
 	}
 }
