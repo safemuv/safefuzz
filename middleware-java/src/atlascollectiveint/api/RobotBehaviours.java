@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
 public class RobotBehaviours {
+	private static boolean DEBUG_POLYGON_COORDS = false;
+	
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	
 	private static List<Point> translateRegionToCoordsList(Region r, double stepSize) {
@@ -28,10 +32,10 @@ public class RobotBehaviours {
 	}
 	
 	private static String pointListToPolyString(List<Point> coords) {
-		StringBuilder b = new StringBuilder();
-		for (Point c : coords)
-			b.append(c.toStringBareCSV());
-		return b.toString();
+		String coordsJoined = coords.stream()
+				.map(p -> p.toStringBareCSV())
+				.collect(Collectors.joining(":"));
+		return coordsJoined;
 	}
 	
 	private static CollectiveIntActiveMQProducer getProducerFor(String robotName) {
@@ -45,8 +49,10 @@ public class RobotBehaviours {
 
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		String polyUpdate = "polygon=" + pointListToPolyString(coords);
-		// TODO: translate the region encoding into MOOS variable update
-		// need to get a reference to the ActiveMQ producer here from somewhere
+		if (DEBUG_POLYGON_COORDS) {
+			System.out.println("coords=" + coords.toString());
+			System.out.println("polyUpdate" + polyUpdate);
+		}
 		
 		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
 		prod.sendMOOSUpdate(endTime, "UP_LOITER", polyUpdate);

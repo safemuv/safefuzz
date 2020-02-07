@@ -27,7 +27,7 @@ public class Region {
 	}
 	
 	public double bottom() {
-		return Math.max(point1.getY(), point2.getY());
+		return Math.min(point1.getY(), point2.getY());
 	}
 	
 	public double right() {
@@ -35,7 +35,7 @@ public class Region {
 	}
 	
 	public double top() {
-		return Math.min(point1.getY(), point2.getY());
+		return Math.max(point1.getY(), point2.getY());
 	}
 
 	public static Region squareAroundPoint(Point p, double size) {

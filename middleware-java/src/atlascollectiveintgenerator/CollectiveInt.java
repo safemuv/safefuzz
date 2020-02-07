@@ -31,7 +31,7 @@ public class CollectiveInt {
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
 			// TODO: Currently the CI is sending directly to the MOOSDB's for the various elements
-			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSWatch(name), mission);
+			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSDB(name), mission);
 			moosProducers.put(name, p);
 			RobotBehaviours.registerNewProducer(name, p);
 			p.setupConnection();
@@ -40,7 +40,7 @@ public class CollectiveInt {
 		for (Computer c : mission.getAllComputers()) {
 			String name = c.getName();
 			// TODO: Currently the CI is sending directly to the MOOSDB's for the various elements
-			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSWatch(name), mission);
+			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSDB(name), mission);
 			moosProducers.put(name, p);
 			RobotBehaviours.registerNewProducer(name, p);
 			p.setupConnection();
