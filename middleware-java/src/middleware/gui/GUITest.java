@@ -60,7 +60,7 @@ public class GUITest {
     	f.repaint();
     }
     
-    public void updateGUI() {
+    public synchronized void updateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
     			updateLabels();

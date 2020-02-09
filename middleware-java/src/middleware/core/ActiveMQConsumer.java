@@ -17,9 +17,9 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
 	private String vehicleName;
 	private boolean mqListen = true;
 	private int pollInterval = 1000;
-	private CARSEventQueue<MOOSEvent> carsQueue;
+	private ATLASEventQueue<MOOSEvent> carsQueue;
 	
-	public ActiveMQConsumer(String vehicleName, String queueName, CARSEventQueue carsQueue) {
+	public ActiveMQConsumer(String vehicleName, String queueName, ATLASEventQueue carsQueue) {
 		this.queueName = queueName;
 		this.carsQueue = carsQueue;
 		this.vehicleName = vehicleName;

@@ -12,11 +12,6 @@ public class ATLASMain {
 		Mission mission = dslloader.loadMission();
 		
 		MOOSATLASCore core = new MOOSATLASCore(mission);
-		try {
-			core.runMiddleware();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		core.runMiddleware();
 	}
 }
