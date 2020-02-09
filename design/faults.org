@@ -1,0 +1,33 @@
+Fault implementation
+
+* Fault in the polygon computation/transmission to the UUV
+Distort the polygon computation list - ListMessageChange - seperators etc, composite fields
+MutateMessage should have a descriptor for subfields etc
+Add class SubfieldSpec
+null reference 
+descriptor character
+random selection
+fixed selection
+
+
+Needs to be a change 
+
+* UUV component/navigation failure
+Overriding the speed/heading in the MOOSDB
+
+* Fault in the location message updates
+Distort the location recording from the message before passing it to the CI
+Quick hack - add an error to the message update according to the faults
+Proper implementation would distort the messages at the middleware
+
+* Failure of the detection messages
+Ignoring the detection messages at the middleware
+Proper implementation would use forwards the pShare messages via the middleware - 
+allowing it to delete some or pass them away
+
+* Sensor failure
+Ignoring the detections at the middleware
+For degraded performance, new components will have to be developed
+
+
+* The middleware has to handle forwarded CI requests so the faults can be injected
