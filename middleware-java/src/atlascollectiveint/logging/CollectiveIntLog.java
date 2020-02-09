@@ -33,9 +33,10 @@ public class CollectiveIntLog {
 	
 	public static synchronized void logCI(String text) {
 		try {
-			getLog().algorithmLog.write(text + "\n");
+			FileWriter l = getLog().algorithmLog;
+			l.write(text + "\n");
 			System.out.println(text+"\n");
-			getLog().algorithmLog.flush();
+			l.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +53,10 @@ public class CollectiveIntLog {
 	
 	public static synchronized void logCIGeneration(String queueName, String text) {
 		try {
-			getLog().generationLog.write("CI producer on " + queueName + " sent: " + text + "\n");
+			FileWriter l = getLog().generationLog;
+			l.write("CI producer on " + queueName + " sent: " + text + "\n");
+			System.out.println(text + "\n");
+			l.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -47,6 +47,7 @@ public class CollectiveIntActiveMQProducer {
 			// Create a Session
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
+			System.out.println("queueName = " + queueName);
 			// Create the destination (Topic or Queue)
 			if (type == QueueOrTopic.QUEUE) 
 				destination = session.createQueue(queueName);
@@ -87,7 +88,8 @@ public class CollectiveIntActiveMQProducer {
 	// TODO: this should be pushed into the middleware and
 	// behaviour translation to the low-level components should
 	// be done there
-	public void sendMOOSUpdate(String robotName, String value) {
-		sendMessage(robotName + "=" + value);
+	public void sendMOOSUpdate(Double endTimeOfUpdate, String key, String value) {
+		String msg = endTimeOfUpdate.toString() + "|" + key + "=" + value;
+		sendMessage(msg);
 	}
 }

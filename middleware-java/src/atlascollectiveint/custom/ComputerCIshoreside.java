@@ -74,7 +74,7 @@ class ComputerCIshoreside {
 	  robots.add("gilda");
 	  robots.add("henry");
 	  robots.add("ella");
-	  fullRegion = new Region(0.0,0.0,100.0,100.0);
+	  fullRegion = new Region(new Point(-50.0,-230.0), new Point(200.0,-30.0));
   }
   
   public static Map<String,Region> staticRegionSplit(Region fullRegion, List<String> robots) {
@@ -89,7 +89,7 @@ class ComputerCIshoreside {
 		  String robot = robots.get(i);
 		  // TODO: fix these expressions
 		  double xl = fullRegion.left() + i % hcount * subwidth;
-		  double yb = fullRegion.bottom() + i % vcount * subheight;
+		  double yb = fullRegion.bottom() + i / vcount * subheight;
 		  Region subr = new Region(xl,yb,xl+subwidth, yb+subheight);
 		  assignments.put(robot, subr);
 	  }

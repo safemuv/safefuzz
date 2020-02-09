@@ -67,5 +67,31 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 ** TODO Timers for the CI - for now, the timers will be triggered at the next event polling
 ** TODO Need to exclude any robots which are currently confirming from participating in the confirmation
 ** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
+
 * TODO Generate a stub loader using EGL which produces the Java objects
 * TODO Metamodels for the other languages
+
+
+* TODO Obtaining the time from the DB updates? - ensuring causality is respected
+* TODO
+* DONE Polygon coords list sent to MOOS is empty - why? - fixed by rewriting the polygon generator code
+  CLOSED: [2020-02-07 Fri 14:26]
+* TODO Points go outside the official region? - check the coord list conversion
+
+* TODO The middleware has to see the forwarded CI requests so the faults can be injected there
+The CI requests must be passed as serialised Behaviour objects to the middleware
+The middleware has to have a thread monitoring reverse communications from the CI
+The middleware also has to have a thread monitoring connections from the fault injection
+
+FaultInstance objects received by the middleware can do 3 things:
+CI behaviour layers have to translate into Message instances from components
+Some faults can remaing to modify in progress CI Messages 
+The faults can also be translated directly into MOOS updates and pushed to MOOSDB
+
+
+
+* TODO What does the fault injector send to the middleware
+Generates a FaultInstance object which specifies
+The exact time or time range of a particular fault 
+
+

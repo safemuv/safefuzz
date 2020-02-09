@@ -41,9 +41,8 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
                 String text = textMessage.getText();
                 // TODO: deserialise the messages here
                 ATLASSharedResult msg = atlasObjMapper.deserialise(text);
-                ci.handleMessage(msg);
                 CollectiveIntLog.logCIMessage(vehicleName, text);
-                
+                ci.handleMessage(msg);
             } else {
                 System.out.println("Received: " + m);
             }
