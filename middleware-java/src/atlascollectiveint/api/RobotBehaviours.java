@@ -31,13 +31,6 @@ public class RobotBehaviours {
 		return coords;
 	}
 	
-	private static String pointListToPolyString(List<Point> coords) {
-		String coordsJoined = coords.stream()
-				.map(p -> p.toStringBareCSV())
-				.collect(Collectors.joining(":"));
-		return coordsJoined;
-	}
-	
 	private static CollectiveIntActiveMQProducer getProducerFor(String robotName) {
 		return producers.get(robotName);
 	}

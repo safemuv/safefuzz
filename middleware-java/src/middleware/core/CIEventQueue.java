@@ -2,12 +2,15 @@ package middleware.core;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.jms.JMSException;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.Mission;
 import atlasdsl.Robot;
+import atlassharedclasses.Point;
 
 public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +44,13 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private static String pointListToPolyString(List<Point> coords) {
+		String coordsJoined = coords.stream()
+				.map(p -> p.toStringBareCSV())
+				.collect(Collectors.joining(":"));
+		return coordsJoined;
 	}
 	
 	public void handleEvent(CIEvent event) {
