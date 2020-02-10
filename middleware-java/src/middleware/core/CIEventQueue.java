@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 import javax.jms.JMSException;
 
 import activemq.portmapping.PortMappings;
-import atlasdsl.Mission;
-import atlasdsl.Robot;
-import atlassharedclasses.Point;
+import atlasdsl.*;
+import atlassharedclasses.*;
 
 public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private static final long serialVersionUID = 1L;
@@ -24,8 +23,14 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	}
 
 	public void setup() {
+		// Create the producers to send out converted updates to the relevant MOOSDB's
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
+			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
+			producers.put(name, p);
+		}
+		for (Computer c : mission.getAllComputers()) {
+			String name = c.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
 			producers.put(name, p);
 		}

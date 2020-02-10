@@ -5,7 +5,8 @@
   CLOSED: [2020-01-07 Tue 18:55]
 
 * DONE Read through the proposal again and check I'm on the right track
-* TODO CI code generator - how does it have to be structured, one CI class per robot? Check with Nikos
+* DONE CI code generator - how does it have to be structured, one CI class per robot? Check with Nikos
+  CLOSED: [2020-02-10 Mon 12:32]
 * DONE Generate a superclass per robot and subclass for each particular robot identity - allowing
   CLOSED: [2020-01-29 Wed 00:38]
 behaviour customisation per individual robots
@@ -72,24 +73,24 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 * TODO Metamodels for the other languages
 
 
-* TODO Obtaining the time from the DB updates? - ensuring causality is respected
-* TODO
+* TODO Obtaining the time from the DB updates? - use the DB_UPTIME variable from the shoreside MOOSDB (DB_TIME is the Unix time from DB)
 * DONE Polygon coords list sent to MOOS is empty - why? - fixed by rewriting the polygon generator code
   CLOSED: [2020-02-07 Fri 14:26]
 * TODO Points go outside the official region? - check the coord list conversion
 
 * TODO The middleware has to see the forwarded CI requests so the faults can be injected there
-The CI requests must be passed as serialised Behaviour objects to the middleware
-The middleware has to have a thread monitoring reverse communications from the CI
-The middleware also has to have a thread monitoring connections from the fault injection
+The CI requests must be passed as serialised Behaviour objects (subclasses) to the middleware
+The middleware has to have an ATLASEventQueue monitoring communications from the CI
+Then relay out the corresponding MOOS variable updates from the CI into the DB
+
+* TODO What does the fault injector send to the middleware
+Generates a FaultInstance object which specifies
+The exact time or time range of a particular fault 
 
 FaultInstance objects received by the middleware can do 3 things:
 CI behaviour layers have to translate into Message instances from components
 Some faults can remaing to modify in progress CI Messages 
 The faults can also be translated directly into MOOS updates and pushed to MOOSDB
 
-* TODO What does the fault injector send to the middleware
-Generates a FaultInstance object which specifies
-The exact time or time range of a particular fault 
 
 

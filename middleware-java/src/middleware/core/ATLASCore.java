@@ -3,20 +3,19 @@ package middleware.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import activemq.portmapping.PortMappings;
 import atlasdsl.*;
-import atlassharedclasses.ATLASObjectMapper;
 import atlassharedclasses.FaultInstance;
+import faultgen.FaultGenerator;
 import middleware.gui.GUITest;
 
 // This code will be combined with the simulator-specific code
 // during code generation
 public abstract class ATLASCore {
-	
 	protected ATLASEventQueue carsIncoming;
 	protected ATLASEventQueue fromCI;
+	
 	//protected ATLASEventQueue fromFaultGen;
-	// TODO: for now the fault generator is to be installed in the middleware process itself
+	// TODO: for now the fault generator is installed in the middleware process itself,
 	// not communicating over ActiveMQ with it
 	
 	protected ActiveMQProducer outputToCI;
@@ -25,18 +24,25 @@ public abstract class ATLASCore {
 	private GUITest gui;
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
+	private FaultGenerator faultGen;
 	
+	private double time = 0.0;
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		gui = new GUITest(mission);
+		faultGen = new FaultGenerator(this,mission);
 	}
-    
-    public void afterAction() {
-    	
-    }
+	
+	public void registerFault(FaultInstance f) {
+		activeFaults.add(f);
+	}
+	
+	public void clearFaults() {
+		activeFaults.clear();
+	}
     
     public ActiveMQProducer getCIProducer() {
     	return outputToCI;
@@ -44,8 +50,11 @@ public abstract class ATLASCore {
 	
     public void runMiddleware()  {
 		for (ATLASEventQueue q : queues) {
-			// The GUI needs to be updated following every event on any queue
+			// Since the GUI displays global status, it
+			// needs to be updated following every event on any queue
 			q.registerAfterHook(() -> gui.updateGUI());
+			// Also after events, need to check for faults
+			q.registerAfterHook(() -> faultGen.pollFaultsNow());
 			q.setup();
 		}
 		
@@ -53,4 +62,8 @@ public abstract class ATLASCore {
 			new Thread(q).start();
 		}
     }
+
+	public double getTime() {
+		return time;
+	}
 }

@@ -83,6 +83,9 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 		if (e instanceof MOOSVariableUpdate) {
 			MOOSVariableUpdate mup = (MOOSVariableUpdate)e;
 			
+			// TODO: need to handle DB_TIME here - update the middleware
+			// time variable in response to them
+			
 			// Handle NODE_REPORT events
 			if (mup.keyStartMatches("NODE_REPORT")) {
 				// Extract the x,y coordinates from the contents via regex
