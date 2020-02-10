@@ -42,26 +42,20 @@ public class RobotBehaviours {
 		return producers.get(robotName);
 	}
 		
-	public static void setSweepRegion(String robotName, Region r, double stepSize) {
-		// TODO: do something about the end time here
-		// maybe a message format encoding for MOOS which doesn't require it
-		Double endTime = 1000000.0;
-
+	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
-		String polyUpdate = "polygon=" + pointListToPolyString(coords);
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
-			System.out.println("polyUpdate" + polyUpdate);
 		}
-		
+		BehaviourCommand cmd = new SetCoordinates(coords);
 		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.sendMOOSUpdate(endTime, "UP_LOITER", polyUpdate);
+		prod.sendCommand(cmd);
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
 		// TODO: construct a region then use setSweepRegion
 		Region r = Region.squareAroundPoint(p, size);
-		setSweepRegion(robotName, r, stepSize);
+		setPatrolAroundRegion(robotName, r, stepSize);
 	}
 	
 	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {

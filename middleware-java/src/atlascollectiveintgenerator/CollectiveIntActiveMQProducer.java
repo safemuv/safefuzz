@@ -9,12 +9,13 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import atlasdsl.*;
+import atlassharedclasses.*;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import atlascollectiveint.logging.CollectiveIntLog;
-import middleware.core.ActiveMQProducer.QueueOrTopic;
-import middleware.logging.ATLASLog;
 
 public class CollectiveIntActiveMQProducer {
 	private ActiveMQConnectionFactory connectionFactory;
@@ -24,6 +25,8 @@ public class CollectiveIntActiveMQProducer {
 	private MessageProducer producer;
 	private String queueName;
 	private QueueOrTopic type;
+	
+	private ATLASObjectMapper aoMapper = new ATLASObjectMapper();
 
 	public enum QueueOrTopic {
 		QUEUE,
@@ -85,11 +88,14 @@ public class CollectiveIntActiveMQProducer {
 		}
 	}
 	
-	// TODO: this should be pushed into the middleware and
-	// behaviour translation to the low-level components should
-	// be done there
-	public void sendMOOSUpdate(Double endTimeOfUpdate, String key, String value) {
-		String msg = endTimeOfUpdate.toString() + "|" + key + "=" + value;
-		sendMessage(msg);
+
+	
+	public void sendCommand(BehaviourCommand cmd) {
+		try {
+			String msg = aoMapper.serialise(cmd);
+			sendMessage(msg);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 }

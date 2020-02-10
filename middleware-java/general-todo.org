@@ -88,8 +88,6 @@ CI behaviour layers have to translate into Message instances from components
 Some faults can remaing to modify in progress CI Messages 
 The faults can also be translated directly into MOOS updates and pushed to MOOSDB
 
-
-
 * TODO What does the fault injector send to the middleware
 Generates a FaultInstance object which specifies
 The exact time or time range of a particular fault 

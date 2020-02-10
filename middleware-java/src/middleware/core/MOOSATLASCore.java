@@ -4,7 +4,6 @@ import activemq.portmapping.PortMappings;
 import atlasdsl.Mission;
 
 public class MOOSATLASCore extends ATLASCore {
-	
 	private int MOOS_QUEUE_CAPACITY = 100;
 
 	public MOOSATLASCore(Mission mission) {
@@ -17,6 +16,5 @@ public class MOOSATLASCore extends ATLASCore {
 	
 	public void runMiddleware() {
 		super.runMiddleware();
-
 	}
 }

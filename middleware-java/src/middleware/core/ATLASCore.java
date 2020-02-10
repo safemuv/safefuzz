@@ -28,7 +28,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
-		fromCI = new CIEventQueue(CI_QUEUE_CAPACITY);
+		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		gui = new GUITest(mission);
 	}

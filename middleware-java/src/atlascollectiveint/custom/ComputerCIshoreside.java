@@ -107,7 +107,7 @@ class ComputerCIshoreside {
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
-		  RobotBehaviours.setSweepRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
+		  RobotBehaviours.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
