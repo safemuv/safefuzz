@@ -1,5 +1,5 @@
 package atlassharedclasses;
 
-public class BehaviourCommand {
+public abstract class BehaviourCommand {
 
 }

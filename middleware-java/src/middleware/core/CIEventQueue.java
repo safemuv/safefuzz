@@ -64,6 +64,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	}
 	
 	public void handleEvent(CIEvent event) {
+		System.out.println("CIEventQueue.handleEvent - " + event.toString());
 		// General procedure:
 		// 1) log received event at the middleware side
 		// 2) apply any relevant faults if they are registered in the middleware
@@ -73,6 +74,9 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		// TOOD: log the incoming event here
 		
 		BehaviourCommand ciCmd = event.getCommand();
+		
+		System.out.println("CIEvent behaviour command class = " + ciCmd.getClass().toString());
+		
 		// Dispatch types of CI event, convert it into a low-level simulator event
 		// currently handle a BehaviourEvent
 		if (ciCmd instanceof ActivateBehaviour) {

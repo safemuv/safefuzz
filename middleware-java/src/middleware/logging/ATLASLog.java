@@ -42,4 +42,9 @@ public class ATLASLog {
 			e.printStackTrace();
 		}
 	}
+
+	public static void logCIInbound(String queueName, String text) {
+		// TODO Auto-generated method stub
+		
+	}
 }

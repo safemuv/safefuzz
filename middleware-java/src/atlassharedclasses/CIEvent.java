@@ -1,7 +1,10 @@
 package atlassharedclasses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CIEvent {
-	private BehaviourCommand cmd;
+	@JsonProperty("command")
+	private BehaviourCommand command;
 	private String robotName;
 	
 	public CIEvent() {
@@ -9,12 +12,12 @@ public class CIEvent {
 	}
 	
 	public CIEvent(BehaviourCommand cmd, String robotName) {
-		this.cmd = cmd;
+		this.command = cmd;
 		this.robotName = robotName;
 	}
 	
 	public BehaviourCommand getCommand() {
-		return cmd;
+		return command;
 	}
 	
 	public String getRobotName() {

@@ -38,12 +38,14 @@ public class CIActiveMQConsumer implements Runnable, ExceptionListener {
 				System.out.println("CIActiveMQConsumer - received " + text);
 				
 				ATLASSharedResult res = atlasObjMapper.deserialise(text);
+				System.out.println(res);
 				if (res.getContentsClass() == CIEvent.class) {
 					Optional<CIEvent> e_o = res.getCIEvent();
 					if (e_o.isPresent()) {
 						CIEvent e = e_o.get();
+						System.out.println("adding to CIEventQueue");
 						carsQueue.add(e);
-						ATLASLog.logCARSInbound(queueName, text);
+						ATLASLog.logCIInbound(queueName, text);
 					}
 				}
 			} else {

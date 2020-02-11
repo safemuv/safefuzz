@@ -6,8 +6,21 @@ import java.util.regex.Pattern;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 
 public class ATLASObjectMapper {
+	private Pattern msgScanner = Pattern.compile("([^,]+),(.+)");
+	// FIX: for some reason jackson is inserting additional fields into the
+	// sonar sensor detections. This should work around this
+	// https://www.baeldung.com/jackson-deserialize-json-unknown-properties
+	private ObjectMapper objMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	
+	public String serialise(Object msg) throws JsonProcessingException {
+		String className = msg.getClass().getName();
+		return className + "," + objMapper.writeValueAsString(msg);
+	}
+	
 	public enum FormatErrorType {
 		JSON_PROCESSING_EXCEPTION,
 		INVALID_CLASS,
@@ -22,15 +35,12 @@ public class ATLASObjectMapper {
 		}
 	}
 	
-	private Pattern msgScanner = Pattern.compile("([^,]+),(.+)");
-	// FIX: for some reason jackson is inserting additional fields into the
-	// sonar sensor detections. This should work around this
-	// https://www.baeldung.com/jackson-deserialize-json-unknown-properties
-	private ObjectMapper objMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	
-	public String serialise(Object msg) throws JsonProcessingException {
-		String className = msg.getClass().getName();
-		return className + "," + objMapper.writeValueAsString(msg);
+	@SuppressWarnings("deprecation")
+	public ATLASObjectMapper() {
+		//https://github.com/FasterXML/jackson-docs/wiki/JacksonPolymorphicDeserialization
+		//PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder().build();
+		//objMapper.activateDefaultTyping(ptv, ObjectMapper.DefaultTyping.NON_FINAL);
+		objMapper.enableDefaultTyping();
 	}
 	
 	public ATLASSharedResult deserialise(String msgText) throws ATLASFormatError {

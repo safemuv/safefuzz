@@ -2,13 +2,17 @@ package test;
 
 import atlasdsl.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import atlassharedclasses.CIEvent;
 import atlassharedclasses.Point;
+import atlassharedclasses.SetCoordinates;
 import atlassharedclasses.SonarDetection;
 
 public class TestCode {
@@ -23,6 +27,27 @@ public class TestCode {
 			System.out.println("x = " + x + " : y = " + y);
 		} else {
 			System.out.println("Match failed!");
+		}
+	}
+	
+	private static void testSerialiseCIEvent() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.enableDefaultTyping();
+		
+		List<Point> coords = new ArrayList<Point>();
+		coords.add(new Point(0.0,10.0));
+		coords.add(new Point(10.0,20.0));
+		CIEvent e = new CIEvent(new SetCoordinates(coords), "ella");
+		CIEvent recovered;
+		
+		try {
+			String res = objectMapper.writeValueAsString(e);
+			recovered = objectMapper.readValue(res, CIEvent.class);
+			System.out.println(res);
+			System.out.println(recovered.getCommand().getClass());
+			
+		} catch (JsonProcessingException e1) {
+			e1.printStackTrace();
 		}
 	}
 	
@@ -74,5 +99,6 @@ public class TestCode {
 		
 		testSerialise();
 		testSerialiseSonarDetection();
+		testSerialiseCIEvent();
 	}
 }
