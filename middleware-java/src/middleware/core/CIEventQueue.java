@@ -60,10 +60,11 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	
 	public void handleEvent(CIEvent event) {
 		// Dispatch types of CI event, convert it into a low-level simulator event
+		// currently handle a BehaviourEvent
+		
 		// 1) log it at the middleware side
 		// 2) apply any relevant faults if they are registered in the middleware!
 		// 3) convert it into a simulator specific representation
-		// 4) then send to producer to be related into the real 
-		// It may be a new BehaviourCommand...
+		// 4) then send to MOOS producers to be relayed to MOOSDBs
 	}
 }

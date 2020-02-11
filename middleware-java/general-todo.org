@@ -82,15 +82,19 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 The CI requests must be passed as serialised Behaviour objects (subclasses) to the middleware
 The middleware has to have an ATLASEventQueue monitoring communications from the CI
 Then relay out the corresponding MOOS variable updates from the CI into the DB
+Finish the conversion of these in the middleware - in CIEventQueue.handleEvent
+Types e.g. CIEvent may need to be handled
 
-* TODO What does the fault injector send to the middleware
+* DONE What does the fault injector send to the middleware
+  CLOSED: [2020-02-11 Tue 02:11]
 Generates a FaultInstance object which specifies
 The exact time or time range of a particular fault 
 
+* TODO 
 FaultInstance objects received by the middleware can do 3 things:
 CI behaviour layers have to translate into Message instances from components
-Some faults can remaing to modify in progress CI Messages 
+Some faults can renaming to modify in progress CI Messages 
 The faults can also be translated directly into MOOS updates and pushed to MOOSDB
-
-
+There has to be an initial phase of activity for a newly registered fault
+Then persistent effects on e.g. CI messages, until the fault is inactivated
 

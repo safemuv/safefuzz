@@ -3,9 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
-import atlassharedclasses.ATLASObjectMapper;
 import atlassharedclasses.FaultInstance;
 import atlasdsl.*;
 import atlasdsl.faults.*;
@@ -36,14 +33,24 @@ public class FaultGenerator {
 		} else {
 			Double startTime = Double.parseDouble(fields[0]);
 			Double endTime = Double.parseDouble(fields[1]);
-			String faultImpactStr = fields[2];
+			String vehicleName = fields[2];
+			String faultImpactStr = fields[3].toUpperCase();
 			FaultImpact fi;
 			// TODO: better solution here
-			if (faultImpactStr == "MutateMessage") {
+			if (faultImpactStr == "MUTATEMESSAGE") {
 				fi = new MutateMessage();
 				Fault f = new Fault(fi);
 				return new FaultInstance(startTime, endTime, f);
-			}	
+			}
+			
+			if (faultImpactStr == "OVERSPEED") {
+				Double speed = Double.parseDouble(fields[4]);
+				// TODO: add new classes for this - has to be a subclass
+				// of affectedComponent
+				//fi = new ChangeComponentProperty();
+				//Fault f = new Fault(fi);
+				//return new FaultInstance(startTime, endTime, f);
+			}
 		}
 		throw new InvalidFaultFormat();
 	}
