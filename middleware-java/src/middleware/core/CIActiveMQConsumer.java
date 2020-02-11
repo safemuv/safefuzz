@@ -27,6 +27,7 @@ public class CIActiveMQConsumer implements Runnable, ExceptionListener {
 		this.queueName = queueName;
 		this.carsQueue = carsQueue;
 		this.vehicleName = vehicleName;
+		atlasObjMapper = new ATLASObjectMapper();
 	}
 
 	public void handleMessage(Message m) {
@@ -34,6 +35,8 @@ public class CIActiveMQConsumer implements Runnable, ExceptionListener {
 			if (m instanceof TextMessage) {
 				TextMessage textMessage = (TextMessage) m;
 				String text = textMessage.getText();
+				System.out.println("CIActiveMQConsumer - received " + text);
+				
 				ATLASSharedResult res = atlasObjMapper.deserialise(text);
 				if (res.getContentsClass() == CIEvent.class) {
 					Optional<CIEvent> e_o = res.getCIEvent();

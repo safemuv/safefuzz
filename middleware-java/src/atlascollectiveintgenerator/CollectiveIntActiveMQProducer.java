@@ -88,9 +88,10 @@ public class CollectiveIntActiveMQProducer {
 		}
 	}
 	
-	public void sendCommand(BehaviourCommand cmd) {
+	public void send(BehaviourCommand cmd, String robotName) {
 		try {
-			String msg = aoMapper.serialise(cmd);
+			CIEvent e = new CIEvent(cmd, robotName);
+			String msg = aoMapper.serialise(e);
 			sendMessage(msg);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

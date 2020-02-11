@@ -1,6 +1,4 @@
-package middleware.core;
-
-import atlassharedclasses.BehaviourCommand;
+package atlassharedclasses;
 
 public class CIEvent {
 	private BehaviourCommand cmd;

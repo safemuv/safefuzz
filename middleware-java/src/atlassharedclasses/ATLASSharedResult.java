@@ -2,8 +2,6 @@ package atlassharedclasses;
 
 import java.util.Optional;
 
-import middleware.core.CIEvent;
-
 // TODO: This class is meant as a sort-of typesafe holder
 // of serialised objects. It should at least be renamed and 
 // probably re-engineered into a better solution

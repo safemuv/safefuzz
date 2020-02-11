@@ -42,7 +42,7 @@ public class RobotBehaviours {
 		}
 		BehaviourCommand cmd = new SetCoordinates(coords);
 		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.sendCommand(cmd);
+		prod.send(cmd, robotName);
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {

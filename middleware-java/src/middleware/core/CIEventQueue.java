@@ -15,7 +15,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private Mission mission;
 	
 	private HashMap<String,ActiveMQProducer> producers = new LinkedHashMap<String,ActiveMQProducer>();
-	private HashMap<String,ActiveMQConsumer> consumers = new LinkedHashMap<String,ActiveMQConsumer>();
+	private HashMap<String,CIActiveMQConsumer> consumers = new LinkedHashMap<String,CIActiveMQConsumer>();
 
 	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
 		super(capacity, '@');
@@ -28,7 +28,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
-			ActiveMQConsumer c = new ActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
+			CIActiveMQConsumer c = new CIActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
 			consumers.put(name,c);
 			startThread(c, false);
@@ -36,7 +36,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		for (Computer cp : mission.getAllComputers()) {
 			String name = cp.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
-			ActiveMQConsumer c = new ActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
+			CIActiveMQConsumer c = new CIActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
 			consumers.put(name, c);
 		}
