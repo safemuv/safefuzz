@@ -18,4 +18,8 @@ public class PortMappings {
 	public static String portForMOOSDB(String moosCommunityName) {
 		return "FAULTS-SIM-TO-ATLAS-targ_" + moosCommunityName + ".moos";
 	}
+	
+	public static String portForMiddlewareFromCI(String vehicleName) {
+		return "MIDDLEWARE-FROM-CI_" + vehicleName.toString();
+	}
 }

@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.jms.JMSException;
-
 import activemq.portmapping.PortMappings;
+
 import atlasdsl.*;
 import atlassharedclasses.*;
 
@@ -16,13 +15,23 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private Mission mission;
 	
 	private HashMap<String,ActiveMQProducer> producers = new LinkedHashMap<String,ActiveMQProducer>();
+	
+	// This consumer listens to the CI ActiveMQ port
+	private ActiveMQConsumer consumer;
 
 	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
 		super(capacity, '@');
 		this.mission = mission;
 	}
 
+	public void addConsumers() {
+		// TODO: for now, only consumer from the shoreside CI is active
+		consumer = new ActiveMQConsumer("shoreside",  PortMappings.portForMiddlewareFromCI("shoreside"), this);
+	}
+	
 	public void setup() {
+		addConsumers();
+		
 		// Create the producers to send out converted updates to the relevant MOOSDB's
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
@@ -46,7 +55,6 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		try {
 			prod.sendMessage(msg);
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -59,12 +67,34 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	}
 	
 	public void handleEvent(CIEvent event) {
-		// Dispatch types of CI event, convert it into a low-level simulator event
-		// currently handle a BehaviourEvent
-		
-		// 1) log it at the middleware side
-		// 2) apply any relevant faults if they are registered in the middleware!
+		// General procedure:
+		// 1) log received event at the middleware side
+		// 2) apply any relevant faults if they are registered in the middleware
 		// 3) convert it into a simulator specific representation
 		// 4) then send to MOOS producers to be relayed to MOOSDBs
+		
+		// TOOD: log the incoming event here
+		
+		BehaviourCommand ciCmd = event.getCommand();
+		// Dispatch types of CI event, convert it into a low-level simulator event
+		// currently handle a BehaviourEvent
+		if (ciCmd instanceof ActivateBehaviour) {
+			ActivateBehaviour actCmd = (ActivateBehaviour)ciCmd;
+			// TODO: Check for any fault impacting the command here
+			System.out.println("CIEventQueue - ActivateBehaviour received");
+		}
+		
+		if (ciCmd instanceof SetCoordinates) {
+			SetCoordinates setCmd = (SetCoordinates)ciCmd;
+			// put the faults that impact the coordinate processing here
+			List<Point> coordinates = setCmd.getCoordinates();
+			// TODO: Check for fault impacting the coordinates here
+			
+			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
+			String polyUpdate = "polygon=" + pointListToPolyString(coordinates);
+			String robotName = event.getRobotName();
+			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
+			sendMOOSUpdate(robotName, "UP_LOITER", polyUpdate);
+		}
 	}
 }

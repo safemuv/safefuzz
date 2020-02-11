@@ -3,8 +3,11 @@ package atlascollectiveintgenerator;
 import atlasdsl.loader.*;
 import atlascollectiveint.api.*;
 import atlassharedclasses.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
@@ -28,19 +31,18 @@ public class CollectiveInt {
 		// TODO: fix, this port is hardcoded to just listen to Shoreside
 		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
 		
+		List<String> producerNames = new ArrayList<String>();
+		
 		for (Robot r : mission.getAllRobots()) {
-			String name = r.getName();
-			// TODO: Currently the CI is sending directly to the MOOSDB's for the various elements
-			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSDB(name), mission);
-			moosProducers.put(name, p);
-			RobotBehaviours.registerNewProducer(name, p);
-			p.setupConnection();
+			producerNames.add(r.getName());
 		}
 		
 		for (Computer c : mission.getAllComputers()) {
-			String name = c.getName();
-			// TODO: Currently the CI is sending directly to the MOOSDB's for the various elements
-			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMOOSDB(name), mission);
+			producerNames.add(c.getName());
+		}
+		
+		for (String name : producerNames) {
+			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMiddlewareFromCI(name), mission);
 			moosProducers.put(name, p);
 			RobotBehaviours.registerNewProducer(name, p);
 			p.setupConnection();

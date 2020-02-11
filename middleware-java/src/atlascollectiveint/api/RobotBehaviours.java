@@ -46,7 +46,6 @@ public class RobotBehaviours {
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
-		// TODO: construct a region then use setSweepRegion
 		Region r = Region.squareAroundPoint(p, size);
 		setPatrolAroundRegion(robotName, r, stepSize);
 	}
