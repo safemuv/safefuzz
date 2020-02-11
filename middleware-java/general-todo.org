@@ -67,19 +67,19 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 ** TODO Change the topic so the CI can communicate directly with the relevant MOOSDB for now
 ** TODO Timers for the CI - for now, the timers will be triggered at the next event polling
 ** TODO Need to exclude any robots which are currently confirming from participating in the confirmation
-** TODO Check with Simos about an algorithm for the coverage/just a simple rectangle for now
+** DONE Check with Simos about an algorithm for the coverage/just a simple rectangle for now
+   CLOSED: [2020-02-11 Tue 16:48]
 
 * TODO Generate a stub loader using EGL which produces the Java objects
 * TODO Metamodels for the other languages
-
-
 * TODO Obtaining the time from the DB updates? - use the DB_UPTIME variable from the shoreside MOOSDB (DB_TIME is the Unix time from DB)
 * DONE Polygon coords list sent to MOOS is empty - why? - fixed by rewriting the polygon generator code
   CLOSED: [2020-02-07 Fri 14:26]
 * TODO Points go outside the official region? - check the coord list conversion
 
 * TODO The middleware has to see the forwarded CI requests so the faults can be injected there
-** TODO The CI requests must be passed as serialised Behaviour objects (subclasses of Behaviour) to the middleware
+** DONE The CI requests must be passed as serialised Behaviour objects (subclasses of Behaviour) to the middleware
+   CLOSED: [2020-02-11 Tue 16:48]
 ** DONE The middleware has to have an ATLASEventQueue monitoring communications from the CI - Finish the conversion of these in the middleware - in CIEventQueue.handleEvent
 ** TODO Then relay out the corresponding MOOS variable updates from the CI into the DB
 ** TODO Types e.g. CIEvent may need to be handled in the conversion software
@@ -90,13 +90,17 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 Generates a FaultInstance object which specifies
 The exact time or time range of a particular fault 
 
-* TODO Register additional objects
-* TODO ActiveMQ port conversion - the link from the CI to the application should be an
+* DONE Register additional objects in ATLASSharedResult
+  CLOSED: [2020-02-11 Tue 16:40]
+* DONE Middleware MQ is expecting MOOSEvent objects - this type needs to receive BehaviourCommands
+  CLOSED: [2020-02-11 Tue 16:47]
+
+* DONE ActiveMQ port conversion - the link from the CI to the application should be 
 ActiveMQ port named the name of the relevant vehicle? Or by the CI location?
-
-If it is the CI location, then it is necessary for the application to provdie 
-
-
+If it is the CI location, then it is necessary for the messages to include the
+particular port name in the messages.
+No, lets use individual ports/producers/consumer links for the different vehicles
+  CLOSED: [2020-02-11 Tue 16:41]
 
 * TODO General methodology for the handling of faults
 FaultInstance objects received by the middleware can do 3 things:
@@ -105,5 +109,3 @@ Some faults can renaming to modify in progress CI Messages
 The faults can also be translated directly into MOOS updates and pushed to MOOSDB
 There has to be an initial phase of activity for a newly registered fault
 Then persistent effects on e.g. CI messages, until the fault is inactivated
-
-
