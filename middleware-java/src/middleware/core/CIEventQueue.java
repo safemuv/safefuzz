@@ -23,13 +23,13 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	}
 	
 	public void setup() {
-		
 		// Create the producers to send out converted updates to the relevant MOOSDB's
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
 			CIActiveMQConsumer c = new CIActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
+			p.run();
 			consumers.put(name,c);
 			startThread(c, false);
 		}
@@ -38,6 +38,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
 			CIActiveMQConsumer c = new CIActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
+			p.run();
 			consumers.put(name, c);
 		}
 	}

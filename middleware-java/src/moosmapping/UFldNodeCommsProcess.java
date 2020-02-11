@@ -4,7 +4,7 @@ public class UFldNodeCommsProcess extends MOOSProcess {
 	
 	public UFldNodeCommsProcess(MOOSCommunity parent) {
 		super("uFldNodeComms", parent);
-		setProperty("COMMS_RANGE", 50);
+		setProperty("COMMS_RANGE", 500);
 		setProperty("CRITICAL_RANGE", 25);
 		setProperty("MIN_MSG_INTERVAL", 15);
 		setProperty("MAX_MSG_LENGTH", 1000);

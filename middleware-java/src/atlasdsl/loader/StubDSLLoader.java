@@ -36,9 +36,9 @@ public class StubDSLLoader implements DSLLoader {
 		addRobotWithSonar(mission, "ella",  new Point(30.0, 0.0), 50, 0.99, 0.03, 0.06);
 		
 		// Add objects to the environment - hazards/benign objects for the robots to find
-		mission.addObject(new EnvironmentalObject(new Point(46.0, -23.0), false));
-		mission.addObject(new EnvironmentalObject(new Point(-7.0, 17.0), true));
-		mission.addObject(new EnvironmentalObject(new Point(66.0, -3.0), false));
+		mission.addObject(new EnvironmentalObject(new Point(10.0, -115.0), false));
+		mission.addObject(new EnvironmentalObject(new Point(140.0,-65.0), true));
+		mission.addObject(new EnvironmentalObject(new Point(135.0,-160.0), false));
 
 		// Define the mission layer
 		double MISSION_END_TIME = 1000.0;

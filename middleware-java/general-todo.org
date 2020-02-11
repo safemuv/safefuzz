@@ -109,3 +109,5 @@ Some faults can renaming to modify in progress CI Messages
 The faults can also be translated directly into MOOS updates and pushed to MOOSDB
 There has to be an initial phase of activity for a newly registered fault
 Then persistent effects on e.g. CI messages, until the fault is inactivated
+* TODO Check CRITICAL_RANGE in the node broker?
+* TODO The CI is dispatching the original vehicle to verify! Fix
