@@ -88,8 +88,6 @@ public class CollectiveIntActiveMQProducer {
 		}
 	}
 	
-
-	
 	public void sendCommand(BehaviourCommand cmd) {
 		try {
 			String msg = aoMapper.serialise(cmd);

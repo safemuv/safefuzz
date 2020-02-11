@@ -45,12 +45,6 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 	public void registerAfter() {
 		
 	}
-	
-    public static void startThread(Runnable runnable, boolean daemon) {
-        Thread brokerThread = new Thread(runnable);
-        brokerThread.setDaemon(daemon);
-        brokerThread.start();
-    }
 
 	public void setup() {
 		// Setup the ActiveMQ connection for the simulation side
@@ -62,7 +56,6 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 			// TODO: change to ActiveMQRobotConsumer?
 			String robotName = r.getName();
 			ActiveMQConsumer consumer = new ActiveMQConsumer(robotName, (PortMappings.portForMOOSWatch(robotName)), this);
-
 			activeConsumers.add(consumer);
 			startThread(consumer, false);
 		}

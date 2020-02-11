@@ -90,6 +90,14 @@ atlassharedclasses.ATLASObjectMapper$ATLASFormatError
 Generates a FaultInstance object which specifies
 The exact time or time range of a particular fault 
 
+* TODO Register additional objects
+* TODO ActiveMQ port conversion - the link from the CI to the application should be an
+ActiveMQ port named the name of the relevant vehicle? Or by the CI location?
+
+If it is the CI location, then it is necessary for the application to provdie 
+
+
+
 * TODO General methodology for the handling of faults
 FaultInstance objects received by the middleware can do 3 things:
 CI behaviour layers have to translate into Message instances from components

@@ -28,7 +28,7 @@ public class CollectiveInt {
 	public void init() {
 		DSLLoader l = new StubDSLLoader();
 		mission = l.loadMission();
-		// TODO: fix, this port is hardcoded to just listen to Shoreside
+		// TODO: fix, this port is hardcoded to just listen to shoreside
 		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
 		
 		List<String> producerNames = new ArrayList<String>();

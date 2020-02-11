@@ -15,33 +15,30 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private Mission mission;
 	
 	private HashMap<String,ActiveMQProducer> producers = new LinkedHashMap<String,ActiveMQProducer>();
-	
-	// This consumer listens to the CI ActiveMQ port
-	private ActiveMQConsumer consumer;
+	private HashMap<String,ActiveMQConsumer> consumers = new LinkedHashMap<String,ActiveMQConsumer>();
 
 	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
 		super(capacity, '@');
 		this.mission = mission;
 	}
-
-	public void addConsumers() {
-		// TODO: for now, only consumer from the shoreside CI is active
-		consumer = new ActiveMQConsumer("shoreside",  PortMappings.portForMiddlewareFromCI("shoreside"), this);
-	}
 	
 	public void setup() {
-		addConsumers();
 		
 		// Create the producers to send out converted updates to the relevant MOOSDB's
 		for (Robot r : mission.getAllRobots()) {
 			String name = r.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
+			ActiveMQConsumer c = new ActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
+			consumers.put(name,c);
+			startThread(c, false);
 		}
-		for (Computer c : mission.getAllComputers()) {
-			String name = c.getName();
+		for (Computer cp : mission.getAllComputers()) {
+			String name = cp.getName();
 			ActiveMQProducer p = new ActiveMQProducer(PortMappings.portForMOOSDB(name), ActiveMQProducer.QueueOrTopic.TOPIC);
+			ActiveMQConsumer c = new ActiveMQConsumer(name, PortMappings.portForMiddlewareFromCI(name), this);
 			producers.put(name, p);
+			consumers.put(name, c);
 		}
 	}
 	
