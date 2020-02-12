@@ -16,10 +16,11 @@ import java.util.stream.Collectors;
 
 class ComputerCIshoreside {
 
-	// The shoreside CI's copy of the robot locations
+	// The shoreside CI's copy of the robot information
 	private static List<String> robots = new ArrayList<String>();
 	private static HashMap<String,Point> robotLocations = new LinkedHashMap<String,Point>();
 	private static HashMap<Integer,Integer> detectionCounts = new LinkedHashMap<Integer,Integer>();
+	private static HashMap<String,Boolean> robotIsConfirming = new LinkedHashMap<String,Boolean>();
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
@@ -49,19 +50,22 @@ class ComputerCIshoreside {
     
     // The shoreside chooses a robot to use to confirm detections, 
     // excluding the detecting one obviously!
-    
-    // TODO: have to exclude any robots which are currently active confirming the 
-    // detections
     private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {
-    	// sort them all relative to distances from the location
+
     	Map<String,Double> dists = robotDistancesTo(loc);
     	Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
-    			.filter(e -> e.getKey() != excludeRobot)
+    			// Check it isn't the exclude robot
+    			.filter(e -> e.getKey().compareTo(excludeRobot) != 0)
+    			// Check robot is not already confirming!
+    			.filter(e -> !robotIsConfirming.get(e.getKey()))
     			.sorted(Map.Entry.comparingByValue())
     			.findFirst();
-    	// TODO: check the sort order here!
+    	// TODO: check sort order here
     	
     	if (res.isPresent()) {
+    		// If a robot found, set it as confirming a detection
+    		String chosen = res.get().getKey();
+    		robotIsConfirming.put(chosen, true);
     		return Optional.of(res.get().getKey());
     	} else {
     		// If no robots are known, it will be empty  
@@ -70,10 +74,16 @@ class ComputerCIshoreside {
     }
     
   public static void setRobotNamesAndRegion() {
+	  // TODO: should we get this from the DSL info?
 	  robots.add("frank");
 	  robots.add("gilda");
 	  robots.add("henry");
 	  robots.add("ella");
+	  
+	  for (String r : robots) {
+		  robotIsConfirming.put(r, false);
+	  }
+		  
 	  fullRegion = new Region(new Point(-50.0,-230.0), new Point(200.0,-30.0));
   }
   

@@ -1,5 +1,6 @@
 package atlasdsl.faults;
 
+import java.util.List;
 import java.util.Optional;
 
 import atlasdsl.*;
@@ -12,5 +13,9 @@ public class Fault {
 	public Fault(FaultImpact fi) {
 		this.affectedRegion = Optional.empty();
 		this.impact = fi;
+	}
+
+	public Object applyFault(Object orig) {
+		return impact.applyImpact(orig);
 	}
 }

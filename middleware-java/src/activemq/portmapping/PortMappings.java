@@ -1,8 +1,6 @@
 package activemq.portmapping;
 
 public class PortMappings {
-	// TODO: move others into here
-	
 	public static String portForCI(String vehicleName) {
 		return "MIDDLEWARE-CI-" + vehicleName.toString();
 	}

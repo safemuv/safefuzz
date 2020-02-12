@@ -2,6 +2,8 @@ package middleware.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import atlasdsl.*;
 import atlassharedclasses.FaultInstance;
@@ -65,5 +67,11 @@ public abstract class ATLASCore {
 
 	public double getTime() {
 		return time;
+	}
+
+	public List<FaultInstance> activeFaultsOfClass(Class class1) {
+		return activeFaults.stream()
+				.filter(f -> f.getClass() == class1)
+				.collect(Collectors.toList());
 	}
 }

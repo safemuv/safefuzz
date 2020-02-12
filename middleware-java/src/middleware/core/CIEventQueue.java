@@ -8,11 +8,13 @@ import javax.jms.JMSException;
 import activemq.portmapping.PortMappings;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 
 public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private static final long serialVersionUID = 1L;
 	private Mission mission;
+	private ATLASCore core;
 	
 	private HashMap<String,ActiveMQProducer> producers = new LinkedHashMap<String,ActiveMQProducer>();
 	private HashMap<String,CIActiveMQConsumer> consumers = new LinkedHashMap<String,CIActiveMQConsumer>();
@@ -20,6 +22,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
 		super(capacity, '@');
 		this.mission = mission;
+		this.core = core;
 	}
 	
 	public void setup() {
@@ -90,7 +93,14 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			SetCoordinates setCmd = (SetCoordinates)ciCmd;
 			// put the faults that impact the coordinate processing here
 			List<Point> coordinates = setCmd.getCoordinates();
-			// TODO: Check for fault impacting the coordinates here
+
+			// Check for faults impacting the coordinates here
+			List<FaultInstance> fs = core.activeFaultsOfClass(PointMessageChange.class);
+			List<Point> modifiedCoords = coordinates;
+			for (FaultInstance fi : fs) {
+				Fault f = fi.getFault();
+				modifiedCoords = (List<Point>)f.applyFault(modifiedCoords);
+			}
 			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
 			String polyUpdate = "polygon=" + pointListToPolyString(coordinates);

@@ -16,4 +16,8 @@ public class FaultInstance {
 	public boolean isReady(double time) {
 		return (time >= startTime) && (time <= endTime);
 	}
+	
+	public Fault getFault() {
+		return fault;
+	}
 }

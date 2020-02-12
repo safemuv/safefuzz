@@ -49,4 +49,8 @@ public class Point {
 	public double distanceTo(Point other) {
 		return Math.sqrt(distanceSqrTo(other));
 	}
+
+	public Point add(Point dp) {
+		return new Point(this.x + dp.x, this.y + dp.y, this.z + dp.z);
+	}
 }
