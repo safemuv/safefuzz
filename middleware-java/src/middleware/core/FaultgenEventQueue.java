@@ -1,16 +1,16 @@
 package middleware.core;
 
+// TODO: This is not used yet - the faults are directly injected into the
+// middleware process, rather than over ActiveMQ
 public class FaultgenEventQueue extends ATLASEventQueue<FaultEvent> {
 
 	private static final long serialVersionUID = 1L;
 
 	public FaultgenEventQueue(int capacity) {
 		super(capacity, '!');
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setup() {
-		// TODO Auto-generated method stub
 
 	}
 

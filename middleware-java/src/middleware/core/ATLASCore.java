@@ -34,8 +34,8 @@ public abstract class ATLASCore {
 		this.mission = mission;
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
-		gui = new GUITest(mission);
 		faultGen = new FaultGenerator(this,mission);
+		gui = new GUITest(mission, faultGen);
 	}
 	
 	public void registerFault(FaultInstance f) {

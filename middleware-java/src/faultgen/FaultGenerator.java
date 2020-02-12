@@ -72,6 +72,16 @@ public class FaultGenerator {
 		reader.close();
 	}
 	
+	public void injectDynamicFaultNow(double timeLength) {
+		double startTime = core.getTime();
+		double endTime = startTime + timeLength;
+		FaultImpact fi = new MutateMessage();
+		Fault f = new Fault(fi);
+		FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+		core.registerFault(fInstance);
+		
+	}
+	
 	public void pollFaultsNow() {
 		double time = core.getTime();
 		FaultInstance nextFault = scheduledFaults.peek();
