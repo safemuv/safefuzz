@@ -22,7 +22,8 @@ public class GUITest {
 	private class FaultButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			double testTimeLength = 20.0;
-			faultGen.injectDynamicFaultNow(testTimeLength);
+			// TODO: get the robot ID and time length from the GUI
+			faultGen.injectSpeedFaultNow(testTimeLength, "gilda");
 			System.out.println("Injecting new fault from GUI");
 		}
 	}	

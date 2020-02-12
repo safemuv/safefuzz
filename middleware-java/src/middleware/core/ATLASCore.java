@@ -72,7 +72,12 @@ public abstract class ATLASCore {
 		return time;
 	}
 	
-	public abstract void sendToCARS(String key, String value);
+	// This is used by active faults to inject their immediate effects
+	// upon the low-level CARS simulation
+	public void sendToCARS(Robot r, String key, String value) {
+		CIEventQueue CIq = (CIEventQueue)fromCI;
+		CIq.sendToCARS(r, key, value);
+	}
 
 	public List<FaultInstance> activeFaultsOfClass(Class class1) {
 		return activeFaults.stream()

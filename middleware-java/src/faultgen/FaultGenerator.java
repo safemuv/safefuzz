@@ -72,10 +72,12 @@ public class FaultGenerator {
 		reader.close();
 	}
 	
-	public void injectDynamicFaultNow(double timeLength) {
+	public void injectSpeedFaultNow(double timeLength, String robotName) {
+		Robot r = mission.getRobot(robotName);
+		
 		double startTime = core.getTime();
 		double endTime = startTime + timeLength;
-		FaultImpact fi = new MutateMessage();
+		FaultImpact fi = new MotionFault(r, "UP_SPEED", "10");
 		Fault f = new Fault(fi);
 		FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
 		core.registerFault(fInstance);
