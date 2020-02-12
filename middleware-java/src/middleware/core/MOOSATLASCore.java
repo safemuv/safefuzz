@@ -18,8 +18,4 @@ public class MOOSATLASCore extends ATLASCore {
 	public void runMiddleware() {
 		super.runMiddleware();
 	}
-	
-	public void sendToCARS(Robot r, String key, String value) {
-		
-	}
 }

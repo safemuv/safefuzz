@@ -77,7 +77,7 @@ public class FaultGenerator {
 		
 		double startTime = core.getTime();
 		double endTime = startTime + timeLength;
-		FaultImpact fi = new MotionFault(r, "UP_SPEED", "10");
+		FaultImpact fi = new MotionFault(r, "UP_LOITER", "speed=5.0");
 		Fault f = new Fault(fi);
 		FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
 		core.registerFault(fInstance);
