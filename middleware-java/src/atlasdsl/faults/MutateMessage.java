@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import atlasdsl.*;
+import middleware.core.ATLASCore;
 
 public class MutateMessage extends MessageImpact {
 	private MessageField affectedField;
@@ -26,5 +27,9 @@ public class MutateMessage extends MessageImpact {
 			}
 		}
 		else return newValue.apply(orig);
+	}
+
+	public void immediateEffects(ATLASCore core) {
+		
 	}
 }

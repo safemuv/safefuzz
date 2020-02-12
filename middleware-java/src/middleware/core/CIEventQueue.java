@@ -99,7 +99,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			List<Point> modifiedCoords = coordinates;
 			for (FaultInstance fi : fs) {
 				Fault f = fi.getFault();
-				modifiedCoords = (List<Point>)f.applyFault(modifiedCoords);
+				modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
 			}
 			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer

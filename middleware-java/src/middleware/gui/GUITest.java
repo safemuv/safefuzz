@@ -23,6 +23,7 @@ public class GUITest {
 		public void actionPerformed(ActionEvent arg0) {
 			double testTimeLength = 20.0;
 			faultGen.injectDynamicFaultNow(testTimeLength);
+			System.out.println("Injecting new fault from GUI");
 		}
 	}	
    
@@ -63,7 +64,7 @@ public class GUITest {
     	f.setLayout(new FlowLayout(FlowLayout.RIGHT));
     	setupLabels();
               
-    	JButton b=new JButton("Inject overspeed fault");//creating instance of JButton  
+    	JButton b=new JButton("Inject Overspeed Fault");//creating instance of JButton  
     	b.setBounds(130,100,100, 40);
     	
     	// TODO: need a drop-down to select the robots to inject
