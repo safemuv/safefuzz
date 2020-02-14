@@ -101,8 +101,9 @@ bool BHV_Loiter::setParam(string param, string value)
     XYPolygon new_poly = string2Poly(value);
     cout << "new_poly size: " << new_poly.size() << endl;
 
-    if(!new_poly.is_convex())  // Should be convex - false otherwise
-      return(false);
+//    if(!new_poly.is_convex())  // Should be convex - false otherwise
+//      return(false);
+
     new_poly.apply_snap(0.1); // snap to tenth of meter
     m_loiter_engine.setPoly(new_poly);
     m_loiter_engine.setClockwise(m_clockwise);
