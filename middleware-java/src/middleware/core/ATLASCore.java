@@ -2,11 +2,11 @@ package middleware.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import atlasdsl.*;
-import atlassharedclasses.FaultInstance;
+import atlasdsl.faults.*;
+import atlassharedclasses.*;
 import faultgen.FaultGenerator;
 import middleware.gui.GUITest;
 
@@ -34,12 +34,15 @@ public abstract class ATLASCore {
 		this.mission = mission;
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
-		gui = new GUITest(mission);
 		faultGen = new FaultGenerator(this,mission);
+		gui = new GUITest(mission, faultGen);
 	}
 	
-	public void registerFault(FaultInstance f) {
-		activeFaults.add(f);
+	public synchronized void registerFault(FaultInstance fi) {
+		activeFaults.add(fi);
+		System.out.println("Fault added");
+		Fault f = fi.getFault();
+		f.immediateEffects(this);
 	}
 	
 	public void clearFaults() {
@@ -67,6 +70,13 @@ public abstract class ATLASCore {
 
 	public double getTime() {
 		return time;
+	}
+	
+	// This is used by active faults to inject their immediate effects
+	// upon the low-level CARS simulation
+	public void sendToCARS(Robot r, String key, String value) {
+		CIEventQueue CIq = (CIEventQueue)fromCI;
+		CIq.sendToCARS(r, key, value);
 	}
 
 	public List<FaultInstance> activeFaultsOfClass(Class class1) {

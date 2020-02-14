@@ -32,11 +32,14 @@ public class FaultGenerator {
 			throw new InvalidFaultFormat();
 		} else {
 			Double startTime = Double.parseDouble(fields[0]);
-			Double endTime = Double.parseDouble(fields[1]);
+			double length = Double.parseDouble(fields[1]);
+			Double endTime = length + startTime;
+			
 			String vehicleName = fields[2];
 			String faultImpactStr = fields[3].toUpperCase();
 			FaultImpact fi;
 			// TODO: better solution here
+			// need to specify what the message mutates
 			if (faultImpactStr == "MUTATEMESSAGE") {
 				fi = new MutateMessage();
 				Fault f = new Fault(fi);
@@ -45,11 +48,11 @@ public class FaultGenerator {
 			
 			if (faultImpactStr == "OVERSPEED") {
 				Double speed = Double.parseDouble(fields[4]);
-				// TODO: add new classes for this - has to be a subclass
-				// of affectedComponent
-				//fi = new ChangeComponentProperty();
-				//Fault f = new Fault(fi);
-				//return new FaultInstance(startTime, endTime, f);
+				Robot r = mission.getRobot(vehicleName);
+				fi = new MotionFault(r, "UP_LOITER", "speed=5.0");
+				Fault f = new Fault(fi);
+				FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+				return fInstance;
 			}
 		}
 		throw new InvalidFaultFormat();
@@ -70,6 +73,18 @@ public class FaultGenerator {
 			}
 		}
 		reader.close();
+	}
+	
+	public void injectSpeedFaultNow(double timeLength, String robotName) {
+		Robot r = mission.getRobot(robotName);
+		
+		double startTime = core.getTime();
+		double endTime = startTime + timeLength;
+		FaultImpact fi = new MotionFault(r, "UP_LOITER", "speed=5.0");
+		Fault f = new Fault(fi);
+		FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+		core.registerFault(fInstance);
+		
 	}
 	
 	public void pollFaultsNow() {

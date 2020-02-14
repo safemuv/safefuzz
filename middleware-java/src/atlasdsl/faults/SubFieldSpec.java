@@ -1,10 +1,32 @@
 package atlasdsl.faults;
 
-public abstract class SubFieldSpec {
-	private char delimeter;
-	private boolean randomSelection;
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+public class SubFieldSpec {
+	private boolean randomSelection = false;
 	// TODO: change this to allow min or max field numbers here
-	private int fieldNum;
-	private int minFieldNum;
-	private int maxFieldNum;
+	private int fieldStartNum;
+	private int fieldRangeLength;
+	Random r = new Random();
+	
+	private int chooseFieldNum(int max) {
+		if (randomSelection) {
+			return Math.min(max, fieldStartNum + r.nextInt(fieldRangeLength));
+		} else return fieldStartNum;
+	}
+	
+	// The integer returned is the chosen index - so it can be stored back later
+	public Map.Entry<Integer, Object> extract(List orig) {
+		Integer fieldNum = chooseFieldNum(orig.size());
+		Object v = orig.get(fieldNum);
+		return new AbstractMap.SimpleEntry<Integer, Object>(fieldNum, v);
+	}
+	
+	public Object store(Object part, List orig, int index) {
+		orig.set(index, part);
+		return orig;
+	}
 }

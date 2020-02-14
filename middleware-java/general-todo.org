@@ -117,5 +117,9 @@ Then persistent effects on e.g. CI messages, until the fault is inactivated
 * DONE The CI is dispatching the original vehicle to verify! Fix
   CLOSED: [2020-02-12 Wed 02:10]
 
-* TODO Check the subfield in MutateMessage
-* TODO Get the sensor false positive/negative values working
+* DONE Get the subfield code implemented in MutateMessage
+  CLOSED: [2020-02-12 Wed 11:50]
+* DONE Got the GUI injection of the overspeed fault working! (permanent fault so far)
+* TODO Get the sensor false positive/negative values consistent with the original report
+* TODO Avoidance between the robots - activating the avoidance behaviour
+* TODO Can we have the robots be activated by the CI so we don't have to press DEPLOY?

@@ -49,7 +49,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	// TODO: this should be pushed into a MOOS-specific translation class?
 	// This should operate upon a Message instead of a string value
 	// serialise the message in some way
-	private void sendMOOSUpdate(String robotName, String key, String value) {
+	private synchronized void sendMOOSUpdate(String robotName, String key, String value) {
 		Double endTimeOfUpdate = 1000000.0;
 		String msg = endTimeOfUpdate.toString() + "|" + key + "=" + value;
 		ActiveMQProducer prod = producers.get(robotName); 
@@ -58,6 +58,12 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// This is used by active faults to inject their immediate effects
+	// upon the low-level CARS simulation
+	public void sendToCARS(Robot r, String key, String value) {
+		sendMOOSUpdate(r.getName(), key, value);
 	}
 	
 	private static String pointListToPolyString(List<Point> coords) {
@@ -99,7 +105,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			List<Point> modifiedCoords = coordinates;
 			for (FaultInstance fi : fs) {
 				Fault f = fi.getFault();
-				modifiedCoords = (List<Point>)f.applyFault(modifiedCoords);
+				modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
 			}
 			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer

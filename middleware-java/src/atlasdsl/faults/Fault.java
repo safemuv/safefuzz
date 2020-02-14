@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import atlasdsl.*;
 import atlassharedclasses.*;
+import middleware.core.ATLASCore;
 
 public class Fault {
 	private Optional<Region> affectedRegion;
@@ -15,7 +16,12 @@ public class Fault {
 		this.impact = fi;
 	}
 
-	public Object applyFault(Object orig) {
+	public Object applyFaultToData(Object orig) {
 		return impact.applyImpact(orig);
+	}
+
+	public void immediateEffects(ATLASCore core) {
+		impact.immediateEffects(core);
+		System.out.println("Fault.immediateEffects");
 	}
 }
