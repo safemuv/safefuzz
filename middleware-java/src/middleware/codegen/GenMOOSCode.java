@@ -16,8 +16,7 @@ public class GenMOOSCode {
 		Mission mission = dslloader.loadMission();
 		
 		MOOSCodeGen gen = new MOOSCodeGen(mission);
-		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);
-		
+		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);		
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
 			CARSSimulation moossim = gen.convertDSL(mission);
