@@ -50,13 +50,14 @@ bool CMOOSDB_ATLAS::fromMQ(CMOOSMsg &Msg, double overrideTimeEnd) {
     CMOOSDBVar &rVar = GetOrMakeVar(Msg);
     // When a message notification comes in from the ActiveMQ,
     // always handle it as a standard notification
+    // but first reset the time to zero
+    rVar.m_dfOverrideTime = 0.0;
     bool res = CMOOSDB::OnNotify(Msg);
     // Need to set an override on this message
     rVar.m_dfOverrideTime = overrideTimeEnd;
 
     CMOOSDBVar &rVar2 = GetOrMakeVar(Msg);
     cout << "rVar.m_dfOverrideTime set to " << rVar2.m_dfOverrideTime << endl;
-    // CHECK: need to verify that this has correctly changed the variable value
     return res;
 }
 
