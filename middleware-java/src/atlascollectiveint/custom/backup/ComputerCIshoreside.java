@@ -1,4 +1,4 @@
-package atlascollectiveint.custom.backup;
+package atlascollectiveint.custom;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -16,10 +16,11 @@ import java.util.stream.Collectors;
 
 class ComputerCIshoreside {
 
-	// The shoreside CI's copy of the robot locations
+	// The shoreside CI's copy of the robot information
 	private static List<String> robots = new ArrayList<String>();
 	private static HashMap<String,Point> robotLocations = new LinkedHashMap<String,Point>();
 	private static HashMap<Integer,Integer> detectionCounts = new LinkedHashMap<Integer,Integer>();
+	private static HashMap<String,Boolean> robotIsConfirming = new LinkedHashMap<String,Boolean>();
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
@@ -50,15 +51,21 @@ class ComputerCIshoreside {
     // The shoreside chooses a robot to use to confirm detections, 
     // excluding the detecting one obviously!
     private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {
-    	// sort them all relative to distances from the location
+
     	Map<String,Double> dists = robotDistancesTo(loc);
     	Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
-    			.filter(e -> e.getKey() != excludeRobot)
-    			.sorted()
+    			// Check it isn't the exclude robot
+    			.filter(e -> e.getKey().compareTo(excludeRobot) != 0)
+    			// Check robot is not already confirming!
+    			.filter(e -> !robotIsConfirming.get(e.getKey()))
+    			.sorted(Map.Entry.comparingByValue())
     			.findFirst();
-    	// TODO: check the sort order here!
+    	// TODO: check sort order here
     	
     	if (res.isPresent()) {
+    		// If a robot found, set it as confirming a detection
+    		String chosen = res.get().getKey();
+    		robotIsConfirming.put(chosen, true);
     		return Optional.of(res.get().getKey());
     	} else {
     		// If no robots are known, it will be empty  
@@ -67,11 +74,17 @@ class ComputerCIshoreside {
     }
     
   public static void setRobotNamesAndRegion() {
+	  // TODO: should we get this from the DSL info?
 	  robots.add("frank");
 	  robots.add("gilda");
 	  robots.add("henry");
 	  robots.add("ella");
-	  fullRegion = new Region(0.0,0.0,100.0,100.0);
+	  
+	  for (String r : robots) {
+		  robotIsConfirming.put(r, false);
+	  }
+		  
+	  fullRegion = new Region(new Point(-50.0,-230.0), new Point(200.0,-30.0));
   }
   
   public static Map<String,Region> staticRegionSplit(Region fullRegion, List<String> robots) {
@@ -82,11 +95,11 @@ class ComputerCIshoreside {
 	  int vcount = VERTICAL_ROWS_STATIC_SPLIT;
 	  double subwidth = fullRegion.width() / hcount;
 	  double subheight = fullRegion.height() / vcount;
-	  for (int i=1;i<=count;i++) {
+	  for (int i=0;i<count;i++) {
 		  String robot = robots.get(i);
 		  // TODO: fix these expressions
 		  double xl = fullRegion.left() + i % hcount * subwidth;
-		  double yb = fullRegion.bottom() + i % vcount * subheight;
+		  double yb = fullRegion.bottom() + i / vcount * subheight;
 		  Region subr = new Region(xl,yb,xl+subwidth, yb+subheight);
 		  assignments.put(robot, subr);
 	  }
@@ -95,14 +108,17 @@ class ComputerCIshoreside {
   }
     
   public static void init() {
+	  System.out.println("init");
       // TODO: load the robot definition names - or should this be part of generated code?
 	  // for now, hardcode it statically
 	  setRobotNamesAndRegion();
 	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,robots);
+	  CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
 		  RobotBehaviours.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
+		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
       // divide up the rect region amongst the robots
@@ -127,11 +143,12 @@ class ComputerCIshoreside {
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
             RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
+            CollectiveIntLog.logCI("Setting robot " + rName + " to confirm sweep");
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack
             // will need to track the robot active regions on some sort of per-robot stack?
         } else {
-        	CollectiveIntLog.logCI("No other robots defined to confirm the detection");
+        	CollectiveIntLog.logCI("ERROR: No other robots avaiable to confirm the detection");
         }
     }
   }
