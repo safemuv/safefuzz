@@ -40,8 +40,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		MethodSpec hook = MethodSpec.methodBuilder("init")
 				.addModifiers(Modifier.PUBLIC)
 				.addModifiers(Modifier.STATIC)
-				.returns(void.class)
-				.build();
+				.returns(void.class).build();
 		ciClass.addMethod(hook);
 	}
 
@@ -201,6 +200,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			activeMQHooks.addCode(activeMQcodeForSensorType(st));
 		}
 		
+		initHooks.addCode("super.init();\n");
 		initHooks.addCode(className + ".init();");
 		
 		try {
