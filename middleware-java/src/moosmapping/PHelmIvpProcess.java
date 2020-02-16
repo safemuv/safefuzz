@@ -66,6 +66,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		double waypointNMRadius = 15.0;
 		
 		addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
+		addBehaviour(new HelmBehaviourAvoidance(this, vehicleName));
 		addBehaviour(new HelmBehaviourStationKeep(this));
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 	}
