@@ -39,6 +39,27 @@ polygon = radial:: x=0.0,y=0.0, radius=20, pts=8, snap=1, label=gilda_LOITER
 visual_hints = nextpt_color=white, nextpt_lcolor=khaki, edge_color=orange, vertex_color=white, edge_size=1, vertex_size=2
 }
 
+Behavior = BHV_AvoidCollision 
+{
+name = avdcollision_
+pwt = 200
+condition = AVOID=true
+updates = CONTACT_INFO
+endflag = CONTACT_RESOLVED = $[CONTACT]
+templating = spawn
+contact = to-be-set
+on_no_contact_ok = true
+extrapolate = true
+decay = 30,60
+pwt_outer_dist = 50
+pwt_inner_dist = 20
+completed_dist = 75
+min_util_cpa_dist = 3
+max_util_cpa_dist = 7
+pwt_grade = linear
+bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
+}
+
 Behavior = BHV_StationKeep 
 {
 name = station-keep

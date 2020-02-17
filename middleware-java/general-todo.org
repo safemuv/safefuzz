@@ -108,19 +108,23 @@ particular port name in the messages.
 No, lets use individual ports/producers/consumer links for the different vehicles
   CLOSED: [2020-02-11 Tue 16:41]
 
-* TODO General methodology for the handling of faults
-FaultInstance objects received by the middleware can do 3 things:
-CI behaviour layers have to translate into Message instances from components
-Some faults can renaming to modify in progress CI Messages 
-Soome faults will also be translated directly into MOOS updates and pushed to MOOSDB
-There has to be an initial phase of activity for a newly registered fault
-Then persistent effects on e.g. CI messages, until the fault is inactivated
-* TODO Check CRITICAL_RANGE in the node broker? - seems OK to now
 * DONE The CI is dispatching the original vehicle to verify! Fix
   CLOSED: [2020-02-12 Wed 02:10]
 
 * DONE Get the subfield code implemented in MutateMessage
   CLOSED: [2020-02-12 Wed 11:50]
 * DONE Got the GUI injection of the overspeed fault working! (permanent fault so far)
-* TODO Avoidance between the robots - activating the avoidance behaviour
 
+* DONE Avoidance between the robots - activating the avoidance behaviour from the case study
+  CLOSED: [2020-02-16 Sun 23:55]
+* DONE Write abstract
+  CLOSED: [2020-02-17 Mon 00:39]
+* DONE 3 diagrams - one of the broad system structure, another of the middleware structure, MOOS communicaties
+  CLOSED: [2020-02-17 Mon 05:02]
+* DONE Update project plan
+  CLOSED: [2020-02-17 Mon 05:17]
+
+* TODO Check over the report generally tomorrow
+* TODO Virtual machine file format
+* TODO Ideally some more images for the instructions
+* TODO Videos and links (how to deliver them)

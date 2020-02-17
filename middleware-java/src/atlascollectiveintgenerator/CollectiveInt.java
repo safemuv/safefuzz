@@ -26,6 +26,7 @@ public class CollectiveInt {
 	}
 
 	public void init() {
+		System.out.println();
 		DSLLoader l = new StubDSLLoader();
 		mission = l.loadMission();
 		// TODO: fix, this port is hardcoded to just listen to shoreside
