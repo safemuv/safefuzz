@@ -124,7 +124,19 @@ No, lets use individual ports/producers/consumer links for the different vehicle
 * DONE Update project plan
   CLOSED: [2020-02-17 Mon 05:17]
 
-* TODO Check over the report generally tomorrow
-* TODO Virtual machine file format
-* TODO Ideally some more images for the instructions
-* TODO Videos and links (how to deliver them)
+
+* DONE Check over the report generally tomorrow
+  CLOSED: [2020-02-19 Wed 15:00]
+* DONE Virtual machine file format
+  CLOSED: [2020-02-19 Wed 15:00]
+* DONE Ideally some more images for the instructions - no time
+  CLOSED: [2020-02-19 Wed 15:00]
+* DONE Videos and links (how to deliver them?)
+  CLOSED: [2020-02-19 Wed 15:00]
+
+* TODO Heterogeneity in the case study
+** DONE Different speeds expressed in the DSL - encode the speed within startSpeed and maxSpeed properties
+   CLOSED: [2020-02-24 Mon 18:31]
+** TODO Different sensor capabilities - also expressing the sensor false +ve/-ve rates
+** TODO Extracting timing information from MOOS and passing it onto the CI
+** TODO Updating the CI algorithm - a stack of assigned actions per robot

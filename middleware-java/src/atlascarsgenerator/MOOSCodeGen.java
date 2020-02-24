@@ -86,10 +86,13 @@ public class MOOSCodeGen extends CARSCodeGen {
 			for (Robot r : mission.getAllRobots()) {
 				middlewareVars.add("NODE_REPORT_" + r.getName().toUpperCase());
 				Point startPos = r.getPointComponentProperty("startLocation");
-				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos);
+				double startSpeed = r.getDoubleComponentProperty("startSpeed");
+				double maxSpeed = r.getDoubleComponentProperty("maxSpeed");
+				
+				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed);
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
-				
+				//TODO: robot properties, such as maximum speed, should be propagated to the robot community here
 				//TODO: AvoidCollision should be added to the new Robot's Helm behaviours when an an avoidance goal exists
 				
 				Sensor s;

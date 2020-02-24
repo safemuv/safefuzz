@@ -109,8 +109,8 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			}
 			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
-			String polyUpdate = "polygon=" + pointListToPolyString(coordinates);
 			String robotName = event.getRobotName();
+			String polyUpdate = "polygon=" + pointListToPolyString(coordinates) + ":label," + robotName + "_LOITER";
 			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
 			sendMOOSUpdate(robotName, "UP_LOITER", polyUpdate);
 		}

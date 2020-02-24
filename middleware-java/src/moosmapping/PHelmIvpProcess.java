@@ -1,27 +1,35 @@
 package moosmapping;
 
-import atlasdsl.*;
 import atlassharedclasses.Point;
 
 public class PHelmIvpProcess extends MOOSProcess {
 	
+	private double startSpeed = 1.0;
+	// The number of divisions into which valid speeds is divided - e.g. 26 permits granularity of 0.05 over the range 0 -> 5 m/s 
+	private int NUM_SPEED_DIVISIONS = 26;
+	
 	private boolean verboseHelm = true;
 	
-	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, Integer minSpeed, Integer maxSpeed) {
+	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, double startSpeed, double maxSpeed) {
 		super("pHelmIvP", parent);
+		this.startSpeed = startSpeed;
 			
 		// Links the Helm process to its behaviour file
 		String parentBHVFile = parent.getBehaviourFileName();
 		resetProperty("AppTick", 4);
 		resetProperty("CommsTick", 4);
-		setProperty("Behaviors", parentBHVFile);
 		setProperty("Verbose", verboseHelm);
+		setProperty("Behaviors", parentBHVFile);
 		setProperty("Domain", "course:0:359:360");
 		
 		setupBehaviours(vehicleName, startPos);
 		setupBehaviourVars();
 		
-		setProperty("Domain", "speed:0:" + minSpeed.toString() + ":" + maxSpeed.toString());
+		// The domain has to be set using the maximum speed here
+		Double minSpeed = 0.0;
+		Double maxSpeed_boxed = maxSpeed;
+		Integer numSpeedPoints = NUM_SPEED_DIVISIONS;
+		setProperty("Domain", "speed:" + minSpeed.toString() + ":" + maxSpeed_boxed.toString() + ":" + numSpeedPoints.toString());
 	}
 	
 	private void setupBehaviourVars() {
@@ -57,11 +65,11 @@ public class PHelmIvpProcess extends MOOSProcess {
 	private void setupBehaviours(String vehicleName, Point startPos) {
 		String startPosAsString = startPos.toString();
 		
-		double loiterSpeed = 1.0;
+		double loiterSpeed = startSpeed;
 		double loiterRadius = 5.0;
 		double loiterNMRadius = 10.0;
 		
-		double waypointSpeed = 1.3;
+		double waypointSpeed = startSpeed;
 		double waypointRadius = 3.0;
 		double waypointNMRadius = 15.0;
 		

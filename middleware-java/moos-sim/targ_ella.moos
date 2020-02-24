@@ -104,7 +104,7 @@ CommsTick = 4
 Behaviors = targ_ella.bhv
 Verbose = true
 Domain = course:0:359:360
-Domain = speed:0:5:26
+Domain = speed:0.0:5.0:25
 }
 
 ProcessConfig = pBasicContactMgr
