@@ -6,8 +6,8 @@ public class FaultgenEventQueue extends ATLASEventQueue<FaultEvent> {
 
 	private static final long serialVersionUID = 1L;
 
-	public FaultgenEventQueue(int capacity) {
-		super(capacity, '!');
+	public FaultgenEventQueue(ATLASCore core, int capacity) {
+		super(core, capacity, '!');
 	}
 
 	public void setup() {

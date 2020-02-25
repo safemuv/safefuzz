@@ -160,6 +160,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		
 		TypeSpec.Builder ciClass = TypeSpec.classBuilder(className);
 		generateStandardHooks(ciClass);
+		activeMQHooks.addCode("super.handleMessage(a);\n");
 		
 		// Need to find all the potential hooks for ANY robot
 		// and need to know which robot the hooks came from?
@@ -190,14 +191,11 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			Robot r = sr.getValue();
 			String sensorTypeName = Sensor.sensorTypeToString(st).toUpperCase();
 			
-			// TODO: Need to create a different hook depending on the sensor type, and these
-			// notifications must match the call parameters defined above in
-			// activeMQcodeForSensorType
 			System.out.println("DEBUG: adding method stub for sensor " + sensorTypeName);
 			String hookName = st.toString() + "DetectionHook";
 			
 			addMethodHookForSensorType(ciClass, st, hookName);
-			activeMQHooks.addCode(activeMQcodeForSensorType(st));
+			activeMQHooks.addCode(activeMQcodeForSensorType(st) + "\n");
 		}
 		
 		initHooks.addCode("super.init();\n");

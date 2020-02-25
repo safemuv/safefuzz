@@ -11,11 +11,9 @@ import javax.jms.JMSException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import activemq.portmapping.PortMappings;
+
 import atlasdsl.*;
-import atlassharedclasses.ATLASObjectMapper;
-import atlassharedclasses.GPSPositionReading;
-import atlassharedclasses.Point;
-import atlassharedclasses.SonarDetection;
+import atlassharedclasses.*;
 
 public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 
@@ -29,7 +27,7 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 	private ActiveMQProducer outputToCI;
 
 	public MOOSEventQueue(ATLASCore core, Mission mission, int queueCapacity) {
-		super(queueCapacity, '.');
+		super(core,queueCapacity, '.');
 		this.mission = mission;
 		nodeReportScanner = Pattern.compile("NAME=([^,]+),X=([^,]+),Y=([^,]+)");
 		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,]+)");
@@ -76,8 +74,32 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 		if (e instanceof MOOSVariableUpdate) {
 			MOOSVariableUpdate mup = (MOOSVariableUpdate)e;
 			
-			// TODO: need to handle DB_TIME here - update the middleware
-			// time variable in response to them
+			if (mup.keyMatches("DB_UPTIME")) {
+				Double time = Double.valueOf(mup.getValue());
+				try {
+					// Update the core's internal time 
+					core.updateTime(time);
+					// If no causality exception, create a time update notification
+					// and send it on to the CI
+					ATLASTimeUpdate tup = new ATLASTimeUpdate(time);
+					String msg = atlasOMapper.serialise(tup);
+					outputToCI.sendMessage(msg);
+					
+					
+				} catch (CausalityException e1) {
+					// If there is a causality error, it may come from merely 
+					// node reports being received out of order from different
+					// vehicles. It is not necessarily fatal.
+					// Log it anyway
+					System.out.println("Causality exception - time diff " + e1.timeDiff());
+				} catch (JsonProcessingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (JMSException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			
 			// Handle NODE_REPORT events
 			if (mup.keyStartMatches("NODE_REPORT")) {

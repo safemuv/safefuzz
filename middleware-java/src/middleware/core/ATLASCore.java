@@ -72,6 +72,12 @@ public abstract class ATLASCore {
 		return time;
 	}
 	
+	public void updateTime(double time) throws CausalityException {
+		if ((time < this.time)) {
+			this.time = time;
+		}
+	}
+	
 	// This is used by active faults to inject their immediate effects
 	// upon the low-level CARS simulation
 	public void sendToCARS(Robot r, String key, String value) {

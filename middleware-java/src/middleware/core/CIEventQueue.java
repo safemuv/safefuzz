@@ -20,7 +20,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private HashMap<String,CIActiveMQConsumer> consumers = new LinkedHashMap<String,CIActiveMQConsumer>();
 
 	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
-		super(capacity, '@');
+		super(core, capacity, '@');
 		this.mission = mission;
 		this.core = core;
 	}

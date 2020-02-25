@@ -101,10 +101,10 @@ ProcessConfig = pHelmIvP
 {
 AppTick = 4
 CommsTick = 4
-Behaviors = targ_henry.bhv
 Verbose = true
+Behaviors = targ_henry.bhv
 Domain = course:0:359:360
-Domain = speed:0.0:5.0:25
+Domain = speed:0.0:5.0:26
 }
 
 ProcessConfig = pBasicContactMgr
@@ -162,6 +162,7 @@ ACTIVEMQ_PORT = 61616
 ACTIVEMQ_TOPIC = MIDDLEWARE-watch-henry
 WATCH_VAR = VAR_X
 WATCH_VAR = VAR_Y
+WATCH_VAR = DB_UPTIME
 WATCH_VAR = NODE_REPORT_GILDA
 WATCH_VAR = NODE_REPORT_HENRY
 WATCH_VAR = NODE_REPORT_FRANK

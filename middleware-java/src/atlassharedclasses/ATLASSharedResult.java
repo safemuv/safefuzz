@@ -39,4 +39,10 @@ public class ATLASSharedResult {
 			return Optional.of((CIEvent)contents);
 		} else return Optional.empty();
 	}
+	
+	public Optional<ATLASTimeUpdate> getATLASTimeUpdate() {
+		if (contentsClass == ATLASTimeUpdate.class) {
+			return Optional.of((ATLASTimeUpdate)contents);
+		} else return Optional.empty();
+	}
 }

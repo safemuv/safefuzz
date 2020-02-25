@@ -8,21 +8,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
 public class CollectiveInt {
 	private Mission mission;
+	
+	protected double time = 0.0;
+	
 	private CollectiveIntActiveMQConsumer consumer;
 	protected HashMap<String, CollectiveIntActiveMQProducer> moosProducers = new LinkedHashMap<String, CollectiveIntActiveMQProducer>();
 	
 	protected void handleMessage(ATLASSharedResult a) {
-		System.out.println("CollectiveInt.handleMessage called");
+		if (a.getContentsClass() == ATLASTimeUpdate.class) {
+			Optional<ATLASTimeUpdate> a_o = a.getATLASTimeUpdate();
+			if (a_o.isPresent()) {
+				double newTime = a_o.get().getTime();
+				updateTime(newTime);
+			}
+		}
 	}
 	
 	public void startCI() {
+		System.out.print("startCI beginning...");
 		consumer.run();
+	}
+	
+	protected void updateTime(double newTime) {
+		if (time < newTime) {
+			time = newTime;
+			// TODO: logging of the time update messages here
+			System.out.println("time = " + time);
+		}
 	}
 
 	public void init() {

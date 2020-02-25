@@ -40,6 +40,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// TODO: check and add other necessary variables here
 		vs.add("VAR_X");
 		vs.add("VAR_Y");
+		vs.add("DB_UPTIME");
 		return vs;
 	}
 	

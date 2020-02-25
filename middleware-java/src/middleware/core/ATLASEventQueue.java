@@ -14,14 +14,18 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	
 	private static final long serialVersionUID = 1L;
 	protected ATLASObjectMapper atlasOMapper;
+	protected ATLASCore core;
+	
 	private boolean continueLoop = true;
 	private char progressChar;
 	private List<VoidLambda> afterHooks = new ArrayList<VoidLambda>();
 	private int charCount = 0;
 	private final int CHAR_COUNT_LIMIT = 80;
+	
 
-	public ATLASEventQueue(int capacity, char progressChar) {
+	public ATLASEventQueue(ATLASCore core, int capacity, char progressChar) {
 		super(capacity);
+		this.core = core;
 		progressChar = '.';
 		this.progressChar = progressChar;
 	}
