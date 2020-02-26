@@ -135,8 +135,18 @@ No, lets use individual ports/producers/consumer links for the different vehicle
   CLOSED: [2020-02-19 Wed 15:00]
 
 * TODO Heterogeneity in the case study
+
 ** DONE Different speeds expressed in the DSL - encode the speed within startSpeed and maxSpeed properties
    CLOSED: [2020-02-24 Mon 18:31]
-** TODO Different sensor capabilities - also expressing the sensor false +ve/-ve rates
-** TODO Extracting timing information from MOOS and passing it onto the CI
+** DONE Different sensor capabilities - different swath widths for the sensors
+   CLOSED: [2020-02-26 Wed 16:29] - DSL can set the sensor swath widths via a property
+** TODO Different sensor false positive/negative probabilities
+*** Swath width may be dynamically reset - provides an additional opportunity for faults
+** DONE Extracting timing information from MOOS and passing it onto the CI
+   CLOSED: [2020-02-26 Wed 16:30]
 ** TODO Updating the CI algorithm - a stack of assigned actions per robot
+** TODO Faults expiring or being deleted after a specific end time
+** TODO Mission monitoring component - goals structure and the geometrical tracker for coverage goals
+** TODO The mission definition - faults will mean that the robots don't find anything in that area
+*** Rotate the non-verifying robots around the fault areas after a time interval
+*** Use a timer to re-assign the verifying robots after a specific time has expired

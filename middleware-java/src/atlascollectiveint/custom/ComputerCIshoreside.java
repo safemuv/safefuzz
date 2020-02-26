@@ -75,6 +75,8 @@ class ComputerCIshoreside {
     
   public static void setRobotNamesAndRegion() {
 	  // TODO: should we get this from the DSL info?
+      // load the robot definition names - or should this be part of generated code?
+	  // for now, hardcode it statically
 	  robots.add("frank");
 	  robots.add("gilda");
 	  robots.add("henry");
@@ -103,14 +105,12 @@ class ComputerCIshoreside {
 		  Region subr = new Region(xl,yb,xl+subwidth, yb+subheight);
 		  assignments.put(robot, subr);
 	  }
-	
-	  return assignments;	  
+	  return assignments;
   }
     
   public static void init() {
 	  System.out.println("init");
-      // TODO: load the robot definition names - or should this be part of generated code?
-	  // for now, hardcode it statically
+
 	  setRobotNamesAndRegion();
 	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,robots);
 	  CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
@@ -121,12 +121,8 @@ class ComputerCIshoreside {
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
-	  // Test of the timer functionality
-	  Timer test = new OneOffTimer(t -> System.out.println("Hello from timer"), 50.0);
-	  API.registerTimer("TEST-TIMER", test);
-	  
+      // divide up the rect region amongst the robots
       // set their original behaviour sweeps on a stack?
-	  // look in the lisp version to see how this is done
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
@@ -134,8 +130,6 @@ class ComputerCIshoreside {
 	  // Send a second robot in to confirm
 	  // Need to scan the positions to find the best choice
 
-	  // TODO: Need to move Point into atlassharedclasses
-	  // and change all PointCI into Point
 	  Point loc = detection.detectionLocation;
 	  int label = detection.objectID;
 
