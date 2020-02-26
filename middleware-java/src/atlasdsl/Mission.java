@@ -1,6 +1,5 @@
 package atlasdsl;
 
-import atlasdsl.*;
 import atlassharedclasses.Region;
 
 import java.util.ArrayList;

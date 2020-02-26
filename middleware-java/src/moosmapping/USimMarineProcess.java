@@ -1,6 +1,5 @@
 package moosmapping;
 
-import atlasdsl.*;
 import atlassharedclasses.Point;
 
 public class USimMarineProcess extends MOOSProcess {

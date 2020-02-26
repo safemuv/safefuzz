@@ -75,6 +75,8 @@ class ComputerCIshoreside {
     
   public static void setRobotNamesAndRegion() {
 	  // TODO: should we get this from the DSL info?
+      // load the robot definition names - or should this be part of generated code?
+	  // for now, hardcode it statically
 	  robots.add("frank");
 	  robots.add("gilda");
 	  robots.add("henry");
@@ -103,27 +105,24 @@ class ComputerCIshoreside {
 		  Region subr = new Region(xl,yb,xl+subwidth, yb+subheight);
 		  assignments.put(robot, subr);
 	  }
-	
-	  return assignments;	  
+	  return assignments;
   }
     
   public static void init() {
 	  System.out.println("init");
-      // TODO: load the robot definition names - or should this be part of generated code?
-	  // for now, hardcode it statically
+
 	  setRobotNamesAndRegion();
 	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,robots);
 	  CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
-		  RobotBehaviours.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
+		  API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
       // divide up the rect region amongst the robots
       // set their original behaviour sweeps on a stack?
-	  // look in the lisp version to see how this is done
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
@@ -131,8 +130,6 @@ class ComputerCIshoreside {
 	  // Send a second robot in to confirm
 	  // Need to scan the positions to find the best choice
 
-	  // TODO: Need to move Point into atlassharedclasses
-	  // and change all PointCI into Point
 	  Point loc = detection.detectionLocation;
 	  int label = detection.objectID;
 
@@ -142,7 +139,7 @@ class ComputerCIshoreside {
         Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
-            RobotBehaviours.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
+            API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
             CollectiveIntLog.logCI("Setting robot " + rName + " to confirm sweep");
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack

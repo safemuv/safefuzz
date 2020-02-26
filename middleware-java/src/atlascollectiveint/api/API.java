@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import atlascollectiveintgenerator.CollectiveInt;
 import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
-public class RobotBehaviours {
+public class API {
+	// TODO: to add to the API - speed change requests from the CI
+	
 	private static boolean DEBUG_POLYGON_COORDS = false;
 	
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
+	private static CollectiveInt ci;
 	
 	private static List<Point> translateRegionToCoordsList(Region r, double stepSize) {
 		List<Point> coords = new ArrayList<Point>();
@@ -52,5 +55,13 @@ public class RobotBehaviours {
 	
 	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {
 		producers.put(communityName, producer);
+	}
+	
+	public static void setCIReference(CollectiveInt ciRef) {
+		ci = ciRef;
+	}
+
+	public static void registerTimer(String timerName, Timer timer) {
+		ci.registerTimer(timerName, timer);
 	}
 }

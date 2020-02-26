@@ -1,11 +1,5 @@
 package atlassharedclasses;
 
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import atlasdsl.*;
-
 public class SonarDetection extends SensorInfo {
 	// TODO: test to see if it fixes the serialising of Jackson fields
 	public Point detectionLocation;

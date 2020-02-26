@@ -2,7 +2,6 @@ package atlasdsl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class RelativeParticipants extends GoalParticipants {
 	public enum LogicOps {

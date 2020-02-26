@@ -1,7 +1,5 @@
 package atlascollectiveintgenerator;
 
-import java.util.Optional;
-
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
@@ -15,7 +13,6 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import atlascollectiveint.logging.CollectiveIntLog;
 import atlasdsl.Mission;
-import atlasdsl.SensorType;
 import atlassharedclasses.*;
 
 public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListener {
@@ -75,8 +72,10 @@ public class CollectiveIntActiveMQConsumer implements Runnable, ExceptionListene
             // Wait for a message while the thread is active
 			while (mqListen) {
 				Message message = consumer.receive(pollInterval);
-				if (message != null)
+				if (message != null) {
 					handleMessage(message);
+					ci.checkTimers();
+				}
 			}
 
             consumer.close();

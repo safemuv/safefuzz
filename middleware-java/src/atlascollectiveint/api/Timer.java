@@ -8,4 +8,10 @@ public abstract class Timer {
 	}
 	
 	public abstract void cancel();
+	public abstract boolean isReady(double timeNow);
+	public abstract boolean shouldRemove(double timeNow);
+	
+	public void performAction() {
+		b.op(this);
+	}
 }

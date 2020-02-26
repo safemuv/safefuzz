@@ -2,7 +2,6 @@ package middleware.core;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.Mission;
-import atlasdsl.Robot;
 
 public class MOOSATLASCore extends ATLASCore {
 	private int MOOS_QUEUE_CAPACITY = 100;
