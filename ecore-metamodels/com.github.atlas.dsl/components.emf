@@ -1,6 +1,8 @@
 @namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components", prefix="cpt")
 package Atlas;
 
+import "platform:/resource/com.github.atlas.dsl/region.ecore";
+
 class Model {
  val Component[*] components;
 }
@@ -14,7 +16,7 @@ class IntProperty extends ComponentProperty {
 }
 
 class PointProperty extends ComponentProperty {
-	val Point value;
+	val Atlas.Point value;
 }
 
 class StringProperty extends ComponentProperty {
@@ -38,7 +40,7 @@ abstract class Subcomponent extends Component {
 }
 
 class Robot extends NamedComponent {
- val Subcomponent[1..*] subcomponents;
+ val Subcomponent[0..*] subcomponents;
 }
 
 enum SensorType {

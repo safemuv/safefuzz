@@ -1,0 +1,9 @@
+DEBUG: This is the instance set 
+[%= C!Robot.allInstances %]
+[%= C!Model.allInstances %]
+
+These are the robots present in the model:
+[% for (r in C!NamedComponent.allInstances) { %]
+[%= r.name %]
+[%= "R" %]
+[%} %]

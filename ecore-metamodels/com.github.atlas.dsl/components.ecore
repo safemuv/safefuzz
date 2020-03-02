@@ -2,11 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components"
     nsPrefix="cpt">
-  <eClassifiers xsi:type="ecore:EClass" name="Point">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model">
     <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
         eType="#//Component" containment="true"/>
@@ -18,7 +13,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PointProperty" eSuperTypes="#//ComponentProperty">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Point"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass region.ecore#//Point"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringProperty" eSuperTypes="#//ComponentProperty">
@@ -36,8 +31,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Subcomponent" abstract="true" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="Robot" eSuperTypes="#//NamedComponent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" lowerBound="1"
-        upperBound="-1" eType="#//Subcomponent" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" upperBound="-1"
+        eType="#//Subcomponent" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SensorType">
     <eLiterals name="SONAR" value="1"/>

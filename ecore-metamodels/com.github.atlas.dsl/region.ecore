@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/message"
-    nsPrefix="msg">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/geometric"
+    nsPrefix="geo">
   <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Point">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
