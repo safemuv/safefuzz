@@ -1,0 +1,5 @@
+[% for (r in C!Robot.allInstances) { %]
+Robot r = new Robot("[%= r.name %]");
+// Extract the necessary properties for r
+mission.addRobot(r);
+[%} %]
