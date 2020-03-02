@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="ASCII"?>
-<cpt:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components"/>
+<cpt:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmi:id="_EduVIFthEeq3RPQmlDds0w">
+  <components xsi:type="cpt:Robot" xmi:id="_FQxisFthEeq3RPQmlDds0w" name="ella">
+    <componentProperties xsi:type="cpt:IntProperty" xmi:id="_Jl-L4FtiEeq3RPQmlDds0w" name="sensorRange" value="50"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_R5-CYFtiEeq3RPQmlDds0w" name="detectionProb" value="0.99"/>
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_I2d2AFtsEeq3RPQmlDds0w" name="startLocation">
+      <value xmi:id="_S7iBgFtsEeq3RPQmlDds0w" x="30.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_c_YFAFtsEeq3RPQmlDds0w" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_iWGSEFtsEeq3RPQmlDds0w" name="maxSpeed" value="5.0"/>
+  </components>
+  <components xsi:type="cpt:Robot" xmi:id="_lldxEFtsEeq3RPQmlDds0w" name="frank">
+    <componentProperties xsi:type="cpt:IntProperty" xmi:id="_lldxEVtsEeq3RPQmlDds0w" name="sensorRange" value="50"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_lldxEltsEeq3RPQmlDds0w" name="detectionProb" value="0.99"/>
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_lldxE1tsEeq3RPQmlDds0w" name="startLocation">
+      <value xmi:id="_lldxFFtsEeq3RPQmlDds0w" x="30.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_lldxFVtsEeq3RPQmlDds0w" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_lldxFltsEeq3RPQmlDds0w" name="maxSpeed" value="5.0"/>
+  </components>
+  <components xsi:type="cpt:Robot" xmi:id="_w-GpwFwbEeqS-Klut5IiKg" name="gilda">
+    <componentProperties xsi:type="cpt:IntProperty" xmi:id="_w-GpwVwbEeqS-Klut5IiKg" name="sensorRange" value="50"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_w-GpwlwbEeqS-Klut5IiKg" name="detectionProb" value="0.99"/>
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_w-Gpw1wbEeqS-Klut5IiKg" name="startLocation">
+      <value xmi:id="_w-GpxFwbEeqS-Klut5IiKg" x="30.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_w-GpxVwbEeqS-Klut5IiKg" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_w-GpxlwbEeqS-Klut5IiKg" name="maxSpeed" value="5.0"/>
+  </components>
+  <components xsi:type="cpt:Robot" xmi:id="_xKYyQFwbEeqS-Klut5IiKg" name="henry">
+    <componentProperties xsi:type="cpt:IntProperty" xmi:id="_xKYyQVwbEeqS-Klut5IiKg" name="sensorRange" value="50"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_xKYyQlwbEeqS-Klut5IiKg" name="detectionProb" value="0.99"/>
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_xKYyQ1wbEeqS-Klut5IiKg" name="startLocation">
+      <value xmi:id="_xKYyRFwbEeqS-Klut5IiKg" x="30.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_xKYyRVwbEeqS-Klut5IiKg" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_xKYyRlwbEeqS-Klut5IiKg" name="maxSpeed" value="5.0"/>
+  </components>
+</cpt:Model>

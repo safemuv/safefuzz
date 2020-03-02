@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission"
+    nsPrefix="mis">
+  <eClassifiers xsi:type="ecore:EClass" name="GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RobotResultField" eSuperTypes="#//GoalResultField"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PointResultField" eSuperTypes="#//GoalResultField"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalResult">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//GoalResultField" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalAction" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Visit" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Patrol" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Cover" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Avoid" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AvoidOthers" eSuperTypes="#//GoalAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clearance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sensortype" upperBound="-1"
+        eType="ecore:EEnum components.ecore#//SensorType" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectiveSensorCover" eSuperTypes="#//Cover"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeParticipants" eSuperTypes="#//GoalParticipants"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Goal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Mission"/>
+</ecore:EPackage>

@@ -1,5 +1,5 @@
 @namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components", prefix="cpt")
-package components;
+package Atlas;
 
 class Model {
  val Component[*] components;
@@ -11,6 +11,10 @@ abstract class ComponentProperty {
 
 class IntProperty extends ComponentProperty {
  attr int value;
+}
+
+class PointProperty extends ComponentProperty {
+	val Point value;
 }
 
 class StringProperty extends ComponentProperty {

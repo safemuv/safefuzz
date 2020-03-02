@@ -1,0 +1,16 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/message", prefix="msg")
+package Atlas;
+
+import "platform:/resource/com.github.atlas.dsl/components.ecore";
+
+class MessageField {
+	val String name;
+}
+
+class Message {
+	attr String name;
+	val Atlas.Component[1] from;
+	val Atlas.Component[2] to;
+	val MessageField[1..*] fields;
+}
+

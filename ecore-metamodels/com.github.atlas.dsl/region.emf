@@ -1,0 +1,33 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/geometric", prefix="geo")
+package Atlas;
+
+abstract class Region {
+	
+}
+
+class Point {
+	attr double x;
+	attr double y;
+	attr double z;
+}
+
+class Rectangle extends Point {
+	val Point[1] corner1;
+	val Point[1] corner2; 	
+}
+
+class Circle extends Point {
+	val Point[1] centre;
+	attr double radius;
+}
+
+class Line extends Point {
+	val Point[2..*] points;
+}
+
+class Polygon extends Point {
+	val Point[3..*] points;
+}
+
+
+

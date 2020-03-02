@@ -1,0 +1,81 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission", prefix="mis")
+package Atlas;
+
+import "platform:/resource/com.github.atlas.dsl/components.ecore";
+
+class GoalResultField {
+	attr String name;
+}
+
+class IntResultField extends GoalResultField {
+	attr int value;
+}
+
+class StringResultField extends GoalResultField {
+	attr String value;
+}
+
+class FloatResultField extends GoalResultField {
+	attr float value;
+}
+
+class RobotResultField extends GoalResultField {
+	
+}
+
+class PointResultField extends GoalResultField {
+	
+}
+
+class GoalResult {
+	val GoalResultField[0..*] contents;	
+}
+
+abstract class GoalAction {
+	
+}
+
+class Visit extends GoalAction {
+	
+}
+
+class Patrol extends GoalAction {
+	
+}
+
+class Cover extends GoalAction {
+	
+}
+
+class Avoid extends GoalAction {
+	
+}
+
+class AvoidOthers extends GoalAction {
+	attr double clearance;
+}
+
+class SensorCover extends Cover {
+	attr double density;
+	val Atlas.SensorType[*] sensortype;
+}
+
+class CollectiveSensorCover extends Cover {
+	
+}
+
+abstract class GoalParticipants {
+	
+}
+
+class RelativeParticipants extends GoalParticipants {
+	
+}
+
+class Goal {
+	
+}
+
+class Mission {
+	
+}

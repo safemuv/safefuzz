@@ -1,0 +1,72 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults", prefix="flt")
+package Atlas;
+
+import "platform:/resource/com.github.atlas.dsl/components.ecore";
+import "platform:/resource/com.github.atlas.dsl/message.ecore";
+import "platform:/resource/com.github.atlas.dsl/region.ecore";
+
+class TimeProperties {
+	attr double faultStart;
+	attr double faultLength;
+	attr double faultPeriod;
+	attr int faultRepeatCount;
+}
+
+class Fault {
+	val Atlas.Region[1] affectedRegion;
+	val TimeProperties[1] affectedTime;
+	val FaultImpact[1] impact;
+}
+
+abstract class FaultImpact {
+	
+}
+
+class MessageImpact {
+	val Atlas.Message[*] affectedMessage;
+}
+
+class DelayMessage extends MessageImpact {
+	attr double delayLength;
+}
+
+class DeleteMessage extends MessageImpact {
+	
+}
+
+class MutateMessage extends MessageImpact {
+	val Atlas.MessageField[*] affectedField;
+	val MessageChange[1] newValue;
+}
+
+abstract class MessageChange {
+	
+}
+
+class IntMessageChange extends MessageChange {
+	attr int absoluteValue;
+	attr int incrementValue;
+}
+
+class StringMessageChange extends MessageChange {
+	attr String absoluteValue;
+}
+
+class FloatMessageChange extends MessageChange {
+	attr double absoluteValue;
+	attr double incrementValue;
+	attr double multFactor;
+}
+
+class ComponentImpact {
+	val Atlas.Component[1] affectedComponent;
+}
+
+class DisabledComponent extends ComponentImpact {
+	
+}
+
+class EnergyLoss extends ComponentImpact {
+	attr int fixedEnergyLoss;
+	attr int powerDraw;
+}
