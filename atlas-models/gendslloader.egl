@@ -15,15 +15,33 @@ public class GeneratedDSLLoader implements DSLLoader {
 		r.setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
 			[% } %]
 			[% if (p.isKindOf(PointProperty)) { %]
-		r.setPointComponentProperty("[%= p.name %]", [%= p.value.toString() %]);
-		[* TODO: need point format converter to x,y,z *]
+[*			[% p_x = p.value.x; p_y = p.value.y; p_z = p.value.z; %] *]
+		r.setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
+		[* TODO: better way of doing point conversion here? *]
+			[% } %]
+		[% } %]
+		
+		[* Add subcomponents to the robots *]
+		[% for (subc in r.subcomponents) { %]
+		[* TODO: need to handle other types of subcomponents, actuators etc *]
+			[% if (subc.isKindOf(Sensor)) { %]
+				Sensor s = new Sensor(SensorType."[%= subc.type %]");
+				[* set subcomponent properties here *]
+				[% for (sp in subc.componentProperties) { %]
+				[* TODO: factor this property pocessing into a subroutine call? *]
+					[% if (sp.isKindOf(IntProperty)) { %]
+						s.setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
+					[% } %]
+					[% if (sp.isKindOf(DoubleProperty)) { %]
+						s.setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
+					[% } %]
+				[% } %]
+				r.addSubcomponent(s);
 			[% } %]
 		[% } %]
 			
-		[* Add subcomponents to the robots *]
 		[* Add the robot to the mission *]
 		mission.addRobot(r);
-		
 	[%} %]
 	}
 }

@@ -8,6 +8,10 @@
     </componentProperties>
     <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_c_YFAFtsEeq3RPQmlDds0w" name="startSpeed" value="1.0"/>
     <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_iWGSEFtsEeq3RPQmlDds0w" name="maxSpeed" value="5.0"/>
+    <subcomponents xsi:type="cpt:Sensor" xmi:id="_c8tYgF1OEeqCGq8HkeamBw">
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_jBMqgF1OEeqCGq8HkeamBw" name="swathWidth" value="30.0"/>
+      <detections>OBJECT</detections>
+    </subcomponents>
   </components>
   <components xsi:type="cpt:Robot" xmi:id="_lldxEFtsEeq3RPQmlDds0w" name="frank">
     <componentProperties xsi:type="cpt:IntProperty" xmi:id="_lldxEVtsEeq3RPQmlDds0w" name="sensorRange" value="50"/>
