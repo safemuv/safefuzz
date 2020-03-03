@@ -44,6 +44,10 @@ class Robot extends NamedComponent {
  val Subcomponent[0..*] subcomponents;
 }
 
+class Computer extends NamedComponent {
+ val Subcomponent[0..*] subcomponents;
+}
+
 enum SensorType {
  SONAR = 1;
  GPS_POSITION = 2;

@@ -8,11 +8,11 @@ import middleware.core.*;
 
 public class MissionMonitor {
 	private Mission mission;
-	double timeNow;
+	private ATLASCore core;
 	
-	public MissionMonitor(Mission mission, double startingMissionTime) {
-		this.mission = mission;
-		this.timeNow = startingMissionTime;
+	public MissionMonitor(ATLASCore core, Mission mission) {
+		this.mission = mission;	
+		this.core = core;
 		scanGoals();
 	}
 	
@@ -24,7 +24,10 @@ public class MissionMonitor {
 	// TODO: needs to handle the subgoals as well here, recurse down to
 	// handle them
 	public void scanGoals() {
+		double timeNow = core.getTime();
 		for (Goal g : mission.getGoals()) {
+			GoalStatus gs = g.getStatus();
+			
 			if ((g.getStatus() == GoalStatus.PENDING) && g.isReady(timeNow)) {
 				g.setStatus(GoalStatus.STARTED);
 			}
@@ -41,18 +44,7 @@ public class MissionMonitor {
 		}
 	}
 	
-	public void advanceTime(double newTime) throws CausalityException {
-		if (newTime > timeNow) {
-			timeNow = newTime;
-		} else {
-			throw new CausalityException(newTime, timeNow);
-		}
-	}
-	
-	// TODO: need to get the time from MOOS in some way!
-	// Can ATLASDBWatch enclose it in all variable updates?
-	public void runStep(double newTime) throws CausalityException {
-		advanceTime(newTime);
+	public void runStep() {
 		scanGoals();
 	}
 }

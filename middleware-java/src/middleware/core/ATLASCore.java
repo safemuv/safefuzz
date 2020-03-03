@@ -9,6 +9,7 @@ import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import faultgen.FaultGenerator;
 import middleware.gui.GUITest;
+import middleware.missionmonitor.*;
 
 // This code will be combined with the simulator-specific code
 // during code generation
@@ -17,12 +18,14 @@ public abstract class ATLASCore {
 	protected ATLASEventQueue fromCI;
 	
 	//protected ATLASEventQueue fromFaultGen;
-	// TODO: for now the fault generator is installed in the middleware process itself,
+	// for now the fault generator is installed in the middleware process itself,
 	// not communicating over ActiveMQ with it
 	
 	protected ActiveMQProducer outputToCI;
 	private final int CI_QUEUE_CAPACITY = 100;
 	protected Mission mission;
+	protected MissionMonitor monitor;
+	
 	private GUITest gui;
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
@@ -32,6 +35,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
+		this.monitor = new MissionMonitor(this, mission);
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
@@ -60,6 +64,7 @@ public abstract class ATLASCore {
 			q.registerAfterHook(() -> gui.updateGUI());
 			// Also after events, need to check for faults
 			q.registerAfterHook(() -> faultGen.pollFaultsNow());
+			q.registerAfterHook(() -> monitor.runStep());
 			q.setup();
 		}
 		

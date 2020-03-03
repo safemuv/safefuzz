@@ -2,6 +2,7 @@
 package Atlas;
 
 import "platform:/resource/com.github.atlas.dsl/components.ecore";
+import "platform:/resource/com.github.atlas.dsl/region.ecore";
 
 class GoalResultField {
 	attr String name;
@@ -68,14 +69,36 @@ abstract class GoalParticipants {
 	
 }
 
+enum logicOps {
+	ADD = 1;
+	SUBTRACT = 2;
+}
+
 class RelativeParticipants extends GoalParticipants {
-	
+	attr logicOps setOperation;
+	val RobotResultField robotResults;
+}
+
+class StaticParticipants extends GoalParticipants {
+	val Atlas.Robot[*] pariticpants;
+}
+
+class GoalTemporalConstraints {
+	val Goal[*] dependenecies;
+	attr double earliestStartTime;
+	attr double latestFinishTime;
 }
 
 class Goal {
-	
+	val GoalTemporalConstraints requirements;
+	val GoalParticipants partipants;
+	val Goal[*] subgoals;
+	val GoalAction action;
 }
 
 class Mission {
-	
+	val Atlas.Robot[*] robots;
+	val Atlas.Computer[*] computers;
+	val Atlas.Region[*] regions;
+	val Goal[*] goals;
 }

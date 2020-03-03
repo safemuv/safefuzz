@@ -34,6 +34,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" upperBound="-1"
         eType="#//Subcomponent" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Computer" eSuperTypes="#//NamedComponent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" upperBound="-1"
+        eType="#//Subcomponent" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SensorType">
     <eLiterals name="SONAR" value="1"/>
     <eLiterals name="GPS_POSITION" value="2"/>

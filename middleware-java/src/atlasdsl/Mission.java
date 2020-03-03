@@ -15,12 +15,20 @@ public class Mission {
 	private Map<String,Computer> computers = new LinkedHashMap<String,Computer>();
 	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
 	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
-	private List<Goal> goals = new ArrayList<Goal>();
+	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
 	
 	private List<Message> messages = new ArrayList<Message>();
 	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
+	}
+	
+	public List<Goal> getAllGoals() {
+		return new ArrayList<Goal>(goals.values());
+	}
+	
+	public List<String> getAllGoalNames() {
+		return new ArrayList<String>();
 	}
 	
 	public Optional<EnvironmentalObject> getEnvironmentalObject(int label) {
@@ -29,8 +37,8 @@ public class Mission {
 		else return Optional.of(eo);
 	}
 	
-	public void addGoal(Goal g) {
-		goals.add(g);
+	public void addGoal(String n, Goal g) {
+		goals.put(n,g);
 	}
 	
 	public List<Computer> getAllComputers() {
@@ -99,7 +107,7 @@ public class Mission {
 	}
 
 	public List<Goal> getGoals() {
-		return goals;
+		return getAllGoals();
 	}
 	
 	public Map<SensorType,Robot> getAllSensorTypesOnVehicles() {

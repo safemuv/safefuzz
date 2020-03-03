@@ -16,6 +16,15 @@ import faultgen.FaultGenerator;
 
 public class GUITest {  
 	
+	JFrame f;
+    HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
+    HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
+    private Mission mission;
+    private FaultButtonListener buttonListener = new FaultButtonListener();
+    private RobotChoiceListener robotChoiceListener = new RobotChoiceListener();
+    private FaultGenerator faultGen;
+    private String chosenRobotName = "";
+	
 	private class RobotChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JComboBox cb = (JComboBox)e.getSource();
@@ -34,26 +43,18 @@ public class GUITest {
 		}
 	}
 	
-	JFrame f;
-    HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
-    private Mission mission;
-    private FaultButtonListener buttonListener = new FaultButtonListener();
-    private RobotChoiceListener robotChoiceListener = new RobotChoiceListener();
-    private FaultGenerator faultGen;
-    private String chosenRobotName = "";
-   
     private void setupLabels() {
     	int y = 0;
     	for (Robot r : mission.getAllRobots()) {
     		chosenRobotName = r.getName();
-	    	JLabel l = new JLabel(labelText(r));
+	    	JLabel l = new JLabel(robotLabelText(r));
 	    	l.setVisible(true);
 	    	robotLabels.put(r, l);
 	    	f.add(l);
     	}
     }
     
-    private String labelText(Robot r) {
+    private String robotLabelText(Robot r) {
     	try {
     		Point loc = r.getPointComponentProperty("location");
     		return r.getName() +  " @ " + loc.toString();
@@ -62,13 +63,26 @@ public class GUITest {
     	}
     }
     
+    private String goalLabelText(Goal g) {
+    	GoalStatus gs = g.getStatus();
+    	return gs.toString();
+    }
+    
     private void updateLabels() {
     	for (Map.Entry<Robot, JLabel> entry : robotLabels.entrySet()) {
     		JLabel l = entry.getValue();
     		Robot r = entry.getKey();
-    		String text = labelText(r);
+    		String text = robotLabelText(r);
     		l.setText(text);
     		l.repaint();
+    	}
+    }
+    
+    private void updateGoalLabels() {
+    	for (Map.Entry<Goal,JLabel> entry : goalLabels.entrySet()) {
+    		JLabel l = entry.getValue();
+    		Goal g = entry.getKey();
+    		l.setText(goalLabelText(g));
     	}
     }
     
@@ -84,11 +98,11 @@ public class GUITest {
     	injectButton.setBounds(130,100,100, 40);
     	
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
+    	List<String> goalNames = mission.getAllGoalNames();	
+    	
     	JComboBox robotChoice = new JComboBox(robotNames.toArray());
     	robotChoice.setSelectedIndex(1);
     	robotChoice.addActionListener(robotChoiceListener);
-    	
-    	// TODO: need a drop-down to select the robots to inject
         injectButton.addActionListener(buttonListener);
 
     	f.add(robotChoice);

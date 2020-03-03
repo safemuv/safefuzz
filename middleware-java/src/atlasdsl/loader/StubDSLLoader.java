@@ -58,8 +58,8 @@ public class StubDSLLoader implements DSLLoader {
 				Optional.of(new DynamicGoalRegion(primarySensorSweep, "DETECTION_COORD", verifySweepRange)),
 				new SensorCover(20.0, SensorType.SONAR));
 		
-		mission.addGoal(mutualAvoidance);
-		mission.addGoal(primarySensorSweep);
+		mission.addGoal("mutualAvoidance", mutualAvoidance);
+		mission.addGoal("primarySensorSweep", primarySensorSweep);
 		primarySensorSweep.addSubgoal(verifySensor);
 		
 		// Add more message definitions here
