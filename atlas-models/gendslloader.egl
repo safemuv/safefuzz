@@ -1,5 +1,29 @@
-[% for (r in C!Robot.allInstances) { %]
-Robot r = new Robot("[%= r.name %]");
-// Extract the necessary properties for r
-mission.addRobot(r);
-[%} %]
+[% out.setContentType("Java"); %]
+
+[* Generate the components layer first *]
+public class GeneratedDSLLoader implements DSLLoader {
+	public Mission loadMission() {
+	[% for (r in C!Robot.allInstances) { %]
+		Robot r = new Robot("[%= r.name %]");
+		[* Extract the necessary properties for r
+		// Set the properies for r *]
+		[% for (p in r.componentProperties) { %]
+			[% if (p.isKindOf(IntProperty)) { %]
+		r.setIntComponentProperty("[%= p.name %]", [%= p.value %]);
+			[% } %]
+			[% if (p.isKindOf(DoubleProperty)) { %]
+		r.setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
+			[% } %]
+			[% if (p.isKindOf(PointProperty)) { %]
+		r.setPointComponentProperty("[%= p.name %]", [%= p.value.toString() %]);
+		[* TODO: need point format converter to x,y,z *]
+			[% } %]
+		[% } %]
+			
+		[* Add subcomponents to the robots *]
+		[* Add the robot to the mission *]
+		mission.addRobot(r);
+		
+	[%} %]
+	}
+}

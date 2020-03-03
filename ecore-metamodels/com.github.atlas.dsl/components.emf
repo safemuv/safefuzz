@@ -28,7 +28,8 @@ class DoubleProperty extends ComponentProperty {
 }
 
 class Component {
- val ComponentProperty[] componentProperties;
+	// TODO: should have maps here
+ 	val ComponentProperty[] componentProperties;
 }
 
 class NamedComponent extends Component {
