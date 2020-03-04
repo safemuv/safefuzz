@@ -52,6 +52,16 @@ public class GUITest {
 	    	robotLabels.put(r, l);
 	    	f.add(l);
     	}
+    	
+    	Map <String,Goal> goals = mission.getGoalsAndNames();
+		for (Map.Entry<String,Goal> es : goals.entrySet()) {
+			String name = es.getKey();
+			Goal g = es.getValue();
+			JLabel l = new JLabel(goalLabelText(g));
+			l.setVisible(true);
+			goalLabels.put(g, l);
+			f.add(l);
+		}
     }
     
     private String robotLabelText(Robot r) {
@@ -64,8 +74,7 @@ public class GUITest {
     }
     
     private String goalLabelText(Goal g) {
-    	GoalStatus gs = g.getStatus();
-    	return gs.toString();
+    	return g.getName() + " - " + g.getStatus().toString();
     }
     
     private void updateLabels() {
@@ -117,6 +126,7 @@ public class GUITest {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
     			updateLabels();
+    			updateGoalLabels();
     			f.repaint();
 			}
 		});

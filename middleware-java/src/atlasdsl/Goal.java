@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class Goal {
+	private String name;
+	protected Mission mission;
 	private GoalTemporalConstraints timingReqs;
 	private GoalParticipants participants;
 	private Optional<GoalRegion> region;
 	private List<Goal> subgoals = new ArrayList<Goal>();
 	private GoalAction action;
 	
-	public Goal(GoalTemporalConstraints timingReqs, GoalParticipants participants, Optional<GoalRegion> region, GoalAction action) {
+	public Goal(String name, Mission mission, GoalTemporalConstraints timingReqs, GoalParticipants participants, Optional<GoalRegion> region, GoalAction action) {
+		this.name = name;
+		this.mission = mission;
 		this.timingReqs = timingReqs;
 		this.participants = participants;
 		this.region = region;
@@ -28,6 +32,10 @@ public class Goal {
 		return status;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void setStatus(GoalStatus gs) {
 		status = gs;
 	} 
@@ -37,7 +45,11 @@ public class Goal {
 	}
 	
 	public Optional<GoalResult> test() {
-		return action.test(this.participants);
+		return action.test(mission, this.participants);
+	}
+	
+	public void setup() {
+		
 	}
 
 	public void addSubgoal(Goal sg) {

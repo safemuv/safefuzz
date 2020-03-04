@@ -45,16 +45,17 @@ public class StubDSLLoader implements DSLLoader {
 
 		// Define the mission layer
 		double MISSION_END_TIME = 1000.0;
+		double AVOIDANCE_CLEARANCE = 30.0;
 		
 		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
-		Goal mutualAvoidance = new Goal(entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers());
-		Goal primarySensorSweep = new Goal(entireMissionTime, allRobots, Optional.empty(), new CollectiveSensorCover(10.0, SensorType.SONAR));
+		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.empty(), new CollectiveSensorCover(10.0, SensorType.SONAR));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		
 		double verifySweepRange = 30.0;
-		Goal verifySensor = new Goal(entireMissionTime, rp, 
+		Goal verifySensor = new Goal("verifySensor", mission, entireMissionTime, rp, 
 				Optional.of(new DynamicGoalRegion(primarySensorSweep, "DETECTION_COORD", verifySweepRange)),
 				new SensorCover(20.0, SensorType.SONAR));
 		

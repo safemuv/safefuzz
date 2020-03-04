@@ -31,6 +31,10 @@ public class Mission {
 		return new ArrayList<String>();
 	}
 	
+	public Map<String,Goal> getGoalsAndNames() {
+		return goals;
+	}
+	
 	public Optional<EnvironmentalObject> getEnvironmentalObject(int label) {
 		EnvironmentalObject eo = objects.get(label);
 		if (eo == null) return Optional.empty();

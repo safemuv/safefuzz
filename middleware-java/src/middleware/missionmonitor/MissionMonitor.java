@@ -20,7 +20,7 @@ public class MissionMonitor {
 		// Needs to update the internal state of any sensor coverage goals 
 		// which are relevant to this type of sensor
 	}
-	
+		
 	// TODO: needs to handle the subgoals as well here, recurse down to
 	// handle them
 	public void scanGoals() {
