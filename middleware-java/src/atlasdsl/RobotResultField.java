@@ -18,4 +18,8 @@ public class RobotResultField extends GoalResultField {
 	public List<Robot> getRobots() {
 		return robots;
 	}
+	
+	public String toString() {
+		return this.name + "=" + robots.toString();
+	}
 }

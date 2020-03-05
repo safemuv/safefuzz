@@ -37,6 +37,7 @@ public class MissionMonitor {
 			} else {
 				Optional<GoalResult> res = g.test();
 				if (res.isPresent()) {
+					System.out.println("res = " + res.get());
 					g.setStatus(GoalStatus.COMPLETED);
 					// This status will need to be referenced by dependent goals somehow
 				}

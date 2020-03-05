@@ -1,5 +1,11 @@
 package atlasdsl;
 
-public class PositionTracker {
+import atlassharedclasses.Region;
 
+public class PositionTracker {
+	private Region region;
+	
+	public PositionTracker(Region region) {
+		this.region = region;
+	}
 }

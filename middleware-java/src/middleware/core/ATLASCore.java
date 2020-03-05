@@ -74,7 +74,7 @@ public abstract class ATLASCore {
     }
 
 	public double getTime() {
-		return time;
+		return time; 
 	}
 	
 	public void updateTime(double time) throws CausalityException {

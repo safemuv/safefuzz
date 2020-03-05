@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import atlassharedclasses.Region;
+
 public class Goal {
 	private String name;
 	protected Mission mission;
@@ -54,5 +56,9 @@ public class Goal {
 
 	public void addSubgoal(Goal sg) {
 		subgoals.add(sg);
+	}
+
+	public Optional<GoalRegion> getGoalRegion() {
+		return region;
 	}
 }

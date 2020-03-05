@@ -14,6 +14,7 @@ public class AvoidOthers extends GoalAction {
 
 	private Optional<Double> testDistances(List<Robot> robots) throws MissingProperty {
 		double clearanceSqr = clearance * clearance;
+		System.out.println("clearanceSqr=" + clearanceSqr);
 		Optional<Robot> failed1;
 		Optional<Robot> failed2;
 		for (Robot r_i : robots) {
@@ -22,6 +23,7 @@ public class AvoidOthers extends GoalAction {
 					Point loc1 = r_i.getPointComponentProperty("location");
 					Point loc2 = r_j.getPointComponentProperty("location");
 					double dist = loc1.distanceSqrTo(loc2);
+					System.out.println("loc1 = " + r_i + "loc2 = " + r_j + " dist_sqr = " + dist);
 					if (dist < clearanceSqr) {
 						failed1 = Optional.of(r_i);
 						failed2 = Optional.of(r_j);
@@ -54,5 +56,9 @@ public class AvoidOthers extends GoalAction {
 		}
 			
 		return Optional.empty();
+	}
+
+	protected void setup(Mission mission, Goal g) {
+		// TODO Auto-generated method stub
 	}
 }

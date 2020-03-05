@@ -7,5 +7,9 @@ public class DoubleResultField extends GoalResultField {
 		this.name = name;
 		this.value = value;
 	}
+	
+	public String toString() {
+		return this.name + "=" + Double.toString(value);
+	}
 
 }

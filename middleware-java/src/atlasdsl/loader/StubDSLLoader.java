@@ -45,7 +45,7 @@ public class StubDSLLoader implements DSLLoader {
 
 		// Define the mission layer
 		double MISSION_END_TIME = 1000.0;
-		double AVOIDANCE_CLEARANCE = 30.0;
+		double AVOIDANCE_CLEARANCE = 5.0;
 		
 		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));

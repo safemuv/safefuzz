@@ -11,8 +11,12 @@ public class SensorCover extends Cover {
 		this.sensor = sensor;
 	}
 
-	protected Optional<GoalResult> test(GoalParticipants participants) {
+	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
+	}
+
+	protected void setup(Mission mission, Goal g) {
+		// TODO Auto-generated method stub		
 	}
 }
