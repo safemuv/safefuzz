@@ -20,6 +20,12 @@ public class MissionMonitor {
 		// Needs to update the internal state of any sensor coverage goals 
 		// which are relevant to this type of sensor
 	}
+	
+	public void setupGoals() {
+		for (Goal g : mission.getAllGoals()) {
+			g.setup();
+		}
+	}
 		
 	// TODO: needs to handle the subgoals as well here, recurse down to
 	// handle them

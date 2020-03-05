@@ -51,7 +51,7 @@ public class Goal {
 	}
 	
 	public void setup() {
-		
+		action.setup(mission, this);
 	}
 
 	public void addSubgoal(Goal sg) {
