@@ -3,6 +3,7 @@ package atlasdsl.loader;
 import java.util.Optional;
 import atlasdsl.*;
 import atlassharedclasses.Point;
+import atlassharedclasses.Region;
 
 public class StubDSLLoader implements DSLLoader {
 	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, double startSpeed, double maxSpeed, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
@@ -47,10 +48,14 @@ public class StubDSLLoader implements DSLLoader {
 		double MISSION_END_TIME = 1000.0;
 		double AVOIDANCE_CLEARANCE = 5.0;
 		
+		Region fullRegion = new Region(new Point(-50.0,-230.0), new Point(200.0,-30.0));
+		
+		StaticGoalRegion staticRegion = new StaticGoalRegion(fullRegion);
+		
 		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
 		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.empty(), new CollectiveSensorCover(10.0, 1, SensorType.SONAR));
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.of(staticRegion), new CollectiveSensorCover(10.0, 1, SensorType.SONAR));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		

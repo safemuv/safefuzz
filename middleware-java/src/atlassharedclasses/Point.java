@@ -53,4 +53,8 @@ public class Point {
 	public Point add(Point dp) {
 		return new Point(this.x + dp.x, this.y + dp.y, this.z + dp.z);
 	}
+
+	public Point sub(Point dp) {
+		return new Point(this.x - dp.x, this.y - dp.y, this.z - dp.z);
+	}
 }

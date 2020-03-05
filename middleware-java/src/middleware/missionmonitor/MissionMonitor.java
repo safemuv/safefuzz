@@ -3,6 +3,7 @@ package middleware.missionmonitor;
 import java.util.Optional;
 
 import atlasdsl.*;
+import atlasdsl.GoalResult.GoalResultStatus;
 import atlassharedclasses.SonarDetection;
 import middleware.core.*;
 
@@ -13,6 +14,7 @@ public class MissionMonitor {
 	public MissionMonitor(ATLASCore core, Mission mission) {
 		this.mission = mission;	
 		this.core = core;
+		setupGoals();
 		scanGoals();
 	}
 	
@@ -43,9 +45,20 @@ public class MissionMonitor {
 			} else {
 				Optional<GoalResult> res = g.test();
 				if (res.isPresent()) {
+					GoalResult gr = res.get();
+					
+					// TODO: This GoalResult needs to be stored, so its fields can be 
+					// referenced by dependent goals somehow
+					
 					System.out.println("res = " + res.get());
-					g.setStatus(GoalStatus.COMPLETED);
-					// This status will need to be referenced by dependent goals somehow
+					if (gr.getResultStatus() == GoalResultStatus.VIOLATED) {
+						g.setStatus(GoalStatus.VIOLATED);
+					}
+					
+					if (gr.getResultStatus() == GoalResultStatus.COMPLETED) {
+						g.setStatus(GoalStatus.COMPLETED);
+					}
+
 				}
 			}
 		}
