@@ -50,7 +50,7 @@ public class Goal {
 		return action.test(mission, this.participants);
 	}
 	
-	public void setup() {
+	public void setup() throws GoalActionSetupFailure {
 		action.setup(mission, this);
 	}
 

@@ -135,8 +135,7 @@ class ComputerCIshoreside {
 
     // Count the detections at this location
     if (freshDetection(label)) {
-        // choose robot to do the confirmation
-        Optional<String> rName_o = chooseRobotNear(loc, robotName);
+                 Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
             API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);

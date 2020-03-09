@@ -8,6 +8,10 @@ import atlassharedclasses.SonarDetection;
 import middleware.core.*;
 
 public class MissionMonitor {
+	private class MissionMonitorSetupFailure extends Exception {
+		
+	}
+	
 	private Mission mission;
 	private ATLASCore core;
 	
@@ -24,8 +28,12 @@ public class MissionMonitor {
 	}
 	
 	public void setupGoals() {
-		for (Goal g : mission.getAllGoals()) {
-			g.setup();
+		try {
+			for (Goal g : mission.getAllGoals()) {
+				g.setup();
+			}
+		} catch (GoalActionSetupFailure gs) {
+			System.out.println("Goal action setup failure");
 		}
 	}
 		
@@ -60,13 +68,7 @@ public class MissionMonitor {
 					}
 					
 					if (gr.getResultStatus() == GoalResultStatus.CONTINUE) {
-						// Continue goal results have to generate a new dependent goal?
-						// The primary sensor sweep detections, somehow have to be mapped into
-						// the production of new dependent goals. Every time a detection is made,
-						// the results productions have to develop a new subgoal which can be
-						// dynamically generated
-						
-						// We need some concept of the result which is produced by a goal
+
 					}
 				}
 			}

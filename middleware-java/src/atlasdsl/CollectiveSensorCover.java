@@ -2,7 +2,9 @@ package atlasdsl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,12 +23,14 @@ public class CollectiveSensorCover extends Cover {
 	private boolean usesDynamicRegions;
 	private int samplesPerUnit = DEFAULT_SAMPLES_PER_UNIT;
 	private SensorType sensor;
-	// Parent goal reference - set within setup
+	// Parent goal and GoalRegion reference - set within setup
 	private Goal goal;
+	private GoalRegion goalRegion;
+	private int regionCount;
 
 	// This is not part of the DSL. It is used internally by the ATLAS
 	// object to track the sensor state in operation
-	private List<PositionTracker> posTrackers = new ArrayList<PositionTracker>();
+	private Map<Region,PositionTracker> posTrackers = new HashMap<Region,PositionTracker>();
 
 	public CollectiveSensorCover(double density, int samplesPerUnit, SensorType sensor) {
 		this.density = density;
@@ -34,31 +38,49 @@ public class CollectiveSensorCover extends Cover {
 		this.sensor = sensor;
 	}
 
-	protected void setup(Mission mission, Goal goal) {
+	protected void setup(Mission mission, Goal goal) throws GoalActionSetupFailure {
 		System.out.println("setup on " + goal.getName());
-		Optional<GoalRegion> gr = goal.getGoalRegion();
-		usesDynamicRegions = gr.isDynamic();
+		this.goal = goal;
+		Optional<GoalRegion> gr_o = goal.getGoalRegion();
+		//usesDynamicRegions = gr.isDynamic();
 		
-		if (gr.isPresent()) {
-			Region r = gr.get().getRegion();
-			this.posTrackers.add(new PositionTracker(r, samplesPerUnit));
-			this.goal = goal;
-		} else {
+		if (gr_o.isPresent()) {
+			this.goalRegion = gr_o.get();
+			List<Region> regions = gr_o.get().getRegions();
+			regionCount = regions.size();
+			
+			for (Region r : regions) {
+				posTrackers.put(r, new PositionTracker(r, samplesPerUnit));
+			}
+				
+			
+		} else { 
 			System.out.println("no region in CollectiveSensorCover");
-			throw new GoalSetupFailure(this);
+			throw new GoalActionSetupFailure(this);
 			// TODO: signal a failure somehow if there is no region returned
 			// throw new NoRegionForCoverageGoal();
 		}
 	}
 	
 	private void checkForNewRegions() {
-		// If this is a dynamic goal region
-		Optional<GoalRegion> gr = goal.getGoalRegion();
+		// Put any new regions into the position trackers map
+		if (goalRegion.getRegionCount() > regionCount) {
+			List<Region> regions = goalRegion.getRegions();
+			for (Region r : regions) {
+				if (!posTrackers.containsKey(r)) { 
+					posTrackers.put(r, new PositionTracker(r, samplesPerUnit));
+				}
+			}
+		}
 		
 	}
 
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
-		checkForNewRegions();
+		
+		if (goalRegion.isDynamic()) {
+			checkForNewRegions();
+		}
+		
 		super.test(mission,participants);
 		try {
 			// Get the coordinates of the participants operating in this goal here
@@ -67,7 +89,7 @@ public class CollectiveSensorCover extends Cover {
 			for (Robot r : robots) {
 				Point coord = r.getPointComponentProperty("location");
 				// Register in the position tracker some contribution from all of them
-				for (PositionTracker pt : posTrackers) {
+				for (PositionTracker pt : posTrackers.values()) {
 					if (pt.getRegion().contains(coord))   
 						pt.notifyCoordinate(coord);
 				}
@@ -75,7 +97,7 @@ public class CollectiveSensorCover extends Cover {
 
 			// If the region is entirely scanned, then signal the completion of the goal
 			boolean completed = true;
-			for (PositionTracker pt : posTrackers) {
+			for (PositionTracker pt : posTrackers.values()) {
 				completed = completed && pt.isComplete();
 			}		
 			

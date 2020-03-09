@@ -1,5 +1,7 @@
 package atlasdsl;
 
+import java.util.List;
+
 import atlassharedclasses.Region;
 
 public class DynamicGoalRegion extends GoalRegion {
@@ -13,13 +15,23 @@ public class DynamicGoalRegion extends GoalRegion {
 		this.relativeRange = relativeRange;
 	}
 
-	protected Region getRegion() {
+	protected List<Region> getRegions() {
 		// TODO: implement dynamic regions lookup from a 
 		// database of previous goal statuses
 		return null;
 	}
 	
+	protected int getRegionCount() {
+		return 0;
+	}
+	
 	protected boolean isDynamic() {
 		return true;
+	}
+
+	@Override
+	protected Region getRegion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

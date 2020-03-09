@@ -8,7 +8,7 @@ public class Cover extends GoalAction {
 		return null;
 	}
 
-	protected void setup(Mission mission, Goal g) {
+	protected void setup(Mission mission, Goal g) throws GoalActionSetupFailure {
 		// TODO Auto-generated method stub	
 	}
 }
