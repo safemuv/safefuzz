@@ -28,10 +28,4 @@ public class DynamicGoalRegion extends GoalRegion {
 	protected boolean isDynamic() {
 		return true;
 	}
-
-	@Override
-	protected Region getRegion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
