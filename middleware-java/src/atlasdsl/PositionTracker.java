@@ -11,8 +11,8 @@ public class PositionTracker {
 	private int uniqueCount = 0;
 	private int totalElements;
 
-	final int X_WIDTH = 500;
-	final int Y_HEIGHT = 500;
+	final int X_WIDTH = 15;
+	final int Y_HEIGHT = 15;
 	int xsize, ysize;
 
 	private Point basePoint = new Point(0, 0);
@@ -24,14 +24,15 @@ public class PositionTracker {
 
 	// This point tracker needs to be displayed in the GUI
 	public PositionTracker(Region region, int countRequired) {
-		final int X_WIDTH = 5;
-		final int Y_HEIGHT = 5;
-
 		this.region = region;
+		
+		// Set basePoint to the minimal coordinate in the system!
+		this.basePoint = region.minCoord();
+		System.out.println("basePoint = " + basePoint);
 		this.countRequired = countRequired;
 
-		xsize = (int) (region.width() / X_WIDTH);
-		ysize = (int) (region.height() / Y_HEIGHT);
+		xsize = (int)(region.width() / X_WIDTH);
+		ysize = (int)(region.height() / Y_HEIGHT);
 		this.counts = new int[xsize][ysize];
 		this.visitedEver = new boolean[xsize][ysize];
 		this.totalElements = xsize * ysize;
@@ -41,10 +42,10 @@ public class PositionTracker {
 	public synchronized void notifyCoordinate(Point coordinate) {
 		// Work out the coordinates for the point tracker here
 		Point diff = coordinate.sub(basePoint);
-		int x = Math.floorDiv((int) diff.getX(), X_WIDTH);
-		int y = Math.floorDiv((int) diff.getY(), Y_HEIGHT);
+		int x = (int) Math.floor(diff.getX() / X_WIDTH);
+		int y = (int) Math.floor(diff.getY() / Y_HEIGHT);
 
-		System.out.println("x=" + x + "," + "y=" + y);
+		System.out.println("coordinate=" + coordinate + ",x=" + x + "," + "y=" + y + ",uniqueCount=" + uniqueCount);
 		if (x > 0 && y > 0 && x < xsize && y < ysize) {
 			counts[x][y] += 1;
 			if (!visitedEver[x][y]) {
@@ -54,6 +55,10 @@ public class PositionTracker {
 		}
 	}
 
+	public Region getRegion() {
+		return region;
+	}
+	
 	// Indicates when all the area is complete
 	public boolean isComplete() {
 		return (uniqueCount == totalElements);

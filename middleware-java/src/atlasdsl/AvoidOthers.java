@@ -25,7 +25,7 @@ public class AvoidOthers extends GoalAction {
 					Point loc1 = r_i.getPointComponentProperty("location");
 					Point loc2 = r_j.getPointComponentProperty("location");
 					double distSqr = loc1.distanceSqrTo(loc2);
-					System.out.println("loc1 = " + r_i + "loc2 = " + r_j + " dist_sqr = " + distSqr);
+					//System.out.println("loc1 = " + r_i + "loc2 = " + r_j + " dist_sqr = " + distSqr);
 					if (distSqr < clearanceSqr) {
 						failed1 = Optional.of(r_i);
 						failed2 = Optional.of(r_j);

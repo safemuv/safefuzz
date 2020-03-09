@@ -1,5 +1,14 @@
 package atlasdsl;
 
-public abstract class Cover extends GoalAction {
+import java.util.Optional;
 
+public class Cover extends GoalAction {
+	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	protected void setup(Mission mission, Goal g) {
+		// TODO Auto-generated method stub	
+	}
 }

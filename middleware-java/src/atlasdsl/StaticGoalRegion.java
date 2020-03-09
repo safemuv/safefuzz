@@ -12,4 +12,8 @@ public class StaticGoalRegion extends GoalRegion {
 	protected Region getRegion() {
 		return region;
 	}
+	
+	protected boolean isDynamic() {
+		return false;
+	}
 }

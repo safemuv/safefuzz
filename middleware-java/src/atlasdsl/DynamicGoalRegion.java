@@ -14,7 +14,12 @@ public class DynamicGoalRegion extends GoalRegion {
 	}
 
 	protected Region getRegion() {
-		// TODO: implement dynamic regions lookup
+		// TODO: implement dynamic regions lookup from a 
+		// database of previous goal statuses
 		return null;
+	}
+	
+	protected boolean isDynamic() {
+		return true;
 	}
 }

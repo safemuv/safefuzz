@@ -60,8 +60,10 @@ public class StubDSLLoader implements DSLLoader {
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		
 		double verifySweepRange = 30.0;
+		
+		// Need a concept of the goal action on the sensor detection and deactivation
 		Goal verifySensor = new Goal("verifySensor", mission, entireMissionTime, rp, 
-				Optional.of(new DynamicGoalRegion(primarySensorSweep, "DETECTION_COORD", verifySweepRange)),
+				Optional.of(new DynamicGoalRegion(primarySensorSweep, "detectionCoord", verifySweepRange)),
 				new SensorCover(20.0, SensorType.SONAR));
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);

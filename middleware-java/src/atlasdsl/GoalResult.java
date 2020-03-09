@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 public class GoalResult {
 	public enum GoalResultStatus {
 		COMPLETED,
-		VIOLATED
+		VIOLATED,
+		CONTINUE
 	}
 	
 	private GoalResultStatus status;

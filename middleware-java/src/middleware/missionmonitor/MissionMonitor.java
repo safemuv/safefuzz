@@ -47,7 +47,7 @@ public class MissionMonitor {
 				if (res.isPresent()) {
 					GoalResult gr = res.get();
 					
-					// TODO: This GoalResult needs to be stored, so its fields can be 
+					// TODO: This GoalResult needs to be stored in a database, so its fields can be 
 					// referenced by dependent goals somehow
 					
 					System.out.println("res = " + res.get());
@@ -58,7 +58,16 @@ public class MissionMonitor {
 					if (gr.getResultStatus() == GoalResultStatus.COMPLETED) {
 						g.setStatus(GoalStatus.COMPLETED);
 					}
-
+					
+					if (gr.getResultStatus() == GoalResultStatus.CONTINUE) {
+						// Continue goal results have to generate a new dependent goal?
+						// The primary sensor sweep detections, somehow have to be mapped into
+						// the production of new dependent goals. Every time a detection is made,
+						// the results productions have to develop a new subgoal which can be
+						// dynamically generated
+						
+						// We need some concept of the result which is produced by a goal
+					}
 				}
 			}
 		}

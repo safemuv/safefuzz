@@ -30,6 +30,10 @@ public class Region {
 		return Math.min(point1.getY(), point2.getY());
 	}
 	
+	public Point minCoord() {
+		return new Point(this.left(), this.bottom());
+	}
+	
 	public double right() {
 		return Math.max(point1.getX(), point2.getX());
 	}
@@ -49,5 +53,11 @@ public class Region {
 	
 	public String toString() {
 		return super.toString() + point1.toString() + "-" + point2.toString();
+	}
+
+	public boolean contains(Point coord) {
+		double x = coord.getX();
+		double y = coord.getY();
+		return (x > this.left() && x < this.right() && y > this.bottom() && y < this.top());
 	}
 }
