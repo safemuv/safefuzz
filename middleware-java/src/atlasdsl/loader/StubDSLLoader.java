@@ -68,7 +68,7 @@ public class StubDSLLoader implements DSLLoader {
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
 		mission.addGoal("primarySensorSweep", primarySensorSweep);
-		primarySensorSweep.addSubgoal(verifySensor);
+		mission.addGoal("verifySensor", verifySensor);
 		
 		// Add more message definitions here
 		mission.addMessage(new Message("detectionGilda", shoreside, mission.getRobot("gilda")));

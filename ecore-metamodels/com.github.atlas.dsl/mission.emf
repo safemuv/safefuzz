@@ -58,6 +58,7 @@ class AvoidOthers extends GoalAction {
 
 class SensorCover extends Cover {
 	attr double density;
+	attr int samplesPerUnit;
 	val Atlas.SensorType[*] sensortype;
 }
 
@@ -75,12 +76,15 @@ enum logicOps {
 }
 
 class RelativeParticipants extends GoalParticipants {
+	ref Goal parentGoal;
+	ref StaticParticipants staticRobots;
 	attr logicOps setOperation;
-	val RobotResultField robotResults;
+	attr String fieldName;
+	attr int participantLimit;
 }
 
 class StaticParticipants extends GoalParticipants {
-	val Atlas.Robot[*] pariticpants;
+	ref Atlas.Robot[*] participants;
 }
 
 class GoalTemporalConstraints {
@@ -90,9 +94,10 @@ class GoalTemporalConstraints {
 }
 
 class Goal {
+	attr String name;
 	val GoalTemporalConstraints requirements;
-	val GoalParticipants partipants;
-	val Goal[*] subgoals;
+	val GoalParticipants participants;
+	//val Goal[*] subgoals;
 	val GoalAction action;
 }
 

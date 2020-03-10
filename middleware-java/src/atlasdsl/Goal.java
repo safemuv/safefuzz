@@ -13,7 +13,7 @@ public class Goal {
 	private GoalTemporalConstraints timingReqs;
 	private GoalParticipants participants;
 	private Optional<GoalRegion> region;
-	private List<Goal> subgoals = new ArrayList<Goal>();
+	//private List<Goal> subgoals = new ArrayList<Goal>();
 	private GoalAction action;
 	private List<GoalResult> results = new ArrayList<GoalResult>();
 	
@@ -57,9 +57,9 @@ public class Goal {
 		action.setup(core, mission, this);
 	}
 
-	public void addSubgoal(Goal sg) {
-		subgoals.add(sg);
-	}
+//	public void addSubgoal(Goal sg) {
+//		subgoals.add(sg);
+//	}
 
 	public Optional<GoalRegion> getGoalRegion() {
 		return region;
