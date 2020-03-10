@@ -1,8 +1,9 @@
 package atlasdsl;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import atlassharedclasses.Region;
+import atlassharedclasses.*;
 
 public class DynamicGoalRegion extends GoalRegion {
 	private Goal relativeToGoal;
@@ -16,13 +17,24 @@ public class DynamicGoalRegion extends GoalRegion {
 	}
 
 	protected List<Region> getRegions() {
-		// TODO: implement dynamic regions lookup from a 
-		// database of previous goal statuses
-		return null;
+		List<GoalResult> gres = relativeToGoal.getResults();
+		
+		List<Region> res = new ArrayList<Region>();
+		for (GoalResult gr : gres) {
+			GoalResultField gf = gr.getField(relativeToGoalField);
+			if (gf instanceof PointResultField) {
+				PointResultField pf = (PointResultField)gf;
+				Point detectionPoint = pf.getValue();
+				Region r = Region.squareAroundPoint(detectionPoint, relativeRange * 2.0);
+				res.add(r);
+			}
+		}
+		return res;
 	}
 	
 	protected int getRegionCount() {
-		return 0;
+		// The number of regions is one per goal result obtained
+		return relativeToGoal.getResults().size();
 	}
 	
 	protected boolean isDynamic() {

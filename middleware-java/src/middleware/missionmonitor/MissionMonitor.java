@@ -30,7 +30,7 @@ public class MissionMonitor {
 	public void setupGoals() {
 		try {
 			for (Goal g : mission.getAllGoals()) {
-				g.setup();
+				g.setup(core);
 			}
 		} catch (GoalActionSetupFailure gs) {
 			System.out.println("Goal action setup failure");
@@ -51,12 +51,14 @@ public class MissionMonitor {
 			if ((g.getStatus() == GoalStatus.STARTED) && g.isLate(timeNow)) {
 				g.setStatus(GoalStatus.MISSED);
 			} else {
+				// TODO: maybe it would be better if a goal under test could 
+				// return multiple results
 				Optional<GoalResult> res = g.test();
 				if (res.isPresent()) {
 					GoalResult gr = res.get();
-					
-					// TODO: This GoalResult needs to be stored in a database, so its fields can be 
-					// referenced by dependent goals somehow
+					// This GoalResult needs to be stored with the associated goal, 
+					// so it can be referenced by the dependent goals
+					g.registerResult(gr);
 					
 					System.out.println("res = " + res.get());
 					if (gr.getResultStatus() == GoalResultStatus.VIOLATED) {

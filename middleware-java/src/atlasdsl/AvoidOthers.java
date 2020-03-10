@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import atlasdsl.GoalResult.GoalResultStatus;
 import atlassharedclasses.Point;
+import middleware.core.ATLASCore;
 
 public class AvoidOthers extends GoalAction {
 	private double clearance;
@@ -61,7 +62,7 @@ public class AvoidOthers extends GoalAction {
 		return Optional.empty();
 	}
 
-	protected void setup(Mission mission, Goal g) {
+	protected void setup(ATLASCore core, Mission mission, Goal g) {
 		// TODO Auto-generated method stub
 	}
 }

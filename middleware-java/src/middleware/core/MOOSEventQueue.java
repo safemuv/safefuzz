@@ -164,6 +164,9 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 						} else {
 							System.out.println("INFO: sending out sensor detection");
 							SonarDetection d = new SonarDetection(new Point(x,y),vname,objectID);
+							
+							core.notifySensorDetection(d);
+							
 							try {
 								String msg = atlasOMapper.serialise(d);
 								

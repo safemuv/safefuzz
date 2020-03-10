@@ -29,6 +29,9 @@ public abstract class ATLASCore {
 	private GUITest gui;
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
+	
+	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
+	
 	private FaultGenerator faultGen;
 	
 	private double time = 0.0;
@@ -94,5 +97,17 @@ public abstract class ATLASCore {
 		return activeFaults.stream()
 				.filter(f -> f.getClass() == class1)
 				.collect(Collectors.toList());
+	}
+
+	// This is called by the simulator-side event queues when a low
+	// level sensor detection occurs
+	public void notifySensorDetection(SonarDetection d) {
+		for (SensorDetectionLambda watcher : sensorWatchers) { 
+			watcher.op(d);
+		}
+	}
+	
+	public void setupSensorWatcher(SensorDetectionLambda l) {
+		sensorWatchers.add(l);
 	}
 }

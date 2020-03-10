@@ -8,9 +8,7 @@ import atlassharedclasses.ATLASObjectMapper;
 
 public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implements Runnable {
 	
-	public interface VoidLambda {
-		public void op();
-	}
+
 	
 	private static final long serialVersionUID = 1L;
 	protected ATLASObjectMapper atlasOMapper;

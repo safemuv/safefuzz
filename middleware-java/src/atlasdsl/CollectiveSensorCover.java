@@ -11,34 +11,53 @@ import java.util.stream.Collectors;
 import atlasdsl.GoalResult.GoalResultStatus;
 import atlassharedclasses.Point;
 import atlassharedclasses.Region;
+import middleware.core.ATLASCore;
 
 public class CollectiveSensorCover extends Cover {
 	private class NoRegionForCoverageGoal extends Exception {
 
 	}
-
+	
 	private final int DEFAULT_SAMPLES_PER_UNIT = 1;
 
 	private double density;
-	private boolean usesDynamicRegions;
 	private int samplesPerUnit = DEFAULT_SAMPLES_PER_UNIT;
 	private SensorType sensor;
+	
 	// Parent goal and GoalRegion reference - set within setup
 	private Goal goal;
 	private GoalRegion goalRegion;
 	private int regionCount;
 
-	// This is not part of the DSL. It is used internally by the ATLAS
-	// object to track the sensor state in operation
+	// This is used to track the robot locations,
+	// and the coverage of their verification areas
 	private Map<Region,PositionTracker> posTrackers = new HashMap<Region,PositionTracker>();
-
+	
+	private List<GoalResult> pendingPartialResults = new ArrayList<GoalResult>();
+	
 	public CollectiveSensorCover(double density, int samplesPerUnit, SensorType sensor) {
 		this.density = density;
 		this.samplesPerUnit = samplesPerUnit;
 		this.sensor = sensor;
 	}
+	
+	private void setupSensorWatchers(ATLASCore core) {
+		// Need to get all the participating robots
+		// Set watcher in the middleware so when the robot receives a detection, it 
+		// generates a GoalResult for this goal
+		
+		// Need a reference to the ATLAS middleware
+		core.setupSensorWatcher((detection) -> 
+			 { 
+				 GoalResult gr = new GoalResult(GoalResultStatus.CONTINUE);
+				 GoalResultField coordField = new PointResultField("detectionCoord", detection.getLocation());
+				 gr.addField(coordField);
+				 pendingPartialResults.add(gr);
+			 });
+	}
 
-	protected void setup(Mission mission, Goal goal) throws GoalActionSetupFailure {
+	protected void setup(ATLASCore core, Mission mission, Goal goal) throws GoalActionSetupFailure {
+		setupSensorWatchers(core);
 		System.out.println("setup on " + goal.getName());
 		this.goal = goal;
 		Optional<GoalRegion> gr_o = goal.getGoalRegion();
@@ -52,7 +71,6 @@ public class CollectiveSensorCover extends Cover {
 			for (Region r : regions) {
 				posTrackers.put(r, new PositionTracker(r, samplesPerUnit));
 			}
-				
 			
 		} else { 
 			System.out.println("no region in CollectiveSensorCover");
@@ -72,16 +90,15 @@ public class CollectiveSensorCover extends Cover {
 				}
 			}
 		}
-		
 	}
 
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
+		super.test(mission,participants);
 		
 		if (goalRegion.isDynamic()) {
 			checkForNewRegions();
 		}
-		
-		super.test(mission,participants);
+				
 		try {
 			// Get the coordinates of the participants operating in this goal here
 			List<Robot> robots = participants.getParticipants();
@@ -90,7 +107,7 @@ public class CollectiveSensorCover extends Cover {
 				Point coord = r.getPointComponentProperty("location");
 				// Register in the position tracker some contribution from all of them
 				for (PositionTracker pt : posTrackers.values()) {
-					if (pt.getRegion().contains(coord))   
+					if (pt.getRegion().contains(coord))
 						pt.notifyCoordinate(coord);
 				}
 			}

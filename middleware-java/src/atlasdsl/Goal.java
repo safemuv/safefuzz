@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import atlassharedclasses.Region;
+import middleware.core.ATLASCore;
 
 public class Goal {
 	private String name;
@@ -14,6 +15,8 @@ public class Goal {
 	private Optional<GoalRegion> region;
 	private List<Goal> subgoals = new ArrayList<Goal>();
 	private GoalAction action;
+	private List<GoalResult> results = new ArrayList<GoalResult>();
+	
 	
 	public Goal(String name, Mission mission, GoalTemporalConstraints timingReqs, GoalParticipants participants, Optional<GoalRegion> region, GoalAction action) {
 		this.name = name;
@@ -50,8 +53,8 @@ public class Goal {
 		return action.test(mission, this.participants);
 	}
 	
-	public void setup() throws GoalActionSetupFailure {
-		action.setup(mission, this);
+	public void setup(ATLASCore core) throws GoalActionSetupFailure {
+		action.setup(core, mission, this);
 	}
 
 	public void addSubgoal(Goal sg) {
@@ -60,5 +63,13 @@ public class Goal {
 
 	public Optional<GoalRegion> getGoalRegion() {
 		return region;
+	}
+
+	public void registerResult(GoalResult gr) {
+		results.add(gr);
+	}
+	
+	public List<GoalResult> getResults() {
+		return results;
 	}
 }

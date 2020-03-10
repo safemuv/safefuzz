@@ -54,7 +54,7 @@ ProcessConfig = uSimMarine
 {
 AppTick = 2
 CommsTick = 2
-START_POS = x=20.0,y=0.0,speed = 0, heading=0, depth=0
+START_POS = x=40.0,y=0.0,speed = 0, heading=0, depth=0
 PREFIX = NAV
 }
 

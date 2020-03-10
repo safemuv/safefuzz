@@ -10,6 +10,10 @@ public class SonarDetection extends SensorInfo {
 		
 	}
 	
+	public Point getLocation() {
+		return detectionLocation;
+	}
+	
 	public SonarDetection(Point detectionLocation, String detectingVehicleName, int objectID) {
 		this.detectionLocation = detectionLocation;
 		this.detectingVehicleName = detectingVehicleName;
