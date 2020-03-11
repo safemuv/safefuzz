@@ -4,7 +4,7 @@ package Atlas;
 import "platform:/resource/com.github.atlas.dsl/components.ecore";
 
 class MessageField {
-	val String name;
+	attr String name;
 }
 
 class Message {
