@@ -31,19 +31,26 @@
   <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sensortype" upperBound="-1"
-        eType="ecore:EEnum components.ecore#//SensorType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" upperBound="-1"
+        eType="ecore:EEnum components.ecore#//SensorType"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CollectiveSensorCover" eSuperTypes="#//Cover"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectiveSensorCover" eSuperTypes="#//Cover">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" upperBound="-1"
+        eType="ecore:EEnum components.ecore#//SensorType"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
   <eClassifiers xsi:type="ecore:EEnum" name="logicOps">
     <eLiterals name="ADD" value="1"/>
     <eLiterals name="SUBTRACT" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RelativeParticipants" eSuperTypes="#//GoalParticipants">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentGoal" eType="#//Goal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRobots" eType="#//StaticParticipants"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="setOperation" eType="#//logicOps"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="robotResults" eType="#//RobotResultField"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StaticParticipants" eSuperTypes="#//GoalParticipants">
     <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
@@ -61,8 +68,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="participants" eType="#//GoalParticipants"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subgoals" upperBound="-1"
-        eType="#//Goal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//GoalAction"
         containment="true"/>
   </eClassifiers>

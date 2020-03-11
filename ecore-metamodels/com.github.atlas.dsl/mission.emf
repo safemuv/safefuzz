@@ -59,11 +59,13 @@ class AvoidOthers extends GoalAction {
 class SensorCover extends Cover {
 	attr double density;
 	attr int samplesPerUnit;
-	val Atlas.SensorType[*] sensortype;
+	attr Atlas.SensorType[*] sensortype;
 }
 
 class CollectiveSensorCover extends Cover {
-	
+	attr double density;
+	attr int samplesPerUnit;
+	attr Atlas.SensorType[*] sensortype;
 }
 
 abstract class GoalParticipants {

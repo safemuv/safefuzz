@@ -60,5 +60,8 @@
   </goals>
   <goals xmi:id="_UIsBQGL4Eeqq3sXki_lbNA" name="verifyDetections">
     <participants xsi:type="mis:RelativeParticipants" xmi:id="_l6rcMGL4Eeqq3sXki_lbNA"/>
+    <action xsi:type="mis:SensorCover" xmi:id="_7AU60GOpEeqqTLuy_cTgiA">
+      <sensortype>GPS_POSITION</sensortype>
+    </action>
   </goals>
 </mis:Mission>
