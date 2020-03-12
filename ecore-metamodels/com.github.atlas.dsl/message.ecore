@@ -3,8 +3,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/message"
     nsPrefix="msg">
   <eClassifiers xsi:type="ecore:EClass" name="MessageField">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Message">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

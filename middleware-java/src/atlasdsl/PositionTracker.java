@@ -14,7 +14,7 @@ public class PositionTracker {
 	final int X_WIDTH = 15;
 	final int Y_HEIGHT = 15;
 	int xsize, ysize;
-
+	
 	private Point basePoint = new Point(0, 0);
 
 	// Need to setup a 2D array which tracks the instance of visits to
@@ -62,5 +62,17 @@ public class PositionTracker {
 	// Indicates when all the area is complete
 	public boolean isComplete() {
 		return (uniqueCount == totalElements);
+	}
+	
+	public int getXSize() {
+		return xsize;
+	}
+	
+	public int getYSize() {
+		return ysize;
+	}
+	
+	public int[][] getCounts() {
+		return counts;		
 	}
 }

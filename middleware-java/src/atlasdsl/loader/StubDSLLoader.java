@@ -55,7 +55,7 @@ public class StubDSLLoader implements DSLLoader {
 		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
 		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.of(staticRegion), new CollectiveSensorCover(10.0, 1, SensorType.SONAR));
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		
@@ -64,7 +64,7 @@ public class StubDSLLoader implements DSLLoader {
 		// Need a concept of the goal action on the sensor detection and deactivation
 		Goal verifySensor = new Goal("verifySensor", mission, entireMissionTime, rp, 
 				Optional.of(new DynamicGoalRegion(primarySensorSweep, "detectionCoord", verifySweepRange)),
-				new SensorCover(20.0, SensorType.SONAR));
+				new SensorCover(20.0, 1, SensorType.SONAR));
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
 		mission.addGoal("primarySensorSweep", primarySensorSweep);

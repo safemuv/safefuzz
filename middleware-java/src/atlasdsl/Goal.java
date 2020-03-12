@@ -72,4 +72,8 @@ public class Goal {
 	public List<GoalResult> getResults() {
 		return results;
 	}
+	
+	public GoalAction getAction() {
+		return action;
+	}
 }

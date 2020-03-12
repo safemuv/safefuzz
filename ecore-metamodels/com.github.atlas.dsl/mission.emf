@@ -60,12 +60,7 @@ class SensorCover extends Cover {
 	attr double density;
 	attr int samplesPerUnit;
 	attr Atlas.SensorType[*] sensortype;
-}
-
-class CollectiveSensorCover extends Cover {
-	attr double density;
-	attr int samplesPerUnit;
-	attr Atlas.SensorType[*] sensortype;
+	attr boolean collective;
 }
 
 abstract class GoalParticipants {
