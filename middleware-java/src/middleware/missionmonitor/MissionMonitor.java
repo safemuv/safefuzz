@@ -60,7 +60,7 @@ public class MissionMonitor {
 					// so it can be referenced by the dependent goals
 					g.registerResult(gr);
 					
-					System.out.println("res = " + res.get());
+//					System.out.println("res = " + res.get());
 					if (gr.getResultStatus() == GoalResultStatus.VIOLATED) {
 						g.setStatus(GoalStatus.VIOLATED);
 					}

@@ -60,8 +60,7 @@ public class CollectiveInt {
 	protected void updateTime(double newTime) {
 		if (timeNow < newTime) {
 			timeNow = newTime;
-			// TODO: logging of the time update messages here
-			System.out.println("time = " + timeNow + "-" + timers.size() + " timers registered");
+			//System.out.println("time = " + timeNow + "-" + timers.size() + " timers registered");
 		}
 	}
 

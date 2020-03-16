@@ -1,5 +1,7 @@
 package middleware.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,21 +29,25 @@ public class GUITest {
 	JFrame f;
     HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
     HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
-    HashMap<Region,Image> regionImages = new LinkedHashMap<Region, Image>();
-    
     
     private Mission mission;
     private FaultButtonListener buttonListener = new FaultButtonListener();
     private RobotChoiceListener robotChoiceListener = new RobotChoiceListener();
     private FaultGenerator faultGen;
     private String chosenRobotName = "";
+    
+    private PositionTrackingOutput ptPanel;
 	
 	private class RobotChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JComboBox cb = (JComboBox)e.getSource();
 	        chosenRobotName = (String)cb.getSelectedItem();
 		}
-	}	
+	}
+	
+	public HashMap<Goal,JLabel> getGoalLabels() {
+		return goalLabels;
+	}
 	
 	private class FaultButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -106,63 +112,24 @@ public class GUITest {
     	}
     }
     
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
     	Graphics2D g2d = (Graphics2D)g;
     	
-    	for (Map.Entry<Region, Image> me :regionImages.entrySet()) {
-    		Image img = me.getValue();
-    		g2d.drawImage(img, 0, 0, null);
-    	}
-    }
-    
-    private void updateRegionImage(Region r, Image img) {
-    	regionImages.replace(r, img);
-    }
-    
-    private void renderPositionTracker(Region r, PositionTracker pt) {
-    	int x = pt.getXSize();
-    	int y = pt.getYSize();
-    	int[][] counts = pt.getCounts();
-    	
-    	// Convert the 2D pixel array into 1D
-    	int[] pixels = Arrays.stream(counts)
-    	        .flatMapToInt(Arrays::stream)
-    	        .toArray();
-    	
-    	MemoryImageSource ms = new MemoryImageSource(x,y,pixels,0,x);
-    	Image img = Toolkit.getDefaultToolkit().createImage(ms);
-    	System.out.println(img);
-    	updateRegionImage(r, img);
-    }
-    
-    private void renderCollectiveSensorCover(SensorCover csc) {
-    	Map<Region,PositionTracker> pts = csc.getPosTrackers();
-    	for (Map.Entry<Region,PositionTracker> me : pts.entrySet()) {
-    		Region r = me.getKey();
-    		PositionTracker pt = me.getValue();
-    		renderPositionTracker(r,pt);
-    	}
-    }
-    
-    private void updateGoalInfo() {
-    	// Render all the coverage goals visually - need to see the
-    	for (Goal g : goalLabels.keySet()) {
-    		GoalAction ga = g.getAction();
-    		if (ga instanceof SensorCover) {
-    			SensorCover csc = (SensorCover)ga;
-    	   		// TODO: This call will likely be slow... may have to only do it
-        		// periodically, e.g. 1/10th of calls 
-    			renderCollectiveSensorCover(csc);
-    		}
-    	}
+
     }
     
     public GUITest(Mission mission, FaultGenerator faultGen) {
     	this.mission = mission;
     	this.faultGen = faultGen;
     	
-    	f=new JFrame();//creating instance of JFrame
-    	f.setLayout(new FlowLayout(FlowLayout.RIGHT));
+    	f=new JFrame();
+    	
+    	ptPanel = new PositionTrackingOutput(this);
+    	ptPanel.setBackground(new Color(0,0,0));
+    	ptPanel.setSize(100,100);
+    	ptPanel.setVisible(true);
+    	
+    	f.setLayout(new BorderLayout());
     	setupLabels();
               
     	JButton injectButton=new JButton("Inject Overspeed Fault");//creating instance of JButton  
@@ -178,10 +145,13 @@ public class GUITest {
 
     	f.add(robotChoice);
     	f.add(injectButton);
+    	f.getContentPane().add(ptPanel, BorderLayout.CENTER);
     	
-    	f.setSize(200,500);//400 width and 500 height  
-    	f.setVisible(true);//making the frame visible
+    	f.setSize(500,500);
+    	f.setVisible(true);
+    	
     	f.repaint();
+    	ptPanel.repaint();
     }
     
     public synchronized void updateGUI() {
@@ -189,8 +159,10 @@ public class GUITest {
 			public void run() {
     			updateLabels();
     			updateGoalLabels();
-    			updateGoalInfo();
+    			ptPanel.updateGoalInfo();
+    			
     			f.repaint();
+    			ptPanel.repaint();
 			}
 		});
     }

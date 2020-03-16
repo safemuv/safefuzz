@@ -45,7 +45,7 @@ public class PositionTracker {
 		int x = (int) Math.floor(diff.getX() / X_WIDTH);
 		int y = (int) Math.floor(diff.getY() / Y_HEIGHT);
 
-		System.out.println("coordinate=" + coordinate + ",x=" + x + "," + "y=" + y + ",uniqueCount=" + uniqueCount);
+		//System.out.println("coordinate=" + coordinate + ",x=" + x + "," + "y=" + y + ",uniqueCount=" + uniqueCount);
 		if (x > 0 && y > 0 && x < xsize && y < ysize) {
 			counts[x][y] += 1;
 			if (!visitedEver[x][y]) {
