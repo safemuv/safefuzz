@@ -85,7 +85,7 @@ class StaticParticipants extends GoalParticipants {
 }
 
 class GoalTemporalConstraints {
-	val Goal[*] dependenecies;
+	val Goal[*] dependencies;
 	attr double earliestStartTime;
 	attr double latestFinishTime;
 }

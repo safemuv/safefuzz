@@ -61,7 +61,6 @@ public class GUITest {
 	}
 	
     private void setupLabels() {
-    	int y = 0;
     	for (Robot r : mission.getAllRobots()) {
     		chosenRobotName = r.getName();
 	    	JLabel l = new JLabel(robotLabelText(r));
@@ -72,7 +71,7 @@ public class GUITest {
     	
     	Map <String,Goal> goals = mission.getGoalsAndNames();
 		for (Map.Entry<String,Goal> es : goals.entrySet()) {
-			String name = es.getKey();
+			//String name = es.getKey();
 			Goal g = es.getValue();
 			JLabel l = new JLabel(goalLabelText(g));
 			l.setVisible(true);
@@ -113,9 +112,7 @@ public class GUITest {
     }
     
     public void paintComponent(Graphics g) {
-    	Graphics2D g2d = (Graphics2D)g;
     	
-
     }
     
     public GUITest(Mission mission, FaultGenerator faultGen) {
@@ -136,7 +133,6 @@ public class GUITest {
     	injectButton.setBounds(130,100,100, 40);
     	
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
-    	List<String> goalNames = mission.getAllGoalNames();	
     	
     	JComboBox robotChoice = new JComboBox(robotNames.toArray());
     	robotChoice.setSelectedIndex(1);

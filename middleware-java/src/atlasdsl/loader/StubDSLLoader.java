@@ -58,7 +58,6 @@ public class StubDSLLoader implements DSLLoader {
 		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
-		
 		double verifySweepRange = 30.0;
 		
 		// Need a concept of the goal action on the sensor detection and deactivation

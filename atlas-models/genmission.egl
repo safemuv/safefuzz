@@ -1,9 +1,11 @@
 [% out.setContentType("Java"); %]
 
-[* Generate the components layer first *]
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() {
-	[% for (r in C!Robot.allInstances) { %]
+		
+	[% for (m in M!Mission.allInstances()) { %]
+	Mission mission = new Mission();
+	[% for (r in m.robots) { %]
 		Robot r = new Robot("[%= r.name %]");
 		[* Extract the necessary properties for r
 		// Set the properies for r *]
@@ -15,7 +17,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		r.setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
 			[% } %]
 			[% if (p.isKindOf(PointProperty)) { %]
-[*			[% p_x = p.value.x; p_y = p.value.y; p_z = p.value.z; %] *]
 		r.setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
 		[* TODO: better way of doing point conversion here? *]
 			[% } %]
@@ -42,6 +43,33 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		[* Add the robot to the mission *]
 		mission.addRobot(r);
-	[%} %]
+	[%} %] [* end Robot loop *]
+	
+	[% for (g in m.goals) { %]
+		[% if (g.participants.isKindOf(StaticParticipants)) { %]
+		GoalParticipants gp = new StaticParticipants([%= g.participants.participants %], mission);
+		[% } %]
+		[% if (g.participants.isKindOf(RelativeParticipants)) { %]
+		GoalParticipants gp = new RelativeParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission);
+		[% } %]
+		
+		[% var goalTemp = g.requirements; %]
+		[* TODO: handle goal dependencies here *]
+		GoalTemporalConstraints gt = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
+		
+		[* Goal actions *]
+		[% var goalAction = g.action; %]
+		[% if (goalAction.isKindOf(SensorCover)) { %]
+		GoalAction ga = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], [%= goalAction.sensortype %]);
+		[% } %]
+		[% if (goalAction.isKindOf(Avoid)) { %]
+		GoalAction ga = new AvoidOthers(AVOIDANCE_CLEARANCE)
+		[% } %]
+		Goal [%= g.name %] = new Goal("[%= g.name %]", mission, gt, gp, Optional.empty(), ga);
+		mission.addGoal("[%= g.name %]", [%= g.name %]);
+	[% } %]
+	
+	[%} %] [* end Mission loop *]
+	return Mission;
 	}
 }

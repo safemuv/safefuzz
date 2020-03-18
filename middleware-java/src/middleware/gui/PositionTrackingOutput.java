@@ -16,6 +16,10 @@ import atlasdsl.SensorCover;
 import atlassharedclasses.Region;
 
 public class PositionTrackingOutput extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	HashMap<Region,Image> regionImages = new LinkedHashMap<Region, Image>();
 	GUITest gui;
 	
@@ -26,7 +30,6 @@ public class PositionTrackingOutput extends JPanel {
 	
 	public void paint(Graphics g) {
 		System.out.println("paint");
-		//super.paintComponents(g);
 		Graphics2D g2d = (Graphics2D)g;
 		g.drawRect(0, 0, 100, 100);
 		g.drawLine(0, 0, 100, 100);
@@ -74,7 +77,6 @@ public class PositionTrackingOutput extends JPanel {
     	System.out.println("updateGoalInfo");
     	HashMap<Goal,JLabel> goalLabels = gui.getGoalLabels();
     	
-    	// Render all the coverage goals visually - need to see the
     	for (Goal g : goalLabels.keySet()) {
     		GoalAction ga = g.getAction();
     		if (ga instanceof SensorCover) {
