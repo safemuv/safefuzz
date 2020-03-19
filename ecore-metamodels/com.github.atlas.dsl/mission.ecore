@@ -31,8 +31,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" upperBound="-1"
-        eType="ecore:EEnum components.ecore#//SensorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" eType="ecore:EEnum components.ecore#//SensorType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="collective" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
@@ -52,7 +51,7 @@
         eType="ecore:EClass components.ecore#//Robot"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalTemporalConstraints">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="dependenecies" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="#//Goal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="earliestStartTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="latestFinishTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>

@@ -1,5 +1,6 @@
 package atlasdsl;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class StaticParticipants extends GoalParticipants {
@@ -11,6 +12,10 @@ public class StaticParticipants extends GoalParticipants {
 	
 	public StaticParticipants(List<Robot> participants) {
 		this.participants = participants;
+	}
+	
+	public StaticParticipants(Robot [] participants, Mission mission) {
+		this.participants = Arrays.asList(participants);
 	}
 	
 	public StaticParticipants(Spec mt, Mission mission) {

@@ -25,6 +25,6 @@ public class RelativeParticipants extends GoalParticipants {
 	
 	public List<Robot> getParticipants() {
 		return new ArrayList<Robot>();
-		// TODO: compute this dynamically from the looking up the parent's goal results
+		// TODO: compute this dynamically
 	}
 }

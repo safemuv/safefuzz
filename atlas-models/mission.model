@@ -57,15 +57,11 @@
   <goals xmi:id="_KRG8UGLxEeqq3sXki_lbNA" name="primarySensorSweep">
     <requirements xmi:id="_elAAgGjJEeq-efG7rPArYw" latestFinishTime="10000.0"/>
     <participants xsi:type="mis:StaticParticipants" xmi:id="_EZNQoGL4Eeqq3sXki_lbNA" participants="_X_gCIGL1Eeqq3sXki_lbNA _CBQMsGL2Eeqq3sXki_lbNA _P7SeoGL2Eeqq3sXki_lbNA _JlG_sGL2Eeqq3sXki_lbNA"/>
-    <action xsi:type="mis:SensorCover" xmi:id="_eKmPQGLxEeqq3sXki_lbNA" density="10.0" samplesPerUnit="1" collective="true">
-      <sensortype>SONAR</sensortype>
-    </action>
+    <action xsi:type="mis:SensorCover" xmi:id="_eKmPQGLxEeqq3sXki_lbNA" density="10.0" samplesPerUnit="1" collective="true"/>
   </goals>
   <goals xmi:id="_UIsBQGL4Eeqq3sXki_lbNA" name="verifyDetections">
     <requirements xmi:id="_hN6jgGjJEeq-efG7rPArYw" latestFinishTime="10000.0"/>
-    <participants xsi:type="mis:RelativeParticipants" xmi:id="_l6rcMGL4Eeqq3sXki_lbNA"/>
-    <action xsi:type="mis:SensorCover" xmi:id="_7AU60GOpEeqqTLuy_cTgiA" density="10.0" samplesPerUnit="3">
-      <sensortype>SONAR</sensortype>
-    </action>
+    <participants xsi:type="mis:RelativeParticipants" xmi:id="_l6rcMGL4Eeqq3sXki_lbNA" parentGoal="_KRG8UGLxEeqq3sXki_lbNA" staticRobots="_fatMQGLxEeqq3sXki_lbNA" fieldName="UUV_DETECTION_NAME" participantLimit="1"/>
+    <action xsi:type="mis:SensorCover" xmi:id="_7AU60GOpEeqqTLuy_cTgiA" density="10.0" samplesPerUnit="3"/>
   </goals>
 </mis:Mission>

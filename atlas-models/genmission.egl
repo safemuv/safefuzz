@@ -1,75 +1,106 @@
 [% out.setContentType("Java"); %]
+package atlasdsl.loader;
+
+import atlasdsl.*;
+import atlassharedclasses.*;
+import java.util.Optional;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() {
 		
 	[% for (m in M!Mission.allInstances()) { %]
+	[% var robotNum = 0; %]
 	Mission mission = new Mission();
 	[% for (r in m.robots) { %]
-		Robot r = new Robot("[%= r.name %]");
+		[% var robotName = "r" + r.name; %]
+		Robot [%= robotName %] = new Robot("[%= r.name %]");
 		[* Extract the necessary properties for r
-		// Set the properies for r *]
+		Set the properies for r *]
 		[% for (p in r.componentProperties) { %]
 			[% if (p.isKindOf(IntProperty)) { %]
-		r.setIntComponentProperty("[%= p.name %]", [%= p.value %]);
+		[%= robotName %].setIntComponentProperty("[%= p.name %]", [%= p.value %]);
 			[% } %]
 			[% if (p.isKindOf(DoubleProperty)) { %]
-		r.setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
+		[%= robotName %].setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
 			[% } %]
 			[% if (p.isKindOf(PointProperty)) { %]
-		r.setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
+		[%= robotName %].setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
 		[* TODO: better way of doing point conversion here? *]
 			[% } %]
 		[% } %]
 		
 		[* Add subcomponents to the robots *]
 		[% for (subc in r.subcomponents) { %]
+			[% var subCNum = 0; %]
+			[% var sensorID = "s" + robotName + "_" + subCNum++; %] 
 		[* TODO: need to handle other types of subcomponents, actuators etc *]
 			[% if (subc.isKindOf(Sensor)) { %]
-		Sensor s = new Sensor(SensorType.[%= subc.type %]);
+		Sensor [%= sensorID %] = new Sensor(SensorType.[%= subc.type %]);
 				[* set subcomponent properties here *]
 				[% for (sp in subc.componentProperties) { %]
 				[* TODO: factor this property pocessing into a subroutine call? *]
 					[% if (sp.isKindOf(IntProperty)) { %]
-		s.setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
+		[%= sensorID %].setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
 					[% } %]
 					[% if (sp.isKindOf(DoubleProperty)) { %]
-		s.setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
+		[%= sensorID %].setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
 					[% } %]
 				[% } %]
-		r.addSubcomponent(s);
+		[%= robotName %].addSubcomponent([%= sensorID %]);
 			[% } %]
 		[% } %]
 			
 		[* Add the robot to the mission *]
-		mission.addRobot(r);
+		mission.addRobot([%= robotName %]);
 	[%} %] [* end Robot loop *]
 	
+	[% var goalnum = 0; %]
 	[% for (g in m.goals) { %]
+		[% goalnum++; %]
+		[% var goalName = g.name; %]
 		[% if (g.participants.isKindOf(StaticParticipants)) { %]
-		GoalParticipants gp = new StaticParticipants([%= g.participants.participants %], mission);
+			[% var allNames = ""; %]
+			[% for (participantRobot in g.participants.participants) { %]
+				[% allNames = allNames + "r" + participantRobot.name + ","; %] 
+			[% } %]
+			[* Strip off the final comma from the end of it *]
+			[% var allNamesLen = allNames.length(); %]
+			[% allNames = allNames.substring(0, allNamesLen-1); %]
+		
+		Robot [] grp[%= goalnum%] = {[%= allNames %]}; 
+		GoalParticipants gp[%= goalName %] = new StaticParticipants(grp[%= goalnum %], mission);
 		[% } %]
+		
 		[% if (g.participants.isKindOf(RelativeParticipants)) { %]
-		GoalParticipants gp = new RelativeParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission);
+		[% var parentGoal = g.participants.parentGoal.name; 
+		   var logicOps = g.participants.setOperation;
+		   var fieldName = g.participants.fieldName;
+		   var limit = g.participants.participantLimit;
+		%]
+	
+		[* RelativeParticipants(Goal parentGoal, StaticParticipants staticRobots, String fieldName, LogicOps operation, int participantLimit) { *]
+		GoalParticipants gp[%= goalnum %] = new RelativeParticipants([%= parentGoal %], (StaticParticipants)gp[%= parentGoal %], "[%= fieldName %]", RelativeParticipants.LogicOps.[%= logicOps %], [%= limit %]);
 		[% } %]
 		
 		[% var goalTemp = g.requirements; %]
 		[* TODO: handle goal dependencies here *]
-		GoalTemporalConstraints gt = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
+		GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
 		
 		[* Goal actions *]
 		[% var goalAction = g.action; %]
 		[% if (goalAction.isKindOf(SensorCover)) { %]
-		GoalAction ga = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], [%= goalAction.sensortype %]);
+		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %]);
 		[% } %]
-		[% if (goalAction.isKindOf(Avoid)) { %]
-		GoalAction ga = new AvoidOthers(AVOIDANCE_CLEARANCE)
+		
+		[% if (goalAction.isKindOf(AvoidOthers)) { %]
+		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
-		Goal [%= g.name %] = new Goal("[%= g.name %]", mission, gt, gp, Optional.empty(), ga);
+		
+		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalnum %], Optional.empty(), ga[%= goalnum %]);
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
 	[% } %]
 	
 	[%} %] [* end Mission loop *]
-	return Mission;
+	return mission;
 	}
 }

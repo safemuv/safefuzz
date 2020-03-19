@@ -59,7 +59,7 @@ class AvoidOthers extends GoalAction {
 class SensorCover extends Cover {
 	attr double density;
 	attr int samplesPerUnit;
-	attr Atlas.SensorType[*] sensortype;
+	attr Atlas.SensorType sensortype;
 	attr boolean collective;
 }
 
