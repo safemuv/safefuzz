@@ -73,10 +73,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, gt1, gp1, Optional.empty(), ga1);
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
- 
- 
- 
- 
 		
 		Robot [] grp2 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpprimarySensorSweep = new StaticParticipants(grp2, mission);

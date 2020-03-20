@@ -57,10 +57,6 @@ public class Goal {
 		action.setup(core, mission, this);
 	}
 
-//	public void addSubgoal(Goal sg) {
-//		subgoals.add(sg);
-//	}
-
 	public Optional<GoalRegion> getGoalRegion() {
 		return region;
 	}
@@ -75,5 +71,16 @@ public class Goal {
 	
 	public GoalAction getAction() {
 		return action;
+	}
+
+	public boolean allDependenciesComplete() {
+		List<Goal> deps = timingReqs.getDependencies();
+		boolean complete = true;
+		for (Goal g : deps) { 
+			if (!(status == GoalStatus.COMPLETED)) {
+				complete = false;
+			}
+		}
+		return complete;
 	}
 }

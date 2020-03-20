@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,10 @@ import faultgen.FaultGenerator;
 public class GUITest {  
 	
 	JFrame f;
+	JPanel robotsPanel = new JPanel();
+	JPanel goalsPanel = new JPanel();
+	JPanel faultPanel = new JPanel();
+	
     HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
     HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
     
@@ -66,7 +71,7 @@ public class GUITest {
 	    	JLabel l = new JLabel(robotLabelText(r));
 	    	l.setVisible(true);
 	    	robotLabels.put(r, l);
-	    	f.add(l);
+	    	robotsPanel.add(l);
     	}
     	
     	Map <String,Goal> goals = mission.getGoalsAndNames();
@@ -76,7 +81,7 @@ public class GUITest {
 			JLabel l = new JLabel(goalLabelText(g));
 			l.setVisible(true);
 			goalLabels.put(g, l);
-			f.add(l);
+			goalsPanel.add(l);
 		}
     }
     
@@ -126,11 +131,17 @@ public class GUITest {
     	ptPanel.setSize(100,100);
     	ptPanel.setVisible(true);
     	
-    	f.setLayout(new BorderLayout());
+    	f.setLayout(new GridLayout(2,2));
     	setupLabels();
+    	
+    	f.add(robotsPanel);
+    	f.add(goalsPanel);
+    	f.add(faultPanel);
               
     	JButton injectButton=new JButton("Inject Overspeed Fault");//creating instance of JButton  
+    	JTextField faultLen = new JTextField("Fault Length");
     	injectButton.setBounds(130,100,100, 40);
+
     	
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
     	
@@ -139,9 +150,11 @@ public class GUITest {
     	robotChoice.addActionListener(robotChoiceListener);
         injectButton.addActionListener(buttonListener);
 
-    	f.add(robotChoice);
-    	f.add(injectButton);
-    	f.getContentPane().add(ptPanel, BorderLayout.CENTER);
+        faultPanel.add(robotChoice);
+    	faultPanel.add(injectButton);
+    	faultPanel.add(faultLen);
+    	//f.getContentPane().add(ptPanel, BorderLayout.CENTER);
+    	f.getContentPane().add(ptPanel);
     	
     	f.setSize(500,500);
     	f.setVisible(true);

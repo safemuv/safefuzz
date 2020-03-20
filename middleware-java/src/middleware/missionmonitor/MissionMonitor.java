@@ -66,7 +66,10 @@ public class MissionMonitor {
 					}
 					
 					if (gr.getResultStatus() == GoalResultStatus.COMPLETED) {
-						g.setStatus(GoalStatus.COMPLETED);
+						// Only set a goal to completed if all the parent goals 
+						// have also completed.
+						if (g.allDependenciesComplete())
+							g.setStatus(GoalStatus.COMPLETED);
 					}
 					
 					if (gr.getResultStatus() == GoalResultStatus.CONTINUE) {

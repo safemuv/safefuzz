@@ -29,4 +29,8 @@ public class GoalTemporalConstraints {
 	public boolean isLate(double timeNow) {
 		return (timeNow > finishTime);
 	}
+
+	public List<Goal> getDependencies() {
+		return dependencies;
+	}
 }

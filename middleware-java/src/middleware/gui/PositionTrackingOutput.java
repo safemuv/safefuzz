@@ -2,6 +2,8 @@ package middleware.gui;
 
 import java.awt.*;
 import java.awt.image.MemoryImageSource;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,6 +28,22 @@ public class PositionTrackingOutput extends JPanel {
 	public PositionTrackingOutput(GUITest gui) {
 		this.gui = gui;
 		this.setSize(100,100);
+	}
+	
+	public void logCounts(Region r, int[][] counts, int x, int y) {
+		String filename = "region-pt-debug-" + r.hashCode();
+		try {
+			FileWriter fw = new FileWriter(filename);
+			for (int i = 0; i < x; i++) {
+				for (int j = 0; j < y; j++) {
+					fw.append(counts[i][j] + "  "); 
+				}
+				fw.append("\n");
+			}
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void paint(Graphics g) {
@@ -57,7 +75,7 @@ public class PositionTrackingOutput extends JPanel {
     	        .flatMapToInt(Arrays::stream)
     	        .toArray();
     	
-    	System.out.println(pixels);
+    	logCounts(r, counts, x, y);
     	
     	MemoryImageSource ms = new MemoryImageSource(x,y,pixels,0,x);
     	Image img = Toolkit.getDefaultToolkit().createImage(ms);
