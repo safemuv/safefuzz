@@ -66,7 +66,7 @@ public class CollectiveInt {
 
 	public void init() {
 		System.out.println();
-		DSLLoader l = new StubDSLLoader();
+		DSLLoader l = new GeneratedDSLLoader();
 		try {
 			mission = l.loadMission();
 			API.setCIReference(this);

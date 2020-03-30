@@ -7,4 +7,8 @@ public class ConversionFailed extends Exception {
 	public ConversionFailed(ConversionFailedReason r) {
 		this.reason = r;
 	}
+	
+	public ConversionFailedReason getReason() {
+		return reason;
+	}
 }

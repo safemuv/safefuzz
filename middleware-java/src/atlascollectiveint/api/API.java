@@ -27,6 +27,7 @@ public class API {
 		for (double y = bottom; y < top; y+=2*stepSize) {
 			coords.add(new Point(left,y));
 			coords.add(new Point(right,y));
+			// TODO: check we're not exceeding region boundary here - is 2X incorrect?
 			coords.add(new Point(right,y+stepSize));
 			coords.add(new Point(left,y+stepSize));
 		}

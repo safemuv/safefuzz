@@ -16,13 +16,6 @@ public class CustomCollectiveInt extends CollectiveInt {
     			  ComputerCIshoreside.SONARDetectionHook(d_o.get(), d.getRobotName());
     		  }
     	  }
-    if (a.getContentsClass() == GPSPositionReading.class) {
-    		  Optional<GPSPositionReading> r_o = a.getGPSPositionReading();
-    		  if (r_o.isPresent()) {
-    			  GPSPositionReading r = r_o.get();
-    			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY(), r.getRobotName());
-    		  }
-    	  }
   }
 
   public void init() {

@@ -29,5 +29,9 @@ class Polygon extends Point {
 	val Point[3..*] points;
 }
 
+class EnvironmentalObject extends Point {
+	attr boolean isHazard;
+	attr int label;
+}
 
 

@@ -6,13 +6,13 @@ import atlassharedclasses.Point;
 import atlassharedclasses.Region;
 
 public class StubDSLLoader implements DSLLoader {
-	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, double startSpeed, double maxSpeed, int sensorRange, double detectionProb, double falsePos, double falseNeg) {
+	public static void addRobotWithSonar(Mission m, String robotName, Point startLocation, double startSpeed, double maxSpeed, double sensorRange, double detectionProb, double falsePos, double falseNeg) {
 		Robot r = new Robot(robotName);
 		Sensor sonar = new Sensor(SensorType.SONAR);
 		Sensor gps = new Sensor(SensorType.GPS_POSITION);
 		
-		sonar.setIntComponentProperty("sensorRange", sensorRange);
-		sonar.setIntComponentProperty("swathWidth", sensorRange);
+		sonar.setDoubleComponentProperty("sensorRange", sensorRange);
+		sonar.setDoubleComponentProperty("swathWidth", sensorRange);
 		sonar.setDoubleComponentProperty("detectionProb", detectionProb);
 		sonar.setDoubleComponentProperty("falsePos", falsePos);
 		sonar.setDoubleComponentProperty("falseNeg", falseNeg);
@@ -34,10 +34,10 @@ public class StubDSLLoader implements DSLLoader {
 		Computer shoreside = new Computer("shoreside");
 		mission.addComputer(shoreside);
 		
-		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0),  1.0,  5.0, 50, 0.99, 0.01, 0.05);
-		addRobotWithSonar(mission, "henry", new Point(40.0, 0.0), 1.5,  5.0, 25, 0.99, 0.03, 0.07);
-		addRobotWithSonar(mission, "frank", new Point(60.0, 0.0), 1.0,  5.0, 10, 0.99, 0.03, 0.02);
-		addRobotWithSonar(mission, "ella",  new Point(80.0, 0.0), 0.75, 5.0, 50, 0.99, 0.03, 0.06);
+		addRobotWithSonar(mission, "gilda", new Point(0.0, 0.0),  1.0,  5.0, 50.0, 0.99, 0.01, 0.05);
+		addRobotWithSonar(mission, "henry", new Point(40.0, 0.0), 1.5,  5.0, 25.0, 0.99, 0.03, 0.07);
+		addRobotWithSonar(mission, "frank", new Point(60.0, 0.0), 1.0,  5.0, 10.0, 0.99, 0.03, 0.02);
+		addRobotWithSonar(mission, "ella",  new Point(80.0, 0.0), 0.75, 5.0, 50.0, 0.99, 0.03, 0.06);
 		
 		// Add objects to the environment - hazards/benign objects for the robots to find
 		mission.addObject(new EnvironmentalObject(new Point(10.0, -115.0), false));

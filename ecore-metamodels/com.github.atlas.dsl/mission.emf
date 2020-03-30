@@ -103,4 +103,5 @@ class Mission {
 	val Atlas.Computer[*] computers;
 	val Atlas.Region[*] regions;
 	val Goal[*] goals;
+	val Atlas.EnvironmentalObject[*] objects;
 }

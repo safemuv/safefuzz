@@ -8,9 +8,7 @@ import atlascarsgenerator.MOOSCodeGen;
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
-import atlasdsl.loader.DSLLoadFailed;
-import atlasdsl.loader.DSLLoader;
-import atlasdsl.loader.StubDSLLoader;
+import atlasdsl.loader.*;
 import carsmapping.CARSSimulation;
 
 public class TestMapping {
@@ -33,7 +31,7 @@ public class TestMapping {
 	
 	// Test function that represents a robot added with a sonar sensor
 	public static void testCodeGeneration2(String code_dir) throws DSLLoadFailed {
-		DSLLoader dslloader = new StubDSLLoader();
+		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission = dslloader.loadMission();
 		
 		MOOSCodeGen gen = new MOOSCodeGen(mission);

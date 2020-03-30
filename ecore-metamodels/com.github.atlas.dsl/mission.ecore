@@ -74,5 +74,7 @@
         eType="ecore:EClass region.ecore#//Region" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="goals" upperBound="-1"
         eType="#//Goal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="ecore:EClass region.ecore#//EnvironmentalObject" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

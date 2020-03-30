@@ -136,6 +136,7 @@ No, lets use individual ports/producers/consumer links for the different vehicle
 
 * TODO Heterogeneity in the case study
 
+
 ** DONE Different speeds expressed in the DSL - encode the speed within startSpeed and maxSpeed properties
    CLOSED: [2020-02-24 Mon 18:31]
 ** DONE Different sensor capabilities - different swath widths for the sensors
@@ -151,12 +152,17 @@ No, lets use individual ports/producers/consumer links for the different vehicle
 *** Rotate the non-verifying robots around the fault areas after a time interval
 *** Use a timer to re-assign the verifying robots after a specific time has expired
 
+* TODO Work after week off
 ** DONE Dependency tracking for the goals - avoid verifySweep going to COMPLETED status before custom regions have been setup
    CLOSED: [2020-03-30 Mon 14:52]
 ** DONE EGL generated mission code in GeneratedDSLLoader should include the dependencies between goals (is it in the model?)
    CLOSED: [2020-03-30 Mon 16:11]
 ** DONE Fix residual errors in GeneratedDSLLoader - use goal name instead of num for participants
    CLOSED: [2020-03-30 Mon 17:00]
+** DONE Regions/Environmental objects needs to be included in EGL and metamodel
+   CLOSED: [2020-03-30 Mon 23:45]
+** DONE GeneratedDSLLoader now working - features can be edited in model editor and generated as MOOS code
+   CLOSED: [2020-03-30 Mon 23:46]
 ** TODO Fix the sensor coverage region tracking timing semantics - should only count one reading per time interval - not each mission monitor polling
 ** TODO Vehicle trajectories are not set up properly by the CI - is exceeding the boundaries of the regions - fix
 ** TODO CI should use a timing limit for verification - activity stack per robot - they return to their original action after?

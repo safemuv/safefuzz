@@ -11,6 +11,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% for (m in M!Mission.allInstances()) { %]
 	[% var robotNum = 0; %]
 	Mission mission = new Mission();
+	
+	[% for (c in m.computers) { %]
+	[% var computerNum = 0; %]
+	Computer c[%= computerNum %] = new Computer("[%= c.name %]");
+	mission.addComputer(c[%= computerNum %]);
+	[% } %]
+	
 	[% for (r in m.robots) { %]
 		[% var robotName = "r" + r.name; %]
 		Robot [%= robotName %] = new Robot("[%= r.name %]");
@@ -111,6 +118,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% } %]
 		
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
+	[% } %]
+	
+	[% for (o in m.objects) { %]
+	mission.addObject(new EnvironmentalObject([%= o.label %], new Point([%= o.x %],[%= o.y %],[%= o.z %]), [%= o.isHazard %]));
 	[% } %]
 	
 	[%} %] [* end Mission loop *]

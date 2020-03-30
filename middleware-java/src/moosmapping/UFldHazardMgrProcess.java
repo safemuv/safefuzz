@@ -1,7 +1,7 @@
 package moosmapping;
 
 public class UFldHazardMgrProcess extends MOOSProcess {
-	public UFldHazardMgrProcess(MOOSCommunity parent, String robotName, int swathWidth, double detectionProb) {
+	public UFldHazardMgrProcess(MOOSCommunity parent, String robotName, double swathWidth, double detectionProb) {
 		super("uFldHazardMgr", parent);
 		setProperty("swath_width", swathWidth);
 		setProperty("sensor_pd", detectionProb);

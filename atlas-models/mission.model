@@ -64,4 +64,8 @@
     <participants xsi:type="mis:RelativeParticipants" xmi:id="_l6rcMGL4Eeqq3sXki_lbNA" parentGoal="_KRG8UGLxEeqq3sXki_lbNA" staticRobots="_fatMQGLxEeqq3sXki_lbNA" fieldName="UUV_DETECTION_NAME" participantLimit="1"/>
     <action xsi:type="mis:SensorCover" xmi:id="_7AU60GOpEeqqTLuy_cTgiA" density="10.0" samplesPerUnit="3"/>
   </goals>
+  <objects xmi:id="_WoyuYHLOEeq1TfrlguzImQ" x="10.0" y="-115.0" label="1"/>
+  <objects xmi:id="_q_C10HLOEeq1TfrlguzImQ" x="140.0" y="-65.0" isHazard="true" label="2"/>
+  <objects xmi:id="_1RLM8HLOEeq1TfrlguzImQ" x="135.0" y="-160.0"/>
+  <objects xmi:id="_81gEkHLPEeq1TfrlguzImQ" x="50.0" y="50.0" label="4"/>
 </mis:Mission>

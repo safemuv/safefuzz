@@ -8,6 +8,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
 		
 	Mission mission = new Mission();
+	
+	Computer c0 = new Computer("shoreside");
+	mission.addComputer(c0);
+	
 		Robot rella = new Robot("ella");
 		rella.setPointComponentProperty("startLocation", new Point(30.0,20.0,0.0));
 		rella.setDoubleComponentProperty("startSpeed", 1.0);
@@ -18,7 +22,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srella_1.setDoubleComponentProperty("swathWidth", 25.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
-			 
+			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
 		rfrank.setPointComponentProperty("startLocation", new Point(60.0,0.0,0.0));
@@ -114,6 +118,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		}
 		
 		mission.addGoal("verifyDetections", verifyDetections);
+	
+	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
+	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
+	mission.addObject(new EnvironmentalObject(0, new Point(135.0,-160.0,0.0), false));
+	mission.addObject(new EnvironmentalObject(4, new Point(50.0,50.0,0.0), false));
 	
 	return mission;
 	}

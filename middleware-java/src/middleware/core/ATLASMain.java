@@ -1,15 +1,13 @@
 package middleware.core;
 
 import atlasdsl.Mission;
-import atlasdsl.loader.DSLLoadFailed;
-import atlasdsl.loader.DSLLoader;
-import atlasdsl.loader.StubDSLLoader;
+import atlasdsl.loader.*;
 
 public class ATLASMain {
 	public static void main(String [] args) {
 		// On initialisation, read the DSL concrete syntax file and construct the appropriate ATLAS objects here
 		// TODO: replace with reference to GenerateDSLLoader once the menu editor completed
-		DSLLoader dslloader = new StubDSLLoader();
+		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();

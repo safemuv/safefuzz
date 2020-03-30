@@ -6,14 +6,12 @@ import atlascarsgenerator.MOOSCodeGen;
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
-import atlasdsl.loader.DSLLoadFailed;
-import atlasdsl.loader.DSLLoader;
-import atlasdsl.loader.StubDSLLoader;
+import atlasdsl.loader.*;
 import carsmapping.CARSSimulation;
 
 public class GenMOOSCode {
 	public static void testCodeGenerationMOOS(String code_dir) throws DSLLoadFailed {
-		DSLLoader dslloader = new StubDSLLoader();
+		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
 		mission = dslloader.loadMission();
 
@@ -29,7 +27,8 @@ public class GenMOOSCode {
 			javaCI.generateCollectiveIntFiles("src/atlascollectiveint/custom", CollectiveIntGenTypes.ALL_COMPUTERS);
 			
 		} catch (ConversionFailed cf) {
-			System.out.println("ERROR: DSL conversion to MOOS representation failed");
+			
+			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
 		}
 	}
 	
