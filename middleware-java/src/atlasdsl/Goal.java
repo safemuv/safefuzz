@@ -17,7 +17,6 @@ public class Goal {
 	private GoalAction action;
 	private List<GoalResult> results = new ArrayList<GoalResult>();
 	
-	
 	public Goal(String name, Mission mission, GoalTemporalConstraints timingReqs, GoalParticipants participants, Optional<GoalRegion> region, GoalAction action) {
 		this.name = name;
 		this.mission = mission;
@@ -30,6 +29,7 @@ public class Goal {
 	private GoalStatus status = GoalStatus.PENDING;
 	
 	public boolean isReady(double timeNow) {
+		System.out.println("isReady on " + name);
 		return timingReqs.isReady(timeNow);
 	}
 	
@@ -72,12 +72,21 @@ public class Goal {
 	public GoalAction getAction() {
 		return action;
 	}
+	
+	public void setDependencyOn(Goal dep) throws SelfDependencyError {
+		if (this == dep) {
+			throw new SelfDependencyError(this, dep);
+		} else {
+			System.out.println("setting dependency from " + this.name + " on " + dep.name);
+			this.timingReqs.addDependency(dep);
+		}
+	}
 
 	public boolean allDependenciesComplete() {
 		List<Goal> deps = timingReqs.getDependencies();
 		boolean complete = true;
 		for (Goal g : deps) { 
-			if (!(status == GoalStatus.COMPLETED)) {
+			if (!(g.status == GoalStatus.COMPLETED)) {
 				complete = false;
 			}
 		}

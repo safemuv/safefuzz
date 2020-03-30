@@ -28,7 +28,7 @@ public class StubDSLLoader implements DSLLoader {
 		m.addRobot(r);
 	}
 	
-	public Mission loadMission() {
+	public Mission loadMission() throws DSLLoadFailed {
 		// TODO: get these consistent with the values in the report object diagram
 		Mission mission = new Mission();
 		Computer shoreside = new Computer("shoreside");
@@ -52,18 +52,29 @@ public class StubDSLLoader implements DSLLoader {
 		
 		StaticGoalRegion staticRegion = new StaticGoalRegion(fullRegion);
 		
-		GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		//GoalTemporalConstraints entireMissionTime = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		// FIXED: cannot reference this same object for specifying the mission time in multiple goals.
+		// Since GoalTemporalConstraints internally tracks dependencies too. Therefore, this will lead to
+		// dependency cycles. This will not occur when using EGL to generate, since we generate a fresh
+		// GoalTemporalConstraints object for each goal
+		
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
-		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, entireMissionTime, allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, entireMissionTime, allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR));
+		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		double verifySweepRange = 30.0;
 		
 		// Need a concept of the goal action on the sensor detection and deactivation
-		Goal verifySensor = new Goal("verifySensor", mission, entireMissionTime, rp, 
+		Goal verifySensor = new Goal("verifySensor", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), rp, 
 				Optional.of(new DynamicGoalRegion(primarySensorSweep, "detectionCoord", verifySweepRange)),
 				new SensorCover(20.0, 1, SensorType.SONAR));
+		
+		try {
+			verifySensor.setDependencyOn(primarySensorSweep);
+		} catch (SelfDependencyError e) {
+			throw new DSLLoadFailed();
+		}
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
 		mission.addGoal("primarySensorSweep", primarySensorSweep);

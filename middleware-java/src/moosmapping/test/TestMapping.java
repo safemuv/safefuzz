@@ -8,6 +8,7 @@ import atlascarsgenerator.MOOSCodeGen;
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
+import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.StubDSLLoader;
 import carsmapping.CARSSimulation;
@@ -31,7 +32,7 @@ public class TestMapping {
 	}
 	
 	// Test function that represents a robot added with a sonar sensor
-	public static void testCodeGeneration2(String code_dir) {
+	public static void testCodeGeneration2(String code_dir) throws DSLLoadFailed {
 		DSLLoader dslloader = new StubDSLLoader();
 		Mission mission = dslloader.loadMission();
 		
@@ -62,6 +63,12 @@ public class TestMapping {
 		
 		outputCodeDir = System.getProperty("user.dir") + "/codegen-test2/";
 		System.out.println("Generating code from DSL in: " + outputCodeDir);
-		testCodeGeneration2(outputCodeDir);
+		
+		try {
+			testCodeGeneration2(outputCodeDir);
+		} catch (DSLLoadFailed e) {
+			System.out.println("DSL loading configuration error");
+			e.printStackTrace();
+		}
 	}
 }

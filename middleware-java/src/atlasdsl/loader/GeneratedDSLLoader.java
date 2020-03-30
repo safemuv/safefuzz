@@ -5,7 +5,7 @@ import atlassharedclasses.*;
 import java.util.Optional;
 
 public class GeneratedDSLLoader implements DSLLoader {
-	public Mission loadMission() {
+	public Mission loadMission() throws DSLLoadFailed {
 		
 	Mission mission = new Mission();
 		Robot rella = new Robot("ella");
@@ -18,7 +18,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srella_1.setDoubleComponentProperty("swathWidth", 25.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
-			
+			 
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
 		rfrank.setPointComponentProperty("startLocation", new Point(60.0,0.0,0.0));
@@ -66,16 +66,24 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalParticipants gpmutualAvoidance = new StaticParticipants(grp1, mission);
 		
 		
+		
 		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 10000.0);
 		
 		
 		GoalAction ga1 = new AvoidOthers(3.0);
 		
-		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, gt1, gp1, Optional.empty(), ga1);
+		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, gt1, gpmutualAvoidance, Optional.empty(), ga1);
+		
+		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
+ 
+ 
+ 
+ 
 		
 		Robot [] grp2 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpprimarySensorSweep = new StaticParticipants(grp2, mission);
+		
 		
 		
 		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 10000.0);
@@ -83,18 +91,28 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR);
 		
 		
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gp2, Optional.empty(), ga2);
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.empty(), ga2);
+		
+		
 		mission.addGoal("primarySensorSweep", primarySensorSweep);
 		
 	
-		GoalParticipants gp3 = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_DETECTION_NAME", RelativeParticipants.LogicOps.ADD, 1);
+		GoalParticipants gpverifyDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_DETECTION_NAME", RelativeParticipants.LogicOps.ADD, 1);
+		
 		
 		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 10000.0);
 		
 		GoalAction ga3 = new SensorCover(10.0, 3, SensorType.SONAR);
 		
 		
-		Goal verifyDetections = new Goal("verifyDetections", mission, gt3, gp3, Optional.empty(), ga3);
+		Goal verifyDetections = new Goal("verifyDetections", mission, gt3, gpverifyDetections, Optional.empty(), ga3);
+		
+		try {
+			verifyDetections.setDependencyOn(primarySensorSweep);
+		} catch (SelfDependencyError e) {
+			throw new DSLLoadFailed();
+		}
+		
 		mission.addGoal("verifyDetections", verifyDetections);
 	
 	return mission;

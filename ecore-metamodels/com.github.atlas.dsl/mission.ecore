@@ -52,7 +52,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalTemporalConstraints">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
-        eType="#//Goal" containment="true"/>
+        eType="#//Goal"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="earliestStartTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="latestFinishTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>

@@ -48,48 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src
+CMAKE_SOURCE_DIR = /home/jharbin/academic/atlas/atlas-middleware/custom-moos/ivp/src/atlasDBWatch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src
+CMAKE_BINARY_DIR = /home/jharbin/academic/atlas/atlas-middleware/custom-moos/ivp/src/atlasDBWatch
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -102,38 +67,27 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
 
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(CMAKE_COMMAND) -E cmake_progress_start /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src/CMakeFiles /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src/atlasDBWatch/CMakeFiles/progress.marks
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f CMakeFiles/Makefile2 atlasDBWatch/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jharbin/academic/atlas/atlas-middleware/custom-moos/ivp/src/atlasDBWatch/CMakeFiles /home/jharbin/academic/atlas/atlas-middleware/custom-moos/ivp/src/atlasDBWatch/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jharbin/academic/atlas/atlas-middleware/custom-moos/ivp/src/atlasDBWatch/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f CMakeFiles/Makefile2 atlasDBWatch/clean
+	$(MAKE) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -143,168 +97,106 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f CMakeFiles/Makefile2 atlasDBWatch/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f CMakeFiles/Makefile2 atlasDBWatch/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/rule:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f CMakeFiles/Makefile2 atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/rule
-.PHONY : atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/rule
+#=============================================================================
+# Target rules for targets named ATLASDBWatch
 
-# Convenience name for target.
-ATLASDBWatch: atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/rule
-
+# Build rule for target.
+ATLASDBWatch: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ATLASDBWatch
 .PHONY : ATLASDBWatch
 
 # fast build rule for target.
 ATLASDBWatch/fast:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/build
 .PHONY : ATLASDBWatch/fast
 
-ATLASDBWatch_App.o: ATLASDBWatch_App.cpp.o
-
+# target to build an object file
+ATLASDBWatch_App.o:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.o
 .PHONY : ATLASDBWatch_App.o
 
-# target to build an object file
-ATLASDBWatch_App.cpp.o:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.cpp.o
-.PHONY : ATLASDBWatch_App.cpp.o
-
-ATLASDBWatch_App.i: ATLASDBWatch_App.cpp.i
-
+# target to preprocess a source file
+ATLASDBWatch_App.i:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.i
 .PHONY : ATLASDBWatch_App.i
 
-# target to preprocess a source file
-ATLASDBWatch_App.cpp.i:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.cpp.i
-.PHONY : ATLASDBWatch_App.cpp.i
-
-ATLASDBWatch_App.s: ATLASDBWatch_App.cpp.s
-
+# target to generate assembly for a file
+ATLASDBWatch_App.s:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.s
 .PHONY : ATLASDBWatch_App.s
 
-# target to generate assembly for a file
-ATLASDBWatch_App.cpp.s:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDBWatch_App.cpp.s
-.PHONY : ATLASDBWatch_App.cpp.s
-
-ATLASDB_Info.o: ATLASDB_Info.cpp.o
-
+# target to build an object file
+ATLASDB_Info.o:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.o
 .PHONY : ATLASDB_Info.o
 
-# target to build an object file
-ATLASDB_Info.cpp.o:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.cpp.o
-.PHONY : ATLASDB_Info.cpp.o
-
-ATLASDB_Info.i: ATLASDB_Info.cpp.i
-
+# target to preprocess a source file
+ATLASDB_Info.i:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.i
 .PHONY : ATLASDB_Info.i
 
-# target to preprocess a source file
-ATLASDB_Info.cpp.i:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.cpp.i
-.PHONY : ATLASDB_Info.cpp.i
-
-ATLASDB_Info.s: ATLASDB_Info.cpp.s
-
+# target to generate assembly for a file
+ATLASDB_Info.s:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.s
 .PHONY : ATLASDB_Info.s
 
-# target to generate assembly for a file
-ATLASDB_Info.cpp.s:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASDB_Info.cpp.s
-.PHONY : ATLASDB_Info.cpp.s
-
-ATLASLinkApp.o: ATLASLinkApp.cpp.o
-
+# target to build an object file
+ATLASLinkApp.o:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.o
 .PHONY : ATLASLinkApp.o
 
-# target to build an object file
-ATLASLinkApp.cpp.o:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.cpp.o
-.PHONY : ATLASLinkApp.cpp.o
-
-ATLASLinkApp.i: ATLASLinkApp.cpp.i
-
+# target to preprocess a source file
+ATLASLinkApp.i:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.i
 .PHONY : ATLASLinkApp.i
 
-# target to preprocess a source file
-ATLASLinkApp.cpp.i:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.cpp.i
-.PHONY : ATLASLinkApp.cpp.i
-
-ATLASLinkApp.s: ATLASLinkApp.cpp.s
-
+# target to generate assembly for a file
+ATLASLinkApp.s:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.s
 .PHONY : ATLASLinkApp.s
 
-# target to generate assembly for a file
-ATLASLinkApp.cpp.s:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLinkApp.cpp.s
-.PHONY : ATLASLinkApp.cpp.s
-
-ATLASLog.o: ATLASLog.cpp.o
-
+# target to build an object file
+ATLASLog.o:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLog.o
 .PHONY : ATLASLog.o
 
-# target to build an object file
-ATLASLog.cpp.o:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLog.cpp.o
-.PHONY : ATLASLog.cpp.o
-
-ATLASLog.i: ATLASLog.cpp.i
-
+# target to preprocess a source file
+ATLASLog.i:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLog.i
 .PHONY : ATLASLog.i
 
-# target to preprocess a source file
-ATLASLog.cpp.i:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLog.cpp.i
-.PHONY : ATLASLog.cpp.i
-
-ATLASLog.s: ATLASLog.cpp.s
-
+# target to generate assembly for a file
+ATLASLog.s:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/ATLASLog.s
 .PHONY : ATLASLog.s
 
-# target to generate assembly for a file
-ATLASLog.cpp.s:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/ATLASLog.cpp.s
-.PHONY : ATLASLog.cpp.s
-
-main.o: main.cpp.o
-
+# target to build an object file
+main.o:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/main.o
 .PHONY : main.o
 
-# target to build an object file
-main.cpp.o:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
+# target to preprocess a source file
+main.i:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/main.i
 .PHONY : main.i
 
-# target to preprocess a source file
-main.cpp.i:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
 # target to generate assembly for a file
-main.cpp.s:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(MAKE) -f atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/build.make atlasDBWatch/CMakeFiles/ATLASDBWatch.dir/main.cpp.s
-.PHONY : main.cpp.s
+main.s:
+	$(MAKE) -f CMakeFiles/ATLASDBWatch.dir/build.make CMakeFiles/ATLASDBWatch.dir/main.s
+.PHONY : main.s
 
 # Help Target
 help:
@@ -312,13 +204,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
-	@echo "... install/local"
-	@echo "... edit_cache"
-	@echo "... ATLASDBWatch"
 	@echo "... rebuild_cache"
-	@echo "... list_install_components"
-	@echo "... install"
+	@echo "... ATLASDBWatch"
+	@echo "... edit_cache"
 	@echo "... ATLASDBWatch_App.o"
 	@echo "... ATLASDBWatch_App.i"
 	@echo "... ATLASDBWatch_App.s"
@@ -345,6 +233,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/jharbin/academic/atlas/git/atlas-undersea/moos-ivp/ivp/src && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

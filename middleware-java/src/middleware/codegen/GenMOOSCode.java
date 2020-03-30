@@ -6,14 +6,17 @@ import atlascarsgenerator.MOOSCodeGen;
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
+import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.StubDSLLoader;
 import carsmapping.CARSSimulation;
 
 public class GenMOOSCode {
-	public static void testCodeGenerationMOOS(String code_dir) {
+	public static void testCodeGenerationMOOS(String code_dir) throws DSLLoadFailed {
 		DSLLoader dslloader = new StubDSLLoader();
-		Mission mission = dslloader.loadMission();
+		Mission mission;
+		mission = dslloader.loadMission();
+
 		
 		MOOSCodeGen gen = new MOOSCodeGen(mission);
 		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);		
@@ -33,7 +36,14 @@ public class GenMOOSCode {
 	public static void main(String [] args) {
 		String outputCodeDir = System.getProperty("user.dir") + "/moos-sim/";
 		System.out.println("Generating code from DSL in: " + outputCodeDir);
-		testCodeGenerationMOOS(outputCodeDir);
+		try {
+			testCodeGenerationMOOS(outputCodeDir);
+		}
+		catch (DSLLoadFailed e) {
+			System.out.println("DSL loading configuration error");
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 }
 

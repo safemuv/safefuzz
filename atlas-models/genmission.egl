@@ -6,7 +6,7 @@ import atlassharedclasses.*;
 import java.util.Optional;
 
 public class GeneratedDSLLoader implements DSLLoader {
-	public Mission loadMission() {
+	public Mission loadMission() throws DSLLoadFailed {
 		
 	[% for (m in M!Mission.allInstances()) { %]
 	[% var robotNum = 0; %]
@@ -79,11 +79,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		%]
 	
 		[* RelativeParticipants(Goal parentGoal, StaticParticipants staticRobots, String fieldName, LogicOps operation, int participantLimit) { *]
-		GoalParticipants gp[%= goalnum %] = new RelativeParticipants([%= parentGoal %], (StaticParticipants)gp[%= parentGoal %], "[%= fieldName %]", RelativeParticipants.LogicOps.[%= logicOps %], [%= limit %]);
+		GoalParticipants gp[%= goalName %] = new RelativeParticipants([%= parentGoal %], (StaticParticipants)gp[%= parentGoal %], "[%= fieldName %]", RelativeParticipants.LogicOps.[%= logicOps %], [%= limit %]);
 		[% } %]
 		
 		[% var goalTemp = g.requirements; %]
-		[* TODO: handle goal dependencies here *]
+		
 		GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
 		
 		[* Goal actions *]
@@ -96,7 +96,20 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
 		
-		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalnum %], Optional.empty(), ga[%= goalnum %]);
+		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], Optional.empty(), ga[%= goalnum %]);
+		
+		[* Register goal dependencies - need an exception handler around this if any dependencies
+		   are inserted *]
+		[% if (g.requirements.dependencies.size > 0) { %]
+		try {
+			[% for (dep in g.requirements.dependencies) { %]
+			[%= goalName %].setDependencyOn([%= dep.name %]);
+			[% } %]
+		} catch (SelfDependencyError e) {
+			throw new DSLLoadFailed();
+		}
+		[% } %]
+		
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
 	[% } %]
 	

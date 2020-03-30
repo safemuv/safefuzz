@@ -13,4 +13,3 @@ class Message {
 	val Atlas.Component[2] to;
 	val MessageField[1..*] fields;
 }
-

@@ -67,28 +67,32 @@ public class CollectiveInt {
 	public void init() {
 		System.out.println();
 		DSLLoader l = new StubDSLLoader();
-		mission = l.loadMission();
-		
-		API.setCIReference(this);
-		
-		// TODO: fix, this port is hardcoded to just listen to shoreside
-		consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
-		
-		List<String> producerNames = new ArrayList<String>();
-		
-		for (Robot r : mission.getAllRobots()) {
-			producerNames.add(r.getName());
-		}
-		
-		for (Computer c : mission.getAllComputers()) {
-			producerNames.add(c.getName());
-		}
-		
-		for (String name : producerNames) {
-			CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMiddlewareFromCI(name), mission);
-			moosProducers.put(name, p);
-			API.registerNewProducer(name, p);
-			p.setupConnection();
+		try {
+			mission = l.loadMission();
+			API.setCIReference(this);
+			
+			// TODO: fix, this port is hardcoded to just listen to shoreside
+			consumer = new CollectiveIntActiveMQConsumer(PortMappings.portForCI("shoreside"), mission, this);
+			
+			List<String> producerNames = new ArrayList<String>();
+			
+			for (Robot r : mission.getAllRobots()) {
+				producerNames.add(r.getName());
+			}
+			
+			for (Computer c : mission.getAllComputers()) {
+				producerNames.add(c.getName());
+			}
+			
+			for (String name : producerNames) {
+				CollectiveIntActiveMQProducer p = new CollectiveIntActiveMQProducer(PortMappings.portForMiddlewareFromCI(name), mission);
+				moosProducers.put(name, p);
+				API.registerNewProducer(name, p);
+				p.setupConnection();
+			}
+		} catch (DSLLoadFailed e) {
+			System.out.println("CollectiveInt.init - loadMission failed - DSL configuration error");
+			e.printStackTrace();
 		}
 	}
 	

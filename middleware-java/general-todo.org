@@ -150,3 +150,16 @@ No, lets use individual ports/producers/consumer links for the different vehicle
 ** TODO The mission definition - faults will mean that the robots don't find anything in that area
 *** Rotate the non-verifying robots around the fault areas after a time interval
 *** Use a timer to re-assign the verifying robots after a specific time has expired
+
+** DONE Dependency tracking for the goals - avoid verifySweep going to COMPLETED status before custom regions have been setup
+   CLOSED: [2020-03-30 Mon 14:52]
+** DONE EGL generated mission code in GeneratedDSLLoader should include the dependencies between goals (is it in the model?)
+   CLOSED: [2020-03-30 Mon 16:11]
+** DONE Fix residual errors in GeneratedDSLLoader - use goal name instead of num for participants
+   CLOSED: [2020-03-30 Mon 17:00]
+** TODO Fix the sensor coverage region tracking timing semantics - should only count one reading per time interval - not each mission monitor polling
+** TODO Vehicle trajectories are not set up properly by the CI - is exceeding the boundaries of the regions - fix
+** TODO CI should use a timing limit for verification - activity stack per robot - they return to their original action after?
+** TODO Are the dynamic regions being set up properly for verification goal?
+** TODO Which robot is required to confirm? Dynamic participants need to be set to use a different robot?
+** TODO Expanded fault generations - new fault types, faults from file, automated fault mutations

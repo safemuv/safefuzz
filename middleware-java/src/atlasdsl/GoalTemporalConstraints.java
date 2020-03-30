@@ -19,8 +19,9 @@ public class GoalTemporalConstraints {
 	
 	public boolean isReady(double timeNow) {
 		boolean depsReady = true;
+		
 		for (Goal d : dependencies) {
-			if (!d.isReady(timeNow))
+			if (!(d.isReady(timeNow)))
 				depsReady = false;
 		}
 		return depsReady && (timeNow >= startTime) && (timeNow <= finishTime); 

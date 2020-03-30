@@ -47,22 +47,22 @@ public class PositionTrackingOutput extends JPanel {
 	}
 	
 	public void paint(Graphics g) {
-		System.out.println("paint");
+		//System.out.println("paint");
 		Graphics2D g2d = (Graphics2D)g;
 		g.drawRect(0, 0, 100, 100);
 		g.drawLine(0, 0, 100, 100);
 		
     	for (Map.Entry<Region, Image> me :regionImages.entrySet()) {
-    		System.out.println("Image");
+    		//System.out.println("Image");
     		Image img = me.getValue();
-    		System.out.println(img.getWidth(null) + "-" + img.getHeight(null));
+    		//System.out.println(img.getWidth(null) + "-" + img.getHeight(null));
     		g2d.drawImage(img, 0, 0, null);
     	}
 	}	
 	
     private void updateRegionImage(Region r, Image img) {
     	regionImages.put(r, img);
-    	System.out.println("updateRegionImage - count " + regionImages.size());
+    	//System.out.println("updateRegionImage - count " + regionImages.size());
     }
     
     private void renderPositionTracker(Region r, PositionTracker pt) {
@@ -92,7 +92,7 @@ public class PositionTrackingOutput extends JPanel {
     }
     
     public void updateGoalInfo() {
-    	System.out.println("updateGoalInfo");
+    	//System.out.println("updateGoalInfo");
     	HashMap<Goal,JLabel> goalLabels = gui.getGoalLabels();
     	
     	for (Goal g : goalLabels.keySet()) {
