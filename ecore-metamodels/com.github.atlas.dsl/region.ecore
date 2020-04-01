@@ -8,22 +8,22 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Rectangle" eSuperTypes="#//Point">
+  <eClassifiers xsi:type="ecore:EClass" name="Rectangle" eSuperTypes="#//Region">
     <eStructuralFeatures xsi:type="ecore:EReference" name="corner1" lowerBound="1"
         eType="#//Point" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="corner2" lowerBound="1"
         eType="#//Point" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Circle" eSuperTypes="#//Point">
+  <eClassifiers xsi:type="ecore:EClass" name="Circle" eSuperTypes="#//Region">
     <eStructuralFeatures xsi:type="ecore:EReference" name="centre" lowerBound="1"
         eType="#//Point" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//Point">
+  <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//Region">
     <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="2"
         upperBound="-1" eType="#//Point" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Polygon" eSuperTypes="#//Point">
+  <eClassifiers xsi:type="ecore:EClass" name="Polygon" eSuperTypes="#//Region">
     <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="3"
         upperBound="-1" eType="#//Point" containment="true"/>
   </eClassifiers>

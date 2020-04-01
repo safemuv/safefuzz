@@ -56,6 +56,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="earliestStartTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="latestFinishTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalRegion" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticGoalRegion" eSuperTypes="#//GoalRegion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" eType="ecore:EClass region.ecore#//Rectangle"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicGoalRegion" eSuperTypes="#//GoalRegion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relativeToGoal" lowerBound="1"
+        eType="#//Goal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeToGoalField" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeRange" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Goal">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requirements" eType="#//GoalTemporalConstraints"
@@ -63,6 +74,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="participants" eType="#//GoalParticipants"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//GoalAction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="#//GoalRegion"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mission">

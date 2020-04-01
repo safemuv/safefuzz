@@ -1,4 +1,5 @@
 [% out.setContentType("Java"); %]
+
 package atlasdsl.loader;
 
 import atlasdsl.*;
@@ -103,7 +104,20 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
 		
-		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], Optional.empty(), ga[%= goalnum %]);
+		[% var goalRegion = g.region; %]
+		[% if (goalRegion.isKindOf(StaticGoalRegion)) { %]
+		[% var sr = goalRegion.staticRegion; %]
+		GoalRegion gr[%= goalName %] = new StaticGoalRegion(
+			new Region(new Point([%= sr.corner1.x %], [%= sr.corner1.y %], [%= sr.corner1.z %]),
+			           new Point([%= sr.corner2.x %], [%= sr.corner2.y %], [%= sr.corner2.z %])));
+		[% } %]
+		
+		[% if (goalRegion.isKindOf(DynamicGoalRegion)) { %]
+		[% var parentGoal = goalRegion.relativeToGoal; %]
+		GoalRegion gr[%= goalName %] = new DynamicGoalRegion([%= parentGoal.name %], "[%= goalRegion.relativeToGoalField %]", [%= goalRegion.relativeRange %]);
+		[% } %]
+		
+		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], Optional.of(gr[%= goalName %]), ga[%= goalnum %]);
 		
 		[* Register goal dependencies - need an exception handler around this if any dependencies
 		   are inserted *]

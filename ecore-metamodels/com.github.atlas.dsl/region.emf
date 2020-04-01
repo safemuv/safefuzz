@@ -11,21 +11,21 @@ class Point {
 	attr double z;
 }
 
-class Rectangle extends Point {
+class Rectangle extends Region {
 	val Point[1] corner1;
-	val Point[1] corner2; 	
+	val Point[1] corner2;
 }
 
-class Circle extends Point {
+class Circle extends Region {
 	val Point[1] centre;
 	attr double radius;
 }
 
-class Line extends Point {
+class Line extends Region {
 	val Point[2..*] points;
 }
 
-class Polygon extends Point {
+class Polygon extends Region {
 	val Point[3..*] points;
 }
 

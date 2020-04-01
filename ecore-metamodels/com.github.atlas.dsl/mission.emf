@@ -90,12 +90,27 @@ class GoalTemporalConstraints {
 	attr double latestFinishTime;
 }
 
+abstract class GoalRegion {
+	
+}
+
+class StaticGoalRegion extends GoalRegion {
+// Atlas.Region does not work here - why?
+	val Atlas.Rectangle staticRegion;
+}
+
+class DynamicGoalRegion extends GoalRegion {
+	ref Goal[1] relativeToGoal;
+	attr String relativeToGoalField;
+	attr double relativeRange;
+}
+
 class Goal {
 	attr String name;
 	val GoalTemporalConstraints requirements;
 	val GoalParticipants participants;
-	//val Goal[*] subgoals;
 	val GoalAction action;
+	val GoalRegion[0..1] region;
 }
 
 class Mission {

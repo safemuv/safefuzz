@@ -1,3 +1,4 @@
+
 package atlasdsl.loader;
 
 import atlasdsl.*;
@@ -13,53 +14,33 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addComputer(c0);
 	
 		Robot rella = new Robot("ella");
-		rella.setPointComponentProperty("startLocation", new Point(30.0,20.0,0.0));
-		rella.setDoubleComponentProperty("startSpeed", 1.0);
-		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
-		srella_1.setDoubleComponentProperty("swathWidth", 25.0);
-		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
-		rfrank.setPointComponentProperty("startLocation", new Point(60.0,0.0,0.0));
-		rfrank.setDoubleComponentProperty("startSpeed", 2.0);
-		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		
  
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
-		srfrank_1.setDoubleComponentProperty("swathWidth", 50.0);
-		srfrank_1.setDoubleComponentProperty("detectionProb", 0.98);
 		rfrank.addSubcomponent(srfrank_1);
 			
 		mission.addRobot(rfrank);
-		Robot rhenry = new Robot("henry");
-		rhenry.setPointComponentProperty("startLocation", new Point(90.0,0.0,0.0));
-		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
-		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
-		
- 
-		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
-		srhenry_1.setDoubleComponentProperty("swathWidth", 50.0);
-		srhenry_1.setDoubleComponentProperty("detectionProb", 0.98);
-		rhenry.addSubcomponent(srhenry_1);
-			
-		mission.addRobot(rhenry);
 		Robot rgilda = new Robot("gilda");
-		rgilda.setPointComponentProperty("startLocation", new Point(120.0,0.0,0.0));
-		rgilda.setDoubleComponentProperty("startSpeed", 1.6);
-		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
-		srgilda_1.setDoubleComponentProperty("swathWidth", 12.0);
-		srgilda_1.setDoubleComponentProperty("detectionProb", 0.98);
 		rgilda.addSubcomponent(srgilda_1);
 			
 		mission.addRobot(rgilda);
+		Robot rhenry = new Robot("henry");
+		
+ 
+		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
+		rhenry.addSubcomponent(srhenry_1);
+			
+		mission.addRobot(rhenry);
 	
  
  
@@ -71,12 +52,17 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 10000.0);
+		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 1000.0);
 		
 		
-		GoalAction ga1 = new AvoidOthers(3.0);
+		GoalAction ga1 = new AvoidOthers(30.0);
 		
-		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, gt1, gpmutualAvoidance, Optional.empty(), ga1);
+		GoalRegion grmutualAvoidance = new StaticGoalRegion(
+			new Region(new Point(0.0, 0.0, 0.0),
+			           new Point(1000.0, 1000.0, 0.0)));
+		
+		
+		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, gt1, gpmutualAvoidance, Optional.of(grmutualAvoidance), ga1);
 		
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
@@ -90,39 +76,38 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 10000.0);
+		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 1000.0);
 		
 		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR);
 		
 		
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.empty(), ga2);
+		GoalRegion grprimarySensorSweep = new StaticGoalRegion(
+			new Region(new Point(0.0, 0.0, 0.0),
+			           new Point(1000.0, 1000.0, 0.0)));
+		
+		
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.of(grprimarySensorSweep), ga2);
 		
 		
 		mission.addGoal("primarySensorSweep", primarySensorSweep);
 		
 	
-		GoalParticipants gpverifyDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_DETECTION_NAME", RelativeParticipants.LogicOps.ADD, 1);
+		GoalParticipants gpverifySensorDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		
 		
-		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 10000.0);
+		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1000.0);
 		
-		GoalAction ga3 = new SensorCover(10.0, 3, SensorType.SONAR);
+		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR);
 		
 		
-		Goal verifyDetections = new Goal("verifyDetections", mission, gt3, gpverifyDetections, Optional.empty(), ga3);
 		
-		try {
-			verifyDetections.setDependencyOn(primarySensorSweep);
-		} catch (SelfDependencyError e) {
-			throw new DSLLoadFailed();
-		}
+		GoalRegion grverifySensorDetections = new DynamicGoalRegion(primarySensorSweep, "UUV_DETECTION_COORD", 30.0);
 		
-		mission.addGoal("verifyDetections", verifyDetections);
+		Goal verifySensorDetections = new Goal("verifySensorDetections", mission, gt3, gpverifySensorDetections, Optional.of(grverifySensorDetections), ga3);
+		
+		
+		mission.addGoal("verifySensorDetections", verifySensorDetections);
 	
-	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
-	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
-	mission.addObject(new EnvironmentalObject(0, new Point(135.0,-160.0,0.0), false));
-	mission.addObject(new EnvironmentalObject(4, new Point(50.0,50.0,0.0), false));
 	
 	return mission;
 	}

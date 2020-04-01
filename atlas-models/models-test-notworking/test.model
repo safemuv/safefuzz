@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mis:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:geo="http://www.github.com/jrharbin-york/atlas-middleware/dsl/geometric" xmlns:mis="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmi:id="_AdlR8HP2Eeqc6cv9mBHIKw">
+  <regions xsi:type="geo:Rectangle" xmi:id="_PGZ8gHP2Eeqc6cv9mBHIKw">
+    <corner1 xmi:id="_RduZMHP2Eeqc6cv9mBHIKw"/>
+    <corner2 xmi:id="_R86PkHP2Eeqc6cv9mBHIKw" x="1000.0" y="1000.0"/>
+  </regions>
+  <goals xmi:id="_LZdwsHP2Eeqc6cv9mBHIKw">
+    <region xsi:type="mis:StaticGoalRegion" xmi:id="_MEwJYHP2Eeqc6cv9mBHIKw" staticRegion="_PGZ8gHP2Eeqc6cv9mBHIKw"/>
+  </goals>
+</mis:Mission>

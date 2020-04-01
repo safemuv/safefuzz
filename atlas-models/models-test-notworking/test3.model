@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mis:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:geo="http://www.github.com/jrharbin-york/atlas-middleware/dsl/geometric" xmlns:mis="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmi:id="_9UIYQHP2Eeqc6cv9mBHIKw">
+  <goals xmi:id="__6FRYHP3Eeqc6cv9mBHIKw">
+    <region xsi:type="mis:StaticGoalRegion" xmi:id="_VbSJAHP4Eeqc6cv9mBHIKw">
+      <staticRegion xsi:type="geo:Rectangle" xmi:id="_WJlZcHP4Eeqc6cv9mBHIKw"/>
+    </region>
+  </goals>
+</mis:Mission>
