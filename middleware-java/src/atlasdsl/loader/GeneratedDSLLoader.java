@@ -14,30 +14,50 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addComputer(c0);
 	
 		Robot rella = new Robot("ella");
+		rella.setPointComponentProperty("startLocation", new Point(0.0,0.0,0.0));
+		rella.setDoubleComponentProperty("maxSpeed", 5.0);
+		rella.setDoubleComponentProperty("startSpeed", 1.0);
 		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
+		srella_1.setDoubleComponentProperty("swathWidth", 10.0);
+		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
+		rfrank.setPointComponentProperty("startLocation", new Point(50.0,0.0,0.0));
+		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
+		rfrank.setDoubleComponentProperty("startSpeed", 1.0);
 		
  
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
+		srfrank_1.setDoubleComponentProperty("swathWidth", 20.0);
+		srfrank_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rfrank.addSubcomponent(srfrank_1);
 			
 		mission.addRobot(rfrank);
 		Robot rgilda = new Robot("gilda");
+		rgilda.setPointComponentProperty("startLocation", new Point(100.0,0.0,0.0));
+		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
+		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
+		srgilda_1.setDoubleComponentProperty("swathWidth", 30.0);
+		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rgilda.addSubcomponent(srgilda_1);
 			
 		mission.addRobot(rgilda);
 		Robot rhenry = new Robot("henry");
+		rhenry.setPointComponentProperty("startLocation", new Point(150.0,0.0,0.0));
+		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
+		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
+		srhenry_1.setDoubleComponentProperty("swathWidth", 12.0);
+		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rhenry.addSubcomponent(srhenry_1);
 			
 		mission.addRobot(rhenry);
@@ -108,6 +128,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("verifySensorDetections", verifySensorDetections);
 	
+	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
+	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
+	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
 	
 	return mission;
 	}
