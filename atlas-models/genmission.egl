@@ -1,8 +1,8 @@
 [% out.setContentType("Java"); %]
-
 package atlasdsl.loader;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
 
@@ -134,8 +134,47 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
 	[% } %]
 	
+	[* Add environmental objects *]
 	[% for (o in m.objects) { %]
 	mission.addObject(new EnvironmentalObject([%= o.label %], new Point([%= o.x %],[%= o.y %],[%= o.z %]), [%= o.isHazard %]));
+	[% } %]
+	
+	[* Add messages - naming schema msg[name] *]
+	
+	[* Add the fault information *]
+	[% var faultNum = 0; %]
+	[% for (f in m.faults) { %]
+	[% faultNum++; %]
+	[% if (f.impact.isKindOf(DelayMessage)) { %]
+	FaultImpact fi[%= faultNum %] = new DelayMessage(msg[%= f.impact.affectedMessage.name %], [%= f.impact.delayLength %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(DeleteMessage)) { %]
+	FaultImpact fi[%= faultNum %] = new DeleteMessage(msg[%= f.impact.affectedMessage.name %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(MotionFault)) { %]
+	[* TODO: need to lookup a component name in these DSL objects here... *]
+	FaultImpact fi[%= faultNum %] = new MotionFault(msg[% f.impact.affectedComponent; %]);
+	[* should verify that the component is a motion source - (Robot r, String affectedProperty, String newValue) *]
+	[% } %]
+	
+	[% if (f.impact.isKindOf(EnergyLoss)) { %]
+	[* TODO: need to lookup a component name in these DSL objects here... *]
+	FaultImpact fi[%= faultNum %] = new EnergyLoss(msg[% f.impact.affectedComponent; %], [%= f.impact.fixedEnergyLoss %], [%= f.impact.powerDraw %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(DisabledComponent)) { %]
+	[* TODO: need to lookup a component name in these DSL objects here... *]
+	FaultImpact fi[%= faultNum %] = new DisabledComponent([% f.impact.affectedComponent; %]);
+	[% } %]
+	
+	[% var ft = f.affectedTime; %]
+	FaultTimeProperties ft[%= faultNum %] = new FaultTimeProperties([%= ft.faultStart %], [%= ft.faultLength %], [%= ft.faultPeriod %], [%= ft.faultRepeatCount %]); 
+	
+	[* TODO: fault regions are not currently expressed here *]
+	Fault f[%= faultNum %] = new Fault(fi[%= faultNum %], Optional.empty(), ft[%= faultNum %]);
+	mission.addFault(f[%= faultNum %]);
 	[% } %]
 	
 	[%} %] [* end Mission loop *]

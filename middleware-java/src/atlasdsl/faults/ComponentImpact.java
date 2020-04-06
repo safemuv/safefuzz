@@ -4,8 +4,11 @@ import atlasdsl.*;
 import middleware.core.ATLASCore;
 
 public class ComponentImpact extends FaultImpact {
-	private Component affectedComponent;
-	private Component changeProperty;
+	protected Component affectedComponent;
+
+	public ComponentImpact(Component c) {
+		this.affectedComponent = c;
+	}
 
 	public Object applyImpact(Object orig) {
 		return orig;

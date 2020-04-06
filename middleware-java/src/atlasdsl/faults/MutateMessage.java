@@ -8,6 +8,10 @@ import atlasdsl.*;
 import middleware.core.ATLASCore;
 
 public class MutateMessage extends MessageImpact {
+	public MutateMessage(Message affectedMessage) {
+		super(affectedMessage);
+	}
+
 	private MessageField affectedField;
 	private Optional<SubFieldSpec> subfield;
 	private MessageChange newValue;

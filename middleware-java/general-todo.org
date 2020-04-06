@@ -161,7 +161,8 @@ No, lets use individual ports/producers/consumer links for the different vehicle
    CLOSED: [2020-03-30 Mon 17:00]
 ** DONE Regions/Environmental objects needs to be included in EGL and metamodel
    CLOSED: [2020-03-30 Mon 23:45]
-** DONE GeneratedDSLLoader now working - features can be edited in model editor and generated as MOOS code
+** DONE GeneratedDSLLoader now working - features can be edited in model editor 
+and generated as MOOS code
    CLOSED: [2020-03-30 Mon 23:46]
 ** TODO Fix the sensor coverage region tracking timing semantics - should only count one reading per time interval - not each mission monitor polling
 ** TODO Vehicle trajectories are not set up properly by the CI - is exceeding the boundaries of the regions - fix
@@ -169,3 +170,65 @@ No, lets use individual ports/producers/consumer links for the different vehicle
 ** TODO Are the dynamic regions being set up properly for verification goal?
 ** TODO Which robot is required to confirm? Dynamic participants need to be set to use a different robot?
 ** TODO Expanded fault generations - new fault types, faults from file, automated fault mutations
+
+
+* Notes for meeting on Thursday 2nd Apr
+** Got the menu-based scenario generator working (it produces a Java definition of the DSL objects)
+*** I had some problems with it generating invalid code when there was a goal with a static region that contained an abstract class
+reference to a Region. it would produce models that could not be re-opened with
+the menu-based editor. I worked around it temporarily restricting the regions used internal to 
+Rectangles (since the low-level code only contains Rectangles).
+** Then can generate MOOS scenarios corresponding to these menu-based definitions and run it (this is currently working)
+** I have produced an EGL code generator which produces the core MOOS middleware interfacing according to the
+object definition. e.g. if it contains a sensor, it will produce code to translate these into low-level middleware interactions. 
+There may still be some MOOS components to sort out 
+Mentions the bits of the code that need modifications
+** I have the mission monitor working for goals Avoidance and SensorCover
+*** The mission monitor contains the DSL objects representing the Goals and iterates over them on each update step, checking 
+*** There was a problem with MOOS in which it internally does not respect the avoidance goal if the vehicles are placed in a 
+*** Need to add some debugging, particularly for the behaviour and logging
+** TODO Next steps - to work on the fault generator, and particularly the fault mutation
+** TODO Me: Start an Overleaf outline of MODELS paper
+** TODO Next meeting in 2 weeks, keep in touch via email or individual comms
+*** Want to submit full paper - 8th May - 10 pages and 2 more for references
+*** Mention workshop paper - 4 page paper
+*** Track: Practice and Innovation
+*** Structure - should resemble the things described in the report
+General overview - Simulation testing and model-based testing in general
+Model driven techniques can accelerate development
+Overview of the DSL and the object diagrams - methodology - show what the users need to input
+Software development
+Will be much stronger with both Gazebo and MOOS - at least with instructions on how to extend to other simulators
+Evaluation: showing finding faults in a simple scenario for the system
+Related work
+Conclusions and future work
+
+Web page for the project - video of the project in operation
+
+Generate hooks for fault injection - with the message information
+Random mutation of existing faults
+Evaluation and logging of the success
+
+DSL contains e.g. reliability parameter
+Core fixed, flexible behaviour or fixed faults
+*** Should we run seperate instances of the simulator, middleware, rather than mutating faults on the fly?
+Should be able to build a totally headless run
+MOOSDB logger will give information on this
+** Seperate questions for the ATLAS report
+** I have made some updates to the online Overleaf questions in response to DSTL replies
+** TODO Do we have to update the report date too?
+** TODO Check with Nikos - conditions of supply of the software?
+** TODO Upload a new version of the virtual machine
+
+** Can get extension for 1 month - which will correspond to date of the MODELS conference 
+Integration with Gazebo would be important for impact - work out the mapping for these concepts and check that
+these are valid
+
+* Structure for the fault generation
+** DONE Emfatic description for the fault layer - provides general description of permissable faults
+** TODO EGL translation into GeneratedDSL java loaders
+** TODO Check the consistency between my Java classes and the EGL
+** TODO Fault specialiser - Flat-file format (or model translation) that provides specific info for one test
+*** e.g. provides exact time of faults
+** TODO Fault generator reads both of these
+** TODO Fault mutation (generates offline or up-front one of the specifics)

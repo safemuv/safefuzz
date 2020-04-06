@@ -1,7 +1,7 @@
-
 package atlasdsl.loader;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
 
@@ -23,6 +23,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srella_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
+ 
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
@@ -131,6 +132,18 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
 	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
 	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
+	
+	
+	
+	
+	
+	
+	FaultImpact fi1 = new DisabledComponent();
+	
+	FaultTimeProperties ft1 = new FaultTimeProperties(10.0, 100.0, 0.0, 0); 
+	
+	Fault f1 = new Fault(fi1, Optional.empty(), ft1);
+	mission.addFault(f1);
 	
 	return mission;
 	}

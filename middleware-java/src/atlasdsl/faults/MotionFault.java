@@ -3,12 +3,11 @@ import atlasdsl.*;
 import middleware.core.ATLASCore;
 
 public class MotionFault extends ComponentImpact {
-	private Robot affectedRobot;
 	private String affectedProperty;
 	private String newValue;
 	
-	public MotionFault(Robot r, String affectedProperty, String newValue) {
-		this.affectedRobot = r;
+	public MotionFault(Component c, String affectedProperty, String newValue) {
+		super(c);
 		this.affectedProperty = affectedProperty;
 		this.newValue = newValue;
 	}
@@ -22,6 +21,7 @@ public class MotionFault extends ComponentImpact {
 		// as the main effect
 		
 		// Somehow need some translation here
-		core.sendToCARS(affectedRobot, affectedProperty, newValue);
+		// TODO: sendTOCARS should be using generic Component here - not a robot - lookup host robot?
+		core.sendToCARS((Robot)affectedComponent, affectedProperty, newValue);
 	}
 }

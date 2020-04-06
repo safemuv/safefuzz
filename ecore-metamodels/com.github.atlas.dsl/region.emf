@@ -1,4 +1,4 @@
-@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/geometric", prefix="geo")
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/region", prefix="atlas")
 package Atlas;
 
 abstract class Region {

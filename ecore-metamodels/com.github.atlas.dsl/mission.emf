@@ -1,8 +1,10 @@
-@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission", prefix="mis")
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission", prefix="atlas")
 package Atlas;
 
-import "platform:/resource/com.github.atlas.dsl/components.ecore";
-import "platform:/resource/com.github.atlas.dsl/region.ecore";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults";
 
 class GoalResultField {
 	attr String name;
@@ -119,4 +121,6 @@ class Mission {
 	val Atlas.Region[*] regions;
 	val Goal[*] goals;
 	val Atlas.EnvironmentalObject[*] objects;
+	val Atlas.Message[*] messages;
+	val Atlas.Fault[*] faults;
 }

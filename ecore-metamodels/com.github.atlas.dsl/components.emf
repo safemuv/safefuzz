@@ -1,7 +1,7 @@
-@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components", prefix="cpt")
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components", prefix="atlas")
 package Atlas;
 
-import "platform:/resource/com.github.atlas.dsl/region.ecore";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
 
 class Model {
  val Component[*] components;
@@ -60,7 +60,6 @@ enum ActuatorType {
 class Sensor extends Subcomponent {
  attr SensorType type;
  attr String[1..*] detections;
- attr String test;
 }
 
 class Actuator extends Subcomponent {
@@ -73,9 +72,10 @@ class ProcessingUnit extends Subcomponent {
 }
 
 class MotionSource extends Subcomponent {
- attr double maxSpeed;
- attr double energyRate;
- attr double energyPerDistance;
+ 	attr double maxSpeed;
+ 	attr double energyRate;
+ 	attr double energyPerDistance;
+ 	attr String[0..*] params;
 }
 
 abstract class EnergyResource extends Subcomponent {

@@ -1,5 +1,9 @@
 package atlasdsl.faults;
 
-public class DisabledComponent extends ComponentImpact {
+import atlasdsl.Component;
 
+public class DisabledComponent extends ComponentImpact {
+	public DisabledComponent(Component c) {
+		super(c);
+	}
 }

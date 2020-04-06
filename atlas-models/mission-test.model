@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ASCII"?>
+<mis:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:flt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmlns:mis="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
+  <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="ella">
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
+      <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_QVLBcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
+    <subcomponents xsi:type="cpt:Sensor" xmi:id="_l8itIHP-Eeqc6cv9mBHIKw">
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_pBGIoHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_4QN-kHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+    </subcomponents>
+  </robots>
+  <robots xmi:id="_gx4mIHP-Eeqc6cv9mBHIKw" name="frank">
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_C4ey0HQREeqc6cv9mBHIKw" name="startLocation">
+      <value xmi:id="_G0D3kHQREeqc6cv9mBHIKw" x="50.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_UhIrkHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_VG2AsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
+    <subcomponents xsi:type="cpt:Sensor" xmi:id="_manJMHP-Eeqc6cv9mBHIKw">
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_q_mcsHQREeqc6cv9mBHIKw" name="swathWidth" value="20.0"/>
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_6xuSAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+    </subcomponents>
+  </robots>
+  <robots xmi:id="_hNarkHP-Eeqc6cv9mBHIKw" name="gilda">
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_FOiEMHQREeqc6cv9mBHIKw" name="startLocation">
+      <value xmi:id="_IfdpcHQREeqc6cv9mBHIKw" x="100.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
+    <subcomponents xsi:type="cpt:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+    </subcomponents>
+  </robots>
+  <robots xmi:id="_hkfHwHP-Eeqc6cv9mBHIKw" name="henry">
+    <componentProperties xsi:type="cpt:PointProperty" xmi:id="_Jyhz0HQREeqc6cv9mBHIKw" name="startLocation">
+      <value xmi:id="_K6StIHQREeqc6cv9mBHIKw" x="150.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
+    <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="0.75"/>
+    <subcomponents xsi:type="cpt:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="12.0"/>
+      <componentProperties xsi:type="cpt:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+    </subcomponents>
+  </robots>
+  <computers xmi:id="_fXV6wHP-Eeqc6cv9mBHIKw" name="shoreside"/>
+  <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
+    <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1000.0"/>
+    <participants xsi:type="mis:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <action xsi:type="mis:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="30.0"/>
+    <region xsi:type="mis:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
+      <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
+        <corner1 xmi:id="_nGbfoHP5Eeqc6cv9mBHIKw"/>
+        <corner2 xmi:id="_nao1EHP5Eeqc6cv9mBHIKw" x="1000.0" y="1000.0"/>
+      </staticRegion>
+    </region>
+  </goals>
+  <goals xmi:id="_iULp4HP_Eeqc6cv9mBHIKw" name="primarySensorSweep">
+    <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="1000.0"/>
+    <participants xsi:type="mis:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <action xsi:type="mis:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true"/>
+    <region xsi:type="mis:StaticGoalRegion" xmi:id="_kLrXAHP_Eeqc6cv9mBHIKw">
+      <staticRegion xmi:id="_eJ7agHQAEeqc6cv9mBHIKw">
+        <corner1 xmi:id="_f1fkcHQAEeqc6cv9mBHIKw"/>
+        <corner2 xmi:id="_h159AHQAEeqc6cv9mBHIKw" x="1000.0" y="1000.0"/>
+      </staticRegion>
+    </region>
+  </goals>
+  <goals xmi:id="_isDXUHP_Eeqc6cv9mBHIKw" name="verifySensorDetections">
+    <requirements xmi:id="_MLuLsHQEEeqc6cv9mBHIKw" latestFinishTime="1000.0"/>
+    <participants xsi:type="mis:RelativeParticipants" xmi:id="_KVVR0HQEEeqc6cv9mBHIKw" parentGoal="_iULp4HP_Eeqc6cv9mBHIKw" staticRobots="_zbOjAHQCEeqc6cv9mBHIKw" setOperation="SUBTRACT" fieldName="UUV_NAME" participantLimit="1"/>
+    <action xsi:type="mis:SensorCover" xmi:id="_D37MsHQIEeqc6cv9mBHIKw" density="5.0" samplesPerUnit="1"/>
+    <region xsi:type="mis:DynamicGoalRegion" xmi:id="_klx5EHP_Eeqc6cv9mBHIKw" relativeToGoal="_iULp4HP_Eeqc6cv9mBHIKw" relativeToGoalField="UUV_DETECTION_COORD" relativeRange="30.0"/>
+  </goals>
+  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" x="10.0" y="-115.0" label="1"/>
+  <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="140.0" y="-65.0" isHazard="true" label="2"/>
+  <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="135.0" y="-160.0" label="3"/>
+  <faults xmi:id="_oCOy4HgSEeq0SrPz4gl2aA">
+    <impact xsi:type="flt:DisabledComponent" xmi:id="_opQ9sHgSEeq0SrPz4gl2aA" affectedComponent="_gWMvsHP-Eeqc6cv9mBHIKw"/>
+  </faults>
+</mis:Mission>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission"
-    nsPrefix="mis">
+    nsPrefix="atlas">
   <eClassifiers xsi:type="ecore:EClass" name="GoalResultField">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -31,7 +31,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" eType="ecore:EEnum components.ecore#//SensorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" eType="ecore:EEnum http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//SensorType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="collective" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
@@ -48,7 +48,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StaticParticipants" eSuperTypes="#//GoalParticipants">
     <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
-        eType="ecore:EClass components.ecore#//Robot"/>
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//Robot"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalTemporalConstraints">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
@@ -58,7 +58,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalRegion" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="StaticGoalRegion" eSuperTypes="#//GoalRegion">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" eType="ecore:EClass region.ecore#//Rectangle"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Rectangle"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DynamicGoalRegion" eSuperTypes="#//GoalRegion">
@@ -80,14 +80,24 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mission">
     <eStructuralFeatures xsi:type="ecore:EReference" name="robots" upperBound="-1"
-        eType="ecore:EClass components.ecore#//Robot" containment="true"/>
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//Robot"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="computers" upperBound="-1"
-        eType="ecore:EClass components.ecore#//Computer" containment="true"/>
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//Computer"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
-        eType="ecore:EClass region.ecore#//Region" containment="true"/>
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Region"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="goals" upperBound="-1"
         eType="#//Goal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
-        eType="ecore:EClass region.ecore#//EnvironmentalObject" containment="true"/>
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//EnvironmentalObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messages" upperBound="-1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="faults" upperBound="-1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults#//Fault"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -10,14 +10,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import atlasdsl.faults.Fault;
+
 public class Mission {
 	private Map<String,Robot> robots = new LinkedHashMap<String,Robot>();
 	private Map<String,Computer> computers = new LinkedHashMap<String,Computer>();
 	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
 	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
 	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
-	
 	private List<Message> messages = new ArrayList<Message>();
+	private List<Fault> faults = new ArrayList<Fault>();
 	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
@@ -76,6 +78,10 @@ public class Mission {
 	
 	public void addComputer(Computer c) {
 		computers.put(c.name, c);
+	}
+	
+	public void addFault(Fault f) {
+		faults.add(f);
 	}
 
 	public Collection<EnvironmentalObject> getEnvironmentalObjects() {
