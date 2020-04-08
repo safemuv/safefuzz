@@ -84,6 +84,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		// TOOD: log the incoming event here
 		
 		BehaviourCommand ciCmd = event.getCommand();
+		String robotName = event.getRobotName();
 		
 		System.out.println("CIEvent behaviour command class = " + ciCmd.getClass().toString());
 		
@@ -101,16 +102,23 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			List<Point> coordinates = setCmd.getCoordinates();
 
 			// Check for faults impacting the coordinates here
-			List<FaultInstance> fs = core.activeFaultsOfClass(PointMessageChange.class);
+			List<FaultInstance> fs = core.activeFaultsOfClass(MutateMessage.class);
+			
 			List<Point> modifiedCoords = coordinates;
 			for (FaultInstance fi : fs) {
 				Fault f = fi.getFault();
-				modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
-			}
-			
+				FaultImpact fim = f.getImpact();
+				if (fim instanceof MessageImpact) {
+					MessageImpact mim = (MessageImpact)fim;
+					if (mim.matchesComponentTo(robotName)) {
+						modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
+					}
+					// TODO: check is from shoreside? - this encodes assumption that the
+					// CI runs on shoreside						
+				}
+			}			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
-			String robotName = event.getRobotName();
-			String polyUpdate = "polygon=" + pointListToPolyString(coordinates) + ":label," + robotName + "_LOITER";
+			String polyUpdate = "polygon=" + pointListToPolyString(modifiedCoords) + ":label," + robotName + "_LOITER";
 			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
 			sendMOOSUpdate(robotName, "UP_LOITER", polyUpdate);
 		}

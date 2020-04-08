@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults"
     nsPrefix="atlas">
-  <eClassifiers xsi:type="ecore:EClass" name="TimeProperties">
+  <eClassifiers xsi:type="ecore:EClass" name="FaultTimeProperties">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultStart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultPeriod" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
@@ -17,11 +17,18 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delayLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeleteMessage" eSuperTypes="#//MessageImpact"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubFieldSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="randomSelection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldStartNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldRangeLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MutateMessage" eSuperTypes="#//MessageImpact">
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedField" lowerBound="1"
         eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//MessageField"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" lowerBound="1"
         eType="#//MessageChange" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subfieldSpec" eType="#//SubFieldSpec"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageChange" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="IntMessageChange" eSuperTypes="#//MessageChange">
@@ -35,6 +42,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="absoluteValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="incrementValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multFactor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PointMessageChange" eSuperTypes="#//MessageChange">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="absoluteValue" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Point"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maxOffsetValue" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Point"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentImpact" abstract="true" eSuperTypes="#//FaultImpact">
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedComponent" lowerBound="1"
@@ -53,7 +66,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedRegion" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Region"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedTime" lowerBound="1"
-        eType="#//TimeProperties" containment="true"/>
+        eType="#//FaultTimeProperties" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="impact" lowerBound="1"
         eType="#//FaultImpact" containment="true"/>
   </eClassifiers>

@@ -27,6 +27,9 @@ public class Fault {
 
 	public void immediateEffects(ATLASCore core) {
 		impact.immediateEffects(core);
-		System.out.println("Fault.immediateEffects");
+	}
+	
+	public FaultImpact getImpact() {
+		return impact;
 	}
 }

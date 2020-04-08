@@ -77,7 +77,6 @@ public class FaultGenerator {
 	
 	public void injectSpeedFaultNow(double timeLength, String robotName) {
 		Robot r = mission.getRobot(robotName);
-		
 		double startTime = core.getTime();
 		double endTime = startTime + timeLength;
 		FaultImpact fi = new MotionFault(r, "UP_LOITER", "speed=5.0");

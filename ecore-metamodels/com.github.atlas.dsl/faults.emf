@@ -29,10 +29,17 @@ class DeleteMessage extends MessageImpact {
 	
 }
 
+class SubFieldSpec {
+	attr boolean randomSelection;
+	// TODO: change this to allow min or max field numbers here
+	attr int fieldStartNum;
+	attr int fieldRangeLength;
+}
+
 class MutateMessage extends MessageImpact {
 	ref Atlas.MessageField[1] affectedField;
 	val MessageChange[1] newValue;
-// TODO: should support subfields for fault modifications to the coordinate list - see MutateMessage class
+	val SubFieldSpec[0..1] subfieldSpec;
 }
 
 abstract class MessageChange {
@@ -52,6 +59,11 @@ class FloatMessageChange extends MessageChange {
 	attr double absoluteValue;
 	attr double incrementValue;
 	attr double multFactor;
+}
+
+class PointMessageChange extends MessageChange {
+	val Atlas.Point[0..1] absoluteValue;
+	val Atlas.Point[0..1] maxOffsetValue;
 }
 
 abstract class ComponentImpact extends FaultImpact {

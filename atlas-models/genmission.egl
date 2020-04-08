@@ -1,4 +1,7 @@
 [% out.setContentType("Java"); %]
+[* componentLookup is used for resolving the name assigned in the Java
+DSL to everything that is a subclass of component *]
+[% var componentLookup = new Map(); %]
 package atlasdsl.loader;
 
 import atlasdsl.*;
@@ -8,19 +11,22 @@ import java.util.Optional;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-		
 	[% for (m in M!Mission.allInstances()) { %]
-	[% var robotNum = 0; %]
+	[% 	var robotNum = 0; 
+		var computerNum = 0; 
+	%]	
 	Mission mission = new Mission();
 	
 	[% for (c in m.computers) { %]
-	[% var computerNum = 0; %]
-	Computer c[%= computerNum %] = new Computer("[%= c.name %]");
-	mission.addComputer(c[%= computerNum %]);
+	[% var computerName = "c" + computerNum++;	%]
+	Computer [%= computerName %] = new Computer("[%= c.name %]");
+	[% componentLookup.put(c, computerName); %]
+	mission.addComputer([%= computerName %]);
 	[% } %]
 	
 	[% for (r in m.robots) { %]
 		[% var robotName = "r" + r.name; %]
+		[% componentLookup.put(r, robotName); %]
 		Robot [%= robotName %] = new Robot("[%= r.name %]");
 		[* Extract the necessary properties for r
 		Set the properies for r *]
@@ -39,22 +45,26 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		[* Add subcomponents to the robots *]
 		[% for (subc in r.subcomponents) { %]
+		
 			[% var subCNum = 0; %]
-			[% var sensorID = "s" + robotName + "_" + subCNum++; %] 
-		[* TODO: need to handle other types of subcomponents, actuators etc *]
+			[% var subID = "s" + robotName + "_" + subCNum++; %] 
+			[% componentLookup.put(subc, subID); %]
+			
+			[* TODO: should this support recursively structured components *]
+			[* TODO: need to handle other types of subcomponents, actuator, motion source, etc *]
 			[% if (subc.isKindOf(Sensor)) { %]
-		Sensor [%= sensorID %] = new Sensor(SensorType.[%= subc.type %]);
+		Sensor [%= subID %] = new Sensor(SensorType.[%= subc.type %]);
 				[* set subcomponent properties here *]
 				[% for (sp in subc.componentProperties) { %]
 				[* TODO: factor this property pocessing into a subroutine call? *]
 					[% if (sp.isKindOf(IntProperty)) { %]
-		[%= sensorID %].setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
+		[%= subID %].setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
 					[% } %]
 					[% if (sp.isKindOf(DoubleProperty)) { %]
-		[%= sensorID %].setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
+		[%= subID %].setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
 					[% } %]
 				[% } %]
-		[%= robotName %].addSubcomponent([%= sensorID %]);
+		[%= robotName %].addSubcomponent([%= subID %]);
 			[% } %]
 		[% } %]
 			
@@ -140,6 +150,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% } %]
 	
 	[* Add messages - naming schema msg[name] *]
+	[% for (msg in m.messages) { %]
+	[% 	var msgName = "msg" + msg.name; 
+		var cFromName = componentLookup.get(msg.from); 
+	 	var cToName = componentLookup.get(msg.to); %] 
+	Message [%= msgName %] = new Message("[%= msg.name %]", [%= cFromName %], [%= cToName %]);
+	mission.addMessage([%= msgName %]); 
+	[% } %]
 	
 	[* Add the fault information *]
 	[% var faultNum = 0; %]
@@ -154,25 +171,29 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% } %]
 	
 	[% if (f.impact.isKindOf(MotionFault)) { %]
-	[* TODO: need to lookup a component name in these DSL objects here... *]
-	FaultImpact fi[%= faultNum %] = new MotionFault(msg[% f.impact.affectedComponent; %]);
-	[* should verify that the component is a motion source - (Robot r, String affectedProperty, String newValue) *]
+		[* Verify here that the component is a motion source *]
+		[% if (not f.impact.affectedComponent.isKindOf(MotionSource)) { 
+			 throw "Error during generation - MotionFault must use a MotionSource as its affected component";
+			} else { %]
+		[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %] = new MotionFault([%= componentName %], [%= f.impact.affectedProperty %], [%= f.impact.newValue %]);
+	[% } %]
 	[% } %]
 	
 	[% if (f.impact.isKindOf(EnergyLoss)) { %]
-	[* TODO: need to lookup a component name in these DSL objects here... *]
-	FaultImpact fi[%= faultNum %] = new EnergyLoss(msg[% f.impact.affectedComponent; %], [%= f.impact.fixedEnergyLoss %], [%= f.impact.powerDraw %]);
+	[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %] = new EnergyLoss(msg[%= componentName %], [%= f.impact.fixedEnergyLoss %], [%= f.impact.powerDraw %]);
 	[% } %]
 	
 	[% if (f.impact.isKindOf(DisabledComponent)) { %]
-	[* TODO: need to lookup a component name in these DSL objects here... *]
-	FaultImpact fi[%= faultNum %] = new DisabledComponent([% f.impact.affectedComponent; %]);
+	[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %] = new DisabledComponent([%= componentName %]);
 	[% } %]
 	
 	[% var ft = f.affectedTime; %]
 	FaultTimeProperties ft[%= faultNum %] = new FaultTimeProperties([%= ft.faultStart %], [%= ft.faultLength %], [%= ft.faultPeriod %], [%= ft.faultRepeatCount %]); 
 	
-	[* TODO: fault regions are not currently expressed here *]
+	[* TODO: fault regions are not currently encoded here by the EGL *]
 	Fault f[%= faultNum %] = new Fault(fi[%= faultNum %], Optional.empty(), ft[%= faultNum %]);
 	mission.addFault(f[%= faultNum %]);
 	[% } %]

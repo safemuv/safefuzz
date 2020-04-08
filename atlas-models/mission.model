@@ -9,6 +9,8 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_l8itIHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_pBGIoHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_4QN-kHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+      <detections>MALICIOUS</detections>
+      <detections>NORMAL</detections>
     </subcomponents>
     <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_o5ESEHgDEeq8sKdfSq6qug" maxSpeed="5.0">
       <params>HEADING</params>
@@ -25,6 +27,8 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_manJMHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_q_mcsHQREeqc6cv9mBHIKw" name="swathWidth" value="20.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_6xuSAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+      <detections>MALICIOUS</detections>
+      <detections>NORMAL</detections>
     </subcomponents>
   </robots>
   <robots xmi:id="_hNarkHP-Eeqc6cv9mBHIKw" name="gilda">
@@ -36,6 +40,8 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+      <detections>MALICIOUS</detections>
+      <detections>NORMAL</detections>
     </subcomponents>
   </robots>
   <robots xmi:id="_hkfHwHP-Eeqc6cv9mBHIKw" name="henry">
@@ -47,6 +53,8 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="12.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
+      <detections>MALICIOUS</detections>
+      <detections>NORMAL</detections>
     </subcomponents>
   </robots>
   <computers xmi:id="_fXV6wHP-Eeqc6cv9mBHIKw" name="shoreside"/>
@@ -95,6 +103,11 @@
   </messages>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" faultStart="10.0" faultLength="100.0"/>
-    <impact xsi:type="atlas_2:DisabledComponent" xmi:id="_4Woq8HgREeq8sKdfSq6qug" affectedComponent="_hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <impact xsi:type="atlas_2:MutateMessage" xmi:id="_fkyEwHkrEeq0KJzhpqNwCA" affectedMessage="_HTGtQHfxEeq8sKdfSq6qug" affectedField="_ItKQcHfxEeq8sKdfSq6qug">
+      <newValue xsi:type="atlas_2:PointMessageChange" xmi:id="_Gdu14HktEeq0KJzhpqNwCA">
+        <absoluteValue xmi:id="_kgZ_UHktEeq0KJzhpqNwCA" x="5.6" y="3.4"/>
+      </newValue>
+      <subfieldSpec xmi:id="_mfY0gHktEeq0KJzhpqNwCA" randomSelection="true"/>
+    </impact>
   </faults>
 </atlas:Mission>

@@ -7,23 +7,27 @@ import java.util.Optional;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-		
+	
 	Mission mission = new Mission();
 	
-	Computer c0 = new Computer("shoreside");
-	mission.addComputer(c0);
+	Computer c1 = new Computer("shoreside");
+	mission.addComputer(c1);
 	
 		Robot rella = new Robot("ella");
 		rella.setPointComponentProperty("startLocation", new Point(0.0,0.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 1.0);
 		
+		
  
+			
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
 		srella_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
+		
  
+			
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
@@ -31,7 +35,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		rfrank.setDoubleComponentProperty("startSpeed", 1.0);
 		
+		
  
+			
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
 		srfrank_1.setDoubleComponentProperty("swathWidth", 20.0);
 		srfrank_1.setDoubleComponentProperty("detectionProb", 0.99);
@@ -43,7 +49,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
 		
+		
  
+			
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
 		srgilda_1.setDoubleComponentProperty("swathWidth", 30.0);
 		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
@@ -55,7 +63,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
 		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
 		
+		
  
+			
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
 		srhenry_1.setDoubleComponentProperty("swathWidth", 12.0);
 		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
@@ -133,12 +143,23 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
 	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
 	
+ 
+	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", rella, c1);
+	mission.addMessage(msgDETECTION_ELLA); 
+ 
+	Message msgDETECTION_FRANK = new Message("DETECTION_FRANK", rfrank, c1);
+	mission.addMessage(msgDETECTION_FRANK); 
+ 
+	Message msgDETECTION_GILDA = new Message("DETECTION_GILDA", rgilda, c1);
+	mission.addMessage(msgDETECTION_GILDA); 
+ 
+	Message msgDETECTION_HENRY = new Message("DETECTION_HENRY", rhenry, c1);
+	mission.addMessage(msgDETECTION_HENRY); 
 	
 	
 	
 	
 	
-	FaultImpact fi1 = new DisabledComponent();
 	
 	FaultTimeProperties ft1 = new FaultTimeProperties(10.0, 100.0, 0.0, 0); 
 	
