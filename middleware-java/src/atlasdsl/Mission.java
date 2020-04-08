@@ -18,7 +18,7 @@ public class Mission {
 	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
 	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
 	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
-	private List<Message> messages = new ArrayList<Message>();
+	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
 	private List<Fault> faults = new ArrayList<Fault>();
 	
 	public List<Robot> getAllRobots() {
@@ -68,7 +68,7 @@ public class Mission {
 	}
 	
 	public void addMessage(Message m) {
-		messages.add(m);
+		messages.put(m.getName(), m);
 	}
 	
 	//TODO: setters for the other geometric regions as well
@@ -89,28 +89,28 @@ public class Mission {
 	}
 	
 	public List<Message> messagesToComponent(Component c) {
-        List<Message> res = messages.stream()
+        List<Message> res = messages.values().stream()
                 .filter(msg -> msg.isTo(c))
                 .collect(Collectors.toList());
         return res;
 	}
 	
 	public List<Message> messagesFromComponent(Component c) {
-        List<Message> res = messages.stream()
+        List<Message> res = messages.values().stream()
                 .filter(msg -> msg.isFrom(c))
                 .collect(Collectors.toList());
         return res;
 	}
 	
 	public List<Message> messagesToAnyComponent(List<Component> cs) {
-        List<Message> res = messages.stream()
+        List<Message> res = messages.values().stream()
                 .filter(msg -> cs.contains(msg.getTo()))
                 .collect(Collectors.toList());
         return res;
 	}
 	
 	public List<Message> messagesFromAnyComponent(List<Component> cs) {
-        List<Message> res = messages.stream()
+        List<Message> res = messages.values().stream()
                 .filter(msg -> cs.contains(msg.getFrom()))
                 .collect(Collectors.toList());
         return res;
@@ -129,5 +129,9 @@ public class Mission {
 			}
 		}
 		return res;
+	}
+
+	public Message getMessage(String messageName) {
+		return messages.get(messageName);
 	}
 }

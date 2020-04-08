@@ -12,9 +12,14 @@ public class Component {
 	private Map<String,StringProperty> stringProperties = new HashMap<String,StringProperty>();
 	private Map<String,DoubleProperty> doubleProperties = new HashMap<String,DoubleProperty>();
 	private Map<String,PointProperty> pointProperties = new HashMap<String,PointProperty>();
+	private Component parent;
 	
 	public void setIntComponentProperty(String name, int value) {
 		intProperties.put(name, new IntProperty(name, value));
+	}
+	
+	public void setParent(Component parent) {
+		this.parent = parent;
 	}
 	
 	public void setDoubleComponentProperty(String name, double value) {
@@ -55,5 +60,9 @@ public class Component {
 		if (p == null) {
 			throw new MissingProperty(this,name);
 		} else return p.getValue();
+	}
+
+	public Component getParent() {
+		return parent;
 	}
 }

@@ -81,7 +81,8 @@ class MotionFault extends ComponentImpact {
 
 class EnergyLoss extends ComponentImpact {
 	attr int fixedEnergyLoss;
-	attr int powerDraw;
+	//attr int powerDraw;
+	// For now, energy loss is fixed. The Component must be a Battery
 }
 
 class Fault {

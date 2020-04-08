@@ -2,6 +2,7 @@ package atlasdsl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -29,6 +30,7 @@ public class Robot extends Component {
 		return "KAYAK";
 	}
 
+	// TODO: should use Optional for these. And the same for MotionSource etc
 	public Sensor getSensor(SensorType st) {
 		List<Subcomponent> sensors = contains.stream()
 				.filter(sc -> sc instanceof Sensor)
@@ -43,5 +45,14 @@ public class Robot extends Component {
 				.filter(sc -> sc instanceof Sensor)
 				.map(sc -> (Sensor)sc)
 				.collect(Collectors.toList()));
+	}
+
+	public Optional<MotionSource> getMotionSource() {
+		List<Subcomponent> mss = contains.stream()
+				.filter(sc -> sc instanceof MotionSource)
+				.collect(Collectors.toList());
+		if (mss.size() > 0) {
+			return Optional.of((MotionSource)mss.get(0));
+		} else return Optional.empty();
 	}
 }

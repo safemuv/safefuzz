@@ -93,7 +93,7 @@ public abstract class ATLASCore {
 		CIq.sendToCARS(r, key, value);
 	}
 
-	public List<FaultInstance> activeFaultsOfClass(Class class1) {
+	public List<FaultInstance> activeFaultsOfClass(Class<?> class1) {
 		return activeFaults.stream()
 				.filter(f -> f.getClass() == class1)
 				.collect(Collectors.toList());

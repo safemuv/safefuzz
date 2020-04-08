@@ -39,7 +39,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 			[% } %]
 			[% if (p.isKindOf(PointProperty)) { %]
 		[%= robotName %].setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
-		[* TODO: better way of doing point conversion here? *]
 			[% } %]
 		[% } %]
 		
@@ -49,11 +48,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 			[% var subCNum = 0; %]
 			[% var subID = "s" + robotName + "_" + subCNum++; %] 
 			[% componentLookup.put(subc, subID); %]
-			
-			[* TODO: should this support recursively structured components *]
 			[* TODO: need to handle other types of subcomponents, actuator, motion source, etc *]
 			[% if (subc.isKindOf(Sensor)) { %]
 		Sensor [%= subID %] = new Sensor(SensorType.[%= subc.type %]);
+		[%= subID %].setParent([%= robotName %]);
 				[* set subcomponent properties here *]
 				[% for (sp in subc.componentProperties) { %]
 				[* TODO: factor this property pocessing into a subroutine call? *]
@@ -168,6 +166,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	[% if (f.impact.isKindOf(DeleteMessage)) { %]
 	FaultImpact fi[%= faultNum %] = new DeleteMessage(msg[%= f.impact.affectedMessage.name %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(MutateMessage)) { %]
+	FaultImpact fi[%= faultNum %] = new MutateMessage(msg[%= f.impact.affectedMessage.name %]);
 	[% } %]
 	
 	[% if (f.impact.isKindOf(MotionFault)) { %]

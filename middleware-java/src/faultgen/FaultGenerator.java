@@ -1,6 +1,7 @@
 package faultgen;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 import atlassharedclasses.FaultInstance;
@@ -26,7 +27,7 @@ public class FaultGenerator {
 		this.mission = mission;
 	}
 	
-	private FaultInstance decodeFaultFromString(String faultDefinition) throws InvalidFaultFormat {
+	private FaultInstance decodeFaultFromString(String faultDefinition) throws InvalidFaultFormat, InvalidComponentType {
 		String[] fields = faultDefinition.split(",");
 		if (fields.length < 3) {
 			throw new InvalidFaultFormat();
@@ -39,9 +40,10 @@ public class FaultGenerator {
 			String faultImpactStr = fields[3].toUpperCase();
 			FaultImpact fi;
 			// TODO: better solution here
-			// need to specify what the message mutates
+			// need to specify what message is mutated - by combo box/dropdown in GUI
 			if (faultImpactStr == "MUTATEMESSAGE") {
-				fi = new MutateMessage();
+				Message m = mission.getMessage("UUV_COORDINATE_UPDATE_INIITAL_ELLA");
+				fi = new MutateMessage(m);
 				Fault f = new Fault(fi);
 				return new FaultInstance(startTime, endTime, f);
 			}
@@ -49,10 +51,16 @@ public class FaultGenerator {
 			if (faultImpactStr == "OVERSPEED") {
 				Double speed = Double.parseDouble(fields[4]);
 				Robot r = mission.getRobot(vehicleName);
-				fi = new MotionFault(r, "UP_LOITER", "speed=5.0");
-				Fault f = new Fault(fi);
-				FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
-				return fInstance;
+				Optional<MotionSource> ms_o = r.getMotionSource();
+				if (ms_o.isPresent()) {
+					MotionSource ms = ms_o.get();
+					fi = new MotionFault(ms, "UP_LOITER", "speed=5.0");
+					Fault f = new Fault(fi);
+					FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+					return fInstance;
+				} else {
+					throw new InvalidFaultFormat();
+				}
 			}
 		}
 		throw new InvalidFaultFormat();
@@ -70,6 +78,8 @@ public class FaultGenerator {
 				scheduledFaults.add(fault);
 			} catch (InvalidFaultFormat e) {
 				e.printStackTrace();
+			} catch (InvalidComponentType e) {
+				e.printStackTrace();
 			}
 		}
 		reader.close();
@@ -77,13 +87,23 @@ public class FaultGenerator {
 	
 	public void injectSpeedFaultNow(double timeLength, String robotName) {
 		Robot r = mission.getRobot(robotName);
-		double startTime = core.getTime();
-		double endTime = startTime + timeLength;
-		FaultImpact fi = new MotionFault(r, "UP_LOITER", "speed=5.0");
-		Fault f = new Fault(fi);
-		FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
-		core.registerFault(fInstance);
-		
+		// Need to look up the MotionSource for the target robot
+		Optional<MotionSource> ms_o = r.getMotionSource(); 
+		if (ms_o.isPresent()) {
+			MotionSource ms = ms_o.get();
+			double startTime = core.getTime();
+			double endTime = startTime + timeLength;
+			FaultImpact fi;
+			try {
+				fi = new MotionFault(ms, "UP_LOITER", "speed=5.0");
+				Fault f = new Fault(fi);
+				FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+				core.registerFault(fInstance);
+			} catch (InvalidComponentType e) {
+				System.out.println("Injecting fault failed - invalid component type not a MotionSource");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void pollFaultsNow() {

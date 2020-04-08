@@ -39,7 +39,7 @@ public class API {
 		return producers.get(robotName);
 	}
 		
-	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize) {
+	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
@@ -49,9 +49,9 @@ public class API {
 		prod.send(cmd, robotName);
 	}
 	
-	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize) {
+	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize, String messageName) {
 		Region r = Region.squareAroundPoint(p, size);
-		setPatrolAroundRegion(robotName, r, stepSize);
+		setPatrolAroundRegion(robotName, r, stepSize, messageName);
 	}
 	
 	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {

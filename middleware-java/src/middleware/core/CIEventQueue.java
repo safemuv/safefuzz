@@ -110,7 +110,8 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 				FaultImpact fim = f.getImpact();
 				if (fim instanceof MessageImpact) {
 					MessageImpact mim = (MessageImpact)fim;
-					if (mim.matchesComponentTo(robotName)) {
+					if (mim.getMessage().getName() == setCmd.getMessageName()) {  
+						// Check the associated message for this fault matches the API command
 						modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
 					}
 					// TODO: check is from shoreside? - this encodes assumption that the

@@ -117,7 +117,7 @@ class ComputerCIshoreside {
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
-		  API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP);
+		  API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 	  }
 	  
@@ -138,7 +138,7 @@ class ComputerCIshoreside {
                  Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
-            API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP);
+            API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP, ("UUV_COORDINATE_UPDATE_VERIFY_" + rName.toUpperCase()));
             CollectiveIntLog.logCI("Setting robot " + rName + " to confirm sweep");
             // need to send this robot back to its original action after some time...
             // TODO: use a timer here to pop from the robot action stack

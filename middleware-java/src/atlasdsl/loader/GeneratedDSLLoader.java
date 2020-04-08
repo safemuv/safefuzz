@@ -20,14 +20,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
  
-			
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
+		srella_1.setParent(rella);
 		srella_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
 		
  
-			
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
@@ -37,8 +36,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
  
-			
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
+		srfrank_1.setParent(rfrank);
 		srfrank_1.setDoubleComponentProperty("swathWidth", 20.0);
 		srfrank_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rfrank.addSubcomponent(srfrank_1);
@@ -51,8 +50,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
  
-			
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
+		srgilda_1.setParent(rgilda);
 		srgilda_1.setDoubleComponentProperty("swathWidth", 30.0);
 		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rgilda.addSubcomponent(srgilda_1);
@@ -65,8 +64,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
  
-			
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
+		srhenry_1.setParent(rhenry);
 		srhenry_1.setDoubleComponentProperty("swathWidth", 12.0);
 		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rhenry.addSubcomponent(srhenry_1);
@@ -142,8 +141,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
 	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
 	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
-	
- 
+	 
 	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", rella, c1);
 	mission.addMessage(msgDETECTION_ELLA); 
  
@@ -157,6 +155,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addMessage(msgDETECTION_HENRY); 
 	
 	
+	
+	FaultImpact fi1 = new MutateMessage(msgDETECTION_ELLA);
 	
 	
 	

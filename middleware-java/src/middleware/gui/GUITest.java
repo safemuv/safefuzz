@@ -1,18 +1,10 @@
 package middleware.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.MemoryImageSource;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,7 +14,7 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import atlasdsl.*;
 import atlassharedclasses.Point;
-import atlassharedclasses.Region;
+
 import faultgen.FaultGenerator;
 
 public class GUITest {  
@@ -45,7 +37,7 @@ public class GUITest {
 	
 	private class RobotChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			JComboBox cb = (JComboBox)e.getSource();
+			JComboBox<?> cb = (JComboBox<?>)e.getSource();
 	        chosenRobotName = (String)cb.getSelectedItem();
 		}
 	}
@@ -145,7 +137,7 @@ public class GUITest {
     	
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
     	
-    	JComboBox robotChoice = new JComboBox(robotNames.toArray());
+    	JComboBox<?> robotChoice = new JComboBox(robotNames.toArray());
     	robotChoice.setSelectedIndex(1);
     	robotChoice.addActionListener(robotChoiceListener);
         injectButton.addActionListener(buttonListener);

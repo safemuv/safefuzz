@@ -41,11 +41,11 @@ abstract class Subcomponent extends Component {
 }
 
 class Robot extends NamedComponent {
- val Subcomponent[0..*] subcomponents;
+ 	val Subcomponent[0..*]#parent subcomponents;
 }
 
 class Computer extends NamedComponent {
- val Subcomponent[0..*] subcomponents;
+ 	val Subcomponent[0..*]#parent subcomponents;
 }
 
 enum SensorType {

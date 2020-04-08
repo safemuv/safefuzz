@@ -1,14 +1,26 @@
 package atlasdsl.faults;
 
+import atlasdsl.Battery;
 import atlasdsl.Component;
+import atlasdsl.InvalidComponentType;
+import middleware.core.ATLASCore;
 
 public class EnergyLoss extends ComponentImpact {
 	private int fixedEnergyLoss;
-	private int powerDraw;
 	
-	public EnergyLoss(Component c, int fixedEnergyLoss, int powerDraw) {
+	public EnergyLoss(Component c, int fixedEnergyLoss, int powerDraw) throws InvalidComponentType {
+		// Verify here that the component is a Battery
+		// For now, EnergyLoss faults are only considering sudden depletion of a battery
 		super(c);
-		this.fixedEnergyLoss = fixedEnergyLoss;
-		this.powerDraw = powerDraw;
+		if (c instanceof Battery) {
+			this.fixedEnergyLoss = fixedEnergyLoss;
+		} else {
+			throw new InvalidComponentType(c, c.getClass(), Battery.class);
+		}	
+	}
+	
+	public void immediateEffects(ATLASCore core) {
+		Battery b = (Battery)affectedComponent;
+		b.depleteEnergy(fixedEnergyLoss);
 	}
 }
