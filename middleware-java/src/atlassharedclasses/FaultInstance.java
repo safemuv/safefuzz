@@ -20,4 +20,17 @@ public class FaultInstance {
 	public Fault getFault() {
 		return fault;
 	}
+	
+	public boolean isValid() {
+		FaultTimeProperties ftp = fault.getTimeProperties();
+		return ftp.isInRange(startTime, endTime);
+	}
+
+	public boolean isFinished(double time) {
+		return (time <= endTime);
+	}
+
+	public double getEndTime() {
+		return endTime;
+	}
 }

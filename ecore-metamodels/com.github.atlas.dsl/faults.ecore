@@ -60,9 +60,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnergyLoss" eSuperTypes="#//ComponentImpact">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedEnergyLoss" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="powerDraw" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Fault">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedRegion" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Region"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="affectedTime" lowerBound="1"

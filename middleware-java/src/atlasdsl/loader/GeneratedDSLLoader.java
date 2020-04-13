@@ -18,22 +18,31 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 1.0);
 		
-		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
 		srella_1.setParent(rella);
 		srella_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srella_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rella.addSubcomponent(srella_1);
-		
+			
+			
  
+			
+			MotionSource srella_2 = new MotionSource();
+			rella.addSubcomponent(srella_2);
+			
+ 
+		Sensor srella_3 = new Sensor(SensorType.GPS_POSITION);
+		srella_3.setParent(rella);
+		rella.addSubcomponent(srella_3);
+			
+			
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
 		rfrank.setPointComponentProperty("startLocation", new Point(50.0,0.0,0.0));
 		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		rfrank.setDoubleComponentProperty("startSpeed", 1.0);
-		
 		
  
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
@@ -42,12 +51,24 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srfrank_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rfrank.addSubcomponent(srfrank_1);
 			
+			
+ 
+		Sensor srfrank_2 = new Sensor(SensorType.GPS_POSITION);
+		srfrank_2.setParent(rfrank);
+		rfrank.addSubcomponent(srfrank_2);
+			
+			
+ 
+			
+			MotionSource srfrank_3 = new MotionSource();
+			rfrank.addSubcomponent(srfrank_3);
+			
+			
 		mission.addRobot(rfrank);
 		Robot rgilda = new Robot("gilda");
 		rgilda.setPointComponentProperty("startLocation", new Point(100.0,0.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
-		
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
@@ -56,12 +77,24 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rgilda.addSubcomponent(srgilda_1);
 			
+			
+ 
+		Sensor srgilda_2 = new Sensor(SensorType.GPS_POSITION);
+		srgilda_2.setParent(rgilda);
+		rgilda.addSubcomponent(srgilda_2);
+			
+			
+ 
+			
+			MotionSource srgilda_3 = new MotionSource();
+			rgilda.addSubcomponent(srgilda_3);
+			
+			
 		mission.addRobot(rgilda);
 		Robot rhenry = new Robot("henry");
 		rhenry.setPointComponentProperty("startLocation", new Point(150.0,0.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
 		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
-		
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
@@ -69,6 +102,19 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srhenry_1.setDoubleComponentProperty("swathWidth", 12.0);
 		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rhenry.addSubcomponent(srhenry_1);
+			
+			
+ 
+		Sensor srhenry_2 = new Sensor(SensorType.GPS_POSITION);
+		srhenry_2.setParent(rhenry);
+		rhenry.addSubcomponent(srhenry_2);
+			
+			
+ 
+			
+			MotionSource srhenry_3 = new MotionSource();
+			rhenry.addSubcomponent(srhenry_3);
+			
 			
 		mission.addRobot(rhenry);
 	
@@ -141,7 +187,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
 	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
 	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
-	 
+	
+ 
 	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", rella, c1);
 	mission.addMessage(msgDETECTION_ELLA); 
  

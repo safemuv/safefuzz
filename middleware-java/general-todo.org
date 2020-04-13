@@ -232,3 +232,9 @@ these are valid
 *** e.g. provides exact time of faults
 ** TODO Fault generator reads both of these
 ** TODO Fault mutation (generates offline or up-front one of the specifics)
+
+
+* TODO Text format, fault instance number, fault name in model, exact time, extra attributes?
+* TODO Returning after a fault is complete (how to return old behaviour)
+* TODO Some faults have to involve topology modifications?
+

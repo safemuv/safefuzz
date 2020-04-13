@@ -9,6 +9,7 @@ public class Fault {
 	private Optional<Region> affectedRegion;
 	private FaultImpact impact;
 	private FaultTimeProperties timeProperties;
+	private String name;
 	
 	public Fault(FaultImpact fi) {
 		this.affectedRegion = Optional.empty();
@@ -29,7 +30,23 @@ public class Fault {
 		impact.immediateEffects(core);
 	}
 	
+	public void completionEffects(ATLASCore core) {
+		impact.completionEffects(core);
+	}
+	
 	public FaultImpact getImpact() {
 		return impact;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public FaultTimeProperties getTimeProperties() {
+		return timeProperties;
+	}
+
+	public int getMaxCount() {
+		return timeProperties.getMaxRepeatCount();
 	}
 }

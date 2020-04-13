@@ -63,6 +63,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	// This is used by active faults to inject their immediate effects
 	// upon the low-level CARS simulation
 	public void sendToCARS(Robot r, String key, String value) {
+		System.out.println("robot = " + r);
 		sendMOOSUpdate(r.getName(), key, value);
 	}
 	
@@ -105,6 +106,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			List<FaultInstance> fs = core.activeFaultsOfClass(MutateMessage.class);
 			
 			List<Point> modifiedCoords = coordinates;
+			
 			for (FaultInstance fi : fs) {
 				Fault f = fi.getFault();
 				FaultImpact fim = f.getImpact();
@@ -117,7 +119,8 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 					// TODO: check is from shoreside? - this encodes assumption that the
 					// CI runs on shoreside						
 				}
-			}			
+			}
+			
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
 			String polyUpdate = "polygon=" + pointListToPolyString(modifiedCoords) + ":label," + robotName + "_LOITER";
 			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);

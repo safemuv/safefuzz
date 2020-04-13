@@ -15,4 +15,8 @@ public class DeleteMessage extends MessageImpact {
 	public void immediateEffects(ATLASCore core) {
 	
 	}
+
+	public void completionEffects(ATLASCore core) {
+		
+	}
 }

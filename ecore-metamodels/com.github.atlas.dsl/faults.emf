@@ -6,6 +6,7 @@ import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
 import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
 import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults";
 
+// TODO: specify that these are limit values? - rename, e.g. earliest start, max length etc
 class FaultTimeProperties {
 	attr double faultStart;
 	attr double faultLength;
@@ -86,6 +87,7 @@ class EnergyLoss extends ComponentImpact {
 }
 
 class Fault {
+	attr String name;
 	val Atlas.Region[0..1] affectedRegion;
 	val FaultTimeProperties[1] affectedTime;
 	val FaultImpact[1] impact;

@@ -52,6 +52,13 @@ public abstract class ATLASCore {
 		f.immediateEffects(this);
 	}
 	
+	public synchronized void completeFault(FaultInstance fi) {
+		activeFaults.remove(fi);
+		System.out.println("Fault completed");
+		Fault f = fi.getFault();
+		f.completionEffects(this);
+	}
+	
 	public void clearFaults() {
 		activeFaults.clear();
 	}
@@ -110,4 +117,6 @@ public abstract class ATLASCore {
 	public void setupSensorWatcher(SensorDetectionLambda l) {
 		sensorWatchers.add(l);
 	}
+
+
 }

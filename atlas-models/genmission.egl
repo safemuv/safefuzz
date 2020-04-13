@@ -43,12 +43,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% } %]
 		
 		[* Add subcomponents to the robots *]
+		[% var subCNum = 0; %]
 		[% for (subc in r.subcomponents) { %]
-		
-			[% var subCNum = 0; %]
 			[% var subID = "s" + robotName + "_" + subCNum++; %] 
 			[% componentLookup.put(subc, subID); %]
-			[* TODO: need to handle other types of subcomponents, actuator, motion source, etc *]
 			[% if (subc.isKindOf(Sensor)) { %]
 		Sensor [%= subID %] = new Sensor(SensorType.[%= subc.type %]);
 		[%= subID %].setParent([%= robotName %]);
@@ -64,6 +62,17 @@ public class GeneratedDSLLoader implements DSLLoader {
 				[% } %]
 		[%= robotName %].addSubcomponent([%= subID %]);
 			[% } %]
+			
+			[* TODO: properties for these subcomponent types *]
+			[% if (subc.isKindOf(MotionSource)) { %]
+			MotionSource [%= subID %] = new MotionSource();
+			[%= robotName %].addSubcomponent([%= subID %]);
+			[% } %]
+			[% if (subc.isKindOf(Actuator)) { %]
+			Actuator [%= subID %] = new Actuator();
+			[%= robotName %].addSubcomponent([%= subID %]);
+			[% } %]
+			
 		[% } %]
 			
 		[* Add the robot to the mission *]

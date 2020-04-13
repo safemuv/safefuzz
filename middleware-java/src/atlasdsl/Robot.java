@@ -22,6 +22,7 @@ public class Robot extends Component {
 	
 	public void addSubcomponent(Subcomponent s) {
 		contains.add(s);
+		s.setParent(this);
 	}
 	
 	public String vehicleTypeAsString() {

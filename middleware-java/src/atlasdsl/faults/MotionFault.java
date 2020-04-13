@@ -5,6 +5,8 @@ import middleware.core.ATLASCore;
 public class MotionFault extends ComponentImpact {
 	private String affectedProperty;
 	private String newValue;
+	// This is to store the preserved value
+	private String originalValue;
 	
 	public MotionFault(Component c, String affectedProperty, String newValue) throws InvalidComponentType {
 		super(c);
@@ -24,7 +26,14 @@ public class MotionFault extends ComponentImpact {
 		// TODO: this assumes a MOOS effect with the same name
 		// as the main effect
 		// Need MOOS translation here
+		
+		// TODO: store the original value here
 		Robot relevantVehicle = (Robot)affectedComponent.getParent();
 		core.sendToCARS(relevantVehicle, affectedProperty, newValue);
+	}
+	
+	public void completionEffect(ATLASCore core) {
+		Robot relevantVehicle = (Robot)affectedComponent.getParent();
+		core.sendToCARS(relevantVehicle, affectedProperty, originalValue);
 	}
 }

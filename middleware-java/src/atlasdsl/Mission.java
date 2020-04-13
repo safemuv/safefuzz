@@ -19,7 +19,7 @@ public class Mission {
 	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
 	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
 	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
-	private List<Fault> faults = new ArrayList<Fault>();
+	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
 	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
@@ -81,7 +81,7 @@ public class Mission {
 	}
 	
 	public void addFault(Fault f) {
-		faults.add(f);
+		faults.put(f.getName(), f);
 	}
 
 	public Collection<EnvironmentalObject> getEnvironmentalObjects() {
@@ -133,5 +133,12 @@ public class Mission {
 
 	public Message getMessage(String messageName) {
 		return messages.get(messageName);
+	}
+
+	public Optional<Fault> lookupFaultByName(String name) {
+		Fault f = faults.get(name); 
+		if (f != null) {
+			return Optional.of(f);
+		} else return Optional.empty(); 
 	}
 }

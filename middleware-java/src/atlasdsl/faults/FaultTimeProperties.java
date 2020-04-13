@@ -12,4 +12,14 @@ public class FaultTimeProperties {
 		this.faultPeriod = faultPeriod;
 		this.faultRepeatCount = faultRepeatCount;
 	}
+	
+	public boolean isInRange(double start, double length) {
+		double validEnd = faultStart + faultLength;
+		double end = start + length;
+		return (start >= faultStart) && (end <= validEnd);
+	}
+	
+	public int getMaxRepeatCount() {
+		return faultRepeatCount;
+	}
 }

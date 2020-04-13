@@ -17,4 +17,8 @@ public class ComponentImpact extends FaultImpact {
 	public void immediateEffects(ATLASCore core) {
 		
 	}
+
+	public void completionEffects(ATLASCore core) {
+		
+	}
 }
