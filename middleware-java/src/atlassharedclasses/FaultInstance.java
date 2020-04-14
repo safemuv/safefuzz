@@ -8,6 +8,7 @@ public class FaultInstance {
 	private Fault fault;
 	
 	public FaultInstance(Double startTime, Double endTime, Fault f) {
+		System.out.println("startTime = " + startTime + ",endTime = " + endTime);
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.fault = f;
@@ -27,7 +28,7 @@ public class FaultInstance {
 	}
 
 	public boolean isFinished(double time) {
-		return (time <= endTime);
+		return (time > endTime);
 	}
 
 	public double getEndTime() {

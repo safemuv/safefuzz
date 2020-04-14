@@ -1,7 +1,6 @@
 package atlasdsl.faults;
 
 import java.util.Optional;
-
 import atlassharedclasses.*;
 import middleware.core.ATLASCore;
 
@@ -16,7 +15,8 @@ public class Fault {
 		this.impact = fi;
 	}
 	
-	public Fault(FaultImpact fi, Optional<Region> r, FaultTimeProperties timeProps) {
+	public Fault(String name, FaultImpact fi, Optional<Region> r, FaultTimeProperties timeProps) {
+		this.name = name;
 		this.affectedRegion = r;
 		this.impact = fi;
 		this.timeProperties = timeProps;

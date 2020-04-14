@@ -131,7 +131,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 1000.0);
 		
 		
-		GoalAction ga1 = new AvoidOthers(30.0);
+		GoalAction ga1 = new AvoidOthers(3.0);
 		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
@@ -181,6 +181,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal verifySensorDetections = new Goal("verifySensorDetections", mission, gt3, gpverifySensorDetections, Optional.of(grverifySensorDetections), ga3);
 		
+		try {
+			verifySensorDetections.setDependencyOn(primarySensorSweep);
+		} catch (SelfDependencyError e) {
+			throw new DSLLoadFailed("Goal verifySensorDetections depends on itself");
+		}
 		
 		mission.addGoal("verifySensorDetections", verifySensorDetections);
 	
@@ -203,14 +208,19 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultImpact fi1 = new MutateMessage(msgDETECTION_ELLA);
+	
+	FaultImpact fi1;
+	try {	
+		fi1 = new MotionFault(srella_2, "UP_LOITER", "speed=5.0");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 1 is not using a MotionSource as its affected component");
+	}
 	
 	
 	
+	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 0.0, 1); 
 	
-	FaultTimeProperties ft1 = new FaultTimeProperties(10.0, 100.0, 0.0, 0); 
-	
-	Fault f1 = new Fault(fi1, Optional.empty(), ft1);
+	Fault f1 = new Fault("SPEEDFAULT", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
 	
 	return mission;

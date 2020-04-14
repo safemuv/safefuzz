@@ -17,7 +17,7 @@ import atlassharedclasses.Point;
 
 import faultgen.FaultGenerator;
 
-public class GUITest {  
+public class GUITest {
 	
 	JFrame f;
 	JPanel robotsPanel = new JPanel();
@@ -48,10 +48,8 @@ public class GUITest {
 	
 	private class FaultButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// TODO: this time will not be respected yet until
-			// time updates from MOOS are flowing through
-			double testTimeLength = 20.0;
-			// TODO: get the robot ID and time length from the GUI
+			// TODO: get the time length from the GUI
+			double testTimeLength = 8.0;
 			faultGen.injectSpeedFaultNow(testTimeLength, chosenRobotName);
 			System.out.println("Injecting new fault from GUI");
 		}

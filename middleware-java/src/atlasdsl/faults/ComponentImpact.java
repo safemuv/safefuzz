@@ -3,7 +3,7 @@ package atlasdsl.faults;
 import atlasdsl.*;
 import middleware.core.ATLASCore;
 
-public class ComponentImpact extends FaultImpact {
+public abstract class ComponentImpact extends FaultImpact {
 	protected Component affectedComponent;
 
 	public ComponentImpact(Component c) {
@@ -14,11 +14,6 @@ public class ComponentImpact extends FaultImpact {
 		return orig;
 	}
 
-	public void immediateEffects(ATLASCore core) {
-		
-	}
-
-	public void completionEffects(ATLASCore core) {
-		
-	}
+	public abstract void immediateEffects(ATLASCore core);
+	public abstract void completionEffects(ATLASCore core);
 }

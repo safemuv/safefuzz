@@ -17,4 +17,6 @@ public class MOOSATLASCore extends ATLASCore {
 	public void runMiddleware() {
 		super.runMiddleware();
 	}
+
+
 }

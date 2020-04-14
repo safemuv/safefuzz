@@ -23,4 +23,8 @@ public class EnergyLoss extends ComponentImpact {
 		Battery b = (Battery)affectedComponent;
 		b.depleteEnergy(fixedEnergyLoss);
 	}
+
+	public void completionEffects(ATLASCore core) {
+		
+	}
 }

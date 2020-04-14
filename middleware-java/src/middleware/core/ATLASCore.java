@@ -47,16 +47,17 @@ public abstract class ATLASCore {
 	
 	public synchronized void registerFault(FaultInstance fi) {
 		activeFaults.add(fi);
-		System.out.println("Fault added");
+		System.out.println("Fault instance added");
 		Fault f = fi.getFault();
 		f.immediateEffects(this);
 	}
 	
 	public synchronized void completeFault(FaultInstance fi) {
 		activeFaults.remove(fi);
-		System.out.println("Fault completed");
 		Fault f = fi.getFault();
-		f.completionEffects(this);
+		System.out.println("Calling completion effect");
+		fi.getFault().completionEffects(this);
+		System.out.println("Fault instance " + fi + " completed: " + f.getClass());
 	}
 	
 	public void clearFaults() {
@@ -88,7 +89,8 @@ public abstract class ATLASCore {
 	}
 	
 	public void updateTime(double time) throws CausalityException {
-		if ((time < this.time)) {
+		//System.out.println("updateTime called with " + time);
+		if ((time > this.time)) {
 			this.time = time;
 		}
 	}
@@ -117,6 +119,8 @@ public abstract class ATLASCore {
 	public void setupSensorWatcher(SensorDetectionLambda l) {
 		sensorWatchers.add(l);
 	}
-
-
+	
+	public void setFaultDefinitionFile(String filePath) {
+		faultGen.setFaultDefinitionFile(filePath);
+	}
 }

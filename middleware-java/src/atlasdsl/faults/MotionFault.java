@@ -1,12 +1,14 @@
 package atlasdsl.faults;
+
 import atlasdsl.*;
 import middleware.core.ATLASCore;
 
 public class MotionFault extends ComponentImpact {
 	private String affectedProperty;
 	private String newValue;
-	// This is to store the preserved value
-	private String originalValue;
+	// TODO: Need to store the original value - this requires the middleware to know
+	// from MOOS the original value!
+	private String originalValue = "speed=1.0";
 	
 	public MotionFault(Component c, String affectedProperty, String newValue) throws InvalidComponentType {
 		super(c);
@@ -32,7 +34,8 @@ public class MotionFault extends ComponentImpact {
 		core.sendToCARS(relevantVehicle, affectedProperty, newValue);
 	}
 	
-	public void completionEffect(ATLASCore core) {
+	public void completionEffects(ATLASCore core) {
+		System.out.println("Motion fault completion effect");
 		Robot relevantVehicle = (Robot)affectedComponent.getParent();
 		core.sendToCARS(relevantVehicle, affectedProperty, originalValue);
 	}

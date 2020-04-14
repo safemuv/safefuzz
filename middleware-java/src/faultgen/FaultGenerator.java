@@ -1,4 +1,5 @@
 package faultgen;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
@@ -11,11 +12,11 @@ import atlasdsl.faults.*;
 import middleware.core.*;
 
 public class FaultGenerator {
-	
 	// Custom comparator used in the queue which sorts faults by finish time
 	private class ByFinishTime implements Comparator<FaultInstance> {
-	    public int compare(FaultInstance st1, FaultInstance st2) {
-	        return (int)(st2.getEndTime() - st1.getEndTime());
+	    public int compare(FaultInstance fi1, FaultInstance fi2) {
+	    	System.out.println("TIMES = " + fi1.getEndTime() + " - " + fi2.getEndTime());
+	        return Double.compare(fi1.getEndTime(), fi2.getEndTime());
 	    }
 	}
 	
@@ -127,7 +128,7 @@ public class FaultGenerator {
 				fi = new MotionFault(ms, "UP_LOITER", "speed=5.0");
 				Fault f = new Fault(fi);
 				FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
-				core.registerFault(fInstance);
+				scheduledFaults.add(fInstance);
 			} catch (InvalidComponentType e) {
 				System.out.println("Injecting fault failed - invalid component type not a MotionSource");
 				e.printStackTrace();
@@ -147,13 +148,25 @@ public class FaultGenerator {
 		}
 		
 		FaultInstance nextToFinish = injectedFaults.peek();
-		if (nextToFinish != null && nextToFinish.isFinished(time)) {
-			FaultInstance next = injectedFaults.remove();
-			core.completeFault(next);
-		}	
+		if (nextToFinish != null) {
+			//System.out.println("nextToFinish.isFinished(" + time + ")" + nextToFinish.isFinished(time));
+			if (nextToFinish != null && nextToFinish.isFinished(time)) {
+				FaultInstance next = injectedFaults.remove();
+				core.completeFault(next);
+			}
+		}
 	}
 	
 	private void clearFaults() {
 		scheduledFaults.clear();
+	}
+
+	public void setFaultDefinitionFile(String filePath) {
+		try {
+			loadFaultsFromFile(filePath);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
