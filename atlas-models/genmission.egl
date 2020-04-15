@@ -207,7 +207,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% } %]
 	
 	[% var ft = f.affectedTime; %]
-	FaultTimeProperties ft[%= faultNum %] = new FaultTimeProperties([%= ft.faultStart %], [%= ft.faultLength %], [%= ft.faultPeriod %], [%= ft.faultRepeatCount %]); 
+	FaultTimeProperties ft[%= faultNum %] = new FaultTimeProperties([%= ft.earliestFaultStart %], [%= ft.latestFaultEnd %], [%= ft.maxFaultLength %], [%= ft.maxFaultRepeatCount %]); 
 	
 	[* TODO: fault regions are not currently encoded here by the EGL *]
 	Fault f[%= faultNum %] = new Fault("[%= f.name %]", fi[%= faultNum %], Optional.empty(), ft[%= faultNum %]);

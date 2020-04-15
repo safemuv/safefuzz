@@ -73,7 +73,7 @@ public class StubDSLLoader implements DSLLoader {
 		try {
 			verifySensor.setDependencyOn(primarySensorSweep);
 		} catch (SelfDependencyError e) {
-			throw new DSLLoadFailed();
+			throw new DSLLoadFailed("Goal depends on itself");
 		}
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);

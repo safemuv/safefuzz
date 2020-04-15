@@ -218,7 +218,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 0.0, 1); 
+	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 8.0, 3); 
 	
 	Fault f1 = new Fault("SPEEDFAULT", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);

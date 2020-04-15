@@ -34,4 +34,8 @@ public class FaultInstance {
 	public double getEndTime() {
 		return endTime;
 	}
+
+	public double getStartTime() {
+		return startTime;
+	}
 }

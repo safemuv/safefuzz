@@ -141,4 +141,8 @@ public class Mission {
 			return Optional.of(f);
 		} else return Optional.empty(); 
 	}
+
+	public List<Fault> getFaultsAsList() {
+		return new ArrayList<Fault>(faults.values());
+	}
 }

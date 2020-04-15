@@ -6,7 +6,6 @@ import atlasdsl.loader.*;
 public class ATLASMain {
 	public static void main(String [] args) {
 		// On initialisation, read the DSL concrete syntax file and construct the appropriate ATLAS objects here
-		// TODO: replace with reference to GenerateDSLLoader once the menu editor completed
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
 		try {

@@ -1,25 +1,36 @@
 package atlasdsl.faults;
 
 public class FaultTimeProperties {
-	private double faultStart;
-	private double faultLength;
-	private double faultPeriod;
-	private int faultRepeatCount;
+	private double earliestFaultStart;
+	private double latestFaultEnd;
+	private double maxFaultLength;
+	private int maxFaultRepeatCount;
 	
-	public FaultTimeProperties(double faultStart, double faultLength, double faultPeriod, int faultRepeatCount) {
-		this.faultStart = faultStart;
-		this.faultLength = faultLength;
-		this.faultPeriod = faultPeriod;
-		this.faultRepeatCount = faultRepeatCount;
+	public FaultTimeProperties(double faultStart, double faultEnd, double faultLength, int faultRepeatCount) {	
+		this.earliestFaultStart = faultStart;
+		this.latestFaultEnd = faultEnd;
+		this.maxFaultLength = faultLength;
+		this.maxFaultRepeatCount = faultRepeatCount;
 	}
 	
 	public boolean isInRange(double start, double length) {
-		double validEnd = faultStart + faultLength;
 		double end = start + length;
-		return (start >= faultStart) && (end <= validEnd);
+		return (start >= earliestFaultStart) && (end <= latestFaultEnd);
 	}
 	
 	public int getMaxRepeatCount() {
-		return faultRepeatCount;
+		return maxFaultRepeatCount;
+	}
+	
+	public double getEarliestStart() {
+		return earliestFaultStart;
+	}
+	
+	public double getLatestEnd() {
+		return latestFaultEnd;
+	}
+	
+	public double getMaxFaultLength() {
+		return maxFaultLength;
 	}
 }

@@ -1,10 +1,14 @@
 package atlasdsl.faults;
 
 import java.util.Optional;
+import java.util.Random;
+
 import atlassharedclasses.*;
 import middleware.core.ATLASCore;
 
 public class Fault {
+	Random random = new Random();
+	
 	private Optional<Region> affectedRegion;
 	private FaultImpact impact;
 	private FaultTimeProperties timeProperties;
@@ -48,5 +52,22 @@ public class Fault {
 
 	public int getMaxCount() {
 		return timeProperties.getMaxRepeatCount();
+	}
+
+	public FaultInstance randomWithin(FaultCreationTypes randomUniform) {		
+		double earliestStartTime = timeProperties.getEarliestStart();
+		double latestEndTime = timeProperties.getLatestEnd();
+		double maxLen = timeProperties.getMaxFaultLength();
+		
+		double offsetFromEarliest = random.nextDouble() * (latestEndTime - earliestStartTime);
+		double startTime = earliestStartTime + offsetFromEarliest;
+		double limitedLen = (latestEndTime - startTime);
+		System.out.println("limitedLen = " + limitedLen + ",maxLen=" + maxLen);
+				
+		double length = Math.min((random.nextDouble() * maxLen), limitedLen);
+		double endTime = startTime + length;
+		
+		FaultInstance fi = new FaultInstance(startTime, endTime, this);
+		return fi;
 	}
 }

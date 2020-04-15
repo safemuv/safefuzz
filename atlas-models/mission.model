@@ -129,7 +129,7 @@
     <fields xmi:id="_OIc_AXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT">
-    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" faultLength="1000.0" faultRepeatCount="1"/>
+    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1000.0" maxFaultLength="8.0" maxFaultRepeatCount="3"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
 </atlas:Mission>
