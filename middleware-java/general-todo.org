@@ -238,3 +238,13 @@ these are valid
 * TODO Returning after a fault is complete (how to return old behaviour)
 * TODO Some faults have to involve topology modifications?
 
+* TODO how can the user specify the custom faults?
+* TODO How to specify the impact of faults according to physical locations
+* TODO Can we add the methodology to the MODELS paper?
+* TODO In the models paper, describe faults more generally - permanent or intermittent
+** TODO for the paper, can we make it more consistent with existing models in literature
+** Do we want to continue the experiment after detecting failure of a goal - make it a user configurable option
+** Can we make sure the simulation can run in parallel - Docker container? or AC2 - have a play around with containers
+** Look around at Amazon EC2
+** UML diagrams preferred over EMF - break them down and simplify 
+** Web page to support the submission - maybe with videos - have managed to set up anonymous websites to support the submission

@@ -11,6 +11,7 @@ class FaultTimeProperties {
 	attr double latestFaultEnd;
 	attr double maxFaultLength;
 	attr int maxFaultRepeatCount;
+	attr double faultProb;
 }
 
 abstract class FaultImpact {

@@ -2,7 +2,9 @@ package faultgen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -20,29 +22,9 @@ public class FaultGenerator {
 	    }
 	}
 	
-	private class InvalidFaultFormat extends Exception {
-		private static final long serialVersionUID = 1L;		
-	}
-	
-	private class FaultNotFoundInModel extends Exception {
-		private static final long serialVersionUID = 1L;
-		private String faultName;
-		
-		private FaultNotFoundInModel(String faultName) {
-			this.faultName = faultName;
-		}
-	}
-	
-	private class FaultInstanceInvalid extends Exception {
-		private static final long serialVersionUID = 1L;
-	}
-	
-	private class FaultRepeatCountInvalid extends Exception {
-		private static final long serialVersionUID = 1L;
-	}
-	
 	private Mission mission;
 	private ATLASCore core;
+	private FaultFileIO faultFileIO;
 	
 	private CountHashmap<Fault> countFaults;
 	
@@ -58,36 +40,7 @@ public class FaultGenerator {
 	public FaultGenerator(ATLASCore core, Mission mission) {
 		this.core = core;
 		this.mission = mission;
-	}
-	
-	private FaultInstance decodeFaultFromString(String faultDefinition) throws InvalidFaultFormat, InvalidComponentType, FaultNotFoundInModel, FaultInstanceInvalid, FaultRepeatCountInvalid {
-		String[] fields = faultDefinition.split(",");
-		if (fields.length < 3) {
-			throw new InvalidFaultFormat();
-		} else {
-			
-			int faultInstanceNum = Integer.parseInt(fields[0]);
-			String faultNameInModel = fields[1];
-			Double startTime = Double.parseDouble(fields[2]);
-			Double length = Double.parseDouble(fields[3]);
-			Double endTime = startTime + length;
-			
-			Optional<Fault> f_o = mission.lookupFaultByName(faultNameInModel);
-			if (f_o.isPresent()) {
-				Fault f = f_o.get();
-				countFaults.incrementCount(f);
-				if ((countFaults.getCount(f)) > f.getMaxCount()) {
-					throw new FaultRepeatCountInvalid();
-				}
-				
-				FaultInstance fi = new FaultInstance(startTime, endTime, f);
-				if (!fi.isValid()) {
-					throw new FaultInstanceInvalid();
-				} else return fi;
-			} else {
-				throw new FaultNotFoundInModel(faultNameInModel);
-			}
-		}
+		this.faultFileIO = new FaultFileIO(mission);
 	}
 	
 	public void loadFaultsFromFile(String filename) throws FileNotFoundException {
@@ -98,7 +51,7 @@ public class FaultGenerator {
 			String faultAsString = reader.nextLine();
 			FaultInstance fault;
 			try {
-				fault = decodeFaultFromString(faultAsString);
+				fault = faultFileIO.decodeFaultFromString(faultAsString);
 				scheduledFaults.add(fault);
 			} catch (InvalidFaultFormat e) {
 				e.printStackTrace();
@@ -157,13 +110,16 @@ public class FaultGenerator {
 		}
 	}
 	
-	private void clearFaults() {
+	public void clearFaults() {
 		scheduledFaults.clear();
 	}
 
 	public void setFaultDefinitionFile(String filePath) {
 		try {
-			loadFaultsFromFile(filePath);
+			List<FaultInstance> faultInstances = faultFileIO.loadFaultsFromFile(filePath);
+			for (FaultInstance fi : faultInstances) {
+				scheduledFaults.add(fi);
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

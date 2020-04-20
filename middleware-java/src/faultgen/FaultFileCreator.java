@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import atlasdsl.*;
 import atlasdsl.faults.*;
@@ -15,11 +16,14 @@ public class FaultFileCreator {
 	int faultsToAdd = 0;
 	int faultsToRemove = 0;
 	
-	String baseFaultDirectory;
+	private String baseFaultDirectory;
+	private Random random;
 		
 	public FaultFileCreator(Mission mission, String baseFaultDirectory) {
 		this.mission = mission;
 		this.baseFaultDirectory = baseFaultDirectory;
+		// TODO: seeds for random generator
+		this.random = new Random();
 	}
 	
 	public void generateFile(String outputFile) {
@@ -56,9 +60,13 @@ public class FaultFileCreator {
 			int count = f.getMaxCount();
 			// Create count faults in the time range
 			for (int i = 0; i < count; i++) {
-				// TODO: argument RANDOM_UNIFORM is not yet used in any way - all generation is uniform
-				FaultInstance fi = f.randomWithin(FaultCreationTypes.RANDOM_UNIFORM);
-				outputFaultInstances.add(fi);
+				FaultTimeProperties ftp = f.getTimeProperties();
+				// TODO: check this computation of faults
+				if (random.nextDouble() < ftp.getFaultProb()) {
+					// TODO: argument RANDOM_UNIFORM is not yet used in any way - all generation is uniform
+					FaultInstance fi = f.randomWithin(FaultCreationTypes.RANDOM_UNIFORM);
+					outputFaultInstances.add(fi);
+				}
 			}
 		}
 		
@@ -68,4 +76,29 @@ public class FaultFileCreator {
 			e.printStackTrace();
 		}
 	}
+	
+	public void mutateFaults(String inputFile, String outputFile) {
+		List<FaultInstance> outputFaultInstances = new ArrayList<FaultInstance>();
+		List<Fault> faults = mission.getFaultsAsList();
+		for (Fault f : faults) {
+			int count = f.getMaxCount();
+			// Create count faults in the time range
+			for (int i = 0; i < count; i++) {
+				FaultTimeProperties ftp = f.getTimeProperties();
+				// TODO: check this computation of faults
+				if (random.nextDouble() < ftp.getFaultProb()) {
+					// TODO: argument RANDOM_UNIFORM is not yet used in any way - all generation is uniform
+					FaultInstance fi = f.randomWithin(FaultCreationTypes.RANDOM_UNIFORM);
+					outputFaultInstances.add(fi);
+				}
+			}
+		}
+		
+		try {
+			writeFaultDefinitionFile(baseFaultDirectory + "/" + outputFile, outputFaultInstances);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -5,12 +5,14 @@ public class FaultTimeProperties {
 	private double latestFaultEnd;
 	private double maxFaultLength;
 	private int maxFaultRepeatCount;
+	private double faultProb;
 	
-	public FaultTimeProperties(double faultStart, double faultEnd, double faultLength, int faultRepeatCount) {	
+	public FaultTimeProperties(double faultStart, double faultEnd, double faultLength, int faultRepeatCount, double faultProb) {	
 		this.earliestFaultStart = faultStart;
 		this.latestFaultEnd = faultEnd;
 		this.maxFaultLength = faultLength;
 		this.maxFaultRepeatCount = faultRepeatCount;
+		this.faultProb = faultProb;
 	}
 	
 	public boolean isInRange(double start, double length) {
@@ -32,5 +34,9 @@ public class FaultTimeProperties {
 	
 	public double getMaxFaultLength() {
 		return maxFaultLength;
+	}
+	
+	public double getFaultProb() {
+		return faultProb;
 	}
 }
