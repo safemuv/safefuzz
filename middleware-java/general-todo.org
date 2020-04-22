@@ -248,3 +248,14 @@ these are valid
 ** Look around at Amazon EC2
 ** UML diagrams preferred over EMF - break them down and simplify 
 ** Web page to support the submission - maybe with videos - have managed to set up anonymous websites to support the submission
+
+* TODO Necessary changes for experiment running
+** DONE Can we start simulation automatically under script control - MOOS, middleware and CI
+   CLOSED: [2020-04-22 Wed 01:37] - just test the script to make sure it works
+** DONE Need a goal to represent detection of all the environmental objects
+   CLOSED: [2020-04-22 Wed 01:26]
+** TODO Need middleware set up with speed and heading parameters for all robots - so they can be restored properly after fault
+*** TODO Logging - the mission completion time,  detection timings for objects
+** DONE Need to specify the fault instance filename to the middleware
+   CLOSED: [2020-04-22 Wed 01:36]
+** TODO How to start the MOOS simulation automatically with proper timing control? - without having to click DEPLOY - change generated MOOS behaviours

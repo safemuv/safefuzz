@@ -10,9 +10,21 @@ public class ATLASMain {
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();
+				
 			MOOSATLASCore core = new MOOSATLASCore(mission);
-			core.setFaultDefinitionFile("fault-instance-files/test.fif");
+			
+			if (args[0] != null) {
+			// core.setFaultDefinitionFile("fault-instance-files/test.fif");
+			core.setFaultDefinitionFile(args[0]);
+			}
+			
+			if (args[1] != null && args[1] != "false") {
+				core.createGUI();
+			}
+				
 			core.runMiddleware();
+			
+			
 		} catch (DSLLoadFailed e) {
 			System.out.println("DSL loading failed - configuration problems");
 			e.printStackTrace();

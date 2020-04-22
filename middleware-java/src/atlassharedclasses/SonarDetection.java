@@ -27,4 +27,8 @@ public class SonarDetection extends SensorInfo {
 	public String getRobotName() {
 		return detectingVehicleName;
 	}
+	
+	public int getObjectID() {
+		return objectID;
+	}
 }

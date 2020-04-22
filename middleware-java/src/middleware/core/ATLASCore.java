@@ -42,6 +42,9 @@ public abstract class ATLASCore {
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
+	}
+	
+	protected void createGUI() {
 		gui = new GUITest(mission, faultGen);
 	}
 	
@@ -72,7 +75,9 @@ public abstract class ATLASCore {
 		for (ATLASEventQueue q : queues) {
 			// Since the GUI displays global status, it
 			// needs to be updated following every event on any queue
-			q.registerAfterHook(() -> gui.updateGUI());
+			if (gui != null) {
+				q.registerAfterHook(() -> gui.updateGUI());
+			}
 			// Also after events, need to check for faults
 			q.registerAfterHook(() -> faultGen.pollFaultsNow());
 			q.registerAfterHook(() -> monitor.runStep());

@@ -13,7 +13,7 @@ public class MOOSATLASCore extends ATLASCore {
 		carsIncoming = new MOOSEventQueue(this, mission, MOOS_QUEUE_CAPACITY);
 		queues.add(carsIncoming);
 	}
-	
+
 	public void runMiddleware() {
 		super.runMiddleware();
 	}
