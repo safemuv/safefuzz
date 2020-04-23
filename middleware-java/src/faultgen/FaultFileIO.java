@@ -52,6 +52,7 @@ public class FaultFileIO {
 	
 	public List<FaultInstance> loadFaultsFromFile(String filename) throws FileNotFoundException {
 		List<FaultInstance> outputFaults = new ArrayList<FaultInstance>();
+		countFaults = new CountHashmap<Fault>();
 
 		File f = new File(filename);
 		Scanner reader = new Scanner(f);

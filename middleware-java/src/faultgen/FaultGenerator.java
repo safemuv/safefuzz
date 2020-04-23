@@ -43,31 +43,6 @@ public class FaultGenerator {
 		this.faultFileIO = new FaultFileIO(mission);
 	}
 	
-	public void loadFaultsFromFile(String filename) throws FileNotFoundException {
-		countFaults = new CountHashmap<Fault>();
-		File f = new File(filename);
-		Scanner reader = new Scanner(f);
-		while (reader.hasNextLine()) {
-			String faultAsString = reader.nextLine();
-			FaultInstance fault;
-			try {
-				fault = faultFileIO.decodeFaultFromString(faultAsString);
-				scheduledFaults.add(fault);
-			} catch (InvalidFaultFormat e) {
-				e.printStackTrace();
-			} catch (InvalidComponentType e) {
-				e.printStackTrace();
-			} catch (FaultNotFoundInModel e) {
-				e.printStackTrace();
-			} catch (FaultInstanceInvalid e) {
-				e.printStackTrace();
-			} catch (FaultRepeatCountInvalid e) {
-				e.printStackTrace();
-			}
-		}
-		reader.close();
-	}
-	
 	public void injectSpeedFaultNow(double timeLength, String robotName) {
 		Robot r = mission.getRobot(robotName);
 		// Need to look up the MotionSource for the target robot
@@ -121,7 +96,6 @@ public class FaultGenerator {
 				scheduledFaults.add(fi);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

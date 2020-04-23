@@ -13,17 +13,14 @@ public class ATLASMain {
 				
 			MOOSATLASCore core = new MOOSATLASCore(mission);
 			
-			if (args[0] != null) {
-			// core.setFaultDefinitionFile("fault-instance-files/test.fif");
-			core.setFaultDefinitionFile(args[0]);
+			if (args.length > 0 && args[0] != null) {
+				core.setFaultDefinitionFile(args[0]);
 			}
 			
-			if (args[1] != null && args[1] != "false") {
+			if (args.length > 1 && args[1] != null && args[1] != "false") {
 				core.createGUI();
 			}
-				
 			core.runMiddleware();
-			
 			
 		} catch (DSLLoadFailed e) {
 			System.out.println("DSL loading failed - configuration problems");
