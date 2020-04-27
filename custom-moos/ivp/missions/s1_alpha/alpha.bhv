@@ -1,9 +1,11 @@
 //--------    FILE: alpha.bhv   -------------
 
-initialize   DEPLOY = false
+initialize   DEPLOY = true
 initialize   RETURN = false
+initialize   MOOS_MANUAL_OVERRIDE=false
 	
 //----------------------------------------------
+
 Behavior = BHV_Waypoint
 { 
   name      = waypt_survey

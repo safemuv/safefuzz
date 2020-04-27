@@ -34,7 +34,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 	
 	private void setupBehaviourVars() {
 
-		moosBehaviourInitVals.put("DEPLOY", false);
+		moosBehaviourInitVals.put("DEPLOY", true);
 		moosBehaviourInitVals.put("RETURN", false);
 		moosBehaviourInitVals.put("STATION_KEEP", false);
 		moosBehaviourInitVals.put("LOITER", true);

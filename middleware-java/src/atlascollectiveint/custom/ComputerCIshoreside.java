@@ -119,6 +119,8 @@ class ComputerCIshoreside {
 		  Region region = e.getValue();
 		  API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
+		  API.startVehicle(robot);
+		  CollectiveIntLog.logCI("Starting robot " + robot);
 	  }
 	  
       // divide up the rect region amongst the robots

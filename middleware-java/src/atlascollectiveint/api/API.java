@@ -49,6 +49,12 @@ public class API {
 		prod.send(cmd, robotName);
 	}
 	
+	public static void startVehicle(String robotName) {
+		BehaviourCommand cmd = new StartVehicle(robotName);
+		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
+		prod.send(cmd, robotName);
+	}
+	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize, String messageName) {
 		Region r = Region.squareAroundPoint(p, size);
 		setPatrolAroundRegion(robotName, r, stepSize, messageName);
@@ -65,4 +71,6 @@ public class API {
 	public static void registerTimer(String timerName, Timer timer) {
 		ci.registerTimer(timerName, timer);
 	}
+	
+	
 }

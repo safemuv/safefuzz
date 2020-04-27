@@ -254,8 +254,15 @@ these are valid
    CLOSED: [2020-04-22 Wed 01:37] - just test the script to make sure it works
 ** DONE Need a goal to represent detection of all the environmental objects
    CLOSED: [2020-04-22 Wed 01:26]
-** TODO Need middleware set up with speed and heading parameters for all robots - so they can be restored properly after fault
-*** TODO Logging - the mission completion time,  detection timings for objects
+** TODO Need middleware set up with speed and heading parameters for all robots - so they can be restored properly after fault - NODE_REPORT_* SPD gives it
+*** TODO Logging - the mission completion time,  detection timings for objects - logs/atlasMissionMonitor.java - contains logging from the DetectObject goal
+*** TODO Testing the heading fault - ensure it works for MOOS
+*** TODO Testing the coordinate fault
+*** TODO Find a working vehicle configuration in no-fault case, and its expected end time
 ** DONE Need to specify the fault instance filename to the middleware
    CLOSED: [2020-04-22 Wed 01:36]
-** TODO How to start the MOOS simulation automatically with proper timing control? - without having to click DEPLOY - change generated MOOS behaviours
+** DONE How to start the MOOS simulation automatically with proper timing control? - without having to click DEPLOY - change generated MOOS behaviours
+   CLOSED: [2020-04-25 Sat 18:49]
+   Need to either initialize   MOOS_MANUAL_OVERRIDE=false in bhv file, or send this update via poke to start the helm automatically!
+
+

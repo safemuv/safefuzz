@@ -97,6 +97,15 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			System.out.println("CIEventQueue - ActivateBehaviour received");
 		}
 		
+		if (ciCmd instanceof StartVehicle) {
+			StartVehicle startCmd = (StartVehicle)ciCmd;
+			// TODO: Check for any fault impacting the command here
+			System.out.println("CIEventQueue - StartVehicle received");
+			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
+			// disable MOOS manual override to start the helm running
+			sendMOOSUpdate(robotName, "MOOS_MANUAL_OVERRIDE", "false");
+		}
+		
 		if (ciCmd instanceof SetCoordinates) {
 			SetCoordinates setCmd = (SetCoordinates)ciCmd;
 			// put the faults that impact the coordinate processing here
