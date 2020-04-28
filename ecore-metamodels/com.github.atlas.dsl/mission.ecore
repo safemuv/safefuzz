@@ -28,6 +28,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="AvoidOthers" eSuperTypes="#//GoalAction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clearance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjects" eSuperTypes="#//GoalAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//EnvironmentalObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="robotsNeededPerObject"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>

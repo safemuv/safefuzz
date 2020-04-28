@@ -9,6 +9,7 @@ import java.util.Optional;
 import atlasdsl.GoalResult.GoalResultStatus;
 import atlassharedclasses.Point;
 import middleware.core.ATLASCore;
+import middleware.logging.ATLASLog;
 
 public class DiscoverObjects extends GoalAction {
 	
@@ -17,6 +18,7 @@ public class DiscoverObjects extends GoalAction {
 		private String robotName;
 		private double time;
 		private int objectID;
+
 		
 		public DiscoveryRecord(int objectID, Point location, String robotName, double time) {
 			this.objectID = objectID;
@@ -35,8 +37,10 @@ public class DiscoverObjects extends GoalAction {
 	// TODO: need to ask the core for the detection logs! - stored when oncoming from the simulator
 	// may be impacted by faults
 	private ATLASCore core;
+	private Mission mission;
 	
 	public DiscoverObjects(List<EnvironmentalObject> targetObjects, int robotsNeededPerObject) {
+		System.out.println("DiscoverObjects created");
 		this.robotsNeededPerObject = robotsNeededPerObject;
 		for (EnvironmentalObject eo : targetObjects) {
 			locatedObjects.put(eo, new HashMap<String,DiscoveryRecord>());
@@ -66,17 +70,27 @@ public class DiscoverObjects extends GoalAction {
 	}
 	
 	private void registerRobotDetection(int objectID, String robotName, double time) {
-		for (Entry<EnvironmentalObject, Map<String, DiscoveryRecord>> me : locatedObjects.entrySet()) {
-			EnvironmentalObject eo = me.getKey();
-			if (eo.getLabel() == objectID && me.getValue() == null ) {
-				DiscoveryRecord dr = new DiscoveryRecord(objectID, eo, robotName, time);
-				// TODO: Log DiscoveryRecord to file here
-				me.getValue().put(robotName,dr);
+		Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(objectID);
+		
+		if (eo.isPresent()) {
+			Map<String,DiscoveryRecord> m = locatedObjects.get(eo);
+			
+			// Create new map for this EO if it doesn't exist
+			if (m == null) {
+				m = new HashMap<String,DiscoveryRecord>();
+			}
+			
+			// Add the robot to the map
+			if (m.get(robotName) == null) {
+				DiscoveryRecord dr = new DiscoveryRecord(objectID, (Point)(eo.get()), robotName, time);
+				ATLASLog.logGoalMessage(this.getClass(), time + "," + robotName + "," + Integer.toString(objectID));
+				m.put(robotName,dr);
 			}
 		}
 	}
 
 	protected void setup(ATLASCore core, Mission mission, Goal g) throws GoalActionSetupFailure {
+		this.mission = mission;
 		core.setupSensorWatcher((detection) -> 
 		{
 			double time = core.getTime();

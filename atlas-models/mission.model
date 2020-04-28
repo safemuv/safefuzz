@@ -113,7 +113,18 @@
     <action xsi:type="atlas:SensorCover" xmi:id="_D37MsHQIEeqc6cv9mBHIKw" density="5.0" samplesPerUnit="1"/>
     <region xsi:type="atlas:DynamicGoalRegion" xmi:id="_klx5EHP_Eeqc6cv9mBHIKw" relativeToGoal="_iULp4HP_Eeqc6cv9mBHIKw" relativeToGoalField="UUV_DETECTION_COORD" relativeRange="30.0"/>
   </goals>
-  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" x="10.0" y="-115.0" label="1"/>
+  <goals xmi:id="_D87cEIiOEeqQioZ_JAeWZg" name="findTestObjects">
+    <requirements xmi:id="_LL8yQIi0EeqQioZ_JAeWZg" latestFinishTime="1000.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <action xsi:type="atlas:DiscoverObjects" xmi:id="_S0efIIiOEeqQioZ_JAeWZg" objects="_DXIVsHRpEeqNXdfjikxLMQ _EPx08HRpEeqNXdfjikxLMQ _D2ADAHRpEeqNXdfjikxLMQ" robotsNeededPerObject="2"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vcl50Ii0EeqQioZ_JAeWZg">
+      <staticRegion xmi:id="_wBWMsIi0EeqQioZ_JAeWZg">
+        <corner1 xmi:id="_xmjP8Ii0EeqQioZ_JAeWZg"/>
+        <corner2 xmi:id="_yH9T4Ii0EeqQioZ_JAeWZg"/>
+      </staticRegion>
+    </region>
+  </goals>
+  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="10.0" label="1"/>
   <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="140.0" y="-65.0" isHazard="true" label="2"/>
   <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="135.0" y="-160.0" label="3"/>
   <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">

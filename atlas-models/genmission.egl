@@ -2,12 +2,15 @@
 [* componentLookup is used for resolving the name assigned in the Java
 DSL to everything that is a subclass of component *]
 [% var componentLookup = new Map(); %]
+[% var EObjectLookup = new Map(); %]
 package atlasdsl.loader;
 
 import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
@@ -79,6 +82,16 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addRobot([%= robotName %]);
 	[%} %] [* end Robot loop *]
 	
+	
+	[* Add environmental objects *]
+	[% var objectID = 0; %]
+	[% for (o in m.objects) { %]
+	EnvironmentalObject eo[%= objectID++ %] = new EnvironmentalObject([%= o.label %], new Point([%= o.x %],[%= o.y %],[%= o.z %]), [%= o.isHazard %]);
+	mission.addObject(eo[%= objectID %]);
+	[% EObjectLookup.put(o, o.label); %]
+	[% } %]
+	[* end environmental objects *]
+	
 	[% var goalnum = 0; %]
 	[% for (g in m.goals) { %]
 		[% goalnum++; %]
@@ -121,6 +134,15 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
 		
+		[% if (goalAction.isKindOf(DiscoverObjects)) { %]
+		List<EnvironmentalObject> ga[%= goalnum %]Objs = new ArrayList<EnvironmentalObject>();
+		[% for (eo in goalAction.objects) { %]
+		ga[%= goalnum %]Objs.add(eo[%= EObjectLookup.get(eo) %]);
+		[% } %]
+		GoalAction ga[%= goalnum %] = new DiscoverObjects(ga[%= goalnum %]Objs, [%= goalAction.robotsNeededPerObject %]);
+		
+		[% } %]
+		
 		[% var goalRegion = g.region; %]
 		[% if (goalRegion.isKindOf(StaticGoalRegion)) { %]
 		[% var sr = goalRegion.staticRegion; %]
@@ -151,10 +173,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
 	[% } %]
 	
-	[* Add environmental objects *]
-	[% for (o in m.objects) { %]
-	mission.addObject(new EnvironmentalObject([%= o.label %], new Point([%= o.x %],[%= o.y %],[%= o.z %]), [%= o.isHazard %]));
-	[% } %]
+
 	
 	[* Add messages - naming schema msg[name] *]
 	[% for (msg in m.messages) { %]

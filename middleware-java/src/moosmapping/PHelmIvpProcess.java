@@ -59,7 +59,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		msd4.setProperty("MODE", "ACTIVE");
 		msd4.setProperty("LOITER", true);
 		setModeProperties.put("LOITERING", msd4);
-	}
+	} 
 
 	
 	private void setupBehaviours(String vehicleName, Point startPos) {

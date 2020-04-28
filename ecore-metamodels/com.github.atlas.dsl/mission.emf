@@ -58,6 +58,11 @@ class AvoidOthers extends GoalAction {
 	attr double clearance;
 }
 
+class DiscoverObjects extends GoalAction {
+	ref Atlas.EnvironmentalObject[*] objects;
+	attr int robotsNeededPerObject;
+}
+
 class SensorCover extends Cover {
 	attr double density;
 	attr int samplesPerUnit;

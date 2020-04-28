@@ -3,7 +3,9 @@ initialize RETURN = false
 initialize STATION_KEEP = false
 initialize LOITER = true
 initialize AVOID = true
-initialize MODE = ACTIVE
+set MODE = ACTIVE {
+DEPLOY = true
+} INACTIVE
 
 set MODE = STATION-KEEPING {
 MODE = ACTIVE

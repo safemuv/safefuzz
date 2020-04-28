@@ -7,11 +7,14 @@ public class ATLASLog {
 	private static ATLASLog logger = null;
 	private FileWriter carsInboundLog;
 	private FileWriter mqOutboundLog;
+	private FileWriter goalLog;
 	
 	ATLASLog() {
 		try {
 			carsInboundLog = new FileWriter("logs/atlasCARSInbound.log");
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
+			goalLog = new FileWriter("logs/goalLog.log");
+			System.out.println("FileWriters created");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,6 +42,20 @@ public class ATLASLog {
 			getLog().mqOutboundLog.write("ActiveMQProducer.send on " + queueName + " received textMessage: " + text + "\n");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static synchronized void logGoalMessage(Class<?> goal, String msg) {
+		try {
+			String className = goal.getClass().getName();
+			getLog().goalLog.write(className + "," + msg + "\n");
+			// Ensure the stream is flushed as for some reason it wasn't 
+			// ever updating the file, even though all the other log files are?
+			// The writes should be infrequent though, so it shouldn't matter
+			getLog().goalLog.flush();
+			System.out.println("logGoalMessage:" + msg + "\n");
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

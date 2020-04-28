@@ -4,6 +4,8 @@ import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
@@ -118,6 +120,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rhenry);
 	
+	
+	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,10.0,0.0), false);
+	mission.addObject(eo1);
+	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true);
+	mission.addObject(eo2);
+	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false);
+	mission.addObject(eo3);
+	
  
  
  
@@ -132,6 +142,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalAction ga1 = new AvoidOthers(3.0);
+		
 		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
@@ -157,6 +168,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR);
 		
 		
+		
 		GoalRegion grprimarySensorSweep = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
 			           new Point(1000.0, 1000.0, 0.0)));
@@ -177,6 +189,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalRegion grverifySensorDetections = new DynamicGoalRegion(primarySensorSweep, "UUV_DETECTION_COORD", 30.0);
 		
 		Goal verifySensorDetections = new Goal("verifySensorDetections", mission, gt3, gpverifySensorDetections, Optional.of(grverifySensorDetections), ga3);
@@ -188,10 +201,38 @@ public class GeneratedDSLLoader implements DSLLoader {
 		}
 		
 		mission.addGoal("verifySensorDetections", verifySensorDetections);
+ 
+ 
+ 
+ 
+		
+		Robot [] grp4 = {rella,rfrank,rgilda,rhenry}; 
+		GoalParticipants gpfindTestObjects = new StaticParticipants(grp4, mission);
+		
+		
+		
+		GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, 1000.0);
+		
+		
+		
+		List<EnvironmentalObject> ga4Objs = new ArrayList<EnvironmentalObject>();
+		ga4Objs.add(eo1);
+		ga4Objs.add(eo3);
+		ga4Objs.add(eo2);
+		GoalAction ga4 = new DiscoverObjects(ga4Objs, 2);
+		
+		
+		GoalRegion grfindTestObjects = new StaticGoalRegion(
+			new Region(new Point(0.0, 0.0, 0.0),
+			           new Point(0.0, 0.0, 0.0)));
+		
+		
+		Goal findTestObjects = new Goal("findTestObjects", mission, gt4, gpfindTestObjects, Optional.of(grfindTestObjects), ga4);
+		
+		
+		mission.addGoal("findTestObjects", findTestObjects);
 	
-	mission.addObject(new EnvironmentalObject(1, new Point(10.0,-115.0,0.0), false));
-	mission.addObject(new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true));
-	mission.addObject(new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false));
+
 	
  
 	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", rella, c1);
@@ -218,7 +259,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 8.0, 3, 0.0); 
+	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 8.0, 3, 0.8); 
 	
 	Fault f1 = new Fault("SPEEDFAULT", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
