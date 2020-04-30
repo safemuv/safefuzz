@@ -70,20 +70,16 @@ public class DiscoverObjects extends GoalAction {
 	}
 	
 	private void registerRobotDetection(int objectID, String robotName, double time) {
-		Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(objectID);
+		Optional<EnvironmentalObject> eo_o = mission.getEnvironmentalObject(objectID);
 		
-		if (eo.isPresent()) {
+		if (eo_o.isPresent()) {
+			EnvironmentalObject eo = eo_o.get();
 			Map<String,DiscoveryRecord> m = locatedObjects.get(eo);
-			
-			// Create new map for this EO if it doesn't exist
-			if (m == null) {
-				m = new HashMap<String,DiscoveryRecord>();
-			}
-			
-			// Add the robot to the map
+						
+			// Add the robot to the map - if it is the first detection for that robotName
 			if (m.get(robotName) == null) {
-				DiscoveryRecord dr = new DiscoveryRecord(objectID, (Point)(eo.get()), robotName, time);
-				ATLASLog.logGoalMessage(this.getClass(), time + "," + robotName + "," + Integer.toString(objectID));
+				DiscoveryRecord dr = new DiscoveryRecord(objectID, (Point)(eo), robotName, time);
+				ATLASLog.logGoalMessage(this, time + "," + robotName + "," + Integer.toString(objectID));
 				m.put(robotName,dr);
 			}
 		}

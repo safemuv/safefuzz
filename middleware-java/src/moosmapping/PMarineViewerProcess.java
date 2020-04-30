@@ -21,11 +21,12 @@ public class PMarineViewerProcess extends MOOSProcess {
 		setProperty("ACTION","STATION_ALL = false");
 		setProperty("ACTION","STATION_ALL = true");
 
-		// TODO: how to make these buttons generic?
-		setProperty("BUTTON_ONE","DEPLOY  # DEPLOY_ALL=true");
-		setProperty("BUTTON_ONE","MOOS_MANUAL_OVERRIDE_ALL=false");
-		setProperty("BUTTON_ONE","RETURN_ALL=false");
-		setProperty("BUTTON_TWO","RETURN  # RETURN_ALL=true");
-		setProperty("BUTTON_THREE","PERMUTE   # UTS_FORWARD=0");
+		// For now, all the buttons are removed from the interface 
+		// The CI and middleware control all MOOS behaviour
+		//setProperty("BUTTON_ONE","DEPLOY  # DEPLOY_ALL=true");
+		//setProperty("BUTTON_ONE","MOOS_MANUAL_OVERRIDE_ALL=false");
+		//setProperty("BUTTON_ONE","RETURN_ALL=false");
+		//setProperty("BUTTON_TWO","RETURN  # RETURN_ALL=true");
+		//setProperty("BUTTON_THREE","PERMUTE   # UTS_FORWARD=0");
 	}
 }

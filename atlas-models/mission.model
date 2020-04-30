@@ -2,7 +2,7 @@
 <atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
   <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="ella">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw"/>
+      <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="190.0" y="-35.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_QVLBcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
@@ -23,7 +23,7 @@
   </robots>
   <robots xmi:id="_gx4mIHP-Eeqc6cv9mBHIKw" name="frank">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_C4ey0HQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_G0D3kHQREeqc6cv9mBHIKw" x="50.0"/>
+      <value xmi:id="_G0D3kHQREeqc6cv9mBHIKw" x="-85.0" y="-150.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_UhIrkHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_VG2AsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
@@ -44,7 +44,7 @@
   </robots>
   <robots xmi:id="_hNarkHP-Eeqc6cv9mBHIKw" name="gilda">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_FOiEMHQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_IfdpcHQREeqc6cv9mBHIKw" x="100.0"/>
+      <value xmi:id="_IfdpcHQREeqc6cv9mBHIKw" x="190.0" y="-150.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
@@ -65,7 +65,7 @@
   </robots>
   <robots xmi:id="_hkfHwHP-Eeqc6cv9mBHIKw" name="henry">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_Jyhz0HQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_K6StIHQREeqc6cv9mBHIKw" x="150.0"/>
+      <value xmi:id="_K6StIHQREeqc6cv9mBHIKw" x="-85.0" y="-45.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="0.75"/>
@@ -124,9 +124,9 @@
       </staticRegion>
     </region>
   </goals>
-  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="10.0" label="1"/>
-  <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="140.0" y="-65.0" isHazard="true" label="2"/>
-  <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="135.0" y="-160.0" label="3"/>
+  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-32.0" label="1"/>
+  <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="100.0" y="-17.0" isHazard="true" label="2"/>
+  <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="80.0" y="-160.0" label="3"/>
   <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_ItKQcHfxEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
@@ -142,5 +142,9 @@
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1000.0" maxFaultLength="8.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
+  </faults>
+  <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT">
+    <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="20.0" maxFaultLength="15.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="heading=153"/>
   </faults>
 </atlas:Mission>

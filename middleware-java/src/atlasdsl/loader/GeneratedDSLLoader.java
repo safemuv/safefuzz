@@ -16,7 +16,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addComputer(c1);
 	
 		Robot rella = new Robot("ella");
-		rella.setPointComponentProperty("startLocation", new Point(0.0,0.0,0.0));
+		rella.setPointComponentProperty("startLocation", new Point(190.0,-35.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 1.0);
 		
@@ -42,7 +42,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
-		rfrank.setPointComponentProperty("startLocation", new Point(50.0,0.0,0.0));
+		rfrank.setPointComponentProperty("startLocation", new Point(-85.0,-150.0,0.0));
 		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		rfrank.setDoubleComponentProperty("startSpeed", 1.0);
 		
@@ -68,7 +68,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rfrank);
 		Robot rgilda = new Robot("gilda");
-		rgilda.setPointComponentProperty("startLocation", new Point(100.0,0.0,0.0));
+		rgilda.setPointComponentProperty("startLocation", new Point(190.0,-150.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
 		
@@ -94,7 +94,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rgilda);
 		Robot rhenry = new Robot("henry");
-		rhenry.setPointComponentProperty("startLocation", new Point(150.0,0.0,0.0));
+		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
 		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
 		
@@ -121,11 +121,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addRobot(rhenry);
 	
 	
-	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,10.0,0.0), false);
+	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-32.0,0.0), false);
 	mission.addObject(eo1);
-	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(140.0,-65.0,0.0), true);
+	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(100.0,-17.0,0.0), true);
 	mission.addObject(eo2);
-	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(135.0,-160.0,0.0), false);
+	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(80.0,-160.0,0.0), false);
 	mission.addObject(eo3);
 	
  
@@ -263,6 +263,22 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f1 = new Fault("SPEEDFAULT", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
+	
+	
+	
+	FaultImpact fi2;
+	try {	
+		fi2 = new MotionFault(srgilda_3, "UP_LOITER", "heading=153");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 2 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8); 
+	
+	Fault f2 = new Fault("HEADINGFAULT", fi2, Optional.empty(), ft2);
+	mission.addFault(f2);
 	
 	return mission;
 	}

@@ -1,7 +1,6 @@
 package atlassharedclasses;
 
 public class SonarDetection extends SensorInfo {
-	// TODO: test to see if it fixes the serialising of Jackson fields
 	public Point detectionLocation;
 	public String detectingVehicleName;
 	public int objectID;

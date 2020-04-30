@@ -15,8 +15,7 @@ public class FaultTimeProperties {
 		this.faultProb = faultProb;
 	}
 	
-	public boolean isInRange(double start, double length) {
-		double end = start + length;
+	public boolean isInRange(double start, double end) {
 		return (start >= earliestFaultStart) && (end <= latestFaultEnd);
 	}
 	

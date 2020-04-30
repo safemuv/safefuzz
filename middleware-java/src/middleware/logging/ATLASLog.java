@@ -3,6 +3,8 @@ package middleware.logging;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import atlasdsl.GoalAction;
+
 public class ATLASLog {
 	private static ATLASLog logger = null;
 	private FileWriter carsInboundLog;
@@ -46,9 +48,9 @@ public class ATLASLog {
 		}
 	}
 	
-	public static synchronized void logGoalMessage(Class<?> goal, String msg) {
+	public static synchronized void logGoalMessage(GoalAction ga, String msg) {
 		try {
-			String className = goal.getClass().getName();
+			String className = ga.getClass().getName();
 			getLog().goalLog.write(className + "," + msg + "\n");
 			// Ensure the stream is flushed as for some reason it wasn't 
 			// ever updating the file, even though all the other log files are?
