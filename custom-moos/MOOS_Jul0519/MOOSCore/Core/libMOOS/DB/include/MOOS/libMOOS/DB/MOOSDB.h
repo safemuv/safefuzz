@@ -134,12 +134,14 @@ protected:
     double GetStartTime(){return m_dfStartTime;}
     void OnPrintVersionAndExit();
 
+protected:
+    double m_dfStartTime;
+
 private:
     std::string m_sDBName;
     std::string m_sCommunityName;
     CMOOSFileReader m_MissionReader;
     int m_nPort;
-    double m_dfStartTime;
     bool m_bQuiet;
     double m_dfSummaryTime;
 

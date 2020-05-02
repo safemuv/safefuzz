@@ -10,7 +10,7 @@
 using namespace std;
 
 CMOOSDB_ATLAS::CMOOSDB_ATLAS(int port, string mission_file) {
-    starting_moos_time = HPMOOSTime();
+
     cout << "starting_moos_time = " << starting_moos_time << endl;
     debug_output.open("/tmp/af_debug" + mission_file + ".log");
     debug_output << "MOOSDB_ATLAS debug" << endl;
@@ -32,10 +32,18 @@ CMOOSDB_ATLAS::CMOOSDB_ATLAS(int port, string mission_file) {
     cout << "ActiveMQ connection completed!" << endl;
 }
 
+bool CMOOSDB_ATLAS::Run(int argc, char *argv[]) {
+    bool res = CMOOSDB::Run(argc,argv);
+    // Moved here from the constructor - this needs to run after the MOOSTimeWarp set
+    starting_moos_time = HPMOOSTime();
+    return res;
+}
+
 bool CMOOSDB_ATLAS::faultInEffect(CMOOSDBVar &rVar) {
-        double dfTimeNow = HPMOOSTime() - starting_moos_time;
-        cout << "timeNow = " << dfTimeNow << endl;
-        return (rVar.m_dfOverrideTime > dfTimeNow);
+    //double dfTimeNow = HPMOOSTime() - starting_moos_time;
+    double dfTimeNow = HPMOOSTime() - m_dfStartTime;
+    cout << "timeNow = " << dfTimeNow << endl;
+    return (rVar.m_dfOverrideTime > dfTimeNow);
 }
 
 bool CMOOSDB_ATLAS::fromMQ(CMOOSMsg &Msg) {

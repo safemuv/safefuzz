@@ -35,6 +35,7 @@ public:
     //bool ProcessMsg(CMOOSMsg &MsgRx,MOOSMSG_LIST & MsgListTx);
     CMOOSDB_ATLAS(int port, const std::string mission_file);
     bool OnNotify(CMOOSMsg &Msg);
+    bool Run(int argc, char *argv[]);
 
     bool fromMQ(CMOOSMsg &Msg, double overrideTimeEnd);
     bool fromMQ(CMOOSMsg &Msg);

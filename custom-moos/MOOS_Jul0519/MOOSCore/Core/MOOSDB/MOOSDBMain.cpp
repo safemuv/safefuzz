@@ -39,7 +39,7 @@ int main(int argc , char * argv[])
   std::string mission_file = P.GetFreeParameter(0, "Mission.moos");
   
   // This is the main MOOS DB Object
-  CMOOSDB * DB;
+  CMOOSDB_ATLAS * DB;
   DB = new CMOOSDB_ATLAS(61616, mission_file);
        
   DB->Run(argc,argv);

@@ -21,7 +21,7 @@ public class MOOSCommunity {
 		missionFile.write("Simulator = true\n");
 		missionFile.write("community = " + communityName + "\n");
 		
-		missionFile.write("MOOSTimeWarp = 1\n");
+		missionFile.write("MOOSTimeWarp = 5\n");
 		
 		missionFile.write("LatOrigin = 43.825300\n");
 		missionFile.write("LongOrigin = -70.330400\n");

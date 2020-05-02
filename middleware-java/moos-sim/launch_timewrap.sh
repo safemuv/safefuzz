@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TW=1
+TW=10.0
 pAntler --MOOSTimeWarp=$TW targ_shoreside.moos &
 pAntler --MOOSTimeWarp=$TW targ_ella.moos &
 pAntler --MOOSTimeWarp=$TW targ_frank.moos &
