@@ -266,3 +266,5 @@ these are valid
    Need to either initialize   MOOS_MANUAL_OVERRIDE=false in bhv file, or send this update via poke to start the helm automatically!
 
 
+
+* TODO Redirect console from MOOS to accelerate sim

@@ -9,6 +9,7 @@ import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import faultgen.FaultGenerator;
 import middleware.gui.GUITest;
+import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
 
 // This code will be combined with the simulator-specific code
@@ -97,6 +98,7 @@ public abstract class ATLASCore {
 		//System.out.println("updateTime called with " + time);
 		if ((time > this.time)) {
 			this.time = time;
+			ATLASLog.logTime(time);
 		}
 	}
 	

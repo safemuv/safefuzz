@@ -669,7 +669,6 @@ bool CMOOSDB::OnNotify(CMOOSMsg &Msg) {
           rVar.m_dfTime = Msg.m_dfTime;
           rVar.m_sWhoChangedMe = Msg.m_sSrc;
           rVar.m_sSrcAux = Msg.m_sSrcAux; // Added by mikerb 5-29-12
-          
           if (Msg.m_sOriginatingCommunity.empty()) {
               // we are the server in the originating community
               rVar.m_sOriginatingCommunity = m_sCommunityName;

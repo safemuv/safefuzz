@@ -10,12 +10,14 @@ public class ATLASLog {
 	private FileWriter carsInboundLog;
 	private FileWriter mqOutboundLog;
 	private FileWriter goalLog;
+	private FileWriter timeLog;
 	
 	ATLASLog() {
 		try {
 			carsInboundLog = new FileWriter("logs/atlasCARSInbound.log");
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
 			goalLog = new FileWriter("logs/goalLog.log");
+			timeLog = new FileWriter("logs/atlasTime.log");
 			System.out.println("FileWriters created");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -63,7 +65,14 @@ public class ATLASLog {
 	}
 
 	public static void logCIInbound(String queueName, String text) {
-		// TODO Auto-generated method stub
-		
+
+	}
+	
+	public static synchronized void logTime(double timeVal) {
+		try {
+			getLog().timeLog.write(String.valueOf(timeVal) + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
