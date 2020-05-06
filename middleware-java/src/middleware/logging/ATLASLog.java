@@ -2,7 +2,6 @@ package middleware.logging;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
 import atlasdsl.GoalAction;
 
 public class ATLASLog {
@@ -18,6 +17,8 @@ public class ATLASLog {
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
 			goalLog = new FileWriter("logs/goalLog.log");
 			timeLog = new FileWriter("logs/atlasTime.log");
+			timeLog.write("0.0\n");
+			timeLog.flush();
 			System.out.println("FileWriters created");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
