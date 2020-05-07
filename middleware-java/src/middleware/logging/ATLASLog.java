@@ -1,5 +1,6 @@
 package middleware.logging;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import atlasdsl.GoalAction;
@@ -10,15 +11,19 @@ public class ATLASLog {
 	private FileWriter mqOutboundLog;
 	private FileWriter goalLog;
 	private FileWriter timeLog;
+	private FileOutputStream timeStream;
 	
 	ATLASLog() {
 		try {
 			carsInboundLog = new FileWriter("logs/atlasCARSInbound.log");
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
 			goalLog = new FileWriter("logs/goalLog.log");
-			timeLog = new FileWriter("logs/atlasTime.log");
+			timeStream = new FileOutputStream("logs/atlasTime.log");
+			timeLog = new FileWriter(timeStream.getFD());
 			timeLog.write("0.0\n");
 			timeLog.flush();
+			timeStream.getFD().sync();
+			
 			System.out.println("FileWriters created");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +76,12 @@ public class ATLASLog {
 	
 	public static synchronized void logTime(double timeVal) {
 		try {
-			getLog().timeLog.write(String.valueOf(timeVal) + "\n");
+			ATLASLog l = getLog();
+			l.timeLog.write(String.valueOf(timeVal) + "\n");
+			// Ensure the stream is flushed. If it isn't, experiments time
+			// will not be updated regularly enough
+			l.timeLog.flush();
+			l.timeStream.getFD().sync();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

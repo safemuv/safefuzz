@@ -18,6 +18,9 @@ public abstract class ATLASCore {
 	protected ATLASEventQueue carsIncoming;
 	protected ATLASEventQueue fromCI;
 	
+	// TODO: read this from the interface
+	private double timeLimit = 1000.0;
+	
 	//protected ATLASEventQueue fromFaultGen;
 	// for now the fault generator is installed in the middleware process itself,
 	// not communicating over ActiveMQ with it
@@ -94,11 +97,13 @@ public abstract class ATLASCore {
 		return time; 
 	}
 	
-	public void updateTime(double time) throws CausalityException {
+	public synchronized void updateTime(double time) throws CausalityException {
 		//System.out.println("updateTime called with " + time);
 		if ((time > this.time)) {
 			this.time = time;
-			ATLASLog.logTime(time);
+			if (this.time > timeLimit) {
+				ATLASLog.logTime(time);
+			}
 		}
 	}
 	

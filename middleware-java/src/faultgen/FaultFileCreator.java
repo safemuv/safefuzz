@@ -77,6 +77,8 @@ public class FaultFileCreator {
 		}
 	}
 	
+	
+	
 	public void mutateFaults(String inputFile, String outputFile) {
 		List<FaultInstance> outputFaultInstances = new ArrayList<FaultInstance>();
 		List<Fault> faults = mission.getFaultsAsList();

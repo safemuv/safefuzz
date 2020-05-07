@@ -1,7 +1,6 @@
 package exptrunner;
 
 import java.util.List;
-
 import atlassharedclasses.FaultInstance;
 
 public abstract class ExptParams {
@@ -15,10 +14,6 @@ public abstract class ExptParams {
 	public abstract void advance();
 
 
-	public void processGoalResults(String string) {
-		// TODO: process the goal results file log
-		System.out.println("Need to process the result file here!");
-	}
-	
+	public abstract void logResults(String string);
 	public abstract List<FaultInstance> specificFaults();
 }
