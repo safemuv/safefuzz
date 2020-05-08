@@ -22,10 +22,10 @@ public class SingleFaultCoverageExpt extends ExptParams {
 	
 	// The current fault ID
 	private int currentFault;
-	
 	private boolean completed = false;
+	private double stepFactor;
 	
-	public SingleFaultCoverageExpt(double timeStart, double timeEnd, double maxLength, double minLength, Fault fault) {
+	public SingleFaultCoverageExpt(double timeStart, double timeEnd, double maxLength, double minLength, double stepFactor, Fault fault) {
 		this.timeStart = timeStart;
 		this.time = timeStart;
 		this.timeEnd = timeEnd;
@@ -34,13 +34,14 @@ public class SingleFaultCoverageExpt extends ExptParams {
 		this.minLength = minLength;
 		this.completed = false;
 		this.fault = fault;
+		this.stepFactor = stepFactor;
 	}
 
 	public void advance() {
 		time += len;
-		if (time > timeEnd) {
+		if (time >= timeEnd) {
 			time = timeStart;
-			len = len * 0.75;
+			len = len * stepFactor;
 		}
 	}
 
@@ -59,5 +60,9 @@ public class SingleFaultCoverageExpt extends ExptParams {
 	public void logResults(String string) {
 		// Read the goal result file here - process the given goals
 		// Write it out to a common result file - with the fault info
+	}
+
+	public void printState() {
+		System.out.println("time = " + time + ",len = " + len);
 	}
 }

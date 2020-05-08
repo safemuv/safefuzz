@@ -133,6 +133,9 @@ public abstract class ATLASCore {
 	}
 	
 	public void setFaultDefinitionFile(String filePath) {
-		faultGen.setFaultDefinitionFile(filePath);
+		if (gui != null) {
+			gui.setFaultDefinitionFile(filePath);
+			faultGen.setFaultDefinitionFile(filePath);
+		}
 	}
 }

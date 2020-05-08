@@ -34,6 +34,7 @@ public class GUITest {
     private String chosenRobotName = "";
     
     private PositionTrackingOutput ptPanel;
+	private String faultDefFile;
 	
 	private class RobotChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -115,6 +116,7 @@ public class GUITest {
     	this.faultGen = faultGen;
     	
     	f=new JFrame();
+    	f.setTitle("ATLAS Middleware - no faults defined");
     	
     	ptPanel = new PositionTrackingOutput(this);
     	ptPanel.setBackground(new Color(0,0,0));
@@ -165,4 +167,9 @@ public class GUITest {
 			}
 		});
     }
+
+	public void setFaultDefinitionFile(String filePath) {
+		this.faultDefFile = filePath;
+		f.setTitle("ATLAS Middleware - FAULTS DEFINED in " + faultDefFile);
+	}
 }

@@ -18,6 +18,8 @@ public class ExptHelper {
 		return process;
 	}
 	
+	// startNewJavaProcess("-jar atlas.jar", "middleware.core.ATLASMain", "test.fif", PATH);
+	
 	// https://wiki.cantara.no/display/dev/Start+a+new+JVM+from+Java
 	public static ProcessBuilder createJVMProcess(final String optionsAsString, final String mainClass,
 			final String[] arguments) {
@@ -31,6 +33,7 @@ public class ExptHelper {
 		command.add(mainClass);
 		command.addAll(Arrays.asList(arguments));
 
+		System.out.println("command: " + command);
 		ProcessBuilder processBuilder = new ProcessBuilder(command);
 		Map<String, String> environment = processBuilder.environment();
 		environment.put("CLASSPATH", classpath);
@@ -52,4 +55,6 @@ public class ExptHelper {
 		Process proc = pb.start();
 		return proc;
 	}
+	
+
 }

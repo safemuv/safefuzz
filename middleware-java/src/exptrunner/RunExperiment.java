@@ -53,23 +53,18 @@ public class RunExperiment {
 			try {
 				reader.close();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 		}
 	}
 
-
-
-
-
-	private static void scanExperiment(Mission mission, String exptTag, ExptParams eparams) {
+	private static void doExperiment(Mission mission, String exptTag, ExptParams eparams) {
 		Process middleware;
 
 		int faultInstanceFileNum = 0;
-		Runtime r = Runtime.getRuntime();
 
 		while (!eparams.completed()) {
+			eparams.printState();
 			// TODO: generate fresh MOOS code if required - need to specify the MOOSTimeWarp
 			// here?
 
@@ -98,17 +93,17 @@ public class RunExperiment {
 				TimeUnit.MILLISECONDS.sleep(1000);
 
 				String[] middlewareOpts = { faultInstanceFileName, " false" };
-				middleware = ExptHelper.startNewJavaProcess("-jar " + ABS_ATLAS_JAR, "middleware.core.ATLASMain", middlewareOpts,	ABS_WORKING_PATH);
+				middleware = ExptHelper.startNewJavaProcess("-jar", ABS_ATLAS_JAR, middlewareOpts,	ABS_WORKING_PATH);
 
 				// Sleep until the middleware is ready, then start the CI
 				TimeUnit.MILLISECONDS.sleep(1000);
 
 				// CI not starting properly as a process, call it via a script
 				exptLog("Starting CI");
-				// TODO: fix absolute paths when working
-				ExptHelper.startScript("/home/jharbin/academic/atlas/atlas-middleware/expt-working", "run-ci.sh");
+				// TODO: check CI - fix absolute paths when working
+				ExptHelper.startScript(ABS_MIDDLEWARE_PATH, "run-ci.sh");
 
-				// wait until the end condition for the middleware - time elapsed?
+				// Wait until the end condition for the middleware
 				waitUntilMiddlewareTime(eparams.getTimeLimit());
 				exptLog("Middleware end time reached");
 				exptLog("Destroying middleware processes");
@@ -124,20 +119,17 @@ public class RunExperiment {
 				// or according to predefined template)
 				eparams.advance();
 				faultInstanceFileNum++;
-				exptLog("Waiting to restart");
-				TimeUnit.MILLISECONDS.sleep(1000);
+				exptLog("Waiting to restart experiment");
+				// Wait 10 seconds before ending 
+				TimeUnit.MILLISECONDS.sleep(10000);
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
-
 
 	public static void main(String[] args) {
 		DSLLoader loader = new GeneratedDSLLoader();
@@ -148,12 +140,11 @@ public class RunExperiment {
 			if (f_o.isPresent()) {
 				Fault f = f_o.get();
 				// TODO: Read args to launch appropriate experiment
-				ExptParams ep = new SingleFaultCoverageExpt(0.0, 999.0, 999.0, 100.0, f);
-				scanExperiment(mission, "coverage", ep);
+				ExptParams ep = new SingleFaultCoverageExpt(0.0, 999.0, 999.0, 100.0, 0.5, f);
+				doExperiment(mission, "coverage", ep);
 				exptLog("Done");
 			}
 		} catch (DSLLoadFailed e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

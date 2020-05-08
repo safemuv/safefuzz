@@ -10,16 +10,17 @@ public class ATLASMain {
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();
-				
 			MOOSATLASCore core = new MOOSATLASCore(mission);
-			
-			if (args.length > 0 && args[0] != null) {
-				core.setFaultDefinitionFile(args[0]);
-			}
-			
+			// Create the GUI first, since we set its window title from the
+			// fault definition file
 			if (args.length > 1 && args[1] != null && args[1] != "false") {
 				core.createGUI();
 			}
+			
+			if (args.length > 0 && args[0] != null && args[0] != "nofault") {
+				core.setFaultDefinitionFile(args[0]);
+			}
+			
 			core.runMiddleware();
 			
 		} catch (DSLLoadFailed e) {

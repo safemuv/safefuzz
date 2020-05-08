@@ -11,9 +11,8 @@ public abstract class ExptParams {
 	}
 
 	public abstract boolean completed();
+	public abstract void printState();
 	public abstract void advance();
-
-
 	public abstract void logResults(String string);
 	public abstract List<FaultInstance> specificFaults();
 }

@@ -3,6 +3,12 @@ package exptrunner;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
+import atlasdsl.Mission;
+import atlasdsl.faults.Fault;
+import atlasdsl.loader.DSLLoadFailed;
+import atlasdsl.loader.DSLLoader;
+import atlasdsl.loader.GeneratedDSLLoader;
 
 public class ExptRunnerTest {
 	private final static String ABS_ATLAS_JAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas.jar";
@@ -35,5 +41,30 @@ public class ExptRunnerTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void testExpSequence() {
+		try {
+			DSLLoader loader = new GeneratedDSLLoader();
+			Mission mission = loader.loadMission();
+			Optional<Fault> f_o = mission.lookupFaultByName("SPEEDFAULT");
+			if (f_o.isPresent()) {
+				Fault f = f_o.get();
+				//TODO: Read args to launch appropriate experiment
+				ExptParams ep = new SingleFaultCoverageExpt(0.0, 999.0, 999.0, 100.0, 0.5, f);
+				
+				while (!ep.completed()) {
+					ep.printState();
+					ep.advance();	
+				}
+			}
+		} catch (DSLLoadFailed e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String [] args) {
+		testExpSequence();
 	}
 }
