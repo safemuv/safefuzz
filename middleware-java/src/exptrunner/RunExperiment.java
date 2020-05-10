@@ -92,7 +92,7 @@ public class RunExperiment {
 				// Sleep until MOOS is ready
 				TimeUnit.MILLISECONDS.sleep(1000);
 
-				String[] middlewareOpts = { faultInstanceFileName, " false" };
+				String[] middlewareOpts = { faultInstanceFileName, "nogui" };
 				middleware = ExptHelper.startNewJavaProcess("-jar", ABS_ATLAS_JAR, middlewareOpts,	ABS_WORKING_PATH);
 
 				// Sleep until the middleware is ready, then start the CI

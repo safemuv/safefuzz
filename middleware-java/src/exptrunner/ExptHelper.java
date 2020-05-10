@@ -33,7 +33,7 @@ public class ExptHelper {
 		command.add(mainClass);
 		command.addAll(Arrays.asList(arguments));
 
-		System.out.println("command: " + command);
+		System.out.println("command: " + String.join(" ", command));
 		ProcessBuilder processBuilder = new ProcessBuilder(command);
 		Map<String, String> environment = processBuilder.environment();
 		environment.put("CLASSPATH", classpath);

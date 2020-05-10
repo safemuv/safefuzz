@@ -11,6 +11,7 @@ public class ATLASLog {
 	private FileWriter mqOutboundLog;
 	private FileWriter goalLog;
 	private FileWriter timeLog;
+	private FileWriter optionsLog;
 	private FileOutputStream timeStream;
 	
 	ATLASLog() {
@@ -19,6 +20,7 @@ public class ATLASLog {
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
 			goalLog = new FileWriter("logs/goalLog.log");
 			timeStream = new FileOutputStream("logs/atlasTime.log");
+			optionsLog = new FileWriter("logs/options.log");
 			timeLog = new FileWriter(timeStream.getFD());
 			timeLog.write("0.0\n");
 			timeLog.flush();
@@ -72,6 +74,16 @@ public class ATLASLog {
 
 	public static void logCIInbound(String queueName, String text) {
 
+	}
+	
+	public static void logMiddlewareOptions(String key, String value) {
+		try {
+			ATLASLog l = getLog();
+			l.optionsLog.write(key + "=" + value);
+			l.optionsLog.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static synchronized void logTime(double timeVal) {
