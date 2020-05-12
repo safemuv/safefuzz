@@ -13,6 +13,10 @@ public class FaultInstance {
 		this.endTime = endTime;
 		this.fault = f;
 	}
+	
+	public String toString() {
+		return fault.toString() + "|" + startTime + "->" + endTime; 
+	}
 
 	public boolean isReady(double time) {
 		return (time >= startTime) && (time <= endTime);

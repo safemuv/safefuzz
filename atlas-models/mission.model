@@ -139,12 +139,24 @@
   <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY" from="_hkfHwHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_OIc_AXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT">
-    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+  <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-ELLA">
+    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT">
     <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="20.0" maxFaultLength="15.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="heading=153"/>
+  </faults>
+  <faults xmi:id="_eW05sJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-FRANK">
+    <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_eW05spRPEeq4FYD6a9PbTQ" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
+  </faults>
+  <faults xmi:id="_ewiaMJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-GILDA">
+    <affectedTime xmi:id="_ewiaMZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_ewiaMpRPEeq4FYD6a9PbTQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
+  </faults>
+  <faults xmi:id="_e8JNQJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-HENRY">
+    <affectedTime xmi:id="_e8JNQZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_e8JNQpRPEeq4FYD6a9PbTQ" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
 </atlas:Mission>

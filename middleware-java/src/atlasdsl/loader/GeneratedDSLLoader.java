@@ -259,9 +259,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 3, 0.8); 
+	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
 	
-	Fault f1 = new Fault("SPEEDFAULT", fi1, Optional.empty(), ft1);
+	Fault f1 = new Fault("SPEEDFAULT-ELLA", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
 	
 	
@@ -275,10 +275,58 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8); 
+	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8);
 	
 	Fault f2 = new Fault("HEADINGFAULT", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);
+	
+	
+	
+	FaultImpact fi3;
+	try {	
+		fi3 = new MotionFault(srfrank_3, "UP_LOITER", "speed=5.0");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 3 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft3 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	
+	Fault f3 = new Fault("SPEEDFAULT-FRANK", fi3, Optional.empty(), ft3);
+	mission.addFault(f3);
+	
+	
+	
+	FaultImpact fi4;
+	try {	
+		fi4 = new MotionFault(srgilda_3, "UP_LOITER", "speed=5.0");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 4 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft4 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	
+	Fault f4 = new Fault("SPEEDFAULT-GILDA", fi4, Optional.empty(), ft4);
+	mission.addFault(f4);
+	
+	
+	
+	FaultImpact fi5;
+	try {	
+		fi5 = new MotionFault(srhenry_3, "UP_LOITER", "speed=5.0");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 5 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft5 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	
+	Fault f5 = new Fault("SPEEDFAULT-HENRY", fi5, Optional.empty(), ft5);
+	mission.addFault(f5);
 	
 	return mission;
 	}

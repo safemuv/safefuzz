@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ExptHelper {
-	
 	public static Process startNewJavaProcess(final String optionsAsString, final String mainClass,
 			final String[] arguments, String path) throws IOException {
 
@@ -19,7 +18,6 @@ public class ExptHelper {
 	}
 	
 	// startNewJavaProcess("-jar atlas.jar", "middleware.core.ATLASMain", "test.fif", PATH);
-	
 	// https://wiki.cantara.no/display/dev/Start+a+new+JVM+from+Java
 	public static ProcessBuilder createJVMProcess(final String optionsAsString, final String mainClass,
 			final String[] arguments) {

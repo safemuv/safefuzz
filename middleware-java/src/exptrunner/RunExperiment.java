@@ -132,19 +132,27 @@ public class RunExperiment {
 	}
 
 	public static void main(String[] args) {
+		// Read args to launch appropriate experiment
+		String faultName = "SPEEDFAULT-ELLA";
+		if (args[0] != null) {
+			faultName = args[0];
+		}
+		
 		DSLLoader loader = new GeneratedDSLLoader();
 		Mission mission;
 		try {
 			mission = loader.loadMission();
-			Optional<Fault> f_o = mission.lookupFaultByName("SPEEDFAULT");
+			Optional<Fault> f_o = mission.lookupFaultByName(faultName);
 			if (f_o.isPresent()) {
+				String resFileName = faultName + "_goalDiscovery.res";
 				Fault f = f_o.get();
-				// TODO: Read args to launch appropriate experiment
-				ExptParams ep = new SingleFaultCoverageExpt(0.0, 999.0, 999.0, 100.0, 0.5, f);
-				doExperiment(mission, "coverage", ep);
+				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f);
+				doExperiment(mission, faultName + "_coverage", ep);
 				exptLog("Done");
 			}
 		} catch (DSLLoadFailed e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
