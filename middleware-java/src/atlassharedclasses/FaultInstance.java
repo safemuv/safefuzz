@@ -15,7 +15,7 @@ public class FaultInstance {
 	}
 	
 	public String toString() {
-		return fault.toString() + "|" + startTime + "->" + endTime; 
+		return fault.toString() + "," + startTime + "," + endTime; 
 	}
 
 	public boolean isReady(double time) {
