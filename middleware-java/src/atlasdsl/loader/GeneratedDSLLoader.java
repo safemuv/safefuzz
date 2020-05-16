@@ -275,7 +275,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8);
+	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8); 
 	
 	Fault f2 = new Fault("HEADINGFAULT", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);

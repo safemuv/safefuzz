@@ -31,6 +31,10 @@ public class FaultFileIO {
 			Double startTime = Double.parseDouble(fields[2]);
 			Double length = Double.parseDouble(fields[3]);
 			Double endTime = startTime + length;
+			Optional<String> extraData = Optional.empty();
+			if (fields.length > 4) {
+				extraData = Optional.of(fields[4]);
+			}
 			
 			Optional<Fault> f_o = mission.lookupFaultByName(faultNameInModel);
 			if (f_o.isPresent()) {
@@ -40,7 +44,7 @@ public class FaultFileIO {
 					throw new FaultRepeatCountInvalid();
 				}
 				
-				FaultInstance fi = new FaultInstance(startTime, endTime, f);
+				FaultInstance fi = new FaultInstance(startTime, endTime, f, extraData);
 				if (!fi.isValid()) {
 					throw new FaultInstanceInvalid();
 				} else return fi;
@@ -50,6 +54,7 @@ public class FaultFileIO {
 		}
 	}
 	
+	// TODO: should be renamed to loadFaultInstancesFromFile
 	public List<FaultInstance> loadFaultsFromFile(String filename) throws FileNotFoundException {
 		List<FaultInstance> outputFaults = new ArrayList<FaultInstance>();
 		countFaults = new CountHashmap<Fault>();

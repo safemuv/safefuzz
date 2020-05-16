@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -31,10 +32,13 @@ public class SingleFaultCoverageExpt extends ExptParams {
 	
 	// The current fault ID
 	private int currentFault;
+	
+	private Optional<String> extraFaultInstanceData;
+	
 	private boolean completed = false;
 	private double stepFactor;
 	
-	public SingleFaultCoverageExpt(String filename, double timeStart, double timeEnd, double maxLength, double minLength, double stepFactor, Fault fault) throws IOException {
+	public SingleFaultCoverageExpt(String filename, double timeStart, double timeEnd, double maxLength, double minLength, double stepFactor, Fault fault, Optional<String> extraFaultInstanceData) throws IOException {
 		this.timeStart = timeStart;
 		this.time = timeStart;
 		this.timeEnd = timeEnd;
@@ -46,6 +50,7 @@ public class SingleFaultCoverageExpt extends ExptParams {
 		this.stepFactor = stepFactor;
 		this.combinedResults = new FileWriter(filename);
 		this.currentFault = 0;
+		this.extraFaultInstanceData = extraFaultInstanceData;
 	}
 
 	public void advance() {
@@ -60,7 +65,7 @@ public class SingleFaultCoverageExpt extends ExptParams {
 	public List<FaultInstance> specificFaults() {
 		List<FaultInstance> fs = new ArrayList<FaultInstance>();
 		System.out.println("Generating fault instance at " + time + " of length " + len);
-		FaultInstance fi = new FaultInstance(time, time+len, fault);
+		FaultInstance fi = new FaultInstance(time, time+len, fault, extraFaultInstanceData);
 		fs.add(fi);
 		return fs;
 	}

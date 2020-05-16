@@ -14,6 +14,7 @@ import atlassharedclasses.FaultInstance;
 import faultgen.*;
 import atlasdsl.*;
 import atlasdsl.faults.Fault;
+import atlasdsl.faults.MotionFault;
 
 public class RunExperiment {
 
@@ -134,7 +135,7 @@ public class RunExperiment {
 	public static void main(String[] args) {
 		// Read args to launch appropriate experiment
 		String faultName = "SPEEDFAULT-ELLA";
-		if (args[0] != null) {
+		if (args.length > 0 && args[0] != null) {
 			faultName = args[0];
 		}
 		
@@ -144,9 +145,29 @@ public class RunExperiment {
 			mission = loader.loadMission();
 			Optional<Fault> f_o = mission.lookupFaultByName(faultName);
 			if (f_o.isPresent()) {
-				String resFileName = faultName + "_goalDiscovery.res";
+				String resFileName = faultName;
 				Fault f = f_o.get();
-				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f);
+				Optional<String> speedOverride_o = Optional.empty(); 
+				
+				// hack to change the fault speed
+				if (f.getImpact() instanceof MotionFault) {
+					if (args.length > 1 && args[1] != null) {
+						String speedOverride_s = args[1];
+						speedOverride_o = Optional.of(speedOverride_s);
+						double speedOverride = Double.valueOf(speedOverride_s);
+						MotionFault mfi = (MotionFault)f.getImpact();
+						resFileName = resFileName + speedOverride_s;
+						System.out.println("Experiment overriding speed to " + speedOverride);
+						mfi._overrideSpeed(speedOverride);
+						
+						// test
+						MotionFault mfi2 = (MotionFault)f.getImpact();
+						System.out.println("test new value = " + mfi2.getNewValue());
+					}
+				}
+				resFileName = resFileName + "_goalDiscovery.res";
+				
+				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f, speedOverride_o);
 				doExperiment(mission, faultName + "_coverage", ep);
 				exptLog("Done");
 			}

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class RepeatSameFaultConfig extends ExptParams {
 	public List<FaultInstance> specificFaults() {
 		List<FaultInstance> fs = new ArrayList<FaultInstance>();
 		System.out.println("Generating fault instance at " + timeStart + " to " + timeEnd);
-		FaultInstance fi = new FaultInstance(timeStart, timeEnd, fault);
+		FaultInstance fi = new FaultInstance(timeStart, timeEnd, fault, Optional.empty());
 		fs.add(fi);
 		return fs;
 	}

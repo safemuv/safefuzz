@@ -67,7 +67,7 @@ public class Fault {
 		double length = Math.min((random.nextDouble() * maxLen), limitedLen);
 		double endTime = startTime + length;
 		
-		FaultInstance fi = new FaultInstance(startTime, endTime, this);
+		FaultInstance fi = new FaultInstance(startTime, endTime, this, Optional.empty());
 		return fi;
 	}
 }

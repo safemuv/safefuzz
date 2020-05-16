@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.FaultInstance;
@@ -38,7 +37,7 @@ public class FaultFileCreator {
 	// file IO/format reading
 	public void writeFaultInstance(int faultInstanceCount, FileWriter fw, FaultInstance fi) throws IOException {
 		Fault f = fi.getFault();
-		String output = Integer.toString(faultInstanceCount) + "," + f.getName() +  "," +  Double.toString(fi.getStartTime()) + "," + Double.toString(fi.getEndTime()) + "\n";
+		String output = Integer.toString(faultInstanceCount) + "," + f.getName() +  "," +  Double.toString(fi.getStartTime()) + "," + Double.toString(fi.getEndTime()) + "," + fi.getExtraData() + "\n";
 		fw.append(output);
 	}
 	
@@ -76,8 +75,6 @@ public class FaultFileCreator {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public void mutateFaults(String inputFile, String outputFile) {
 		List<FaultInstance> outputFaultInstances = new ArrayList<FaultInstance>();

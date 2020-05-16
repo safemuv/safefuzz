@@ -20,6 +20,10 @@ public class MotionFault extends ComponentImpact {
 		}
 	}
 	
+	public String getNewValue() {
+		return newValue;
+	}
+	
 	public Object applyImpact(Object orig) {
 		return orig;
 	}
@@ -38,5 +42,10 @@ public class MotionFault extends ComponentImpact {
 		System.out.println("Motion fault completion effect");
 		Robot relevantVehicle = (Robot)affectedComponent.getParent();
 		core.sendToCARS(relevantVehicle, affectedProperty, originalValue);
+	}
+
+	public void _overrideSpeed(double speedOverride) {
+		newValue = "speed=" + Double.toString(speedOverride);
+		System.out.println("WARNING: using temporary hack to override speed only for experiments: " + newValue);
 	}
 }

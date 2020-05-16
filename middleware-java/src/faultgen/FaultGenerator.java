@@ -52,7 +52,7 @@ public class FaultGenerator {
 			try {
 				fi = new MotionFault(ms, "UP_LOITER", "speed=5.0");
 				Fault f = new Fault(fi);
-				FaultInstance fInstance = new FaultInstance(startTime, endTime, f);
+				FaultInstance fInstance = new FaultInstance(startTime, endTime, f, Optional.empty());
 				scheduledFaults.add(fInstance);
 			} catch (InvalidComponentType e) {
 				System.out.println("Injecting fault failed - invalid component type not a MotionSource");

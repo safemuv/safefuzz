@@ -2,7 +2,7 @@ ServerHost = localhost
 ServerPort = 9000
 Simulator = true
 community = shoreside
-MOOSTimeWarp = 10
+MOOSTimeWarp = 5
 LatOrigin = 43.825300
 LongOrigin = -70.330400
 
@@ -11,7 +11,7 @@ Processconfig = ANTLER
 MSBetweenLaunches = 100
 Run = MOOSDB @ NewConsole = false
 Run = uProcessWatch @ NewConsole = false
-# Run = pMarineViewer @ NewConsole = false
+Run = pMarineViewer @ NewConsole = false
 Run = pHostInfo @ NewConsole = false
 Run = uFldShoreBroker @ NewConsole = false
 Run = pShare @ NewConsole = false
