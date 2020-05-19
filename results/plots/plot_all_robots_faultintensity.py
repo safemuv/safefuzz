@@ -28,16 +28,13 @@ for i in range(0,len(index)):
     v_for_cell = counts[i] / 6
     flines = np.where(fault_nums==i)
     fline = flines[0][0]
-    rect = Rectangle((starts[fline],lengths[fline]),lengths[fline],lengths[fline], color=(1,v_for_cell,1))
+    rect = Rectangle((starts[fline],lengths[fline]),i,1, color=(1,v_for_cell,1))
     ax.add_patch(rect)
     # How to set the colour
 
-plt.ylim(0,2000);
+plt.ylim(0,4);
 plt.xlim(0,1000);
 plt.xlabel("Fault time range");
 plt.ylabel("Fault time length");
 plt.title("Impact of faults upon missed detections by UUV " + sys.argv[2] + "\n(intensity of colour is more missed detections)");
 plt.savefig("coverage_singlefault_" + sys.argv[2]);
-
-
-

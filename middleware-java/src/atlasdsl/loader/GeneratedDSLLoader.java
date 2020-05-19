@@ -268,14 +268,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	FaultImpact fi2;
 	try {	
-		fi2 = new MotionFault(srgilda_3, "UP_LOITER", "heading=153");
+		fi2 = new MotionFault(srgilda_3, "UP_HEADING", "heading=153");
 	} catch (InvalidComponentType e) {
 		throw new DSLLoadFailed("MotionFault 2 is not using a MotionSource as its affected component");
 	}
 	
 	
 	
-	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 20.0, 15.0, 1, 0.8); 
+	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
 	
 	Fault f2 = new Fault("HEADINGFAULT", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);

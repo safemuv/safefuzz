@@ -144,8 +144,8 @@
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT">
-    <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="20.0" maxFaultLength="15.0" maxFaultRepeatCount="1" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="heading=153"/>
+    <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
   </faults>
   <faults xmi:id="_eW05sJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-FRANK">
     <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>

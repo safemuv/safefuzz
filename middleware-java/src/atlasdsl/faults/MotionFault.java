@@ -27,20 +27,39 @@ public class MotionFault extends ComponentImpact {
 	public Object applyImpact(Object orig) {
 		return orig;
 	}
+	
+	// Custom implementation for a heading fault
+	public void headingImmediateEffect(Robot relevantVehicle, ATLASCore core) {	
+		core.sendToCARS(relevantVehicle, "CONSTHEADING", "true");
+		core.sendToCARS(relevantVehicle, "LOITER", "false");
+	}
+	
+	public void headingCompletionEffect(Robot relevantVehicle, ATLASCore core) {	
+		core.sendToCARS(relevantVehicle, "CONSTHEADING", "false");
+		core.sendToCARS(relevantVehicle, "LOITER", "true");
+	}
 
 	public void immediateEffects(ATLASCore core) {
 		// TODO: this assumes a MOOS effect with the same name
 		// as the main effect
 		// Need MOOS translation here
 		
-		// TODO: store the original value here
 		Robot relevantVehicle = (Robot)affectedComponent.getParent();
+		if (affectedProperty.contains("HEADING")) {
+			headingImmediateEffect(relevantVehicle, core);
+		}
+		
+		// TODO: store the original value here
 		core.sendToCARS(relevantVehicle, affectedProperty, newValue);
 	}
 	
 	public void completionEffects(ATLASCore core) {
-		System.out.println("Motion fault completion effect");
 		Robot relevantVehicle = (Robot)affectedComponent.getParent();
+		if (affectedProperty.contains("HEADING")) {
+			headingCompletionEffect(relevantVehicle, core);
+		}
+		
+		System.out.println("Motion fault completion effect");
 		core.sendToCARS(relevantVehicle, affectedProperty, originalValue);
 	}
 
