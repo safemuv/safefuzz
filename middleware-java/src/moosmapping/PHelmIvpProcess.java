@@ -38,6 +38,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 		moosBehaviourInitVals.put("RETURN", false);
 		moosBehaviourInitVals.put("STATION_KEEP", false);
 		moosBehaviourInitVals.put("LOITER", true);
+		moosBehaviourInitVals.put("CONSTHEADING", false);
+		
 		// TODO: this should be conditionally set if an avoidance goal is present
 		moosBehaviourInitVals.put("AVOID", true);
 				
@@ -59,8 +61,12 @@ public class PHelmIvpProcess extends MOOSProcess {
 		msd4.setProperty("MODE", "ACTIVE");
 		msd4.setProperty("LOITER", true);
 		setModeProperties.put("LOITERING", msd4);
-	} 
-
+		
+		MOOSSetModeDetails msd5 = new MOOSSetModeDetails("CONSTHEADING");
+		msd5.setProperty("MODE", "ACTIVE");
+		msd5.setProperty("CONSTHEADING", true);
+		setModeProperties.put("CONSTHEADING", msd5);
+	}
 	
 	private void setupBehaviours(String vehicleName, Point startPos) {
 		String startPosAsString = startPos.toString();
@@ -77,5 +83,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		addBehaviour(new HelmBehaviourAvoidance(this, vehicleName));
 		addBehaviour(new HelmBehaviourStationKeep(this));
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
+		addBehaviour(new HelmBehaviourConstantHeading(this));
+		addBehaviour(new HelmBehaviourConstantSpeed(this));
 	}
 }

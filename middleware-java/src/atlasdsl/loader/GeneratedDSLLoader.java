@@ -141,7 +141,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 1000.0);
 		
 		
-		GoalAction ga1 = new AvoidOthers(3.0);
+		GoalAction ga1 = new AvoidOthers(15.0);
 		
 		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
@@ -268,7 +268,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	FaultImpact fi2;
 	try {	
-		fi2 = new MotionFault(srgilda_3, "UP_HEADING", "heading=153");
+		fi2 = new MotionFault(srella_2, "UP_HEADING", "heading=180");
 	} catch (InvalidComponentType e) {
 		throw new DSLLoadFailed("MotionFault 2 is not using a MotionSource as its affected component");
 	}
@@ -277,7 +277,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
 	
-	Fault f2 = new Fault("HEADINGFAULT", fi2, Optional.empty(), ft2);
+	Fault f2 = new Fault("HEADINGFAULT-ELLA", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);
 	
 	
@@ -327,6 +327,54 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f5 = new Fault("SPEEDFAULT-HENRY", fi5, Optional.empty(), ft5);
 	mission.addFault(f5);
+	
+	
+	
+	FaultImpact fi6;
+	try {	
+		fi6 = new MotionFault(srfrank_3, "UP_HEADING", "heading=153");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 6 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft6 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	
+	Fault f6 = new Fault("HEADINGFAULT-FRANK", fi6, Optional.empty(), ft6);
+	mission.addFault(f6);
+	
+	
+	
+	FaultImpact fi7;
+	try {	
+		fi7 = new MotionFault(srgilda_3, "UP_HEADING", "heading=350");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 7 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft7 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	
+	Fault f7 = new Fault("HEADINGFAULT-GILDA", fi7, Optional.empty(), ft7);
+	mission.addFault(f7);
+	
+	
+	
+	FaultImpact fi8;
+	try {	
+		fi8 = new MotionFault(srhenry_3, "UP_HEADING", "heading=153");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault 8 is not using a MotionSource as its affected component");
+	}
+	
+	
+	
+	FaultTimeProperties ft8 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	
+	Fault f8 = new Fault("HEADINGFAULT-HENRY", fi8, Optional.empty(), ft8);
+	mission.addFault(f8);
 	
 	return mission;
 	}

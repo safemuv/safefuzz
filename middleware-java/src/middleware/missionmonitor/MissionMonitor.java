@@ -1,11 +1,13 @@
 package middleware.missionmonitor;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import atlasdsl.*;
 import atlasdsl.GoalResult.GoalResultStatus;
 import atlassharedclasses.SonarDetection;
 import middleware.core.*;
+import middleware.logging.ATLASLog;
 
 public class MissionMonitor {
 	private class MissionMonitorSetupFailure extends Exception {
@@ -14,6 +16,7 @@ public class MissionMonitor {
 	
 	private Mission mission;
 	private ATLASCore core;
+	private HashMap<Goal,Double> violationsTime = new HashMap<Goal,Double>(); 
 	
 	public MissionMonitor(ATLASCore core, Mission mission) {
 		this.mission = mission;	
@@ -60,9 +63,13 @@ public class MissionMonitor {
 					// so it can be referenced by the dependent goals
 					g.registerResult(gr);
 					
-//					System.out.println("res = " + res.get());
 					if (gr.getResultStatus() == GoalResultStatus.VIOLATED) {
 						g.setStatus(GoalStatus.VIOLATED);
+						if (!violationsTime.containsKey(g)) {
+							violationsTime.put(g,timeNow);
+							GoalAction ga = g.getAction();
+							ATLASLog.logGoalMessage(ga, "VIOLATED," + Double.toString(timeNow) + "," + );
+						}
 					}
 					
 					if (gr.getResultStatus() == GoalResultStatus.COMPLETED) {

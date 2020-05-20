@@ -88,7 +88,7 @@
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
     <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1000.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
-    <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="3.0"/>
+    <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="15.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
         <corner1 xmi:id="_nGbfoHP5Eeqc6cv9mBHIKw"/>
@@ -143,9 +143,9 @@
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
-  <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT">
+  <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT-ELLA">
     <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_HEADING" newValue="heading=180"/>
   </faults>
   <faults xmi:id="_eW05sJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-FRANK">
     <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
@@ -158,5 +158,17 @@
   <faults xmi:id="_e8JNQJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-HENRY">
     <affectedTime xmi:id="_e8JNQZRPEeq4FYD6a9PbTQ" latestFaultEnd="1001.0" maxFaultLength="1001.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_e8JNQpRPEeq4FYD6a9PbTQ" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
+  </faults>
+  <faults xmi:id="_xyoc8JnzEeqfCc6JwfilfA" name="HEADINGFAULT-FRANK">
+    <affectedTime xmi:id="_xyoc8ZnzEeqfCc6JwfilfA" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_xyoc8pnzEeqfCc6JwfilfA" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
+  </faults>
+  <faults xmi:id="_0Vbw4JnzEeqfCc6JwfilfA" name="HEADINGFAULT-GILDA">
+    <affectedTime xmi:id="_0Vbw4ZnzEeqfCc6JwfilfA" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_0Vbw4pnzEeqfCc6JwfilfA" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=350"/>
+  </faults>
+  <faults xmi:id="_2HfkYJnzEeqfCc6JwfilfA" name="HEADINGFAULT-HENRY">
+    <affectedTime xmi:id="_2HfkYZnzEeqfCc6JwfilfA" latestFaultEnd="1000.0" maxFaultLength="1000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <impact xsi:type="atlas_2:MotionFault" xmi:id="_2HfkYpnzEeqfCc6JwfilfA" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
   </faults>
 </atlas:Mission>

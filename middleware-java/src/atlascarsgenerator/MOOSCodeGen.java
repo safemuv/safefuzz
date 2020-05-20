@@ -62,7 +62,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// Names of variables to be shared via pShare
 		List<String> moosSharedVars = new ArrayList<String>();
 		List<String> middlewareVars = varsForMissionGoals(mission);
-		List<String> collectiveIntelVars = varsForCI(mission); 
+		List<String> collectiveIntelVars = varsForCI(mission);
 		
 		int atlasPort = 61613;
 		try {

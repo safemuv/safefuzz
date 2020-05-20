@@ -10,16 +10,30 @@ import middleware.core.ATLASCore;
 public class AvoidOthers extends GoalAction {
 	private double clearance;
 	
+	public class ViolationRecord {
+		private Point loc1;
+		private Point loc2;
+		private Robot r1;
+		private Robot r2;
+		private double clearance;
+		
+		public ViolationRecord(Point loc1, Point loc2, Robot r1, Robot r2, double clearance) {
+			this.loc1 = loc1;
+			this.loc2 = loc2;
+			this.r1 = r1;
+			this.r2 = r2;
+			this.clearance = clearance;
+		}
+		
+	}
+	
 	public AvoidOthers(double clearance) {
 		this.clearance = clearance;
 	}
 
 	// TODO: Specific log for the computation of each goal?
-	private Optional<Double> testDistances(List<Robot> robots) throws MissingProperty {
+	private Optional<ViolationRecord> testDistances(List<Robot> robots) throws MissingProperty {
 		double clearanceSqr = clearance * clearance;
-		//System.out.println("clearanceSqr=" + clearanceSqr);
-		Optional<Robot> failed1;
-		Optional<Robot> failed2;
 		for (Robot r_i : robots) {
 			for (Robot r_j : robots) {
 				if (r_i != r_j) {
@@ -28,9 +42,8 @@ public class AvoidOthers extends GoalAction {
 					double distSqr = loc1.distanceSqrTo(loc2);
 					//System.out.println("loc1 = " + r_i + "loc2 = " + r_j + " dist_sqr = " + distSqr);
 					if (distSqr < clearanceSqr) {
-						failed1 = Optional.of(r_i);
-						failed2 = Optional.of(r_j);
-						return Optional.of(Math.sqrt(distSqr));
+						ViolationRecord vr = new ViolationRecord(loc1, loc2, r_i, r_j);
+						return Optional.of(vr);
 					}
 				}
 			}
@@ -43,8 +56,8 @@ public class AvoidOthers extends GoalAction {
 		try {
 			// If the result is present, that means the clearance
 			// exceeded the minimum allowed 
-			Optional<Double> res = testDistances(robots);
-			if (res.isPresent()) {
+			Optional<Double> vr = testDistances(robots);
+			if (vr.isPresent()) {
 				Double clearanceFound = res.get();
 				// This goal only returns a VIOLATED status, or it returns Empty
 				GoalResult gr = new GoalResult(GoalResultStatus.VIOLATED);

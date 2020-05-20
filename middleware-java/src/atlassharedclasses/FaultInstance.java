@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import atlasdsl.faults.*;
 
-public class FaultInstance {
+public class FaultInstance implements Comparable<FaultInstance> {
 	private double startTime;
 	private double endTime;
 	private Fault fault;
@@ -28,6 +28,17 @@ public class FaultInstance {
 			MotionFault mfi2 = (MotionFault)f.getImpact();
 			System.out.println("test newValue changed = " + mfi2.getNewValue());
 		}
+	}
+	
+	public int compareTo(FaultInstance other) {
+		int timeCompare = Double.compare(this.startTime, other.startTime);
+		if (timeCompare != 0) {
+			return timeCompare;
+		} else {
+			int idCompare = this.fault.getName().compareTo(other.fault.getName());
+			return idCompare;
+		}
+		
 	}
 	
 	public String toString() {
