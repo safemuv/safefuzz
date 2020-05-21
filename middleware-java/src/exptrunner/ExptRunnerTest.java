@@ -9,6 +9,7 @@ import atlasdsl.faults.Fault;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
+import faultgen.FaultFileCreator;
 
 public class ExptRunnerTest {
 	private final static String ABS_ATLAS_JAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas.jar";
@@ -31,6 +32,13 @@ public class ExptRunnerTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void setupFaultFile() throws DSLLoadFailed {
+		DSLLoader loader = new GeneratedDSLLoader();
+		Mission mission = loader.loadMission();
+		FaultFileCreator ffc = new FaultFileCreator(mission, "/home/jharbin/academic/atlas/atlas-middleware/middleware-java/");
+		ffc.generateFaultListFromScratch("testfaults.fif");
 	}
 
 	public static void test2() {
@@ -66,6 +74,11 @@ public class ExptRunnerTest {
 	}
 	
 	public static void main(String [] args) {
-		testExpSequence();
+		try {
+			setupFaultFile();
+		} catch (DSLLoadFailed e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

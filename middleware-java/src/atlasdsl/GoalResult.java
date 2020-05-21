@@ -2,6 +2,7 @@ package atlasdsl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GoalResult {
 	public enum GoalResultStatus {
@@ -35,5 +36,11 @@ public class GoalResult {
 		return status.toString() + " - " + goalResults.toString();
 		//List<String> res = goalResults.entrySet().map(Object::toString).collect(Collectors.toList());
 		//return String.join(",", res);
+	}
+
+	public String getAllFields() {
+		return goalResults.values().stream()
+				.map(gf -> gf.toString())
+				.collect(Collectors.joining(","));
 	}
 }

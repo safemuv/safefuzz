@@ -12,6 +12,12 @@ public class SubFieldSpec {
 	private int fieldRangeLength;
 	Random r = new Random();
 	
+	public SubFieldSpec(int fieldStartNum, int fieldRangeLength, boolean isRandom) {
+		this.fieldStartNum = fieldStartNum;
+		this.fieldRangeLength = fieldRangeLength;
+		this.randomSelection = isRandom;
+	}
+	
 	private int chooseFieldNum(int max) {
 		if (randomSelection) {
 			return Math.min(max, fieldStartNum + r.nextInt(fieldRangeLength));

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-
 import atlasdsl.InvalidComponentType;
 import atlasdsl.Mission;
 import atlasdsl.faults.Fault;
@@ -20,10 +19,16 @@ public class FaultFileIO {
 		this.mission = mission;
 	}
 	
-	public FaultInstance decodeFaultFromString(String faultDefinition) throws InvalidFaultFormat, InvalidComponentType, FaultNotFoundInModel, FaultInstanceInvalid, FaultRepeatCountInvalid {
+	public Optional<FaultInstance> decodeFaultFromString(String faultDefinition) throws InvalidFaultFormat, InvalidComponentType, FaultNotFoundInModel, FaultInstanceInvalid, FaultRepeatCountInvalid {
 		String[] fields = faultDefinition.split(",");
+		//System.out.println("Fields length = " + fields.length + ", string=" + faultDefinition);
 		if (fields.length < 3) {
-			throw new InvalidFaultFormat();
+			// Ignore the situation with an empty line or a single name tag
+			if (fields.length > 1) {
+				throw new InvalidFaultFormat();
+			} else {
+				return Optional.empty();
+			}
 		} else {
 			
 			int faultInstanceNum = Integer.parseInt(fields[0]);
@@ -47,7 +52,7 @@ public class FaultFileIO {
 				FaultInstance fi = new FaultInstance(startTime, endTime, f, extraData);
 				if (!fi.isValid()) {
 					throw new FaultInstanceInvalid();
-				} else return fi;
+				} else return Optional.of(fi);
 			} else {
 				throw new FaultNotFoundInModel(faultNameInModel);
 			}
@@ -63,10 +68,15 @@ public class FaultFileIO {
 		Scanner reader = new Scanner(f);
 		while (reader.hasNextLine()) {
 			String faultAsString = reader.nextLine();
-			FaultInstance fault;
+			Optional<FaultInstance> fi_o;
+			
 			try {
-				fault = decodeFaultFromString(faultAsString);
-				outputFaults.add(fault);
+				fi_o = decodeFaultFromString(faultAsString);
+				if (fi_o.isPresent()) {
+					FaultInstance fi = fi_o.get();
+					outputFaults.add(fi);
+				}
+				
 			} catch (InvalidFaultFormat e) {
 				e.printStackTrace();
 			} catch (InvalidComponentType e) {

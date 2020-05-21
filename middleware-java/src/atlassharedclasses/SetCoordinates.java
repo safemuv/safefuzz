@@ -9,8 +9,10 @@ public class SetCoordinates extends BehaviourCommand {
 		
 	}
 	
-	public SetCoordinates(List<Point> coordinates) {
+	public SetCoordinates(List<Point> coordinates, String messageName) {
+		super(messageName);
 		this.coordinates = coordinates;
+
 	}
 		
 	public List<Point> getCoordinates() {

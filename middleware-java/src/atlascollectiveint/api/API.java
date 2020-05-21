@@ -44,7 +44,7 @@ public class API {
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
 		}
-		BehaviourCommand cmd = new SetCoordinates(coords);
+		BehaviourCommand cmd = new SetCoordinates(coords, MessageName);
 		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
 		prod.send(cmd, robotName);
 	}

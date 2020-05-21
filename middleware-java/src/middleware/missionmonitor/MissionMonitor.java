@@ -68,7 +68,8 @@ public class MissionMonitor {
 						if (!violationsTime.containsKey(g)) {
 							violationsTime.put(g,timeNow);
 							GoalAction ga = g.getAction();
-							ATLASLog.logGoalMessage(ga, "VIOLATED," + Double.toString(timeNow) + "," + );
+							String fields = gr.getAllFields();
+							ATLASLog.logGoalMessage(ga, "VIOLATED," + Double.toString(timeNow) + "," + gr.getResultStatus());
 						}
 					}
 					

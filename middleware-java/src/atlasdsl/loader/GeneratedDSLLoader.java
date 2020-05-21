@@ -30,8 +30,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
  
 			
-			MotionSource srella_2 = new MotionSource();
-			rella.addSubcomponent(srella_2);
+		MotionSource srella_2 = new MotionSource();
+		rella.addSubcomponent(srella_2);
 			
  
 		Sensor srella_3 = new Sensor(SensorType.GPS_POSITION);
@@ -246,6 +246,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 	Message msgDETECTION_HENRY = new Message("DETECTION_HENRY", rhenry, c1);
 	mission.addMessage(msgDETECTION_HENRY); 
+ 
+	Message msgUUV_COORDINATE_UPDATE_INIITAL_ELLA = new Message("UUV_COORDINATE_UPDATE_INIITAL_ELLA", c1, rella);
+	mission.addMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA); 
 	
 	
 	
@@ -375,6 +378,17 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f8 = new Fault("HEADINGFAULT-HENRY", fi8, Optional.empty(), ft8);
 	mission.addFault(f8);
+	
+	// Need to add subfieldspec
+	SubFieldSpec sf9 = new SubFieldSpec(0,4,false);
+	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0,10.0));
+	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
+	
+	
+	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 1000.0, 300.0, 1, 0.8); 
+	
+	Fault f9 = new Fault("COORDINATE-ELLA", fi9, Optional.empty(), ft9);
+	mission.addFault(f9);
 	
 	return mission;
 	}

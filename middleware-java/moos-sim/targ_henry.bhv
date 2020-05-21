@@ -49,7 +49,7 @@ Behavior = BHV_AvoidCollision
 {
 name = avdcollision_
 pwt = 200
-condition = AVOID=true
+condition = (AVOID=true) and (CONSTHEADING=false)
 updates = CONTACT_INFO
 endflag = CONTACT_RESOLVED = $[CONTACT]
 templating = spawn

@@ -115,8 +115,14 @@ public abstract class ATLASCore {
 	}
 
 	public List<FaultInstance> activeFaultsOfClass(Class<?> class1) {
+		for (FaultInstance fi : activeFaults) {
+			System.out.println("fault instance name " + fi.getFault().getImpact().getClass().getName());
+		}
+		
+		System.out.println("class1 name: = " + class1.getName());
+		System.out.println("activeFaults count: " + activeFaults.size());
 		return activeFaults.stream()
-				.filter(f -> f.getClass() == class1)
+				.filter(fi -> fi.getFault().getImpact().getClass() == class1)
 				.collect(Collectors.toList());
 	}
 

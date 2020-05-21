@@ -5,7 +5,7 @@ public class HelmBehaviourAvoidance extends MOOSBehaviour {
 		super("BHV_AvoidCollision", parent);
 		setProperty("name", "avdcollision_");
 		setProperty("pwt", 200);
-		setProperty("condition", "AVOID=true");
+		setProperty("condition", "(AVOID=true) and (CONSTHEADING=false)");
 		setProperty("updates", "CONTACT_INFO");
 		setProperty("endflag", "CONTACT_RESOLVED = $[CONTACT]");
 		setProperty("templating", "spawn");

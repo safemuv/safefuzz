@@ -113,17 +113,24 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 
 			// Check for faults impacting the coordinates here
 			List<FaultInstance> fs = core.activeFaultsOfClass(MutateMessage.class);
+			System.out.println("faults of class MutateMessage: " + fs.size());
 			
 			List<Point> modifiedCoords = coordinates;
 			
 			for (FaultInstance fi : fs) {
 				Fault f = fi.getFault();
 				FaultImpact fim = f.getImpact();
+				System.out.println("fim class = " + fim.getClass().toString());
 				if (fim instanceof MessageImpact) {
 					MessageImpact mim = (MessageImpact)fim;
-					if (mim.getMessage().getName() == setCmd.getMessageName()) {  
-						// Check the associated message for this fault matches the API command
+					System.out.println(mim.getMessage().getName());
+					System.out.println(setCmd.getMessageName());
+					
+					// Check the fault message name matches this name
+					if (mim.getMessage().getName().equals(setCmd.getMessageName())) {  
+						System.out.println("before applying fault:  coords =" + modifiedCoords.toString());
 						modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
+						System.out.println("applying fault: modifiedCoords = " + modifiedCoords.toString());
 					}
 					// TODO: check is from shoreside? - this encodes assumption that the
 					// CI runs on shoreside						
