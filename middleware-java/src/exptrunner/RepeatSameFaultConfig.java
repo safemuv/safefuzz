@@ -56,7 +56,7 @@ public class RepeatSameFaultConfig extends ExptParams {
 	}
 
 	public boolean completed() {
-		return (repeats < repeatsCount); 
+		return (repeats >= repeatsCount); 
 	}
 
 	public void logResults(String logFileDir) {

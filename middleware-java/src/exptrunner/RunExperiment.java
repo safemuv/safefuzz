@@ -170,7 +170,7 @@ public class RunExperiment {
 				
 				//ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f, speedOverride_o);
 				ExptParams ep = new RandomFaultConfigs(resFileName, repeatsCount, mission);
-				doExperiment(mission, faultName + "_coverage", ep);
+				doExperiment(mission, faultName + "_mutlifault", ep);
 				exptLog("Done");
 			}
 		} catch (DSLLoadFailed e) {

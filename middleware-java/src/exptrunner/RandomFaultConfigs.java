@@ -29,6 +29,8 @@ public class RandomFaultConfigs extends ExptParams {
 	private FaultFileIO fio;
 	private String filename;
 	
+	private String path = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
+	
 	public RandomFaultConfigs(String filename, int repeatsCount, Mission mission) throws IOException {
 		this.combinedResults = new FileWriter(filename);
 		this.repeats = 0;
@@ -36,10 +38,11 @@ public class RandomFaultConfigs extends ExptParams {
 		this.mission = mission;
 		this.filename = filename;
 		fio = new FaultFileIO(mission);
+		genNewFaults();
 	}
 	
 	private void genNewFaults() {
-		FaultFileCreator ffc = new FaultFileCreator(mission, "/home/jharbin/academic/atlas/atlas-middleware/middleware-java/");
+		FaultFileCreator ffc = new FaultFileCreator(mission, path);
 		ffc.generateFaultListFromScratch(filename);
 	}
 	
@@ -50,7 +53,7 @@ public class RandomFaultConfigs extends ExptParams {
 
 	public List<FaultInstance> specificFaults() {
 		try {
-			List<FaultInstance> fs = fio.loadFaultsFromFile("testfaults.fif");
+			List<FaultInstance> fs = fio.loadFaultsFromFile(path + "testfaults.fif");
 			return fs;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -65,7 +68,8 @@ public class RandomFaultConfigs extends ExptParams {
 	}
 
 	public boolean completed() {
-		return (repeats < repeatsCount); 
+		System.out.println("repeats = " + repeats + ",repeatsCount = " + repeatsCount);
+		return (repeats >= repeatsCount); 
 	}
 
 	public void logResults(String logFileDir) {
