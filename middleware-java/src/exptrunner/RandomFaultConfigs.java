@@ -23,38 +23,40 @@ public class RandomFaultConfigs extends ExptParams {
 	private FileWriter combinedResults;
 	
 	// The time range for the fixed fault
-	private int repeats;
+	private int run;
 	private int repeatsCount;
 	private Mission mission;
 	private FaultFileIO fio;
-	private String filename;
+	private String resFileName;
+	private String tempFaultFileName;
 	
 	private String path = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
 	
-	public RandomFaultConfigs(String filename, int repeatsCount, Mission mission) throws IOException {
-		this.combinedResults = new FileWriter(filename);
-		this.repeats = 0;
+	public RandomFaultConfigs(String tempFaultFilename, String resFileName, int repeatsCount, Mission mission) throws IOException {
+		this.combinedResults = new FileWriter(resFileName);
+		this.run = 0;
 		this.repeatsCount = repeatsCount;
 		this.mission = mission;
-		this.filename = filename;
+		this.tempFaultFileName = tempFaultFilename;
 		fio = new FaultFileIO(mission);
 		genNewFaults();
 	}
 	
 	private void genNewFaults() {
 		FaultFileCreator ffc = new FaultFileCreator(mission, path);
-		ffc.generateFaultListFromScratch(filename);
+		ffc.generateFaultListFromScratch(tempFaultFileName);
 	}
 	
 	public void advance() {
-		repeats++;
-		genNewFaults();
+		run++;
 	}
 
 	public List<FaultInstance> specificFaults() {
 		try {
-			List<FaultInstance> fs = fio.loadFaultsFromFile(path + "testfaults.fif");
-			return fs;
+			List<FaultInstance> fs = fio.loadFaultsFromFile(path + tempFaultFileName);
+			// Limit the number of faults loaded by repeats
+			List<FaultInstance> selected = fs.stream().limit(run).collect(Collectors.toList());
+			return selected;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return new ArrayList<FaultInstance>();
@@ -68,8 +70,8 @@ public class RandomFaultConfigs extends ExptParams {
 	}
 
 	public boolean completed() {
-		System.out.println("repeats = " + repeats + ",repeatsCount = " + repeatsCount);
-		return (repeats >= repeatsCount); 
+		System.out.println("repeats = " + run + ",repeatsCount = " + repeatsCount);
+		return (run >= repeatsCount); 
 	}
 
 	public void logResults(String logFileDir) {
@@ -87,7 +89,7 @@ public class RandomFaultConfigs extends ExptParams {
 				String robot = fields[2];
 				String num = fields[3];
 				if (goalClass.equals("atlasdsl.DiscoverObjects")) {
-					combinedResults.write(repeats + "," + specificFaultsAsString() + "," + time + "," + robot + "," + num + "\n");
+					combinedResults.write(run + "," + specificFaultsAsString() + "," + time + "," + robot + "," + num + "\n");
 					combinedResults.flush();
 				}
 			}
@@ -103,7 +105,7 @@ public class RandomFaultConfigs extends ExptParams {
 	}
 
 	public void printState() {
-		System.out.println("repeats = " + repeats);
+		System.out.println("repeats = " + run);
 		
 	}
 }

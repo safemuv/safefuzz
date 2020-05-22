@@ -132,51 +132,25 @@ public class RunExperiment {
 		}
 	}
 
-	public static void main(String[] args) {
-		// Read args to launch appropriate experiment
-		String faultName = "SPEEDFAULT-ELLA";
-		if (args.length > 0 && args[0] != null) {
-			faultName = args[0];
-		}
-		
+	public static void runMultifaultExpt(String[] args) {
 		DSLLoader loader = new GeneratedDSLLoader();
 		Mission mission;
 		try {
 			mission = loader.loadMission();
-			Optional<Fault> f_o = mission.lookupFaultByName(faultName);
-			if (f_o.isPresent()) {
-				String resFileName = faultName;
-				Fault f = f_o.get();
-				Optional<String> speedOverride_o = Optional.empty(); 
-				
-				// hack to change the fault speed
-				if (f.getImpact() instanceof MotionFault) {
-					if (args.length > 1 && args[1] != null) {
-						String speedOverride_s = args[1];
-						speedOverride_o = Optional.of(speedOverride_s);
-						double speedOverride = Double.valueOf(speedOverride_s);
-						MotionFault mfi = (MotionFault)f.getImpact();
-						resFileName = resFileName + speedOverride_s;
-						System.out.println("Experiment overriding speed to " + speedOverride);
-						mfi._overrideSpeed(speedOverride);
-						
-						// test
-						MotionFault mfi2 = (MotionFault)f.getImpact();
-						System.out.println("test new value = " + mfi2.getNewValue());
-					}
-				}
-				resFileName = resFileName + "_goalDiscovery.res";
-				int repeatsCount = 30;
-				
-				//ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f, speedOverride_o);
-				ExptParams ep = new RandomFaultConfigs(resFileName, repeatsCount, mission);
-				doExperiment(mission, faultName + "_mutlifault", ep);
-				exptLog("Done");
-			}
-		} catch (DSLLoadFailed e) {
-			e.printStackTrace();
+			String tempFileName = "tempFaultFile.fif";
+			String resFileName = "multifault.res";
+			int repeatsCount = 30;
+			ExptParams ep = new RandomFaultConfigs(tempFileName, resFileName, repeatsCount, mission);
+			doExperiment(mission, "multifault", ep);
+			exptLog("Done");
+		}  catch (DSLLoadFailed e) {
+				e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+				e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[] args) {
+		runMultifaultExpt(args);
 	}
 }
