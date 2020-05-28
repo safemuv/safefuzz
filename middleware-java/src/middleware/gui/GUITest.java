@@ -9,10 +9,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.*;
 import atlasdsl.*;
+import atlasdsl.faults.Fault;
+import atlassharedclasses.FaultInstance;
 import atlassharedclasses.Point;
 
 import faultgen.FaultGenerator;
@@ -29,17 +32,18 @@ public class GUITest {
     
     private Mission mission;
     private FaultButtonListener buttonListener = new FaultButtonListener();
-    private RobotChoiceListener robotChoiceListener = new RobotChoiceListener();
+    private FaultChoiceListener faultChoiceListener = new FaultChoiceListener();
+    
     private FaultGenerator faultGen;
-    private String chosenRobotName = "";
+    private String chosenFault = "";
     
     private PositionTrackingOutput ptPanel;
 	private String faultDefFile;
 	
-	private class RobotChoiceListener implements ActionListener {
+	private class FaultChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JComboBox<?> cb = (JComboBox<?>)e.getSource();
-	        chosenRobotName = (String)cb.getSelectedItem();
+	        chosenFault = (String)cb.getSelectedItem();
 		}
 	}
 	
@@ -50,15 +54,23 @@ public class GUITest {
 	private class FaultButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// TODO: get the time length from the GUI
-			double testTimeLength = 8.0;
-			faultGen.injectSpeedFaultNow(testTimeLength, chosenRobotName);
-			System.out.println("Injecting new fault from GUI");
+			double faultTimeLength = 8.0;
+
+			Optional<Fault> f_o = mission.lookupFaultByName(chosenFault);
+			if (f_o.isPresent()) {
+				Fault f = f_o.get();
+				faultGen.injectDynamicFault(f, faultTimeLength, Optional.empty());
+				// TODO: log the dynamic fault GUI action
+				System.out.println("Injecting new fault from GUI");
+			} else {
+				System.out.println("Could not find fault " + chosenFault + " in model");
+			}
 		}
 	}
 	
     private void setupLabels() {
     	for (Robot r : mission.getAllRobots()) {
-    		chosenRobotName = r.getName();
+    		//chosenRobotName = r.getName();
 	    	JLabel l = new JLabel(robotLabelText(r));
 	    	l.setVisible(true);
 	    	robotLabels.put(r, l);
@@ -130,19 +142,23 @@ public class GUITest {
     	f.add(goalsPanel);
     	f.add(faultPanel);
               
-    	JButton injectButton=new JButton("Inject Overspeed Fault");//creating instance of JButton  
+    	
+    	JButton injectButton=new JButton("Inject Fault");
+    	
     	JTextField faultLen = new JTextField("Fault Length");
     	injectButton.setBounds(130,100,100, 40);
 
-    	
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
+    	List<String> faultNames = mission.getFaultsAsList().stream().map(f -> f.getName()).collect(Collectors.toList());
     	
     	JComboBox<?> robotChoice = new JComboBox(robotNames.toArray());
+    	JComboBox<?> faultChoice = new JComboBox(faultNames.toArray());
+    	
     	robotChoice.setSelectedIndex(1);
-    	robotChoice.addActionListener(robotChoiceListener);
         injectButton.addActionListener(buttonListener);
+        faultChoice.addActionListener(faultChoiceListener);
 
-        faultPanel.add(robotChoice);
+        faultPanel.add(faultChoice);
     	faultPanel.add(injectButton);
     	faultPanel.add(faultLen);
     	//f.getContentPane().add(ptPanel, BorderLayout.CENTER);

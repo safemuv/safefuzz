@@ -60,7 +60,7 @@ public class RandomFaultConfigs extends ExptParams {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return new ArrayList<FaultInstance>();
-		}
+		} 
 	}
 	
 	private String specificFaultsAsString() {

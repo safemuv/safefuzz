@@ -11,7 +11,7 @@ max_len = 1000
 ypos_start = 0
 ypos_gap = 3
 fig,ax  = plt.subplots(1)
-vehicle_name = "ELLA";
+vehicle_name = sys.argv[1];
 
 yticks_pos = []
 yticks_labels = []
@@ -48,12 +48,11 @@ def set_axis_structure():
     plt.title("Impact of faults upon missed detections by UUV " + vehicle_name + "\n(intensity of colour is more missed detections)");
     plt.savefig("coverage_singlefault_" + vehicle_name, bbox_inches='tight');
 
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-ELLA2.0_goalDiscovery.res", 2.0)
+ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "2.0_goalDiscovery.res", 2.0)
 ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-ELLA3.0_goalDiscovery.res", 3.0)
+ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "3.0_goalDiscovery.res", 3.0)
 ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-ELLA4.0_goalDiscovery.res", 4.0)
+ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "4.0_goalDiscovery.res", 4.0)
 ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-ELLA5.0_goalDiscovery.res", 5.0)
-
+ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "5.0_goalDiscovery.res", 5.0)
 set_axis_structure()

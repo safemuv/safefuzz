@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import atlascollectiveintgenerator.CollectiveInt;
 import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
@@ -17,7 +16,10 @@ public class API {
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	private static CollectiveInt ci;
 	
-	private static List<Point> translateRegionToCoordsList(Region r, double stepSize) {
+	private static List<Point> translateRegionToCoordsList(Region r, double desiredStepSize) {
+		int stepCount = (int)Math.ceil(r.height() / desiredStepSize);
+		double stepSize = r.height() / stepCount;
+						
 		List<Point> coords = new ArrayList<Point>();
 		double left = r.left();
 		double right = r.right();
@@ -27,7 +29,6 @@ public class API {
 		for (double y = bottom; y < top; y+=2*stepSize) {
 			coords.add(new Point(left,y));
 			coords.add(new Point(right,y));
-			// TODO: check we're not exceeding region boundary here - is 2X incorrect?
 			coords.add(new Point(right,y+stepSize));
 			coords.add(new Point(left,y+stepSize));
 		}
@@ -41,6 +42,8 @@ public class API {
 		
 	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
+		System.out.println("region =\n" + r);
+		System.out.println("coords =\n" + coords);
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
 		}

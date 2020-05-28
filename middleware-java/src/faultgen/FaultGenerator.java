@@ -85,6 +85,13 @@ public class FaultGenerator {
 	public void clearFaults() {
 		scheduledFaults.clear();
 	}
+	
+	public void injectDynamicFault(Fault f, double length, Optional<String> extraData) {
+		double startTime = core.getTime();
+		double endTime = startTime + length;
+		FaultInstance fi = new FaultInstance(startTime, endTime, f, extraData);
+		scheduledFaults.add(fi);
+	}
 
 	public void setFaultDefinitionFile(String filePath) {
 		try {

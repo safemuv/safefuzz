@@ -22,7 +22,7 @@ public class RunExperiment {
 	private final static String ABS_WORKING_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
 	private final static String ABS_MIDDLEWARE_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
 	private final static String ABS_MOOS_PATH = "/home/jharbin//academic/atlas/atlas-middleware/middleware-java/moos-sim/";
-	
+
 	private final static String ABS_ATLAS_JAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas.jar";
 
 	private static void exptLog(String s) {
@@ -72,7 +72,7 @@ public class RunExperiment {
 			String faultInstanceFileName = "expt_" + exptTag + Integer.toString(faultInstanceFileNum);
 			exptLog("Running experiment with fault instance file " + faultInstanceFileName);
 			// Generate a fault instance file for the experiment according to the experiment
-			// parameters
+			// parameters 
 			FaultFileCreator ffc = new FaultFileCreator(mission, ABS_WORKING_PATH);
 			List<FaultInstance> outputFaultInstances = eparams.specificFaults();
 
@@ -80,8 +80,9 @@ public class RunExperiment {
 				ffc.writeFaultDefinitionFile(ABS_WORKING_PATH + faultInstanceFileName, outputFaultInstances);
 
 				// Launch the MOOS code, middleware and CI as separate subprocesses
-				
-				// TODO: if launching an experiment with more robots, need to ensure individual launch scripts are
+
+				// TODO: if launching an experiment with more robots, need to ensure individual
+				// launch scripts are
 				// generated in the MOOS code
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_shoreside.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_ella.sh");
@@ -94,7 +95,7 @@ public class RunExperiment {
 				TimeUnit.MILLISECONDS.sleep(1000);
 
 				String[] middlewareOpts = { faultInstanceFileName, "nogui" };
-				middleware = ExptHelper.startNewJavaProcess("-jar", ABS_ATLAS_JAR, middlewareOpts,	ABS_WORKING_PATH);
+				middleware = ExptHelper.startNewJavaProcess("-jar", ABS_ATLAS_JAR, middlewareOpts, ABS_WORKING_PATH);
 
 				// Sleep until the middleware is ready, then start the CI
 				TimeUnit.MILLISECONDS.sleep(1000);
@@ -121,7 +122,7 @@ public class RunExperiment {
 				eparams.advance();
 				faultInstanceFileNum++;
 				exptLog("Waiting to restart experiment");
-				// Wait 10 seconds before ending 
+				// Wait 10 seconds before ending
 				TimeUnit.MILLISECONDS.sleep(10000);
 
 			} catch (IOException e) {
@@ -129,6 +130,53 @@ public class RunExperiment {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public static void runCoverage(String[] args) {
+		// Read args to launch appropriate experiment
+		String faultName = "SPEEDFAULT-ELLA";
+		if (args.length > 0 && args[0] != null) {
+			faultName = args[0];
+		}
+
+		DSLLoader loader = new GeneratedDSLLoader();
+		Mission mission;
+		try {
+			mission = loader.loadMission();
+			Optional<Fault> f_o = mission.lookupFaultByName(faultName);
+			if (f_o.isPresent()) {
+				String resFileName = faultName;
+				Fault f = f_o.get();
+				Optional<String> speedOverride_o = Optional.empty();
+
+				// hack to change the fault speed
+				if (f.getImpact() instanceof MotionFault) {
+					if (args.length > 1 && args[1] != null) {
+						String speedOverride_s = args[1];
+						speedOverride_o = Optional.of(speedOverride_s);
+						double speedOverride = Double.valueOf(speedOverride_s);
+						MotionFault mfi = (MotionFault) f.getImpact();
+						resFileName = resFileName + speedOverride_s;
+						System.out.println("Experiment overriding speed to " + speedOverride);
+						mfi._overrideSpeed(speedOverride);
+
+						// test
+						MotionFault mfi2 = (MotionFault) f.getImpact();
+						System.out.println("test new value = " + mfi2.getNewValue());
+					}
+				}
+				resFileName = resFileName + "_goalDiscovery.res";
+
+				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f,
+						speedOverride_o);
+				doExperiment(mission, faultName + "_coverage", ep);
+				exptLog("Done");
+			}
+		} catch (DSLLoadFailed e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -143,13 +191,13 @@ public class RunExperiment {
 			ExptParams ep = new RandomFaultConfigs(tempFileName, resFileName, repeatsCount, mission);
 			doExperiment(mission, "multifault", ep);
 			exptLog("Done");
-		}  catch (DSLLoadFailed e) {
-				e.printStackTrace();
+		} catch (DSLLoadFailed e) {
+			e.printStackTrace();
 		} catch (IOException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		runMultifaultExpt(args);
 	}
