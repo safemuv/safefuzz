@@ -47,7 +47,7 @@ public class CollectiveInt {
 		Iterator<Entry<String, Timer>> it = timers.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Timer t = it.next().getValue();
-	        System.out.println("timeNow = " + timeNow);
+	        //System.out.println("timeNow = " + timeNow);
 			if (t.isReady(timeNow)) {
 				t.performAction();
 			}

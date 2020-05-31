@@ -37,7 +37,7 @@ updates = UP_LOITER
 runflag = VEHICLE_UNDERWAY = TRUE
 endflag = VEHICLE_UNDERWAY = FALSE
 post_suffix = A
-speed = 1.0
+speed = 0.8
 clockwise = false
 radius = 5.0
 nm_radius = 10.0
@@ -73,7 +73,7 @@ pwt = 100
 condition = MODE==RETURNING
 updates = RETURN_UPDATES
 endflag = STATION_KEEP = true
-speed = 1.0
+speed = 0.8
 radius = 3.0
 nm_radius = 15.0
 points = 200.0,-85.0

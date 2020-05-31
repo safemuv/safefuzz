@@ -18,7 +18,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Robot rella = new Robot("ella");
 		rella.setPointComponentProperty("startLocation", new Point(200.0,-85.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
-		rella.setDoubleComponentProperty("startSpeed", 1.0);
+		rella.setDoubleComponentProperty("startSpeed", 0.8);
 		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
@@ -86,20 +86,22 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.addSubcomponent(srgilda_2);
 			
 			
- 		MotionSource srgilda_3 = new MotionSource();
-		rgilda.addSubcomponent(srgilda_3);
+ 
+			
+			MotionSource srgilda_3 = new MotionSource();
+			rgilda.addSubcomponent(srgilda_3);
 			
 			
 		mission.addRobot(rgilda);
 		Robot rhenry = new Robot("henry");
 		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
-		rhenry.setDoubleComponentProperty("startSpeed", 0.8);
+		rhenry.setDoubleComponentProperty("startSpeed", 0.9);
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
 		srhenry_1.setParent(rhenry);
-		srhenry_1.setDoubleComponentProperty("swathWidth", 12.0);
+		srhenry_1.setDoubleComponentProperty("swathWidth", 25.0);
 		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rhenry.addSubcomponent(srhenry_1);
 			
@@ -119,7 +121,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addRobot(rhenry);
 	
 	
-	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-15.0,0.0), false);
+	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-55.0,0.0), false);
 	mission.addObject(eo1);
 	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(185.0,-45.0,0.0), true);
 	mission.addObject(eo2);
@@ -136,10 +138,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 1000.0);
+		GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 2000.0);
 		
 		
-		GoalAction ga1 = new AvoidOthers(15.0);
+		GoalAction ga1 = new AvoidOthers(4.0);
 		
 		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
@@ -161,7 +163,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 1000.0);
+		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 2000.0);
 		
 		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR);
 		
@@ -181,7 +183,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalParticipants gpverifySensorDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		
 		
-		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1000.0);
+		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 2000.0);
 		
 		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR);
 		
@@ -209,7 +211,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, 1000.0);
+		GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, 2000.0);
 		
 		
 		
@@ -260,7 +262,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	FaultTimeProperties ft1 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 3, 0.8); 
 	
 	Fault f1 = new Fault("SPEEDFAULT-ELLA", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
@@ -276,7 +278,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	FaultTimeProperties ft2 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 1, 0.8); 
 	
 	Fault f2 = new Fault("HEADINGFAULT-ELLA", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);
@@ -292,7 +294,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft3 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	FaultTimeProperties ft3 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 3, 0.8); 
 	
 	Fault f3 = new Fault("SPEEDFAULT-FRANK", fi3, Optional.empty(), ft3);
 	mission.addFault(f3);
@@ -308,7 +310,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft4 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	FaultTimeProperties ft4 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 3, 0.8); 
 	
 	Fault f4 = new Fault("SPEEDFAULT-GILDA", fi4, Optional.empty(), ft4);
 	mission.addFault(f4);
@@ -324,7 +326,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft5 = new FaultTimeProperties(0.0, 1001.0, 1001.0, 3, 0.8); 
+	FaultTimeProperties ft5 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 3, 0.8); 
 	
 	Fault f5 = new Fault("SPEEDFAULT-HENRY", fi5, Optional.empty(), ft5);
 	mission.addFault(f5);
@@ -340,7 +342,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft6 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	FaultTimeProperties ft6 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 1, 0.8); 
 	
 	Fault f6 = new Fault("HEADINGFAULT-FRANK", fi6, Optional.empty(), ft6);
 	mission.addFault(f6);
@@ -356,7 +358,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft7 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	FaultTimeProperties ft7 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 1, 0.8); 
 	
 	Fault f7 = new Fault("HEADINGFAULT-GILDA", fi7, Optional.empty(), ft7);
 	mission.addFault(f7);
@@ -372,7 +374,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 	
-	FaultTimeProperties ft8 = new FaultTimeProperties(0.0, 1000.0, 1000.0, 1, 0.8); 
+	FaultTimeProperties ft8 = new FaultTimeProperties(0.0, 2000.0, 2000.0, 1, 0.8); 
 	
 	Fault f8 = new Fault("HEADINGFAULT-HENRY", fi8, Optional.empty(), ft8);
 	mission.addFault(f8);
@@ -380,11 +382,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 	SubFieldSpec sf9 = new SubFieldSpec(0,4,false);
 	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0,10.0));
 	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
+
 	
-	
-	
-	
-	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 1000.0, 300.0, 1, 0.8); 
+	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 2000.0, 300.0, 1, 0.8); 
 	
 	Fault f9 = new Fault("COORDINATE-ELLA", fi9, Optional.empty(), ft9);
 	mission.addFault(f9);

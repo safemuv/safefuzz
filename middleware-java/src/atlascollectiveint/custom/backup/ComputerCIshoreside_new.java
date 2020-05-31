@@ -29,7 +29,7 @@ class ComputerCIshoreside_new {
 	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
 	
-	private static final int TIME_SPENT_VERIFYING = 300;
+	private static final double TIME_SPENT_VERIFYING = 500.0;
 	
     private static boolean freshDetection(int label) {
     	Integer c = detectionCounts.get(label);
@@ -155,6 +155,7 @@ class ComputerCIshoreside_new {
             	  API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
             	}));
             
+            // TODO: check if this is necessarily unique?
             API.registerTimer(rName, treturn);
              
             

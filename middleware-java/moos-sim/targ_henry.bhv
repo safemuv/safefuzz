@@ -73,7 +73,7 @@ pwt = 100
 condition = MODE==RETURNING
 updates = RETURN_UPDATES
 endflag = STATION_KEEP = true
-speed = 0.8
+speed = 0.9
 radius = 3.0
 nm_radius = 15.0
 points = -85.0,-45.0

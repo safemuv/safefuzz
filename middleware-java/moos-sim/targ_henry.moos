@@ -149,7 +149,7 @@ ProcessConfig = uFldHazardMgr
 {
 AppTick = 2
 CommsTick = 2
-swath_width = 12.0
+swath_width = 25.0
 sensor_pd = 0.99
 report_name = henry
 }

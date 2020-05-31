@@ -29,7 +29,7 @@ class ComputerCIshoreside {
 	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
 	
-	private static final int TIME_SPENT_VERIFYING = 300;
+	private static final double TIME_SPENT_VERIFYING = 500.0;
 	
     private static boolean freshDetection(int label) {
     	Integer c = detectionCounts.get(label);
@@ -129,9 +129,6 @@ class ComputerCIshoreside {
 		  API.startVehicle(robot);
 		  CollectiveIntLog.logCI("Starting robot " + robot);
 	  }
-	  
-      // divide up the rect region amongst the robots
-      // set their original behaviour sweeps on a stack?
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
@@ -158,6 +155,7 @@ class ComputerCIshoreside {
             	  API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
             	}));
             
+            // TODO: check if this is necessarily unique?
             API.registerTimer(rName, treturn);
              
             
@@ -169,7 +167,6 @@ class ComputerCIshoreside {
 
   public static void GPS_POSITIONDetectionHook(Double x, Double y, String robotName) {
 	  // Update the robot position notification
-	  // TODO: Need the robotname in this hook in the code generator!
 	  robotLocations.put(robotName, new Point(x,y));
   }
 }
