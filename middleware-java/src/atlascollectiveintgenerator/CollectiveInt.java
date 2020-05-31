@@ -19,7 +19,12 @@ import atlasdsl.*;
 public class CollectiveInt {
 	private Mission mission;
 	
-	protected double timeNow = 0.0;
+	// TODO: better way to handle CI time. We cannot have multiple CI processes here? 
+	protected static double timeNow = 0.0;
+	
+	public static double getTimeNow() {
+		return timeNow;
+	}
 	
 	private CollectiveIntActiveMQConsumer consumer;
 	protected HashMap<String, CollectiveIntActiveMQProducer> moosProducers = new LinkedHashMap<String, CollectiveIntActiveMQProducer>();
@@ -42,6 +47,7 @@ public class CollectiveInt {
 		Iterator<Entry<String, Timer>> it = timers.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Timer t = it.next().getValue();
+	        System.out.println("timeNow = " + timeNow);
 			if (t.isReady(timeNow)) {
 				t.performAction();
 			}

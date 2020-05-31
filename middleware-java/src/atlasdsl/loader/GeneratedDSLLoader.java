@@ -16,7 +16,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addComputer(c1);
 	
 		Robot rella = new Robot("ella");
-		rella.setPointComponentProperty("startLocation", new Point(190.0,-35.0,0.0));
+		rella.setPointComponentProperty("startLocation", new Point(200.0,-85.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 1.0);
 		
@@ -30,8 +30,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
  
 			
-		MotionSource srella_2 = new MotionSource();
-		rella.addSubcomponent(srella_2);
+			MotionSource srella_2 = new MotionSource();
+			rella.addSubcomponent(srella_2);
 			
  
 		Sensor srella_3 = new Sensor(SensorType.GPS_POSITION);
@@ -70,7 +70,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Robot rgilda = new Robot("gilda");
 		rgilda.setPointComponentProperty("startLocation", new Point(190.0,-150.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
-		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
+		rgilda.setDoubleComponentProperty("startSpeed", 1.4);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
@@ -86,17 +86,15 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.addSubcomponent(srgilda_2);
 			
 			
- 
-			
-			MotionSource srgilda_3 = new MotionSource();
-			rgilda.addSubcomponent(srgilda_3);
+ 		MotionSource srgilda_3 = new MotionSource();
+		rgilda.addSubcomponent(srgilda_3);
 			
 			
 		mission.addRobot(rgilda);
 		Robot rhenry = new Robot("henry");
 		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
-		rhenry.setDoubleComponentProperty("startSpeed", 0.75);
+		rhenry.setDoubleComponentProperty("startSpeed", 0.8);
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
@@ -121,9 +119,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addRobot(rhenry);
 	
 	
-	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-32.0,0.0), false);
+	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-15.0,0.0), false);
 	mission.addObject(eo1);
-	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(100.0,-17.0,0.0), true);
+	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(185.0,-45.0,0.0), true);
 	mission.addObject(eo2);
 	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(80.0,-160.0,0.0), false);
 	mission.addObject(eo3);
@@ -379,10 +377,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 	Fault f8 = new Fault("HEADINGFAULT-HENRY", fi8, Optional.empty(), ft8);
 	mission.addFault(f8);
 	
-	// Need to add subfieldspec
 	SubFieldSpec sf9 = new SubFieldSpec(0,4,false);
 	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0,10.0));
 	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
+	
+	
 	
 	
 	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 1000.0, 300.0, 1, 0.8); 

@@ -74,6 +74,4 @@ public class API {
 	public static void registerTimer(String timerName, Timer timer) {
 		ci.registerTimer(timerName, timer);
 	}
-	
-	
 }

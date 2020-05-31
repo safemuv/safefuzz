@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import javax.swing.*;
 import atlasdsl.*;
 import atlasdsl.faults.Fault;
-import atlassharedclasses.FaultInstance;
 import atlassharedclasses.Point;
 
 import faultgen.FaultGenerator;

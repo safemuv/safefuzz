@@ -15,10 +15,15 @@ public class MOOSSimulation implements CARSSimulation {
 	private void generateLaunchScript(MOOSFiles mf) throws IOException {
 		// Append a string with ampersand to launch all processes simultaneously
 		String launchSeperatelyStr = " &";
+		
 		FileWriter missionFile = mf.getOpenFile("launch.sh");
+		FileWriter missionFileExtLogs = mf.getOpenFile("launch-showconsole.sh");
+		
 		missionFile.write("#!/bin/sh\n\n");
 		for (MOOSCommunity c : communities) {
-			missionFile.write("pAntler " + c.getMissionFileName() + launchSeperatelyStr + "\n");
+			String logAppendStr = " > console-logs/" + c.getCommunityName() + "-out 2> console-logs/" + c.getCommunityName() + "-err " ;
+			missionFile.write("pAntler " + c.getMissionFileName() + logAppendStr + launchSeperatelyStr + "\n");
+			missionFileExtLogs.write("pAntler " + c.getMissionFileName() + launchSeperatelyStr + "\n");
 		}
 	}
 	

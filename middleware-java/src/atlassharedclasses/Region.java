@@ -19,7 +19,7 @@ public class Region {
 	}
 
 	public double height() {
-		return Math.abs(point1.getX() - point2.getX());		
+		return Math.abs(point1.getY() - point2.getY());		
 	}
 	
 	public double left() {

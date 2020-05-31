@@ -1,4 +1,4 @@
-package atlascollectiveint.custom;
+package atlascollectiveint.custom.backup;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
+class ComputerCIshoreside_new {
 
 	// The shoreside CI's copy of the robot information
 	private static List<String> robots = new ArrayList<String>();
@@ -129,9 +129,6 @@ class ComputerCIshoreside {
 		  API.startVehicle(robot);
 		  CollectiveIntLog.logCI("Starting robot " + robot);
 	  }
-	  
-      // divide up the rect region amongst the robots
-      // set their original behaviour sweeps on a stack?
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
@@ -169,7 +166,6 @@ class ComputerCIshoreside {
 
   public static void GPS_POSITIONDetectionHook(Double x, Double y, String robotName) {
 	  // Update the robot position notification
-	  // TODO: Need the robotname in this hook in the code generator!
 	  robotLocations.put(robotName, new Point(x,y));
   }
 }

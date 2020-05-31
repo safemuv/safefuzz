@@ -2,7 +2,7 @@ ServerHost = localhost
 ServerPort = 9001
 Simulator = true
 community = ella
-MOOSTimeWarp = 5
+MOOSTimeWarp = 10
 LatOrigin = 43.825300
 LongOrigin = -70.330400
 
@@ -54,7 +54,7 @@ ProcessConfig = uSimMarine
 {
 AppTick = 2
 CommsTick = 2
-START_POS = x=190.0,y=-35.0,speed = 0, heading=0, depth=0
+START_POS = x=200.0,y=-85.0,speed = 0, heading=0, depth=0
 PREFIX = NAV
 }
 

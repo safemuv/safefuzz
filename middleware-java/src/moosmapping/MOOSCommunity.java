@@ -11,6 +11,7 @@ public class MOOSCommunity {
 	protected String communityName;
 	private static int dbPortBase = 9000;
 	protected int dbPortOffset;
+	private int moosTimeWarp = 10;
 	
 	private Map<String,MOOSProcess> processes = new LinkedHashMap<String,MOOSProcess>();
 	private List<String> sharedVars = new ArrayList<String>();
@@ -21,7 +22,7 @@ public class MOOSCommunity {
 		missionFile.write("Simulator = true\n");
 		missionFile.write("community = " + communityName + "\n");
 		
-		missionFile.write("MOOSTimeWarp = 5\n");
+		missionFile.write("MOOSTimeWarp = " + moosTimeWarp + "\n");
 		
 		missionFile.write("LatOrigin = 43.825300\n");
 		missionFile.write("LongOrigin = -70.330400\n");

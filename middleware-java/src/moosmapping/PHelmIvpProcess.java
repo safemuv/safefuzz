@@ -81,7 +81,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 		
 		addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
 		addBehaviour(new HelmBehaviourAvoidance(this, vehicleName));
-		addBehaviour(new HelmBehaviourStationKeep(this));
+		// StationKeeping is not needed for current scenario
+		//addBehaviour(new HelmBehaviourStationKeep(this));
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 		addBehaviour(new HelmBehaviourConstantHeading(this));
 		addBehaviour(new HelmBehaviourConstantSpeed(this));

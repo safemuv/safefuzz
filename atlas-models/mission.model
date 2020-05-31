@@ -2,10 +2,10 @@
 <atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
   <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="ella">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="190.0" y="-35.0"/>
+      <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="200.0" y="-85.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_QVLBcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="0.8"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_l8itIHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_pBGIoHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_4QN-kHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -47,7 +47,7 @@
       <value xmi:id="_IfdpcHQREeqc6cv9mBHIKw" x="190.0" y="-150.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.4"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -68,7 +68,7 @@
       <value xmi:id="_K6StIHQREeqc6cv9mBHIKw" x="-85.0" y="-45.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="0.75"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="0.9"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="12.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -88,7 +88,7 @@
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
     <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1000.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
-    <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="15.0"/>
+    <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="5.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
         <corner1 xmi:id="_nGbfoHP5Eeqc6cv9mBHIKw"/>
@@ -124,8 +124,8 @@
       </staticRegion>
     </region>
   </goals>
-  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-32.0" label="1"/>
-  <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="100.0" y="-17.0" isHazard="true" label="2"/>
+  <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-15.0" label="1"/>
+  <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="185.0" y="-45.0" isHazard="true" label="2"/>
   <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="80.0" y="-160.0" label="3"/>
   <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_ItKQcHfxEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
