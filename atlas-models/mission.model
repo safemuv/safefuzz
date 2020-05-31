@@ -180,7 +180,7 @@
       <newValue xsi:type="atlas_2:PointMessageChange" xmi:id="_e399wJp3Eeqgh-vrPhaKXw">
         <absoluteValue xmi:id="_onPAIJq-EeqJfKOVVRTaRA" x="10.0" y="10.0"/>
       </newValue>
-      <subfieldSpec xmi:id="_eBOjAJp3Eeqgh-vrPhaKXw" fieldRangeLength="4"/>
+      <subfieldSpec xmi:id="_eBOjAJp3Eeqgh-vrPhaKXw" fieldRangeLength="1"/>
     </impact>
   </faults>
 </atlas:Mission>

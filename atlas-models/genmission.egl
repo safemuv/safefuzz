@@ -191,13 +191,23 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% if (f.impact.isKindOf(DelayMessage)) { %]
 	FaultImpact fi[%= faultNum %] = new DelayMessage(msg[%= f.impact.affectedMessage.name %], [%= f.impact.delayLength %]);
 	[% } %]
-	
+	 
 	[% if (f.impact.isKindOf(DeleteMessage)) { %]
 	FaultImpact fi[%= faultNum %] = new DeleteMessage(msg[%= f.impact.affectedMessage.name %]);
 	[% } %]
 	
 	[% if (f.impact.isKindOf(MutateMessage)) { %]
-	FaultImpact fi[%= faultNum %] = new MutateMessage(msg[%= f.impact.affectedMessage.name %]);
+	[% var fi = f.impact; %]
+	[% var hasSf = "Optional.empty()"; %]
+	[% if (fi.subfieldSpec.size > 0) { %]
+	SubFieldSpec sf[%= faultNum %] = new SubFieldSpec([%= fi.subfieldSpec.fieldStartNum %], [%= fi.subfieldSpec.fieldRangeLength %], [%= fi.subfieldSpec.randomSelection %]);
+	[% hasSf = "Optional.of(sf" + faultNum + ")"; %]
+	[% } %]
+	[* TODO: other kinds of MessageChange here *]
+	[% if(fi.newValue.isKindOf(PointMessageChange)) { %]
+	PointMessageChange ps[%= faultNum %] = PointMessageChange.forAbsolute(new Point([%= fi.newValue.absoluteValue.x %], [%= fi.newValue.absoluteValue.y %])); 
+	[% } %]
+	FaultImpact fi[%= faultNum %] = new MutateMessage(msg[%= f.impact.affectedMessage.name %], [%= hasSf %], ps[%= faultNum %]);
 	[% } %]
 	
 	[% if (f.impact.isKindOf(MotionFault)) { %]

@@ -250,7 +250,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	Message msgUUV_COORDINATE_UPDATE_INIITAL_ELLA = new Message("UUV_COORDINATE_UPDATE_INIITAL_ELLA", c1, rella);
 	mission.addMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA); 
 	
-	
+	 
 	
 	
 	FaultImpact fi1;
@@ -266,7 +266,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f1 = new Fault("SPEEDFAULT-ELLA", fi1, Optional.empty(), ft1);
 	mission.addFault(f1);
-	
+	 
 	
 	
 	FaultImpact fi2;
@@ -282,7 +282,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f2 = new Fault("HEADINGFAULT-ELLA", fi2, Optional.empty(), ft2);
 	mission.addFault(f2);
-	
+	 
 	
 	
 	FaultImpact fi3;
@@ -298,7 +298,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f3 = new Fault("SPEEDFAULT-FRANK", fi3, Optional.empty(), ft3);
 	mission.addFault(f3);
-	
+	 
 	
 	
 	FaultImpact fi4;
@@ -314,7 +314,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f4 = new Fault("SPEEDFAULT-GILDA", fi4, Optional.empty(), ft4);
 	mission.addFault(f4);
-	
+	 
 	
 	
 	FaultImpact fi5;
@@ -330,7 +330,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f5 = new Fault("SPEEDFAULT-HENRY", fi5, Optional.empty(), ft5);
 	mission.addFault(f5);
-	
+	 
 	
 	
 	FaultImpact fi6;
@@ -346,7 +346,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f6 = new Fault("HEADINGFAULT-FRANK", fi6, Optional.empty(), ft6);
 	mission.addFault(f6);
-	
+	 
 	
 	
 	FaultImpact fi7;
@@ -362,7 +362,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f7 = new Fault("HEADINGFAULT-GILDA", fi7, Optional.empty(), ft7);
 	mission.addFault(f7);
-	
+	 
 	
 	
 	FaultImpact fi8;
@@ -378,11 +378,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	Fault f8 = new Fault("HEADINGFAULT-HENRY", fi8, Optional.empty(), ft8);
 	mission.addFault(f8);
+	 
 	
-	SubFieldSpec sf9 = new SubFieldSpec(0,4,false);
-	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0,10.0));
+	SubFieldSpec sf9 = new SubFieldSpec(0, 1, false);
+	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0, 10.0)); 
 	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
-
+	
+	
+	
 	
 	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 2000.0, 300.0, 1, 0.8); 
 	
