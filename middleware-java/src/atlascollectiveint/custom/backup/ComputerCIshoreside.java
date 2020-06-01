@@ -21,12 +21,15 @@ class ComputerCIshoreside {
 	private static HashMap<String,Point> robotLocations = new LinkedHashMap<String,Point>();
 	private static HashMap<Integer,Integer> detectionCounts = new LinkedHashMap<Integer,Integer>();
 	private static HashMap<String,Boolean> robotIsConfirming = new LinkedHashMap<String,Boolean>();
+	private static HashMap<String,Region> robotSweepRegions = new LinkedHashMap<String,Region>();
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
 	private static final double VERTICAL_STEP_SIZE_INITIAL_SWEEP = 30;
 	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
+	
+	private static final double TIME_SPENT_VERIFYING = 500.0;
 	
     private static boolean freshDetection(int label) {
     	Integer c = detectionCounts.get(label);
@@ -118,13 +121,14 @@ class ComputerCIshoreside {
 		  String robot = e.getKey();
 		  Region region = e.getValue();
 		  API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
+		  
 		  CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
+		  robotSweepRegions.put(robot, region);
+		  
+
 		  API.startVehicle(robot);
 		  CollectiveIntLog.logCI("Starting robot " + robot);
 	  }
-	  
-      // divide up the rect region amongst the robots
-      // set their original behaviour sweeps on a stack?
   }
 
   public static void SONARDetectionHook(SonarDetection detection, String robotName) {
@@ -135,25 +139,34 @@ class ComputerCIshoreside {
 	  Point loc = detection.detectionLocation;
 	  int label = detection.objectID;
 
-    // Count the detections at this location
     if (freshDetection(label)) {
                  Optional<String> rName_o = chooseRobotNear(loc, robotName);
         if (rName_o.isPresent()) {
         	String rName = rName_o.get();
             API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP, ("UUV_COORDINATE_UPDATE_VERIFY_" + rName.toUpperCase()));
-            CollectiveIntLog.logCI("Setting robot " + rName + " to confirm sweep");
-            // need to send this robot back to its original action after some time...
-            // TODO: use a timer here to pop from the robot action stack
-            // will need to track the robot active regions on some sort of per-robot stack?
+            CollectiveIntLog.logCI("Setting robot " + rName + " to verify detection");
+            
+            // Need to send this robot back to its original action after some time...
+            // Register a one-off timer to return the robot to its original activity
+            OneOffTimer treturn = OneOffTimer.afterDelay(TIME_SPENT_VERIFYING, (t ->
+            	{ Region origRegion = robotSweepRegions.get(rName);
+            	  CollectiveIntLog.logCI("Verification timer expired for robot " + rName);
+            	  CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
+            	  API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP, ("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
+            	}));
+            
+            // TODO: check if this is necessarily unique?
+            API.registerTimer(rName, treturn);
+             
+            
         } else {
-        	CollectiveIntLog.logCI("ERROR: No other robots avaiable to confirm the detection");
+        	CollectiveIntLog.logCI("ERROR: No robots avaiable to confirm the detection");
         }
     }
   }
 
   public static void GPS_POSITIONDetectionHook(Double x, Double y, String robotName) {
 	  // Update the robot position notification
-	  // TODO: Need the robotname in this hook in the code generator!
 	  robotLocations.put(robotName, new Point(x,y));
   }
 }

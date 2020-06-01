@@ -86,7 +86,7 @@
   </robots>
   <computers xmi:id="_fXV6wHP-Eeqc6cv9mBHIKw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
-    <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="2000.0"/>
+    <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="2400.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="4.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
@@ -97,7 +97,7 @@
     </region>
   </goals>
   <goals xmi:id="_iULp4HP_Eeqc6cv9mBHIKw" name="primarySensorSweep">
-    <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="2000.0"/>
+    <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="2400.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_kLrXAHP_Eeqc6cv9mBHIKw">
@@ -108,13 +108,13 @@
     </region>
   </goals>
   <goals xmi:id="_isDXUHP_Eeqc6cv9mBHIKw" name="verifySensorDetections">
-    <requirements xmi:id="_MLuLsHQEEeqc6cv9mBHIKw" dependencies="_iULp4HP_Eeqc6cv9mBHIKw" latestFinishTime="2000.0"/>
+    <requirements xmi:id="_MLuLsHQEEeqc6cv9mBHIKw" dependencies="_iULp4HP_Eeqc6cv9mBHIKw" latestFinishTime="2400.0"/>
     <participants xsi:type="atlas:RelativeParticipants" xmi:id="_KVVR0HQEEeqc6cv9mBHIKw" parentGoal="_iULp4HP_Eeqc6cv9mBHIKw" staticRobots="_zbOjAHQCEeqc6cv9mBHIKw" setOperation="SUBTRACT" fieldName="UUV_NAME" participantLimit="1"/>
     <action xsi:type="atlas:SensorCover" xmi:id="_D37MsHQIEeqc6cv9mBHIKw" density="5.0" samplesPerUnit="1"/>
     <region xsi:type="atlas:DynamicGoalRegion" xmi:id="_klx5EHP_Eeqc6cv9mBHIKw" relativeToGoal="_iULp4HP_Eeqc6cv9mBHIKw" relativeToGoalField="UUV_DETECTION_COORD" relativeRange="30.0"/>
   </goals>
   <goals xmi:id="_D87cEIiOEeqQioZ_JAeWZg" name="findTestObjects">
-    <requirements xmi:id="_LL8yQIi0EeqQioZ_JAeWZg" latestFinishTime="2000.0"/>
+    <requirements xmi:id="_LL8yQIi0EeqQioZ_JAeWZg" latestFinishTime="2400.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:DiscoverObjects" xmi:id="_S0efIIiOEeqQioZ_JAeWZg" objects="_DXIVsHRpEeqNXdfjikxLMQ _EPx08HRpEeqNXdfjikxLMQ _D2ADAHRpEeqNXdfjikxLMQ" robotsNeededPerObject="2"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vcl50Ii0EeqQioZ_JAeWZg">
@@ -143,39 +143,39 @@
     <fields xmi:id="_Xw3_QJp3Eeqgh-vrPhaKXw" name="coords"/>
   </messages>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-ELLA">
-    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_vXDb0IlfEeqKMYostsW9cQ" name="HEADINGFAULT-ELLA">
-    <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <affectedTime xmi:id="_30Y0gIlfEeqKMYostsW9cQ" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_yGPl8IlfEeqKMYostsW9cQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="UP_HEADING" newValue="heading=180"/>
   </faults>
   <faults xmi:id="_eW05sJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-FRANK">
-    <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_eW05spRPEeq4FYD6a9PbTQ" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_ewiaMJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-GILDA">
-    <affectedTime xmi:id="_ewiaMZRPEeq4FYD6a9PbTQ" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <affectedTime xmi:id="_ewiaMZRPEeq4FYD6a9PbTQ" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_ewiaMpRPEeq4FYD6a9PbTQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_e8JNQJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-HENRY">
-    <affectedTime xmi:id="_e8JNQZRPEeq4FYD6a9PbTQ" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="3" faultProb="0.8"/>
+    <affectedTime xmi:id="_e8JNQZRPEeq4FYD6a9PbTQ" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_e8JNQpRPEeq4FYD6a9PbTQ" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_LOITER" newValue="speed=5.0"/>
   </faults>
   <faults xmi:id="_xyoc8JnzEeqfCc6JwfilfA" name="HEADINGFAULT-FRANK">
-    <affectedTime xmi:id="_xyoc8ZnzEeqfCc6JwfilfA" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <affectedTime xmi:id="_xyoc8ZnzEeqfCc6JwfilfA" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_xyoc8pnzEeqfCc6JwfilfA" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
   </faults>
   <faults xmi:id="_0Vbw4JnzEeqfCc6JwfilfA" name="HEADINGFAULT-GILDA">
-    <affectedTime xmi:id="_0Vbw4ZnzEeqfCc6JwfilfA" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <affectedTime xmi:id="_0Vbw4ZnzEeqfCc6JwfilfA" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_0Vbw4pnzEeqfCc6JwfilfA" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=350"/>
   </faults>
   <faults xmi:id="_2HfkYJnzEeqfCc6JwfilfA" name="HEADINGFAULT-HENRY">
-    <affectedTime xmi:id="_2HfkYZnzEeqfCc6JwfilfA" latestFaultEnd="2000.0" maxFaultLength="2000.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <affectedTime xmi:id="_2HfkYZnzEeqfCc6JwfilfA" latestFaultEnd="2400.0" maxFaultLength="2400.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_2HfkYpnzEeqfCc6JwfilfA" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="UP_HEADING" newValue="heading=153"/>
   </faults>
   <faults xmi:id="_iWBq8Jp1Eeqgh-vrPhaKXw" name="COORDINATE-ELLA">
-    <affectedTime xmi:id="_kETKoJp1Eeqgh-vrPhaKXw" latestFaultEnd="2000.0" maxFaultLength="300.0" maxFaultRepeatCount="1" faultProb="0.8"/>
+    <affectedTime xmi:id="_kETKoJp1Eeqgh-vrPhaKXw" latestFaultEnd="2400.0" maxFaultLength="300.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MutateMessage" xmi:id="_X5XCUJp2Eeqgh-vrPhaKXw" affectedMessage="_Rg2LoJp3Eeqgh-vrPhaKXw" affectedField="_Xw3_QJp3Eeqgh-vrPhaKXw">
       <newValue xsi:type="atlas_2:PointMessageChange" xmi:id="_e399wJp3Eeqgh-vrPhaKXw">
         <absoluteValue xmi:id="_onPAIJq-EeqJfKOVVRTaRA" x="10.0" y="10.0"/>
