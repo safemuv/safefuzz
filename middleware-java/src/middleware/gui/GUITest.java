@@ -21,10 +21,14 @@ import faultgen.FaultGenerator;
 
 public class GUITest {
 	
+	private final double DEFAULT_FAULT_TIME_LENGTH = 10.0;
+	
 	JFrame f;
 	JPanel robotsPanel = new JPanel();
 	JPanel goalsPanel = new JPanel();
 	JPanel faultPanel = new JPanel();
+	
+	JTextField faultLen;
 	
     HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
     HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
@@ -51,10 +55,19 @@ public class GUITest {
 	}
 	
 	private class FaultButtonListener implements ActionListener {
+		
+
 		public void actionPerformed(ActionEvent e) {
 			// TODO: get the time length from the GUI
-			double faultTimeLength = 8.0;
-
+			double faultTimeLength = DEFAULT_FAULT_TIME_LENGTH;
+			
+			try {
+				String faultTimeLength_s = faultLen.getText();
+				faultTimeLength = Double.valueOf(faultTimeLength_s);
+			} catch (NumberFormatException ex) {
+				System.out.println("Fault time length not set - assuming default");
+			}
+ 
 			Optional<Fault> f_o = mission.lookupFaultByName(chosenFault);
 			if (f_o.isPresent()) {
 				Fault f = f_o.get();
@@ -141,10 +154,9 @@ public class GUITest {
     	f.add(goalsPanel);
     	f.add(faultPanel);
               
-    	
     	JButton injectButton=new JButton("Inject Fault");
     	
-    	JTextField faultLen = new JTextField("Fault Length");
+    	faultLen = new JTextField("Fault Length");
     	injectButton.setBounds(130,100,100, 40);
 
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
