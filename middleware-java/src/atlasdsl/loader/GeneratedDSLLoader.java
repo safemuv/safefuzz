@@ -177,7 +177,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.of(grprimarySensorSweep), ga2);
 		
 		
-		mission.addGoal("primarySensorSweep", primarySensorSweep);
+		//mission.addGoal("primarySensorSweep", primarySensorSweep);
 		
 	
 		GoalParticipants gpverifySensorDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
@@ -200,7 +200,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			throw new DSLLoadFailed("Goal verifySensorDetections depends on itself");
 		}
 		
-		mission.addGoal("verifySensorDetections", verifySensorDetections);
+		//mission.addGoal("verifySensorDetections", verifySensorDetections);
  
  
  
@@ -383,9 +383,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	SubFieldSpec sf9 = new SubFieldSpec(0, 1, false);
 	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0, 10.0)); 
 	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
-	
-	
-	
+
 	
 	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 2400.0, 300.0, 1, 0.8); 
 	
