@@ -21,7 +21,7 @@ Run = pBasicContactMgr @ NewConsole = false
 Run = pHostInfo @ NewConsole = false
 Run = uFldNodeBroker @ NewConsole = false
 Run = uFldHazardMgr @ NewConsole = false
-Run = ATLASDBWatch @ NewConsole = false
+Run = ATLASDBInterface @ NewConsole = false
 }
 
 ProcessConfig = MOOSDB
@@ -154,12 +154,13 @@ sensor_pd = 0.99
 report_name = frank
 }
 
-ProcessConfig = ATLASDBWatch
+ProcessConfig = ATLASDBInterface
 {
 AppTick = 2
 CommsTick = 2
 ACTIVEMQ_PORT = 61616
-ACTIVEMQ_TOPIC = MIDDLEWARE-watch-frank
+ACTIVEMQ_TOPIC_PROD = MIDDLEWARE-watch-frank
+ACTIVEMQ_TOPIC_CONS = FAULTS-SIM-TO-ATLAS-targ_frank.moos
 WATCH_VAR = VAR_X
 WATCH_VAR = VAR_Y
 WATCH_VAR = DB_UPTIME

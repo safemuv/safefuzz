@@ -86,6 +86,6 @@ public class PHelmIvpProcess extends MOOSProcess {
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 		addBehaviour(new HelmBehaviourConstantHeading(this));
 		addBehaviour(new HelmBehaviourConstantSpeed(this));
-		addBehaviour(new HelmBehaviourConstantDepth(this));
+		//addBehaviour(new HelmBehaviourConstantDepth(this));
 	}
 }

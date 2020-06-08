@@ -21,7 +21,7 @@
 /* <http://www.gnu.org/licenses/>.                               */
 /*****************************************************************/
 
-#include "ATLASDBWatch_App.h"
+#include "ATLASDBInterface_App.h"
 #include "ATLASLog.h"
 #include "ATLASDB_Info.h"
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
           else if(i==2)
                   run_command = argi;
   }
-  
+
   if(mission_file == "")
     showHelpAndExit();
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
   cout << "ATLASDBWatch_App launching as " << run_command << endl;
   cout << termColor() << endl;
   debug << "Mission file: " << mission_file.c_str();
-  ATLASDBWatch atlasapp;
+  ATLASDBInterface atlasapp;
   atlasapp.Run(run_command.c_str(), mission_file.c_str(), argc, argv);
   return 0;
 }

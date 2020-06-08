@@ -296,6 +296,7 @@ SET(IVP_NON_GUI_APPS
   pGradeFrontEstimate
   uFldCTDSensor
   atlasDBWatch
+  atlasDBInterface
   )
 
 #---------------------------------------------------------------------

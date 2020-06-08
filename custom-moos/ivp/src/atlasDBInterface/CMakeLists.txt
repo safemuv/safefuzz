@@ -1,5 +1,5 @@
 #--------------------------------------------------------
-# The CMakeLists.txt for:                    ATLASDBWatch
+# The CMakeLists.txt for:                ATLASDBInterface
 #--------------------------------------------------------
 
 # Set System Specific Libraries
@@ -16,6 +16,7 @@ SET(SRC
   ATLASDBInterface_App.cpp
   ATLASDB_Info.cpp
   ATLASLinkApp.cpp
+  ATLASLinkConsumer.cpp
   ATLASLog.cpp
   main.cpp)
 
@@ -34,9 +35,9 @@ set(ActiveMQ_LIBRARY "/usr/local/lib/libactivemq-cpp.so")
 
 
 
-ADD_EXECUTABLE(ATLASDBWatch ${SRC})
+ADD_EXECUTABLE(ATLASDBInterface ${SRC})
 
-TARGET_LINK_LIBRARIES(ATLASDBWatch
+TARGET_LINK_LIBRARIES(ATLASDBInterface
   ${MOOS_LIBRARIES}
   ${ActiveMQ_LIBRARY}
   mbutil

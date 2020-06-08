@@ -18,7 +18,9 @@
 #include "MOOS/libMOOS/MOOSLib.h"
 #include "MOOS/libMOOS/Utils/ProcessConfigReader.h"
 
-#include "ATLASDBWatch_App.h"
+#include "ATLASDBInterface_App.h"
+#include "ATLASLinkConsumer.h"
+
 #include "ATLASLinkApp.h"
 #include "ATLASLog.h"
 
@@ -29,12 +31,15 @@
 
 using namespace std;
 
-ATLASDBWatch::ATLASDBWatch() {
+ATLASDBInterface::ATLASDBInterface() {
 }
+
+// TODO: need to receive notifications over the MOOSDB and use the database
+// update mechanism to activate them
 
 //---------------------------------------------------------
 // Procedure: OnNewMail
-bool ATLASDBWatch::OnNewMail(MOOSMSG_LIST &NewMail) {
+bool ATLASDBInterface::OnNewMail(MOOSMSG_LIST &NewMail) {
   MOOSMSG_LIST::iterator p;
   for (p = NewMail.begin(); p != NewMail.end(); p++) {
     CMOOSMsg &msg = *p;
@@ -45,21 +50,31 @@ bool ATLASDBWatch::OnNewMail(MOOSMSG_LIST &NewMail) {
   return true;
 }
 
-void ATLASDBWatch::SetupActiveMQ() {
-  activemq::library::ActiveMQCPP::initializeLibrary();
-  string mq_activemq_url = "failover:(tcp://localhost:" + to_string(mq_activemq_port) + ")";
-  prod = new ATLASLinkProducer(mq_activemq_url, mq_topic_name);
+// SetupActiveMQ - returns true if connection parameters are correctly set
+bool ATLASDBInterface::SetupActiveMQ() {
+    if (mq_activemq_port != 0) {
+        activemq::library::ActiveMQCPP::initializeLibrary();
+        string mq_activemq_url = "failover:(tcp://localhost:" + to_string(mq_activemq_port) + ")";
+        cout << "Producer name:" << mq_topic_name_prod << endl;
+        cout << "Consumer name:" << mq_topic_name_cons << endl;
+        prod = new ATLASLinkProducer(mq_activemq_url, mq_topic_name_prod);
+        cons = new ATLASLinkConsumer(this, mq_activemq_url, mq_topic_name_cons);
+        return true;
+    } else {
+        cout << "Not setting up ActiveMQ - check parameters" << endl;
+        return false;
+    }
 }
 
 //---------------------------------------------------------
 // Procedure: OnConnectToServer
-bool ATLASDBWatch::OnConnectToServer() {
+bool ATLASDBInterface::OnConnectToServer() {
   return true;
 }
 
 //------------------------------------------------------------
 // Procedure: RegisterVariables
-void ATLASDBWatch::RegisterVariables() {
+void ATLASDBInterface::RegisterVariables() {
   for (string var : vars_to_watch) {
     m_Comms.Register(var, 0);
     std::cout << "Registering with MOOSDB for variable " << var << endl;
@@ -68,11 +83,11 @@ void ATLASDBWatch::RegisterVariables() {
 
 //---------------------------------------------------------
 // Procedure: Iterate()
-bool ATLASDBWatch::Iterate() {
+bool ATLASDBInterface::Iterate() {
     return true;
 }
 
-bool ATLASDBWatch::ScanForVariable(const string &fileLine,
+bool ATLASDBInterface::ScanForVariable(const string &fileLine,
                                    const string &targetVar,
                                    function<void(string)> matchAction) {
   string sLine = fileLine;
@@ -91,7 +106,7 @@ bool ATLASDBWatch::ScanForVariable(const string &fileLine,
 
 // Process the mission file and determine the variables to watch
 // store them to vars_to_watch, set other variables when found
-void ATLASDBWatch::ProcessMissionFile() {
+void ATLASDBInterface::ProcessMissionFile() {
   STRING_LIST sParams;
   m_MissionReader.EnableVerbatimQuoting(false);
   m_MissionReader.GetConfiguration(GetAppName(), sParams);
@@ -102,14 +117,16 @@ void ATLASDBWatch::ProcessMissionFile() {
                     [this](string foundVal) { this->vars_to_watch.push_back(foundVal); });
     ScanForVariable(*p, "ACTIVEMQ_PORT",
                     [this](string foundVal) { this->mq_activemq_port = stoi(foundVal); });
-    ScanForVariable(*p, "ACTIVEMQ_TOPIC",
-                    [this](string foundVal) { this->mq_topic_name = foundVal; });
+    ScanForVariable(*p, "ACTIVEMQ_TOPIC_PROD",
+                    [this](string foundVal) { this->mq_topic_name_prod = foundVal; });
+    ScanForVariable(*p, "ACTIVEMQ_TOPIC_CONS",
+                    [this](string foundVal) { this->mq_topic_name_cons = foundVal; });
   }
 }
 
 // Get secondary paramters such as the user name/code for ActiveMQ messages
 // Must be called after ActiveMQ is setup
-void ATLASDBWatch::SecondaryProcessMissionFile() {
+void ATLASDBInterface::SecondaryProcessMissionFile() {
     STRING_LIST sParams;
     m_MissionReader.EnableVerbatimQuoting(false);
     m_MissionReader.GetConfiguration(GetAppName(), sParams);
@@ -126,15 +143,28 @@ void ATLASDBWatch::SecondaryProcessMissionFile() {
 //---------------------------------------------------------
 // Procedure: OnStartUp()
 //      Note: happens before connection is open
-bool ATLASDBWatch::OnStartUp() {
+bool ATLASDBInterface::OnStartUp() {
   ProcessMissionFile();
+
   for (string var : vars_to_watch) {
       debug << "Watching variable " << var << "\n";
   };
-  SetupActiveMQ();
-  SecondaryProcessMissionFile();
-  cout << "SetupActiveMQ() done" << endl;
-  RegisterVariables();
-  cout << "RegisterVariables() done" << endl;
-  return true;
+
+  bool ok = SetupActiveMQ();
+  if (ok) {
+      SecondaryProcessMissionFile();
+      cout << "SetupActiveMQ() done" << endl;
+      RegisterVariables();
+      cout << "RegisterVariables() done" << endl;
+      return true;
+  } else {
+      return false;
+  };
+}
+
+void ATLASDBInterface::fromMQHook(CMOOSMsg &msg, double endTime) {
+    cout << "MOOSMsg received over ActiveMQ - publishing to MOOSDB";
+    string k = msg.GetKey();
+    string v = msg.GetAsString();
+    Notify(k,v);
 }
