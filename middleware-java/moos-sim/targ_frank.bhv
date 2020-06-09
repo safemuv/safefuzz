@@ -3,6 +3,7 @@ initialize RETURN = false
 initialize STATION_KEEP = false
 initialize LOITER = true
 initialize CONSTHEADING = false
+initialize CONSTDEPTH = true
 initialize AVOID = true
 set MODE = ACTIVE {
 DEPLOY = true
@@ -99,5 +100,18 @@ condition = MODE==CONSTHEADING
 updates = UP_HEADINGSPEED
 speed = 1.0
 duration = no-time-limit
+}
+
+Behavior = BHV_ConstantDepth 
+{
+name = constdepth
+pwt = 100
+condition = CONSTDEPTH==true
+updates = UP_DEPTH
+depth = 5
+duration = no-time-limit
+peakwidth = 3
+basewidth = 2
+summitdelta = 20
 }
 

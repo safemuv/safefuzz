@@ -1,4 +1,4 @@
-package faultgen.test;
+package test.faultgen;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;

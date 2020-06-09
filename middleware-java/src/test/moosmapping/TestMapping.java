@@ -1,4 +1,4 @@
-package moosmapping.test;
+package test.moosmapping;
 
 import moosmapping.*;
 

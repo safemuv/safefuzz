@@ -91,8 +91,9 @@ public class MOOSCodeGen extends CARSCodeGen {
 				Point startPos = r.getPointComponentProperty("startLocation");
 				double startSpeed = r.getDoubleComponentProperty("startSpeed");
 				double maxSpeed = r.getDoubleComponentProperty("maxSpeed");
+				double maxDepth = r.getDoubleComponentProperty("maxDepth");
 				
-				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed);
+				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed, maxDepth);
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
 				//TODO: robot properties, such as maximum speed, should be propagated to the robot community here

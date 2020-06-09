@@ -41,6 +41,7 @@
   <eClassifiers xsi:type="ecore:EEnum" name="SensorType">
     <eLiterals name="SONAR" value="1"/>
     <eLiterals name="GPS_POSITION" value="2"/>
+    <eLiterals name="CAMERA" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ActuatorType">
     <eLiterals name="MOTOR" value="1"/>

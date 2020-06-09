@@ -51,6 +51,7 @@ class Computer extends NamedComponent {
 enum SensorType {
  SONAR = 1;
  GPS_POSITION = 2;
+ CAMERA = 3;
 }
 
 enum ActuatorType {

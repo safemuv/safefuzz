@@ -23,6 +23,7 @@ public class CustomCollectiveInt extends CollectiveInt {
     			  ComputerCIshoreside.GPS_POSITIONDetectionHook(r.getX(),r.getY(), r.getRobotName());
     		  }
     	  }
+
   }
 
   public void init() {

@@ -10,7 +10,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 	
 	private boolean verboseHelm = true;
 	
-	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, double startSpeed, double maxSpeed) {
+	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, double startSpeed, double maxSpeed, double maxDepth) {
 		super("pHelmIvP", parent);
 		this.startSpeed = startSpeed;
 			
@@ -21,6 +21,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 		setProperty("Verbose", verboseHelm);
 		setProperty("Behaviors", parentBHVFile);
 		setProperty("Domain", "course:0:359:360");
+		
+		setProperty("Domain", "depth:0:" + Double.toString(maxDepth) + ":" + Integer.toString((int)(Math.ceil(maxDepth) + 1)) + ":optional");
 		
 		setupBehaviours(vehicleName, startPos);
 		setupBehaviourVars();
@@ -39,6 +41,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		moosBehaviourInitVals.put("STATION_KEEP", false);
 		moosBehaviourInitVals.put("LOITER", true);
 		moosBehaviourInitVals.put("CONSTHEADING", false);
+		moosBehaviourInitVals.put("CONSTDEPTH", true);
 		
 		// TODO: this should be conditionally set if an avoidance goal is present
 		moosBehaviourInitVals.put("AVOID", true);
@@ -86,6 +89,6 @@ public class PHelmIvpProcess extends MOOSProcess {
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 		addBehaviour(new HelmBehaviourConstantHeading(this));
 		addBehaviour(new HelmBehaviourConstantSpeed(this));
-		//addBehaviour(new HelmBehaviourConstantDepth(this));
+		addBehaviour(new HelmBehaviourConstantDepth(this));
 	}
 }

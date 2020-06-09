@@ -82,7 +82,7 @@ ProcessConfig = pMarinePID
 AppTick = 2
 CommsTick = 2
 VERBOSE = true
-DEPTH_CONTROL = false
+DEPTH_CONTROL = true
 ACTIVE_START = true
 YAW_PID_KP = 0.4
 YAW_PID_KD = 0.1
@@ -92,8 +92,18 @@ SPEED_PID_KP = 0.4
 SPEED_PID_KD = 0.1
 SPEED_PID_KI = 0.0
 SPEED_PID_INTEGRAL_LIMIT = 0.07
+pitch_pid_kp = 0.12
+pitch_pid_kd = 0
+pitch_pid_ki = 0.004
+pitch_pid_integral_limit = 0.05
+z_to_pitch_pid_kp = 0.12
+z_to_pitch_pid_kd = 0
+z_to_pitch_pid_ki = 0.004
+z_to_pitch_pid_integral_limit = 0.05
 MAXRUDDER = 100
 MAXTHRUST = 100
+MAXPITCH = 15
+MAXELEVATOR = 13
 SPEED_FACTOR = 20
 }
 
@@ -104,6 +114,7 @@ CommsTick = 4
 Verbose = true
 Behaviors = targ_frank.bhv
 Domain = course:0:359:360
+Domain = depth:0:20.0:21:optional
 Domain = speed:0.0:5.0:26
 }
 

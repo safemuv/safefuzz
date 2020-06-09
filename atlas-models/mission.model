@@ -6,6 +6,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_QVLBcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="0.8"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_olp0UKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_l8itIHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_pBGIoHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_4QN-kHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -20,6 +21,9 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_zjBP4H2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
       <detections>POS</detections>
     </subcomponents>
+    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_eHRsIKnXEeqQLbqZOrinhg" type="CAMERA">
+      <detections>IMAGE</detections>
+    </subcomponents>
   </robots>
   <robots xmi:id="_gx4mIHP-Eeqc6cv9mBHIKw" name="frank">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_C4ey0HQREeqc6cv9mBHIKw" name="startLocation">
@@ -27,6 +31,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_UhIrkHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_VG2AsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_qmiuAKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_manJMHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_q_mcsHQREeqc6cv9mBHIKw" name="swathWidth" value="20.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_6xuSAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -48,6 +53,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.4"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sF2koKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -69,6 +75,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="0.9"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_tpyckKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="25.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>

@@ -19,6 +19,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rella.setPointComponentProperty("startLocation", new Point(200.0,-85.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 0.8);
+		rella.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
@@ -39,12 +40,19 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rella.addSubcomponent(srella_3);
 			
 			
+ 
+		Sensor srella_4 = new Sensor(SensorType.CAMERA);
+		srella_4.setParent(rella);
+		rella.addSubcomponent(srella_4);
+			
+			
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
 		rfrank.setPointComponentProperty("startLocation", new Point(-85.0,-150.0,0.0));
 		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		rfrank.setDoubleComponentProperty("startSpeed", 1.0);
+		rfrank.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
@@ -71,6 +79,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.setPointComponentProperty("startLocation", new Point(190.0,-150.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		rgilda.setDoubleComponentProperty("startSpeed", 1.4);
+		rgilda.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
@@ -97,6 +106,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
 		rhenry.setDoubleComponentProperty("startSpeed", 0.9);
+		rhenry.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
@@ -177,7 +187,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.of(grprimarySensorSweep), ga2);
 		
 		
-		//mission.addGoal("primarySensorSweep", primarySensorSweep);
+		mission.addGoal("primarySensorSweep", primarySensorSweep);
 		
 	
 		GoalParticipants gpverifySensorDetections = new RelativeParticipants(primarySensorSweep, (StaticParticipants)gpprimarySensorSweep, "UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
@@ -200,7 +210,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			throw new DSLLoadFailed("Goal verifySensorDetections depends on itself");
 		}
 		
-		//mission.addGoal("verifySensorDetections", verifySensorDetections);
+		mission.addGoal("verifySensorDetections", verifySensorDetections);
  
  
  
@@ -383,7 +393,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 	SubFieldSpec sf9 = new SubFieldSpec(0, 1, false);
 	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0, 10.0)); 
 	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
-
+	
+	
+	
 	
 	FaultTimeProperties ft9 = new FaultTimeProperties(0.0, 2400.0, 300.0, 1, 0.8); 
 	

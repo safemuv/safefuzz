@@ -1,4 +1,4 @@
-package middleware.test;
+package test.middleware;
 
 // Just a test instance of the middleware with MOOS assumptions directly integrated.
 // Will be used to test ActiveMQ links into Java code from the MOOS processes

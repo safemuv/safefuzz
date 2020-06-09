@@ -28,9 +28,17 @@ public class ATLASSharedResult {
 		} else return Optional.empty();
 	}
 	
+	// TODO: remove SonarDetection when the sensor types are fully
+	// generalised, replace with SensorDetection
 	public Optional<SonarDetection> getSonarDetection() {
 		if (contentsClass == SonarDetection.class) {
 			return Optional.of((SonarDetection)contents);
+		} else return Optional.empty();
+	}
+	
+	public Optional<SensorDetection> getSensorDetection() {
+		if (contentsClass == SensorDetection.class) {
+			return Optional.of((SensorDetection)contents);
 		} else return Optional.empty();
 	}
 	
