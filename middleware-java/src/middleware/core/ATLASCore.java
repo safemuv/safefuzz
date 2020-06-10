@@ -128,7 +128,7 @@ public abstract class ATLASCore {
 
 	// This is called by the simulator-side event queues when a low
 	// level sensor detection occurs
-	public void notifySensorDetection(SonarDetection d) {
+	public void notifySensorDetection(SensorDetection d) {
 		for (SensorDetectionLambda watcher : sensorWatchers) { 
 			watcher.op(d);
 		}

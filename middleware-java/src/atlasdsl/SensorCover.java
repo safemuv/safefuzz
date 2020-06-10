@@ -49,7 +49,11 @@ public class SensorCover extends Cover {
 		core.setupSensorWatcher((detection) -> 
 			 { 
 				 GoalResult gr = new GoalResult(GoalResultStatus.CONTINUE);
-				 GoalResultField coordField = new PointResultField("detectionCoord", detection.getLocation());
+				 
+				 Object o = detection.getField("location");
+				 
+				 Point p = (Point)detection.getField("location");
+				 GoalResultField coordField = new PointResultField("detectionCoord", p);
 				 gr.addField(coordField);
 				 pendingPartialResults.add(gr);
 			 });

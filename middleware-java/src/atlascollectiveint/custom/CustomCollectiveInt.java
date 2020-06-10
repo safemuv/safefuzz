@@ -4,16 +4,25 @@ import atlassharedclasses.*;
 import java.util.Optional;
 
 import atlascollectiveintgenerator.CollectiveInt;
+import atlasdsl.SensorType;
 import atlassharedclasses.ATLASSharedResult;
 
 public class CustomCollectiveInt extends CollectiveInt {
   protected void handleMessage(ATLASSharedResult a) {
     super.handleMessage(a);
-    if (a.getContentsClass() == SonarDetection.class) {
-    		  Optional<SonarDetection> d_o = a.getSonarDetection();
+    if (a.getContentsClass() == SensorDetection.class) {
+    		  Optional<SensorDetection> d_o = a.getSensorDetection();
     		  if (d_o.isPresent()) {
-    			  SonarDetection d = d_o.get();
-    			  ComputerCIshoreside.SONARDetectionHook(d_o.get(), d.getRobotName());
+    			  SensorDetection d = d_o.get();
+    			  System.out.println("detection type = " + d.getSensorType());
+    			  // TODO: this has to be pushed into generated code, to dispatch based on the sensor type!!!
+    			  if (d.getSensorType() == SensorType.SONAR) {
+    			  	  ComputerCIshoreside.SONARDetectionHook(d_o.get(), (String)d.getField("robotName"));
+    			  }
+    			  
+    			  //if (d.getSensorType() == SensorType.CAMERA) {
+    			  //	  ComputerCIshoreside.CAMERADetectionHook(d_o.get(), (String)d.getField("robotName"));
+    			  //}
     		  }
     	  }
     if (a.getContentsClass() == GPSPositionReading.class) {

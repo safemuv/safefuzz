@@ -131,13 +131,15 @@ class ComputerCIshoreside {
 	  }
   }
 
-  public static void SONARDetectionHook(SonarDetection detection, String robotName) {
+  public static void SONARDetectionHook(SensorDetection detection, String robotName) {
 	  // On a detection, if the detection is the first time...
 	  // Send a second robot in to confirm
 	  // Need to scan the positions to find the best choice
 
-	  Point loc = detection.detectionLocation;
-	  int label = detection.objectID;
+	  // TODO: would be better if the generated code had the fields from the
+	  // detection message as parameters
+	  Point loc = (Point)detection.getField("location");
+	  int label = (Integer)detection.getField("objectID");
 
     if (freshDetection(label)) {
                  Optional<String> rName_o = chooseRobotNear(loc, robotName);

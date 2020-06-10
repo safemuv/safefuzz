@@ -11,8 +11,7 @@ import javax.lang.model.element.Modifier;
 import com.squareup.javapoet.*;
 
 import atlasdsl.*;
-import atlassharedclasses.ATLASSharedResult;
-import atlassharedclasses.SonarDetection;
+import atlassharedclasses.*;
 
 public class JavaCollectiveIntGen extends CollectiveIntGen {
 	public JavaCollectiveIntGen(Mission m) {
@@ -132,7 +131,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 					.addModifiers(Modifier.PUBLIC)
 					.addModifiers(Modifier.STATIC)
 					.returns(void.class)
-					.addParameter(SonarDetection.class, "detection")
+					.addParameter(SensorDetection.class, "detection")
 					.addParameter(String.class, "robotName");
 				ciClass.addMethod(m.build());
 				break;

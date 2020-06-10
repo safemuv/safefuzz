@@ -89,10 +89,13 @@ public class DiscoverObjects extends GoalAction {
 		this.mission = mission;
 		core.setupSensorWatcher((detection) -> 
 		{
-			double time = core.getTime();
-			int objectID = detection.getObjectID();
-			String robotName = detection.getRobotName();
-			registerRobotDetection(objectID,robotName,time);
+			// Need to dispatch on the sensor type!
+			if (detection.getSensorType() == SensorType.SONAR) {
+				double time = core.getTime();
+				int objectID = (int) detection.getField("objectID");
+				String robotName = (String) detection.getField("robotName");
+				registerRobotDetection(objectID,robotName,time);
+			}
 		});
 	}
 }

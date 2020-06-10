@@ -17,7 +17,7 @@ import atlassharedclasses.*;
 
 public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 
-	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS = false;
+	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS = true;
 	
 	private static final long serialVersionUID = 1L;
 	private Pattern nodeReportScanner;
@@ -148,12 +148,12 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 			if (mup.keyStartMatches("UHZ_DETECTION_REPORT")) {
 				System.out.println("SENSOR DETECTION REPORT");
 				String val = mup.getValue();
-				Matcher m = detectionScanner.matcher(val);
-				if (m.find()) {
-					double x = Double.parseDouble(m.group(1));
-					double y = Double.parseDouble(m.group(2));
-					Integer objectID = Integer.parseInt(m.group(3));
-					String vname = m.group(4);
+				Matcher mtch = detectionScanner.matcher(val);
+				if (mtch.find()) {
+					double x = Double.parseDouble(mtch.group(1));
+					double y = Double.parseDouble(mtch.group(2));
+					Integer objectID = Integer.parseInt(mtch.group(3));
+					String vname = mtch.group(4);
 					Robot r = mission.getRobot(vname);
 					Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(objectID);
 					if (r == null) {
@@ -163,8 +163,11 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 							System.out.println("DEBUG: detected object not registered in environment " + objectID + "full update " + val);	
 						} else {
 							System.out.println("INFO: sending out sensor detection");
-							SonarDetection d = new SonarDetection(new Point(x,y),vname,objectID);
-							
+							Message m = new Message("SONAR_DETECTION_" + vname.toUpperCase());
+							SensorDetection d = new SensorDetection(m, SensorType.SONAR);
+							d.setField("location", new Point(x,y));
+							d.setField("robotName", vname);
+							d.setField("objectID", objectID);						
 							core.notifySensorDetection(d);
 							
 							try {

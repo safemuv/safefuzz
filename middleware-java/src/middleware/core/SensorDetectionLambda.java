@@ -1,8 +1,8 @@
 package middleware.core;
 
-import atlassharedclasses.SonarDetection;
+import atlassharedclasses.*;
 
 public interface SensorDetectionLambda {
 	// TODO: change this for general sensor detection, not just Sonar
-	public void op(SonarDetection d);
+	public void op(SensorDetection d);
 }

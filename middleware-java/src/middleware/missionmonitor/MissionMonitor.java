@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import atlasdsl.*;
 import atlasdsl.GoalResult.GoalResultStatus;
-import atlassharedclasses.SonarDetection;
+import atlassharedclasses.*;
+
 import middleware.core.*;
 import middleware.logging.ATLASLog;
 
@@ -25,7 +26,7 @@ public class MissionMonitor {
 		scanGoals();
 	}
 	
-	public void reportDetection(SonarDetection sd) {
+	public void reportDetection(SensorDetection sd) {
 		// Needs to update the internal state of any sensor coverage goals 
 		// which are relevant to this type of sensor
 	}
