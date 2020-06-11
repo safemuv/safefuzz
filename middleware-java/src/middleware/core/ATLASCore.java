@@ -19,7 +19,7 @@ public abstract class ATLASCore {
 	protected ATLASEventQueue fromCI;
 	
 	// TODO: read this from the interface
-	private double timeLimit = 1000.0;
+	private double timeLimit = 2500.0;
 	
 	//protected ATLASEventQueue fromFaultGen;
 	// for now the fault generator is installed in the middleware process itself,

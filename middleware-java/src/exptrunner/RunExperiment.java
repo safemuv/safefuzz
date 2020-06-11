@@ -82,8 +82,7 @@ public class RunExperiment {
 				// Launch the MOOS code, middleware and CI as separate subprocesses
 
 				// TODO: if launching an experiment with more robots, need to ensure individual
-				// launch scripts are
-				// generated in the MOOS code
+				// launch scripts are generated in the MOOS code
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_shoreside.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_ella.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_frank.sh");
@@ -199,6 +198,7 @@ public class RunExperiment {
 	}
 
 	public static void main(String[] args) {
-		runMultifaultExpt(args);
+		//runMultifaultExpt(args);
+		runCoverage(args);
 	}
 }

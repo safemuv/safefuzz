@@ -17,7 +17,7 @@ import atlassharedclasses.*;
 
 public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 
-	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS = true;
+	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS = false;
 	
 	private static final long serialVersionUID = 1L;
 	private Pattern nodeReportScanner;

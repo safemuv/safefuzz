@@ -19,6 +19,7 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	private List<VoidLambda> afterHooks = new ArrayList<VoidLambda>();
 	private int charCount = 0;
 	private final int CHAR_COUNT_LIMIT = 80;
+	private final int EVENTS_PER_PRINTED_CHAR = 3;
 	
 
 	public ATLASEventQueue(ATLASCore core, int capacity, char progressChar) {
@@ -40,9 +41,11 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	
 	public abstract void setup();
 	
-	private void printChar() {
+	private void printCharIfReady() {
 		charCount++;
-		System.out.print(progressChar);
+		if (charCount % EVENTS_PER_PRINTED_CHAR == 0) {
+			System.out.print(progressChar);
+		}
 		if (charCount > CHAR_COUNT_LIMIT) {
 			System.out.println();
 			charCount = 0;
@@ -54,7 +57,7 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 		while (continueLoop) {
 			try {
 				E e = take();
-				printChar();
+				printCharIfReady();
 				
 				for (VoidLambda v : afterHooks) {
 					v.op();
