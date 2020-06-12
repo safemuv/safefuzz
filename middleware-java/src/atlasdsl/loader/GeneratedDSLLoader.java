@@ -40,12 +40,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rella.addSubcomponent(srella_3);
 			
 			
- 
-		Sensor srella_4 = new Sensor(SensorType.CAMERA);
-		srella_4.setParent(rella);
-		rella.addSubcomponent(srella_4);
-			
-			
 			
 		mission.addRobot(rella);
 		Robot rfrank = new Robot("frank");
@@ -129,6 +123,60 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 			
 		mission.addRobot(rhenry);
+		Robot rbrian = new Robot("brian");
+		rbrian.setPointComponentProperty("startLocation", new Point(-85.0,0.0,0.0));
+		rbrian.setDoubleComponentProperty("maxSpeed", 0.5);
+		rbrian.setDoubleComponentProperty("startSpeed", 0.9);
+		rbrian.setDoubleComponentProperty("maxDepth", 20.0);
+		
+ 
+		Sensor srbrian_1 = new Sensor(SensorType.CAMERA);
+		srbrian_1.setParent(rbrian);
+		srbrian_1.setDoubleComponentProperty("imagingRange", 3.0);
+		srbrian_1.setDoubleComponentProperty("detectionProb", 0.99);
+		rbrian.addSubcomponent(srbrian_1);
+			
+			
+ 
+		Sensor srbrian_2 = new Sensor(SensorType.GPS_POSITION);
+		srbrian_2.setParent(rbrian);
+		rbrian.addSubcomponent(srbrian_2);
+			
+			
+ 
+			
+			MotionSource srbrian_3 = new MotionSource();
+			rbrian.addSubcomponent(srbrian_3);
+			
+			
+		mission.addRobot(rbrian);
+		Robot rlinda = new Robot("linda");
+		rlinda.setPointComponentProperty("startLocation", new Point(0.0,-30.0,0.0));
+		rlinda.setDoubleComponentProperty("maxSpeed", 5.0);
+		rlinda.setDoubleComponentProperty("startSpeed", 0.9);
+		rlinda.setDoubleComponentProperty("maxDepth", 20.0);
+		
+ 
+		Sensor srlinda_1 = new Sensor(SensorType.CAMERA);
+		srlinda_1.setParent(rlinda);
+		srlinda_1.setDoubleComponentProperty("imagingRange", 3.0);
+		srlinda_1.setDoubleComponentProperty("detectionProb", 0.99);
+		rlinda.addSubcomponent(srlinda_1);
+			
+			
+ 
+		Sensor srlinda_2 = new Sensor(SensorType.GPS_POSITION);
+		srlinda_2.setParent(rlinda);
+		rlinda.addSubcomponent(srlinda_2);
+			
+			
+ 
+			
+			MotionSource srlinda_3 = new MotionSource();
+			rlinda.addSubcomponent(srlinda_3);
+			
+			
+		mission.addRobot(rlinda);
 	
 	
 	EnvironmentalObject eo1 = new EnvironmentalObject(1, new Point(0.0,-55.0,0.0), false);

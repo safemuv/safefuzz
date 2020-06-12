@@ -108,6 +108,18 @@ public class MOOSCodeGen extends CARSCodeGen {
 					rprocess.addProcess(sonar_proc);
 					shoresideSonar = true;
 				}
+				
+				// TODO: Can we support sonar and camera sensors correctly on a single vehicle?
+				// For the heterogeneous case study it doesn't matter for now
+				if ((s = (r.getSensor(SensorType.CAMERA))) != null) {
+					//System.out.println("sensor camera, parent = " + ((Robot)s.getParent()).getName());					
+					double sensorWidth = s.getDoubleComponentProperty("imagingRange");			
+					double detectionProb = 1.0;
+					// The camera is implemented as a hazard process 
+					MOOSProcess sonar_proc = new UFldHazardMgrProcess(rprocess, r.getName(), sensorWidth, detectionProb); 
+					rprocess.addProcess(sonar_proc);
+					shoresideSonar = true;
+				}
 			}
 			
 			// If there is a sonar sensor anywhere, then the shoreside needs to include a HazardSensor process

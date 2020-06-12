@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
 class ComputerCIshoreside {
 
 	// The shoreside CI's copy of the robot information
-	private static List<String> robots = new ArrayList<String>();
+	private static List<String> sweepRobots = new ArrayList<String>();
+	private static List<String> cameraRobots = new ArrayList<String>();
+	
 	private static HashMap<String,Point> robotLocations = new LinkedHashMap<String,Point>();
 	private static HashMap<Integer,Integer> detectionCounts = new LinkedHashMap<Integer,Integer>();
 	private static HashMap<String,Boolean> robotIsConfirming = new LinkedHashMap<String,Boolean>();
@@ -80,12 +82,15 @@ class ComputerCIshoreside {
 	  // TODO: should we get this from the DSL info?
       // load the robot definition names - or should this be part of generated code?
 	  // for now, hardcode it statically
-	  robots.add("frank");
-	  robots.add("gilda");
-	  robots.add("henry");
-	  robots.add("ella");
+	  sweepRobots.add("frank");
+	  sweepRobots.add("gilda");
+	  sweepRobots.add("henry");
+	  sweepRobots.add("ella");
 	  
-	  for (String r : robots) {
+	  cameraRobots.add("brian");
+	  cameraRobots.add("linda");
+	  
+	  for (String r : sweepRobots) {
 		  robotIsConfirming.put(r, false);
 	  }
 		  
@@ -115,7 +120,7 @@ class ComputerCIshoreside {
 	  System.out.println("init");
 
 	  setRobotNamesAndRegion();
-	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,robots);
+	  Map<String,Region> regionAssignments = staticRegionSplit(fullRegion,sweepRobots);
 	  CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
 	  for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 		  String robot = e.getKey();
@@ -170,5 +175,9 @@ class ComputerCIshoreside {
   public static void GPS_POSITIONDetectionHook(Double x, Double y, String robotName) {
 	  // Update the robot position notification
 	  robotLocations.put(robotName, new Point(x,y));
+  }
+  
+  public static void CAMERADetectionHook(SensorDetection detection, String robotName) {
+	  CollectiveIntLog.logCI("Camera detection");
   }
 }

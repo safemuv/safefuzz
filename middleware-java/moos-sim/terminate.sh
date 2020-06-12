@@ -7,6 +7,7 @@ killall -9 MOOSDB
 killall -9 uFldNodeBroker
 killall -9 pHelmIvP
 killall -9 ATLASDBWatch
+killall -9 ATLASDBInterface
 killall -9 pLogger
 killall -9 pMarinePID
 killall -9 uProcessWatch

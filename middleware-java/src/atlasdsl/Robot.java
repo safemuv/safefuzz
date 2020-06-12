@@ -35,7 +35,9 @@ public class Robot extends Component {
 	public Sensor getSensor(SensorType st) {
 		List<Subcomponent> sensors = contains.stream()
 				.filter(sc -> sc instanceof Sensor)
+				.filter(sc -> ((Sensor)sc).getType() == st)
 				.collect(Collectors.toList());
+		
 		if (sensors.size() > 0) {
 			return (Sensor) sensors.get(0);
 		} else return null;

@@ -13,7 +13,6 @@ public class Sensor extends Subcomponent {
 	}
 	
 	public static String sensorTypeToString(SensorType st) {
-		if (st == SensorType.SONAR) return "SONAR";
-		else return "GPS_POSITION";
+		return st.name();
 	}
 }

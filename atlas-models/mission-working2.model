@@ -21,6 +21,9 @@
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_zjBP4H2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
       <detections>POS</detections>
     </subcomponents>
+    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_eHRsIKnXEeqQLbqZOrinhg" type="CAMERA">
+      <detections>IMAGE</detections>
+    </subcomponents>
   </robots>
   <robots xmi:id="_gx4mIHP-Eeqc6cv9mBHIKw" name="frank">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_C4ey0HQREeqc6cv9mBHIKw" name="startLocation">
@@ -83,50 +86,6 @@
       <detections>POS</detections>
     </subcomponents>
     <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_3bj50H2jEeqRdcV7Ed4ZKQ" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
-  <robots xmi:id="_Y_ymkKyYEeqTYY1ormOQgg" name="brian">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_Y_ymkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_Y_ymkqyYEeqTYY1ormOQgg" x="-85.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymk6yYEeqTYY1ormOQgg" name="maxSpeed" value="0.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.9"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymlayYEeqTYY1ormOQgg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_Y_ymlqyYEeqTYY1ormOQgg" type="CAMERA">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_yml6yYEeqTYY1ormOQgg" name="imagingRange" value="3.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymmKyYEeqTYY1ormOQgg" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_Y_ymmayYEeqTYY1ormOQgg" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_Y_ymmqyYEeqTYY1ormOQgg" maxSpeed="0.5">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
-  <robots xmi:id="_a3uYkKyYEeqTYY1ormOQgg" name="linda">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_a3uYkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_a3uYkqyYEeqTYY1ormOQgg" y="-30.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYk6yYEeqTYY1ormOQgg" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.9"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYlayYEeqTYY1ormOQgg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_a3uYlqyYEeqTYY1ormOQgg" type="CAMERA">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYl6yYEeqTYY1ormOQgg" name="imagingRange" value="3.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYmKyYEeqTYY1ormOQgg" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_a3uYmayYEeqTYY1ormOQgg" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_a3uYmqyYEeqTYY1ormOQgg" maxSpeed="5.0">
       <params>HEADING</params>
       <params>SPEED</params>
       <params>COURSE</params>

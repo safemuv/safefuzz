@@ -38,7 +38,7 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
         brokerThread.setDaemon(daemon);
         brokerThread.start();
     }
-	
+	 
 	public abstract void setup();
 	
 	private void printCharIfReady() {

@@ -101,14 +101,27 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 	
 	private String activeMQcodeForSensorType(SensorType st) {
 		switch (st) {
-		case SONAR:
-			return "if (a.getContentsClass() == SonarDetection.class) {\n" + 
-			"		  Optional<SonarDetection> d_o = a.getSonarDetection();\n" + 
-			"		  if (d_o.isPresent()) {\n" + 
-			"			  SonarDetection d = d_o.get();\n" + 
-			"			  ComputerCIshoreside.SONARDetectionHook(d_o.get(), d.getRobotName());\n" + 
-			"		  }\n" + 
-			"	  }";
+		case SONAR:		
+			return "if (a.getContentsClass() == SensorDetection.class) {\n" + 
+	    	"	  Optional<SensorDetection> d_o = a.getSensorDetection();\n"+
+	    	"	  if (d_o.isPresent()) {\n" +
+	    	"		  SensorDetection d = d_o.get();\n" +
+	    	"		  if (d.getSensorType() == SensorType.SONAR) {\n" +
+	    	"		  	  ComputerCIshoreside.SONARDetectionHook(d_o.get(), (String)d.getField(\"robotName\"));\n" +
+	    	"		  }\n" +
+	    	"	  }\n" +
+	    	"  };\n";
+			
+		case CAMERA:
+			return "if (a.getContentsClass() == SensorDetection.class) {\n" + 
+	    	"	  Optional<SensorDetection> d_o = a.getSensorDetection();\n"+
+	    	"	  if (d_o.isPresent()) {\n" +
+	    	"		  SensorDetection d = d_o.get();\n" +
+	    	"		  if (d.getSensorType() == SensorType.CAMERA) {\n" +
+	    	"		  	  ComputerCIshoreside.CAMERADetectionHook(d_o.get(), (String)d.getField(\"robotName\"));\n" +
+	    	"		  }\n" +
+	    	"	  }\n" +
+	    	"  };\n";
 			
 		case GPS_POSITION:
 			return "if (a.getContentsClass() == GPSPositionReading.class) {\n" + 
@@ -127,6 +140,16 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		MethodSpec.Builder m = null;
 		switch (st) {
 			case SONAR:
+				m = MethodSpec.methodBuilder(hookName)
+					.addModifiers(Modifier.PUBLIC)
+					.addModifiers(Modifier.STATIC)
+					.returns(void.class)
+					.addParameter(SensorDetection.class, "detection")
+					.addParameter(String.class, "robotName");
+				ciClass.addMethod(m.build());
+				break;
+				
+			case CAMERA:
 				m = MethodSpec.methodBuilder(hookName)
 					.addModifiers(Modifier.PUBLIC)
 					.addModifiers(Modifier.STATIC)
@@ -184,7 +207,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
         // all the notifications via pShare, this is done at the 
         // shoreside
 		for (Map.Entry<SensorType, Robot> sr : mission.getAllSensorTypesOnVehicles().entrySet()) {
-			// should be sensor types?
+			System.out.println("sr_map = " + sr.toString());
 			SensorType st = sr.getKey();
 			Robot r = sr.getValue();
 			String sensorTypeName = Sensor.sensorTypeToString(st).toUpperCase();
@@ -203,6 +226,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			FileWriter robotOut = cif.getOpenFile(className + ".java");
 			List<String> customImports = new ArrayList<String>();
 			customImports.add("atlascollectiveint.api.*");
+
 			System.out.println("Adding custom imports");
 			JavaFile javaFile = JavaFile.builder("atlascollectiveint.custom", ciClass.build()).build();
 			String output = injectImports(javaFile, customImports);
@@ -214,9 +238,8 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 		}
 	}
 	
-	// temp fix for https://github.com/square/javapoet/issues/512
+	// fix for https://github.com/square/javapoet/issues/512
 	public String injectImports(JavaFile javaFile, List<String> imports) {
-			System.out.println("injectImports");
 		    String rawSource = javaFile.toString();
 
 		    List<String> result = new ArrayList<>();
@@ -262,6 +285,7 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			// Use additional imports: https://github.com/square/javapoet/issues/512
 			List<String> customImports = new ArrayList<String>();
 			customImports.add("atlassharedclasses.*");
+			customImports.add("atlasdsl.SensorType");
 			customImports.add("java.util.Optional");
 			
 			try {

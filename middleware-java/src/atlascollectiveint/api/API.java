@@ -74,4 +74,10 @@ public class API {
 	public static void registerTimer(String timerName, Timer timer) {
 		ci.registerTimer(timerName, timer);
 	}
+	
+	public static void setDepth(String robotName, double depth, String messageName) {
+		BehaviourCommand cmd = new SetDepth(depth, messageName);
+		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
+		prod.send(cmd, robotName);
+	}
 }

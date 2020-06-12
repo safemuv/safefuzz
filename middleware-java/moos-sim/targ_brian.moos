@@ -1,7 +1,7 @@
 ServerHost = localhost
-ServerPort = 9004
+ServerPort = 9005
 Simulator = true
-community = henry
+community = brian
 MOOSTimeWarp = 10
 LatOrigin = 43.825300
 LongOrigin = -70.330400
@@ -46,7 +46,7 @@ ProcessConfig = pShare
 {
 AppTick = 2
 CommsTick = 2
-input = route =  localhost:9304
+input = route =  localhost:9305
 output = src_name=Y, dest_name=B, route=localhost:9300
 }
 
@@ -54,7 +54,7 @@ ProcessConfig = uSimMarine
 {
 AppTick = 2
 CommsTick = 2
-START_POS = x=-85.0,y=-45.0,speed = 0, heading=0, depth=0
+START_POS = x=-85.0,y=0.0,speed = 0, heading=0, depth=0
 PREFIX = NAV
 }
 
@@ -62,7 +62,7 @@ ProcessConfig = pLogger
 {
 AppTick = 10
 CommsTick = 10
-File = LOG_henry
+File = LOG_brian
 Path = ./
 SyncLog = true @ 0.2
 AsyncLog = true
@@ -112,10 +112,10 @@ ProcessConfig = pHelmIvP
 AppTick = 4
 CommsTick = 4
 Verbose = true
-Behaviors = targ_henry.bhv
+Behaviors = targ_brian.bhv
 Domain = course:0:359:360
 Domain = depth:0:20.0:21:optional
-Domain = speed:0.0:5.0:26
+Domain = speed:0.0:0.5:26
 }
 
 ProcessConfig = pBasicContactMgr
@@ -160,9 +160,9 @@ ProcessConfig = uFldHazardMgr
 {
 AppTick = 2
 CommsTick = 2
-swath_width = 25.0
-sensor_pd = 0.99
-report_name = henry
+swath_width = 3.0
+sensor_pd = 1.0
+report_name = brian
 }
 
 ProcessConfig = ATLASDBInterface
@@ -170,8 +170,8 @@ ProcessConfig = ATLASDBInterface
 AppTick = 2
 CommsTick = 2
 ACTIVEMQ_PORT = 61616
-ACTIVEMQ_TOPIC_PROD = MIDDLEWARE-watch-henry
-ACTIVEMQ_TOPIC_CONS = FAULTS-SIM-TO-ATLAS-targ_henry.moos
+ACTIVEMQ_TOPIC_PROD = MIDDLEWARE-watch-brian
+ACTIVEMQ_TOPIC_CONS = FAULTS-SIM-TO-ATLAS-targ_brian.moos
 WATCH_VAR = VAR_X
 WATCH_VAR = VAR_Y
 WATCH_VAR = DB_UPTIME
