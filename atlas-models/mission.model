@@ -90,7 +90,7 @@
   </robots>
   <robots xmi:id="_Y_ymkKyYEeqTYY1ormOQgg" name="brian">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_Y_ymkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_Y_ymkqyYEeqTYY1ormOQgg" x="-85.0"/>
+      <value xmi:id="_Y_ymkqyYEeqTYY1ormOQgg" x="55.0" y="15.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymk6yYEeqTYY1ormOQgg" name="maxSpeed" value="0.5"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.9"/>
@@ -112,7 +112,7 @@
   </robots>
   <robots xmi:id="_a3uYkKyYEeqTYY1ormOQgg" name="linda">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_a3uYkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_a3uYkqyYEeqTYY1ormOQgg" y="-30.0"/>
+      <value xmi:id="_a3uYkqyYEeqTYY1ormOQgg" x="150.0" y="15.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYk6yYEeqTYY1ormOQgg" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.9"/>

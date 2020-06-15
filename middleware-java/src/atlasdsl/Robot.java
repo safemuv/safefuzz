@@ -58,4 +58,13 @@ public class Robot extends Component {
 			return Optional.of((MotionSource)mss.get(0));
 		} else return Optional.empty();
 	}
+
+	public Optional<Sensor> getFirstSensor() {
+		List<Sensor> sensors = getAllSensors();
+		if (sensors.size() > 0) {
+			return Optional.of(sensors.get(0));
+		} else {
+			return Optional.empty();
+		}
+	}
 }

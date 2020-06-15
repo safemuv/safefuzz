@@ -25,6 +25,12 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 	private Mission mission;
 	private List<ActiveMQConsumer> activeConsumers = new ArrayList<ActiveMQConsumer>();
 	private ActiveMQProducer outputToCI;
+	
+	private class NoSensorForRobot extends Exception {
+		NoSensorForRobot() {
+			
+		}
+	}
 
 	public MOOSEventQueue(ATLASCore core, Mission mission, int queueCapacity) {
 		super(core,queueCapacity, '.');
@@ -162,15 +168,23 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 						if (!eo.isPresent()) {
 							System.out.println("DEBUG: detected object not registered in environment " + objectID + "full update " + val);	
 						} else {
+							try {
 							System.out.println("INFO: sending out sensor detection");
-							Message m = new Message("SONAR_DETECTION_" + vname.toUpperCase());
-							SensorDetection d = new SensorDetection(m, SensorType.SONAR);
+							// TODO: need to work out what type of sensor is involved? is it a
+							// sonar or camera? For now, we just assume the first sensor
+							Optional<Sensor> s = r.getFirstSensor();
+							if (!s.isPresent()) {
+								throw new NoSensorForRobot(); 
+							}
+							SensorType st = s.get().getType();
+							Message m = new Message(st.name() + "_DETECTION_" + vname.toUpperCase());
+							SensorDetection d = new SensorDetection(m, st);
 							d.setField("location", new Point(x,y));
 							d.setField("robotName", vname);
 							d.setField("objectID", objectID);						
 							core.notifySensorDetection(d);
 							
-							try {
+							
 								String msg = atlasOMapper.serialise(d);
 								
 								if (DEBUG_PRINT_DESERIALISED_MSGS) {
@@ -181,6 +195,9 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (JsonProcessingException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (NoSensorForRobot e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
