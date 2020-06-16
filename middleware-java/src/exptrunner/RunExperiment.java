@@ -87,6 +87,8 @@ public class RunExperiment {
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_ella.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_frank.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_gilda.sh");
+				ExptHelper.startScript(ABS_MOOS_PATH, "launch_brian.sh");
+				ExptHelper.startScript(ABS_MOOS_PATH, "launch_linda.sh");
 				ExptHelper.startScript(ABS_MOOS_PATH, "launch_henry.sh");
 
 				exptLog("Started MOOS launch scripts");

@@ -24,6 +24,7 @@ class ComputerCIshoreside {
 	private static HashMap<Integer,Integer> detectionCounts = new LinkedHashMap<Integer,Integer>();
 	private static HashMap<String,Boolean> robotIsConfirming = new LinkedHashMap<String,Boolean>();
 	private static HashMap<String,Region> robotSweepRegions = new LinkedHashMap<String,Region>();
+	private static HashMap<String,Double> robotSpeeds = new LinkedHashMap<String,Double>();
 	private static Region fullRegion;
 
 	private static final double SWEEP_RADIUS = 50.0;
@@ -32,6 +33,7 @@ class ComputerCIshoreside {
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 2;
 	
 	private static final double TIME_SPENT_VERIFYING = 500.0;
+	private static final double CAMERA_DIVE_DEPTH = 20.0;
 	
     private static boolean freshDetection(int label) {
     	Integer c = detectionCounts.get(label);
@@ -52,18 +54,30 @@ class ComputerCIshoreside {
     	            e -> loc.distanceTo(e.getValue())));
     	return res;
     }
+       
+    private static double travelTimeForRobot(String robotName, double dist) {
+    	Double speed = robotSpeeds.get(robotName);
+    	if (speed == null) {
+    		System.out.println("Robot " + robotName + " does not have a speed defined: setting its travel time to maximum");
+    		return Double.MAX_VALUE;
+    	} else {
+    		double time = dist / speed;
+    		return time;
+    	}
+    }
     
-    // The shoreside chooses a robot from the sweep robots to use to confirm detections, 
+    // The shoreside chooses a robot to use to confirm detections, 
     // excluding the detecting one obviously!
-    private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {
-
+    private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {  	
     	Map<String,Double> dists = robotDistancesTo(loc);
     	Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
     			// Check it isn't the exclude robot
     			.filter(e -> e.getKey().compareTo(excludeRobot) != 0)
-    			.filter(e -> sweepRobots.contains(e.getKey()))
     			// Check robot is not already confirming!
     			.filter(e -> !robotIsConfirming.get(e.getKey()))
+    			// Have to transform to new Map - here the distance is mapped to the travel time
+    			.collect(Collectors.toMap(Map.Entry::getKey, e -> travelTimeForRobot(e.getKey(), e.getValue())))
+    			.entrySet().stream()
     			.sorted(Map.Entry.comparingByValue())
     			.findFirst();
     	// TODO: check sort order here
@@ -80,18 +94,28 @@ class ComputerCIshoreside {
     }
     
   public static void setRobotNamesAndRegion() {
-	  // TODO: should we get this from the DSL info?
-      // load the robot definition names - or should this be part of generated code?
-	  // for now, hardcode it statically
+	  // For now, hardcode in statically the names of the robots
 	  sweepRobots.add("frank");
 	  sweepRobots.add("gilda");
 	  sweepRobots.add("henry");
 	  sweepRobots.add("ella");
-	  
 	  cameraRobots.add("brian");
 	  cameraRobots.add("linda");
 	  
+	  robotSpeeds.put("frank", 1.0);
+	  robotSpeeds.put("gilda", 1.0);
+	  robotSpeeds.put("henry", 1.0);
+	  robotSpeeds.put("ella", 1.4);
+	  
+	  robotSpeeds.put("brian", 0.3);
+	  robotSpeeds.put("linda", 0.3);
+	 
+	  
 	  for (String r : sweepRobots) {
+		  robotIsConfirming.put(r, false);
+	  }
+	  
+	  for (String r : cameraRobots) {
 		  robotIsConfirming.put(r, false);
 	  }
 		  
@@ -133,7 +157,13 @@ class ComputerCIshoreside {
 		  
 
 		  API.startVehicle(robot);
-		  CollectiveIntLog.logCI("Starting robot " + robot);
+		  CollectiveIntLog.logCI("Starting sweep robot " + robot);
+	  }
+	  
+	  for (String robot : cameraRobots) {
+		  API.startVehicle(robot);
+		  API.setDepth(robot, CAMERA_DIVE_DEPTH, "DEPTH_SET_MESSAGE_" + robot);
+		  CollectiveIntLog.logCI("Starting camera robot " + robot);
 	  }
   }
 

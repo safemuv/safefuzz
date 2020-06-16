@@ -38,11 +38,11 @@ updates = UP_LOITER
 runflag = VEHICLE_UNDERWAY = TRUE
 endflag = VEHICLE_UNDERWAY = FALSE
 post_suffix = A
-speed = 0.9
+speed = 0.3
 clockwise = false
 radius = 5.0
 nm_radius = 10.0
-polygon = radial:: x=0.0,y=-30.0, radius=20, pts=8, snap=1, label=linda_LOITER
+polygon = radial:: x=80.0,y=55.0, radius=20, pts=8, snap=1, label=linda_LOITER
 visual_hints = nextpt_color=white, nextpt_lcolor=khaki, edge_color=orange, vertex_color=white, edge_size=1, vertex_size=2
 }
 
@@ -74,10 +74,10 @@ pwt = 100
 condition = MODE==RETURNING
 updates = RETURN_UPDATES
 endflag = STATION_KEEP = true
-speed = 0.9
+speed = 0.3
 radius = 3.0
 nm_radius = 15.0
-points = 0.0,-30.0
+points = 80.0,55.0
 repeat = 10
 lead = 8
 }

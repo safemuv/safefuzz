@@ -18,7 +18,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Robot rella = new Robot("ella");
 		rella.setPointComponentProperty("startLocation", new Point(200.0,-85.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
-		rella.setDoubleComponentProperty("startSpeed", 0.8);
+		rella.setDoubleComponentProperty("startSpeed", 1.4);
 		rella.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
@@ -72,7 +72,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Robot rgilda = new Robot("gilda");
 		rgilda.setPointComponentProperty("startLocation", new Point(190.0,-150.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
-		rgilda.setDoubleComponentProperty("startSpeed", 1.4);
+		rgilda.setDoubleComponentProperty("startSpeed", 1.0);
 		rgilda.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
@@ -99,7 +99,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Robot rhenry = new Robot("henry");
 		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
-		rhenry.setDoubleComponentProperty("startSpeed", 0.9);
+		rhenry.setDoubleComponentProperty("startSpeed", 1.0);
 		rhenry.setDoubleComponentProperty("maxDepth", 20.0);
 		
  
@@ -124,8 +124,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rhenry);
 		Robot rbrian = new Robot("brian");
-		rbrian.setPointComponentProperty("startLocation", new Point(-85.0,0.0,0.0));
-		rbrian.setDoubleComponentProperty("maxSpeed", 0.5);
+		rbrian.setPointComponentProperty("startLocation", new Point(150.0,55.0,0.0));
+		rbrian.setDoubleComponentProperty("maxSpeed", 0.3);
 		rbrian.setDoubleComponentProperty("startSpeed", 0.9);
 		rbrian.setDoubleComponentProperty("maxDepth", 20.0);
 		
@@ -151,9 +151,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 		mission.addRobot(rbrian);
 		Robot rlinda = new Robot("linda");
-		rlinda.setPointComponentProperty("startLocation", new Point(0.0,-30.0,0.0));
+		rlinda.setPointComponentProperty("startLocation", new Point(80.0,55.0,0.0));
 		rlinda.setDoubleComponentProperty("maxSpeed", 5.0);
-		rlinda.setDoubleComponentProperty("startSpeed", 0.9);
+		rlinda.setDoubleComponentProperty("startSpeed", 0.3);
 		rlinda.setDoubleComponentProperty("maxDepth", 20.0);
 		
  

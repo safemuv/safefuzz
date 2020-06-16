@@ -154,6 +154,7 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 			if (mup.keyStartMatches("UHZ_DETECTION_REPORT")) {
 				System.out.println("SENSOR DETECTION REPORT");
 				String val = mup.getValue();
+				System.out.println("detection report = " + val);
 				Matcher mtch = detectionScanner.matcher(val);
 				if (mtch.find()) {
 					double x = Double.parseDouble(mtch.group(1));
