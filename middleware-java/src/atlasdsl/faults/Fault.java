@@ -70,4 +70,12 @@ public class Fault {
 		FaultInstance fi = new FaultInstance(startTime, endTime, this, Optional.empty());
 		return fi;
 	}
+
+	public double getEarliestStartTime() {
+		return timeProperties.getEarliestStart();
+	}
+	
+	public double getLatestEndTime() {
+		return timeProperties.getLatestEnd();
+	}
 }
