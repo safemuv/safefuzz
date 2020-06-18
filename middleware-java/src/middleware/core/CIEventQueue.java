@@ -10,19 +10,22 @@ import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
+import middleware.carstranslations.MOOSTranslation;
 
 public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 	private static final long serialVersionUID = 1L;
 	private Mission mission;
 	private ATLASCore core;
+	private CARSTranslations carsTrans;
 	
 	private HashMap<String,ActiveMQProducer> producers = new LinkedHashMap<String,ActiveMQProducer>();
 	private HashMap<String,CIActiveMQConsumer> consumers = new LinkedHashMap<String,CIActiveMQConsumer>();
 
-	public CIEventQueue(ATLASCore core, Mission mission, int capacity) {
+	public CIEventQueue(ATLASCore core, Mission mission, int capacity, Class carsClass) {
 		super(core, capacity, '@');
 		this.mission = mission;
 		this.core = core;
+		this.carsTrans = (CARSTranslations) new MOOSTranslations(producers);
 	}
 	
 	public void setup() {
@@ -46,25 +49,11 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		}
 	}
 	
-	// TODO: this should be pushed into a MOOS-specific translation class?
-	// This should operate upon a Message instead of a string value
-	// serialise the message in some way
-	private synchronized void sendMOOSUpdate(String robotName, String key, String value) {
-		Double endTimeOfUpdate = 1000000.0;
-		String msg = endTimeOfUpdate.toString() + "|" + key + "=" + value;
-		ActiveMQProducer prod = producers.get(robotName); 
-		try {
-			prod.sendMessage(msg);
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	// This is used by active faults to inject their immediate effects
 	// upon the low-level CARS simulation
 	public void sendToCARS(Robot r, String key, String value) {
 		System.out.println("robot = " + r);
-		sendMOOSUpdate(r.getName(), key, value);
+		carsTrans.sendCARSUpdate(r.getName(), key, value);
 	}
 	
 	private static String pointListToPolyString(List<Point> coords) {
@@ -99,11 +88,9 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		
 		if (ciCmd instanceof StartVehicle) {
 			StartVehicle startCmd = (StartVehicle)ciCmd;
-			// TODO: Check for any fault impacting the command here
+			// TODO: Check for any fault impacting the command here?
 			System.out.println("CIEventQueue - StartVehicle received");
-			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
-			// disable MOOS manual override to start the helm running
-			sendMOOSUpdate(robotName, "MOOS_MANUAL_OVERRIDE", "false");
+			carsTrans.startRobot(robotName);
 		}
 		
 		if (ciCmd instanceof SetCoordinates) {
@@ -140,7 +127,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
 			String polyUpdate = "polygon=" + pointListToPolyString(modifiedCoords) + ":label," + robotName + "_LOITER";
 			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
-			sendMOOSUpdate(robotName, "UP_LOITER", polyUpdate);
+			carsTrans.sendCARSUpdate(robotName, "UP_LOITER", polyUpdate);
 		}
 	}
 }
