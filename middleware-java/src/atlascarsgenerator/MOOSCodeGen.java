@@ -124,8 +124,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 			
 			// If there is a sonar sensor anywhere, then the shoreside needs to include a HazardSensor process
 			if (shoresideSonar) {
-				
 				moosSharedVars.add("UHZ_SENSOR_CONFIG");
+				moosSharedVars.add("UHZ_HAZARD_REPORT");
 				moosSharedVars.add("UHZ_CONFIG_REQUEST");
 				moosSharedVars.add("UHZ_SENSOR_REQUEST");
 				moosSharedVars.add("HAZARDSET_REPORT");

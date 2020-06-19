@@ -29,6 +29,7 @@ public abstract class ATLASCore {
 	private final int CI_QUEUE_CAPACITY = 100;
 	protected Mission mission;
 	protected MissionMonitor monitor;
+	protected CARSTranslations carsOutput;
 	
 	private GUITest gui;
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
@@ -46,6 +47,10 @@ public abstract class ATLASCore {
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
+	}
+	
+	protected CARSTranslations getCARSTranslationOutput() {
+		return carsOutput;
 	}
 	
 	protected void createGUI() {

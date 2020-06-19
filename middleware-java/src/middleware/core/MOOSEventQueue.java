@@ -18,6 +18,7 @@ import atlassharedclasses.*;
 public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 
 	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS = false;
+	private static final boolean ALWAYS_REQUEST_CLASSIFICATION = true;
 	
 	private static final long serialVersionUID = 1L;
 	private Pattern nodeReportScanner;
@@ -150,8 +151,14 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 				}
 			}
 			
+			if (mup.keyStartMatches("UHZ_HAZARD_REPORT")) {
+				String val = mup.getValue();
+				System.out.println("Hazard report - raw contents " + val);
+			}
+			
 			// Handle sonar detection report events
 			if (mup.keyStartMatches("UHZ_DETECTION_REPORT")) {
+				
 				System.out.println("SENSOR DETECTION REPORT");
 				String val = mup.getValue();
 				System.out.println("detection report = " + val);
@@ -161,6 +168,12 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 					double y = Double.parseDouble(mtch.group(2));
 					Integer objectID = Integer.parseInt(mtch.group(3));
 					String vname = mtch.group(4);
+					
+					if (ALWAYS_REQUEST_CLASSIFICATION) {
+						// Request classification of the detection from CARS
+						core.getCARSTranslationOutput().sendCARSUpdate("shoreside", "UHZ_CLASSIFY_REQUEST", "vname=" + vname +",label=" + objectID);
+					}
+					
 					Robot r = mission.getRobot(vname);
 					Optional<EnvironmentalObject> eo = mission.getEnvironmentalObject(objectID);
 					if (r == null) {

@@ -21,7 +21,6 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	private final int CHAR_COUNT_LIMIT = 80;
 	private final int EVENTS_PER_PRINTED_CHAR = 3;
 	
-
 	public ATLASEventQueue(ATLASCore core, int capacity, char progressChar) {
 		super(capacity);
 		this.core = core;

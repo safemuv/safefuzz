@@ -8,7 +8,11 @@ public class MOOSTranslations implements CARSTranslations {
 	
 	HashMap<String,ActiveMQProducer> producers;
 	
-	public MOOSTranslations(HashMap<String,ActiveMQProducer> producers) {
+	public MOOSTranslations() {
+
+	}
+	
+	public void setOutputProducers(HashMap<String,ActiveMQProducer> producers) {
 		this.producers = producers;
 	}
 	
