@@ -38,7 +38,8 @@ public class SingleFaultCoverageExpt extends ExptParams {
 	private boolean completed = false;
 	private double stepFactor;
 	
-	public SingleFaultCoverageExpt(String filename, double timeStart, double timeEnd, double maxLength, double minLength, double stepFactor, Fault fault, Optional<String> extraFaultInstanceData) throws IOException {
+	public SingleFaultCoverageExpt(String filename, double runTime, double timeStart, double timeEnd, double maxLength, double minLength, double stepFactor, Fault fault, Optional<String> extraFaultInstanceData) throws IOException {
+		super(runTime);
 		this.timeStart = timeStart;
 		this.time = timeStart;
 		this.timeEnd = timeEnd;
