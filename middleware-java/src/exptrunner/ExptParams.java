@@ -4,7 +4,7 @@ import java.util.List;
 import atlassharedclasses.FaultInstance;
 
 public abstract class ExptParams {
-	private double runtime = 1600.0;
+	private double runtime = 1200.0;
 
 	public double getTimeLimit() {
 		return runtime;

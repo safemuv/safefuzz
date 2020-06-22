@@ -7,9 +7,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import atlassharedclasses.ATLASObjectMapper;
 
 public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implements Runnable {
-	
-
-	
 	private static final long serialVersionUID = 1L;
 	protected ATLASObjectMapper atlasOMapper;
 	protected ATLASCore core;
@@ -17,9 +14,9 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	private boolean continueLoop = true;
 	private char progressChar;
 	private List<VoidLambda> afterHooks = new ArrayList<VoidLambda>();
-	private int charCount = 0;
-	private final int CHAR_COUNT_LIMIT = 80;
-	private final int EVENTS_PER_PRINTED_CHAR = 3;
+	private int eventCount = 0;
+	private final int CHAR_COUNT_LIMIT = 320;
+	private final int EVENTS_PER_PRINTED_CHAR = 8;
 	
 	public ATLASEventQueue(ATLASCore core, int capacity, char progressChar) {
 		super(capacity);
@@ -41,13 +38,13 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	public abstract void setup();
 	
 	private void printCharIfReady() {
-		charCount++;
-		if (charCount % EVENTS_PER_PRINTED_CHAR == 0) {
+		eventCount++;
+		if (eventCount % EVENTS_PER_PRINTED_CHAR == 0) {
 			System.out.print(progressChar);
 		}
-		if (charCount > CHAR_COUNT_LIMIT) {
+		if (eventCount > CHAR_COUNT_LIMIT) {
 			System.out.println();
-			charCount = 0;
+			eventCount = 0;
 		} 
 	}
 	

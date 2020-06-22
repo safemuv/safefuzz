@@ -196,14 +196,17 @@ class ComputerCIshoreside {
 				// Need to send this robot back to its original action after some time...
 				// Register a one-off timer to return the robot to its original activity
 				OneOffTimer treturn = OneOffTimer.afterDelay(TIME_SPENT_VERIFYING, (t -> {
-					Region origRegion = robotSweepRegions.get(rName);
 					CollectiveIntLog.logCI("Verification timer expired for robot " + rName);
-					CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
-					API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
-							("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
+					Region origRegion = robotSweepRegions.get(rName);
+					if (origRegion != null) {
+						// Set the robot as available for future detections
+						robotIsConfirming.put(rName, false);
+						CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
+						API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
+								("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
+					}
 				}));
 
-				// TODO: check if this is necessarily unique?
 				API.registerTimer(rName, treturn);
 
 			} else {
