@@ -169,7 +169,7 @@ public class RunExperiment {
 				}
 				resFileName = resFileName + "_goalDiscovery.res";
 
-				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1000.0, 1000.0, 50.0, 0.5, f,
+				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 0.0, 1600.0, 1600.0, 50.0, 0.5, f,
 						speedOverride_o);
 				doExperiment(mission, faultName + "_coverage", ep);
 				exptLog("Done");

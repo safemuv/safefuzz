@@ -7,4 +7,8 @@ public class ResultInfo {
 		return 0;
 	}
 	
+	public void setField(String key, int val) {
+		
+	}
+	
 }

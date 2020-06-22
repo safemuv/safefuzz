@@ -131,6 +131,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				moosSharedVars.add("HAZARDSET_REPORT");
 				
 				middlewareVars.add("UHZ_DETECTION_REPORT");
+				middlewareVars.add("UHZ_HAZARD_REPORT");
 				
 				if (shoreside == null) {
 					throw new ConversionFailed(ConversionFailedReason.NO_SHORESIDE);
