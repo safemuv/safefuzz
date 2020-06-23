@@ -189,7 +189,7 @@ public class RunExperiment {
 			String tempFileName = "tempFaultFile.fif";
 			String resFileName = "multifault.res";
 			int repeatsCount = 30;
-			ExptParams ep = new RandomFaultConfigs(tempFileName, resFileName, repeatsCount, mission);
+			ExptParams ep = new RandomFaultConfigs(tempFileName, 1200.0, resFileName, repeatsCount, mission);
 			doExperiment(mission, "multifault", ep);
 			exptLog("Done");
 		} catch (DSLLoadFailed e) {

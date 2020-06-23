@@ -37,6 +37,7 @@ public class FaultMutation extends ExptParams {
 
 	private List<FaultInstanceSet> pop = new ArrayList<FaultInstanceSet>();
 	private Map<FaultInstanceSet, ResultInfo> popResults = new LinkedHashMap<FaultInstanceSet, ResultInfo>();
+	private Map<FaultInstanceSet, ResultInfo> storedResults = new LinkedHashMap<FaultInstanceSet, ResultInfo>();
 
 	private FileWriter evolutionLog;
 	private int maxIterationCount;
@@ -50,6 +51,15 @@ public class FaultMutation extends ExptParams {
 
 	private int envObjectCount;
 
+	private double totalFaultTimeInModel = 0.0;
+
+	private enum MutationType {
+		EXPAND_LENGTH,
+		CONTRACT_LENGTH,
+		CHANGE_ADDITIONAL_INFO,
+		MOVE_START;
+	}
+	
 	// Overall algorithm...
 
 	// Run all the simulations for the current population - store the results for
@@ -57,6 +67,20 @@ public class FaultMutation extends ExptParams {
 	// When the end point is reached... rank them all
 	// Ranking criteria: what is the analysis for them all?
 
+	public FaultMutation(String resFileName, double runTime, long seed, int maxIterationCount, Mission mission) throws IOException {
+		super(runTime);
+		this.evolutionLog = new FileWriter(resFileName);
+		this.r = new Random(seed);
+		this.runNoInPopulation = 0;
+		this.mission = mission;
+		this.maxIterationCount = maxIterationCount;
+		setupInitialPopulation();
+		this.envObjectCount = mission.getEnvironmentalObjects().size();
+		
+		// TODO: this needs to be set
+		this.totalFaultTimeInModel  = 0.0;
+	}
+	
 	private FaultInstance newFaultInstance(Fault f) {
 		double maxRange = f.getLatestEndTime() - f.getEarliestStartTime();
 		double timeStart = f.getEarliestStartTime() + r.nextDouble() * maxRange;
@@ -80,8 +104,8 @@ public class FaultMutation extends ExptParams {
 		}
 	}
 
-	private void debugPrintPopulationWithRanks(List<Entry<FaultInstanceSet, Integer>> ranks) {
-		for (Map.Entry<FaultInstanceSet, Integer> e : ranks) {
+	private void debugPrintPopulationWithRanks(List<Entry<FaultInstanceSet, Double>> ranks) {
+		for (Map.Entry<FaultInstanceSet, Double> e : ranks) {
 			System.out.println(e.getKey().toString() + " - rank " + e.getValue());
 		}
 	}
@@ -99,33 +123,60 @@ public class FaultMutation extends ExptParams {
 		debugPrintPopulation(pop);
 	}
 
-	private int scoreForResult(FaultInstanceSet fs, ResultInfo r) {
-		return r.getTotalFaults();
+	private double scoreForResult(FaultInstanceSet fs, ResultInfo ri) {
+		// Score based on the size of the total fault length too!
+		// TODO: compute total fault length possible in model! This will give us a metric that is 0 -> 1,
+		// so therefore will be used as a secondary factor
+		return ri.getTotalFaults() + fs.totalFaultTimeLength() / this.totalFaultTimeInModel;
 	}
 
-	private List<Entry<FaultInstanceSet, Integer>> rankPopulation() {
+	private List<Entry<FaultInstanceSet, Double>> rankPopulation() {
 		return popResults.entrySet().stream()
 				.collect(Collectors.toMap(Map.Entry::getKey, e -> scoreForResult(e.getKey(), e.getValue()))).entrySet()
 				.stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
 	}
 
-	private FaultInstance mutateFaultInstance(FaultInstance fi) {
-		// TODO: mutate an individual fault instance
-		// FaultInstance fi = fi.clone();
-		// fi.adjust
-		return fi;
+	// Choose the mutation options with equal probability
+	private MutationType chooseMutationOption() {
+		double v = r.nextDouble();
+		if (v < 0.333) {
+			return MutationType.CONTRACT_LENGTH;
+		} else if (v < 0.666) {
+			return MutationType.EXPAND_LENGTH;
+		} else return MutationType.MOVE_START;
+	}
+	
+	private FaultInstance mutateFaultInstanceRandomly(FaultInstance input) {
+		FaultInstance output = new FaultInstance(input);
+		double maxTimeShift = input.getFault().getMaxTimeRange();
+		MutationType mutationType = chooseMutationOption();
+		
+		switch (mutationType) {
+		case CONTRACT_LENGTH:
+			// Type of mutation: contracting an FI - reducing its length
+			double expandFactor = r.nextDouble();
+			output.multLengthFactor(expandFactor);
+		case EXPAND_LENGTH:
+			// Type of mutation: expanding an FI temporally - extending its length
+			double contractFactor = r.nextDouble();
+			output.multLengthFactor(contractFactor);
+		case MOVE_START:
+			double absTimeShift = (r.nextDouble() - 0.5) * maxTimeShift * 2;
+			output.absShiftTimes(absTimeShift);
+		}
+		return output;
 	}
 
 	private List<FaultInstanceSet> mutatePopulation(List<FaultInstanceSet> population,
-			List<Entry<FaultInstanceSet, Integer>> ranks) {
+			List<Entry<FaultInstanceSet, Double>> ranks) {
 
 		List<FaultInstanceSet> newPop = new ArrayList<FaultInstanceSet>();
 
-		// create new populations by mutating best
+		// create new populations by mutating best one
 		for (int i = 0; i < MUTATIONS_OF_SELECTED_BEST; i++) {
 			FaultInstanceSet best = ranks.get(0).getKey();
 			// TODO: specify a mutation function for the individual fault instances
-			FaultInstanceSet mutatedBest = best.mutateWithProb(MUTATION_PROB, fi -> mutateFaultInstance(fi));
+			FaultInstanceSet mutatedBest = best.mutateWithProb(MUTATION_PROB, fi -> mutateFaultInstanceRandomly(fi));
 			newPop.add(mutatedBest);
 		}
 
@@ -139,20 +190,12 @@ public class FaultMutation extends ExptParams {
 
 	private void iteratePopulation() {
 		iteration++;
-		List<Entry<FaultInstanceSet, Integer>> ranks = rankPopulation();
+		List<Entry<FaultInstanceSet, Double>> ranks = rankPopulation();
 		pop = mutatePopulation(pop, ranks);
 		debugPrintPopulationWithRanks(ranks);
 	}
 
-	public FaultMutation(String resFileName, long seed, int maxIterationCount, Mission mission) throws IOException {
-		this.evolutionLog = new FileWriter(resFileName);
-		this.r = new Random(seed);
-		this.runNoInPopulation = 0;
-		this.mission = mission;
-		this.maxIterationCount = maxIterationCount;
-		setupInitialPopulation();
-		this.envObjectCount = mission.getEnvironmentalObjects().size();
-	}
+
 
 	public void advance() {
 		runNoInPopulation++;
@@ -202,12 +245,14 @@ public class FaultMutation extends ExptParams {
 
 	public void logResults(String logFileDir) {
 		// process the result file and obtain the results
-		// TODO: create a new ResultInfo and store it
 		FaultInstanceSet currentFS = pop.get(runNoInPopulation);
 		ResultInfo ri = new ResultInfo();
 		countDetections(ri);
 		popResults.put(currentFS, ri);
-		// TODO: logging to files
+		
+		storedResults.put(currentFS, ri);
+		// TODO: logging to additional files
+		// ensuring that previous results are cached
 
 	}
 
