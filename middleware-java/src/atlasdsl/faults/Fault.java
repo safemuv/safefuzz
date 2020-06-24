@@ -78,4 +78,8 @@ public class Fault {
 	public double getLatestEndTime() {
 		return timeProperties.getLatestEnd();
 	}
+
+	public double getMaxTimeRange() {
+		return (getLatestEndTime() - getEarliestStartTime());
+	}
 }

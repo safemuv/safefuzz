@@ -30,6 +30,13 @@ public class FaultInstance implements Comparable<FaultInstance> {
 		}
 	}
 	
+	public FaultInstance(FaultInstance orig) {
+		this.endTime = orig.endTime;
+		this.startTime = orig.startTime;
+		this.fault = orig.fault;
+		this.extraData = orig.extraData;
+	}
+	
 	public int compareTo(FaultInstance other) {
 		int timeCompare = Double.compare(this.startTime, other.startTime);
 		if (timeCompare != 0) {
@@ -76,5 +83,30 @@ public class FaultInstance implements Comparable<FaultInstance> {
 		}	else { 
 			return "";
 		}
+	}
+	
+	private void constrainTimeValid() {
+		Fault f = this.getFault();
+		// Check if corresponding to the length of the fault in the model
+		if (this.endTime > f.getLatestEndTime()) {
+			this.endTime = f.getLatestEndTime();
+		}
+		
+		if (this.startTime < f.getEarliestStartTime()) {
+			this.startTime = f.getEarliestStartTime();
+		}
+	}
+
+	public void multLengthFactor(double factor) {
+		double origLen = this.endTime - this.startTime;
+		this.endTime = this.startTime + origLen * factor;
+		constrainTimeValid();
+	}
+
+	public void absShiftTimes(double absTimeShift) {
+		Fault f = this.getFault();
+		this.startTime += absTimeShift;
+		this.endTime += absTimeShift;
+		constrainTimeValid();
 	}
 }

@@ -59,7 +59,7 @@ public class ExptRunnerTest {
 			if (f_o.isPresent()) {
 				Fault f = f_o.get();
 				//TODO: Read args to launch appropriate experiment
-				ExptParams ep = new SingleFaultCoverageExpt("SPEEDFAULT.res", 0.0, 999.0, 999.0, 100.0, 0.5, f, Optional.empty());
+				ExptParams ep = new SingleFaultCoverageExpt("SPEEDFAULT.res", 999.0, 0.0, 999.0, 999.0, 100.0, 0.5, f, Optional.empty());
 				
 				while (!ep.completed()) {
 					ep.printState();

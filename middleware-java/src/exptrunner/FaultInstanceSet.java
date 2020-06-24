@@ -43,4 +43,12 @@ public class FaultInstanceSet {
 	public List<FaultInstance> asList() {
 		return fs.stream().collect(toCollection(ArrayList::new));
 	}
+
+	public double totalFaultTimeLength() {
+		double total = 0.0;
+		for (FaultInstance fi : fs) {
+			total += (fi.getEndTime() - fi.getStartTime());
+		}
+		return total;
+	}
 }

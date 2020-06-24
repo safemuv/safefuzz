@@ -32,7 +32,8 @@ public class RandomFaultConfigs extends ExptParams {
 	
 	private String path = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
 	
-	public RandomFaultConfigs(String tempFaultFilename, String resFileName, int repeatsCount, Mission mission) throws IOException {
+	public RandomFaultConfigs(String tempFaultFilename, double runTime, String resFileName, int repeatsCount, Mission mission) throws IOException {
+		super(runTime);
 		this.combinedResults = new FileWriter(resFileName);
 		this.run = 0;
 		this.repeatsCount = repeatsCount;
