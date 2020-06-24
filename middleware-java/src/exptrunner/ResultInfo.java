@@ -1,14 +1,21 @@
 package exptrunner;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class ResultInfo {
-	// TODO: contains numeric count of all faults 
+	
+	private Map<String,Integer> fields = new LinkedHashMap<String,Integer>();
+	
 	public int getTotalFaults() {
-		// TODO Auto-generated method stub
-		return 0;
+		int total = 0;
+		for (Map.Entry<String, Integer> me : fields.entrySet()) {
+			total += me.getValue();
+		}
+		return total;
 	}
 	
 	public void setField(String key, int val) {
-		
+		fields.put(key, val);
 	}
-	
 }

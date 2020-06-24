@@ -198,9 +198,33 @@ public class RunExperiment {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void runMutation(String[] args) {
+		DSLLoader loader = new GeneratedDSLLoader();
+		Mission mission;
+		try {
+			mission = loader.loadMission();
+			String tempFileName = "tempFaultFile.fif";
+			String resFileName = "multifault.res";
+			int repeatsCount = 30;
+			double runtime = 1200.0;
+			int seed = 6453232;
+			int iterations = 3;
+			
+			ExptParams ep = new FaultMutation(tempFileName, runtime, seed, iterations, mission);
+			doExperiment(mission, "multifault", ep);
+			exptLog("Done");
+		} catch (DSLLoadFailed e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
+		// TODO: something more intelligent to select all these
 		//runMultifaultExpt(args);
-		runCoverage(args);
+		//runCoverage(args);
+		runMutation(args);
 	}
 }

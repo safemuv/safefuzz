@@ -45,11 +45,10 @@ public class FaultInstance implements Comparable<FaultInstance> {
 			int idCompare = this.fault.getName().compareTo(other.fault.getName());
 			return idCompare;
 		}
-		
 	}
 	
 	public String toString() {
-		return fault.toString() + "," + startTime + "," + endTime; 
+		return fault.getName() + "," + startTime + "," + endTime + "," + extraData; 
 	}
 
 	public boolean isReady(double time) {

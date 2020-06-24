@@ -3,6 +3,7 @@ package exptrunner;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import static java.util.stream.Collectors.*;
@@ -21,23 +22,35 @@ public class FaultInstanceSet {
 		this.fs = fis;
 	}
 	
-	public FaultInstanceSet(CreationOperation op, int count) {
-		Set<FaultInstance> fs = new HashSet<FaultInstance>();
-		
+	public FaultInstanceSet(CreationOperation creationOp, int count) {
+		for (int i = 0; i < count; i++) 
+			fs.add(creationOp.op(i));
 	}
 	
 	public int getCount() {
 		return fs.size();
 	}
 	
-	public FaultInstanceSet mutateBy(int countToMutate, MutationOperation mut) {
+	//public FaultInstanceSet mutateBy(Random r, int countToMutate, MutationOperation mut) {
 		// TODO: implement mutation 
-		return new FaultInstanceSet(this.fs);
-	}
+		//for (FaultInstance fi : fs) {
+			//
+//		}
+//		return new FaultInstanceSet(this.fs);
+	//}
 	
-	public FaultInstanceSet mutateWithProb(double prob, MutationOperation mut) {
-		// TODO: implement mutation 
-		return new FaultInstanceSet(this.fs);
+	public FaultInstanceSet mutateWithProb(Random r, double prob, MutationOperation mut) {
+		// TODO: implement mutation
+		Set<FaultInstance> outputFaultSet = new HashSet<FaultInstance>();
+		for (FaultInstance origFi : this.fs) {
+			double v = r.nextDouble();
+			if (v < prob) {
+				outputFaultSet.add(mut.op(origFi));
+			} else {
+				outputFaultSet.add(origFi);
+			}
+		}
+		return new FaultInstanceSet(outputFaultSet);
 	}
 	
 	public List<FaultInstance> asList() {
@@ -50,5 +63,13 @@ public class FaultInstanceSet {
 			total += (fi.getEndTime() - fi.getStartTime());
 		}
 		return total;
+	}
+	
+	public String toString() {
+		String output = "HASHCODE:" + this.hashCode() + " - " + this.getCount() + " faults\n";
+		for (FaultInstance fi : fs) {
+			output = output + fi.toString() + "\n";
+		}
+		return output;
 	}
 }
