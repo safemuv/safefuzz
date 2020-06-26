@@ -39,6 +39,8 @@ public class FaultMutation extends ExptParams {
 
 	private static final int MAX_INDIVIDUAL_MUTATIONS = 3;
 
+	private static final double INACTIVE_INITIAL_FAULT_PROB = 0.5;
+
 	// TODO: constant probabilities for the mutation process
 
 	private List<FaultInstanceSet> pop = new ArrayList<FaultInstanceSet>();
@@ -101,9 +103,16 @@ public class FaultMutation extends ExptParams {
 
 		double rangeOfEnd = f.getLatestEndTime() - timeStart;
 		double timeEnd = timeStart + r.nextDouble() * rangeOfEnd;
-
+		
 		// TODO: optional intensity data
-		return new FaultInstance(timeStart, timeEnd, f, Optional.empty());
+		FaultInstance fi = new FaultInstance(timeStart, timeEnd, f, Optional.empty());
+		
+		if (r.nextDouble() < INACTIVE_INITIAL_FAULT_PROB) {
+			fi.setActiveFlag(false);
+			System.out.println("setting INACTIVE");
+		}
+		
+		return fi;
 	}
 
 	private <T> T randomElementInList(List<T> l) {
@@ -136,7 +145,8 @@ public class FaultMutation extends ExptParams {
 		for (int i = 0; i < INITIAL_POPULATION_SIZE; i++) {
 			getPop().add(i, new FaultInstanceSet(index -> {
 				Fault f = allFaults.get(index);
-				return newFaultInstance(f);
+				FaultInstance fi = newFaultInstance(f);
+				return fi;
 			}, allFaults.size()));
 		}
 		
