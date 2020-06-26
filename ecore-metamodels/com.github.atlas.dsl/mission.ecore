@@ -64,8 +64,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalRegion" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="StaticGoalRegion" eSuperTypes="#//GoalRegion">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Rectangle"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" upperBound="-1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/region#//Rectangle"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DynamicGoalRegion" eSuperTypes="#//GoalRegion">
     <eStructuralFeatures xsi:type="ecore:EReference" name="relativeToGoal" lowerBound="1"

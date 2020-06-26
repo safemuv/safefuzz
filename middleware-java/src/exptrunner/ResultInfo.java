@@ -7,7 +7,7 @@ public class ResultInfo {
 	
 	private Map<String,Integer> fields = new LinkedHashMap<String,Integer>();
 	
-	public int getTotalFaults() {
+	public int getTotalGoalViolations() {
 		int total = 0;
 		for (Map.Entry<String, Integer> me : fields.entrySet()) {
 			total += me.getValue();

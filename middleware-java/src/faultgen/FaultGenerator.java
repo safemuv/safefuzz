@@ -66,7 +66,7 @@ public class FaultGenerator {
 	public void pollFaultsNow() {
 		double time = core.getTime();
 		FaultInstance nextFault = scheduledFaults.peek();
-		if (nextFault != null && nextFault.isReady(time)) {
+		if (nextFault != null && nextFault.isReady(time) && nextFault.isActive()) {
 			FaultInstance next = scheduledFaults.remove();
 			injectedFaults.add(next);
 			core.registerFault(next);

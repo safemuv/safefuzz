@@ -40,14 +40,14 @@ public class FaultInstanceSet {
 	//}
 	
 	public FaultInstanceSet mutateWithProb(Random r, double prob, MutationOperation mut) {
-		// TODO: implement mutation
 		Set<FaultInstance> outputFaultSet = new HashSet<FaultInstance>();
 		for (FaultInstance origFi : this.fs) {
+			FaultInstance copy = new FaultInstance(origFi);
 			double v = r.nextDouble();
 			if (v < prob) {
-				outputFaultSet.add(mut.op(origFi));
+				outputFaultSet.add(mut.op(copy));
 			} else {
-				outputFaultSet.add(origFi);
+				outputFaultSet.add(copy);
 			}
 		}
 		return new FaultInstanceSet(outputFaultSet);
@@ -65,6 +65,16 @@ public class FaultInstanceSet {
 		return total;
 	}
 	
+	public double totalActiveFaultTimeLength() {
+		double total = 0.0;
+		for (FaultInstance fi : fs) {
+			if (fi.isActive()) {
+				total += (fi.getEndTime() - fi.getStartTime());
+			}
+		}
+		return total;
+	}
+	
 	public String toString() {
 		String output = "HASHCODE:" + this.hashCode() + " - " + this.getCount() + " faults\n";
 		for (FaultInstance fi : fs) {
@@ -72,4 +82,19 @@ public class FaultInstanceSet {
 		}
 		return output;
 	}
+	
+	public boolean _hasFaultInRange(double trigPoint, double minSize, String faultName) {
+		boolean isPresent = false;
+		for (FaultInstance fi : fs) {
+			String faultNameForInstance = fi.getFault().getName();
+			//System.out.println("faultNameForInstance = " + faultNameForInstance);
+			boolean faultNameMatch = faultNameForInstance.equals(faultName);
+			System.out.println("faultNameMatch = " + faultNameMatch);
+			double length = fi.getLength();
+			if ((trigPoint > fi.getStartTime()) && (trigPoint < fi.getEndTime()) && (length < minSize) && faultNameMatch) {
+				isPresent = true;
+			}
+		}
+		return isPresent;
+	} 
 }

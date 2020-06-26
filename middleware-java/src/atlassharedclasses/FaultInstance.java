@@ -7,16 +7,18 @@ import atlasdsl.faults.*;
 public class FaultInstance implements Comparable<FaultInstance> {
 	private double startTime;
 	private double endTime;
+	// Fault instances are always active by default - for compatibility
+	private boolean isActive = true;
 	private Fault fault;
 	private Optional<String> extraData;
 	
 	public FaultInstance(Double startTime, Double endTime, Fault f, Optional<String> extraData) {
-		System.out.println("startTime = " + startTime + ",endTime = " + endTime);
+		//System.out.println("startTime = " + startTime + ",endTime = " + endTime);
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.fault = f;
 		this.extraData = extraData;		
-		System.out.println("FaultInstance extraData = " + extraData);
+		//System.out.println("FaultInstance extraData = " + extraData);
 		
 		// hack to change the speed for MotionFault - for paper experiments only
 		if (f.getImpact() instanceof MotionFault && extraData.isPresent()) {
@@ -28,6 +30,10 @@ public class FaultInstance implements Comparable<FaultInstance> {
 			MotionFault mfi2 = (MotionFault)f.getImpact();
 			System.out.println("test newValue changed = " + mfi2.getNewValue());
 		}
+	}
+	
+	public void setActiveFlag(boolean flag) {
+		this.isActive = flag;
 	}
 	
 	public FaultInstance(FaultInstance orig) {
@@ -48,7 +54,11 @@ public class FaultInstance implements Comparable<FaultInstance> {
 	}
 	
 	public String toString() {
-		return fault.getName() + "," + startTime + "," + endTime + "," + extraData; 
+		String isActiveStr = "";
+		if (!isActive) {
+			isActiveStr = ",[INACTIVE]";
+		}
+		return fault.getName() + "," + startTime + "," + endTime + "," + extraData + isActiveStr; 
 	}
 
 	public boolean isReady(double time) {
@@ -75,7 +85,12 @@ public class FaultInstance implements Comparable<FaultInstance> {
 	public double getStartTime() {
 		return startTime;
 	}
-
+	
+	public double getLength() { 
+		return endTime - startTime;
+	}
+	
+	
 	public String getExtraData() {
 		if (extraData.isPresent()) {
 			return extraData.get();
@@ -91,14 +106,25 @@ public class FaultInstance implements Comparable<FaultInstance> {
 			this.endTime = f.getLatestEndTime();
 		}
 		
+		if (this.endTime < f.getEarliestStartTime()) {
+			this.endTime = f.getEarliestStartTime();
+		}
+		
 		if (this.startTime < f.getEarliestStartTime()) {
 			this.startTime = f.getEarliestStartTime();
+		}
+		
+		if (this.startTime > f.getLatestEndTime()) {
+			this.startTime = f.getLatestEndTime();
 		}
 	}
 
 	public void multLengthFactor(double factor) {
-		double origLen = this.endTime - this.startTime;
-		this.endTime = this.startTime + origLen * factor;
+		double origLen = endTime - startTime;
+		System.out.println("origLen = " + origLen);
+		endTime = startTime + (origLen * factor);
+		
+		System.out.println("endTime=" + endTime);
 		constrainTimeValid();
 	}
 
@@ -107,5 +133,13 @@ public class FaultInstance implements Comparable<FaultInstance> {
 		this.startTime += absTimeShift;
 		this.endTime += absTimeShift;
 		constrainTimeValid();
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void flipActiveFlag() {
+		isActive = !isActive;
 	}
 }

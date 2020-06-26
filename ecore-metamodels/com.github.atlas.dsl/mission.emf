@@ -102,7 +102,6 @@ abstract class GoalRegion {
 }
 
 class StaticGoalRegion extends GoalRegion {
-// Atlas.Region does not work here - why?
 	val Atlas.Rectangle staticRegion;
 }
 

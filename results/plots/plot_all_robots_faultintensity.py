@@ -27,6 +27,7 @@ def plot_range(ypos, filename, fault_intensity):
     lengths = ends - starts
     for i in range(0,len(index)):
         v_for_cell = counts[i] / 6
+        v_for_cell = min(v_for_cell,1)
         flines = np.where(fault_nums==i)
         fline = flines[0][0]
         end_this_rect = starts[fline] + lengths[fline]
@@ -48,11 +49,12 @@ def set_axis_structure():
     plt.title("Impact of faults upon missed detections by UUV " + vehicle_name + "\n(intensity of colour is more missed detections)");
     plt.savefig("coverage_singlefault_" + vehicle_name, bbox_inches='tight');
 
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "2.0_goalDiscovery.res", 2.0)
+base_file = "/home/jharbin/academic/atlas/atlas-middleware/results/24_06_2020_0118/speedfault-coverage/SPEEDFAULT-"
+#ypos_start = plot_range(ypos_start, base_file + vehicle_name + "2.0_goalDiscovery.res", 2.0)
+#ypos_start+=ypos_gap
+ypos_start = plot_range(ypos_start, base_file + vehicle_name + "3.0_goalDiscovery.res", 3.0)
 ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "3.0_goalDiscovery.res", 3.0)
+ypos_start = plot_range(ypos_start, base_file + vehicle_name + "4.0_goalDiscovery.res", 4.0)
 ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "4.0_goalDiscovery.res", 4.0)
-ypos_start+=ypos_gap
-ypos_start = plot_range(ypos_start, "/home/jharbin/academic/atlas/atlas-middleware/results/17_05_2020_0100/SPEEDFAULT-" + vehicle_name + "5.0_goalDiscovery.res", 5.0)
+ypos_start = plot_range(ypos_start, base_file + vehicle_name + "5.0_goalDiscovery.res", 5.0)
 set_axis_structure()

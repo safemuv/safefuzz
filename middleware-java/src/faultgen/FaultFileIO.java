@@ -36,9 +36,10 @@ public class FaultFileIO {
 			Double startTime = Double.parseDouble(fields[2]);
 			Double length = Double.parseDouble(fields[3]);
 			Double endTime = startTime + length;
+			boolean isActive = Boolean.parseBoolean(fields[4]);
 			Optional<String> extraData = Optional.empty();
-			if (fields.length > 4) {
-				extraData = Optional.of(fields[4]);
+			if (fields.length > 5) {
+				extraData = Optional.of(fields[5]);
 			}
 			
 			Optional<Fault> f_o = mission.lookupFaultByName(faultNameInModel);
@@ -50,6 +51,8 @@ public class FaultFileIO {
 				}
 				
 				FaultInstance fi = new FaultInstance(startTime, endTime, f, extraData);
+				fi.setActiveFlag(isActive);
+				
 				if (!fi.isValid()) {
 					throw new FaultInstanceInvalid();
 				} else return Optional.of(fi);

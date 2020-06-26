@@ -23,26 +23,34 @@ import atlassharedclasses.FaultInstance;
 public class FaultMutation extends ExptParams {
 
 	// The number of fault instances produced in the initial sets of the population
-	private static final int NUMBER_OF_INITIAL_FAULTS = 3;
+	// private static final int NUMBER_OF_INITIAL_FAULTS = 8;
+	// We assume that there is one fault instance per fault in the model
 
 	// The number of randomly generated test fault instance sets in the population
-	private static final int INITIAL_POPULATION_SIZE = 3;
+	private static final int INITIAL_POPULATION_SIZE = 8;
 
 	// Probability of mutation of existing faults
 	private static final double MUTATION_PROB = 0.3;
 
-	private static final int MUTATIONS_OF_SELECTED_BEST = 2;
-	private static final int EXISTING_POP_TO_RETAIN = 1;
+	private static final int MUTATIONS_OF_SELECTED_BEST = 6;
+	private static final int EXISTING_POP_TO_RETAIN = 2;
 
 	private static final int DETECTIONS_PER_OBJECT = 2;
 
-	private static final int MAX_INDIVIDUAL_MUTATIONS = 2;
+	private static final int MAX_INDIVIDUAL_MUTATIONS = 3;
+
+	// TODO: constant probabilities for the mutation process
 
 	private List<FaultInstanceSet> pop = new ArrayList<FaultInstanceSet>();
 	private Map<FaultInstanceSet, ResultInfo> popResults = new LinkedHashMap<FaultInstanceSet, ResultInfo>();
 	private Map<FaultInstanceSet, ResultInfo> storedResults = new LinkedHashMap<FaultInstanceSet, ResultInfo>();
 
+	private LoggingOperation logOp;
+
 	private FileWriter evolutionLog;
+	private FileWriter mutationLog;
+	private FileWriter populationLog;
+
 	private int maxIterationCount;
 
 	private int runNoInPopulation = 0;
@@ -53,11 +61,18 @@ public class FaultMutation extends ExptParams {
 
 	private int envObjectCount;
 
-	private double totalFaultTimeInModel = 0.0;
+//	private double totalFaultTimeInModel = 0.0;
 
 	private enum MutationType {
-		EXPAND_LENGTH, CONTRACT_LENGTH, CHANGE_ADDITIONAL_INFO, MOVE_START;
+		EXPAND_LENGTH, CONTRACT_LENGTH, CHANGE_ADDITIONAL_INFO, MOVE_START, FLIP_ACTIVE_FLAG;
 	}
+
+	// TODO: custom mutation probabilities
+	// private static final double PROB_EXPAND_LENGTH = 0.2;
+	// private static final double PROB_CONTRACT_LENGTH = 0.2;
+	// private static final double PROB_CHANGE_ADDITIONAL_INFO = 0.2;
+	// private static final double PROB_MOVE_START = 0.2;
+	// private static final double PROB_FLIP_ACTIVE_FLAG = 0.2;
 
 	// Overall algorithm...
 
@@ -65,20 +80,19 @@ public class FaultMutation extends ExptParams {
 	// each one
 	// When the end point is reached... rank them all
 	// Ranking criteria: what is the analysis for them all?
-
-	public FaultMutation(String resFileName, double runTime, long seed, int maxIterationCount, Mission mission)
-			throws IOException {
+	public FaultMutation(LoggingOperation logOp, String resFileName, String mutationFileName, String populationFileName,
+			double runTime, long seed, int maxIterationCount, Mission mission) throws IOException {
 		super(runTime);
+		this.logOp = logOp;
 		this.evolutionLog = new FileWriter(resFileName);
+		this.mutationLog = new FileWriter(mutationFileName);
+		this.populationLog = new FileWriter(populationFileName);
 		this.r = new Random(seed);
 		this.runNoInPopulation = 0;
 		this.mission = mission;
 		this.maxIterationCount = maxIterationCount;
 		setupInitialPopulation();
 		this.envObjectCount = mission.getEnvironmentalObjects().size();
-
-		// TODO: this needs to be set
-		this.totalFaultTimeInModel = 0.0;
 	}
 
 	private FaultInstance newFaultInstance(Fault f) {
@@ -114,33 +128,42 @@ public class FaultMutation extends ExptParams {
 
 	private void setupInitialPopulation() {
 		System.out.println("Setting up initial population...");
-		pop.clear();
-		popResults.clear();
+		getPop().clear();
+		getPopResults().clear();
 		runNoInPopulation = 0;
 		List<Fault> allFaults = mission.getFaultsAsList();
+		
 		for (int i = 0; i < INITIAL_POPULATION_SIZE; i++) {
-			pop.add(i, new FaultInstanceSet(index -> {
-				Fault f = randomElementInList(allFaults);
+			getPop().add(i, new FaultInstanceSet(index -> {
+				Fault f = allFaults.get(index);
 				return newFaultInstance(f);
-			}, NUMBER_OF_INITIAL_FAULTS));
+			}, allFaults.size()));
 		}
+		
 		// print the initial population
-		debugPrintPopulation(pop);
+		debugPrintPopulation(getPop());
+	}
+
+	private double faultCostProportion(FaultInstanceSet fs, ResultInfo ri) {
+		return (1 - ((fs.totalActiveFaultTimeLength() / (fs.getCount() * runtime))));
 	}
 
 	private double scoreForResult(FaultInstanceSet fs, ResultInfo ri) {
 		// Score based on the size of the total fault length too!
-		// TODO: compute total fault length possible in model! This will give us a
+		// Compute total fault length possible in model! This will give us a
 		// metric that is 0 -> 1,
 		// so therefore will be used as a secondary factor
-		double score = ri.getTotalFaults() + (1 - ((fs.totalFaultTimeLength() / (fs.getCount() * runtime))));
-		System.out.println("scoreForResult: total faults=" + ri.getTotalFaults());
-		System.out.println("scoreForResult: time length =" + fs.totalFaultTimeLength());
+		double fc = faultCostProportion(fs, ri);
+		double totalFaults = ri.getTotalGoalViolations();
+		double score = totalFaults + fc;
+		System.out.println("scoreForResult:goal violations=" + ri.getTotalGoalViolations());
+		System.out.println("scoreForResult: time length   =" + fs.totalFaultTimeLength());
+		System.out.println("scoreForResult: final score   =" + score);
 		return score;
 	}
 
 	private List<Entry<FaultInstanceSet, Double>> rankPopulation() {
-		return popResults.entrySet().stream()
+		return getPopResults().entrySet().stream()
 				.collect(Collectors.toMap(Map.Entry::getKey, e -> scoreForResult(e.getKey(), e.getValue()))).entrySet()
 				.stream().sorted(reverseOrder(Map.Entry.comparingByValue())).collect(Collectors.toList());
 	}
@@ -148,39 +171,64 @@ public class FaultMutation extends ExptParams {
 	// Choose the mutation options with equal probability
 	private MutationType chooseMutationOption() {
 		double v = r.nextDouble();
-		if (v < 0.333) {
+		if (v < 0.2) {
 			return MutationType.CONTRACT_LENGTH;
-		} else if (v < 0.666) {
+		} else if (v < 0.4) {
 			return MutationType.EXPAND_LENGTH;
-		} else
+		} else if (v < 0.6) {
 			return MutationType.MOVE_START;
+		} else if (v < 0.8) {
+			return MutationType.CHANGE_ADDITIONAL_INFO;
+		} else
+			return MutationType.FLIP_ACTIVE_FLAG;
 	}
 
-	private FaultInstance mutateFaultInstanceRandomly(FaultInstance input) {
+	// set to public for testing
+	public FaultInstance mutateFaultInstanceRandomly(FaultInstance input) {
 		FaultInstance output = new FaultInstance(input);
 		double maxTimeShift = input.getFault().getMaxTimeRange();
 		MutationType mutationType = chooseMutationOption();
 		System.out.println("Performing mutation on fault instance " + input.toString());
-
-		switch (mutationType) {
-		case CONTRACT_LENGTH:
-			// Type of mutation: contracting an FI - reducing its length
-			double expandFactor = r.nextDouble();
-			System.out.println("Contracting length: factor = " + expandFactor);
-			output.multLengthFactor(expandFactor);
-		case EXPAND_LENGTH:
-			// Type of mutation: expanding an FI temporally - extending its length
-			double contractFactor = r.nextDouble();
-			expandFactor = 1.0 / contractFactor;
-			System.out.println("Expanding length: factor = " + expandFactor);
-			output.multLengthFactor(expandFactor);
-
-		case MOVE_START:
-			double absTimeShift = (r.nextDouble() - 0.5) * maxTimeShift * 2;
-			System.out.println("Moving fault: absTimeShift = " + absTimeShift);
-			output.absShiftTimes(absTimeShift);
+		try {
+			mutationLog.write("Performing mutation on fault instance " + input.toString() + "\n");
+			switch (mutationType) {
+			case CONTRACT_LENGTH:
+				// Type of mutation: contracting an FI - reducing its length
+				double expandFactor = r.nextDouble();
+				System.out.println("Contracting length: factor = " + expandFactor);
+				mutationLog.write("Performing mutation on fault instance " + input.toString() + "\n");
+				output.multLengthFactor(expandFactor);
+				break;
+			case EXPAND_LENGTH:
+				// Type of mutation: expanding an FI temporally - extending its length
+				double contractFactor = r.nextDouble();
+				expandFactor = 1.0 / contractFactor;
+				System.out.println("Expanding length: factor = " + expandFactor);
+				mutationLog.write("Expanding length: factor = " + expandFactor + "\n");
+				output.multLengthFactor(expandFactor);
+				break;
+			case MOVE_START:
+				double absTimeShift = (r.nextDouble() - 0.5) * maxTimeShift * 2;
+				System.out.println("Moving fault: absTimeShift = " + absTimeShift);
+				mutationLog.write("Moving fault: absTimeShift = " + absTimeShift + "\n");
+				output.absShiftTimes(absTimeShift);
+				break;
+			case CHANGE_ADDITIONAL_INFO:
+				System.out.println("Change additional info: not yet implemented");
+				mutationLog.write("Change additional info: not yet implemented\n");
+				// TODO: changing the intensity
+			case FLIP_ACTIVE_FLAG:
+				System.out.println("Flipping active flag");
+				mutationLog.write("Flipping active flag\n");
+				output.flipActiveFlag();
+			}
+			System.out.println("Mutated fault = " + output.toString());
+			mutationLog.write("Mutated fault = " + output.toString() + "\n");
+			mutationLog.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("mutated fault = " + output.toString());
 		return output;
 	}
 
@@ -199,41 +247,42 @@ public class FaultMutation extends ExptParams {
 		List<FaultInstanceSet> newPop = new ArrayList<FaultInstanceSet>();
 
 		// create new populations by mutating best one
+		FaultInstanceSet best = ranks.get(0).getKey();
+		newPop.add(best);
+		System.out.println(
+				"Best chosen:=" + best.hashCode() + ", score = " + ranks.get(0).getValue() + "\n" + best.toString());
 		for (int i = 0; i < MUTATIONS_OF_SELECTED_BEST; i++) {
-			FaultInstanceSet best = ranks.get(0).getKey();
-			newPop.add(best);
-			System.out.println("Best chosen:=" + best.hashCode() + ", score = " + ranks.get(0).getValue());
-			// TODO: specify a mutation function for the individual fault instances
 			FaultInstanceSet mutatedBest = best.mutateWithProb(r, MUTATION_PROB,
 					fi -> mutatePossiblyMultipleTimes(fi, MAX_INDIVIDUAL_MUTATIONS));
 			newPop.add(mutatedBest);
 		}
 
-		for (int i = 0; i <= EXISTING_POP_TO_RETAIN; i++) {
+		for (int i = 1; i <= EXISTING_POP_TO_RETAIN; i++) {
 			FaultInstanceSet existing = ranks.get(i).getKey();
 			newPop.add(existing);
 		}
 
+		System.out.println("population size at end of mutation = " + newPop.size());
 		return newPop;
 	}
 
 	private void iteratePopulation() {
 		iteration++;
 		List<Entry<FaultInstanceSet, Double>> ranks = rankPopulation();
-		pop = mutatePopulation(pop, ranks);
+		setPop(mutatePopulation(getPop(), ranks));
 		debugPrintPopulationWithRanks(ranks);
 	}
 
 	public void advance() {
 		runNoInPopulation++;
-		if (runNoInPopulation >= pop.size()) {
+		if (runNoInPopulation >= getPop().size()) {
 			runNoInPopulation = 0;
 			iteratePopulation();
 		}
 	}
 
 	public List<FaultInstance> specificFaults() {
-		return pop.get(runNoInPopulation).asList();
+		return getPop().get(runNoInPopulation).asList();
 	}
 
 	private String specificFaultsAsString() {
@@ -246,7 +295,7 @@ public class FaultMutation extends ExptParams {
 		return (iteration > maxIterationCount);
 	}
 
-	private void countDetections(String logFileDir, ResultInfo ri) {
+	public void countDetections(String logFileDir, ResultInfo ri) {
 		File f = new File(logFileDir + "/goalLog.log");
 		int detections = 0;
 		Scanner reader;
@@ -272,18 +321,72 @@ public class FaultMutation extends ExptParams {
 	}
 
 	public void logResults(String logFileDir) {
-		// process the result file and obtain the results
-		FaultInstanceSet currentFS = pop.get(runNoInPopulation);
-		ResultInfo ri = new ResultInfo();
-		countDetections(logFileDir, ri);
-		popResults.put(currentFS, ri);
-		// storedResults maintains a previous results cache
-		// ensure it is used rather than re-evaluating!
-		storedResults.put(currentFS, ri);
-		// TODO: logging to additional files?
+		if (logOp != null) {
+			logOp.op(this, logFileDir);
+		} else {
+			// process the result file and obtain the results
+			FaultInstanceSet currentFS = getPop().get(runNoInPopulation);
+			
+			ResultInfo ri = new ResultInfo();
+			countDetections(logFileDir, ri);
+			getPopResults().put(currentFS, ri);
+			// storedResults maintains a previous results cache
+			// ensure it is used rather than re-evaluating!
+
+			getStoredResults().put(currentFS, ri);
+
+			try {
+				double score = scoreForResult(currentFS, ri);
+				int totalGoalViolations = ri.getTotalGoalViolations();
+				double faultCostProportion = faultCostProportion(currentFS, ri);
+				// TODO: print the number of faults too
+				// TODO: print the proportion of time faults are active
+				evolutionLog.write(Integer.toString(iteration) + "," + Integer.toString(runNoInPopulation) + ","
+						+ Double.toString(score) + ",");
+				evolutionLog.write(
+						Integer.toString(totalGoalViolations) + "," + Double.toString(faultCostProportion) + "\n");
+				evolutionLog.flush();
+				
+				populationLog.write(Integer.toString(iteration) + "," + Integer.toString(runNoInPopulation) + "," 
+						+ currentFS.toString() + "\n\n");
+				populationLog.flush();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void printState() {
 		System.out.println("iterations = " + iteration + ",numInPop = " + runNoInPopulation);
+	}
+
+	public List<FaultInstanceSet> getPop() {
+		return pop;
+	}
+
+	public void setPop(List<FaultInstanceSet> pop) {
+		this.pop = pop;
+	}
+
+	public int getRunNoInPopulation() {
+		return runNoInPopulation;
+	}
+
+	public Map<FaultInstanceSet, ResultInfo> getPopResults() {
+		return popResults;
+	}
+
+	public void setPopResults(Map<FaultInstanceSet, ResultInfo> popResults) {
+		this.popResults = popResults;
+	}
+
+	public Map<FaultInstanceSet, ResultInfo> getStoredResults() {
+		return storedResults;
+	}
+
+	public void setStoredResults(Map<FaultInstanceSet, ResultInfo> storedResults) {
+		this.storedResults = storedResults;
 	}
 }

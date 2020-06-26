@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import atlasdsl.loader.*;
@@ -59,7 +60,7 @@ public class RunExperiment {
 		}
 	}
 
-	private static void doExperiment(Mission mission, String exptTag, ExptParams eparams) {
+	private static void doExperiment(Mission mission, String exptTag, ExptParams eparams, boolean actuallyRun) {
 		Process middleware;
 
 		int faultInstanceFileNum = 0;
@@ -79,6 +80,7 @@ public class RunExperiment {
 			try {
 				ffc.writeFaultDefinitionFile(ABS_WORKING_PATH + faultInstanceFileName, outputFaultInstances);
 
+				if (actuallyRun) {
 				// Launch the MOOS code, middleware and CI as separate subprocesses
 
 				// TODO: if launching an experiment with more robots, need to ensure individual
@@ -114,7 +116,8 @@ public class RunExperiment {
 				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
 				exptLog("Kill MOOS / Java processes command sent");
 				exptLog("Destroy commands completed");
-
+				
+				}
 				// Read and process the result files from the experiment
 				eparams.logResults(ABS_WORKING_PATH + "logs");
 
@@ -122,9 +125,12 @@ public class RunExperiment {
 				// or according to predefined template)
 				eparams.advance();
 				faultInstanceFileNum++;
-				exptLog("Waiting to restart experiment");
-				// Wait 10 seconds before ending
-				TimeUnit.MILLISECONDS.sleep(10000);
+				
+				if (actuallyRun) {
+					exptLog("Waiting to restart experiment");
+					// Wait 10 seconds before ending
+					TimeUnit.MILLISECONDS.sleep(10000);
+				}
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -171,7 +177,7 @@ public class RunExperiment {
 
 				ExptParams ep = new SingleFaultCoverageExpt(resFileName, 1200.0, 0.0, 1200.0, 1200.0, 50.0, 0.5, f,
 						speedOverride_o);
-				doExperiment(mission, faultName + "_coverage", ep);
+				doExperiment(mission, faultName + "_coverage", ep, true);
 				exptLog("Done");
 			}
 		} catch (DSLLoadFailed e) {
@@ -190,7 +196,7 @@ public class RunExperiment {
 			String resFileName = "multifault.res";
 			int repeatsCount = 30;
 			ExptParams ep = new RandomFaultConfigs(tempFileName, 1200.0, resFileName, repeatsCount, mission);
-			doExperiment(mission, "multifault", ep);
+			doExperiment(mission, "multifault", ep,true);
 			exptLog("Done");
 		} catch (DSLLoadFailed e) {
 			e.printStackTrace();
@@ -204,16 +210,68 @@ public class RunExperiment {
 		Mission mission;
 		try {
 			mission = loader.loadMission();
-			String tempFileName = "tempFaultFile.fif";
-			String resFileName = "multifault.res";
-			int repeatsCount = 30;
+			String evolveFileName = "evolveProgress.log";
+			String mutationFilename = "mutations.log";
+			String popFileName = "population.log";
+			
 			double runtime = 1200.0;
 			int seed = 6453232;
-			int iterations = 3;
+			int iterations = 12;
 			
-			ExptParams ep = new FaultMutation(tempFileName, runtime, seed, iterations, mission);
-			doExperiment(mission, "multifault", ep);
+			ExptParams ep = new FaultMutation(null, evolveFileName, mutationFilename, popFileName, runtime, seed, iterations, mission);
+			doExperiment(mission, "multifault", ep,true);
 			exptLog("Done");
+		} catch (DSLLoadFailed e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void testEvolveProcess() {
+		try {
+			DSLLoader loader = new GeneratedDSLLoader();
+			Mission mission = loader.loadMission();
+			Optional<Fault> f_o = mission.lookupFaultByName("SPEEDFAULT-ELLA");
+			if (f_o.isPresent()) {
+				Random seedGen = new Random();
+				String tempFileName = "evolve.log";
+				String resFileName = "multifault.res";
+				int repeatsCount = 30;
+				double runtime = 1200.0;
+				int seed = seedGen.nextInt();
+				System.out.println("seed=" + seed);
+				int iterations = 20;
+				
+				Fault f = f_o.get();
+				
+				LoggingOperation logOp = (ep, logFileDir) -> {
+					int runNoInPopulation = ep.getRunNoInPopulation();
+					FaultInstanceSet currentFS = ep.getPop().get(runNoInPopulation);
+					ResultInfo ri = new ResultInfo();
+					int missedDetections = 0;
+					
+					// Count operation
+					if (currentFS._hasFaultInRange(800.0,300.0, "SPEEDFAULT-ELLA")) {
+						missedDetections++;
+					}
+					
+					// Count operation
+					if (currentFS._hasFaultInRange(500.0,300.0, "HEADINGFAULT-FRANK")) {
+						missedDetections++;
+					}
+					
+					ri.setField("missedDetections", missedDetections);
+					ep.getPopResults().put(currentFS, ri);
+					// storedResults maintains a previous results cache
+					// ensure it is used rather than re-evaluating!
+					ep.getStoredResults().put(currentFS, ri);
+					
+				};
+				
+				FaultMutation ep = new FaultMutation(logOp, tempFileName, "mutation.log", "pop.log", runtime, seed, iterations, mission);
+				doExperiment(mission, "evolvefault", ep, false);
+			}
 		} catch (DSLLoadFailed e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -226,5 +284,6 @@ public class RunExperiment {
 		//runMultifaultExpt(args);
 		//runCoverage(args);
 		runMutation(args);
+//		testEvolveProcess();
 	}
 }

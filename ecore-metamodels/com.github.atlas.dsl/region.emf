@@ -2,7 +2,6 @@
 package Atlas;
 
 abstract class Region {
-	
 }
 
 class Point {
@@ -33,5 +32,3 @@ class EnvironmentalObject extends Point {
 	attr boolean isHazard;
 	attr int label;
 }
-
-

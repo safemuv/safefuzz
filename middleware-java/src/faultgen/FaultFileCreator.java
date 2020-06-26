@@ -38,7 +38,7 @@ public class FaultFileCreator {
 	public void writeFaultInstance(int faultInstanceCount, FileWriter fw, FaultInstance fi) throws IOException {
 		Fault f = fi.getFault();
 		double length = fi.getEndTime() - fi.getStartTime();
-		String output = Integer.toString(faultInstanceCount) + "," + f.getName() +  "," +  String.format("%.2f", fi.getStartTime()) + "," + String.format("%.2f", length) + "," + fi.getExtraData() + "\n";
+		String output = Integer.toString(faultInstanceCount) + "," + f.getName() +  "," +  String.format("%.2f", fi.getStartTime()) + "," + String.format("%.2f", length) + "," + Boolean.toString(fi.isActive()) + "," + fi.getExtraData() + "\n";
 		fw.append(output);
 	}
 	
