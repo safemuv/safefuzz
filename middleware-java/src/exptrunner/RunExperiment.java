@@ -25,6 +25,8 @@ public class RunExperiment {
 	private final static String ABS_MOOS_PATH = "/home/jharbin//academic/atlas/atlas-middleware/middleware-java/moos-sim/";
 
 	private final static String ABS_ATLAS_JAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas.jar";
+	
+	private final static boolean CLEAR_MOOS_LOGS_EACH_TIME = true;
 
 	private static void exptLog(String s) {
 		System.out.println(s);
@@ -113,7 +115,13 @@ public class RunExperiment {
 				exptLog("Middleware end time reached");
 				exptLog("Destroying middleware processes");
 				middleware.destroy();
-				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
+				
+				if (CLEAR_MOOS_LOGS_EACH_TIME) {
+					ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate_clear_logs.sh");
+				} else {
+					ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
+				}
+				
 				exptLog("Kill MOOS / Java processes command sent");
 				exptLog("Destroy commands completed");
 				
