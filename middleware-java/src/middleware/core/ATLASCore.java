@@ -2,12 +2,14 @@ package middleware.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import faultgen.FaultGenerator;
+import middleware.carstranslations.CARSTranslations;
 import middleware.gui.GUITest;
 import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
@@ -61,14 +63,17 @@ public abstract class ATLASCore {
 		activeFaults.add(fi);
 		System.out.println("Fault instance added");
 		Fault f = fi.getFault();
-		f.immediateEffects(this);
+		Optional<String> additionalData = fi.getExtraDataOpt();
+		f.immediateEffects(this, additionalData);
 	}
 	
 	public synchronized void completeFault(FaultInstance fi) {
 		activeFaults.remove(fi);
 		Fault f = fi.getFault();
+		Optional<String> additionalData = fi.getExtraDataOpt();
 		System.out.println("Calling completion effect");
-		fi.getFault().completionEffects(this);
+		
+		fi.getFault().completionEffects(this, additionalData);
 		System.out.println("Fault instance " + fi + " completed: " + f.getClass());
 	}
 	

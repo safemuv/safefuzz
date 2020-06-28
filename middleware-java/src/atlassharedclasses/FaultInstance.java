@@ -21,15 +21,15 @@ public class FaultInstance implements Comparable<FaultInstance> {
 		//System.out.println("FaultInstance extraData = " + extraData);
 		
 		// hack to change the speed for MotionFault - for paper experiments only
-		if (f.getImpact() instanceof MotionFault && extraData.isPresent()) {
-			double speedOverride = Double.valueOf(extraData.get());
-			MotionFault mfi = (MotionFault)f.getImpact();
-			System.out.println("Experiment overriding speed to " + speedOverride);
-			mfi._overrideSpeed(speedOverride);
+		//if (f.getImpact() instanceof MotionFault && extraData.isPresent()) {
+//			double speedOverride = Double.valueOf(extraData.get());
+			//MotionFault mfi = (MotionFault)f.getImpact();
+			//System.out.println("Experiment overriding speed to " + speedOverride);
+			//mfi._overrideSpeed(speedOverride);
 			// test
-			MotionFault mfi2 = (MotionFault)f.getImpact();
-			System.out.println("test newValue changed = " + mfi2.getNewValue());
-		}
+			//MotionFault mfi2 = (MotionFault)f.getImpact();
+			//System.out.println("test newValue changed = " + mfi2.getNewValue());
+		//}
 	}
 	
 	public void setActiveFlag(boolean flag) {
@@ -99,6 +99,10 @@ public class FaultInstance implements Comparable<FaultInstance> {
 		}
 	}
 	
+	public Optional<String> getExtraDataOpt() {
+		return extraData;
+	}
+	
 	private void constrainTimeValid() {
 		Fault f = this.getFault();
 		// Check if corresponding to the length of the fault in the model
@@ -141,5 +145,9 @@ public class FaultInstance implements Comparable<FaultInstance> {
 
 	public void flipActiveFlag() {
 		isActive = !isActive;
+	}
+
+	public void setExtraData(String string) {
+		extraData = Optional.of(string);
 	}
 }

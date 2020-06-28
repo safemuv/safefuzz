@@ -97,7 +97,7 @@ public class RunExperiment {
 
 				exptLog("Started MOOS launch scripts");
 				// Sleep until MOOS is ready
-				TimeUnit.MILLISECONDS.sleep(1000);
+				TimeUnit.MILLISECONDS.sleep(400);
 
 				String[] middlewareOpts = { faultInstanceFileName, "nogui" };
 				middleware = ExptHelper.startNewJavaProcess("-jar", ABS_ATLAS_JAR, middlewareOpts, ABS_WORKING_PATH);
@@ -170,15 +170,15 @@ public class RunExperiment {
 					if (args.length > 1 && args[1] != null) {
 						String speedOverride_s = args[1];
 						speedOverride_o = Optional.of(speedOverride_s);
-						double speedOverride = Double.valueOf(speedOverride_s);
-						MotionFault mfi = (MotionFault) f.getImpact();
-						resFileName = resFileName + speedOverride_s;
-						System.out.println("Experiment overriding speed to " + speedOverride);
-						mfi._overrideSpeed(speedOverride);
+						//double speedOverride = Double.valueOf(speedOverride_s);
+						//MotionFault mfi = (MotionFault) f.getImpact();
+						//resFileName = resFileName + speedOverride_s;
+						//System.out.println("Experiment overriding speed to " + speedOverride);
+//						mfi._overrideSpeed(speedOverride);
 
 						// test
-						MotionFault mfi2 = (MotionFault) f.getImpact();
-						System.out.println("test new value = " + mfi2.getNewValue());
+//						MotionFault mfi2 = (MotionFault) f.getImpact();
+						//System.out.println("test new value = " + mfi2.getNewValue());
 					}
 				}
 				resFileName = resFileName + "_goalDiscovery.res";

@@ -50,7 +50,7 @@ public class FaultGenerator {
 			double endTime = startTime + timeLength;
 			FaultImpact fi;
 			try {
-				fi = new MotionFault(ms, "UP_LOITER", "speed=5.0");
+				fi = new MotionFault(ms, "speed", "5.0");
 				Fault f = new Fault(fi);
 				FaultInstance fInstance = new FaultInstance(startTime, endTime, f, Optional.empty());
 				scheduledFaults.add(fInstance);
@@ -66,10 +66,13 @@ public class FaultGenerator {
 	public void pollFaultsNow() {
 		double time = core.getTime();
 		FaultInstance nextFault = scheduledFaults.peek();
-		if (nextFault != null && nextFault.isReady(time) && nextFault.isActive()) {
+		if (nextFault != null && nextFault.isReady(time)) {
 			FaultInstance next = scheduledFaults.remove();
-			injectedFaults.add(next);
-			core.registerFault(next);
+			// If the fault is not active, it is discarded
+			if (next.isActive()) {
+				injectedFaults.add(next);
+				core.registerFault(next);
+			}
 		}
 		
 		FaultInstance nextToFinish = injectedFaults.peek();

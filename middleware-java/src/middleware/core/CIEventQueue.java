@@ -3,6 +3,7 @@ package middleware.core;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import activemq.portmapping.PortMappings;
@@ -115,7 +116,8 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 					// Check the fault message name matches this name
 					if (mim.getMessage().getName().equals(setCmd.getMessageName())) {  
 						System.out.println("before applying fault:  coords =" + modifiedCoords.toString());
-						modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords);
+						Optional<String> additionalData = fi.getExtraDataOpt();
+						modifiedCoords = (List<Point>)f.applyFaultToData(modifiedCoords, additionalData);
 						System.out.println("applying fault: modifiedCoords = " + modifiedCoords.toString());
 					}
 					// TODO: check is from shoreside? - this encodes assumption that the

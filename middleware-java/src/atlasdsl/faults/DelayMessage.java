@@ -1,5 +1,7 @@
 package atlasdsl.faults;
 
+import java.util.Optional;
+
 import atlasdsl.Message;
 import middleware.core.ATLASCore;
 
@@ -11,16 +13,15 @@ public class DelayMessage extends MessageImpact {
 		this.delayLength = delayLength;
 	}
 	
-	public Object applyImpact(Object orig) {
+	public Object applyImpact(Object orig, Optional<String> additionalData) {
 		return orig;
 	}
 
-	public void immediateEffects(ATLASCore core) {
+	public void immediateEffects(ATLASCore core, Optional<String> additionalData) {
 		
 	}
 
-	public void completionEffects(ATLASCore core) {
+	public void completionEffects(ATLASCore core, Optional<String> additionalData) {
 		
 	}
-	
 }

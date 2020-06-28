@@ -17,7 +17,7 @@ public class MutateMessage extends MessageImpact {
 		this.newValue = newValue;
 	}
 
-	public Object applyImpact(Object orig) {
+	public Object applyImpact(Object orig, Optional<String> additionalData) {
 		if (subfield.isPresent()) {
 			System.out.println("subfield present");
 			if (orig instanceof List) {
@@ -36,11 +36,11 @@ public class MutateMessage extends MessageImpact {
 		else return newValue.apply(orig);
 	}
 
-	public void immediateEffects(ATLASCore core) {
+	public void immediateEffects(ATLASCore core, Optional<String> additionalData) {
 		
 	}
 
-	public void completionEffects(ATLASCore core) {
+	public void completionEffects(ATLASCore core, Optional<String> additionalData) {
 		
 	}
 }

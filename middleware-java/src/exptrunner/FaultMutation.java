@@ -39,7 +39,10 @@ public class FaultMutation extends ExptParams {
 
 	private static final int MAX_INDIVIDUAL_MUTATIONS = 3;
 
-	private static final double INACTIVE_INITIAL_FAULT_PROB = 0.5;
+	private static final double INACTIVE_INITIAL_FAULT_PROB = 0.7;
+
+	private static final double MIN_SPEED_VALUE = 2.0;
+	private static final double MAX_SPEED_VALUE = 5.0;
 
 	// TODO: constant probabilities for the mutation process
 
@@ -69,7 +72,7 @@ public class FaultMutation extends ExptParams {
 		EXPAND_LENGTH, CONTRACT_LENGTH, CHANGE_ADDITIONAL_INFO, MOVE_START, FLIP_ACTIVE_FLAG;
 	}
 
-	// TODO: custom mutation probabilities
+	// TODO: finish custom mutation probabilities
 	// private static final double PROB_EXPAND_LENGTH = 0.2;
 	// private static final double PROB_CONTRACT_LENGTH = 0.2;
 	// private static final double PROB_CHANGE_ADDITIONAL_INFO = 0.2;
@@ -104,15 +107,15 @@ public class FaultMutation extends ExptParams {
 		double rangeOfEnd = f.getLatestEndTime() - timeStart;
 		double timeEnd = timeStart + r.nextDouble() * rangeOfEnd;
 		
-		// TODO: optional intensity data
+
 		FaultInstance fi = new FaultInstance(timeStart, timeEnd, f, Optional.empty());
 		
 		if (r.nextDouble() < INACTIVE_INITIAL_FAULT_PROB) {
 			fi.setActiveFlag(false);
-			System.out.println("setting INACTIVE");
 		}
 		
 		return fi;
+		//changeAdditionalInfo(fi);
 	}
 
 	private <T> T randomElementInList(List<T> l) {
@@ -178,19 +181,34 @@ public class FaultMutation extends ExptParams {
 				.stream().sorted(reverseOrder(Map.Entry.comparingByValue())).collect(Collectors.toList());
 	}
 
-	// Choose the mutation options with equal probability
+	// Active flag flipping - most probable!
 	private MutationType chooseMutationOption() {
 		double v = r.nextDouble();
-		if (v < 0.2) {
+		if (v < 0.15) {
 			return MutationType.CONTRACT_LENGTH;
-		} else if (v < 0.4) {
+		} else if (v < 0.3) {
 			return MutationType.EXPAND_LENGTH;
-		} else if (v < 0.6) {
+		} else if (v < 0.45) {
 			return MutationType.MOVE_START;
-		} else if (v < 0.8) {
+		} else if (v < 0.6) {
 			return MutationType.CHANGE_ADDITIONAL_INFO;
 		} else
 			return MutationType.FLIP_ACTIVE_FLAG;
+	}
+	
+	FaultInstance changeAdditionalInfo(FaultInstance input) {
+		Fault f = input.getFault();
+		FaultInstance output = input;
+		if (f.getName().contains("SPEEDFAULT")) {
+			double newSpeed = MIN_SPEED_VALUE + r.nextDouble() * (MAX_SPEED_VALUE - MIN_SPEED_VALUE);
+			output.setExtraData("speed=" + Double.toString(newSpeed));	
+		}
+		
+		if (f.getName().contains("HEADINGFAULT")) {
+			double newHeading = r.nextDouble() * 360.0;
+			output.setExtraData("heading=" + Double.toString(newHeading));	
+		}
+		return output;
 	}
 
 	// set to public for testing
@@ -226,7 +244,7 @@ public class FaultMutation extends ExptParams {
 			case CHANGE_ADDITIONAL_INFO:
 				System.out.println("Change additional info: not yet implemented");
 				mutationLog.write("Change additional info: not yet implemented\n");
-				// TODO: changing the intensity
+				output = changeAdditionalInfo(input);
 			case FLIP_ACTIVE_FLAG:
 				System.out.println("Flipping active flag");
 				mutationLog.write("Flipping active flag\n");

@@ -26,16 +26,16 @@ public class Fault {
 		this.timeProperties = timeProps;
 	}
 
-	public Object applyFaultToData(Object orig) {
-		return impact.applyImpact(orig);
+	public Object applyFaultToData(Object orig, Optional<String> additionalData) {
+		return impact.applyImpact(orig, additionalData);
 	}
 
-	public void immediateEffects(ATLASCore core) {
-		impact.immediateEffects(core);
+	public void immediateEffects(ATLASCore core, Optional<String> additionalData) {
+		impact.immediateEffects(core, additionalData);
 	}
 	
-	public void completionEffects(ATLASCore core) {
-		impact.completionEffects(core);
+	public void completionEffects(ATLASCore core, Optional<String> additionalData) {
+		impact.completionEffects(core, additionalData);
 	}
 	
 	public FaultImpact getImpact() {

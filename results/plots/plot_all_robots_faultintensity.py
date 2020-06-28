@@ -7,7 +7,7 @@ from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
 from numpy import genfromtxt
 
-max_len = 1000
+max_len = 1200
 ypos_start = 0
 ypos_gap = 3
 fig,ax  = plt.subplots(1)

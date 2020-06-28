@@ -2,7 +2,7 @@ ServerHost = localhost
 ServerPort = 9001
 Simulator = true
 community = ella
-MOOSTimeWarp = 20
+MOOSTimeWarp = 10
 LatOrigin = 43.825300
 LongOrigin = -70.330400
 

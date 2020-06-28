@@ -2,6 +2,8 @@ package middleware.core;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.Mission;
+import middleware.carstranslations.CARSTranslations;
+import middleware.carstranslations.MOOSTranslations;
 
 public class MOOSATLASCore extends ATLASCore {
 	private int MOOS_QUEUE_CAPACITY = 100;

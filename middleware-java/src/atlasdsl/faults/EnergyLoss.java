@@ -1,5 +1,7 @@
 package atlasdsl.faults;
 
+import java.util.Optional;
+
 import atlasdsl.Battery;
 import atlasdsl.Component;
 import atlasdsl.InvalidComponentType;
@@ -19,12 +21,12 @@ public class EnergyLoss extends ComponentImpact {
 		}	
 	}
 	
-	public void immediateEffects(ATLASCore core) {
+	public void immediateEffects(ATLASCore core, Optional<String> additionalData) {
 		Battery b = (Battery)affectedComponent;
 		b.depleteEnergy(fixedEnergyLoss);
 	}
 
-	public void completionEffects(ATLASCore core) {
+	public void completionEffects(ATLASCore core, Optional<String> additionalData) {
 		
 	}
 }

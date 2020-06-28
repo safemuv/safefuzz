@@ -68,7 +68,7 @@ class ComputerCIshoreside {
 
 	// The shoreside chooses a robot to use to confirm detections,
 	// excluding the detecting one obviously!
-	private static Optional<String> chooseRobotNear(Point loc, List<String> allowedRobots, String excludeRobot) {
+	private static Optional<String> chooseRobot(Point loc, List<String> allowedRobots, String excludeRobot) {
 		Map<String, Double> dists = robotDistancesTo(loc);
 		Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
 				// Check it isn't the exclude robot
@@ -78,8 +78,6 @@ class ComputerCIshoreside {
 				// Have to transform to new Map - here the distance is mapped to the travel time
 				.collect(Collectors.toMap(Map.Entry::getKey, e -> travelTimeForRobot(e.getKey(), e.getValue())))
 				.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst();
-		// TODO: check sort order here
-
 		if (res.isPresent()) {
 			// If a robot found, set it as confirming a detection
 			String chosen = res.get().getKey();
@@ -172,21 +170,19 @@ class ComputerCIshoreside {
 		// Send a second robot in to confirm
 		// Need to scan the positions to find the best choice
 
-		// TODO: would be better if the generated code had the fields from the
-		// detection message as parameters
 		Point loc = (Point) detection.getField("location");
 		int label = (Integer) detection.getField("objectID");
 		String detectionType = (String) detection.getField("type");
 
-		List<String> chosenRobots;
+		List<String> candidateRobots;
 		if (detectionType.equals("benign")) {
-			chosenRobots = allRobots;
+			candidateRobots = allRobots;
 		} else {
-			chosenRobots = cameraRobots; 
-		}		
+			candidateRobots = cameraRobots; 
+		}
 				
 		if (freshDetection(label)) {
-			Optional<String> rName_o = chooseRobotNear(loc, chosenRobots, robotName);
+			Optional<String> rName_o = chooseRobot(loc, candidateRobots, robotName);
 			if (rName_o.isPresent()) {
 				String rName = rName_o.get();
 				API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP,
