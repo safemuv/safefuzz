@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.Collections.reverseOrder;
 
@@ -66,18 +67,9 @@ public class FaultMutation extends ExptParams {
 
 	private int envObjectCount;
 
-//	private double totalFaultTimeInModel = 0.0;
-
 	private enum MutationType {
 		EXPAND_LENGTH, CONTRACT_LENGTH, CHANGE_ADDITIONAL_INFO, MOVE_START, FLIP_ACTIVE_FLAG;
 	}
-
-	// TODO: finish custom mutation probabilities
-	// private static final double PROB_EXPAND_LENGTH = 0.2;
-	// private static final double PROB_CONTRACT_LENGTH = 0.2;
-	// private static final double PROB_CHANGE_ADDITIONAL_INFO = 0.2;
-	// private static final double PROB_MOVE_START = 0.2;
-	// private static final double PROB_FLIP_ACTIVE_FLAG = 0.2;
 
 	// Overall algorithm...
 
@@ -114,8 +106,7 @@ public class FaultMutation extends ExptParams {
 			fi.setActiveFlag(false);
 		}
 		
-		return fi;
-		//changeAdditionalInfo(fi);
+		return changeAdditionalInfo(fi);
 	}
 
 	private <T> T randomElementInList(List<T> l) {
@@ -152,13 +143,24 @@ public class FaultMutation extends ExptParams {
 				return fi;
 			}, allFaults.size()));
 		}
-		
 		// print the initial population
 		debugPrintPopulation(getPop());
 	}
+	
+	private double totalActiveFaultTimeLengthScaledByIntensity(FaultInstanceSet fs) {
+		Set<FaultInstance> faultInstances = fs.getFaultInstances();
+		double total = 0.0;
+		for (FaultInstance fi : faultInstances) {
+			if (fi.isActive()) {
+				total += faultInstanceIntensity(fi) * (fi.getEndTime() - fi.getStartTime());
+			}
+		}
+		return total;
+	}
 
 	private double faultCostProportion(FaultInstanceSet fs, ResultInfo ri) {
-		return (1 - ((fs.totalActiveFaultTimeLength() / (fs.getCount() * runtime))));
+		
+		return 1 - ((totalActiveFaultTimeLengthScaledByIntensity(fs) / (fs.getCount() * runtime)));
 	}
 
 	private double scoreForResult(FaultInstanceSet fs, ResultInfo ri) {
@@ -201,14 +203,30 @@ public class FaultMutation extends ExptParams {
 		FaultInstance output = input;
 		if (f.getName().contains("SPEEDFAULT")) {
 			double newSpeed = MIN_SPEED_VALUE + r.nextDouble() * (MAX_SPEED_VALUE - MIN_SPEED_VALUE);
-			output.setExtraData("speed=" + Double.toString(newSpeed));	
+			output.setExtraData(Double.toString(newSpeed));	
 		}
 		
 		if (f.getName().contains("HEADINGFAULT")) {
 			double newHeading = r.nextDouble() * 360.0;
-			output.setExtraData("heading=" + Double.toString(newHeading));	
+			output.setExtraData(Double.toString(newHeading));	
 		}
 		return output;
+	}
+	
+	double faultInstanceIntensity(FaultInstance fi) {
+		// Assume the intensity is always 1 unless otherwise
+		double intensity = 1.0;
+		Fault f = fi.getFault();
+		Optional<String> extraData_opt = fi.getExtraDataOpt();
+		if (extraData_opt.isPresent()) {
+			String extraData = extraData_opt.get();
+			double exValue = Double.parseDouble(extraData);
+			// The speed faults intensity is relative to the max value
+			if (f.getName().contains("SPEEDFAULT")) {
+				intensity = exValue / MAX_SPEED_VALUE;
+			}
+		}
+		return intensity;
 	}
 
 	// set to public for testing
@@ -341,7 +359,10 @@ public class FaultMutation extends ExptParams {
 				}
 			}
 			int totalExpected = envObjectCount * DETECTIONS_PER_OBJECT;
-			int missedDetections = totalExpected - detections;
+			// If there is an object on the edge of a region, there will be excess detections. 
+			// Therefore, bound the amount to zero
+			int missedDetections = Math.max(0, totalExpected - detections);
+
 			ri.setField("missedDetections", missedDetections);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

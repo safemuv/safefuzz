@@ -31,6 +31,10 @@ public class FaultInstanceSet {
 		return fs.size();
 	}
 	
+	public Set<FaultInstance> getFaultInstances() {
+		return fs;
+	}
+	
 	//public FaultInstanceSet mutateBy(Random r, int countToMutate, MutationOperation mut) {
 		// TODO: implement mutation 
 		//for (FaultInstance fi : fs) {
