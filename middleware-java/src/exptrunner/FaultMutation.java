@@ -159,7 +159,6 @@ public class FaultMutation extends ExptParams {
 	}
 
 	private double faultCostProportion(FaultInstanceSet fs, ResultInfo ri) {
-		
 		return 1 - ((totalActiveFaultTimeLengthScaledByIntensity(fs) / (fs.getCount() * runtime)));
 	}
 
@@ -223,6 +222,7 @@ public class FaultMutation extends ExptParams {
 			double exValue = Double.parseDouble(extraData);
 			// The speed faults intensity is relative to the max value
 			if (f.getName().contains("SPEEDFAULT")) {
+				System.out.println("speedfault intensity");
 				intensity = exValue / MAX_SPEED_VALUE;
 			}
 		}
@@ -388,12 +388,18 @@ public class FaultMutation extends ExptParams {
 				double score = scoreForResult(currentFS, ri);
 				int totalGoalViolations = ri.getTotalGoalViolations();
 				double faultCostProportion = faultCostProportion(currentFS, ri);
+				
+				double totalFaultTime = currentFS.totalFaultTimeLength();
+				double totalActiveFaultTime = currentFS.totalActiveFaultTimeLength();
+				double faultTimeScaledByIntensity = totalActiveFaultTimeLengthScaledByIntensity(currentFS); 
+				
 				// TODO: print the number of faults too
 				// TODO: print the proportion of time faults are active
 				evolutionLog.write(Integer.toString(iteration) + "," + Integer.toString(runNoInPopulation) + ","
 						+ Double.toString(score) + ",");
-				evolutionLog.write(
-						Integer.toString(totalGoalViolations) + "," + Double.toString(faultCostProportion) + "\n");
+				evolutionLog.write(Integer.toString(totalGoalViolations) + "," + Double.toString(faultCostProportion) + ",");
+				evolutionLog.write(Double.toString(totalFaultTime) + "," + Double.toString(totalActiveFaultTime) + ","
+						+ Double.toString(faultTimeScaledByIntensity) + "\n");
 				evolutionLog.flush();
 				
 				populationLog.write(Integer.toString(iteration) + "," + Integer.toString(runNoInPopulation) + "," 
