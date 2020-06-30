@@ -217,6 +217,9 @@ class ComputerCIshoreside {
 	}
 
 	public static void CAMERADetectionHook(SensorDetection detection, String robotName) {
-		CollectiveIntLog.logCI("Camera detection");
+		Point loc = (Point) detection.getField("location");
+		int objectID = (Integer) detection.getField("objectID");
+		String detectionType = (String) detection.getField("type");
+		CollectiveIntLog.logCI("Camera detection of object ID " + objectID + "at location" + " type " + detectionType + robotName);
 	}
 }
