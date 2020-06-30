@@ -172,7 +172,7 @@ public class RunExperiment {
 						speedOverride_o = Optional.of(speedOverride_s);
 						//double speedOverride = Double.valueOf(speedOverride_s);
 						//MotionFault mfi = (MotionFault) f.getImpact();
-						//resFileName = resFileName + speedOverride_s;
+						resFileName = resFileName + speedOverride_s;
 						//System.out.println("Experiment overriding speed to " + speedOverride);
 //						mfi._overrideSpeed(speedOverride);
 
