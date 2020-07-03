@@ -225,7 +225,7 @@ public class RunExperiment {
 			double runtime = 1200.0;
 			// TODO: when experiments are stable, add the seed 
 			int seed = 6453232;
-			int iterations = 50;
+			int iterations = 10;
 			
 			ExptParams ep = new FaultMutation(null, evolveFileName, mutationFilename, popFileName, runtime, seed, iterations, mission);
 			doExperiment(mission, "multifault", ep,true);

@@ -28,13 +28,13 @@ public class FaultMutation extends ExptParams {
 	// We assume that there is one fault instance per fault in the model
 
 	// The number of randomly generated test fault instance sets in the population
-	private static final int INITIAL_POPULATION_SIZE = 8;
+	private static final int INITIAL_POPULATION_SIZE = 32;
 
 	// Probability of mutation of existing faults
 	private static final double MUTATION_PROB = 0.3;
 
-	private static final int MUTATIONS_OF_SELECTED_BEST = 6;
-	private static final int EXISTING_POP_TO_RETAIN = 2;
+	private static final int MUTATIONS_OF_SELECTED_BEST = 22;
+	private static final int EXISTING_POP_TO_RETAIN = 10;
 
 	private static final int DETECTIONS_PER_OBJECT = 2;
 

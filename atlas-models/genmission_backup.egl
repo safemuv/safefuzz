@@ -1,0 +1,249 @@
+[% out.setContentType("Java"); %]
+[* componentLookup is used for resolving the name assigned in the Java
+DSL to everything that is a subclass of component *]
+[% var componentLookup = new Map(); %]
+[% var EObjectLookup = new Map(); %]
+package atlasdsl.loader;
+
+import atlasdsl.*;
+import atlasdsl.faults.*;
+import atlassharedclasses.*;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
+public class GeneratedDSLLoader implements DSLLoader {
+	public Mission loadMission() throws DSLLoadFailed {
+	[% for (m in M!Mission.allInstances()) { %]
+	[% 	var robotNum = 0; 
+		var computerNum = 0; 
+	%]	
+	Mission mission = new Mission();
+	
+	[% for (c in m.computers) { %]
+	[% var computerName = "c" + computerNum++;	%]
+	Computer [%= computerName %] = new Computer("[%= c.name %]");
+	[% componentLookup.put(c, computerName); %]
+	mission.addComputer([%= computerName %]);
+	[% } %]
+	
+	[% for (r in m.robots) { %]
+		[% var robotName = "r" + r.name; %]
+		[% componentLookup.put(r, robotName); %]
+		Robot [%= robotName %] = new Robot("[%= r.name %]");
+		[* Extract the necessary properties for r
+		Set the properies for r *]
+		[% for (p in r.componentProperties) { %]
+			[% if (p.isKindOf(IntProperty)) { %]
+		[%= robotName %].setIntComponentProperty("[%= p.name %]", [%= p.value %]);
+			[% } %]
+			[% if (p.isKindOf(DoubleProperty)) { %]
+		[%= robotName %].setDoubleComponentProperty("[%= p.name %]", [%= p.value %]);
+			[% } %]
+			[% if (p.isKindOf(PointProperty)) { %]
+		[%= robotName %].setPointComponentProperty("[%= p.name %]", new Point([%= p.value.x %],[%= p.value.y %],[%= p.value.z %]));
+			[% } %]
+		[% } %]
+		
+		[* Add subcomponents to the robots *]
+		[% var subCNum = 0; %]
+		[% for (subc in r.subcomponents) { %]
+			[% var subID = "s" + robotName + "_" + subCNum++; %] 
+			[% componentLookup.put(subc, subID); %]
+			[% if (subc.isKindOf(Sensor)) { %]
+		Sensor [%= subID %] = new Sensor(SensorType.[%= subc.type %]);
+		[%= subID %].setParent([%= robotName %]);
+				[* set subcomponent properties here *]
+				[% for (sp in subc.componentProperties) { %]
+				[* TODO: factor this property pocessing into a subroutine call? *]
+					[% if (sp.isKindOf(IntProperty)) { %]
+		[%= subID %].setIntComponentProperty("[%= sp.name %]", [%= sp.value %]);
+					[% } %]
+					[% if (sp.isKindOf(DoubleProperty)) { %]
+		[%= subID %].setDoubleComponentProperty("[%= sp.name %]", [%= sp.value %]);
+					[% } %]
+				[% } %]
+		[%= robotName %].addSubcomponent([%= subID %]);
+			[% } %]
+			
+			[* TODO: properties for these subcomponent types *]
+			[% if (subc.isKindOf(MotionSource)) { %]
+			MotionSource [%= subID %] = new MotionSource();
+			[%= robotName %].addSubcomponent([%= subID %]);
+			[% } %]
+			[% if (subc.isKindOf(Actuator)) { %]
+			Actuator [%= subID %] = new Actuator();
+			[%= robotName %].addSubcomponent([%= subID %]);
+			[% } %]
+			
+		[% } %]
+			
+		[* Add the robot to the mission *]
+		mission.addRobot([%= robotName %]);
+	[%} %] [* end Robot loop *]
+	
+	
+	[* Add environmental objects *]
+	[% var objectID = 0; %]
+	[% for (o in m.objects) { %]
+	EnvironmentalObject eo[%= objectID++ %] = new EnvironmentalObject([%= o.label %], new Point([%= o.x %],[%= o.y %],[%= o.z %]), [%= o.isHazard %]);
+	mission.addObject(eo[%= objectID %]);
+	[% EObjectLookup.put(o, o.label); %]
+	[% } %]
+	[* end environmental objects *]
+	
+	[% var goalnum = 0; %]
+	[% for (g in m.goals) { %]
+		[% goalnum++; %]
+		[% var goalName = g.name; %]
+		[% if (g.participants.isKindOf(StaticParticipants)) { %]
+			[% var allNames = ""; %]
+			[% for (participantRobot in g.participants.participants) { %]
+				[% allNames = allNames + "r" + participantRobot.name + ","; %] 
+			[% } %]
+			[* Strip off the final comma from the end of it *]
+			[% var allNamesLen = allNames.length(); %]
+			[% allNames = allNames.substring(0, allNamesLen-1); %]
+		
+		Robot [] grp[%= goalnum%] = {[%= allNames %]}; 
+		GoalParticipants gp[%= goalName %] = new StaticParticipants(grp[%= goalnum %], mission);
+		[% } %]
+		
+		[% if (g.participants.isKindOf(RelativeParticipants)) { %]
+		[% var parentGoal = g.participants.parentGoal.name; 
+		   var logicOps = g.participants.setOperation;
+		   var fieldName = g.participants.fieldName;
+		   var limit = g.participants.participantLimit;
+		%]
+	
+		[* RelativeParticipants(Goal parentGoal, StaticParticipants staticRobots, String fieldName, LogicOps operation, int participantLimit) { *]
+		GoalParticipants gp[%= goalName %] = new RelativeParticipants([%= parentGoal %], (StaticParticipants)gp[%= parentGoal %], "[%= fieldName %]", RelativeParticipants.LogicOps.[%= logicOps %], [%= limit %]);
+		[% } %]
+		
+		[% var goalTemp = g.requirements; %]
+		
+		GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
+		
+		[* Goal actions *]
+		[% var goalAction = g.action; %]
+		[% if (goalAction.isKindOf(SensorCover)) { %]
+		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %]);
+		[% } %]
+		
+		[% if (goalAction.isKindOf(AvoidOthers)) { %]
+		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
+		[% } %]
+		
+		[% if (goalAction.isKindOf(DiscoverObjects)) { %]
+		List<EnvironmentalObject> ga[%= goalnum %]Objs = new ArrayList<EnvironmentalObject>();
+		[% for (eo in goalAction.objects) { %]
+		ga[%= goalnum %]Objs.add(eo[%= EObjectLookup.get(eo) %]);
+		[% } %]
+		GoalAction ga[%= goalnum %] = new DiscoverObjects(ga[%= goalnum %]Objs, [%= goalAction.robotsNeededPerObject %]);
+		
+		[% } %]
+		
+		[% var goalRegion = g.region; %]
+		[% if (goalRegion.isKindOf(StaticGoalRegion)) { %]
+		[% var sr = goalRegion.staticRegion; %]
+		GoalRegion gr[%= goalName %] = new StaticGoalRegion(
+			new Region(new Point([%= sr.corner1.x %], [%= sr.corner1.y %], [%= sr.corner1.z %]),
+			           new Point([%= sr.corner2.x %], [%= sr.corner2.y %], [%= sr.corner2.z %])));
+		[% } %]
+		
+		[% if (goalRegion.isKindOf(DynamicGoalRegion)) { %]
+		[% var parentGoal = goalRegion.relativeToGoal; %]
+		GoalRegion gr[%= goalName %] = new DynamicGoalRegion([%= parentGoal.name %], "[%= goalRegion.relativeToGoalField %]", [%= goalRegion.relativeRange %]);
+		[% } %]
+		
+		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], Optional.of(gr[%= goalName %]), ga[%= goalnum %]);
+		
+		[* Register goal dependencies - need an exception handler around this if any dependencies
+		   are inserted *]
+		[% if (g.requirements.dependencies.size > 0) { %]
+		try {
+			[% for (dep in g.requirements.dependencies) { %]
+			[%= goalName %].setDependencyOn([%= dep.name %]);
+			[% } %]
+		} catch (SelfDependencyError e) {
+			throw new DSLLoadFailed("Goal [%= goalName %] depends on itself");
+		}
+		[% } %]
+		
+		mission.addGoal("[%= g.name %]", [%= g.name %]);
+	[% } %]
+	
+
+	
+	[* Add messages - naming schema msg[name] *]
+	[% for (msg in m.messages) { %]
+	[% 	var msgName = "msg" + msg.name; 
+		var cFromName = componentLookup.get(msg.from); 
+	 	var cToName = componentLookup.get(msg.to); %] 
+	Message [%= msgName %] = new Message("[%= msg.name %]", [%= cFromName %], [%= cToName %]);
+	mission.addMessage([%= msgName %]); 
+	[% } %]
+	
+	[* Add the fault information *]
+	[% var faultNum = 0; %]
+	[% for (f in m.faults) { %]
+	[% faultNum++; %]
+	[% if (f.impact.isKindOf(DelayMessage)) { %]
+	FaultImpact fi[%= faultNum %] = new DelayMessage(msg[%= f.impact.affectedMessage.name %], [%= f.impact.delayLength %]);
+	[% } %]
+	 
+	[% if (f.impact.isKindOf(DeleteMessage)) { %]
+	FaultImpact fi[%= faultNum %] = new DeleteMessage(msg[%= f.impact.affectedMessage.name %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(MutateMessage)) { %]
+	[% var fi = f.impact; %]
+	[% var hasSf = "Optional.empty()"; %]
+	[% if (fi.subfieldSpec.size > 0) { %]
+	SubFieldSpec sf[%= faultNum %] = new SubFieldSpec([%= fi.subfieldSpec.fieldStartNum %], [%= fi.subfieldSpec.fieldRangeLength %], [%= fi.subfieldSpec.randomSelection %]);
+	[% hasSf = "Optional.of(sf" + faultNum + ")"; %]
+	[% } %]
+	[* TODO: other kinds of MessageChange here *]
+	[% if(fi.newValue.isKindOf(PointMessageChange)) { %]
+	PointMessageChange ps[%= faultNum %] = PointMessageChange.forAbsolute(new Point([%= fi.newValue.absoluteValue.x %], [%= fi.newValue.absoluteValue.y %])); 
+	[% } %]
+	FaultImpact fi[%= faultNum %] = new MutateMessage(msg[%= f.impact.affectedMessage.name %], [%= hasSf %], ps[%= faultNum %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(MotionFault)) { %]
+		[* Verify here that the component is a motion source *]
+		[% if (not f.impact.affectedComponent.isKindOf(MotionSource)) { 
+			 throw "Error during generation - MotionFault must use a MotionSource as its affected component";
+			} else { %]
+		[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %];
+	try {	
+		fi[%= faultNum %] = new MotionFault([%= componentName %], "[%= f.impact.affectedProperty %]", "[%= f.impact.newValue %]");
+	} catch (InvalidComponentType e) {
+		throw new DSLLoadFailed("MotionFault [%= faultNum %] is not using a MotionSource as its affected component");
+	}
+	[% } %]
+	[% } %]
+	
+	[% if (f.impact.isKindOf(EnergyLoss)) { %]
+	[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %] = new EnergyLoss(msg[%= componentName %], [%= f.impact.fixedEnergyLoss %], [%= f.impact.powerDraw %]);
+	[% } %]
+	
+	[% if (f.impact.isKindOf(DisabledComponent)) { %]
+	[% var componentName = componentLookup.get(f.impact.affectedComponent); %]
+	FaultImpact fi[%= faultNum %] = new DisabledComponent([%= componentName %]);
+	[% } %]
+	
+	[% var ft = f.affectedTime; %]
+	FaultTimeProperties ft[%= faultNum %] = new FaultTimeProperties([%= ft.earliestFaultStart %], [%= ft.latestFaultEnd %], [%= ft.maxFaultLength %], [%= ft.maxFaultRepeatCount %], [%= ft.faultProb %]); 
+	
+	[* TODO: fault regions are not currently encoded here by the EGL *]
+	Fault f[%= faultNum %] = new Fault("[%= f.name %]", fi[%= faultNum %], Optional.empty(), ft[%= faultNum %]);
+	mission.addFault(f[%= faultNum %]);
+	[% } %]
+	
+	[%} %] [* end Mission loop *]
+	return mission;
+	}
+}
