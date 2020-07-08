@@ -14,6 +14,8 @@ import atlasdsl.*;
 import atlassharedclasses.*;
 
 public class JavaCollectiveIntGen extends CollectiveIntGen {
+	private static final boolean GENERATE_INDIVIDUAL_ROBOT_CI = false;
+
 	public JavaCollectiveIntGen(Mission m) {
 		super(m);
 	}
@@ -271,8 +273,9 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 			addMQHooks.addParameter(ATLASSharedResult.class, "a");
 						
 			for (Robot r : mission.getAllRobots()) {
-				// TODO: add initHooks to the generateRobotCI too
-				generateRobotCI(addMQHooks, cif, r);
+				if (GENERATE_INDIVIDUAL_ROBOT_CI) {
+					generateRobotCI(addMQHooks, cif, r);
+				}
 			}
 			
 			for (Computer c : mission.getAllComputers()) {
@@ -299,7 +302,6 @@ public class JavaCollectiveIntGen extends CollectiveIntGen {
 				e.printStackTrace();
 			}
 			
-			// TODO: step 4. map subscriptions to topics with ActiveMQ for every needed reception - build up a list of all 
-			// topics needed and subscription code to connect to them over ActiveMQ
+			System.out.println("\nCI Generation Completed");
 	}
 }
