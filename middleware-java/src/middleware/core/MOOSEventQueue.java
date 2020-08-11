@@ -14,6 +14,7 @@ import activemq.portmapping.PortMappings;
 
 import atlasdsl.*;
 import atlassharedclasses.*;
+import fuzzingengine.FuzzingEngine;
 
 public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 
@@ -55,6 +56,9 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 	public void setup() {
 		// Setup the ActiveMQ connection for the simulation side
 
+
+		
+		
 		// Setup MOOS-side interface for the middleware
 		for (Robot r : mission.getAllRobots()) {
 			// TODO: either this class will be custom-generated, or
@@ -82,8 +86,13 @@ public class MOOSEventQueue extends ATLASEventQueue<MOOSEvent> {
 	// messages
 	// once the test code below is working
 	public void handleEvent(MOOSEvent e) {
+		
 		if (e instanceof MOOSVariableUpdate) {
-			MOOSVariableUpdate mup = (MOOSVariableUpdate) e;
+			MOOSVariableUpdate mupOrig = (MOOSVariableUpdate) e;
+			
+			FuzzingEngine fe = core.getFuzzingEngine();
+			// TODO: see if we can convert somehow to a generic type here
+			MOOSVariableUpdate mup = fe.fuzzMessage(mupOrig);
 
 			if (mup.keyMatches("DB_UPTIME")) {
 				Double time = Double.valueOf(mup.getValue());

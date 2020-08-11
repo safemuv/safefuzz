@@ -14,6 +14,8 @@ import middleware.gui.GUITest;
 import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
 
+import fuzzingengine.*;
+
 // This code will be combined with the simulator-specific code
 // during code generation
 public abstract class ATLASCore {
@@ -33,6 +35,8 @@ public abstract class ATLASCore {
 	protected MissionMonitor monitor;
 	protected CARSTranslations carsOutput;
 	
+	protected FuzzingEngine fuzzEngine;
+	
 	private GUITest gui;
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
@@ -49,6 +53,8 @@ public abstract class ATLASCore {
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
+		
+		fuzzEngine = new VariableChangeFuzzingEngine();
 	}
 	
 	protected CARSTranslations getCARSTranslationOutput() {
@@ -154,5 +160,9 @@ public abstract class ATLASCore {
 		if (gui != null) {
 			gui.setFaultDefinitionFile(filePath);
 		}		
+	}
+
+	protected FuzzingEngine getFuzzingEngine() {
+		return fuzzEngine;
 	}
 }

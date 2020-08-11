@@ -26,9 +26,18 @@ public class MOOSVariableUpdate extends MOOSEvent {
 		this.time = time;
 		setExtractedKeyAndValue(updateText);
 	}
+	
+	public MOOSVariableUpdate(MOOSVariableUpdate other) {
+		this.vehicleName = other.vehicleName;
+		this.time = other.time;
+	}
 
 	public boolean keyMatches(String target) {
 		return target.equals(key);
+	}
+	
+	public String getKey() {
+		return key;
 	}
 	
 	public boolean keyStartMatches(String target) {
@@ -44,5 +53,9 @@ public class MOOSVariableUpdate extends MOOSEvent {
 	
 	public String getVehicleName() {
 		return vehicleName;
+	}
+
+	public void setValue(String replaced) {
+		value = replaced;
 	}
 }

@@ -45,6 +45,9 @@ public class FaultMutation extends ExptParams {
 	private static final double MIN_SPEED_VALUE = 2.0;
 	private static final double MAX_SPEED_VALUE = 5.0;
 
+	private static final boolean USE_AVOIDANCE_VIOLATIONS = true;
+	private static final boolean USE_OBJECTS_DISCOVERED_COUNT = true;
+
 	// TODO: constant probabilities for the mutation process
 
 	private List<FaultInstanceSet> pop = new ArrayList<FaultInstanceSet>();
@@ -344,6 +347,7 @@ public class FaultMutation extends ExptParams {
 	public void countDetections(String logFileDir, ResultInfo ri) {
 		File f = new File(logFileDir + "/goalLog.log");
 		int detections = 0;
+		int violations = 0;
 		Scanner reader;
 		try {
 			reader = new Scanner(f);
@@ -354,9 +358,19 @@ public class FaultMutation extends ExptParams {
 				String time = fields[1];
 				String robot = fields[2];
 				String num = fields[3];
-				if (goalClass.equals("atlasdsl.DiscoverObjects")) {
-					detections++;
+				
+				if (USE_OBJECTS_DISCOVERED_COUNT) {
+					if (goalClass.equals("atlasdsl.DiscoverObjects")) {
+						detections++;
+					}
 				}
+				
+				if (USE_AVOIDANCE_VIOLATIONS) {
+					if (goalClass.equals("atlasdsl.AvoidOthers")) {
+						violations++;
+					}
+				}
+				
 			}
 			int totalExpected = envObjectCount * DETECTIONS_PER_OBJECT;
 			// If there is an object on the edge of a region, there will be excess detections. 
