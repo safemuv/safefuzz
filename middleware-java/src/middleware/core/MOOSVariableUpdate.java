@@ -30,6 +30,8 @@ public class MOOSVariableUpdate extends MOOSEvent {
 	public MOOSVariableUpdate(MOOSVariableUpdate other) {
 		this.vehicleName = other.vehicleName;
 		this.time = other.time;
+		this.key = other.key;
+		this.value = other.value;
 	}
 
 	public boolean keyMatches(String target) {
