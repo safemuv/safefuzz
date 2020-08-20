@@ -1,6 +1,6 @@
 package fuzzingengine;
 
-import middleware.core.MOOSVariableUpdate;
+import middleware.core.CARSVariableUpdate;
 
 public abstract class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 	public boolean doFuzzing = true;
@@ -13,8 +13,8 @@ public abstract class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 
 	}
 		
-	public synchronized MOOSVariableUpdate fuzzMessage(MOOSVariableUpdate mup) {
-		MOOSVariableUpdate mupOut = new MOOSVariableUpdate(mup);
+	public synchronized CARSVariableUpdate fuzzMessage(CARSVariableUpdate mup) {
+		CARSVariableUpdate mupOut = new CARSVariableUpdate(mup);
 				
 		if (debugging) {
 			System.out.println("FUZZ ENGINE VARIABLE IN: " + mupOut.getValue());

@@ -10,6 +10,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import carsspecific.moos.carsqueue.MOOSEvent;
 import middleware.logging.ATLASLog;
 
 public class ActiveMQConsumer implements Runnable, ExceptionListener {
@@ -30,7 +31,7 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
             if (m instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) m;
                 String text = textMessage.getText();
-                MOOSEvent e = (MOOSEvent)new MOOSVariableUpdate(vehicleName, text, 0.0);
+                MOOSEvent e = (MOOSEvent)new CARSVariableUpdate(vehicleName, text, 0.0);
                 carsQueue.add(e);
                 ATLASLog.logCARSInbound(queueName, text);
                 

@@ -2,13 +2,17 @@ package middleware.carstranslations;
 
 import java.util.HashMap;
 
-import atlasdsl.Robot;
-import middleware.core.ActiveMQProducer;
+import middleware.core.*;
 
-public interface CARSTranslations {
-	public void sendCARSUpdate(String robotName, Object key, Object value);
-	public void startRobot(String robotName);
-	public void setOutputProducers(HashMap<String,ActiveMQProducer> producers);
+public abstract class CARSTranslations {
+	public abstract void sendCARSUpdate(String robotName, Object key, Object value);
+	public abstract void startRobot(String robotName);
+	public abstract void setOutputProducers(HashMap<String,ActiveMQProducer> producers);
 	
-	//public String translatePropertyToCARSUpdate(String property);
+	public void sendBackEvent(CARSVariableUpdate event) {
+		String vehicleName = event.getVehicleName();
+		String key = event.getKey();
+		String value = event.getValue();
+		sendCARSUpdate(vehicleName, key, value);
+	}
 }

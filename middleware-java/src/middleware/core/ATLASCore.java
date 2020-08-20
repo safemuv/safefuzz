@@ -57,7 +57,7 @@ public abstract class ATLASCore {
 		fuzzEngine = new FixedNumericVariableChangeFuzzingEngine();
 	}
 	
-	protected CARSTranslations getCARSTranslationOutput() {
+	public CARSTranslations getCARSTranslationOutput() {
 		return carsOutput;
 	}
 	
@@ -162,7 +162,7 @@ public abstract class ATLASCore {
 		}		
 	}
 
-	protected FuzzingEngine getFuzzingEngine() {
+	public FuzzingEngine getFuzzingEngine() {
 		return fuzzEngine;
 	}
 }

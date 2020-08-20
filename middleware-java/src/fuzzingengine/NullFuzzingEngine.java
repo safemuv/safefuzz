@@ -1,9 +1,17 @@
 package fuzzingengine;
 
-import middleware.core.MOOSVariableUpdate;
+import middleware.core.CARSVariableUpdate;
 
 public class NullFuzzingEngine extends FuzzingEngine {
-	public MOOSVariableUpdate fuzzMessage(MOOSVariableUpdate mup) {
+	public CARSVariableUpdate fuzzMessage(CARSVariableUpdate mup) {
 		return mup;
+	}
+
+	public <E> E fuzzTransformEvent(E event) {
+		return event;
+	}
+
+	public <E> boolean shouldFuzzCARSEvent(E event) {
+		return false;
 	}
 }
