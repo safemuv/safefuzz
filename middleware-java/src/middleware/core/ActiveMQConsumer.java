@@ -20,6 +20,7 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
 	private int pollInterval = 1000;
 	private ATLASEventQueue<MOOSEvent> carsQueue;
 	
+	@SuppressWarnings("rawtypes")
 	public ActiveMQConsumer(String vehicleName, String queueName, ATLASEventQueue carsQueue) {
 		this.queueName = queueName;
 		this.carsQueue = carsQueue;

@@ -19,8 +19,8 @@ import fuzzingengine.*;
 // This code will be combined with the simulator-specific code
 // during code generation
 public abstract class ATLASCore {
-	protected ATLASEventQueue carsIncoming;
-	protected ATLASEventQueue fromCI;
+	protected ATLASEventQueue<?> carsIncoming;
+	protected ATLASEventQueue<?> fromCI;
 	
 	// TODO: read this from the interface
 	private double timeLimit = 1200.0;
@@ -38,6 +38,8 @@ public abstract class ATLASCore {
 	protected FuzzingEngine fuzzEngine;
 	
 	private GUITest gui;
+
+	@SuppressWarnings("rawtypes")
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
 	
@@ -54,7 +56,8 @@ public abstract class ATLASCore {
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
 		
-		fuzzEngine = new FixedNumericVariableChangeFuzzingEngine();
+//		fuzzEngine = new NumericVariableChangeFuzzingEngine(0.0);
+		fuzzEngine = new NullFuzzingEngine();
 	}
 	
 	public CARSTranslations getCARSTranslationOutput() {
@@ -92,7 +95,7 @@ public abstract class ATLASCore {
     }
 	
     public void runMiddleware()  {
-		for (ATLASEventQueue q : queues) {
+		for (ATLASEventQueue<?> q : queues) {
 			// Since the GUI displays global status, it
 			// needs to be updated following every event on any queue
 			if (gui != null) {
@@ -104,7 +107,7 @@ public abstract class ATLASCore {
 			q.setup();
 		}
 		
-		for (ATLASEventQueue q : queues) {
+		for (ATLASEventQueue<?> q : queues) {
 			new Thread(q).start();
 		}
     }

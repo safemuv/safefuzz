@@ -2,7 +2,6 @@ package carsspecific.ros.translations;
 
 import java.util.HashMap;
 import javax.jms.JMSException;
-import atlasdsl.Robot;
 import middleware.carstranslations.CARSTranslations;
 import middleware.core.ActiveMQProducer;
 

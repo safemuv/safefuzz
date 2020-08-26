@@ -135,7 +135,8 @@ public class GUITest {
     	
     }
     
-    public GUITest(Mission mission, FaultGenerator faultGen) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public GUITest(Mission mission, FaultGenerator faultGen) {
     	this.mission = mission;
     	this.faultGen = faultGen;
     	
@@ -162,8 +163,8 @@ public class GUITest {
     	List<String> robotNames = mission.getAllRobots().stream().map(r -> r.getName()).collect(Collectors.toList());
     	List<String> faultNames = mission.getFaultsAsList().stream().map(f -> f.getName()).collect(Collectors.toList());
     	
-    	JComboBox<?> robotChoice = new JComboBox(robotNames.toArray());
-    	JComboBox<?> faultChoice = new JComboBox(faultNames.toArray());
+		JComboBox<?> robotChoice = new JComboBox(robotNames.toArray());
+		JComboBox<?> faultChoice = new JComboBox(faultNames.toArray());
     	
     	robotChoice.setSelectedIndex(1);
         injectButton.addActionListener(buttonListener);

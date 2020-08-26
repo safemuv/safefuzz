@@ -1,35 +1,46 @@
 package fuzzingengine;
 
+import java.util.Optional;
 import middleware.core.CARSVariableUpdate;
 
-public abstract class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
-	public boolean doFuzzing = true;
+public class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 	private static final boolean debugging = false;
 	private String regexNumberScanner = "[+-]?([0-9]*\\.)?[0-9]+";
 	
-	public abstract String getReplacement(String inValue);
+	private final double defaultFixedChange = 0.0;
+	private String fixedChange = Double.toString(defaultFixedChange);
+	private Optional<DoubleLambda> generateDouble;
 	
-	public NumericVariableChangeFuzzingEngine() {
+	public NumericVariableChangeFuzzingEngine(DoubleLambda generateDouble) {
+		this.generateDouble = Optional.of(generateDouble);
+	}
+	
+	public NumericVariableChangeFuzzingEngine(double fixedChange) {
+		this.fixedChange = Double.toString(fixedChange);
+	}
+	
+	public String getReplacement(String inValue) {
+		return fixedChange;
+	}
 
+	public <E> E fuzzTransformEvent(E event) {
+		if (event instanceof CARSVariableUpdate) {
+			CARSVariableUpdate cvu = (CARSVariableUpdate)event;
+			CARSVariableUpdate newUpdate = new CARSVariableUpdate(cvu);
+			// TODO: handle checking the type of the update here - ensure we
+			// only fuzz a standard operation
+			
+			// Need to be able to fuzz parts of a structural message
+			String change = fixedChange;
+			if (generateDouble.isPresent()) {
+				DoubleLambda dl = generateDouble.get();
+				change = Double.toString(dl.op());
+			}
+			newUpdate.setValue(change);
+			return (E)newUpdate;
+		} else {
+			return event;
+		}
 	}
-		
-	public synchronized CARSVariableUpdate fuzzMessage(CARSVariableUpdate mup) {
-		CARSVariableUpdate mupOut = new CARSVariableUpdate(mup);
-				
-		if (debugging) {
-			System.out.println("FUZZ ENGINE VARIABLE IN: " + mupOut.getValue());
-		}
-		if (doFuzzing) {
-			String inval = mup.getValue();
-			String replaceValue = getReplacement(inval);
-			String outval = inval.replaceAll(regexNumberScanner, replaceValue);
-			System.out.println("outval=" + outval);
-			mupOut.setValue(outval);
-		}
-		
-		if (debugging) {
-			System.out.println("FUZZ ENGINE VARIABLE OUT:" + mupOut.getValue());
-		}
-		return mupOut;
-	}
+	
 }

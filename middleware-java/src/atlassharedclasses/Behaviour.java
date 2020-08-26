@@ -1,6 +1,6 @@
 package atlassharedclasses;
 
-public enum Behaviours {
+public enum Behaviour {
 	IN_MOTION,
 	STOPPED
 }

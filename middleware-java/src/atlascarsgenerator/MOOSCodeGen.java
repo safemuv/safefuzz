@@ -2,7 +2,6 @@ package atlascarsgenerator;
 
 import carsmapping.CARSSimulation;
 import carsspecific.moos.moosmapping.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,9 +2,10 @@ package carsspecific.moos.translations;
 
 import java.util.HashMap;
 import javax.jms.JMSException;
-import atlasdsl.Robot;
 import middleware.carstranslations.CARSTranslations;
 import middleware.core.*;
+import middleware.logging.ATLASLog;
+import sun.rmi.runtime.Log;
 
 public class MOOSTranslations extends CARSTranslations {
 	
@@ -25,6 +26,7 @@ public class MOOSTranslations extends CARSTranslations {
 		String msg = endTimeOfUpdate.toString() + "|" + keyStr + "=" + valueStr;
 		ActiveMQProducer prod = producers.get(robotName); 
 		try {
+			ATLASLog.logCARSOutbound(robotName, msg);
 			prod.sendMessage(msg);
 		} catch (JMSException e) {
 			e.printStackTrace();

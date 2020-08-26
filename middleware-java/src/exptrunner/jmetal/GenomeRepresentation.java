@@ -1,11 +1,11 @@
 package exptrunner.jmetal;
 
-import jmetal.core.Problem;
-import jmetal.core.SolutionType;
-import jmetal.core.Variable;
+//import jmetal.core.Problem;
+//import jmetal.core.SolutionType;
+//import jmetal.core.Variable;
 
-public class GenomeRepresentation extends SolutionType {
+//public class GenomeRepresentation extends SolutionType {
 	
 	
 
-}
+//}

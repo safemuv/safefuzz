@@ -14,7 +14,6 @@ import activemq.portmapping.PortMappings;
 
 import atlasdsl.*;
 import atlassharedclasses.*;
-import fuzzingengine.FuzzingEngine;
 import middleware.core.*;
 
 public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
@@ -230,8 +229,9 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 				System.out.println("detection report = " + val);
 				Matcher mtch = detectionScanner.matcher(val);
 				if (mtch.find()) {
-					double x = Double.parseDouble(mtch.group(1));
-					double y = Double.parseDouble(mtch.group(2));
+					// x and y fields not currently used
+					//double x = Double.parseDouble(mtch.group(1));
+					//double y = Double.parseDouble(mtch.group(2));
 					Integer objectID = Integer.parseInt(mtch.group(3));
 					String vname = mtch.group(4);
 

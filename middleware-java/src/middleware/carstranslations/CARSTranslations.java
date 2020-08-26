@@ -9,9 +9,9 @@ public abstract class CARSTranslations {
 	public abstract void startRobot(String robotName);
 	public abstract void setOutputProducers(HashMap<String,ActiveMQProducer> producers);
 	
-	public void sendBackEvent(CARSVariableUpdate event) {
+	public void sendBackEvent(CARSVariableUpdate event, String reflectBackName) {
 		String vehicleName = event.getVehicleName();
-		String key = event.getKey();
+		String key = reflectBackName;
 		String value = event.getValue();
 		sendCARSUpdate(vehicleName, key, value);
 	}

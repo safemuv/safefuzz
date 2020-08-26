@@ -1,8 +1,6 @@
 package middleware.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Optional;
 
 import atlassharedclasses.ATLASObjectMapper;
 import fuzzingengine.*;
@@ -34,14 +32,15 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		
 		E modifiedEvent = event;
 		boolean doFuzzing = fuzzingEngine.shouldFuzzCARSEvent(event);
-		boolean reflectBack = fuzzingEngine.shouldReflectBackToCARS(event);
+		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
 		if (doFuzzing) {
 			modifiedEvent = fuzzingEngine.fuzzTransformEvent(event);
-			if (reflectBack) {
+			if (reflectBackAsName.isPresent()) {
+				String reflectBackName = reflectBackAsName.get();
 				if (modifiedEvent instanceof CARSVariableUpdate) {
 					CARSVariableUpdate varUpdate = (CARSVariableUpdate)modifiedEvent;  
-					cTrans.sendBackEvent(varUpdate);
+					cTrans.sendBackEvent(varUpdate, reflectBackName);
 				}
 			}
 		}
