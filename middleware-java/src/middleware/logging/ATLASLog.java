@@ -10,6 +10,7 @@ public class ATLASLog {
 	private FileWriter carsInboundLog;
 	private FileWriter carsOutboundLog;
 	private FileWriter mqOutboundLog;
+	private FileWriter fuzzingLog;
 	private FileWriter goalLog;
 	private FileWriter timeLog;
 	private FileWriter optionsLog;
@@ -20,6 +21,7 @@ public class ATLASLog {
 			carsInboundLog = new FileWriter("logs/atlasCARSInbound.log");
 			carsOutboundLog = new FileWriter("logs/atlasCARSOutbound.log");
 			mqOutboundLog = new FileWriter("logs/atlasMQOutbound.log");
+			fuzzingLog = new FileWriter("logs/fuzzing.log");
 			goalLog = new FileWriter("logs/goalLog.log");
 			timeStream = new FileOutputStream("logs/atlasTime.log");
 			optionsLog = new FileWriter("logs/options.log");
@@ -40,6 +42,16 @@ public class ATLASLog {
 			logger = new ATLASLog();
 		} 
 		return logger;
+	}
+	
+	public static synchronized void logFuzzing(String msg) {
+		try {
+			FileWriter w = getLog().fuzzingLog;
+			w.write(msg + "\n");
+			w.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static synchronized void logCARSInbound(String queueName, String text) {

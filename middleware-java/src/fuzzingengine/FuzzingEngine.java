@@ -18,10 +18,30 @@ public abstract class FuzzingEngine {
 	// This contains the 
 	private HashMap<String,String> carsKeysReflection = new LinkedHashMap<String,String>();
 	
+	public void addFuzzKey(String in) {
+		System.out.println("addFuzzKey = " + in + ",length=" + in.length());
+		messageKeysToFuzz.add(in);
+	}
+	
+	public void addFuzzKey(String in, String out) {
+		carsKeysReflection.put(in,out);
+	}
+	
+	public void clearKeys() {
+		carsKeysReflection.clear();
+		messageKeysToFuzz.clear();
+	}
+	
 	public <E> boolean shouldFuzzCARSEvent(E event) {
+		System.out.println("shouldFuzzCARSEvent");
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate)event;
 			String k = cv.getKey();
+			if (k.equals("DB_UPTIME")) {
+				System.out.println("matches");
+				System.out.println(messageKeysToFuzz);
+			}
+			System.out.println("k = " + k + ",length=" + k.length());
 			return messageKeysToFuzz.contains(k) || carsKeysReflection.containsKey(k);
 		} else {
 			return false;

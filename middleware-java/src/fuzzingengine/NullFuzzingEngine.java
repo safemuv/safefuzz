@@ -10,8 +10,4 @@ public class NullFuzzingEngine extends FuzzingEngine {
 	public <E> E fuzzTransformEvent(E event) {
 		return event;
 	}
-
-	public <E> boolean shouldFuzzCARSEvent(E event) {
-		return false;
-	}
 }

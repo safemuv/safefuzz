@@ -3,6 +3,7 @@ package middleware.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import atlasdsl.*;
@@ -47,6 +48,8 @@ public abstract class ATLASCore {
 	
 	private FaultGenerator faultGen;
 	
+	private Random fuzzGenRandom = new Random();
+	
 	private double time = 0.0;
 	
 	public ATLASCore(Mission mission) {
@@ -55,9 +58,11 @@ public abstract class ATLASCore {
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
-		
-//		fuzzEngine = new NumericVariableChangeFuzzingEngine(0.0);
-		fuzzEngine = new NullFuzzingEngine();
+
+		// TODO: test code for inserting fuzzing - do a proper fuzzing launcher here
+		fuzzEngine = new NumericVariableChangeFuzzingEngine(() -> 50.0 * fuzzGenRandom.nextDouble());
+		fuzzEngine.addFuzzKey("DB_UPTIME", "DB_UPTIME_PRI");
+		//fuzzEngine.addFuzzKey("DB_UPTIME");
 	}
 	
 	public CARSTranslations getCARSTranslationOutput() {
@@ -65,7 +70,7 @@ public abstract class ATLASCore {
 	}
 	
 	protected void createGUI() {
-		gui = new GUITest(mission, faultGen);
+		gui = new GUITest(this,mission, faultGen);
 	}
 	
 	public synchronized void registerFault(FaultInstance fi) {

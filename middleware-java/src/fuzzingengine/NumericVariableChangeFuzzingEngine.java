@@ -9,7 +9,7 @@ public class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 	
 	private final double defaultFixedChange = 0.0;
 	private String fixedChange = Double.toString(defaultFixedChange);
-	private Optional<DoubleLambda> generateDouble;
+	private Optional<DoubleLambda> generateDouble = Optional.empty();
 	
 	public NumericVariableChangeFuzzingEngine(DoubleLambda generateDouble) {
 		this.generateDouble = Optional.of(generateDouble);
@@ -18,7 +18,7 @@ public class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 	public NumericVariableChangeFuzzingEngine(double fixedChange) {
 		this.fixedChange = Double.toString(fixedChange);
 	}
-	
+
 	public String getReplacement(String inValue) {
 		return fixedChange;
 	}

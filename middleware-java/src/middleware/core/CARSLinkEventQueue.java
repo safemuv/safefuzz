@@ -31,10 +31,12 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		// the low-level CARS?
 		
 		E modifiedEvent = event;
+		System.out.println("calling shouldFuzzCARSEvent");
 		boolean doFuzzing = fuzzingEngine.shouldFuzzCARSEvent(event);
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
 		if (doFuzzing) {
+			System.out.println("doFuzzing");
 			modifiedEvent = fuzzingEngine.fuzzTransformEvent(event);
 			if (reflectBackAsName.isPresent()) {
 				String reflectBackName = reflectBackAsName.get();
