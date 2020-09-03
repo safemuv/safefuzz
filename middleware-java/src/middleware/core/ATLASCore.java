@@ -16,6 +16,8 @@ import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
 
 import fuzzingengine.*;
+import fuzzingengine.operations.FuzzingOperation;
+import fuzzingengine.operations.NumericVariableChangeFuzzingOperation;
 
 // This code will be combined with the simulator-specific code
 // during code generation
@@ -60,8 +62,14 @@ public abstract class ATLASCore {
 		faultGen = new FaultGenerator(this,mission);
 
 		// TODO: test code for inserting fuzzing - do a proper fuzzing launcher here
-		fuzzEngine = new NumericVariableChangeFuzzingEngine(() -> 50.0 * fuzzGenRandom.nextDouble());
-		fuzzEngine.addFuzzKey("DB_UPTIME", "DB_UPTIME_PRI");
+		//fuzzEngine = new NumericVariableChangeFuzzingEngine(() -> 50.0 * fuzzGenRandom.nextDouble());
+		fuzzEngine = new FuzzingEngine();
+		FuzzingOperation op = (FuzzingOperation)new NumericVariableChangeFuzzingOperation(() -> 50.0 * fuzzGenRandom.nextDouble());
+		fuzzEngine.addFuzzKey("DB_UPTIME", op);
+		
+		//fuzzEngine.addFuzzKey("DB_UPTIME", "DB_UPTIME_PRI");
+		
+		fuzzEngine = new NullFuzzingEngine();
 		//fuzzEngine.addFuzzKey("DB_UPTIME");
 	}
 	

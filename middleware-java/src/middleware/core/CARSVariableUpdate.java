@@ -5,6 +5,7 @@ import carsspecific.moos.carsqueue.MOOSEvent;
 public class CARSVariableUpdate extends MOOSEvent {
 	private String vehicleName;
 	private String value;
+	private String sourceComponent;
 	private String key;
 	double time;
 	
@@ -61,5 +62,9 @@ public class CARSVariableUpdate extends MOOSEvent {
 
 	public void setValue(String replaced) {
 		value = replaced;
+	}
+
+	public String getSourceComponent() {
+		return sourceComponent;
 	}
 }

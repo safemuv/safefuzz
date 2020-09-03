@@ -1,8 +1,8 @@
-package fuzzingengine;
+package fuzzingengine.operations;
 
-public class ExternalFuzzingEngine extends FuzzingEngine {
+public class ExternalFuzzingOperation extends FuzzingOperation {
 
-	public ExternalFuzzingEngine() {
+	public ExternalFuzzingOperation() {
 		// Load the external fuzzer process
 		// Specify the fuzzing capability from the DSL
 	}

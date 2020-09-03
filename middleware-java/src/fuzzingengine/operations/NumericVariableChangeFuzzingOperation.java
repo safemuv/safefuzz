@@ -1,9 +1,12 @@
-package fuzzingengine;
+package fuzzingengine.operations;
 
 import java.util.Optional;
+import java.util.Random;
+
+import fuzzingengine.DoubleLambda;
 import middleware.core.CARSVariableUpdate;
 
-public class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
+public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
 	private static final boolean debugging = false;
 	private String regexNumberScanner = "[+-]?([0-9]*\\.)?[0-9]+";
 	
@@ -11,12 +14,19 @@ public class NumericVariableChangeFuzzingEngine extends FuzzingEngine {
 	private String fixedChange = Double.toString(defaultFixedChange);
 	private Optional<DoubleLambda> generateDouble = Optional.empty();
 	
-	public NumericVariableChangeFuzzingEngine(DoubleLambda generateDouble) {
+	public NumericVariableChangeFuzzingOperation(DoubleLambda generateDouble) {
 		this.generateDouble = Optional.of(generateDouble);
 	}
 	
-	public NumericVariableChangeFuzzingEngine(double fixedChange) {
+	public NumericVariableChangeFuzzingOperation(double fixedChange) {
 		this.fixedChange = Double.toString(fixedChange);
+	}
+	
+	public static NumericVariableChangeFuzzingOperation Random(double lower, double upper) {
+		Random r = new Random();
+		double diff = upper - lower;
+		NumericVariableChangeFuzzingOperation op = new NumericVariableChangeFuzzingOperation(() -> lower + (diff * r.nextDouble()));
+		return op;
 	}
 
 	public String getReplacement(String inValue) {

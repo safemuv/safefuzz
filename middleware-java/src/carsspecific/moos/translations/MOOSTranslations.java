@@ -5,7 +5,7 @@ import javax.jms.JMSException;
 import middleware.carstranslations.CARSTranslations;
 import middleware.core.*;
 import middleware.logging.ATLASLog;
-import sun.rmi.runtime.Log;
+
 
 public class MOOSTranslations extends CARSTranslations {
 	

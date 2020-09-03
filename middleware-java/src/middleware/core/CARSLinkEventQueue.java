@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import atlassharedclasses.ATLASObjectMapper;
 import fuzzingengine.*;
+import fuzzingengine.operations.*;
 import middleware.carstranslations.CARSTranslations;
 
 public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implements Runnable {
@@ -27,18 +28,16 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 	public void handleEvent(E event) {
 		boolean handleSpecifically = true;
 		// Do the fuzzing specific parts of a CARS message
-		// If the message is on the list to fuzz... alter it, potentially reflect it back to 
-		// the low-level CARS?
-		
+		// If the message is on the list to fuzz... alter it
+		Optional<FuzzingOperation> op_o = fuzzingEngine.shouldFuzzCARSEvent(event);
 		E modifiedEvent = event;
-		System.out.println("calling shouldFuzzCARSEvent");
-		boolean doFuzzing = fuzzingEngine.shouldFuzzCARSEvent(event);
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
-		if (doFuzzing) {
-			System.out.println("doFuzzing");
-			modifiedEvent = fuzzingEngine.fuzzTransformEvent(event);
+		if (op_o.isPresent()) {
+			FuzzingOperation fo = op_o.get();
+			modifiedEvent = fuzzingEngine.fuzzTransformEvent(event, fo);
 			if (reflectBackAsName.isPresent()) {
+				// Potentially reflect it back to the low-level CARS?
 				String reflectBackName = reflectBackAsName.get();
 				if (modifiedEvent instanceof CARSVariableUpdate) {
 					CARSVariableUpdate varUpdate = (CARSVariableUpdate)modifiedEvent;  
