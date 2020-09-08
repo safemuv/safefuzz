@@ -52,9 +52,8 @@ ATLASLinkConsumer::ATLASLinkConsumer(ATLASDBInterface *atlas_int,
 
   // Determine the topic name
   ostringstream topicname;
-  topicname << "FAULTS-SIM-TO-ATLAS";
   if (!atlas_link_extraname.empty())
-    topicname << "-" << atlas_link_extraname;
+    topicname << atlas_link_extraname;
 
   // Create the destination (Topic or Queue)
   destination = session->createTopic(topicname.str());

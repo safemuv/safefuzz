@@ -1,5 +1,7 @@
 package middleware.core;
 
+import java.util.Optional;
+
 import carsspecific.moos.carsqueue.MOOSEvent;
 
 public class CARSVariableUpdate extends MOOSEvent {
@@ -7,7 +9,8 @@ public class CARSVariableUpdate extends MOOSEvent {
 	private String value;
 	private String sourceComponent;
 	private String key;
-	double time;
+	private double time;
+	private Optional<String> carsProcess;
 	
 	public class VariableInvalid extends Exception {
 		private static final long serialVersionUID = 1L;
@@ -24,9 +27,10 @@ public class CARSVariableUpdate extends MOOSEvent {
 		}
 	}
 	
-	public CARSVariableUpdate(String vehicleName, String updateText, double time) throws VariableInvalid {
+	public CARSVariableUpdate(String vehicleName, String updateText, Optional<String> carsProcess, double time) throws VariableInvalid {
 		this.vehicleName = vehicleName;
 		this.time = time;
+		this.carsProcess = carsProcess;
 		setExtractedKeyAndValue(updateText);
 	}
 	
@@ -59,12 +63,20 @@ public class CARSVariableUpdate extends MOOSEvent {
 	public String getVehicleName() {
 		return vehicleName;
 	}
+	
+	public boolean hasCARSProcessName() {
+		return carsProcess.isPresent();
+	}
+	
+	public String getProcessName() {
+		return carsProcess.get();
+	}
 
 	public void setValue(String replaced) {
 		value = replaced;
 	}
 
-	public String getSourceComponent() {
-		return sourceComponent;
+	public Optional<String> getSourceComponent() {
+		return carsProcess;
 	}
 }

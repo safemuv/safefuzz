@@ -62,6 +62,14 @@ public class ATLASLog {
 		}
 	}
 	
+	public static synchronized void logCARSInbound(String queueName, String text, String processName) {
+		try {
+			getLog().carsInboundLog.write("Received from CARS queue " + queueName + ":processName = " + processName + ":" + text + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static synchronized void logCARSOutbound(String queueName, String text) {
 		try {
 			getLog().carsOutboundLog.write("Sending to CARS queue " + queueName + ":" + text + "\n");

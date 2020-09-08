@@ -94,9 +94,10 @@ void ATLASLinkProducer::cleanup() {
 void ATLASLinkProducer::sendToMQ(CMOOSMsg &mooseMsg) {
   if (session != nullptr) {
     string activeMQMsg = mooseMsg.GetKey() + "=" + mooseMsg.GetAsString();
+    string processUserName = mooseMsg.GetSource();
     TextMessage *msg = session->createTextMessage(activeMQMsg);
     // FIX: real properties here
-    msg->setStringProperty("USER_NAME", activeMQUserName);
+    msg->setStringProperty("USER_NAME", processUserName);
     msg->setIntProperty("USER_CODE", activeMQUserCode);
     producer->send(msg);
     cout << "ActiveMQ Message sent: " << activeMQMsg << endl;

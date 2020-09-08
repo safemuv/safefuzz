@@ -1,5 +1,7 @@
 package middleware.core;
 
+import java.util.Optional;
+
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.ExceptionListener;
@@ -31,10 +33,25 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
         try {
             if (m instanceof TextMessage) {
                 TextMessage textMessage = (TextMessage) m;
+                long msgTime = (long) 0.0;
+                Optional<String> carsProcess = Optional.empty();
+                try {
+                	// TODO: maybe rename this to something more descriptive?
+                	// Property should be renamed to something like PROCESS_NAME / SOURCE_NAME on the CARS side
+                	carsProcess = Optional.of(m.getStringProperty("USER_NAME"));
+                	msgTime = m.getJMSTimestamp();
+                } catch (JMSException jme) {
+                	
+                }
                 String text = textMessage.getText();
-                MOOSEvent e = (MOOSEvent)new CARSVariableUpdate(vehicleName, text, 0.0);
+                MOOSEvent e = (MOOSEvent)new CARSVariableUpdate(vehicleName, text, carsProcess, msgTime);
                 carsQueue.add(e);
-                ATLASLog.logCARSInbound(queueName, text);
+                
+                if (carsProcess.isPresent()) {
+                	ATLASLog.logCARSInbound(queueName, text, carsProcess.get());
+                } else {
+                	ATLASLog.logCARSInbound(queueName, text);
+                }
                 
             } else {
                 System.out.println("Received: " + m);

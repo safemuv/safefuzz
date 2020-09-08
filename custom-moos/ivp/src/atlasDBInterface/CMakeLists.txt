@@ -33,13 +33,12 @@ include_directories(${APR_INCLUDE_DIR} ${ActiveMQ_INCLUDE_DIR})
 #set(ActiveMQ_LIBRARY "/home/userfs/j/jrh512/source/activemq-cpp-install/lib/libactivemq-cpp.so")
 set(ActiveMQ_LIBRARY "/usr/local/lib/libactivemq-cpp.so")
 
-
-
 ADD_EXECUTABLE(ATLASDBInterface ${SRC})
 
 TARGET_LINK_LIBRARIES(ATLASDBInterface
   ${MOOS_LIBRARIES}
   ${ActiveMQ_LIBRARY}
+  ssl
   mbutil
   ${SYSTEM_LIBS})
 

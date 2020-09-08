@@ -155,8 +155,7 @@ class ComputerCIshoreside {
 			API.startVehicle(robot);
 			
 			CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
-			robotSweepRegions.put(robot, region);		
-			
+			robotSweepRegions.put(robot, region);
 		}
 
 		for (String robot : cameraRobots) {

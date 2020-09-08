@@ -63,16 +63,19 @@ public class FuzzingEngine {
 					return Optional.of(fuzzingOperations.get(k));
 				} else {
 					return Optional.empty();
+					
 				}
 			}
 			
 			if (fuzzSelType == FuzzingSelectionType.LOCAL_BY_SPECIFIC_SOURCE) {
-				String componentName = cv.getSourceComponent();
-				if (fuzzingComponents.containsKey(componentName)) {
-					return Optional.of(fuzzingOperations.get(componentName));
-				} else {
-					return Optional.empty();
+				Optional<String> componentName_o = cv.getSourceComponent();
+				if (componentName_o.isPresent()) {
+					String componentName = componentName_o.get();
+					if (fuzzingComponents.containsKey(componentName)) {
+						return Optional.of(fuzzingOperations.get(componentName));
+					} 
 				}
+				return Optional.empty();
 			}
 		}
 
