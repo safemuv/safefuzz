@@ -20,4 +20,20 @@ public class PortMappings {
 	public static String portForMiddlewareFromCI(String vehicleName) {
 		return "MIDDLEWARE-FROM-CI_" + vehicleName.toString();
 	}
+	
+	public static int portNumberForPShareReception() {
+		return 36000;
+	}
+	
+	public static int portNumberForPShareTransmission() {
+		return 36005;
+	}
+	
+	public static String addressForPShare() {
+		return "127.0.0.1";
+	}
+	
+	public static int bufferSizeUDP() {
+		return 65535;
+	}
 }

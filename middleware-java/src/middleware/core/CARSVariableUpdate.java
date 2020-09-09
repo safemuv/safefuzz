@@ -34,6 +34,13 @@ public class CARSVariableUpdate extends MOOSEvent {
 		setExtractedKeyAndValue(updateText);
 	}
 	
+	public CARSVariableUpdate(String vehicleName, String updateText, double time) throws VariableInvalid {
+		this.vehicleName = vehicleName;
+		this.time = time;
+		this.carsProcess = Optional.empty();
+		setExtractedKeyAndValue(updateText);
+	}
+	
 	public CARSVariableUpdate(CARSVariableUpdate other) {
 		this.vehicleName = other.vehicleName;
 		this.time = other.time;

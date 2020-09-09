@@ -63,13 +63,14 @@ public abstract class ATLASCore {
 
 		// TODO: test code for inserting fuzzing - do a proper fuzzing launcher here
 		//fuzzEngine = new NumericVariableChangeFuzzingEngine(() -> 50.0 * fuzzGenRandom.nextDouble());
-		//fuzzEngine = new FuzzingEngine();
+		fuzzEngine = new FuzzingEngine();
+		fuzzEngine.setFuzzSelectionType(FuzzingSelectionType.LOCAL_BY_SPECIFIC_SOURCE);
 		//FuzzingOperation op = (FuzzingOperation)new NumericVariableChangeFuzzingOperation(() -> 50.0 * fuzzGenRandom.nextDouble());
 		//fuzzEngine.addFuzzKey("DB_UPTIME", op);
 		
 		//fuzzEngine.addFuzzKey("DB_UPTIME", "DB_UPTIME_PRI");
 		
-		fuzzEngine = new NullFuzzingEngine();
+		//fuzzEngine = new NullFuzzingEngine();
 		//fuzzEngine.addFuzzKey("DB_UPTIME");
 	}
 	
@@ -175,7 +176,7 @@ public abstract class ATLASCore {
 		
 		if (gui != null) {
 			gui.setFaultDefinitionFile(filePath);
-		}		
+		}
 	}
 
 	public FuzzingEngine getFuzzingEngine() {
