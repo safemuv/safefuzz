@@ -46,8 +46,8 @@ ProcessConfig = pShare
 {
 AppTick = 2
 CommsTick = 2
-input = route =  localhost:9302
-output = src_name=Y, dest_name=B, route=localhost:9300
+input = route =  localhost:9902
+output = src_name=Y, dest_name=B, route=localhost:9900
 }
 
 ProcessConfig = uSimMarine
@@ -143,7 +143,7 @@ ProcessConfig = uFldNodeBroker
 {
 AppTick = 1
 CommsTick = 1
-TRY_SHORE_HOST = pshare_route=localhost:9300
+TRY_SHORE_HOST = pshare_route=localhost:9900
 BRIDGE = src=VIEW_POLYGON
 BRIDGE = src=VIEW_POINT
 BRIDGE = src=VIEW_SEGLIST

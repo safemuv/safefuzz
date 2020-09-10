@@ -5,6 +5,7 @@ import carsspecific.moos.moosmapping.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 import atlassharedclasses.Point;
 
@@ -66,6 +67,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		List<String> collectiveIntelVars = varsForCI(mission);
 		
 		int atlasPort = 61613;
+		int pSharePortToMiddleware = PortMappings.portNumberForPShareReception();
 		try {
 		
 			MOOSSimulation moossim = new MOOSSimulation();
@@ -76,7 +78,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			// computers involved
 			MOOSCommunity shoreside = null;
 			if (mission.includesComputer()) {
-				shoreside = new ComputerCommunity(moossim,"shoreside");
+				shoreside = new ComputerCommunity(moossim,"shoreside", PortMappings.portNumberForPShareReception());
 				moossim.addCommunity(shoreside);
 				System.out.println("Adding community for fixed computer");
 			}
@@ -91,8 +93,11 @@ public class MOOSCodeGen extends CARSCodeGen {
 				double startSpeed = r.getDoubleComponentProperty("startSpeed");
 				double maxSpeed = r.getDoubleComponentProperty("maxSpeed");
 				double maxDepth = r.getDoubleComponentProperty("maxDepth");
+				String pShareHostname = PortMappings.addressForPShare();
 				
-				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed, maxDepth);
+				System.out.println("pSharePortBase = " + pSharePortToMiddleware);
+				
+				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed, maxDepth, pShareHostname, pSharePortToMiddleware);
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
 				//TODO: robot properties, such as maximum speed, should be propagated to the robot community here

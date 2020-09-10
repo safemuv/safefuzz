@@ -3,14 +3,14 @@ package carsspecific.moos.moosmapping;
 import java.util.List;
 
 public class UFldNodeBrokerProcess extends MOOSProcess {
-	public UFldNodeBrokerProcess(MOOSCommunity parent) {
+	public UFldNodeBrokerProcess(MOOSCommunity parent, String pShareHost, int pSharePortBase) {
 		super("uFldNodeBroker", parent);
 		
 		resetProperty("AppTick", 1);
 		resetProperty("CommsTick", 1);
 		
 		// TODO: this should look up the shoreside host from the community
-		setProperty("TRY_SHORE_HOST", "pshare_route=localhost:9300");
+		setProperty("TRY_SHORE_HOST", "pshare_route=" + pShareHost + ":" + Integer.toString(pSharePortBase));
 		setProperty("BRIDGE", "src=VIEW_POLYGON");
 		setProperty("BRIDGE", "src=VIEW_POINT");
 		setProperty("BRIDGE", "src=VIEW_SEGLIST");

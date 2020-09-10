@@ -22,15 +22,15 @@ public class PortMappings {
 	}
 	
 	public static int portNumberForPShareReception() {
-		return 36000;
+		return 9900;
 	}
 	
 	public static int portNumberForPShareTransmission() {
-		return 36005;
+		return 9300;
 	}
 	
 	public static String addressForPShare() {
-		return "127.0.0.1";
+		return "localhost";
 	}
 	
 	public static int bufferSizeUDP() {

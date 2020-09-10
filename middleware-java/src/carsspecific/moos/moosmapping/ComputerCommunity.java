@@ -1,13 +1,13 @@
 package carsspecific.moos.moosmapping;
 
 public class ComputerCommunity extends MOOSCommunity {
-	public ComputerCommunity(MOOSSimulation sim, String computerName) {
+	public ComputerCommunity(MOOSSimulation sim, String computerName, int pSharePortBase) {
 		super(sim,computerName);
 		addProcess(new PMarineViewerProcess(this));
 		addProcess(new PHostinfoProcess(this));
 		addProcess(new UFldShoreBrokerProcess(this));
 		
-		PShareProcess pshare = new PShareProcess(this, dbPortOffset);
+		PShareProcess pshare = new PShareProcess(this, dbPortOffset, pSharePortBase);
 		pshare.addShoresideInput();
 		addProcess(pshare);
 		
