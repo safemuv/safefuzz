@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+import middleware.logging.DebugLog;
+
 public abstract class UDPConsumer implements Runnable {
 	private DatagramSocket datagramSocket;
 	protected ATLASEventQueue carsQueue;
@@ -16,22 +18,7 @@ public abstract class UDPConsumer implements Runnable {
 	private boolean listenCont = true;
 	private byte[] receive = new byte[BYTE_BUFFER_LENGTH];
 	private int port; 
-
-    // A utility method to convert the byte array 
-    // data into a string representation. 
-    private static StringBuilder debugString(byte[] a) { 
-        if (a == null) 
-            return null; 
-        StringBuilder ret = new StringBuilder(); 
-        int i = 0; 
-        while (a[i] != 0) 
-        { 
-            ret.append((char) a[i]); 
-            i++; 
-        } 
-        return ret; 
-    } 
-    
+   
 	public UDPConsumer(ATLASEventQueue carsQueue, int port) {
 		this.port = port;
 		this.carsQueue = carsQueue;
@@ -49,7 +36,7 @@ public abstract class UDPConsumer implements Runnable {
 		        // TODO: push UDP events into a corresponding ATLASEventQueue
 		        handleUDPMesssage(receive, receivedLen);
 		        if (DEBUG_DISPLAY_UDP_BUFFER) {
-		        	System.out.println("UDP Reception Buffer:" + debugString(receive)); 
+		        	System.out.println("UDP Reception Buffer:" + DebugLog.bytesToHex(receive, receivedLen)); 
 		        }
 		        receive = new byte[BYTE_BUFFER_LENGTH]; 
 		    } 			

@@ -10,7 +10,12 @@ public class PShareUDPConsumer extends UDPConsumer {
 	}
 
 	protected void handleUDPMesssage(byte[] receive, int len) {
-		PShareEvent e = new PShareEvent(receive, len);
-		carsQueue.add(e);
+		try {
+			PShareEvent e = new PShareEvent(receive, len);
+			carsQueue.add(e);
+		} catch (PShareEventDecodingError e) {
+			
+		}
+
 	}
 }

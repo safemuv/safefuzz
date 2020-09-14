@@ -68,6 +68,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		
 		int atlasPort = 61613;
 		int pSharePortToMiddleware = PortMappings.portNumberForPShareReception();
+		int pShareListenPort = PortMappings.portBaseForPShareListen();
 		try {
 		
 			MOOSSimulation moossim = new MOOSSimulation();
@@ -78,7 +79,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			// computers involved
 			MOOSCommunity shoreside = null;
 			if (mission.includesComputer()) {
-				shoreside = new ComputerCommunity(moossim,"shoreside", PortMappings.portNumberForPShareReception());
+				shoreside = new ComputerCommunity(moossim,"shoreside", PortMappings.portNumberForPShareReception(), PortMappings.portBaseForPShareListen());
 				moossim.addCommunity(shoreside);
 				System.out.println("Adding community for fixed computer");
 			}
@@ -97,7 +98,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				
 				System.out.println("pSharePortBase = " + pSharePortToMiddleware);
 				
-				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed, maxDepth, pShareHostname, pSharePortToMiddleware);
+				MOOSCommunity rprocess = new RobotCommunity(moossim, r, startPos, startSpeed, maxSpeed, maxDepth, pShareHostname, pSharePortToMiddleware, pShareListenPort);
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
 				//TODO: robot properties, such as maximum speed, should be propagated to the robot community here

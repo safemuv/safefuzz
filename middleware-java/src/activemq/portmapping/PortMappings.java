@@ -25,15 +25,16 @@ public class PortMappings {
 		return 9900;
 	}
 	
-	public static int portNumberForPShareTransmission() {
-		return 9300;
-	}
-	
 	public static String addressForPShare() {
 		return "localhost";
 	}
 	
 	public static int bufferSizeUDP() {
 		return 65535;
+	}
+
+	public static int portBaseForPShareListen() {
+		// TODO Auto-generated method stub
+		return 9300;
 	}
 }

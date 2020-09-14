@@ -70,7 +70,7 @@ public class FuzzingEngine {
 				Optional<String> componentName_o = cv.getSourceComponent();
 				if (componentName_o.isPresent()) {
 					String componentName = componentName_o.get();
-					System.out.println("componentName = " + componentName);
+					//System.out.println("componentName = " + componentName);
 					if (fuzzingComponents.containsKey(componentName)) {
 						return Optional.of(fuzzingOperations.get(componentName));
 					} 
