@@ -4,10 +4,10 @@ import carsmapping.CARSSimulation;
 import carsspecific.moos.moosmapping.*;
 import java.util.ArrayList;
 import java.util.List;
+import atlassharedclasses.Point;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
-import atlassharedclasses.Point;
 
 // FIX: maybe move to MOOSSimulation?
 
@@ -126,6 +126,9 @@ public class MOOSCodeGen extends CARSCodeGen {
 					shoresideSonar = true;
 				}
 			}
+			
+			// TODO: if there are any environmental obstacles, then the shoreside needs to include uFldObstacleSim
+			// and the vehicles need to include PObstacleMgr
 			
 			// If there is a sonar sensor anywhere, then the shoreside needs to include a HazardSensor process
 			if (shoresideSonar) {
