@@ -13,7 +13,7 @@ public class TestMain {
 	
 	public static void main(String [] args) {
 		testReplace("A");
-		FuzzingEngine vf = new NumericVariableChangeFuzzingEngine(0.0);
+		//FuzzingEngine vf = new NumericVariableChangeFuzzingEngine(0.0);
 		
 		CARSVariableUpdate mup;
 		try {

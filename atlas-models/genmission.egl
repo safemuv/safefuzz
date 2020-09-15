@@ -96,12 +96,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% var obstacleID = 0; %]
 	[% for (o in m.obstacles) { %]
 	[* Now to generate the point list *]
-	ArrayList<Point> points[%= obstacleID %] = new ArrayList<Point>();
-	[% for (p in o.polygon) { %]
-		points[%= obstacleID %].add(new Point([%= p.x %], [%= p.y %], [%= p.z %]));
+	ArrayList<Point> eopoints[%= obstacleID %] = new ArrayList<Point>();
+	[% for (p in o.poly.points) { %]
+		eopoints[%= obstacleID %].add(new Point([%= p.x %], [%= p.y %], [%= p.z %]));
 	[% } %]
-	EnvironmentalObstacle eob[%= obstacleID++ %] = new EnvironmentalObstacle([%= o.label %], );
-	mission.addObstacle(eob[%= obstacleID%]);
+	EnvironmentalObstacle eob[%= obstacleID %] = new EnvironmentalObstacle("[%= o.label %]", eopoints[%= obstacleID %]);
+	mission.addObstacle(eob[%= obstacleID %]);
+	[% obstacleID++; %]
 	[% } %]
 	[* End environmental obstacles *]
 	

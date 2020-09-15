@@ -10,14 +10,18 @@ public class EnvironmentalObstacle {
 	private List<Point> polygon = new ArrayList<Point>();
 	private String label;
 	
-	EnvironmentalObstacle(String label, List<Point> polygon) {
+	public EnvironmentalObstacle(String label, List<Point> polygon) {
 		this.polygon = polygon;
-		this.label =label;  
+		this.label = label;  
 	}			
 	
 	public String pointsList() {
 		return polygon.stream()
 				.map(p -> p.getX() + "," + p.getY())
 				.collect(Collectors.joining(":"));
+	}
+	
+	public String getLabel() {
+		return label;
 	}
 }
