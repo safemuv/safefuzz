@@ -1,4 +1,4 @@
-package atlascarsgenerator;
+package middleware.atlascarsgenerator;
 
 public enum ConversionFailedReason {
 	MISSING_PROPERTY,

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import carsmapping.*;
+import middleware.atlascarsgenerator.carsmapping.*;
 
 public class MOOSSimulation implements CARSSimulation {
 	private int portOffsetCounter = 0;

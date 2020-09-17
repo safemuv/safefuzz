@@ -1,5 +1,5 @@
 // REDUNDANT - DELETE FROM GIT
-package carsmapping;
+package middleware.atlascarsgenerator.carsmapping;
 
 public abstract interface CARSMapping {
 	public abstract void generateCARSInterface(String baseDirectory);

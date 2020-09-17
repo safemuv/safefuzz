@@ -15,7 +15,7 @@ public class EnvironmentalObstacle {
 		this.label = label;  
 	}			
 	
-	public String pointsList() {
+	public String pointsListForObstacleFile() {
 		return polygon.stream()
 				.map(p -> p.getX() + "," + p.getY())
 				.collect(Collectors.joining(":"));

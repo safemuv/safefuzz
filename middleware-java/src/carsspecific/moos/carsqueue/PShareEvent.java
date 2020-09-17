@@ -8,22 +8,6 @@ import middleware.logging.DebugLog;
 
 public class PShareEvent extends CARSEvent {
 	
-	//private class StringPtr {
-//		private int value;
-//		
-///		public StringPtr(int startVal) {
-//			this.value = startVal;
-//		}
-//		
-//		private int get() {
-//			return this.value;
-//		}
-//		
-//		public void advance(int by) {
-//			this.value += by;
-//		}
-//	}
-	
 	// The raw contents of the byte array
 	private byte [] contents;
 	private int len;
@@ -63,6 +47,21 @@ public class PShareEvent extends CARSEvent {
 		}
 	}
 	
+	private PShareEvent() {
+		
+	}
+	
+	private static PShareEvent clone(PShareEvent e) {
+		PShareEvent newE = new PShareEvent();
+		newE.contents = e.contents;
+		newE.len = e.len;
+		newE.componentName = e.componentName;
+		newE.communityName = e.communityName;
+		newE.key = e.key;
+		newE.value = e.value;
+		return newE;
+	}
+	
 	public byte [] byteContents() {
 		return contents;
 	}
@@ -71,7 +70,22 @@ public class PShareEvent extends CARSEvent {
 		return len;
 	}
 	
+	public String getKey() {
+		return key;
+	}
+	
+	public String getValue() {
+		return value;
+	}
+	
 	public String toString() {
 		return "<PShareEvent:" + DebugLog.bytesToHex(contents, len) + ">";
+	}
+
+	public PShareEvent cloneWithNewValue(String key, String newValue) throws PShareEventDecodingError {
+		PShareEvent eNew = PShareEvent.clone(this);
+		eNew.value = newValue;
+		// replace the string in the contents
+		return eNew;
 	}
 }

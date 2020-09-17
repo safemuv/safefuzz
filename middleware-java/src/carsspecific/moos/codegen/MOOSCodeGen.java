@@ -1,11 +1,13 @@
-package atlascarsgenerator;
+package carsspecific.moos.codegen;
 
-import carsmapping.CARSSimulation;
 import carsspecific.moos.moosmapping.*;
+import middleware.atlascarsgenerator.*;
+import middleware.atlascarsgenerator.carsmapping.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import atlassharedclasses.Point;
-
+import atlassharedclasses.Region;
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
@@ -48,11 +50,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 		return new ArrayList<>();
 	}
 	
-	// Creates an ATLASDBWatch component to watch the given variables
-	private void createATLASLink(MOOSCommunity c, List<String> middleWareVars, int port) {
-		System.out.println("createATLASLink");
-		//ATLASWatchProcess dbwatch = new ATLASWatchProcess(c, c.getCommunityName());
-		
+	// Creates an ATLASDBInterface component to watch the given variables
+	private void createATLASLink(MOOSCommunity c, List<String> middleWareVars, int port) {	
 		ATLASInterfaceProcess dbwatch = new ATLASInterfaceProcess(c, c.getCommunityName());
 		for (String v : middleWareVars) {
 			dbwatch.addWatchVariable(v);
@@ -65,6 +64,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 		List<String> moosSharedVars = new ArrayList<String>();
 		List<String> middlewareVars = varsForMissionGoals(mission);
 		List<String> collectiveIntelVars = varsForCI(mission);
+		
+		boolean needShoresideObstacles = false;
 		
 		int atlasPort = 61613;
 		int pSharePortToMiddleware = PortMappings.portNumberForPShareReception();
@@ -125,10 +126,26 @@ public class MOOSCodeGen extends CARSCodeGen {
 					rprocess.addProcess(sonar_proc);
 					shoresideSonar = true;
 				}
+				
+				// If there are any environmental obstacles, then the shoreside needs to include uFldObstacleSim
+				// and the vehicles need to include PObstacleMgr, so set a flag
+				if (mission.hasObstacles()) {
+					needShoresideObstacles = true;
+					MOOSProcess pObstacleMgr = new PObstacleMgrProcess(rprocess);
+					rprocess.addProcess(pObstacleMgr);
+				}
 			}
 			
-			// TODO: if there are any environmental obstacles, then the shoreside needs to include uFldObstacleSim
-			// and the vehicles need to include PObstacleMgr
+			if (needShoresideObstacles) {
+				// TODO: specify a fixed region
+				Region r = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
+				System.out.println("TEST: using a fixed region in obstacle code generation");
+				UFldObstacleSim uFldObstacleSim = new UFldObstacleSim(shoreside, r);
+				for (EnvironmentalObstacle eo : mission.getObstacles()) {
+					uFldObstacleSim.addDetectionObject(eo);
+				}
+				shoreside.addProcess(uFldObstacleSim);
+			}
 			
 			// If there is a sonar sensor anywhere, then the shoreside needs to include a HazardSensor process
 			if (shoresideSonar) {

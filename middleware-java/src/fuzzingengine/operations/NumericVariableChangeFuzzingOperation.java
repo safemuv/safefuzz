@@ -52,5 +52,4 @@ public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
 			return event;
 		}
 	}
-	
 }

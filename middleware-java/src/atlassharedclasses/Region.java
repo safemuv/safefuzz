@@ -1,5 +1,7 @@
 package atlassharedclasses;
 
+import java.util.stream.Collectors;
+
 public class Region {
 	private Point point1;
 	private Point point2;
@@ -53,6 +55,14 @@ public class Region {
 	
 	public String toString() {
 		return super.toString() + point1.toString() + "-" + point2.toString();
+	}
+	
+	public String pointsListForObstacleFile() {
+		double x1 = left();
+		double x2 = right();
+		double y1 = bottom();
+		double y2 = top();
+		return x1 + "," + y2 + ":" + x1 + "," + y1 + ":" + x2 + "," + y1 + ":" + x2 + "," + y2;
 	}
 
 	public boolean contains(Point coord) {

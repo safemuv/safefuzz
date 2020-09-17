@@ -1,4 +1,4 @@
-package atlascarsgenerator;
+package middleware.atlascarsgenerator;
 
 public class ConversionFailed extends Exception {
 	private static final long serialVersionUID = 1L;

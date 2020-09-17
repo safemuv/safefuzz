@@ -1,14 +1,13 @@
 package test.moosmapping;
 
-import atlascarsgenerator.ConversionFailed;
-import atlascarsgenerator.MOOSCodeGen;
-
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
 import atlasdsl.loader.*;
-import carsmapping.CARSSimulation;
+import carsspecific.moos.codegen.MOOSCodeGen;
 import carsspecific.moos.moosmapping.*;
+import middleware.atlascarsgenerator.ConversionFailed;
+import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
 public class TestMapping {
 	public static void testCodeGeneration1(String code_dir) {

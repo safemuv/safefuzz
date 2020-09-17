@@ -1,8 +1,8 @@
-package atlascarsgenerator;
+package carsspecific.ros.codegen;
 
-import carsmapping.CARSSimulation;
-import carsspecific.moos.moosmapping.*;
-import carsspecific.ros.rosmapping.ROSSimulation;
+import carsspecific.ros.rosmapping.*;
+import middleware.atlascarsgenerator.*;
+import middleware.atlascarsgenerator.carsmapping.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 import atlassharedclasses.*;
+import fuzzingengine.FuzzingEngine;
 import middleware.core.*;
 
 public class PShareEventQueue extends ATLASEventQueue<PShareEvent> {
@@ -18,6 +19,7 @@ public class PShareEventQueue extends ATLASEventQueue<PShareEvent> {
 	private Mission mission;
 	private List<UDPConsumer> activeConsumers = new ArrayList<UDPConsumer>();
 	private UDPProducer reflectBack;
+	private FuzzingEngine fuzzingEngine;
 	
 	private final int UDP_RECEPTION_PORT = PortMappings.portNumberForPShareReception();
 	private final int UDP_TRANSMISSION_PORT = PortMappings.portBaseForPShareListen();
@@ -29,6 +31,7 @@ public class PShareEventQueue extends ATLASEventQueue<PShareEvent> {
 		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,]+)");
 		atlasOMapper = new ATLASObjectMapper();
 		reflectBack = new UDPProducer(IP_ADDRESS, UDP_TRANSMISSION_PORT);
+		fuzzingEngine = core.getFuzzingEngine();
 	}
 
 	public void run() {
@@ -45,8 +48,14 @@ public class PShareEventQueue extends ATLASEventQueue<PShareEvent> {
 		System.out.println("PShareEvent - " + event);
 		
 		try {
-			reflectBack.sendBack(event);
+			String key = event.getKey();
+			String value = event.getValue();
+			String newValue = fuzzingEngine.fuzzUDPEventKey(key, value);
+			PShareEvent modified = event.cloneWithNewValue(key, newValue);
+			reflectBack.sendBack(modified);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PShareEventDecodingError e) {
 			e.printStackTrace();
 		}
 	}

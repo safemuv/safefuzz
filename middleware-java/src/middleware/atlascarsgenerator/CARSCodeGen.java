@@ -1,6 +1,6 @@
-package atlascarsgenerator;
+package middleware.atlascarsgenerator;
 import atlasdsl.*;
-import carsmapping.CARSSimulation;
+import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
 public abstract class CARSCodeGen {
 	private Mission carsmission;

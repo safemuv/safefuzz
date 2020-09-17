@@ -150,4 +150,13 @@ public class Mission {
 	public void addObstacle(EnvironmentalObstacle eob) {
 		obstacles.put(eob.getLabel(), eob);
 	}
+	
+	public List<EnvironmentalObstacle> getObstacles() {
+	    List<EnvironmentalObstacle> res = obstacles.values().stream().collect(Collectors.toList());
+	    return res;
+	}
+	
+	public boolean hasObstacles() {
+		return obstacles.size() > 0;
+	}
 }

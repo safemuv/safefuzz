@@ -1,13 +1,12 @@
 package middleware.codegen;
 
-import atlascarsgenerator.ConversionFailed;
-import atlascarsgenerator.MOOSCodeGen;
-
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
 import atlasdsl.loader.*;
-import carsmapping.CARSSimulation;
+import carsspecific.moos.codegen.MOOSCodeGen;
+import middleware.atlascarsgenerator.ConversionFailed;
+import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
 public class GenMOOSCode {
 	public static void testCodeGenerationMOOS(String code_dir) throws DSLLoadFailed {
