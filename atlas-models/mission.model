@@ -44,98 +44,10 @@
       <params>COURSE</params>
     </subcomponents>
   </robots>
-  <robots xmi:id="_hNarkHP-Eeqc6cv9mBHIKw" name="gilda">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_FOiEMHQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_IfdpcHQREeqc6cv9mBHIKw" x="190.0" y="-150.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sF2koKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_4KLoQH2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_zWcekH2jEeqRdcV7Ed4ZKQ" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
-  <robots xmi:id="_hkfHwHP-Eeqc6cv9mBHIKw" name="henry">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_Jyhz0HQREeqc6cv9mBHIKw" name="startLocation">
-      <value xmi:id="_K6StIHQREeqc6cv9mBHIKw" x="-85.0" y="-45.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_tpyckKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="25.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_52jDcH2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_3bj50H2jEeqRdcV7Ed4ZKQ" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
-  <robots xmi:id="_Y_ymkKyYEeqTYY1ormOQgg" name="brian">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_Y_ymkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_Y_ymkqyYEeqTYY1ormOQgg" x="150.0" y="55.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymk6yYEeqTYY1ormOQgg" name="maxSpeed" value="0.75"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.75"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymlayYEeqTYY1ormOQgg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_Y_ymlqyYEeqTYY1ormOQgg" type="CAMERA">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_yml6yYEeqTYY1ormOQgg" name="imagingRange" value="3.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_Y_ymmKyYEeqTYY1ormOQgg" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_Y_ymmayYEeqTYY1ormOQgg" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_Y_ymmqyYEeqTYY1ormOQgg" maxSpeed="0.5">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
-  <robots xmi:id="_a3uYkKyYEeqTYY1ormOQgg" name="linda">
-    <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_a3uYkayYEeqTYY1ormOQgg" name="startLocation">
-      <value xmi:id="_a3uYkqyYEeqTYY1ormOQgg" x="80.0" y="55.0"/>
-    </componentProperties>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYk6yYEeqTYY1ormOQgg" name="maxSpeed" value="0.75"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYlKyYEeqTYY1ormOQgg" name="startSpeed" value="0.75"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYlayYEeqTYY1ormOQgg" name="maxDepth" value="20.0"/>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_a3uYlqyYEeqTYY1ormOQgg" type="CAMERA">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYl6yYEeqTYY1ormOQgg" name="imagingRange" value="3.0"/>
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_a3uYmKyYEeqTYY1ormOQgg" name="detectionProb" value="0.99"/>
-      <detections>MALICIOUS</detections>
-      <detections>NORMAL</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_a3uYmayYEeqTYY1ormOQgg" type="GPS_POSITION">
-      <detections>POS</detections>
-    </subcomponents>
-    <subcomponents xsi:type="atlas_1:MotionSource" xmi:id="_a3uYmqyYEeqTYY1ormOQgg" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
-  </robots>
   <computers xmi:id="_fXV6wHP-Eeqc6cv9mBHIKw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
     <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="4.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
@@ -146,7 +58,7 @@
   </goals>
   <goals xmi:id="_iULp4HP_Eeqc6cv9mBHIKw" name="primarySensorSweep">
     <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_kLrXAHP_Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_eJ7agHQAEeqc6cv9mBHIKw">
@@ -163,7 +75,7 @@
   </goals>
   <goals xmi:id="_D87cEIiOEeqQioZ_JAeWZg" name="findTestObjects">
     <requirements xmi:id="_LL8yQIi0EeqQioZ_JAeWZg" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:DiscoverObjects" xmi:id="_S0efIIiOEeqQioZ_JAeWZg" objects="_DXIVsHRpEeqNXdfjikxLMQ _EPx08HRpEeqNXdfjikxLMQ _D2ADAHRpEeqNXdfjikxLMQ" robotsNeededPerObject="2"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vcl50Ii0EeqQioZ_JAeWZg">
       <staticRegion xmi:id="_wBWMsIi0EeqQioZ_JAeWZg">
@@ -189,12 +101,6 @@
   <messages xmi:id="_GuJJkHfyEeq8sKdfSq6qug" name="DETECTION_FRANK" from="_gx4mIHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_GuJJkXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_J6OrEHfyEeq8sKdfSq6qug" name="DETECTION_GILDA" from="_hNarkHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
-    <fields xmi:id="_J6OrEXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
-  </messages>
-  <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY" from="_hkfHwHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
-    <fields xmi:id="_OIc_AXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
-  </messages>
   <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INIITAL_ELLA" from="_fXV6wHP-Eeqc6cv9mBHIKw" to="_gWMvsHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_Xw3_QJp3Eeqgh-vrPhaKXw" name="coords"/>
   </messages>
@@ -210,25 +116,9 @@
     <affectedTime xmi:id="_eW05sZRPEeq4FYD6a9PbTQ" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_eW05spRPEeq4FYD6a9PbTQ" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="speed" newValue="5.0"/>
   </faults>
-  <faults xmi:id="_ewiaMJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-GILDA">
-    <affectedTime xmi:id="_ewiaMZRPEeq4FYD6a9PbTQ" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_ewiaMpRPEeq4FYD6a9PbTQ" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="speed" newValue="5.0"/>
-  </faults>
-  <faults xmi:id="_e8JNQJRPEeq4FYD6a9PbTQ" name="SPEEDFAULT-HENRY">
-    <affectedTime xmi:id="_e8JNQZRPEeq4FYD6a9PbTQ" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_e8JNQpRPEeq4FYD6a9PbTQ" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="speed" newValue="5.0"/>
-  </faults>
   <faults xmi:id="_xyoc8JnzEeqfCc6JwfilfA" name="HEADINGFAULT-FRANK">
     <affectedTime xmi:id="_xyoc8ZnzEeqfCc6JwfilfA" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="1" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_xyoc8pnzEeqfCc6JwfilfA" affectedComponent="_txN7cH2jEeqRdcV7Ed4ZKQ" affectedProperty="heading" newValue="153.0"/>
-  </faults>
-  <faults xmi:id="_0Vbw4JnzEeqfCc6JwfilfA" name="HEADINGFAULT-GILDA">
-    <affectedTime xmi:id="_0Vbw4ZnzEeqfCc6JwfilfA" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="1" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_0Vbw4pnzEeqfCc6JwfilfA" affectedComponent="_zWcekH2jEeqRdcV7Ed4ZKQ" affectedProperty="heading" newValue="350.0"/>
-  </faults>
-  <faults xmi:id="_2HfkYJnzEeqfCc6JwfilfA" name="HEADINGFAULT-HENRY">
-    <affectedTime xmi:id="_2HfkYZnzEeqfCc6JwfilfA" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="1" faultProb="0.8"/>
-    <impact xsi:type="atlas_2:MotionFault" xmi:id="_2HfkYpnzEeqfCc6JwfilfA" affectedComponent="_3bj50H2jEeqRdcV7Ed4ZKQ" affectedProperty="heading" newValue="153.0"/>
   </faults>
   <faults xmi:id="_iWBq8Jp1Eeqgh-vrPhaKXw" name="COORDINATE-ELLA">
     <affectedTime xmi:id="_kETKoJp1Eeqgh-vrPhaKXw" latestFaultEnd="1200.0" maxFaultLength="300.0" maxFaultRepeatCount="1" faultProb="0.8"/>

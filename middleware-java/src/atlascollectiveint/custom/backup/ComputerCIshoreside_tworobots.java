@@ -1,4 +1,4 @@
-package atlascollectiveint.custom;
+package atlascollectiveint.custom.backup;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
+class ComputerCIshoreside_tworobots {
 	private static List<String> sweepRobots = new ArrayList<String>();
 	private static List<String> cameraRobots = new ArrayList<String>();
 	private static List<String> allRobots = new ArrayList<String>();
@@ -113,8 +113,8 @@ class ComputerCIshoreside {
 		HashMap<String, Region> assignments = new HashMap<String, Region>();
 
 		int count = robots.size();
-		int hcount = count / 2;
-		int vcount = VERTICAL_ROWS_STATIC_SPLIT;
+		int hcount = (int) Math.floor(count / 2);
+		int vcount = (int) Math.min(VERTICAL_ROWS_STATIC_SPLIT, count);
 		double subwidth = fullRegion.width() / hcount;
 		double subheight = fullRegion.height() / vcount;
 		for (int i = 0; i < count; i++) {
