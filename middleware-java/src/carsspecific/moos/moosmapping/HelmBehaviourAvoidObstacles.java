@@ -2,7 +2,7 @@ package carsspecific.moos.moosmapping;
 
 public class HelmBehaviourAvoidObstacles extends MOOSBehaviour {
 	public HelmBehaviourAvoidObstacles(MOOSProcess parent, String vehicleName) {
-		super("BHV_AvoidCollision", parent);
+		super("BHV_AvoidObstacle", parent);
 		setProperty("name", "avd_obstacles_");
 		setProperty("pwt", 500);
 		setProperty("condition", "DEPLOY = true");
