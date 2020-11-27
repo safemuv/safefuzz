@@ -25,7 +25,14 @@ public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
 	public static NumericVariableChangeFuzzingOperation Random(double lower, double upper) {
 		Random r = new Random();
 		double diff = upper - lower;
-		NumericVariableChangeFuzzingOperation op = new NumericVariableChangeFuzzingOperation(() -> lower + (diff * r.nextDouble()));
+		NumericVariableChangeFuzzingOperation op = new NumericVariableChangeFuzzingOperation(input -> lower + (diff * r.nextDouble()));
+		return op;
+	}
+	
+	public static NumericVariableChangeFuzzingOperation RandomOffset(double lower, double upper) {
+		Random r = new Random();
+		double diff = upper - lower;
+		NumericVariableChangeFuzzingOperation op = new NumericVariableChangeFuzzingOperation(input -> input + (lower + (diff * r.nextDouble())));
 		return op;
 	}
 
@@ -42,9 +49,15 @@ public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
 			
 			// Need to be able to fuzz parts of a structural message
 			String change = fixedChange;
-			if (generateDouble.isPresent()) {
-				DoubleLambda dl = generateDouble.get();
-				change = Double.toString(dl.op());
+			
+			try {
+				if (generateDouble.isPresent()) {
+					DoubleLambda dl = generateDouble.get();
+					double d = Double.valueOf(((CARSVariableUpdate)event).getValue());
+					change = Double.toString(dl.op(d));
+				}
+			} catch (NumberFormatException e) {
+				return (E)newUpdate;
 			}
 			newUpdate.setValue(change);
 			return (E)newUpdate;

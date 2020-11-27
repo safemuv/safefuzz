@@ -14,14 +14,14 @@ class FuzzingConfig {
 	private HashMap<String, FuzzingConfigRecord> Lookup = new LinkedHashMap<String, FuzzingConfigRecord>();
 	private List<FuzzingConfigRecord> records = new ArrayList<FuzzingConfigRecord>();
 
-	private class FuzzingConfigRecord {
+	public class FuzzingConfigRecord {
 		String key;
 		Optional<String> reflectionKey;
 		Optional<String> component;
 		FuzzingOperation op;
-		String subfield;
+		Optional<String> subfield;
 
-		public FuzzingConfigRecord(String key, Optional<String> reflectionKey, Optional<String> component, String subfield,
+		public FuzzingConfigRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> subfield,
 				FuzzingOperation op) {
 			this.key = key;
 			this.reflectionKey = reflectionKey;

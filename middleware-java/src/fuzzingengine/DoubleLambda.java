@@ -1,5 +1,5 @@
 package fuzzingengine;
 
 public interface DoubleLambda {
-	double op();
+	double op(double input);
 }

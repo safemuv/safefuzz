@@ -168,3 +168,12 @@ void ATLASDBInterface::fromMQHook(CMOOSMsg &msg, double endTime) {
     string v = msg.GetAsString();
     Notify(k,v);
 }
+
+void ATLASDBInterface::fromMQHook(string &k, string &v, double endTime) {
+  cout << "MOOSMsg received over ActiveMQ - publishing to MOOSDB";
+  if (isNumber(v)) {
+    Notify(k,atof(v.c_str()));
+  } else {
+    Notify(k,v);
+  }
+}

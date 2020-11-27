@@ -1,13 +1,7 @@
 package fuzzingengine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import carsspecific.moos.carsqueue.PShareEvent;
+import fuzzingengine.FuzzingConfig.FuzzingConfigRecord;
 import fuzzingengine.operations.FuzzingOperation;
 import middleware.core.*;
 import middleware.logging.ATLASLog;
@@ -27,6 +21,12 @@ public class FuzzingEngine {
 	public void setFuzzSelectionType(FuzzingSelectionType fuzzSelType) {
 		this.fuzzSelType = fuzzSelType;
 	}
+	
+	public void addFuzzingOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, FuzzingOperation op) {
+		FuzzingConfigRecord fr = confs.new FuzzingConfigRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
+		confs.addRecord(fr);
+	}
+	// TODO: add something with subfields
 
 	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
 		ATLASLog.logFuzzing("shouldFuzzCARSEvent called - " + event);

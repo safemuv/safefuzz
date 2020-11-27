@@ -16,8 +16,7 @@ import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
 
 import fuzzingengine.*;
-import fuzzingengine.operations.FuzzingOperation;
-import fuzzingengine.operations.NumericVariableChangeFuzzingOperation;
+import fuzzingengine.operations.*;
 
 // This code will be combined with the simulator-specific code
 // during code generation
@@ -48,10 +47,7 @@ public abstract class ATLASCore {
 	
 	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
 	
-	private FaultGenerator faultGen;
-	
-	private Random fuzzGenRandom = new Random();
-	
+	private FaultGenerator faultGen;	
 	private double time = 0.0;
 	
 	public ATLASCore(Mission mission) {
@@ -61,17 +57,17 @@ public abstract class ATLASCore {
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
 
-		// TODO: test code for inserting fuzzing - do a proper fuzzing launcher here
-		//fuzzEngine = new NumericVariableChangeFuzzingEngine(() -> 50.0 * fuzzGenRandom.nextDouble());
+		// TODO: test code for inserting fuzzing - define the fuzzing operations in the model
 		fuzzEngine = new FuzzingEngine();
-		fuzzEngine.setFuzzSelectionType(FuzzingSelectionType.LOCAL_BY_SPECIFIC_SOURCE);
-		//FuzzingOperation op = (FuzzingOperation)new NumericVariableChangeFuzzingOperation(() -> 50.0 * fuzzGenRandom.nextDouble());
-		//fuzzEngine.addFuzzKey("DB_UPTIME", op);
+		fuzzEngine.setFuzzSelectionType(FuzzingSelectionType.LOCAL_BY_SPECIFIC_KEYS);
 		
-		//fuzzEngine.addFuzzKey("DB_UPTIME", "DB_UPTIME_PRI");
+		FuzzingOperation nullOp = new NullFuzzingOperation();
+		FuzzingOperation thrustFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-20.0, 20.0);
+		FuzzingOperation rudderFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-50.0, 50.0);
 		
-		//fuzzEngine = new NullFuzzingEngine();
-		//fuzzEngine.addFuzzKey("DB_UPTIME");
+		fuzzEngine.addFuzzingOperation("DESIRED_THRUST", Optional.of("DEZIRED_THRUST"), Optional.of("uSimMarine"), thrustFuzz);
+		fuzzEngine.addFuzzingOperation("DESIRED_RUDDER", Optional.of("DEZIRED_RUDDER"), Optional.of("uSimMarine"), rudderFuzz);
+		fuzzEngine.addFuzzingOperation("DESIRED_ELEVATOR", Optional.of("DEZIRED_ELEVATOR"), Optional.of("uSimMarine"), nullOp);
 	}
 	
 	public CARSTranslations getCARSTranslationOutput() {

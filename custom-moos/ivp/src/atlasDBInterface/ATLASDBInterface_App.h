@@ -17,6 +17,7 @@ public:
   bool OnConnectToServer();
   bool OnStartUp();
   void fromMQHook(CMOOSMsg &msg, double endTime);
+  void fromMQHook(string &key, string &val, double endTime);
 
 protected:
   ATLASLinkProducer *prod;

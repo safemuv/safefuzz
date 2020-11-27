@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "MBUtils.h"
 #include "ATLASLinkConsumer.h"
 
 using namespace activemq::core;
@@ -106,10 +107,9 @@ void ATLASLinkConsumer::onMessage(const Message *message) {
         string key = matches[2];
         string val = matches[3];
         cout << "From ActiveMQ" << key << endl;
-        CMOOSMsg *moosemsg = new CMOOSMsg(MOOS_STRING, key, val);
         if (atlas_int)
-                atlas_int->fromMQHook(*moosemsg, endTime);
-        delete moosemsg;
+	  atlas_int->fromMQHook(key, val, endTime);
+	//        delete moosemsg;
       } else {
         cout << "No match" << endl;
       }
