@@ -1,0 +1,14 @@
+[% out.setContentType("Java"); %]
+package middleware.codegen;
+
+public class GeneratedSimulatorInfo {
+	public void getSimInfo() {
+[% for (s in M!Simulator.allInstances()) { %]
+	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
+	[% if (s.name == "MOOS-IVP") {} %]
+		[% for (vspec in s.vars) { %]
+			System.out.println("[%= vspec.component %] - [%= vspec.variable %]");
+		[% } %]
+	[% } %]
+	}
+}

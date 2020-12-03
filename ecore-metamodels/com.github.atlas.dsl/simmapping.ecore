@@ -2,10 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Simmapping" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping"
     nsPrefix="simmapping">
-  <eClassifiers xsi:type="ecore:EClass" name="Simulator">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseDirectory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VariableDirection">
     <eLiterals name="INBOUND" value="1"/>
     <eLiterals name="OUTBOUND" value="2"/>
@@ -22,6 +18,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nature" eType="#//VariableNature"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Simulator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseDirectory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TopologySpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"
         containment="true"/>
@@ -32,6 +34,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableMappings">
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

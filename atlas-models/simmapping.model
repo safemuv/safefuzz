@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_5HqHEDTxEeuERoJWzNgdGw">
-  <vars xmi:id="_56FCgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_THRUST"/>
-  <vars xmi:id="_98GtgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_RUDDER"/>
+<simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping ../com.github.atlas.dsl/simmapping.ecore" xmi:id="_5HqHEDTxEeuERoJWzNgdGw">
+  <sims xmi:id="_Aa_DYDT1EeuERoJWzNgdGw" name="MOOS-IVP">
+    <vars xmi:id="_56FCgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_THRUST"/>
+    <vars xmi:id="_98GtgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_RUDDER"/>
+  </sims>
 </simmapping:VariableMappings>
