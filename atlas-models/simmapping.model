@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_5HqHEDTxEeuERoJWzNgdGw">
+  <vars xmi:id="_56FCgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_THRUST"/>
+  <vars xmi:id="_98GtgDTxEeuERoJWzNgdGw" component="uSimMarine" variable="DESIRED_RUDDER"/>
+</simmapping:VariableMappings>
