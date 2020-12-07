@@ -1,11 +1,14 @@
 package carsspecific.moos.codegen;
 
 import carsspecific.moos.moosmapping.*;
+import fuzzingengine.FuzzingEngine;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import atlassharedclasses.Point;
 import atlassharedclasses.Region;
 import activemq.portmapping.PortMappings;
@@ -15,8 +18,8 @@ import atlasdsl.*;
 
 public class MOOSCodeGen extends CARSCodeGen {
 	// TODO: how to specify the sensor behaviour
-	public MOOSCodeGen(Mission m) {
-		super(m);
+	public MOOSCodeGen(Mission m, Optional<FuzzingEngine> fe_o) {
+		super(m, fe_o);
 	}
 
 	// This performs the necessary processing to add sensors to the robots
@@ -61,7 +64,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		c.addProcess(dbwatch);
 	}
 
-	public CARSSimulation convertDSL(Mission mission) throws ConversionFailed {
+	public CARSSimulation convertDSL() throws ConversionFailed {
 		// Names of variables to be shared via pShare
 		List<String> moosSharedVars = new ArrayList<String>();
 		List<String> middlewareVars = varsForMissionGoals(mission);

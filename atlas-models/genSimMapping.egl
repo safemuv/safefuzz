@@ -1,14 +1,37 @@
 [% out.setContentType("Java"); %]
-package middleware.codegen;
+package fuzzingengine.spec;
+import fuzzingengine.*;
 
-public class GeneratedSimulatorInfo {
-	public void getSimInfo() {
+[* Load this information when loading the Mission
+The info has to be loaded and present at the start during code generation
+The FuzzingEngine object is loaded when the middleware core is created
+Then the FuzzingEngine can be asked to perform the corresponding code generation operations based upon its code
+
+	// TODO: need to generate the following
+	public void setFuzzingContent(FuzzingEngine fuzzEngine) {
+	FuzzingOperation nullOp = new NullFuzzingOperation();
+	FuzzingOperation thrustFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-20.0, 20.0);
+	FuzzingOperation rudderFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-50.0, 50.0);
+	
+	fuzzEngine.addFuzzingOperation("DESIRED_THRUST", Optional.of("DEZIRED_THRUST"), Optional.of("uSimMarine"), thrustFuzz);
+	fuzzEngine.addFuzzingOperation("DESIRED_RUDDER", Optional.of("DEZIRED_RUDDER"), Optional.of("uSimMarine"), rudderFuzz);
+	fuzzEngine.addFuzzingOperation("DESIRED_ELEVATOR", Optional.of("DEZIRED_ELEVATOR"), Optional.of("uSimMarine"), nullOp);
+	} 
+*]
+
+public class GeneratedFuzzingSpec {
+	public static FuzzingEngine createFuzzingEngine() {
+	FuzzingEngine fe = new FuzzingEngine();
 [% for (s in M!Simulator.allInstances()) { %]
 	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
 	[% if (s.name == "MOOS-IVP") {} %]
 		[% for (vspec in s.vars) { %]
-			System.out.println("[%= vspec.component %] - [%= vspec.variable %]");
+[*			[% if (vspec.dir == M!VariableDirection.INBOUND) %] *]
+				System.out.println("[%= vspec.component %] - [%= vspec.variable %]");
+				System.out.println("");
 		[% } %]
 	[% } %]
+	
+	return fe;
 	}
 }

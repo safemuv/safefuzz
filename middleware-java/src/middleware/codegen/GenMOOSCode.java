@@ -1,10 +1,14 @@
 package middleware.codegen;
 
+import java.util.Optional;
+
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
 import atlasdsl.loader.*;
 import carsspecific.moos.codegen.MOOSCodeGen;
+import fuzzingengine.FuzzingEngine;
+import fuzzingengine.spec.GeneratedFuzzingSpec;
 import middleware.atlascarsgenerator.ConversionFailed;
 import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
@@ -13,20 +17,20 @@ public class GenMOOSCode {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
 		mission = dslloader.loadMission();
-
 		
-		MOOSCodeGen gen = new MOOSCodeGen(mission);
+		FuzzingEngine fe = GeneratedFuzzingSpec.createFuzzingEngine();
+		MOOSCodeGen gen = new MOOSCodeGen(mission, Optional.of(fe));
+		
 		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);		
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
-			CARSSimulation moossim = gen.convertDSL(mission);
+			CARSSimulation moossim = gen.convertDSL();
 			System.out.println("DSL conversion completed");
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");
 			javaCI.generateCollectiveIntFiles("src/atlascollectiveint/custom", CollectiveIntGenTypes.ALL_COMPUTERS);
 			
 		} catch (ConversionFailed cf) {
-			
 			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
 		}
 	}

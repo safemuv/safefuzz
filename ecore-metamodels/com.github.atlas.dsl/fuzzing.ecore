@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Fuzzing" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping"
+    nsPrefix="fuzzing">
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingOperation" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubfieldInfo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableFuzzing" eSuperTypes="#//FuzzingType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inVariableName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectVariableName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subfield" eType="#//SubfieldInfo"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentFuzzing" eSuperTypes="#//FuzzingType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingInfo" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableFuzzing" eSuperTypes="#//FuzzingOperation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingInfoRecord">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ftype" upperBound="-1"
+        eType="#//FuzzingType" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="#//FuzzingOperation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingSpec">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="records" upperBound="-1"
+        eType="#//FuzzingInfoRecord" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

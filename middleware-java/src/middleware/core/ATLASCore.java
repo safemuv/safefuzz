@@ -17,6 +17,7 @@ import middleware.missionmonitor.*;
 
 import fuzzingengine.*;
 import fuzzingengine.operations.*;
+import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 // This code will be combined with the simulator-specific code
 // during code generation
@@ -26,10 +27,6 @@ public abstract class ATLASCore {
 	
 	// TODO: read this from the interface
 	private double timeLimit = 1200.0;
-	
-	//protected ATLASEventQueue fromFaultGen;
-	// for now the fault generator is installed in the middleware process itself,
-	// not communicating over ActiveMQ with it
 	
 	protected ActiveMQProducer outputToCI;
 	private final int CI_QUEUE_CAPACITY = 100;
@@ -56,18 +53,7 @@ public abstract class ATLASCore {
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
-
-		// TODO: test code for inserting fuzzing - define the fuzzing operations in the model
-		fuzzEngine = new FuzzingEngine();
-		fuzzEngine.setFuzzSelectionType(FuzzingSelectionType.LOCAL_BY_SPECIFIC_KEYS);
-		
-		FuzzingOperation nullOp = new NullFuzzingOperation();
-		FuzzingOperation thrustFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-20.0, 20.0);
-		FuzzingOperation rudderFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-50.0, 50.0);
-		
-		fuzzEngine.addFuzzingOperation("DESIRED_THRUST", Optional.of("DEZIRED_THRUST"), Optional.of("uSimMarine"), thrustFuzz);
-		fuzzEngine.addFuzzingOperation("DESIRED_RUDDER", Optional.of("DEZIRED_RUDDER"), Optional.of("uSimMarine"), rudderFuzz);
-		fuzzEngine.addFuzzingOperation("DESIRED_ELEVATOR", Optional.of("DEZIRED_ELEVATOR"), Optional.of("uSimMarine"), nullOp);
+		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine();
 	}
 	
 	public CARSTranslations getCARSTranslationOutput() {

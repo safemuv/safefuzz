@@ -1,5 +1,7 @@
 package test.moosmapping;
 
+import java.util.Optional;
+
 import atlascollectiveintgenerator.*;
 
 import atlasdsl.*;
@@ -32,12 +34,12 @@ public class TestMapping {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission = dslloader.loadMission();
 		
-		MOOSCodeGen gen = new MOOSCodeGen(mission);
+		MOOSCodeGen gen = new MOOSCodeGen(mission, Optional.empty());
 		CollectiveIntGen javaCI = new JavaCollectiveIntGen(mission);
 		
 		System.out.println("Converting DSL to MOOS representation...");
 		try {
-			CARSSimulation moossim = gen.convertDSL(mission);
+			CARSSimulation moossim = gen.convertDSL();
 			System.out.println("DSL conversion completed");
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");

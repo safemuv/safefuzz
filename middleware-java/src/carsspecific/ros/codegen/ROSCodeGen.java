@@ -1,19 +1,20 @@
 package carsspecific.ros.codegen;
 
 import carsspecific.ros.rosmapping.*;
+import fuzzingengine.FuzzingEngine;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import atlasdsl.*;
-import atlassharedclasses.Point;
 
 public class ROSCodeGen extends CARSCodeGen {
 	// TODO: how to specify the sensor behaviour
-	public ROSCodeGen(Mission m) {
-		super(m);
+	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o) {
+		super(m, fe_o);
 	}
 	
 	// This performs the necessary processing to add sensors to the robots
@@ -59,7 +60,7 @@ public class ROSCodeGen extends CARSCodeGen {
 		c.addProcess(dbwatch);
 	}
 	
-	public CARSSimulation convertDSL(Mission mission) throws ConversionFailed {
+	public CARSSimulation convertDSL() throws ConversionFailed {
 		CARSSimulation rossim = new ROSSimulation();
 		return rossim;	
 	}}
