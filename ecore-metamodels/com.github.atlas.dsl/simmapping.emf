@@ -8,17 +8,48 @@ enum VariableDirection {
 	OUTBOUND = 2;
 }
 
-enum VariableNature {
-	BINARY = 1;
-	CONFIG = 2;
+enum BasicVariableType {
+	CUSTOM = 1;
+	STRING = 2;
+	DOUBLE = 3;
 }
+
+class SimpleVariableType {
+	attr BasicVariableType vt;
+}
+
+class ConstantType {
+	val String constant;
+}
+
+class VariableType {
+	val VariableType[*] subtypes;
+}
+
+abstract class FuzzingNature {
+	
+}
+
+class BinaryFuzzing extends FuzzingNature {
+	// Extra BBE parameters?
+	attr String componentFullSystemPath;
+} 
+
+class CustomConfigurationFuzzing extends FuzzingNature {
+	// Specify how to perform the fuzzing
+	// Class name in the custom model
+}
+
+// How to specify the information
 
 class VariableSpecification {
 	val Simulator[1] sim;
 	attr String component;
 	attr String variable;
+	attr String reflectionName; // This may be optional
+	val VariableType vtype;
 	attr VariableDirection dir;
- 	attr VariableNature nature;
+ 	val FuzzingNature nature;
 }
 
 class Simulator {

@@ -6,17 +6,39 @@
     <eLiterals name="INBOUND" value="1"/>
     <eLiterals name="OUTBOUND" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="VariableNature">
-    <eLiterals name="BINARY" value="1"/>
-    <eLiterals name="CONFIG" value="2"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="BasicVariableType">
+    <eLiterals name="CUSTOM" value="1"/>
+    <eLiterals name="STRING" value="2"/>
+    <eLiterals name="DOUBLE" value="3"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
+        eType="#//VariableType" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingNature" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentFullSystemPath"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature"/>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nature" eType="#//VariableNature"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nature" eType="#//FuzzingNature"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Simulator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

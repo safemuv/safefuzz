@@ -13,14 +13,13 @@ Then the FuzzingEngine can be asked to perform the corresponding code generation
 	FuzzingOperation thrustFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-20.0, 20.0);
 	FuzzingOperation rudderFuzz = NumericVariableChangeFuzzingOperation.RandomOffset(-50.0, 50.0);
 	
-	fuzzEngine.addFuzzingOperation("DESIRED_THRUST", Optional.of("DEZIRED_THRUST"), Optional.of("uSimMarine"), thrustFuzz);
-	fuzzEngine.addFuzzingOperation("DESIRED_RUDDER", Optional.of("DEZIRED_RUDDER"), Optional.of("uSimMarine"), rudderFuzz);
-	fuzzEngine.addFuzzingOperation("DESIRED_ELEVATOR", Optional.of("DEZIRED_ELEVATOR"), Optional.of("uSimMarine"), nullOp);
+	fuzzEngine.addFuzzingOperation("DESIRED_THRUST", Optional.of("DEZIRED_THRUST"), Optional.of("uSimMarine"), thrustFuzz, BINARY);
+	fuzzEngine.addFuzzingOperation("DESIRED_RUDDER", Optional.of("DEZIRED_RUDDER"), Optional.of("uSimMarine"), rudderFuzz, BINARY);
+	fuzzEngine.addFuzzingOperation("DESIRED_ELEVATOR", Optional.of("DEZIRED_ELEVATOR"), Optional.of("uSimMarine"), nullOp, BINARY);
 	}
 	
-Access the information form the 
-	
-	
+The FuzzingEngine has to contain the information on how to encode the binary information
+FuzzingEngine - get binary specifications
 	
 *]
 
@@ -28,7 +27,7 @@ public class GeneratedFuzzingSpec {
 	public static FuzzingEngine createFuzzingEngine() {
 	FuzzingEngine fe = new FuzzingEngine();
 	
-[% for (s in M!Simulator.allInstances()) { %]
+[% for (s in SimMapping!Simulator.allInstances()) { %]
 	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
 	[% if (s.name == "MOOS-IVP") {} %]
 		[% for (vspec in s.vars) { %]

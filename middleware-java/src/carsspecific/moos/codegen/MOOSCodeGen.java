@@ -4,9 +4,11 @@ import carsspecific.moos.moosmapping.*;
 import fuzzingengine.FuzzingEngine;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
+import utils.binarymodify.BinaryModify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import atlassharedclasses.Point;
@@ -203,13 +205,19 @@ public class MOOSCodeGen extends CARSCodeGen {
 			}
 
 			setupActuators(mission, moossim, moosSharedVars);
-
+			
 			for (MOOSCommunity c : moossim.getAllCommunities()) {
 				c.registerSharedVars(moosSharedVars);
 
 				// ATLASDBWatch process must be created in the each community
 				// to watch the given variables for the middleware
 				createATLASLink(c, middlewareVars, atlasPort);
+			}
+			
+			// If there is a fuzzing engine
+			if (fe_o.isPresent()) {
+				FuzzingEngine fe = fe_o.get();
+				fuzzingEngineChanges(fe, moossim);
 			}
 
 			// This returns a MOOS community without any faults
@@ -220,6 +228,34 @@ public class MOOSCodeGen extends CARSCodeGen {
 					+ mp.getPropertyName() + "...");
 			mp.printStackTrace();
 			throw new ConversionFailed(ConversionFailedReason.MISSING_PROPERTY);
+		}
+	}
+
+	// TODO: may pull this out into another class - if there is something common from different simulators?
+	private void fuzzingEngineChanges(FuzzingEngine fe, MOOSSimulation moossim) {
+		// Specifies what is added to fuzzing processes
+		final String PROCESSNAME_FUZZED_APPEND = "_f";
+		
+		// Get all the selected components
+		List<String> componentNames = fe.getComponents();
+		// Get the binary for the component
+		for (String component : componentNames) {
+			String componentFullPath = fe.getSimMapping().getFullPath(component);
+				
+			// Get the original/reflected variable name mappings
+			Map<String,String> varChanges = fe.getSimMapping().getBinaryChanges(component);		
+			String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
+			BinaryModify.BBEModifyNewFile(componentFullPath, componentFullPath_modified, varChanges);
+			
+			for (Map.Entry<String,String> me : varChanges.entrySet()) {
+				String varSource = me.getKey();
+				// Add all the source variables to ATLASDBInterface to access
+				// TODO: if we only want one robot to be fuzzed, ATLASDBWatch must only have this...
+				for (MOOSCommunity c : moossim.getAllCommunities()) {
+					ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
+					dbInt.addWatchVariable(varSource);
+				}
+			}	
 		}
 	}
 }

@@ -1,9 +1,11 @@
-@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping", prefix="fuzzing")
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing", prefix="fuzzing")
 package Fuzzing;
 
 //import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing";
 
 abstract class FuzzingType {
+
+
 
 }
 
@@ -17,8 +19,7 @@ class SubfieldInfo {
 
 class VariableFuzzing extends FuzzingType {
 	attr String inVariableName;
-	attr String reflectVariableName;
-	val SubfieldInfo[0..1] subfield;
+
 }
 
 class ComponentFuzzing extends FuzzingType {
@@ -26,7 +27,6 @@ class ComponentFuzzing extends FuzzingType {
 }
 
 // TODO: specification for message fuzzing here
-
 abstract class FuzzingInfo {
 	
 }

@@ -1,5 +1,7 @@
 package fuzzingengine;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import fuzzingengine.FuzzingConfig.FuzzingConfigRecord;
 import fuzzingengine.operations.FuzzingOperation;
@@ -8,6 +10,8 @@ import middleware.logging.ATLASLog;
 
 public class FuzzingEngine {
 	FuzzingConfig confs = new FuzzingConfig();
+	FuzzingSimMapping simmapping = new FuzzingSimMapping();
+	
 	private FuzzingSelectionType fuzzSelType;
 
 	public FuzzingEngine() {
@@ -26,6 +30,7 @@ public class FuzzingEngine {
 		FuzzingConfigRecord fr = confs.new FuzzingConfigRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
 		confs.addRecord(fr);
 	}
+
 	// TODO: add something with subfields
 
 	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
@@ -75,4 +80,16 @@ public class FuzzingEngine {
 		}
 		return val;
 	}
+	
+	public FuzzingSimMapping getSimMapping() {
+		return simmapping;
+	}
+
+	public List<String> getComponents() {
+		// TODO: Return all selected components, either all components or those with a selected key, 
+		// depending on mode
+		return new ArrayList<String>();
+	}
+	
+	// TODO: Add method to get the fuzzing mode
 }
