@@ -1,43 +1,45 @@
 @namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing", prefix="fuzzing")
 package Fuzzing;
 
-//import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
 
-abstract class FuzzingType {
-
-
-
+abstract class FuzzingEntitySelection {
 }
 
 abstract class FuzzingOperation {
-	
 }
 
-class SubfieldInfo {
-	attr String sep;
+class VariableFuzzing extends FuzzingEntitySelection {
+	// This is a reference to the variables in the sim mapping layer
+	val Simmapping.VariableSpecification varToFuzz;
+	// Need to specify a specific variable if there is 
 }
 
-class VariableFuzzing extends FuzzingType {
-	attr String inVariableName;
-
-}
-
-class ComponentFuzzing extends FuzzingType {
+class ComponentFuzzing extends FuzzingEntitySelection {
 	attr String component;
 }
 
-// TODO: specification for message fuzzing here
-abstract class FuzzingInfo {
-	
+class MessageFuzzing extends FuzzingEntitySelection {
+	// Message references
+	val Atlas.Message[0..1] msg;
 }
 
-class SimpleVariableFuzzing extends FuzzingOperation {
-	
+class RelativeDoubleChange extends FuzzingOperation {
+	attr double maxLimit;
+	attr double minLimit;
+	attr double maxChange;
+}
+
+class ConstantDoubleChange extends FuzzingOperation {
+	attr double newValue;
 }
 
 class FuzzingInfoRecord {
-	val FuzzingType[*] ftype;
+	val FuzzingEntitySelection[*] ftype;
 	val FuzzingOperation[1] operation;
+	val Atlas.Robot[0..*] relevantVehicles;
 }
 
 class FuzzingSpec {

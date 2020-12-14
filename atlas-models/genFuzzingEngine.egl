@@ -1,6 +1,9 @@
 [% out.setContentType("Java"); %]
 package fuzzingengine.spec;
+
+import java.util.Optional;
 import fuzzingengine.*;
+import fuzzingengine.operations.*;
 
 [* Load this information when loading the Mission
 The info has to be loaded and present at the start during code generation

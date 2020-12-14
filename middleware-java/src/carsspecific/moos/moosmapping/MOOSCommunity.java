@@ -144,6 +144,7 @@ public class MOOSCommunity {
 	}
 	
 	public MOOSProcess getProcess(String name) {
+		
 		return processes.get(name);
 	}
 }

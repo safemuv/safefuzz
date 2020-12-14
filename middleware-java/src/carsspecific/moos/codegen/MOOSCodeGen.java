@@ -5,11 +5,14 @@ import fuzzingengine.FuzzingEngine;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
 import utils.binarymodify.BinaryModify;
+import utils.binarymodify.IncorrectStringLength;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import atlassharedclasses.Point;
 import atlassharedclasses.Region;
@@ -214,7 +217,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				createATLASLink(c, middlewareVars, atlasPort);
 			}
 			
-			// If there is a fuzzing engine
+			// If there is a fuzzing engine, perform the fuzzing conversion
 			if (fe_o.isPresent()) {
 				FuzzingEngine fe = fe_o.get();
 				fuzzingEngineChanges(fe, moossim);
@@ -233,19 +236,23 @@ public class MOOSCodeGen extends CARSCodeGen {
 
 	// TODO: may pull this out into another class - if there is something common from different simulators?
 	private void fuzzingEngineChanges(FuzzingEngine fe, MOOSSimulation moossim) {
-		// Specifies what is added to fuzzing processes
+		// Specifies what is added to fuzzing processe name
 		final String PROCESSNAME_FUZZED_APPEND = "_f";
 		
 		// Get all the selected components
-		List<String> componentNames = fe.getComponents();
+		Set<String> componentNames = fe.getComponents();
 		// Get the binary for the component
 		for (String component : componentNames) {
 			String componentFullPath = fe.getSimMapping().getFullPath(component);
 				
 			// Get the original/reflected variable name mappings
-			Map<String,String> varChanges = fe.getSimMapping().getBinaryChanges(component);		
+			Map<String,String> varChanges = fe.getSimMapping().getBinaryChanges(component, fe.getVariables());		
 			String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
-			BinaryModify.BBEModifyNewFile(componentFullPath, componentFullPath_modified, varChanges);
+			try {
+				BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
+			} catch (IncorrectStringLength | IOException | InterruptedException e) {
+				e.printStackTrace();
+			}
 			
 			for (Map.Entry<String,String> me : varChanges.entrySet()) {
 				String varSource = me.getKey();
@@ -254,6 +261,10 @@ public class MOOSCodeGen extends CARSCodeGen {
 				for (MOOSCommunity c : moossim.getAllCommunities()) {
 					ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
 					dbInt.addWatchVariable(varSource);
+					MOOSProcess moosProcess = c.getProcess(component);
+					if (moosProcess != null) {
+						moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
+					}
 				}
 			}	
 		}

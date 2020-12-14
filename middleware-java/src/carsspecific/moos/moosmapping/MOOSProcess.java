@@ -68,4 +68,9 @@ public class MOOSProcess extends MOOSElement {
 	public void addBehaviour(MOOSBehaviour b) {
 		behaviours.add(b);
 	}
+	
+	public void setProcessName(String newName) {
+		System.out.println("Renaming MOOS process " + processName + " to " + newName);
+		this.processName = newName;
+	}
 }

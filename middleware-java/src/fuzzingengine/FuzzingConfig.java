@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import fuzzingengine.operations.FuzzingOperation;
 
 class FuzzingConfig {
@@ -78,6 +81,10 @@ class FuzzingConfig {
 		if (fr != null) {
 			return fr.getReflectionKey();
 		} else return Optional.empty();
+	}
+	
+	public Set<String> getComponents() {
+		return records.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
 	}
 
 }

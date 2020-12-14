@@ -1,8 +1,11 @@
 package fuzzingengine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import fuzzingengine.FuzzingConfig.FuzzingConfigRecord;
 import fuzzingengine.operations.FuzzingOperation;
 import middleware.core.*;
@@ -85,11 +88,13 @@ public class FuzzingEngine {
 		return simmapping;
 	}
 
-	public List<String> getComponents() {
+	public Set<String> getComponents() {
 		// TODO: Return all selected components, either all components or those with a selected key, 
 		// depending on mode
-		return new ArrayList<String>();
+		return confs.getComponents();
 	}
 	
-	// TODO: Add method to get the fuzzing mode
+	public HashMap<String,String> getVariables() {
+		return new HashMap<String,String>();
+	}
 }
