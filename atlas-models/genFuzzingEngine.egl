@@ -29,17 +29,21 @@ FuzzingEngine - get binary specifications
 public class GeneratedFuzzingSpec {
 	public static FuzzingEngine createFuzzingEngine() {
 	FuzzingEngine fe = new FuzzingEngine();
+	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 [% for (s in SimMapping!Simulator.allInstances()) { %]
+	
 	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
 	[% if (s.name == "MOOS-IVP") {} %]
+		[% var baseDir = s.baseDirectory; %]
 		[% for (vspec in s.vars) { %]
-[*			[% if (vspec.dir == M!VariableDirection.INBOUND) %] *]
-				System.out.println("[%= vspec.component %] - [%= vspec.variable %]");
-				System.out.println("");
+	simMapping.addRecord("[%= vspec.component %]", 
+	"[%= vspec.variable %]", "[%= vspec.reflectionName %]", FuzzingSimMapping.VariableDirection.[%= vspec.dir %],
+	"[%= baseDir %]/[%= vspec.componentPath %]");
 		[% } %]
 	[% } %]
 	
+	fe.setSimMapping(simMapping); 
 	return fe;
 	}
 }

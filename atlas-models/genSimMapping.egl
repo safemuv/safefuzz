@@ -27,6 +27,7 @@ Access the information form the
 public class GeneratedFuzzingSpec {
 	public static FuzzingEngine createFuzzingEngine() {
 	FuzzingEngine fe = new FuzzingEngine();
+	FuzzingSimMapping simmapping = new FuzzingSimMapping();
 	
 [% for (s in M!Simulator.allInstances()) { %]
 	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
