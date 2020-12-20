@@ -11,20 +11,21 @@ import java.util.stream.Collectors;
 import fuzzingengine.operations.FuzzingOperation;
 
 class FuzzingConfig {
-	
-	private HashMap<String, FuzzingConfigRecord> keyLookup = new LinkedHashMap<String, FuzzingConfigRecord>();
-	private HashMap<String, FuzzingConfigRecord> componentLookup = new LinkedHashMap<String, FuzzingConfigRecord>();
-	private HashMap<String, FuzzingConfigRecord> Lookup = new LinkedHashMap<String, FuzzingConfigRecord>();
-	private List<FuzzingConfigRecord> records = new ArrayList<FuzzingConfigRecord>();
+	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
+	private HashMap<String, FuzzingKeySelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
+	private HashMap<String, FuzzingKeySelectionRecord> Lookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
+	private List<FuzzingKeySelectionRecord> records = new ArrayList<FuzzingKeySelectionRecord>();
 
-	public class FuzzingConfigRecord {
+	// TODO: FuzzingComponentSelectionRecord
+	public class FuzzingKeySelectionRecord {
 		String key;
 		Optional<String> reflectionKey;
 		Optional<String> component;
 		FuzzingOperation op;
 		Optional<String> subfield;
+		Optional<String> vehicleSelection;
 
-		public FuzzingConfigRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> subfield,
+		public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> subfield,
 				FuzzingOperation op) {
 			this.key = key;
 			this.reflectionKey = reflectionKey;
@@ -54,7 +55,7 @@ class FuzzingConfig {
 		}
 	}
 	
-	public void addRecord(FuzzingConfigRecord fr) {
+	public void addRecord(FuzzingKeySelectionRecord fr) {
 		records.add(fr);
 		keyLookup.put(fr.getKey(), fr);
 		if (fr.hasComponent()) {
@@ -63,21 +64,21 @@ class FuzzingConfig {
 	}
 	
 	public Optional<FuzzingOperation> getOperationByKey(String key) {
-		FuzzingConfigRecord fr = keyLookup.get(key);
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		if (fr != null) {
 			return Optional.of(fr.getOperation());
 		} else return Optional.empty();
 	}
 	
 	public Optional<FuzzingOperation> getOperationByComponent(String component) {
-		FuzzingConfigRecord fr = componentLookup.get(component);
+		FuzzingKeySelectionRecord fr = componentLookup.get(component);
 		if (fr != null) {
 			return Optional.of(fr.getOperation());
 		} else return Optional.empty();
 	}
 	
 	public Optional<String> getReflectionKey(String key) {
-		FuzzingConfigRecord fr = keyLookup.get(key);
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		if (fr != null) {
 			return fr.getReflectionKey();
 		} else return Optional.empty();

@@ -97,4 +97,8 @@ public class FuzzingEngine {
 	public HashMap<String,String> getVariables() {
 		return new HashMap<String,String>();
 	}
+
+	public void setSimMapping(FuzzingSimMapping simMapping) {
+		this.simmapping = simMapping;
+	}
 }
