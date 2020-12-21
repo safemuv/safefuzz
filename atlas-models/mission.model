@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission ../com.github.atlas.dsl/mission.ecore" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
   <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="gilda">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
       <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="200.0" y="-85.0"/>
@@ -116,6 +116,7 @@
       <points xmi:id="_0OihOReTEeuAQ6XAB6J9bg" x="100.0" y="-38.0"/>
     </poly>
   </obstacles>
+  <messages xmi:id="_rSrX4EMhEeupX-fvLkUw6g" name="TEST" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_gx4mIHP-Eeqc6cv9mBHIKw"/>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-GILDA">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="speed" newValue="5.0"/>

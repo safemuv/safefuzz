@@ -19,7 +19,7 @@ class SimpleVariableType {
 }
 
 class ConstantType {
-	val String constant;
+	attr String constant;
 }
 
 class VariableType {
@@ -42,9 +42,14 @@ class CustomConfigurationFuzzing extends FuzzingNature {
 
 // How to specify the information
 
+class FuzzingComponent {
+        attr String name;
+        attr String componentRelativePath; // relative to the base
+}
+
 class VariableSpecification {
 	val Simulator[1] sim;
-	attr String component;
+	ref FuzzingComponent[1] component;
 	attr String variable;
 	attr String reflectionName; // This may be optional
 	val VariableType vtype;
@@ -56,6 +61,7 @@ class Simulator {
 	attr String name;
 	attr String baseDirectory;
 	val VariableSpecification[*] vars;
+	val FuzzingComponent[*] components;
 }
 
 class TopologySpecification {

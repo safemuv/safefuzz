@@ -43,7 +43,6 @@ public class FuzzingSimMapping {
 		records.get(component).add(vs);
 	}
 	
-	
 	// Returns all the strings to mutate for a binary
 	public HashMap<String,String> getBinaryChanges(String component, HashMap<String,String> inNames) {
 		//	TODO: returning null hashmap for getBinaryChanges 

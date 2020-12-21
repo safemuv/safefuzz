@@ -11,56 +11,25 @@ import java.util.stream.Collectors;
 import fuzzingengine.operations.FuzzingOperation;
 
 class FuzzingConfig {
+	// TODO: merge all of these together
 	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
 	private HashMap<String, FuzzingKeySelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
-	private HashMap<String, FuzzingKeySelectionRecord> Lookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
-	private List<FuzzingKeySelectionRecord> records = new ArrayList<FuzzingKeySelectionRecord>();
-
-	// TODO: FuzzingComponentSelectionRecord
-	public class FuzzingKeySelectionRecord {
-		String key;
-		Optional<String> reflectionKey;
-		Optional<String> component;
-		FuzzingOperation op;
-		Optional<String> subfield;
-		Optional<String> vehicleSelection;
-
-		public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> subfield,
-				FuzzingOperation op) {
-			this.key = key;
-			this.reflectionKey = reflectionKey;
-			this.component = component;
-			this.op = op;
-			this.subfield = subfield;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public Optional<String> getReflectionKey() {
-			return reflectionKey;
-		}
-
-		public boolean hasComponent() {
-			return component.isPresent();
-		}
-		
-		public String getComponent() {
-			return component.get();
-		}
-
-		public FuzzingOperation getOperation() {
-			return op;
-		}
-	}
+	private HashMap<String, FuzzingMessageSelectionRecord> messageLookup = new LinkedHashMap<String, FuzzingMessageSelectionRecord>();
+	private List<FuzzingKeySelectionRecord> keyRecords = new ArrayList<FuzzingKeySelectionRecord>();
+	private List<FuzzingMessageSelectionRecord> messageRecords = new ArrayList<FuzzingMessageSelectionRecord>();
 	
-	public void addRecord(FuzzingKeySelectionRecord fr) {
-		records.add(fr);
+	// TODO: FuzzingComponentSelectionRecord?
+	public void addKeyRecord(FuzzingKeySelectionRecord fr) {
+		keyRecords.add(fr);
 		keyLookup.put(fr.getKey(), fr);
 		if (fr.hasComponent()) {
 			componentLookup.put(fr.getComponent(), fr);
 		}
+	}
+	
+	public void addMessageRecord(FuzzingMessageSelectionRecord mr) {
+		messageRecords.add(mr);
+		messageLookup.put(mr.getKey(), mr);
 	}
 	
 	public Optional<FuzzingOperation> getOperationByKey(String key) {
@@ -85,7 +54,7 @@ class FuzzingConfig {
 	}
 	
 	public Set<String> getComponents() {
-		return records.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
+		return keyRecords.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
 	}
 
 }

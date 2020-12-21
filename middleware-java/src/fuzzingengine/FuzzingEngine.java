@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import fuzzingengine.FuzzingConfig.FuzzingConfigRecord;
+import atlasdsl.Message;
+import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
 import middleware.core.*;
 import middleware.logging.ATLASLog;
@@ -29,13 +30,17 @@ public class FuzzingEngine {
 		this.fuzzSelType = fuzzSelType;
 	}
 	
-	public void addFuzzingOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, FuzzingOperation op) {
-		FuzzingConfigRecord fr = confs.new FuzzingConfigRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
-		confs.addRecord(fr);
+	public void addFuzzingKeyOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, FuzzingOperation op) {
+		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
+		confs.addKeyRecord(fr);
 	}
-
-	// TODO: add something with subfields
-
+	
+	public void addFuzzingMessageOperation(String fuzzingMessageKey, Message m, FuzzingOperation op) {
+		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(fuzzingMessageKey, m, op); 
+		confs.addMessageRecord(mr);
+	}
+	
+	// TODO: how to handle subfields?
 	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
 		ATLASLog.logFuzzing("shouldFuzzCARSEvent called - " + event);
 		if (event instanceof CARSVariableUpdate) {
@@ -100,5 +105,10 @@ public class FuzzingEngine {
 
 	public void setSimMapping(FuzzingSimMapping simMapping) {
 		this.simmapping = simMapping;
+	}
+
+	public List<String> getMessageKeys(String robotName, VariableDirection outbound) {
+		System.out.println("getMessageKeys unimplemented");
+		return new ArrayList<String>();
 	}
 }

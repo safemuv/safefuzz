@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
 <simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
-  <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="MOOS">
-    <vars xmi:id="_6_gdYEAREeu4wsxCsdBwyw"/>
+  <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="MOOS-IVP" baseDirectory="/home/atlas/atlas/cust">
+    <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST"/>
+    <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER"/>
+    <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="TESTBASE"/>
   </sims>
 </simmapping:VariableMappings>

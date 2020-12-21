@@ -2,6 +2,7 @@ package carsspecific.moos.codegen;
 
 import carsspecific.moos.moosmapping.*;
 import fuzzingengine.FuzzingEngine;
+import fuzzingengine.FuzzingSimMapping;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
 import utils.binarymodify.BinaryModify;
@@ -220,7 +221,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 			// If there is a fuzzing engine, perform the fuzzing conversion
 			if (fe_o.isPresent()) {
 				FuzzingEngine fe = fe_o.get();
-				fuzzingEngineChanges(fe, moossim);
+				fuzzingEngineKeyChanges(fe, moossim);
+				fuzzingEngineMessageChange(fe, moossim);
 			}
 
 			// This returns a MOOS community without any faults
@@ -234,8 +236,29 @@ public class MOOSCodeGen extends CARSCodeGen {
 		}
 	}
 
+	private void fuzzingEngineMessageChange(FuzzingEngine fe, MOOSSimulation moossim) {
+		// On the output message side, need to setup explicit pShare message settings for output keys
+		for (MOOSCommunity community : moossim.getAllCommunities()) {
+			String robotName = community.getCommunityName();
+			List<String> outboundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.OUTBOUND);
+			PShareProcess pShare = (PShareProcess) community.getProcess("pShare");
+			ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) community.getProcess("ATLASDBInterface");
+			
+			for (String k : outboundKeys) {
+				String kprimed = k + "'";
+				pShare.addOutputRecord(k, kprimed);
+			}
+			
+			List<String> inBoundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.INBOUND);
+			for (String k : inBoundKeys) {
+				String kprimed = k + "'";
+				dbInt.addWatchVariable(kprimed);
+			}
+		}
+	}
+
 	// TODO: may pull this out into another class - if there is something common from different simulators?
-	private void fuzzingEngineChanges(FuzzingEngine fe, MOOSSimulation moossim) {
+	private void fuzzingEngineKeyChanges(FuzzingEngine fe, MOOSSimulation moossim) {
 		// Specifies what is added to fuzzing processe name
 		final String PROCESSNAME_FUZZED_APPEND = "_f";
 		
@@ -266,7 +289,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 						moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
 					}
 				}
-			}	
+			}
 		}
 	}
 }

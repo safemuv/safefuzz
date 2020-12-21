@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xmi:id="_P292kD50EeunyIiPnuY6hQ">
-  <records xmi:id="_QpJhcD50EeunyIiPnuY6hQ">
-    <ftype xsi:type="fuzzing:VariableFuzzing" xmi:id="_zqbdcD51EeunyIiPnuY6hQ"/>
-    <operation xsi:type="fuzzing:UniformRandomChange" xmi:id="_gFdB8D51EeunyIiPnuY6hQ">
-      <maxLimit xsi:type="fuzzing:FuzzingDouble" xmi:id="_rorNgD51EeunyIiPnuY6hQ" v="50.0"/>
-      <minLimit xsi:type="fuzzing:FuzzingDouble" xmi:id="_sFMxcD51EeunyIiPnuY6hQ" v="-100.0"/>
-      <maxChange xsi:type="fuzzing:FuzzingDouble" xmi:id="_qN878D51EeunyIiPnuY6hQ" v="100.0"/>
-    </operation>
-    <selection xsi:type="fuzzing:GlobalSelection" xmi:id="_d7NX8D51EeunyIiPnuY6hQ"/>
-  </records>
+<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing ../com.github.atlas.dsl/fuzzing.ecore" xmi:id="_P292kD50EeunyIiPnuY6hQ">
+  <records xmi:id="_rLvMwEL9Eeut4tLYmKP6Ig"/>
 </fuzzing:FuzzingSpec>

@@ -15,8 +15,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
@@ -28,10 +27,16 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingComponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentRelativePath"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
@@ -45,6 +50,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseDirectory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//FuzzingComponent" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TopologySpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"

@@ -10,11 +10,12 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine();
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
-
-	simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", FuzzingSimMapping.VariableDirection.INBOUND);
-
-	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", FuzzingSimMapping.VariableDirection.INBOUND);
 	
+	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"));
+	simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"));
+		//FIR;
 	fe.setSimMapping(simMapping); 
 	return fe;
 	}

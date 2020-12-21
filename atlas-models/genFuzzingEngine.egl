@@ -34,14 +34,21 @@ public class GeneratedFuzzingSpec {
 [% for (s in SimMapping!Simulator.allInstances()) { %]
 	
 	[* TODO: always do MOOS-IVP for now, generalise to other simulators later *]
-	[% if (s.name == "MOOS-IVP") {} %]
+	[% if (s.name == "MOOS-IVP") { %]
 		[% var baseDir = s.baseDirectory; %]
-		[% for (vspec in s.vars) { %]
-	simMapping.addRecord("[%= vspec.component %]", 
-	"[%= vspec.variable %]", "[%= vspec.reflectionName %]", FuzzingSimMapping.VariableDirection.[%= vspec.dir %],
-	"[%= baseDir %]/[%= vspec.componentPath %]");
+			[% for (vspec in s.vars) { %]
+			[% var c = vspec.component; %]
+	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
+	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"));
 		[% } %]
 	[% } %]
+		
+	[% for (f in Fuzzing!FuzzingInfoRecord.allInstances()) { %]
+		//FIR;
+	[% } %]
+	
+	
+[% } %]
 	
 	fe.setSimMapping(simMapping); 
 	return fe;
