@@ -246,12 +246,14 @@ public class MOOSCodeGen extends CARSCodeGen {
 			
 			for (String k : outboundKeys) {
 				String kprimed = k + "'";
+				System.out.println("For robot " + robotName + " adding outbound key to pShare reflection " + k + " -> " + kprimed);
 				pShare.addOutputRecord(k, kprimed);
 			}
 			
 			List<String> inBoundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.INBOUND);
 			for (String k : inBoundKeys) {
 				String kprimed = k + "'";
+				System.out.println("For robot " + robotName + " adding outbound key to pShare reflection " + k + " -> " + kprimed);
 				dbInt.addWatchVariable(kprimed);
 			}
 		}

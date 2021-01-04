@@ -108,7 +108,7 @@ public class FuzzingEngine {
 	}
 
 	public List<String> getMessageKeys(String robotName, VariableDirection outbound) {
-		System.out.println("getMessageKeys unimplemented");
-		return new ArrayList<String>();
+		//TODO: add these keys during generation process
+		return confs.getMessageKeys(robotName);
 	}
 }

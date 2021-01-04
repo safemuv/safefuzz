@@ -12,8 +12,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageFuzzing" eSuperTypes="#//FuzzingEntitySelection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="msg" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="msg" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RelativeDoubleChange" eSuperTypes="#//FuzzingOperation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>

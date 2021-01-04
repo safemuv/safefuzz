@@ -56,5 +56,16 @@ class FuzzingConfig {
 	public Set<String> getComponents() {
 		return keyRecords.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
 	}
+	
+	public List<String> getMessageKeys(String robotName) {
+		//TODO: put the real keys in here - this is just a stub for testing for now
+		// Need to look up the keys from the message definitions
+		ArrayList<String> keys = new ArrayList<String>();
+		
+		if (robotName.equals("gilda")) {
+			keys.add("TEST1");
+		}
 
+		return keys;
+	}
 }

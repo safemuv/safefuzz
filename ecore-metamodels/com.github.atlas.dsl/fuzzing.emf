@@ -23,7 +23,7 @@ class ComponentFuzzing extends FuzzingEntitySelection {
 
 class MessageFuzzing extends FuzzingEntitySelection {
 	// Message references
-	val Atlas.Message[0..1] msg;
+	ref Atlas.Message[0..1] msg;
 }
 
 class RelativeDoubleChange extends FuzzingOperation {
