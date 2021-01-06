@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xmi:id="_P292kD50EeunyIiPnuY6hQ">
+<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing ../com.github.atlas.dsl/fuzzing.ecore" xmi:id="_P292kD50EeunyIiPnuY6hQ">
   <records xmi:id="_rLvMwEL9Eeut4tLYmKP6Ig">
     <ftype xsi:type="fuzzing:MessageFuzzing" xmi:id="_CV9BIE6lEeuAxvfe2FfEBg"/>
   </records>

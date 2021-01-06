@@ -89,8 +89,8 @@ class ComputerCIshoreside_tworobots {
 
 	public static void setRobotNamesAndRegion() {
 		// For now, hardcode in statically the names of the robots
-		sweepRobots.add("frank");
-		sweepRobots.add("ella");
+		sweepRobots.add("henry");
+		sweepRobots.add("gilda");
 
 		robotSpeeds.put("frank", 1.5);
 		robotSpeeds.put("ella", 1.6);

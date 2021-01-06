@@ -15,7 +15,11 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"));
 	simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"));
+		
 		//FIR;
+	
+	
+	
 	fe.setSimMapping(simMapping); 
 	return fe;
 	}

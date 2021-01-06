@@ -61,7 +61,7 @@ ProcessConfig = pShare
 {
   AppTick    = 2
   CommsTick  = 2
-
+  output = src_name=TEST1, dest_name=TEST1', route=localhost:9200
   input = route =  localhost:9202
 }
 

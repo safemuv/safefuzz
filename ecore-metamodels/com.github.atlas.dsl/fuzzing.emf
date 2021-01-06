@@ -22,7 +22,6 @@ class ComponentFuzzing extends FuzzingEntitySelection {
 }
 
 class MessageFuzzing extends FuzzingEntitySelection {
-	// Message references
 	ref Atlas.Message[0..1] msg;
 }
 
