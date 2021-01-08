@@ -35,8 +35,10 @@ public class FuzzingEngine {
 		confs.addKeyRecord(fr);
 	}
 	
-	public void addFuzzingMessageOperation(String fuzzingMessageKey, Message m, FuzzingOperation op) {
-		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(fuzzingMessageKey, m, op); 
+	public void addFuzzingMessageOperation(String fuzzingMessageKey, Optional<String> fuzzingMessageKeyReflection, Message m, FuzzingOperation op) {
+		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(fuzzingMessageKey, m, op);
+		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection, op);
+		confs.addKeyRecord(kr);
 		confs.addMessageRecord(mr);
 	}
 	
@@ -60,6 +62,11 @@ public class FuzzingEngine {
 					return Optional.empty();
 				}
 			}
+			
+			if (fuzzSelType == FuzzingSelectionType.INTERROBOT_COMMS) {
+				String k = cv.getKey();
+				return confs.hasMessageKey(k);
+			}
 		}
 
 		return Optional.empty();
@@ -76,17 +83,6 @@ public class FuzzingEngine {
 
 	public <E> E fuzzTransformEvent(E event, FuzzingOperation op) {
 		return op.fuzzTransformEvent(event);
-	}
-	
-	public String fuzzUDPEventKey(String key, String val) {
-		if (fuzzSelType == FuzzingSelectionType.INTERROBOT_COMMS) {
-			Optional<FuzzingOperation> op_o = confs.getOperationByKey(key);
-			if (op_o.isPresent()) {
-				FuzzingOperation op = op_o.get(); 
-				return op.fuzzTransformEvent(val);
-			} 
-		}
-		return val;
 	}
 	
 	public FuzzingSimMapping getSimMapping() {
@@ -107,8 +103,8 @@ public class FuzzingEngine {
 		this.simmapping = simMapping;
 	}
 
-	public List<String> getMessageKeys(String robotName, VariableDirection outbound) {
+	public List<String> getMessageKeys(String robotName, VariableDirection dir) {
 		//TODO: add these keys during generation process
-		return confs.getMessageKeys(robotName);
+		return confs.getMessageKeys(robotName, dir);
 	}
 }

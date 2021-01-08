@@ -8,7 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
+import fuzzingengine.operations.NumericVariableChangeFuzzingOperation;
 
 class FuzzingConfig {
 	// TODO: merge all of these together
@@ -57,12 +59,27 @@ class FuzzingConfig {
 		return keyRecords.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
 	}
 	
-	public List<String> getMessageKeys(String robotName) {
+	FuzzingOperation test1_OP = NumericVariableChangeFuzzingOperation.Random(0.0, 10.0);
+	
+	public Optional<FuzzingOperation> hasMessageKey(String k) {
+		if (k.equals("TEST1'")) {
+			System.out.println("hasMessageKey - TEST1'");
+			return Optional.of(test1_OP);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	public List<String> getMessageKeys(String robotName, VariableDirection dir) {
 		//TODO: put the real keys in here - this is just a stub for testing for now
 		// Need to look up the keys from the message definitions
 		ArrayList<String> keys = new ArrayList<String>();
 		
-		if (robotName.equals("gilda")) {
+		if (robotName.equals("gilda") && dir == VariableDirection.OUTBOUND) {
+			keys.add("TEST1");
+		}
+		
+		if (robotName.equals("shoreside") && dir == VariableDirection.INBOUND) {
 			keys.add("TEST1");
 		}
 

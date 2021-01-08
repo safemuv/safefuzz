@@ -253,7 +253,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			List<String> inBoundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.INBOUND);
 			for (String k : inBoundKeys) {
 				String kprimed = k + "'";
-				System.out.println("For robot " + robotName + " adding outbound key to pShare reflection " + k + " -> " + kprimed);
+				System.out.println("For robot " + robotName + " adding inbound fuzzing key to ATLASDBWatch " + k + " -> " + kprimed);
 				dbInt.addWatchVariable(kprimed);
 			}
 		}

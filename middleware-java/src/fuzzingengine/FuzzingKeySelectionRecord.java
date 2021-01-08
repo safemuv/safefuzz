@@ -20,6 +20,13 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.component = component;
 		this.subfield = subfield;
 	}
+	
+	// for messages
+	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, FuzzingOperation op) {
+		super(op);
+		this.key = key;
+		this.reflectionKey = reflectionKey;
+	}
 
 	public String getKey() {
 		return key;
