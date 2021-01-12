@@ -6,10 +6,7 @@ import java.util.Random;
 import fuzzingengine.DoubleLambda;
 import middleware.core.CARSVariableUpdate;
 
-public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
-	private static final boolean debugging = false;
-	private String regexNumberScanner = "[+-]?([0-9]*\\.)?[0-9]+";
-	
+public class NumericVariableChangeFuzzingOperation extends ValueFuzzingOperation {
 	private final double defaultFixedChange = 0.0;
 	private String fixedChange = Double.toString(defaultFixedChange);
 	private Optional<DoubleLambda> generateDouble = Optional.empty();
@@ -40,29 +37,13 @@ public class NumericVariableChangeFuzzingOperation extends FuzzingOperation {
 		return fixedChange;
 	}
 
-	public <E> E fuzzTransformEvent(E event) {
-		if (event instanceof CARSVariableUpdate) {
-			CARSVariableUpdate cvu = (CARSVariableUpdate)event;
-			CARSVariableUpdate newUpdate = new CARSVariableUpdate(cvu);
-			// TODO: handle checking the type of the update here - ensure we
-			// only fuzz a standard operation
-			
-			// Need to be able to fuzz parts of a structural message
-			String change = fixedChange;
-			
-			try {
-				if (generateDouble.isPresent()) {
-					DoubleLambda dl = generateDouble.get();
-					double d = Double.valueOf(((CARSVariableUpdate)event).getValue());
-					change = Double.toString(dl.op(d));
-				}
-			} catch (NumberFormatException e) {
-				return (E)newUpdate;
-			}
-			newUpdate.setValue(change);
-			return (E)newUpdate;
-		} else {
-			return event;
+	public String fuzzTransformString(String input) {
+		String changed = fixedChange;
+		if (generateDouble.isPresent()) {
+			DoubleLambda dl = generateDouble.get();
+			double d = Double.valueOf(input);
+			changed = Double.toString(dl.op(d));
 		}
+		return changed;
 	}
 }

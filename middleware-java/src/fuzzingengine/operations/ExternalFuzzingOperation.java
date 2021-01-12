@@ -1,6 +1,6 @@
 package fuzzingengine.operations;
 
-public class ExternalFuzzingOperation extends FuzzingOperation {
+public class ExternalFuzzingOperation extends EventFuzzingOperation {
 
 	public ExternalFuzzingOperation() {
 		// Load the external fuzzer process
@@ -9,6 +9,6 @@ public class ExternalFuzzingOperation extends FuzzingOperation {
 
 	public <E> E fuzzTransformEvent(E event) {
 		// TODO Auto-generated method stub
-		return null;
+		return event;
 	}
 }

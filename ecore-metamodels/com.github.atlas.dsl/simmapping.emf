@@ -14,7 +14,11 @@ enum BasicVariableType {
 	DOUBLE = 3;
 }
 
-class SimpleVariableType {
+abstract class VariableType {
+}
+
+// Info for the grammar
+class SimpleVariableType extends VariableType {
 	attr BasicVariableType vt;
 }
 
@@ -22,7 +26,11 @@ class ConstantType {
 	attr String constant;
 }
 
-class VariableType {
+class RegexpVariableType extends VariableType {
+	attr String regexp;
+} 
+
+class GrammarVariableType {
 	val VariableType[*] subtypes;
 }
 
@@ -31,9 +39,7 @@ abstract class FuzzingNature {
 }
 
 class BinaryFuzzing extends FuzzingNature {
-	// Extra BBE parameters?
-	attr String componentFullSystemPath;
-} 
+}
 
 class CustomConfigurationFuzzing extends FuzzingNature {
 	// Specify how to perform the fuzzing
@@ -43,12 +49,11 @@ class CustomConfigurationFuzzing extends FuzzingNature {
 // How to specify the information
 
 class FuzzingComponent {
-        attr String name;
-        attr String componentRelativePath; // relative to the base
+    attr String name;
+    attr String componentRelativePath; // relative to the base
 }
 
 class VariableSpecification {
-	val Simulator[1] sim;
 	ref FuzzingComponent[1] component;
 	attr String variable;
 	attr String reflectionName; // This may be optional

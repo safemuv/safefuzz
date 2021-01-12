@@ -1,5 +1,6 @@
 package fuzzingengine.operations;
 
 public abstract class FuzzingOperation {
-	public abstract <E> E fuzzTransformEvent(E event);
+	public abstract boolean isEventBased();
+	public abstract boolean isValueBased();
 }

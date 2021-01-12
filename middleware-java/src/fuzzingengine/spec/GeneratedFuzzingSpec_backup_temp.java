@@ -4,7 +4,7 @@ import java.util.Optional;
 import fuzzingengine.*;
 import fuzzingengine.operations.*;
 
-public class GeneratedFuzzingSpec {
+public class GeneratedFuzzingSpec_backup_temp {
 	public static FuzzingEngine createFuzzingEngine() {
 	FuzzingEngine fe = new FuzzingEngine();
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();

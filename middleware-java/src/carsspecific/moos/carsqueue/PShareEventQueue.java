@@ -47,16 +47,16 @@ public class PShareEventQueue extends ATLASEventQueue<PShareEvent> {
 	public void handleEvent(PShareEvent event) {
 		System.out.println("PShareEvent - " + event);
 		
-		try {
+		//try {
 			String key = event.getKey();
 			String value = event.getValue();
-			String newValue = fuzzingEngine.fuzzUDPEventKey(key, value);
-			PShareEvent modified = event.cloneWithNewValue(key, newValue);
-			reflectBack.sendBack(modified);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (PShareEventDecodingError e) {
-			e.printStackTrace();
-		}
+			//String newValue = fuzzingEngine.fuzzUDPEventKey(key, value);
+			//PShareEvent modified = event.cloneWithNewValue(key, newValue);
+			//reflectBack.sendBack(modified);
+		//} catch (IOException e) {
+//			e.printStackTrace();
+		//} catch (PShareEventDecodingError e) {
+//			e.printStackTrace();
+		//}
 	}
 }

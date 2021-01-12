@@ -22,7 +22,7 @@ public class PortMappings {
 	}
 	
 	public static int portNumberForPShareReception() {
-		return 9900;
+		return 9200;
 	}
 	
 	public static String addressForPShare() {
@@ -34,7 +34,6 @@ public class PortMappings {
 	}
 
 	public static int portBaseForPShareListen() {
-		// TODO Auto-generated method stub
-		return 9300;
+		return 9200;
 	}
 }

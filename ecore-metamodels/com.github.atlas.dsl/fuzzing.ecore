@@ -5,8 +5,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingEntitySelection" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingOperation" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="VariableFuzzing" eSuperTypes="#//FuzzingEntitySelection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="varToFuzz" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//VariableSpecification"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varToFuzz" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//VariableSpecification"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentFuzzing" eSuperTypes="#//FuzzingEntitySelection">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -22,13 +21,26 @@
   <eClassifiers xsi:type="ecore:EClass" name="ConstantDoubleChange" eSuperTypes="#//FuzzingOperation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="newValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimingSpec" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EntireTime" eSuperTypes="#//TimingSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecificTime" eSuperTypes="#//TimingSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubSpecSelection" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericSubSpecSelection" eSuperTypes="#//SubSpecSelection">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingInfoRecord">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ftype" upperBound="-1"
         eType="#//FuzzingEntitySelection" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
         eType="#//FuzzingOperation" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="relevantVehicles" upperBound="-1"
-        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//Robot"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//Robot"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="TimingSpec" eType="#//TimingSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subspec" eType="#//SubSpecSelection"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingSpec">

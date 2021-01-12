@@ -12,9 +12,7 @@ abstract class FuzzingOperation {
 }
 
 class VariableFuzzing extends FuzzingEntitySelection {
-	// This is a reference to the variables in the sim mapping layer
-	val Simmapping.VariableSpecification varToFuzz;
-	// Need to specify a specific variable if there is 
+	ref Simmapping.VariableSpecification varToFuzz;
 }
 
 class ComponentFuzzing extends FuzzingEntitySelection {
@@ -35,13 +33,33 @@ class ConstantDoubleChange extends FuzzingOperation {
 	attr double newValue;
 }
 
+abstract class TimingSpec {
+}
+
+class EntireTime extends TimingSpec {
+
+}
+
+class SpecificTime extends TimingSpec {
+	attr double start;
+	attr double end;
+}
+
+abstract class SubSpecSelection {
+}
+
+class NumericSubSpecSelection extends SubSpecSelection {
+	attr int selection;
+}
+
 class FuzzingInfoRecord {
 	val FuzzingEntitySelection[*] ftype;
 	val FuzzingOperation[1] operation;
-	val Atlas.Robot[0..*] relevantVehicles;
+	ref Atlas.Robot[0..*] relevantVehicles;
+	val TimingSpec TimingSpec;
+	val SubSpecSelection[0..1] subspec;
 }
 
 class FuzzingSpec {
 	val FuzzingInfoRecord[*] records;
 }
-

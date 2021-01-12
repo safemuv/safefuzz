@@ -8,27 +8,15 @@ import java.util.Set;
 
 import atlasdsl.Message;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
+import fuzzingengine.operations.EventFuzzingOperation;
 import fuzzingengine.operations.FuzzingOperation;
+import fuzzingengine.operations.ValueFuzzingOperation;
 import middleware.core.*;
 import middleware.logging.ATLASLog;
 
 public class FuzzingEngine {
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
-	
-	private FuzzingSelectionType fuzzSelType;
-
-	public FuzzingEngine() {
-		fuzzSelType = FuzzingSelectionType.LOCAL_BY_SPECIFIC_KEYS;
-	}
-
-	public FuzzingEngine(String filename) {
-		fuzzSelType = FuzzingSelectionType.LOCAL_BY_SPECIFIC_KEYS;
-	}
-	
-	public void setFuzzSelectionType(FuzzingSelectionType fuzzSelType) {
-		this.fuzzSelType = fuzzSelType;
-	}
 	
 	public void addFuzzingKeyOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, FuzzingOperation op) {
 		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
@@ -42,34 +30,28 @@ public class FuzzingEngine {
 		confs.addMessageRecord(mr);
 	}
 	
-	// TODO: how to handle subfields?
+	// TODO: this should be sensitive to the robot name and timing?
 	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
 		ATLASLog.logFuzzing("shouldFuzzCARSEvent called - " + event);
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
 
-			if (fuzzSelType == FuzzingSelectionType.LOCAL_BY_SPECIFIC_KEYS) {
-				String k = cv.getKey();
-				return confs.getOperationByKey(k);
-			}
-			
-			if (fuzzSelType == FuzzingSelectionType.LOCAL_BY_SPECIFIC_SOURCE) {
-				Optional<String> componentName_o = cv.getSourceComponent();
-				if (componentName_o.isPresent()) {
-					String componentName = componentName_o.get();
-					return confs.getOperationByComponent(componentName);
+			String key = cv.getKey();
+				Optional<FuzzingOperation> op_o = confs.getOperationByKey(key);
+				if (op_o.isPresent()) {
+					return op_o;
 				} else {
-					return Optional.empty();
+					Optional<String> componentName_o = cv.getSourceComponent();
+					if (componentName_o.isPresent()) {
+						String componentName = componentName_o.get();
+						return confs.getOperationByComponent(componentName);
+					} else {
+						return confs.hasMessageKey(key);
 				}
 			}
-			
-			if (fuzzSelType == FuzzingSelectionType.INTERROBOT_COMMS) {
-				String k = cv.getKey();
-				return confs.hasMessageKey(k);
-			}
+		} else {
+			return Optional.empty();
 		}
-
-		return Optional.empty();
 	}
 
 	public <E> Optional<String> shouldReflectBackToCARS(E event) {
@@ -82,7 +64,23 @@ public class FuzzingEngine {
 	}
 
 	public <E> E fuzzTransformEvent(E event, FuzzingOperation op) {
-		return op.fuzzTransformEvent(event);
+		if (op.isEventBased()) {
+			EventFuzzingOperation eop = (EventFuzzingOperation)op;
+			return eop.fuzzTransformEvent(event);
+		} else {
+			if (event instanceof CARSVariableUpdate) {
+				CARSVariableUpdate cv = (CARSVariableUpdate) event;
+				CARSVariableUpdate newUpdate = new CARSVariableUpdate(cv);
+				ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
+				String v = cv.getValue();
+				String newValue = vop.fuzzTransformString(v);
+				// TODO: handle extracting chunks of string here - regex/grammar based
+				newUpdate.setValue(newValue);
+				return (E)newUpdate;
+			} else {
+				return event;
+			}
+		}
 	}
 	
 	public FuzzingSimMapping getSimMapping() {

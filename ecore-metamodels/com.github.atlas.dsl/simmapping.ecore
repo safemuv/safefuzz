@@ -11,21 +11,22 @@
     <eLiterals name="STRING" value="2"/>
     <eLiterals name="DOUBLE" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType">
+  <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableType">
+  <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
         eType="#//VariableType" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingNature" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentFullSystemPath"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature"/>
   <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature"/>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -33,8 +34,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

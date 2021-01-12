@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing ../com.github.atlas.dsl/fuzzing.ecore" xmi:id="_P292kD50EeunyIiPnuY6hQ">
-  <records xmi:id="_rLvMwEL9Eeut4tLYmKP6Ig">
-    <ftype xsi:type="fuzzing:MessageFuzzing" xmi:id="_CV9BIE6lEeuAxvfe2FfEBg"/>
+<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xmi:id="_P292kD50EeunyIiPnuY6hQ">
+  <records xmi:id="_Sj3MoFOnEeu-ze1bTRBqDw">
+    <ftype xsi:type="fuzzing:VariableFuzzing" xmi:id="_VcuQIFOnEeu-ze1bTRBqDw" varToFuzz="_WK4WoFOnEeu-ze1bTRBqDw"/>
+    <operation xsi:type="fuzzing:RelativeDoubleChange" xmi:id="_wxYUIFOnEeu-ze1bTRBqDw" maxLimit="-100.0" minLimit="100.0" maxChange="30.0"/>
+    <TimingSpec xsi:type="fuzzing:EntireTime" xmi:id="_tDMLIFOnEeu-ze1bTRBqDw"/>
+    <subspec xsi:type="fuzzing:NumericSubSpecSelection" xmi:id="_vER5IFOnEeu-ze1bTRBqDw"/>
   </records>
 </fuzzing:FuzzingSpec>

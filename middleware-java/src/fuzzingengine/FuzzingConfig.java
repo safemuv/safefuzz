@@ -10,10 +10,9 @@ import java.util.stream.Collectors;
 
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
-import fuzzingengine.operations.NumericVariableChangeFuzzingOperation;
 
 class FuzzingConfig {
-	// TODO: merge all of these together
+	// TODO: merge all of these together?
 	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
 	private HashMap<String, FuzzingKeySelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
 	private HashMap<String, FuzzingMessageSelectionRecord> messageLookup = new LinkedHashMap<String, FuzzingMessageSelectionRecord>();
@@ -59,30 +58,25 @@ class FuzzingConfig {
 		return keyRecords.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
 	}
 	
-	FuzzingOperation test1_OP = NumericVariableChangeFuzzingOperation.Random(0.0, 10.0);
-	
-	public Optional<FuzzingOperation> hasMessageKey(String k) {
-		if (k.equals("TEST1'")) {
-			System.out.println("hasMessageKey - TEST1'");
-			return Optional.of(test1_OP);
-		} else {
-			return Optional.empty();
-		}
+	public Optional<FuzzingOperation> hasMessageKey(String key) {
+		FuzzingMessageSelectionRecord mr = messageLookup.get(key);
+		if (mr != null) {
+			return Optional.of(mr.getOperation());
+		} else return Optional.empty();
 	}
 	
 	public List<String> getMessageKeys(String robotName, VariableDirection dir) {
-		//TODO: put the real keys in here - this is just a stub for testing for now
-		// Need to look up the keys from the message definitions
-		ArrayList<String> keys = new ArrayList<String>();
+		List<String> out = new ArrayList<String>();
 		
-		if (robotName.equals("gilda") && dir == VariableDirection.OUTBOUND) {
-			keys.add("TEST1");
-		}
+		for (FuzzingMessageSelectionRecord mr : messageRecords) {
+			if (mr.getRobotFrom() == robotName && dir == VariableDirection.OUTBOUND) {
+				out.add(mr.getKey());
+			}
 		
-		if (robotName.equals("shoreside") && dir == VariableDirection.INBOUND) {
-			keys.add("TEST1");
+			if (mr.getRobotTo() == robotName && dir == VariableDirection.INBOUND) {
+				out.add(mr.getKey());
+			}
 		}
-
-		return keys;
+		return out;
 	}
 }
