@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Random;
 
 import fuzzingengine.DoubleLambda;
-import middleware.core.CARSVariableUpdate;
 
 public class NumericVariableChangeFuzzingOperation extends ValueFuzzingOperation {
 	private final double defaultFixedChange = 0.0;

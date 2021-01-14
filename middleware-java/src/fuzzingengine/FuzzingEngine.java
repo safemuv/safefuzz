@@ -1,10 +1,11 @@
 package fuzzingengine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import atlasdsl.Message;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
@@ -63,6 +64,13 @@ public class FuzzingEngine {
 		return Optional.empty();
 	}
 
+	public static String replaceGroup(Matcher m, String source, int groupToReplace, int groupOccurrence, String replacement) {
+		m.reset();
+	    for (int i = 0; i < groupOccurrence; i++)
+	        if (!m.find()) return source; // pattern not met, may also throw an exception here
+	    return new StringBuilder(source).replace(m.start(groupToReplace), m.end(groupToReplace), replacement).toString();
+	}
+	
 	public <E> E fuzzTransformEvent(E event, FuzzingOperation op) {
 		if (op.isEventBased()) {
 			EventFuzzingOperation eop = (EventFuzzingOperation)op;
@@ -72,10 +80,21 @@ public class FuzzingEngine {
 				CARSVariableUpdate cv = (CARSVariableUpdate) event;
 				CARSVariableUpdate newUpdate = new CARSVariableUpdate(cv);
 				ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
+				String key = cv.getKey();
 				String v = cv.getValue();
-				String newValue = vop.fuzzTransformString(v);
-				// TODO: handle extracting chunks of string here - regex/grammar based
-				newUpdate.setValue(newValue);
+				String newValue;
+				// Need to also look up the group number
+				Optional<Matcher> regexp = getPatternMatcher(key);
+				if (!regexp.isPresent()) {
+					newValue = vop.fuzzTransformString(v);
+				} else {
+					Matcher m = regexp.get();
+					newValue = vop.fuzzTransformString(v);
+					// TODO: setup these
+					newValue = replaceGroup(m, v, 1, 1, "");
+				}
+				
+				newUpdate.setValue(newValue); 
 				return (E)newUpdate;
 			} else {
 				return event;

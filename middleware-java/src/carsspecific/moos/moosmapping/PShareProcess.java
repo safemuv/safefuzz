@@ -1,7 +1,6 @@
 package carsspecific.moos.moosmapping;
 
 public class PShareProcess extends MOOSProcess {
-
 	int pSharePortBase;
 	
 	// TODO: this currently carries the assumption that the shoreside is the
