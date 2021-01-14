@@ -2,6 +2,7 @@ package fuzzingengine;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -19,14 +20,14 @@ public class FuzzingEngine {
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
 	
-	public void addFuzzingKeyOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, FuzzingOperation op) {
-		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, reflectionKey, component, Optional.empty(), op);
+	public void addFuzzingKeyOperation(String fuzzingKey, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex, int groupNum, FuzzingOperation op) {
+		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, reflectionKey, component, regex, groupNum, op);
 		confs.addKeyRecord(fr);
 	}
 	
-	public void addFuzzingMessageOperation(String fuzzingMessageKey, Optional<String> fuzzingMessageKeyReflection, Message m, FuzzingOperation op) {
+	public void addFuzzingMessageOperation(String fuzzingMessageKey, Optional<String> fuzzingMessageKeyReflection, Message m, Optional<String> regex, int groupNum, FuzzingOperation op) {
 		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(fuzzingMessageKey, m, op);
-		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection, op);
+		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection, regex, groupNum, op);
 		confs.addKeyRecord(kr);
 		confs.addMessageRecord(mr);
 	}
@@ -64,11 +65,15 @@ public class FuzzingEngine {
 		return Optional.empty();
 	}
 
-	public static String replaceGroup(Matcher m, String source, int groupToReplace, int groupOccurrence, String replacement) {
-		m.reset();
-	    for (int i = 0; i < groupOccurrence; i++)
-	        if (!m.find()) return source; // pattern not met, may also throw an exception here
-	    return new StringBuilder(source).replace(m.start(groupToReplace), m.end(groupToReplace), replacement).toString();
+	public static String replaceGroup(Pattern p, String source, int groupToReplace, ValueFuzzingOperation op) throws FuzzingEngineMatchFailure {
+		Matcher m = p.matcher(source);
+	    if (!m.find()) {
+	    	throw new FuzzingEngineMatchFailure(p, source);
+	    } else {
+	        String v = m.group(groupToReplace);
+	        String newV = op.fuzzTransformString(v);
+	        return new StringBuilder(source).replace(m.start(groupToReplace), m.end(groupToReplace), newV).toString();
+	    }
 	}
 	
 	public <E> E fuzzTransformEvent(E event, FuzzingOperation op) {
@@ -82,16 +87,19 @@ public class FuzzingEngine {
 				ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
 				String key = cv.getKey();
 				String v = cv.getValue();
-				String newValue;
+				String newValue = v;
 				// Need to also look up the group number
-				Optional<Matcher> regexp = getPatternMatcher(key);
-				if (!regexp.isPresent()) {
+				Optional<Map.Entry<Pattern,Integer>> regexp_sel = confs.getPatternAndGroupNum(key);
+				if (!regexp_sel.isPresent()) {
 					newValue = vop.fuzzTransformString(v);
 				} else {
-					Matcher m = regexp.get();
-					newValue = vop.fuzzTransformString(v);
-					// TODO: setup these
-					newValue = replaceGroup(m, v, 1, 1, "");
+					Pattern p = regexp_sel.get().getKey();
+					Integer groupNum = regexp_sel.get().getValue();
+					try {
+						newValue = replaceGroup(p, v, groupNum,  vop);
+					} catch (FuzzingEngineMatchFailure e) {
+						ATLASLog.logFuzzing("FuzzingEngineMatchFailure - " + event + e);
+					}
 				}
 				
 				newUpdate.setValue(newValue); 

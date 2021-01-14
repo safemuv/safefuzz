@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
@@ -31,6 +34,20 @@ class FuzzingConfig {
 	public void addMessageRecord(FuzzingMessageSelectionRecord mr) {
 		messageRecords.add(mr);
 		messageLookup.put(mr.getKey(), mr);
+	}
+	
+	public Optional<Pattern> getPatternByKey(String key) {
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		if (fr != null) {
+			return fr.getPattern();
+		} else return Optional.empty();
+	}
+	
+	public Optional<Map.Entry<Pattern,Integer>> getPatternAndGroupNum(String key) {
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		if (fr != null) {
+			return fr.getPatternAndGroupNum();
+		} else return Optional.empty();
 	}
 	
 	public Optional<FuzzingOperation> getOperationByKey(String key) {
@@ -79,4 +96,6 @@ class FuzzingConfig {
 		}
 		return out;
 	}
+	
+	
 }

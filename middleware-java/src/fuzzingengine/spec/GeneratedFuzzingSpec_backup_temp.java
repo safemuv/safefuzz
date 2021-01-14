@@ -17,8 +17,8 @@ public class GeneratedFuzzingSpec_backup_temp {
 	// TODO: set up the EGL code to generate the keys
 	// EGL: have EGL code for generating keys (not yet for the message setup)
 
-	FuzzingOperation test1_OP = NumericVariableChangeFuzzingOperation.Random(0.0, 10.0);
-	fe.addFuzzingKeyOperation("TEST1'", Optional.of("TEST1"), Optional.empty(), test1_OP);
+	FuzzingOperation test1_OP = DoubleVariableChange.Random(0.0, 10.0);
+	fe.addFuzzingKeyOperation("TEST1'", Optional.of("TEST1"), Optional.empty(), Optional.of("\\(([0-9]+),([0-9]+)\\)"), 2, test1_OP);
 	
 	// need to set up reflection for this key
 	fe.setSimMapping(simMapping); 
