@@ -9,6 +9,10 @@
       <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_8cC3YFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_upkYQFOVEeu-ze1bTRBqDw"/>
     </vars>
+    <vars xmi:id="_PctvEFbUEeu6WaQSprjfJg" component="_UPBngFbUEeu6WaQSprjfJg" variable="TESTXXX" reflectionName="TEST">
+      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_YpKQgFbUEeu6WaQSprjfJg" regexp="\\(([0-9]+),([0-9]+)\\)"/>
+    </vars>
     <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine"/>
+    <components xmi:id="_UPBngFbUEeu6WaQSprjfJg" name="test" componentRelativePath="/bin/test"/>
   </sims>
 </simmapping:VariableMappings>

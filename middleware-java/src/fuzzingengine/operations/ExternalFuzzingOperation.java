@@ -11,4 +11,8 @@ public class ExternalFuzzingOperation extends EventFuzzingOperation {
 		// TODO Auto-generated method stub
 		return event;
 	}
+
+	public static FuzzingOperation createFromParamString(String s) {
+		return null;
+	}
 }

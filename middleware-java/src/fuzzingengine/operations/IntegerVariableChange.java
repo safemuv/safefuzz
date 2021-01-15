@@ -46,4 +46,16 @@ public class IntegerVariableChange extends ValueFuzzingOperation {
 		}
 		return changed;
 	}
+	
+	public static FuzzingOperation createFromParamString(String s) throws CreationFailed {
+		String fields [] = s.split("\\|");
+		System.out.println(fields[0]);
+		if (fields[0].toUpperCase().equals("RANDOM")) {
+			int l = Integer.valueOf(fields[1]);
+			int r = Integer.valueOf(fields[2]);
+			return IntegerVariableChange.Random(l,r);
+		}
+		
+		throw new CreationFailed("Invalid parameter string " + s);
+	}
 }

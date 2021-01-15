@@ -18,29 +18,53 @@ public class FuzzingSimMapping {
 		private String component;
 		private String variable;
 		private String reflectionName;
-		// TODO: encode the type definition
 		private VariableDirection dir;
 		private Optional<String> binaryPath;
+		private Optional<String> regexp;
 		
-		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath) {
+		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp) {
 			this.component = component;
 			this.variable = variable;
 			this.reflectionName = reflectionName;
 			this.dir = dir;
 			this.binaryPath = binaryPath;
+			this.regexp = regexp;
+		}
+		
+		public Optional<String> getComponent() {
+			return Optional.of(component);
+		}
+		
+		public String getVariable() {
+			return variable;
+		}
+		
+		public Optional<String> getReflectionName() {
+			return Optional.of(reflectionName);
+		}
+		
+		public Optional<String> getRegexp() {
+			return regexp;
 		}
 	}
 	
 	// Maps the component name to variable specification
 	private HashMap<String, List<VariableSpecification>> records = new HashMap<String,List<VariableSpecification>>();
+	// Maps the variable name to variable specifications
+	private HashMap<String,VariableSpecification> recordsVariables = new HashMap<String,VariableSpecification>();
 	
-	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath) {
+	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex) {
 		if (!records.containsKey(component)) {
 			records.put(component, new ArrayList<VariableSpecification>());
 		}
 		
-		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath);
+		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex);
 		records.get(component).add(vs);
+		recordsVariables.put(variable, vs);
+	}
+	
+	public VariableSpecification getRecordForKey(String key) {
+		return recordsVariables.get(key);
 	}
 	
 	// Returns all the strings to mutate for a binary

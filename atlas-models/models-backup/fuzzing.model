@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzing:FuzzingSpec xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzing="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing ../com.github.atlas.dsl/fuzzing.ecore" xmi:id="_P292kD50EeunyIiPnuY6hQ">
+  <records xmi:id="_Sj3MoFOnEeu-ze1bTRBqDw">
+    <ftype xsi:type="fuzzing:VariableFuzzing" xmi:id="_Ls53MFTsEeueAJNriUq_7A" varNameToFuzz="DESIRED_THRUST"/>
+    <operation xmi:id="_iTsYsFT-EeueAJNriUq_7A" className="NumericVariableChangeFuzzingOperation"/>
+    <TimingSpec xsi:type="fuzzing:EntireTime" xmi:id="_tDMLIFOnEeu-ze1bTRBqDw"/>
+    <subspec xsi:type="fuzzing:NumericSubSpecSelection" xmi:id="_vER5IFOnEeu-ze1bTRBqDw"/>
+  </records>
+</fuzzing:FuzzingSpec>

@@ -3,23 +3,22 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Fuzzing" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing"
     nsPrefix="fuzzing">
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingEntitySelection" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="FuzzingOperation" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingOperationParameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingOperation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opParams" eType="#//FuzzingOperationParameter"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableFuzzing" eSuperTypes="#//FuzzingEntitySelection">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="varToFuzz" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//VariableSpecification"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="varNameToFuzz" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentFuzzing" eSuperTypes="#//FuzzingEntitySelection">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="component" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageFuzzing" eSuperTypes="#//FuzzingEntitySelection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="msg" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RelativeDoubleChange" eSuperTypes="#//FuzzingOperation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxChange" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConstantDoubleChange" eSuperTypes="#//FuzzingOperation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimingSpec" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="EntireTime" eSuperTypes="#//TimingSpec"/>

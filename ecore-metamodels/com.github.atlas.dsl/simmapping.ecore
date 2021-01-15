@@ -61,8 +61,6 @@
         eType="#//VariableSpecification" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableMappings">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>
   </eClassifiers>

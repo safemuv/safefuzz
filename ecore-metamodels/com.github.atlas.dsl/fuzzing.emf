@@ -8,11 +8,18 @@ import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
 abstract class FuzzingEntitySelection {
 }
 
-abstract class FuzzingOperation {
+class FuzzingOperationParameter {
+	attr String param;
+}
+
+class FuzzingOperation {
+	attr String className;
+	val FuzzingOperationParameter[0..1] opParams;
 }
 
 class VariableFuzzing extends FuzzingEntitySelection {
-	ref Simmapping.VariableSpecification varToFuzz;
+	//ref Simmapping.VariableSpecification varToFuzz;
+	attr String varNameToFuzz;
 }
 
 class ComponentFuzzing extends FuzzingEntitySelection {
@@ -23,15 +30,15 @@ class MessageFuzzing extends FuzzingEntitySelection {
 	ref Atlas.Message[0..1] msg;
 }
 
-class RelativeDoubleChange extends FuzzingOperation {
-	attr double maxLimit;
-	attr double minLimit;
-	attr double maxChange;
-}
+//class RelativeDoubleChange extends FuzzingOperation {
+//	attr double maxLimit;
+//	attr double minLimit;
+//	attr double maxChange;
+//}
 
-class ConstantDoubleChange extends FuzzingOperation {
-	attr double newValue;
-}
+//class ConstantDoubleChange extends FuzzingOperation {
+//	attr double newValue;
+//}
 
 abstract class TimingSpec {
 }

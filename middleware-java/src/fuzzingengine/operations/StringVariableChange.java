@@ -5,30 +5,30 @@ import java.util.Random;
 
 import fuzzingengine.DoubleLambda;
 
-public class DoubleVariableChange extends ValueFuzzingOperation {
+public class StringVariableChange extends ValueFuzzingOperation {
 	private final double defaultFixedChange = 0.0;
 	private String fixedChange = Double.toString(defaultFixedChange);
 	private Optional<DoubleLambda> generateDouble = Optional.empty();
 	
-	public DoubleVariableChange(DoubleLambda generateDouble) {
+	public StringVariableChange(DoubleLambda generateDouble) {
 		this.generateDouble = Optional.of(generateDouble);
 	}
 	
-	public DoubleVariableChange(double fixedChange) {
+	public StringVariableChange(double fixedChange) {
 		this.fixedChange = Double.toString(fixedChange);
 	}
 	
-	public static DoubleVariableChange Random(double lower, double upper) {
+	public static StringVariableChange Random(double lower, double upper) {
 		Random r = new Random();
 		double diff = upper - lower;
-		DoubleVariableChange op = new DoubleVariableChange(input -> lower + (diff * r.nextDouble()));
+		StringVariableChange op = new StringVariableChange(input -> lower + (diff * r.nextDouble()));
 		return op;
 	}
 	
-	public static DoubleVariableChange RandomOffset(double lower, double upper) {
+	public static StringVariableChange RandomOffset(double lower, double upper) {
 		Random r = new Random();
 		double diff = upper - lower;
-		DoubleVariableChange op = new DoubleVariableChange(input -> input + (lower + (diff * r.nextDouble())));
+		StringVariableChange op = new StringVariableChange(input -> input + (lower + (diff * r.nextDouble())));
 		return op;
 	}
 
@@ -46,7 +46,7 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 		return changed;
 	}
 
-	public static FuzzingOperation createFromParamString(String s) {
-		return null;
+	public static FuzzingOperation createFromParamString(String s) throws CreationFailed {
+		throw new CreationFailed("StringVariableChange unimplemented");
 	}
 }

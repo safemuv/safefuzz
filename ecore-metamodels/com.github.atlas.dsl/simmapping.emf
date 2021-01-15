@@ -77,7 +77,6 @@ class TopologySpecification {
 }
 
 class VariableMappings {
-	val VariableSpecification[*] vars; 
 	val Simulator[*] sims;
 }
 
