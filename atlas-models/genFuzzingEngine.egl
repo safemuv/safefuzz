@@ -25,7 +25,6 @@ The FuzzingEngine has to contain the information on how to encode the binary inf
 FuzzingEngine - get binary specifications
 	
 *]
-
 public class GeneratedFuzzingSpec {
 	public static FuzzingEngine createFuzzingEngine() {
 	FuzzingEngine fe = new FuzzingEngine();
@@ -44,7 +43,19 @@ public class GeneratedFuzzingSpec {
 	[% } %]
 		
 	[% for (f in Fuzzing!FuzzingInfoRecord.allInstances()) { %]
-		//FIR;
+		[% var ft = f.ftype; %]
+		[% if (ft.isKindOf(Fuzzing!VariableFuzzing)) { %]
+			[%= ft.varNameToFuzz %]
+			testing
+		[% } %]
+		
+		[% if (ft.isKindOf(Fuzzing!ComponentFuzzing)) { %]
+			// COMPONENT
+		[% } %]
+		
+		[% if (ft.isKindOf(Fuzzing!MessageFuzzing)) { %]
+			// MESSAGE
+		[% } %]
 	[% } %]
 	
 	
