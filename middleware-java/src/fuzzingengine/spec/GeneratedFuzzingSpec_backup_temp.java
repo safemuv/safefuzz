@@ -1,22 +1,30 @@
 package fuzzingengine.spec;
 
 import java.util.Optional;
-import fuzzingengine.*;
-import fuzzingengine.operations.*;
+import atlasdsl.Mission;
 
+import fuzzingengine.*;
 public class GeneratedFuzzingSpec_backup_temp {
-	public static FuzzingEngine createFuzzingEngine() {
-	FuzzingEngine fe = new FuzzingEngine();
+
+	public static FuzzingEngine createFuzzingEngine(Mission m) {
+	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
-	//simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 
-	//FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"), Optional.of("\\(([0-9]+),([0-9]+)\\)"));
-	//simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", 
-	//FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/cust/TESTBASE"));
-
+	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
+		Optional.empty()
+	);
+	simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
+		Optional.empty()
+	);
+	simMapping.addRecord("test", "TESTXXX", "TEST", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/test"),
+		Optional.of("\\(([0-9]+),([0-9]+)\\)")
+	);
 	
-	// need to set up reflection for this key
-	fe.setSimMapping(simMapping); 
+	fe.setSimMapping(simMapping);
+	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test.fuzz");
 	return fe;
 	}
 }

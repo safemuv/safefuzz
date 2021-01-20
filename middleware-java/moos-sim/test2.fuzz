@@ -1,0 +1,3 @@
+Key,TESTXXX,gilda,2,IntegerVariableChange,Random|0|10
+Component,uSimMarine,gilda,INBOUND,
+Message,TEST_MSG,TESTFIELD,2,IntegerVariableChange,Random|0|100

@@ -51,10 +51,11 @@ class CustomConfigurationFuzzing extends FuzzingNature {
 class FuzzingComponent {
     attr String name;
     attr String componentRelativePath; // relative to the base
+    val VariableSpecification[*] vars;
 }
 
 class VariableSpecification {
-	ref FuzzingComponent[1] component;
+	ref FuzzingComponent[0..1] component;
 	attr String variable;
 	attr String reflectionName; // This may be optional
 	val VariableType vtype;
@@ -62,21 +63,19 @@ class VariableSpecification {
  	val FuzzingNature nature;
 }
 
+class MessageReferences {
+	attr String messageName;
+	attr String messageFields;
+}
+
 class Simulator {
 	attr String name;
 	attr String baseDirectory;
-	val VariableSpecification[*] vars;
 	val FuzzingComponent[*] components;
-}
-
-class TopologySpecification {
-	val Simulator[1] sim;
-	val Atlas.Message[1] msg;
-	// The variables that are involved
-	val VariableSpecification[*] specs;
 }
 
 class VariableMappings {
 	val Simulator[*] sims;
+	val MessageReferences[*] messageRefs;
 }
 

@@ -2,21 +2,9 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Simmapping" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping"
     nsPrefix="simmapping">
-  <eClassifiers xsi:type="ecore:EEnum" name="VariableDirection">
-    <eLiterals name="INBOUND" value="1"/>
-    <eLiterals name="OUTBOUND" value="2"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="BasicVariableType">
-    <eLiterals name="CUSTOM" value="1"/>
-    <eLiterals name="STRING" value="2"/>
-    <eLiterals name="DOUBLE" value="3"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -32,36 +20,33 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentRelativePath"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
-        eType="#//FuzzingComponent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nature" eType="#//FuzzingNature"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageReferences">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageFields" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Simulator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseDirectory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
         eType="#//FuzzingComponent" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TopologySpecification">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sim" lowerBound="1" eType="#//Simulator"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="msg" lowerBound="1" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="specs" upperBound="-1"
-        eType="#//VariableSpecification" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableMappings">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageRefs" upperBound="-1"
+        eType="#//MessageReferences" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

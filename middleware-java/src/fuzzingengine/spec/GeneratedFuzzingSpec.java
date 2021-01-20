@@ -1,11 +1,13 @@
 package fuzzingengine.spec;
 
 import java.util.Optional;
-import fuzzingengine.*;
+import atlasdsl.Mission;
 
+import fuzzingengine.*;
 public class GeneratedFuzzingSpec {
-	public static FuzzingEngine createFuzzingEngine() {
-	FuzzingEngine fe = new FuzzingEngine();
+
+	public static FuzzingEngine createFuzzingEngine(Mission m) {
+	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 

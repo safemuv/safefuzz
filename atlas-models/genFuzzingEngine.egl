@@ -5,19 +5,22 @@ fuzzFileName gives the fuzzing definition file *]
 package fuzzingengine.spec;
 
 import java.util.Optional;
-import fuzzingengine.*;
+import atlasdsl.Mission;
 
+import fuzzingengine.*;
 public class GeneratedFuzzingSpec {
-	public static FuzzingEngine createFuzzingEngine() {
-	FuzzingEngine fe = new FuzzingEngine();
+
+	public static FuzzingEngine createFuzzingEngine(Mission m) {
+	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 [% for (s in SimMapping!Simulator.allInstances()) { %]
 	[% if (s.name == simName) { %]
-		[% var baseDir = s.baseDirectory; %]
-			[% for (vspec in s.vars) { %]
-			[% var c = vspec.component; %]
-			[% var vt = vspec.vtype; %]
+		[% for (comp in s.components) { %]
+			[% for (vspec in comp.vars) { %]
+				[% var baseDir = s.baseDirectory; %]
+				[% var c = vspec.component; %]
+				[% var vt = vspec.vtype; %]
 	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
 	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"),
 	[% if (vt.isKindOf(RegexpVariableType)) { %]
@@ -27,11 +30,12 @@ public class GeneratedFuzzingSpec {
 	[% } %]
 	);
 		[% } %]
+		[% } %]
 	[% } %]
 [% } %]
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("[%= fuzzFileName %]");
+	fe.setupFromFuzzingFile("[%= fuzzFileName %]", m);
 	return fe;
 	}
 }

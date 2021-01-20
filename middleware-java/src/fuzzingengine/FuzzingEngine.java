@@ -19,6 +19,7 @@ import javax.script.ScriptException;
 import java.lang.reflect.*;
 
 import atlasdsl.Message;
+import atlasdsl.Mission;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.operations.EventFuzzingOperation;
@@ -28,21 +29,31 @@ import middleware.core.*;
 import middleware.logging.ATLASLog;
 
 public class FuzzingEngine {
+	Mission m;
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
 
+	public FuzzingEngine(Mission m) {
+		this.m = m;
+	}
+	
 	public void addFuzzingKeyOperation(String fuzzingKey, int groupNum, FuzzingOperation op) {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
 		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName(), vr.getComponent(), vr.getRegexp(),
 				groupNum, op);
 		confs.addKeyRecord(fr);
 	}
+	
+	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op) {
+		// This operation has to produce the operation here
+	}
 
-	public void addFuzzingMessageOperation(String fuzzingMessageKey, Optional<String> fuzzingMessageKeyReflection,
-			Message m, Optional<String> regex, int groupNum, FuzzingOperation op) {
-		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(fuzzingMessageKey, m, op);
-		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection,
-				regex, groupNum, op);
+	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, FuzzingOperation op) throws InvalidMessage {
+		Message msg = m.getMessage(messageName);
+		// TODO: handle case where the given message is not defined in the mission
+		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
+		// TODO: get the regex info from the simmapping for the message
+		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection, regex, groupNum, op);
 		confs.addKeyRecord(kr);
 		confs.addMessageRecord(mr);
 	}
@@ -193,15 +204,16 @@ public class FuzzingEngine {
 						i++;
 					}
 					
-					// Scan for key
+					// Scan for key record in file
 					if (fields[0].toUpperCase().equals("KEY")) {
 						System.out.println("KEY based fuzzing");
 						String  varName = fields[1];
-						Integer groupNum = Integer.valueOf(fields[2]);
-						String  opClass = fields[3];
-						String params = fields[4];
+						// TODO: parse the vehicle names from here
+						String vehicleNames = fields[2];
+						Integer groupNum = Integer.valueOf(fields[3]);
+						String opClass = fields[4];
+						String params = fields[5];
 						
-						// Get the rest of params
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
@@ -210,19 +222,52 @@ public class FuzzingEngine {
 						}
 					}
 					
-					// Scan for component
+					// Scan for component record in file
 					if (fields[0].toUpperCase().equals("COMPONENT")) {
-						System.out.println("Implement component-based fuzzing reader");
+						// TODO: parse the vehicle names from here
+						String componentName = fields[1];
+						String vehicleNames = fields[2];
+						String dirString = fields[3];
+						String opClass = fields[4];
+						String params = fields[5];
+						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
+						if (op_o.isPresent()) {
+							FuzzingOperation op = op_o.get();
+							addFuzzingComponentOperation(componentName, op);
+							System.out.println("Installing fuzzing operation for " + componentName + " - " + op);
+						}
 					}
 					
 					// Scan for message
 					if (fields[0].toUpperCase().equals("MESSAGE")) {
 						System.out.println("Implement message-based fuzzing reader");
+						String messageName = fields[1];
+						// No vehicle names for messages - since they are pre-defined?
+						String messageFieldName = fields[2];
+						Integer groupNum = Integer.valueOf(fields[3]);
+						String opClass = fields[4];
+						String params = fields[5];
+						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
+						if (op_o.isPresent()) {
+							FuzzingOperation op = op_o.get();
+							// Where to get the regexp for the message fields? - in the model
+							try {
+								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, op);
+							} catch (InvalidMessage e) {
+								e.printStackTrace();
+								// TODO: raise exception to indicate the conversion failed
+							}
+							System.out.println("Installing fuzzing operation for " + messageName + ":" + messageFieldName + " - " + op);
+						}
 					}
+					
+
 				}
 			});
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
+
+
 }
