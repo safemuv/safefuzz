@@ -15,19 +15,19 @@ import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
 
 class FuzzingConfig {
-	// TODO: merge all of these together?
 	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
-	private HashMap<String, FuzzingKeySelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
+	private HashMap<String, FuzzingKeySelectionRecord> keysByComponentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
+	private HashMap<String, FuzzingComponentSelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingComponentSelectionRecord>();
+	
 	private HashMap<String, FuzzingMessageSelectionRecord> messageLookup = new LinkedHashMap<String, FuzzingMessageSelectionRecord>();
 	private List<FuzzingKeySelectionRecord> keyRecords = new ArrayList<FuzzingKeySelectionRecord>();
 	private List<FuzzingMessageSelectionRecord> messageRecords = new ArrayList<FuzzingMessageSelectionRecord>();
 	
-	// TODO: FuzzingComponentSelectionRecord?
 	public void addKeyRecord(FuzzingKeySelectionRecord fr) {
 		keyRecords.add(fr);
 		keyLookup.put(fr.getKey(), fr);
 		if (fr.hasComponent()) {
-			componentLookup.put(fr.getComponent(), fr);
+			keysByComponentLookup.put(fr.getComponent(), fr);
 		}
 	}
 	
@@ -58,7 +58,7 @@ class FuzzingConfig {
 	}
 	
 	public Optional<FuzzingOperation> getOperationByComponent(String component) {
-		FuzzingKeySelectionRecord fr = componentLookup.get(component);
+		FuzzingKeySelectionRecord fr = keysByComponentLookup.get(component);
 		if (fr != null) {
 			return Optional.of(fr.getOperation());
 		} else return Optional.empty();
@@ -96,6 +96,8 @@ class FuzzingConfig {
 		}
 		return out;
 	}
-	
-	
+
+	public void addComponentRecord(FuzzingComponentSelectionRecord cr) {
+		componentLookup.put(cr.componentName, cr);
+	}
 }

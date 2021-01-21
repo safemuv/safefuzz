@@ -23,8 +23,17 @@ public class GeneratedFuzzingSpec_backup_temp {
 		Optional.of("\\(([0-9]+),([0-9]+)\\)")
 	);
 	
+	
+	
+	simMapping.addRecord("NULL-DETECTION_TEST", "TESTMSG1", "TESTMSG1'", 
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
+		Optional.empty()
+	);
+
+	
+	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test.fuzz");
+	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test.fuzz", m);
 	return fe;
 	}
 }

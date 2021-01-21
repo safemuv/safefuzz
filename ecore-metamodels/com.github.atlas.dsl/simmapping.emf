@@ -42,22 +42,20 @@ class BinaryFuzzing extends FuzzingNature {
 }
 
 class CustomConfigurationFuzzing extends FuzzingNature {
-	// Specify how to perform the fuzzing
-	// Class name in the custom model
+	// Names a class to modify during code generation
+	attr String CustomFuzzingModifierClass;
 }
-
-// How to specify the information
 
 class FuzzingComponent {
     attr String name;
-    attr String componentRelativePath; // relative to the base
+    attr String componentRelativePath;
     val VariableSpecification[*] vars;
 }
 
 class VariableSpecification {
 	ref FuzzingComponent[0..1] component;
 	attr String variable;
-	attr String reflectionName; // This may be optional
+	attr String reflectionName; //May be optional
 	val VariableType vtype;
 	attr VariableDirection dir;
  	val FuzzingNature nature;
@@ -65,7 +63,7 @@ class VariableSpecification {
 
 class MessageReferences {
 	attr String messageName;
-	attr String messageFields;
+	val VariableSpecification[*] vars;
 }
 
 class Simulator {

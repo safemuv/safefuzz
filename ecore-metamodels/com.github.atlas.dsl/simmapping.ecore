@@ -2,20 +2,31 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Simmapping" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping"
     nsPrefix="simmapping">
+  <eClassifiers xsi:type="ecore:EEnum" name="VariableDirection">
+    <eLiterals name="INBOUND" value="1"/>
+    <eLiterals name="OUTBOUND" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BasicVariableType">
+    <eLiterals name="CUSTOM" value="1"/>
+    <eLiterals name="STRING" value="2"/>
+    <eLiterals name="DOUBLE" value="3"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
-        eType="#//VariableType" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingNature" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="CustomFuzzingModifierClass"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingComponent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentRelativePath"
@@ -29,13 +40,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nature" eType="#//FuzzingNature"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageReferences">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageFields" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Simulator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

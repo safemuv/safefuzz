@@ -45,15 +45,17 @@ public class FuzzingEngine {
 	}
 	
 	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op) {
-		// This operation has to produce the operation here
+		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op);
+		confs.addComponentRecord(cr);
 	}
 
 	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, FuzzingOperation op) throws InvalidMessage {
 		Message msg = m.getMessage(messageName);
+		VariableSpecification vr = simmapping.getRecordForKey(messageFieldName);
 		// TODO: handle case where the given message is not defined in the mission
 		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
 		// TODO: get the regex info from the simmapping for the message
-		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(fuzzingMessageKey, fuzzingMessageKeyReflection, regex, groupNum, op);
+		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName(), vr.getRegexp(), groupNum, op);
 		confs.addKeyRecord(kr);
 		confs.addMessageRecord(mr);
 	}
@@ -188,7 +190,7 @@ public class FuzzingEngine {
 		return Optional.empty();
 	}
 
-	public void setupFromFuzzingFile(String fileName) {
+	public void setupFromFuzzingFile(String fileName, Mission m) {
 		System.out.println("setupFromFuzzingFile - " + fileName);
 		try {
 			Files.readAllLines(Paths.get(fileName)).forEach(line -> {

@@ -93,4 +93,9 @@ public class FuzzingSimMapping {
 		System.out.println("TODO: Define getFullPath");
 		return "/tmp/uSimMarine";
 	}
+
+	public void addRecord(String string, String string2, Optional<Object> empty) {
+		// TODO Auto-generated method stub
+		
+	}
 }

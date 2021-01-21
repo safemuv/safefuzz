@@ -17,4 +17,7 @@
       </vars>
     </components>
   </sims>
+  <messageRefs xmi:id="_7TrPAFrKEeuyDa-U3oQ4FQ" messageName="DETECTION_TEST">
+    <vars xmi:id="_84iUAFrKEeuyDa-U3oQ4FQ" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
+  </messageRefs>
 </simmapping:VariableMappings>
