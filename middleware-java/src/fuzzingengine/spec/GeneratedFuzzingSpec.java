@@ -26,7 +26,7 @@ public class GeneratedFuzzingSpec {
 	
 			 
 	
-	simMapping.addRecord("NULL-DETECTION_TEST", "TESTMSG1", "TESTMSG1'", 
+	simMapping.addRecord("NULL-TEST_MSG", "TESTMSG1", "TESTMSG1'", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
 		Optional.empty()
 	);

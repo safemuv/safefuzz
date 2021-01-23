@@ -58,7 +58,7 @@ class FuzzingConfig {
 	}
 	
 	public Optional<FuzzingOperation> getOperationByComponent(String component) {
-		FuzzingKeySelectionRecord fr = keysByComponentLookup.get(component);
+		FuzzingComponentSelectionRecord fr = componentLookup.get(component);
 		if (fr != null) {
 			return Optional.of(fr.getOperation());
 		} else return Optional.empty();
@@ -99,5 +99,26 @@ class FuzzingConfig {
 
 	public void addComponentRecord(FuzzingComponentSelectionRecord cr) {
 		componentLookup.put(cr.componentName, cr);
+	}
+
+	public Optional<FuzzingOperation> getOperationByKeyAndVehicle(String key, String vehicle) {
+		// TODO: maybe lookup based on both key and vehicle
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		if (fr != null) {
+			if (fr.hasVehicle(vehicle)) {
+				return Optional.of(fr.getOperation());
+			}
+		} 
+		return Optional.empty();
+	}
+
+	public Optional<FuzzingOperation> getOperationByComponentAndVehicle(String componentName, String vehicle) {
+		FuzzingComponentSelectionRecord fr = componentLookup.get(componentName);
+		if (fr != null) {
+			if (fr.hasVehicle(vehicle)) {
+				return Optional.of(fr.getOperation());
+			}
+		} 
+		return Optional.empty();
 	}
 }

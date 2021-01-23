@@ -8,4 +8,8 @@ abstract public class FuzzingSelectionRecord {
 	public FuzzingSelectionRecord(FuzzingOperation op) {
 		this.op = op;
 	}
+	
+	protected FuzzingOperation getOperation() {
+		return op;
+	}
 }

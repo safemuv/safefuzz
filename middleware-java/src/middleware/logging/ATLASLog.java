@@ -48,7 +48,6 @@ public class ATLASLog {
 		try {
 			FileWriter w = getLog().fuzzingLog;
 			w.write(msg + "\n");
-			w.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -3,6 +3,7 @@ package fuzzingengine;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -20,6 +22,7 @@ import java.lang.reflect.*;
 
 import atlasdsl.Message;
 import atlasdsl.Mission;
+import atlasdsl.Robot;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.operations.EventFuzzingOperation;
@@ -37,15 +40,30 @@ public class FuzzingEngine {
 		this.m = m;
 	}
 	
-	public void addFuzzingKeyOperation(String fuzzingKey, int groupNum, FuzzingOperation op) {
+	private List<Robot> getVehicles(String vehicleList) throws MissingRobot {
+		// May need to check whether these vehicles match properly with the model
+		if (vehicleList.equals("all")) {
+			return m.getAllRobots();
+		} else if (vehicleList.equals("")) {
+			return m.getAllRobots();
+		} else {
+			List<String> vehicleNames = Arrays.asList(vehicleList.split("|"));
+			// TODO: check for the missing robots in the model
+			return vehicleNames.stream().map(name -> m.getRobot(name)).collect(Collectors.toList());
+		}
+	}
+	
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
+		List<Robot> vehicles = getVehicles(vehicleNameList);
 		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName(), vr.getComponent(), vr.getRegexp(),
-				groupNum, op);
+				groupNum, op, vehicles);
 		confs.addKeyRecord(fr);
 	}
 	
-	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op) {
-		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op);
+	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList) throws MissingRobot {
+		List<Robot> vehicles = getVehicles(vehicleNameList);
+		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op, vehicles);
 		confs.addComponentRecord(cr);
 	}
 
@@ -65,16 +83,16 @@ public class FuzzingEngine {
 		ATLASLog.logFuzzing("shouldFuzzCARSEvent called - " + event);
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
-
+			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
-			Optional<FuzzingOperation> op_o = confs.getOperationByKey(key);
+			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key,vehicle);
 			if (op_o.isPresent()) {
 				return op_o;
 			} else {
 				Optional<String> componentName_o = cv.getSourceComponent();
 				if (componentName_o.isPresent()) {
 					String componentName = componentName_o.get();
-					return confs.getOperationByComponent(componentName);
+					return confs.getOperationByComponentAndVehicle(componentName,vehicle);
 				} else {
 					return confs.hasMessageKey(key);
 				}
@@ -219,7 +237,11 @@ public class FuzzingEngine {
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
-							addFuzzingKeyOperation(varName, groupNum, op);
+							try {
+								addFuzzingKeyOperation(varName, vehicleNames, groupNum, op);
+							} catch (MissingRobot e) {
+								e.printStackTrace();
+							}
 							System.out.println("Installing fuzzing operation for " +varName + " - " + op);
 						}
 					}
@@ -230,12 +252,17 @@ public class FuzzingEngine {
 						String componentName = fields[1];
 						String vehicleNames = fields[2];
 						String dirString = fields[3];
+						// TODO: not using the direction string yet
 						String opClass = fields[4];
 						String params = fields[5];
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
-							addFuzzingComponentOperation(componentName, op);
+							try {
+								addFuzzingComponentOperation(componentName, op, vehicleNames);
+							} catch (MissingRobot e) {
+								e.printStackTrace();
+							}
 							System.out.println("Installing fuzzing operation for " + componentName + " - " + op);
 						}
 					}
