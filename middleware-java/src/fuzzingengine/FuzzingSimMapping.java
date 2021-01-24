@@ -89,13 +89,11 @@ public class FuzzingSimMapping {
 	}
 	
 	// Returns all the strings to mutate for a binary
-	public HashMap<String,String> getBinaryChanges(String component, HashMap<String,String> inNames) {
+	public HashMap<String,String> getBinaryChanges(String component, HashMap<String,String> inOutNames) {
 		//	TODO: returning null hashmap for getBinaryChanges 
-		// replace this with filtering the input names to determine any defined as binary
-		System.out.println("TODO: Define the binary changes from FuzzingSimMapping");
 		HashMap<String,String> binaryVars = new HashMap<String,String>();
 	
-		for (Map.Entry<String,String> me : inNames.entrySet()) {
+		for (Map.Entry<String,String> me : inOutNames.entrySet()) {
 			String inkey = me.getKey();
 			String outkey = me.getValue();
 			if (isBinary(me.getKey())) {

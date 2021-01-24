@@ -2,6 +2,7 @@ package carsspecific.moos.codegen;
 
 import carsspecific.moos.moosmapping.*;
 import fuzzingengine.FuzzingEngine;
+import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.MissingComponentPath;
 import middleware.atlascarsgenerator.*;
@@ -271,20 +272,23 @@ public class MOOSCodeGen extends CARSCodeGen {
 			}
 		}
 	}
+	
+
 
 	private void fuzzingEngineKeyChanges(FuzzingEngine fe, MOOSSimulation moossim) {
 		// Specifies what is added to fuzzing process name
 		final String PROCESSNAME_FUZZED_APPEND = "_f";
 
 		// Get all the selected components
-		Set<String> componentNames = fe.getComponents();
+		Set<String> componentNames = fe.getConfig().getComponentsByEither();
 		// Get the binary for the component
 		for (String component : componentNames) {
 			if (fe.getSimMapping().isBinary(component)) {
 				try {
 					String componentFullPath = fe.getSimMapping().getFullPath(component);
 					// Get the original/reflected variable name mappings
-					Map<String, String> varChanges = fe.getSimMapping().getBinaryChanges(component, fe.getVariables());
+					Map<String, String> varChanges = fe.getAllBinaryChanges(component);		
+					System.out.println("varChanges = " + varChanges);
 					String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
 
 					BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
@@ -296,6 +300,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 						// TODO: if we only want one robot to be fuzzed, ATLASDBWatch must only have
 						// this...
 						for (MOOSCommunity c : moossim.getAllCommunities()) {
+							String name = c.getCommunityName();
 							ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
 							dbInt.addWatchVariable(varSource);
 							MOOSProcess moosProcess = c.getProcess(component);

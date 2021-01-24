@@ -40,7 +40,7 @@ public class GeneratedFuzzingSpec {
 	
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test2.fuzz", m);
+	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/fuzz-configs/test-key.fuzz", m);
 	return fe;
 	}
 }

@@ -3,7 +3,6 @@ package middleware.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import atlasdsl.*;
@@ -16,7 +15,6 @@ import middleware.logging.ATLASLog;
 import middleware.missionmonitor.*;
 
 import fuzzingengine.*;
-import fuzzingengine.operations.*;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 // This code will be combined with the simulator-specific code

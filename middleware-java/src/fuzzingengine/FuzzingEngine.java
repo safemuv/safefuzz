@@ -10,14 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import java.lang.reflect.*;
 
@@ -176,16 +171,22 @@ public class FuzzingEngine {
 	public FuzzingSimMapping getSimMapping() {
 		return simmapping;
 	}
-
-	public Set<String> getComponents() {
-		// TODO: Return all selected components, either all components or those with a
-		// selected key,
-		// depending on mode
-		return confs.getComponents();
+	
+	public FuzzingConfig getConfig() {
+		return confs;
 	}
 
 	public HashMap<String, String> getVariables() {
-		return new HashMap<String, String>();
+		// Need to return: any variables from components enabled for binary fuzzing
+		// With either the component enabled for fuzzing
+		// Or the individual variable enabled
+		HashMap<String, String> vars = new HashMap<String,String>();
+		//for (confs.getAllKeysByComponent(component)) {
+		//	confs.getAllKeysByComponent
+		//}
+		
+		return vars;
+		
 	}
 
 	public void setSimMapping(FuzzingSimMapping simMapping) {
@@ -315,6 +316,15 @@ public class FuzzingEngine {
 			ex.printStackTrace();
 		}
 	}
-
-
+	
+	public Map<String,String> getAllBinaryChanges(String component) {
+		Map<String,String> inOut = new HashMap<String,String>();
+		List<FuzzingKeySelectionRecord> recs = getConfig().getAllKeysByComponent(component);
+		for (FuzzingKeySelectionRecord kr : recs) {
+			if (kr.getReflectionKey().isPresent()) {
+				inOut.put(kr.getKey(), kr.getReflectionKey().get());
+			}
+		}
+		return inOut;
+	}
 }

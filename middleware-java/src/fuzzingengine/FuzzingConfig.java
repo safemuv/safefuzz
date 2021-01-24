@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,7 +14,7 @@ import java.util.stream.Stream;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
 
-class FuzzingConfig {
+public class FuzzingConfig {
 	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
 	private HashMap<String, FuzzingKeySelectionRecord> keysByComponentLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
 	private HashMap<String, FuzzingComponentSelectionRecord> componentLookup = new LinkedHashMap<String, FuzzingComponentSelectionRecord>();
@@ -72,9 +71,21 @@ class FuzzingConfig {
 		} else return Optional.empty();
 	}
 	
-	public Set<String> getComponents() {
+	// This returns any component names that are selected by their key records selecting them for fuzzing
+	public Set<String> getComponentsByKeyRecords() {
+		System.out.println("keyRecords = " + keyRecords);
 		return keyRecords.stream()
 				.flatMap(c -> c.hasComponent() ? Stream.of(c.getComponent()) : Stream.empty()).collect(Collectors.toSet());
+	}
+	
+	// This returns any component names that are selected by component records selecting them for fuzzing
+	public Set<String> getComponent() {
+		return componentLookup.keySet();
+	}
+	
+	// This returns any components selected either directly, or selected because keys they contain are selected for fuzzing
+	public Set<String> getComponentsByEither() {
+		return Stream.concat(getComponent().stream(), getComponentsByKeyRecords().stream()).collect(Collectors.toSet());
 	}
 	
 	public Optional<FuzzingOperation> hasMessageKey(String key) {
@@ -122,5 +133,9 @@ class FuzzingConfig {
 			}
 		} 
 		return Optional.empty();
+	}
+	
+	public List<FuzzingKeySelectionRecord> getAllKeysByComponent(String component) {
+		return keyRecords.stream().filter(kr -> kr.getComponent().equals(component)).collect(Collectors.toList());
 	}
 }
