@@ -12,7 +12,7 @@ import fuzzingengine.operations.FuzzingOperation;
 public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	String key;
 	Optional<String> reflectionKey;
-	Optional<String> component;
+	Optional<String> component = Optional.empty();
 
 	Optional<String> regex;
 	Optional<Pattern> pattern;
@@ -53,7 +53,9 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		super(op);
 		this.key = key;
 		this.reflectionKey = reflectionKey;
+		this.component = Optional.empty();
 		this.groupNum = groupNum;
+		this.regex = regex;
 		setupPattern();
 	}
 

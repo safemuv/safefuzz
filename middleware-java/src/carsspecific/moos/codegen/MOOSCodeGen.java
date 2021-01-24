@@ -3,6 +3,7 @@ package carsspecific.moos.codegen;
 import carsspecific.moos.moosmapping.*;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingSimMapping;
+import fuzzingengine.MissingComponentPath;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
 import utils.binarymodify.BinaryModify;
@@ -200,7 +201,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 					shoreBroker.setProperty("bridge", "src=UHZ_CONFIG_ACK_$V,       alias=UHZ_CONFIG_ACK");
 					shoreBroker.setProperty("bridge", "src=UHZ_DETECTION_REPORT_$V, alias=UHZ_DETECTION_REPORT");
 					shoreBroker.setProperty("bridge", "src=HAZARDSET_REQUEST_$V,    alias=HAZARDSET_REQUEST");
-					
+
 					if (needShoresideObstacles) {
 						shoreBroker.setProperty("bridge", "src=GIVEN_OBSTACLE");
 						shoreBroker.setProperty("qbridge", "TRACKED_FEATURE");
@@ -209,7 +210,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 			}
 
 			setupActuators(mission, moossim, moosSharedVars);
-			
+
 			for (MOOSCommunity c : moossim.getAllCommunities()) {
 				c.registerSharedVars(moosSharedVars);
 
@@ -217,12 +218,11 @@ public class MOOSCodeGen extends CARSCodeGen {
 				// to watch the given variables for the middleware
 				createATLASLink(c, middlewareVars, atlasPort);
 			}
-			
+
 			// If there is a fuzzing engine, perform the fuzzing conversion
 			if (fe_o.isPresent()) {
 				FuzzingEngine fe = fe_o.get();
-				fuzzingEngineKeyChanges(fe, moossim);
-				fuzzingEngineMessageChange(fe, moossim);
+				fuzzingEngineAllChanges(fe, moossim);
 			}
 
 			// This returns a MOOS community without any faults
@@ -236,60 +236,79 @@ public class MOOSCodeGen extends CARSCodeGen {
 		}
 	}
 
+	private void fuzzingEngineAllChanges(FuzzingEngine fe, MOOSSimulation moossim) {
+		fuzzingEngineKeyChanges(fe, moossim);
+		fuzzingEngineComponentChanges(fe, moossim);
+		fuzzingEngineMessageChange(fe, moossim);
+	}
+
+	private void fuzzingEngineComponentChanges(FuzzingEngine fe, MOOSSimulation moossim) {
+		// TODO Auto-generated method stub
+	}
+
 	private void fuzzingEngineMessageChange(FuzzingEngine fe, MOOSSimulation moossim) {
-		// On the output message side, need to setup explicit pShare message settings for output keys
+		// On the output message side, need to setup explicit pShare message settings
+		// for output keys
 		for (MOOSCommunity community : moossim.getAllCommunities()) {
 			String robotName = community.getCommunityName();
 			List<String> outboundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.OUTBOUND);
 			PShareProcess pShare = (PShareProcess) community.getProcess("pShare");
 			ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) community.getProcess("ATLASDBInterface");
-			
+
 			for (String k : outboundKeys) {
 				String kprimed = k + "'";
-				System.out.println("For robot " + robotName + " adding outbound key to pShare reflection " + k + " -> " + kprimed);
+				System.out.println(
+						"For robot " + robotName + " adding outbound key to pShare reflection " + k + " -> " + kprimed);
 				pShare.addOutputRecord(k, kprimed);
 			}
-			
+
 			List<String> inBoundKeys = fe.getMessageKeys(robotName, FuzzingSimMapping.VariableDirection.INBOUND);
 			for (String k : inBoundKeys) {
 				String kprimed = k + "'";
-				System.out.println("For robot " + robotName + " adding inbound fuzzing key to ATLASDBWatch " + k + " -> " + kprimed);
+				System.out.println("For robot " + robotName + " adding inbound fuzzing key to ATLASDBWatch " + k
+						+ " -> " + kprimed);
 				dbInt.addWatchVariable(kprimed);
 			}
 		}
 	}
 
-	// TODO: may pull this out into another class - if there is something common from different simulators?
 	private void fuzzingEngineKeyChanges(FuzzingEngine fe, MOOSSimulation moossim) {
-		// Specifies what is added to fuzzing processe name
+		// Specifies what is added to fuzzing process name
 		final String PROCESSNAME_FUZZED_APPEND = "_f";
-		
+
 		// Get all the selected components
 		Set<String> componentNames = fe.getComponents();
 		// Get the binary for the component
 		for (String component : componentNames) {
-			String componentFullPath = fe.getSimMapping().getFullPath(component);
-				
-			// Get the original/reflected variable name mappings
-			Map<String,String> varChanges = fe.getSimMapping().getBinaryChanges(component, fe.getVariables());		
-			String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
-			try {
-				BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
-			} catch (IncorrectStringLength | IOException | InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			for (Map.Entry<String,String> me : varChanges.entrySet()) {
-				String varSource = me.getKey();
-				// Add all the source variables to ATLASDBInterface to access
-				// TODO: if we only want one robot to be fuzzed, ATLASDBWatch must only have this...
-				for (MOOSCommunity c : moossim.getAllCommunities()) {
-					ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
-					dbInt.addWatchVariable(varSource);
-					MOOSProcess moosProcess = c.getProcess(component);
-					if (moosProcess != null) {
-						moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
+			if (fe.getSimMapping().isBinary(component)) {
+				try {
+					String componentFullPath = fe.getSimMapping().getFullPath(component);
+					// Get the original/reflected variable name mappings
+					Map<String, String> varChanges = fe.getSimMapping().getBinaryChanges(component, fe.getVariables());
+					String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
+
+					BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
+
+
+					for (Map.Entry<String, String> me : varChanges.entrySet()) {
+						String varSource = me.getKey();
+						// Add all the source variables to ATLASDBInterface to access
+						// TODO: if we only want one robot to be fuzzed, ATLASDBWatch must only have
+						// this...
+						for (MOOSCommunity c : moossim.getAllCommunities()) {
+							ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
+							dbInt.addWatchVariable(varSource);
+							MOOSProcess moosProcess = c.getProcess(component);
+							if (moosProcess != null) {
+								moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
+							}
+						}
 					}
+				}
+				catch (IncorrectStringLength | IOException | InterruptedException e) {
+					e.printStackTrace();
+				} catch (MissingComponentPath e) {
+					e.printStackTrace();
 				}
 			}
 		}

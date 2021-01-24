@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
@@ -72,7 +73,8 @@ class FuzzingConfig {
 	}
 	
 	public Set<String> getComponents() {
-		return keyRecords.stream().map(c -> c.getComponent()).collect(Collectors.toSet());
+		return keyRecords.stream()
+				.flatMap(c -> c.hasComponent() ? Stream.of(c.getComponent()) : Stream.empty()).collect(Collectors.toSet());
 	}
 	
 	public Optional<FuzzingOperation> hasMessageKey(String key) {

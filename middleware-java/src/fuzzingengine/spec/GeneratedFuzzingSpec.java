@@ -10,6 +10,9 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+		
+	simMapping.setComponentFuzzingInfo("uSimMarine", FuzzingSimMapping.FuzzingNature.BINARY, Optional.empty(), Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"));
+		
 	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
 		Optional.empty()
@@ -18,6 +21,9 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
 		Optional.empty()
 	);
+		
+	simMapping.setComponentFuzzingInfo("test", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty());
+		
 	simMapping.addRecord("test", "TESTXXX", "TEST", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/test"),
 		Optional.of("\\(([0-9]+),([0-9]+)\\)")
@@ -34,7 +40,7 @@ public class GeneratedFuzzingSpec {
 	
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test.fuzz", m);
+	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/test2.fuzz", m);
 	return fe;
 	}
 }

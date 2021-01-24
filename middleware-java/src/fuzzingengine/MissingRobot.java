@@ -10,4 +10,8 @@ public class MissingRobot extends Exception {
 	public MissingRobot(String name) {
 		this.name = name;
 	}
+	
+	public String getName() {
+		return name;
+	}
 }

@@ -14,6 +14,12 @@ public class FuzzingSimMapping {
 		OUTBOUND
 	}
 	
+	public enum FuzzingNature {
+		BINARY,
+		CUSTOM_CONFIG,
+		NO_MODIFICATIONS
+	}
+	
 	public class VariableSpecification {
 		private String component;
 		private String variable;
@@ -48,10 +54,25 @@ public class FuzzingSimMapping {
 		}
 	}
 	
+	private class FuzzingComponentNatureInfo {
+		private String name;
+		private FuzzingNature nature;
+		private Optional<String> classNameString;
+		private Optional<String> fullPath;
+		
+		public FuzzingComponentNatureInfo(String name, FuzzingNature nature, Optional<String> classNameString, Optional<String> fullPath) {
+			this.name = name;
+			this.nature = nature;
+			this.classNameString = classNameString;
+			this.fullPath = fullPath;
+		}
+	}
+	
 	// Maps the component name to variable specification
 	private HashMap<String, List<VariableSpecification>> records = new HashMap<String,List<VariableSpecification>>();
 	// Maps the variable name to variable specifications
 	private HashMap<String,VariableSpecification> recordsVariables = new HashMap<String,VariableSpecification>();
+	private HashMap<String,FuzzingComponentNatureInfo> componentFuzzingInfo = new HashMap<String,FuzzingComponentNatureInfo>();
 	
 	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex) {
 		if (!records.containsKey(component)) {
@@ -84,18 +105,30 @@ public class FuzzingSimMapping {
 		return binaryVars;
 	}
 
-	private boolean isBinary(String key) {
-		return true;
+	public boolean isBinary(String component) {
+		// Get a record if it exists, indicate that the component nature is set to binary
+		FuzzingComponentNatureInfo fcni = componentFuzzingInfo.get(component);
+		if (fcni == null) {
+			return false;
+		} else {
+			return (fcni.nature == FuzzingNature.BINARY);
+		}
 	}
 
-	public String getFullPath(String component) {
-		// TODO Auto-generated method stub
-		System.out.println("TODO: Define getFullPath");
-		return "/tmp/uSimMarine";
+	public String getFullPath(String component) throws MissingComponentPath {
+		FuzzingComponentNatureInfo fcni = componentFuzzingInfo.get(component);
+		if (fcni == null) {
+			throw new MissingComponentPath(component);
+		} else {
+			Optional<String> p = fcni.fullPath;
+			if (p.isPresent()) {
+				return p.get();
+			} else throw new MissingComponentPath(component);
+		}
 	}
 
-	public void addRecord(String string, String string2, Optional<Object> empty) {
-		// TODO Auto-generated method stub
-		
+	public void setComponentFuzzingInfo(String component, FuzzingNature nature, Optional<String> classNameForConfig, Optional<String> fullPath) {
+		FuzzingComponentNatureInfo fcni = new FuzzingComponentNatureInfo(component, nature, classNameForConfig, fullPath);
+		componentFuzzingInfo.put(component,fcni);
 	}
 }

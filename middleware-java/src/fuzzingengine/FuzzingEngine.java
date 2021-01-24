@@ -3,6 +3,7 @@ package fuzzingengine;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -41,15 +42,23 @@ public class FuzzingEngine {
 	}
 	
 	private List<Robot> getVehicles(String vehicleList) throws MissingRobot {
-		// May need to check whether these vehicles match properly with the model
-		if (vehicleList.equals("all")) {
+		if (vehicleList.toUpperCase().equals("ALL")) {
 			return m.getAllRobots();
 		} else if (vehicleList.equals("")) {
 			return m.getAllRobots();
 		} else {
-			List<String> vehicleNames = Arrays.asList(vehicleList.split("|"));
-			// TODO: check for the missing robots in the model
-			return vehicleNames.stream().map(name -> m.getRobot(name)).collect(Collectors.toList());
+			List<String> vehicleNames = Arrays.asList(vehicleList.split("\\|"));
+			// Check for the missing robots in the model
+			List<Robot> robots = new ArrayList<Robot>();
+			for (String vn : vehicleNames) {
+				Robot r = m.getRobot(vn);
+				if (r != null) {
+					robots.add(r);
+				} else {
+					throw new MissingRobot(vn);
+				}
+			}
+			return robots;
 		}
 	}
 	
@@ -69,13 +78,20 @@ public class FuzzingEngine {
 
 	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, FuzzingOperation op) throws InvalidMessage {
 		Message msg = m.getMessage(messageName);
-		VariableSpecification vr = simmapping.getRecordForKey(messageFieldName);
-		// TODO: handle case where the given message is not defined in the mission
-		FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
-		// TODO: get the regex info from the simmapping for the message
-		FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName(), vr.getRegexp(), groupNum, op);
-		confs.addKeyRecord(kr);
-		confs.addMessageRecord(mr);
+		if (msg == null) {
+			throw new InvalidMessage(messageName, "Message not in model");
+		} else {
+			VariableSpecification vr = simmapping.getRecordForKey(messageFieldName);
+			if (vr == null) {
+				throw new InvalidMessage(messageName, "Simmapping key not present for message field name " + messageFieldName);
+			} else {
+				// TODO: handle case where the given message is not defined in the mission
+				FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName(), vr.getRegexp(), groupNum, op);
+				confs.addKeyRecord(kr);
+				confs.addMessageRecord(mr);
+			}
+		}
 	}
 
 	// TODO: this should be sensitive to the robot name and timing?
@@ -240,6 +256,7 @@ public class FuzzingEngine {
 							try {
 								addFuzzingKeyOperation(varName, vehicleNames, groupNum, op);
 							} catch (MissingRobot e) {
+								System.out.println("Missing robot: name = " + e.getName());
 								e.printStackTrace();
 							}
 							System.out.println("Installing fuzzing operation for " +varName + " - " + op);
@@ -283,6 +300,7 @@ public class FuzzingEngine {
 							try {
 								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, op);
 							} catch (InvalidMessage e) {
+								System.out.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
 								e.printStackTrace();
 								// TODO: raise exception to indicate the conversion failed
 							}

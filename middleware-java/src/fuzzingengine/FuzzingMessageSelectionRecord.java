@@ -12,18 +12,25 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
 	String robotNameFrom;
 	String robotNameTo;
 
+	private String lookupFirstComponentName(List<Component> cs) {
+		Component c = cs.get(0);
+		if (c instanceof Robot) {
+			Robot r = (Robot)cs.get(0);
+			return r.getName();
+		} else {
+			Computer co = (Computer)cs.get(0);
+			return co.getName();
+		}
+	}
+	
 	private String getRobotNameMessageFrom() {
 		List<Component> rnames = m.getFrom();
-		Component c = rnames.get(0);
-		Robot r = (Robot)rnames.get(0);
-		return r.getName();
+		return lookupFirstComponentName(rnames);
 	}
 	
 	private String getRobotNameMessageTo() {
 		List<Component> rnames = m.getTo();
-		Component c = rnames.get(0);
-		Robot r = (Robot)rnames.get(0);
-		return r.getName();
+		return lookupFirstComponentName(rnames);
 	}
 	
 	public FuzzingMessageSelectionRecord(String keyName, Message m, FuzzingOperation op) {
