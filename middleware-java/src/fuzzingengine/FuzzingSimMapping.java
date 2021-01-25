@@ -2,9 +2,12 @@ package fuzzingengine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 // Stores all the information for a simulator mapping
 public class FuzzingSimMapping {
@@ -45,12 +48,16 @@ public class FuzzingSimMapping {
 			return variable;
 		}
 		
-		public Optional<String> getReflectionName() {
+		public Optional<String> getReflectionName_opt() {
 			return Optional.of(reflectionName);
 		}
 		
 		public Optional<String> getRegexp() {
 			return regexp;
+		}
+		
+		public String getReflectionName() {
+			return reflectionName;
 		}
 	}
 	
@@ -86,6 +93,24 @@ public class FuzzingSimMapping {
 	
 	public VariableSpecification getRecordForKey(String key) {
 		return recordsVariables.get(key);
+	}
+	
+	public Set<VariableSpecification> getRecordsUponComponent(String component) {
+		//return recordsVariables.entrySet().stream()
+			//.filter(vr -> vr.getValue().getComponent().equals(component))
+			//.map(e -> vr.getValue())
+			//.collect(Collectors.toSet());
+		
+		Set<VariableSpecification> recs = new HashSet<VariableSpecification>();
+		for (Map.Entry<String, VariableSpecification> e : recordsVariables.entrySet()) {
+			Optional<String> s_o = e.getValue().getComponent();
+			if (s_o.isPresent()) {
+				if (s_o.get().equals(component)) {
+					recs.add(e.getValue());
+				}
+			}		
+		}
+		return recs;
 	}
 	
 	// Returns all the strings to mutate for a binary
@@ -128,5 +153,12 @@ public class FuzzingSimMapping {
 	public void setComponentFuzzingInfo(String component, FuzzingNature nature, Optional<String> classNameForConfig, Optional<String> fullPath) {
 		FuzzingComponentNatureInfo fcni = new FuzzingComponentNatureInfo(component, nature, classNameForConfig, fullPath);
 		componentFuzzingInfo.put(component,fcni);
+	}
+	
+	public Optional<String> getReflectionKey(String key) {
+		VariableSpecification vr = getRecordForKey(key);
+		if (vr != null) {
+			return Optional.of(vr.getReflectionName());
+		} else return Optional.empty();
 	}
 }

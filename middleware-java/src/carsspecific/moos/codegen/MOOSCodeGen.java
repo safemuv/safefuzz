@@ -243,9 +243,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 		fuzzingEngineMessageChange(fe, moossim);
 	}
 
-	private void fuzzingEngineComponentChanges(FuzzingEngine fe, MOOSSimulation moossim) {
-		// TODO Auto-generated method stub
-	}
+
 
 	private void fuzzingEngineMessageChange(FuzzingEngine fe, MOOSSimulation moossim) {
 		// On the output message side, need to setup explicit pShare message settings
@@ -273,8 +271,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 		}
 	}
 	
-
-
 	private void fuzzingEngineKeyChanges(FuzzingEngine fe, MOOSSimulation moossim) {
 		// Specifies what is added to fuzzing process name
 		final String PROCESSNAME_FUZZED_APPEND = "_f";
@@ -283,11 +279,12 @@ public class MOOSCodeGen extends CARSCodeGen {
 		Set<String> componentNames = fe.getConfig().getComponentsByEither();
 		// Get the binary for the component
 		for (String component : componentNames) {
+			System.out.println("component = " + component);
 			if (fe.getSimMapping().isBinary(component)) {
 				try {
 					String componentFullPath = fe.getSimMapping().getFullPath(component);
 					// Get the original/reflected variable name mappings
-					Map<String, String> varChanges = fe.getAllChanges(component);		
+					Map<String, String> varChanges = fe.getAllChanges(component);
 					System.out.println("varChanges = " + varChanges);
 					String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
 
@@ -318,7 +315,52 @@ public class MOOSCodeGen extends CARSCodeGen {
 				}
 			}
 		}
-		
-		
+	}
+	
+	// TODO: factor common things between fuzzingEngineKeyChanges and this
+	private void fuzzingEngineComponentChanges(FuzzingEngine fe, MOOSSimulation moossim) {
+		// Specifies what is added to fuzzing process name
+		final String PROCESSNAME_FUZZED_APPEND = "_f";
+
+		// Get all the selected components selected for component-based fuzzing
+		Set<String> componentNames = fe.getConfig().getComponents();
+		// Get the binary for the component
+		for (String component : componentNames) {
+			System.out.println("component = " + component);
+			if (fe.getSimMapping().isBinary(component)) {
+				try {
+					String componentFullPath = fe.getSimMapping().getFullPath(component);
+					// Get the original/reflected variable name mappings
+					Map<String, String> varChanges = fe.getAllChangesDefinedOn(component);
+					System.out.println("varChanges = " + varChanges);
+					String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
+
+					BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
+				} catch (IncorrectStringLength | IOException | InterruptedException e) {
+					e.printStackTrace();
+				} catch (MissingComponentPath e) {
+					e.printStackTrace();
+				}
+			}
+		}
+			
+		// Now do the fuzzing component variable name changes for the selected keys
+		for (MOOSCommunity c : moossim.getAllCommunities()) {
+				String cname = c.getCommunityName();
+				Set<String> componentNamesForRobot = fe.getConfig().getComponentsForRobot(cname);
+				for (String component : componentNamesForRobot) {
+					Map<String, String> varChanges = fe.getAllChangesDefinedOn(component);
+					System.out.println("varChanges = " + varChanges);
+					for (Map.Entry<String, String> me : varChanges.entrySet()) {
+						String varSource = me.getKey();			
+						ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
+						dbInt.addWatchVariable(varSource);
+						MOOSProcess moosProcess = c.getProcess(component);
+						if (moosProcess != null) {
+							moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
+						}
+				}
+			}
+		}
 	}
 }

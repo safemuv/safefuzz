@@ -60,7 +60,7 @@ public class FuzzingEngine {
 	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
 		List<Robot> vehicles = getVehicles(vehicleNameList);
-		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName(), vr.getComponent(), vr.getRegexp(),
+		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(), vr.getComponent(), vr.getRegexp(),
 				groupNum, op, vehicles);
 		confs.addKeyRecord(fr);
 	}
@@ -82,11 +82,25 @@ public class FuzzingEngine {
 			} else {
 				// TODO: handle case where the given message is not defined in the mission
 				FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
-				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName(), vr.getRegexp(), groupNum, op);
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName_opt(), vr.getRegexp(), groupNum, op);
 				confs.addKeyRecord(kr);
 				confs.addMessageRecord(mr);
 			}
 		}
+	}
+	
+	// need to test: look up the key in simmodel, is its specific component set as active
+	private Optional<FuzzingOperation> getOperationByInboundComponentAndVehicle(String key, String vehicle) {
+		VariableSpecification vr = simmapping.getRecordForKey(key);
+		if (vr != null) {
+			Optional<String> comp = vr.getComponent();
+			if (comp.isPresent()) {
+				System.out.println("comp = " + comp);
+				return confs.getOperationByOutboundComponentAndVehicle(comp.get(), vehicle);
+			}
+		}
+		
+		return Optional.empty();
 	}
 
 	// TODO: this should be sensitive to the robot name and timing?
@@ -103,8 +117,18 @@ public class FuzzingEngine {
 				Optional<String> componentName_o = cv.getSourceComponent();
 				if (componentName_o.isPresent()) {
 					String componentName = componentName_o.get();
-					return confs.getOperationByComponentAndVehicle(componentName,vehicle);
+					// Outbound operations are looked up based on their event's component
+					// name, obtained from MOOS or other sim
+					Optional<FuzzingOperation> op_2 = confs.getOperationByOutboundComponentAndVehicle(componentName,vehicle);
+					if (op_2.isPresent()) {
+						return op_2;
+					} else {
+						// Inbound operations have to be looked up based on the key name
+						// Check the simmapping to see if we have an active component for the key
+						return getOperationByInboundComponentAndVehicle(key, vehicle);
+					}
 				} else {
+					// TOOD: fix this for message based? - can this be merged with key based?
 					return confs.hasMessageKey(key);
 				}
 			}
@@ -117,7 +141,8 @@ public class FuzzingEngine {
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
 			String k = cv.getKey();
-			return confs.getReflectionKey(k);
+			//return confs.getReflectionKey(k);
+			return simmapping.getReflectionKey(k);
 		}
 		return Optional.empty();
 	}
@@ -281,7 +306,7 @@ public class FuzzingEngine {
 							} catch (MissingRobot e) {
 								e.printStackTrace();
 							}
-							System.out.println("Installing fuzzing operation for " + componentName + " - " + op);
+							System.out.println("Installing fuzzing operation for component " + componentName + " - " + op);
 						}
 					}
 					
@@ -317,13 +342,26 @@ public class FuzzingEngine {
 		}
 	}
 	
+	// This gets the explicitly selected keys upon this component
 	public Map<String,String> getAllChanges(String component) {
 		Map<String,String> inOut = new HashMap<String,String>();
+				
 		List<FuzzingKeySelectionRecord> recs = getConfig().getAllKeysByComponent(component);
 		for (FuzzingKeySelectionRecord kr : recs) {
 			if (kr.getReflectionKey().isPresent()) {
 				inOut.put(kr.getKey(), kr.getReflectionKey().get());
 			}
+		}
+		return inOut;
+	}
+	
+	// This gets the keys upon this component defined in the simmapping
+	public Map<String,String> getAllChangesDefinedOn(String component) {
+		Map<String,String> inOut = new HashMap<String,String>();
+		
+		Set<VariableSpecification> recs = getSimMapping().getRecordsUponComponent(component);
+		for (VariableSpecification vr : recs) {
+			inOut.put(vr.getVariable(), vr.getReflectionName());
 		}
 		return inOut;
 	}

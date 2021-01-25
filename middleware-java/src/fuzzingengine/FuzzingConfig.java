@@ -79,13 +79,13 @@ public class FuzzingConfig {
 	}
 	
 	// This returns any component names that are selected by component records selecting them for fuzzing
-	public Set<String> getComponent() {
+	public Set<String> getComponents() {
 		return componentLookup.keySet();
 	}
 	
 	// This returns any components selected either directly, or selected because keys they contain are selected for fuzzing
 	public Set<String> getComponentsByEither() {
-		return Stream.concat(getComponent().stream(), getComponentsByKeyRecords().stream()).collect(Collectors.toSet());
+		return Stream.concat(getComponents().stream(), getComponentsByKeyRecords().stream()).collect(Collectors.toSet());
 	}
 	
 	public Optional<FuzzingOperation> hasMessageKey(String key) {
@@ -121,12 +121,13 @@ public class FuzzingConfig {
 			if (fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
 			}
-		} 
+		}
 		return Optional.empty();
 	}
 
-	public Optional<FuzzingOperation> getOperationByComponentAndVehicle(String componentName, String vehicle) {
+	public Optional<FuzzingOperation> getOperationByOutboundComponentAndVehicle(String componentName, String vehicle) {
 		FuzzingComponentSelectionRecord fr = componentLookup.get(componentName);
+		//System.out.println("componentLookup for " + componentName + " resulting in " + fr);
 		if (fr != null) {
 			if (fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
@@ -134,7 +135,7 @@ public class FuzzingConfig {
 		} 
 		return Optional.empty();
 	}
-	
+		
 	public List<FuzzingKeySelectionRecord> getAllKeysByComponent(String component) {
 		return keyRecords.stream().filter(kr -> kr.getComponent().equals(component)).collect(Collectors.toList());
 	}
@@ -147,7 +148,7 @@ public class FuzzingConfig {
 	}
 	
 	// This returns any component names that are selected by component records selecting them for fuzzing on the given robot
-	public Set<String> getComponentForRobot(String rname) {
+	public Set<String> getComponentsForRobot(String rname) {
 		return componentLookup.entrySet().stream()
 				.filter(c -> c.getValue().hasVehicle(rname))
 				.map(c -> c.getKey())
@@ -156,7 +157,7 @@ public class FuzzingConfig {
 	
 	// This returns any components selected either directly, or selected because keys they contain are selected for fuzzing
 	public Set<String> getComponentsByEitherForRobot(String rname) {
-		return Stream.concat(getComponentForRobot(rname).stream(), 
+		return Stream.concat(getComponentsForRobot(rname).stream(), 
 							 getComponentsByKeyRecordsForRobot(rname).stream())
 				.collect(Collectors.toSet());
 	}
