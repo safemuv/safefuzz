@@ -16,10 +16,21 @@ public class GeneratedFuzzingSpec {
 	
 [% for (s in SimMapping!Simulator.allInstances()) { %]
 	[% if (s.name == simName) { %]
+	[% var baseDir = s.baseDirectory; %]
 		[% for (comp in s.components) { %]
+		[% var cnature = "FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS";
+		   var classstring = "Optional.empty()";
+	   	   var crelpathstr = "Optional.empty()"; %]
+		[% 	if (comp.nature.isKindOf(BinaryFuzzing)) {
+				cnature = "FuzzingSimMapping.FuzzingNature.BINARY";
+				classstring = "Optional.empty()";
+				crelpathstr = "Optional.of(\"" + baseDir + "/" + comp.componentRelativePath + "\")";
+			} %]
+		
+	simMapping.setComponentFuzzingInfo("[%= comp.name %]", [%= cnature %], [%= classstring %], [%= crelpathstr %]);
+		
 			[% for (vspec in comp.vars) { %]
-				[% var baseDir = s.baseDirectory; %]
-				[% var c = vspec.component; %]
+				[% var c = comp; %]
 				[% var vt = vspec.vtype; %]
 	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
 	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"),

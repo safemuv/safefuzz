@@ -198,6 +198,7 @@
   <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INIITAL_ELLA" from="_fXV6wHP-Eeqc6cv9mBHIKw" to="_gWMvsHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_Xw3_QJp3Eeqgh-vrPhaKXw" name="coords"/>
   </messages>
+  <messages xmi:id="_B5vysFxNEeu3VcdoygRUQw" name="TEST_MSG" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw"/>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-ELLA">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="speed" newValue="5.0"/>

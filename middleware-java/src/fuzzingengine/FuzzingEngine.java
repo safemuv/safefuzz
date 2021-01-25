@@ -317,7 +317,7 @@ public class FuzzingEngine {
 		}
 	}
 	
-	public Map<String,String> getAllBinaryChanges(String component) {
+	public Map<String,String> getAllChanges(String component) {
 		Map<String,String> inOut = new HashMap<String,String>();
 		List<FuzzingKeySelectionRecord> recs = getConfig().getAllKeysByComponent(component);
 		for (FuzzingKeySelectionRecord kr : recs) {

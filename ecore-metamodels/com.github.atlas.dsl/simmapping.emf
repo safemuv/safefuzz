@@ -50,6 +50,7 @@ class FuzzingComponent {
     attr String name;
     attr String componentRelativePath;
     val VariableSpecification[*] vars;
+    val FuzzingNature nature;
 }
 
 class VariableSpecification {
@@ -57,12 +58,12 @@ class VariableSpecification {
 	attr String variable;
 	attr String reflectionName; //May be optional
 	val VariableType vtype;
-	attr VariableDirection dir;
- 	val FuzzingNature nature;
+	attr VariableDirection dir; 	
 }
 
 class MessageReferences {
 	attr String messageName;
+	//ref Atlas.Message messageRef;
 	val VariableSpecification[*] vars;
 }
 

@@ -287,35 +287,38 @@ public class MOOSCodeGen extends CARSCodeGen {
 				try {
 					String componentFullPath = fe.getSimMapping().getFullPath(component);
 					// Get the original/reflected variable name mappings
-					Map<String, String> varChanges = fe.getAllBinaryChanges(component);		
+					Map<String, String> varChanges = fe.getAllChanges(component);		
 					System.out.println("varChanges = " + varChanges);
 					String componentFullPath_modified = componentFullPath + PROCESSNAME_FUZZED_APPEND;
 
 					BinaryModify.BBEModifyFile(componentFullPath, componentFullPath_modified, varChanges);
-
-
-					for (Map.Entry<String, String> me : varChanges.entrySet()) {
-						String varSource = me.getKey();
-						// Add all the source variables to ATLASDBInterface to access
-						// TODO: if we only want one robot to be fuzzed, ATLASDBWatch must only have
-						// this...
-						for (MOOSCommunity c : moossim.getAllCommunities()) {
-							String name = c.getCommunityName();
-							ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
-							dbInt.addWatchVariable(varSource);
-							MOOSProcess moosProcess = c.getProcess(component);
-							if (moosProcess != null) {
-								moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
-							}
-						}
-					}
-				}
-				catch (IncorrectStringLength | IOException | InterruptedException e) {
+				} catch (IncorrectStringLength | IOException | InterruptedException e) {
 					e.printStackTrace();
 				} catch (MissingComponentPath e) {
 					e.printStackTrace();
 				}
 			}
 		}
+			
+		// Now do the fuzzing component variable name changes for the selected keys
+		for (MOOSCommunity c : moossim.getAllCommunities()) {
+				String cname = c.getCommunityName();
+				Set<String> componentNamesForRobot = fe.getConfig().getComponentsByEitherForRobot(cname);
+				for (String component : componentNamesForRobot) {
+					Map<String, String> varChanges = fe.getAllChanges(component);
+					System.out.println("varChanges = " + varChanges);
+					for (Map.Entry<String, String> me : varChanges.entrySet()) {
+						String varSource = me.getKey();			
+						ATLASInterfaceProcess dbInt = (ATLASInterfaceProcess) c.getProcess("ATLASDBInterface");
+						dbInt.addWatchVariable(varSource);
+						MOOSProcess moosProcess = c.getProcess(component);
+						if (moosProcess != null) {
+							moosProcess.setProcessName(component + PROCESSNAME_FUZZED_APPEND);
+						}
+				}
+			}
+		}
+		
+		
 	}
 }

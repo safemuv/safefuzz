@@ -4,20 +4,20 @@
     <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine">
       <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST">
         <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_4yUXoFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
-        <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_tRt0gFOVEeu-ze1bTRBqDw"/>
       </vars>
       <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER">
         <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_8cC3YFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
-        <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_upkYQFOVEeu-ze1bTRBqDw"/>
       </vars>
+      <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
     <components xmi:id="_UPBngFbUEeu6WaQSprjfJg" name="test" componentRelativePath="/bin/test">
       <vars xmi:id="_PctvEFbUEeu6WaQSprjfJg" component="_UPBngFbUEeu6WaQSprjfJg" variable="TESTXXX" reflectionName="TEST">
         <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_YpKQgFbUEeu6WaQSprjfJg" regexp="\\(([0-9]+),([0-9]+)\\)"/>
       </vars>
+      <nature xsi:type="simmapping:CustomConfigurationFuzzing" xmi:id="_mAXYcF32Eeudl7r9rCrUPw" CustomFuzzingModifierClass="TestConfig"/>
     </components>
   </sims>
-  <messageRefs xmi:id="_7TrPAFrKEeuyDa-U3oQ4FQ" messageName="DETECTION_TEST">
+  <messageRefs xmi:id="_7TrPAFrKEeuyDa-U3oQ4FQ" messageName="TEST_MSG">
     <vars xmi:id="_84iUAFrKEeuyDa-U3oQ4FQ" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
   </messageRefs>
 </simmapping:VariableMappings>

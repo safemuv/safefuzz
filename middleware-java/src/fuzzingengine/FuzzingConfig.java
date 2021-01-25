@@ -138,4 +138,26 @@ public class FuzzingConfig {
 	public List<FuzzingKeySelectionRecord> getAllKeysByComponent(String component) {
 		return keyRecords.stream().filter(kr -> kr.getComponent().equals(component)).collect(Collectors.toList());
 	}
+	
+	// This returns any component names that are selected by their key records selecting them for fuzzing
+	public Set<String> getComponentsByKeyRecordsForRobot(String rname) {
+		System.out.println("keyRecords = " + keyRecords);
+		return keyRecords.stream()
+				.flatMap(r -> (r.hasComponent() && r.hasVehicle(rname)) ? Stream.of(r.getComponent()) : Stream.empty()).collect(Collectors.toSet());
+	}
+	
+	// This returns any component names that are selected by component records selecting them for fuzzing on the given robot
+	public Set<String> getComponentForRobot(String rname) {
+		return componentLookup.entrySet().stream()
+				.filter(c -> c.getValue().hasVehicle(rname))
+				.map(c -> c.getKey())
+				.collect(Collectors.toSet());
+	}
+	
+	// This returns any components selected either directly, or selected because keys they contain are selected for fuzzing
+	public Set<String> getComponentsByEitherForRobot(String rname) {
+		return Stream.concat(getComponentForRobot(rname).stream(), 
+							 getComponentsByKeyRecordsForRobot(rname).stream())
+				.collect(Collectors.toSet());
+	}
 }
