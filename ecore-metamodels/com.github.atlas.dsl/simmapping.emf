@@ -59,6 +59,7 @@ class VariableSpecification {
 	attr String reflectionName; //May be optional
 	val VariableType vtype;
 	attr VariableDirection dir; 	
+	ref OperationParameterSets[*] opParams;
 }
 
 class MessageReferences {
@@ -73,8 +74,63 @@ class Simulator {
 	val FuzzingComponent[*] components;
 }
 
-class VariableMappings {
+abstract class OperationParameter {
+	attr String name;
+}
+
+abstract class DoubleOperationParameter extends OperationParameter {
+}
+
+abstract class IntOperationParameter extends OperationParameter {
+}
+
+abstract class StringOperationParameter extends OperationParameter {
+}
+
+class DoubleConstantOperationParameter extends DoubleOperationParameter {
+	attr double value;
+}
+
+class DoubleListOperationParamter extends DoubleOperationParameter {
+	val Double[1..*] values;
+}
+
+class DoubleRangeOperationParameter extends DoubleOperationParameter {
+	attr double lower;
+	attr double upper;
+}
+
+class IntConstantOperationParameter extends IntOperationParameter {
+	attr int value;
+}
+
+class IntOperationParamter extends IntOperationParameter {
+	val Integer[1..*] values;
+}
+
+class IntRangeOperationParameter extends IntOperationParameter {
+	attr int lower;
+	attr int upper;
+}
+
+class StringListOperationParameter extends StringOperationParameter {
+	val String[1..*] values;
+}
+
+class OperationParameterSets {
+	ref FuzzingOperation[1] parent;
+	attr String name;
+	val OperationParameter[*] params;
+}
+
+class FuzzingOperation {
+	attr String operationClassName;
+	val OperationParameterSets[*]#parent paramSets;
+}
+
+class FuzzingSpecification {
 	val Simulator[*] sims;
 	val MessageReferences[*] messageRefs;
+	val FuzzingOperation[*] operations;
 }
 
