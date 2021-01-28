@@ -76,7 +76,8 @@ public class FuzzingEngine {
 		if (msg == null) {
 			throw new InvalidMessage(messageName, "Message not in model");
 		} else {
-			VariableSpecification vr = simmapping.getRecordForKey(messageFieldName);
+			String primedKeyName = messageFieldName + "'";
+			VariableSpecification vr = simmapping.getRecordForKey(primedKeyName);
 			if (vr == null) {
 				throw new InvalidMessage(messageName, "Simmapping key not present for message field name " + messageFieldName);
 			} else {
@@ -219,7 +220,6 @@ public class FuzzingEngine {
 	}
 
 	public List<String> getMessageKeys(String robotName, VariableDirection dir) {
-		// TODO: add these keys during generation process
 		return confs.getMessageKeys(robotName, dir);
 	}
 	
@@ -314,7 +314,7 @@ public class FuzzingEngine {
 					if (fields[0].toUpperCase().equals("MESSAGE")) {
 						System.out.println("Implement message-based fuzzing reader");
 						String messageName = fields[1];
-						// No vehicle names for messages - since they are pre-defined?
+						// No vehicle names for messages - since they are pre-defined
 						String messageFieldName = fields[2];
 						Integer groupNum = Integer.valueOf(fields[3]);
 						String opClass = fields[4];

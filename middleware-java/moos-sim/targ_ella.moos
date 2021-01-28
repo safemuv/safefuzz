@@ -47,8 +47,10 @@ ProcessConfig = pShare
 {
 AppTick = 2
 CommsTick = 2
-input = route =  localhost:9301
-output = src_name=Y, dest_name=B, route=localhost:9900
+input = route =  localhost:9201
+output = src_name=TESTMSG1, dest_name=TESTMSG1', route=localhost:9200
+output = src_name=Y, dest_name=B, route=localhost:9200
+
 }
 
 ProcessConfig = uSimMarine
@@ -144,7 +146,7 @@ ProcessConfig = uFldNodeBroker
 {
 AppTick = 1
 CommsTick = 1
-TRY_SHORE_HOST = pshare_route=localhost:9900
+TRY_SHORE_HOST = pshare_route=localhost:9200
 BRIDGE = src=VIEW_POLYGON
 BRIDGE = src=VIEW_POINT
 BRIDGE = src=VIEW_SEGLIST
@@ -186,6 +188,10 @@ WATCH_VAR = VAR_Y
 WATCH_VAR = DB_UPTIME
 WATCH_VAR = NODE_REPORT_ELLA
 WATCH_VAR = NODE_REPORT_FRANK
+WATCH_VAR = NODE_REPORT_GILDA
+WATCH_VAR = NODE_REPORT_HENRY
+WATCH_VAR = NODE_REPORT_BRIAN
+WATCH_VAR = NODE_REPORT_LINDA
 WATCH_VAR = UHZ_DETECTION_REPORT
 WATCH_VAR = UHZ_HAZARD_REPORT
 }

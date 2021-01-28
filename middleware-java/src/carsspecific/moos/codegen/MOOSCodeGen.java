@@ -243,8 +243,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 		fuzzingEngineMessageChange(fe, moossim);
 	}
 
-
-
 	private void fuzzingEngineMessageChange(FuzzingEngine fe, MOOSSimulation moossim) {
 		// On the output message side, need to setup explicit pShare message settings
 		// for output keys

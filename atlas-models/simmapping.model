@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
+<simmapping:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
   <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="MOOS-IVP" baseDirectory="/home/atlas/atlas/atlas-middleware/custom-moos">
     <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine">
       <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST">
@@ -10,14 +10,18 @@
       </vars>
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
-    <components xmi:id="_UPBngFbUEeu6WaQSprjfJg" name="test" componentRelativePath="/bin/test">
-      <vars xmi:id="_PctvEFbUEeu6WaQSprjfJg" component="_UPBngFbUEeu6WaQSprjfJg" variable="TESTXXX" reflectionName="TEST">
-        <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_YpKQgFbUEeu6WaQSprjfJg" regexp="\\(([0-9]+),([0-9]+)\\)"/>
-      </vars>
-      <nature xsi:type="simmapping:CustomConfigurationFuzzing" xmi:id="_mAXYcF32Eeudl7r9rCrUPw" CustomFuzzingModifierClass="TestConfig"/>
-    </components>
   </sims>
   <messageRefs xmi:id="_7TrPAFrKEeuyDa-U3oQ4FQ" messageName="TEST_MSG">
-    <vars xmi:id="_84iUAFrKEeuyDa-U3oQ4FQ" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
+    <vars xmi:id="_84iUAFrKEeuyDa-U3oQ4FQ" variable="TESTMSG1" reflectionName="TESTMSG1'" opParams="_QTw8wGChEeutnKr1ezKbgA"/>
   </messageRefs>
-</simmapping:VariableMappings>
+  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" messageName="DETECTION_ELLA">
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="DETECTION_NAME" reflectionName="DETECTION_NAME'"/>
+  </messageRefs>
+  <operations xmi:id="_OpmgEF_oEeuxLJxWnEYJKg" operationClassName="DoubleVariableChange"/>
+  <operations xmi:id="_GthrQF_xEeuxLJxWnEYJKg" operationClassName="DelayEvent"/>
+  <operations xmi:id="_YdKVwF_xEeuxLJxWnEYJKg" operationClassName="DiscardEvent">
+    <paramSets xmi:id="_QTw8wGChEeutnKr1ezKbgA" parent="_YdKVwF_xEeuxLJxWnEYJKg" name="DiscardEvent-fullrange">
+      <params xsi:type="simmapping:DoubleRangeOperationParameter" name="discardProbability" upper="1.0"/>
+    </paramSets>
+  </operations>
+</simmapping:FuzzingSpecification>

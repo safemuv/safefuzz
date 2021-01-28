@@ -52,7 +52,8 @@ public class GeneratedFuzzingSpec {
 			[% var c = vspec.component; 
 			   var cname;
 			   var crelpathstr;
-			   var reflectName;
+			   var primedName;
+			   var origName = vspec.variable;
 			%]
 			[% if (c.isDefined()) {
 				cname = c.name;
@@ -63,13 +64,14 @@ public class GeneratedFuzzingSpec {
 			}
 			 %]
 			 
-			 [* auto-prime if not defined *]
-			 [% if (not (vspec.reflectionName.isDefined())) { %]
-			 	reflectName = vspec.variable + "'";
-			 [% } %]
-			[% var vt = vspec.vtype; %]
+            [* We assume that the primed name is automatically computed by adding the 
+            character to the end, ignoring reflectionName, e.g. X -> X'. This is because later in 
+            FuzzingEngine.addFuzzingMessageOperation we assume X' is the name of the given simmapping key *]
+		 	[% primedName = origName + "'";
+			   var vt = vspec.vtype; %]
 	
-	simMapping.addRecord("[%= cname %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
+	[* The primed name is FIRST, since it is received by pShare at the recipient as the altered name *]
+	simMapping.addRecord("[%= cname %]", "[%= primedName %]", "[%= origName %]", 
 	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], [%= crelpathstr %],
 	[% if (vt.isKindOf(RegexpVariableType)) { %]
 		Optional.of("[%= vt.regexp %]")
