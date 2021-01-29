@@ -8,16 +8,16 @@ import fuzzingengine.operations.FuzzingOperation;
 
 public class FuzzingComponentSelectionRecord extends FuzzingSelectionRecord {
 	String componentName;
-	List<Robot> participants;
+	List<String> participants;
 	HashMap<String,Boolean> participantsLookup = new HashMap<String,Boolean>();
 	
 	private void setupParticipants() {
-		for (Robot r : participants) {
-			participantsLookup.put(r.getName(), true);
+		for (String n : participants) {
+			participantsLookup.put(n, true);
 		}
 	}
 	
-	public FuzzingComponentSelectionRecord(String componentName, FuzzingOperation op, List<Robot> participants) {
+	public FuzzingComponentSelectionRecord(String componentName, FuzzingOperation op, List<String> participants) {
 		super(op);
 		this.componentName = componentName;
 		this.participants = participants;

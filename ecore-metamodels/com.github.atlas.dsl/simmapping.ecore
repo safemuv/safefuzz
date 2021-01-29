@@ -73,7 +73,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="DoubleConstantOperationParameter" eSuperTypes="#//DoubleOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DoubleListOperationParamter" eSuperTypes="#//DoubleOperationParameter">
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleListOperationParameter" eSuperTypes="#//DoubleOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"
         containment="true"/>
@@ -85,7 +85,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="IntConstantOperationParameter" eSuperTypes="#//IntOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IntOperationParamter" eSuperTypes="#//IntOperationParameter">
+  <eClassifiers xsi:type="ecore:EClass" name="IntOperationParameter" eSuperTypes="#//IntOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"
         containment="true"/>
@@ -101,7 +101,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationParameterSets">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
-        eType="#//FuzzingOperation"/>
+        eType="#//FuzzingOperation" changeable="false" eOpposite="#//FuzzingOperation/paramSets"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
         eType="#//OperationParameter" containment="true"/>

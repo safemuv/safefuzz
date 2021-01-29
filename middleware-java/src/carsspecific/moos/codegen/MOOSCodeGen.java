@@ -225,6 +225,15 @@ public class MOOSCodeGen extends CARSCodeGen {
 				FuzzingEngine fe = fe_o.get();
 				fuzzingEngineAllChanges(fe, moossim);
 			}
+			
+			// The catch-all output element in pShare has to be inserted AFTER the
+			// fuzzing engine modifications (since messaage keys modify pShare).
+			// Otherwise, it is ignored
+			for (MOOSCommunity c : moossim.getAllCommunities()) {
+				c.registerSharedVars(moosSharedVars);
+				PShareProcess ps = (PShareProcess)c.getProcess("pShare");
+				ps.setCatchAllOutputRecord();
+			}
 
 			// This returns a MOOS community without any faults
 			// There will be a later stage to modify the community to inject faults.

@@ -26,6 +26,7 @@ public class FuzzingConfig {
 	public void addKeyRecord(FuzzingKeySelectionRecord fr) {
 		keyRecords.add(fr);
 		keyLookup.put(fr.getKey(), fr);
+		System.out.println("adding key record: key " + fr.getKey());
 		if (fr.hasComponent()) {
 			keysByComponentLookup.put(fr.getComponent(), fr);
 		}
@@ -120,6 +121,8 @@ public class FuzzingConfig {
 		if (fr != null) {
 			if (fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
+			} else {
+				System.out.println("hasVehicle " + vehicle + " is false");
 			}
 		}
 		return Optional.empty();

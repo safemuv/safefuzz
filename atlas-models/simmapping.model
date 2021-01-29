@@ -2,7 +2,7 @@
 <simmapping:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
   <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="MOOS-IVP" baseDirectory="/home/atlas/atlas/atlas-middleware/custom-moos">
     <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine">
-      <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST" opParams="_muKTcGHkEeuhOsiHBV6TXQ">
+      <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST" opParams="_muKTcGHkEeuhOsiHBV6TXQ _lDtCgGJBEeukWa_atNvm4w">
         <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_4yUXoFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
       </vars>
       <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER">
@@ -11,15 +11,15 @@
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
   </sims>
-  <messageRefs xmi:id="_7TrPAFrKEeuyDa-U3oQ4FQ" messageName="TEST_MSG">
-    <vars xmi:id="_84iUAFrKEeuyDa-U3oQ4FQ" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
-  </messageRefs>
   <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" messageName="DETECTION_ELLA">
-    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="DETECTION_NAME" reflectionName="DETECTION_NAME'"/>
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
     <paramSets xmi:id="_muKTcGHkEeuhOsiHBV6TXQ" name="DeleteEvent-fiftypercent">
       <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_oxA8AGHkEeuhOsiHBV6TXQ" name="dropProbability" value="0.5"/>
+    </paramSets>
+    <paramSets xmi:id="_lDtCgGJBEeukWa_atNvm4w" name="Delete-everything">
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_m-la0GJBEeukWa_atNvm4w" name="dropProbability" value="1.0"/>
     </paramSets>
   </operations>
 </simmapping:FuzzingSpecification>

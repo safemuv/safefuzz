@@ -159,4 +159,16 @@ public class Mission {
 	public boolean hasObstacles() {
 		return obstacles.size() > 0;
 	}
+	
+	public List<String> getAllRobotAndComputerNames() {
+		List<String> names = new ArrayList<String>();
+		for (Robot r : getAllRobots()) {
+			names.add(r.getName());
+		}
+		
+		for (Computer c : getAllComputers()) {
+			names.add(c.getName());
+		}		
+		return names;
+	}
 }

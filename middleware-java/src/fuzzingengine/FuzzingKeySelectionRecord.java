@@ -1,11 +1,13 @@
 package fuzzingengine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import atlasdsl.Component;
 import atlasdsl.Robot;
 import fuzzingengine.operations.FuzzingOperation;
 
@@ -17,7 +19,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	Optional<String> regex;
 	Optional<Pattern> pattern;
 	Optional<String> vehicleSelection;
-	List<Robot> participants;
+	List<String> participants = new ArrayList<String>();
 	HashMap<String,Boolean> participantsLookup = new HashMap<String,Boolean>();
 	int groupNum;
 
@@ -30,13 +32,13 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 	
 	private void setupParticipants() {
-		for (Robot r : participants) {
-			participantsLookup.put(r.getName(), true);
+		for (String r : participants) {
+			participantsLookup.put(r, true);
 		}
 	}
 	
 	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex,
-			int groupNum, FuzzingOperation op, List<Robot> participants) {
+			int groupNum, FuzzingOperation op, List<String> participants) {
 		super(op);
 		this.key = key;
 		this.reflectionKey = reflectionKey;
@@ -57,6 +59,11 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.groupNum = groupNum;
 		this.regex = regex;
 		setupPattern();
+	}
+	
+	public void addParticipant(String r) {
+		participants.add(r);
+		participantsLookup.put(r,true);
 	}
 
 	public String getKey() {

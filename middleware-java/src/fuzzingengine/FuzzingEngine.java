@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 
 import java.lang.reflect.*;
 
+import atlasdsl.Component;
+import atlasdsl.Computer;
 import atlasdsl.Message;
 import atlasdsl.Mission;
 import atlasdsl.Robot;
@@ -36,37 +38,31 @@ public class FuzzingEngine {
 		this.m = m;
 	}
 	
-	private List<Robot> getVehicles(String vehicleList) throws MissingRobot {
+
+	
+	private List<String> getVehicles(String vehicleList) throws MissingRobot {
 		if (vehicleList.toUpperCase().equals("ALL")) {
-			return m.getAllRobots();
+			return m.getAllRobotAndComputerNames();
 		} else if (vehicleList.equals("")) {
-			return m.getAllRobots();
+			return m.getAllRobotAndComputerNames();
+
 		} else {
 			List<String> vehicleNames = Arrays.asList(vehicleList.split("\\|"));
 			// Check for the missing robots in the model
-			List<Robot> robots = new ArrayList<Robot>();
-			for (String vn : vehicleNames) {
-				Robot r = m.getRobot(vn);
-				if (r != null) {
-					robots.add(r);
-				} else {
-					throw new MissingRobot(vn);
-				}
-			}
-			return robots;
+			return vehicleNames;
 		}
 	}
 	
 	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
-		List<Robot> vehicles = getVehicles(vehicleNameList);
+		List<String> vehicles = getVehicles(vehicleNameList);
 		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(), vr.getComponent(), vr.getRegexp(),
 				groupNum, op, vehicles);
 		confs.addKeyRecord(fr);
 	}
 	
 	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList) throws MissingRobot {
-		List<Robot> vehicles = getVehicles(vehicleNameList);
+		List<String> vehicles = getVehicles(vehicleNameList);
 		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op, vehicles);
 		confs.addComponentRecord(cr);
 	}
@@ -83,7 +79,30 @@ public class FuzzingEngine {
 			} else {
 				// TODO: handle case where the given message is not defined in the mission
 				FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
-				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(messageFieldName, vr.getReflectionName_opt(), vr.getRegexp(), groupNum, op);
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getRegexp(), groupNum, op);
+
+				// For all dests, have to set them as a participant for the fuzzing key record
+				List<Component> cDests = msg.getTo();
+				
+				for (Component c : cDests) {
+					String destName;
+					if (c instanceof Computer) {
+						Computer comp = (Computer)c;
+						destName = comp.getName();
+						kr.addParticipant(destName);
+						System.out.println("Adding participant " + destName);
+					}
+				} 
+				
+				for (Component c : cDests) {
+					String destName;
+					if (c instanceof Robot) {
+						Robot r = (Robot)c;
+						destName = r.getName();
+						kr.addParticipant(destName);
+					}
+				}
+
 				confs.addKeyRecord(kr);
 				confs.addMessageRecord(mr);
 			}
@@ -106,11 +125,11 @@ public class FuzzingEngine {
 
 	// TODO: this should be sensitive to the robot name and timing?
 	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
-		ATLASLog.logFuzzing("shouldFuzzCARSEvent called - " + event);
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
 			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
+			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
 			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key,vehicle);
 			if (op_o.isPresent()) {
 				return op_o;

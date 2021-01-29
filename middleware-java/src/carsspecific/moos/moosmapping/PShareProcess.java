@@ -11,7 +11,6 @@ public class PShareProcess extends MOOSProcess {
 		this.pSharePortBase = pSharePortBase;
 		int inputPort = pShareOrigBase + portOffset;
 		setProperty("input","route =  localhost:" + Integer.toString(inputPort));
-		setProperty("output","src_name=Y, dest_name=B, route=localhost:" + Integer.toString(pSharePortBase));
 	}
 	
 	public void addShoresideInput() {
@@ -20,5 +19,9 @@ public class PShareProcess extends MOOSProcess {
 	
 	public void addOutputRecord(String srcName, String dstName) {
 		setProperty("output","src_name=" + srcName + ", dest_name=" + dstName + ", route=localhost:" + Integer.toString(pSharePortBase));
+	}
+	
+	public void setCatchAllOutputRecord() {
+		setProperty("output","src_name=Y, dest_name=B, route=localhost:" + Integer.toString(pSharePortBase));
 	}
 }
