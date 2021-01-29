@@ -118,7 +118,7 @@ class StringListOperationParameter extends StringOperationParameter {
 }
 
 class OperationParameterSets {
-	ref FuzzingOperation[1] parent;
+	readonly ref FuzzingOperation[1]#paramSets parent;
 	attr String name;
 	val OperationParameter[*] params;
 }
