@@ -1,1 +1,37 @@
-Testing 123
+[* For key based fuzzing generation *]
+
+[* Lookup the participants from the mission model *]
+[% for (fexpt in FuzzingExpt!FuzzingExperiment.allInstances()) { 
+	for (sel in fexpt.sels) { %] 
+	
+	[* For variable-based fuzzing generation *]
+	[% if (sel.isKindOf(FuzzingExpt!VariableFuzzingSelection)) { 
+		var v = sel.varChoice;
+		var vname = v.variable;
+		var participants = getParticipantsAsList(sel);
+		var regexNum = 0;
+		var opString = chooseFuzzingOperationAsString(sel);
+		
+	%] 
+Key,[%= vname %],[%= participants %],[%= regexNum %],[%= opString %]
+	[% } %]
+[% } %]
+[% } %]
+
+[* TODO: extract the participants from the model
+For now, just returning a single string
+ *]
+[%
+operation getParticipantsAsList(sel) : String {
+	return "gilda";
+}
+%]
+
+[* TODO: return the fuzzing engine and suitable parameters as a string 
+For now just returning a constant
+*]
+[%
+operation chooseFuzzingOperationAsString(sel) : String {
+	return "DoubleVariableChange,Random|0.0|10.0"; 
+}
+%]
