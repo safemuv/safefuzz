@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzingexpt:FuzzingExperiment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzingexpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzingexpt" xmi:id="_WVM6AGTvEeu9Uu45mkkD9Q" name="TESTING">
+  <sels xsi:type="fuzzingexpt:ComponentFuzzingSelection" xmi:id="_6chUMGT0Eeu9Uu45mkkD9Q"/>
+  <sels xsi:type="fuzzingexpt:VariableFuzzingSelection" xmi:id="_8UTVMGT0Eeu9Uu45mkkD9Q"/>
+</fuzzingexpt:FuzzingExperiment>

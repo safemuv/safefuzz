@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="FuzzingExpt" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzingexpt"
+    nsPrefix="fuzzingexpt">
+  <eClassifiers xsi:type="ecore:EClass" name="ParticipantChoice" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecificParticipantChoice">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//NamedComponent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AllParticipantChoice" eSuperTypes="#//ParticipantChoice"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingSelection" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantChoice" lowerBound="1"
+        eType="#//ParticipantChoice" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opParams" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//OperationParameterSets"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentFuzzingSelection" eSuperTypes="#//FuzzingSelection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="componentChoice" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//FuzzingComponent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableFuzzingSelection" eSuperTypes="#//FuzzingSelection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varChoice" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//VariableSpecification"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageFuzzingSelection" eSuperTypes="#//FuzzingSelection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="msgChoice" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping#//FuzzingMessage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingExperiment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sels" upperBound="-1" eType="#//FuzzingSelection"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

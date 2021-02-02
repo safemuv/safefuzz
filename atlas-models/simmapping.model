@@ -11,7 +11,8 @@
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
   </sims>
-  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" messageName="DETECTION_ELLA">
+  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA">
+    <messageRef href="mission.model#_HTGtQHfxEeq8sKdfSq6qug"/>
     <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">

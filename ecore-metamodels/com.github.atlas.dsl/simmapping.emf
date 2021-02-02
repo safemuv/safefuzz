@@ -15,6 +15,7 @@ enum BasicVariableType {
 }
 
 abstract class VariableType {
+
 }
 
 // Info for the grammar
@@ -62,9 +63,8 @@ class VariableSpecification {
 	ref OperationParameterSets[*] opParams;
 }
 
-class MessageReferences {
-	attr String messageName;
-	//ref Atlas.Message messageRef;
+class FuzzingMessage {
+	ref Atlas.Message messageRef;
 	val VariableSpecification[*] vars;
 }
 
@@ -91,8 +91,8 @@ class DoubleConstantOperationParameter extends DoubleOperationParameter {
 	attr double value;
 }
 
-class DoubleListOperationParamter extends DoubleOperationParameter {
-	val Double[1..*] values;
+class DoubleListOperationParameter extends DoubleOperationParameter {
+	attr Double[1..*] values;
 }
 
 class DoubleRangeOperationParameter extends DoubleOperationParameter {
@@ -104,8 +104,8 @@ class IntConstantOperationParameter extends IntOperationParameter {
 	attr int value;
 }
 
-class IntOperationParamter extends IntOperationParameter {
-	val Integer[1..*] values;
+class IntListOperationParameter extends IntOperationParameter {
+	attr Integer[1..*] values;
 }
 
 class IntRangeOperationParameter extends IntOperationParameter {
@@ -114,10 +114,10 @@ class IntRangeOperationParameter extends IntOperationParameter {
 }
 
 class StringListOperationParameter extends StringOperationParameter {
-	val String[1..*] values;
+	attr String[1..*] values;
 }
 
-class OperationParameterSets {
+class OperationParameterSet {
 	readonly ref FuzzingOperation[1]#paramSets parent;
 	attr String name;
 	val OperationParameter[*] params;
@@ -125,12 +125,12 @@ class OperationParameterSets {
 
 class FuzzingOperation {
 	attr String operationClassName;
-	val OperationParameterSets[*]#parent paramSets;
+	val OperationParameterSet[*]#parent paramSets;
 }
 
 class FuzzingSpecification {
 	val Simulator[*] sims;
-	val MessageReferences[*] messageRefs;
+	val FuzzingMessage[*] messageRefs;
 	val FuzzingOperation[*] operations;
 }
 

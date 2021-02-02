@@ -1,0 +1,40 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzingexpt", prefix="fuzzingexpt")
+package FuzzingExpt;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+
+abstract class ParticipantChoice {
+}
+
+class SpecificParticipantChoice {
+	ref Atlas.NamedComponent[0..*] participants;
+} 
+
+class AllParticipantChoice extends ParticipantChoice {
+	
+}
+
+abstract class FuzzingSelection {
+	val ParticipantChoice[1] participantChoice;
+	ref Simmapping.OperationParameterSets opParams;
+}
+
+class ComponentFuzzingSelection extends FuzzingSelection {
+	ref Simmapping.FuzzingComponent componentChoice;
+}
+
+class VariableFuzzingSelection extends FuzzingSelection {
+	ref Simmapping.VariableSpecification varChoice;
+}
+
+class MessageFuzzingSelection extends FuzzingSelection {
+	ref Simmapping.FuzzingMessage msgChoice;
+}
+
+class FuzzingExperiment {
+	// Use 0 for an empty experiment
+	attr String name;
+	val FuzzingSelection[0..*] sels;
+}

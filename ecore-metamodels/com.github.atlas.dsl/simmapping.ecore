@@ -50,8 +50,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="opParams" upperBound="-1"
         eType="#//OperationParameterSets"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MessageReferences">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzingMessage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageRef" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
         containment="true"/>
   </eClassifiers>
@@ -74,9 +74,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DoubleListOperationParameter" eSuperTypes="#//DoubleOperationParameter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DoubleRangeOperationParameter" eSuperTypes="#//DoubleOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
@@ -85,19 +84,17 @@
   <eClassifiers xsi:type="ecore:EClass" name="IntConstantOperationParameter" eSuperTypes="#//IntOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IntOperationParameter" eSuperTypes="#//IntOperationParameter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntListOperationParameter" eSuperTypes="#//IntOperationParameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IntRangeOperationParameter" eSuperTypes="#//IntOperationParameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="upper" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringListOperationParameter" eSuperTypes="#//StringOperationParameter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationParameterSets">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
@@ -115,7 +112,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageRefs" upperBound="-1"
-        eType="#//MessageReferences" containment="true"/>
+        eType="#//FuzzingMessage" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
         eType="#//FuzzingOperation" containment="true"/>
   </eClassifiers>

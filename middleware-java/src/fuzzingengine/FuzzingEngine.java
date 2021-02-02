@@ -38,8 +38,6 @@ public class FuzzingEngine {
 		this.m = m;
 	}
 	
-
-	
 	private List<String> getVehicles(String vehicleList) throws MissingRobot {
 		if (vehicleList.toUpperCase().equals("ALL")) {
 			return m.getAllRobotAndComputerNames();
