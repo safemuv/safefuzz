@@ -60,10 +60,11 @@ class VariableSpecification {
 	attr String reflectionName; //May be optional
 	val VariableType vtype;
 	attr VariableDirection dir; 	
-	ref OperationParameterSets[*] opParams;
+	ref OperationParameterSet[*] opParams;
 }
 
 class FuzzingMessage {
+	attr String name;
 	ref Atlas.Message messageRef;
 	val VariableSpecification[*] vars;
 }

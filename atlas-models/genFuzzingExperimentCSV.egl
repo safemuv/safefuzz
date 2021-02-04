@@ -1,22 +1,66 @@
 [* For key based fuzzing generation *]
+[* For component-based fuzzing:
+should we use the component-based selection after all, instead of individual keys?
+If we are using algorithm replacement, yes, we will need to
 
-[* Lookup the participants from the mission model *]
+For now, represent it with a key-based fuzzing for the entry
+*]
 [% for (fexpt in FuzzingExpt!FuzzingExperiment.allInstances()) { 
-	for (sel in fexpt.sels) { %] 
-	
-	[* For variable-based fuzzing generation *]
-	[% if (sel.isKindOf(FuzzingExpt!VariableFuzzingSelection)) { 
-		var v = sel.varChoice;
-		var vname = v.variable;
-		var participants = getParticipantsAsList(sel);
-		var regexNum = 0;
-		var opString = chooseFuzzingOperationAsString(sel);
+	for (sel in fexpt.sels) {
+		if (sel.isKindOf(FuzzingExpt!VariableFuzzingSelection)) { 
+			generateVariableEntry(sel);
+		}
+		if (sel.isKindOf(FuzzingExpt!ComponentFuzzingSelection)) { 
+			if (GENERATE_COMPONENT_AS_INDIVIDUAL_KEYS) {
+				generateComponentEntriesAsKeys(sel);
+			} else {
+				generateComponentEntries(sel);
+			}
+		}
+		if (sel.isKindOf(FuzzingExpt!MessageFuzzingSelection)) {
+			generateMessageEntries(sel);
+		}
+	}
+}
+%]
+[%
+operation generateVariableEntry(sel) {
+	var v = sel.varChoice;
+	var vname = v.variable;
+	var participants = getParticipantsAsList(sel);
+	var regexNum = 0;
+	var opString = chooseFuzzingOperationAsString(sel);
 		
 	%] 
 Key,[%= vname %],[%= participants %],[%= regexNum %],[%= opString %]
-	[% } %]
 [% } %]
+
+[%
+operation generateComponentEntries(sel) {
+	var c = sel.componentChoice;
+	var cname = c.name; 
+	var participants = getParticipantsAsList(sel);
+	var opString = chooseFuzzingOperationAsString(sel);
+	var dir = "INBOUND";
+%]Component,[%= cname %],[%= participants %],[%= dir %],[%= opString %]
 [% } %]
+
+[%
+operation generateComponentEntriesAsKeys(sel) {
+	var c = sel.componentChoice;
+	var cname = c.name; 
+	var participants = getParticipantsAsList(sel);
+	var opString = chooseFuzzingOperationAsString(sel);
+	var dir = "INBOUND";
+%]COMPONENT AS KEYS !!!! TODO !!!!
+[% } %]
+
+[%
+operation generateMessageEntries(sel) {
+	var m = sel.msgChoice;
+	var msg = m.messageRef;
+	var cname = msg.name; 
+%]Message,[%= cname %],!!!!!TODO OTHER MSGFIELDS!!!!![% } %]
 
 [* TODO: extract the participants from the model
 For now, just returning a single string

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fuzzingexpt:FuzzingExperiment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzingexpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzingexpt" xmi:id="_WVM6AGTvEeu9Uu45mkkD9Q" name="TESTING">
-  <sels xsi:type="fuzzingexpt:ComponentFuzzingSelection" xmi:id="_6chUMGT0Eeu9Uu45mkkD9Q"/>
-  <sels xsi:type="fuzzingexpt:VariableFuzzingSelection" xmi:id="_8UTVMGT0Eeu9Uu45mkkD9Q"/>
+<fuzzingexpt:FuzzingExperiment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzingexpt="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzingexpt" xmi:id="_WVM6AGTvEeu9Uu45mkkD9Q" name="TEST-uSimMarine">
+  <sels xsi:type="fuzzingexpt:ComponentFuzzingSelection" xmi:id="_6chUMGT0Eeu9Uu45mkkD9Q">
+    <opParams href="simmapping.model#_iVhRMGWzEeuUFJZhgh9oFg"/>
+    <componentChoice href="simmapping.model#_YQLbUEL1Eeut4tLYmKP6Ig"/>
+  </sels>
+  <sels xsi:type="fuzzingexpt:MessageFuzzingSelection" xmi:id="_-8INwGaOEeuONYgSkWPWeQ">
+    <opParams href="simmapping.model#_lDtCgGJBEeukWa_atNvm4w"/>
+    <msgChoice href="simmapping.model#_uQqTAF9cEeuiLI5a8kQKyA"/>
+  </sels>
 </fuzzingexpt:FuzzingExperiment>

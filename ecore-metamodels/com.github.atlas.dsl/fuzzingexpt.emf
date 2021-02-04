@@ -18,19 +18,19 @@ class AllParticipantChoice extends ParticipantChoice {
 
 abstract class FuzzingSelection {
 	val ParticipantChoice[1] participantChoice;
-	ref Simmapping.OperationParameterSets opParams;
+	ref Simmapping.OperationParameterSet[*] opParams;
 }
 
 class ComponentFuzzingSelection extends FuzzingSelection {
-	ref Simmapping.FuzzingComponent componentChoice;
+	ref Simmapping.FuzzingComponent[1] componentChoice;
 }
 
 class VariableFuzzingSelection extends FuzzingSelection {
-	ref Simmapping.VariableSpecification varChoice;
+	ref Simmapping.VariableSpecification[1] varChoice;
 }
 
 class MessageFuzzingSelection extends FuzzingSelection {
-	ref Simmapping.FuzzingMessage msgChoice;
+	ref Simmapping.FuzzingMessage[1] msgChoice;
 }
 
 class FuzzingExperiment {

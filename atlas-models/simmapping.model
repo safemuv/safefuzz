@@ -11,9 +11,9 @@
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
   </sims>
-  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA">
+  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_ELLA">
     <messageRef href="mission.model#_HTGtQHfxEeq8sKdfSq6qug"/>
-    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="TESTMSG1" reflectionName="TESTMSG1'"/>
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="OBJECT_ID" reflectionName="OBJECT_ID'"/>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
     <paramSets xmi:id="_muKTcGHkEeuhOsiHBV6TXQ" name="DeleteEvent-fiftypercent">
@@ -21,6 +21,11 @@
     </paramSets>
     <paramSets xmi:id="_lDtCgGJBEeukWa_atNvm4w" name="Delete-everything">
       <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_m-la0GJBEeukWa_atNvm4w" name="dropProbability" value="1.0"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_g8j6MGWzEeuUFJZhgh9oFg" operationClassName="DoubleVariableChange">
+    <paramSets xmi:id="_iVhRMGWzEeuUFJZhgh9oFg" name="DoubleVariableChange-0-100">
+      <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_tdzNMGWzEeuUFJZhgh9oFg" name="value" upper="100.0"/>
     </paramSets>
   </operations>
 </simmapping:FuzzingSpecification>
