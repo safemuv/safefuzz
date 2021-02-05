@@ -8,7 +8,7 @@ import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
 abstract class ParticipantChoice {
 }
 
-class SpecificParticipantChoice {
+class SpecificParticipantChoice extends ParticipantChoice {
 	ref Atlas.NamedComponent[0..*] participants;
 } 
 

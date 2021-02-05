@@ -54,6 +54,13 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 			double r = Double.valueOf(fields[2]);
 			return DoubleVariableChange.Random(l,r);
 		}
+		
+		if (fields[0].toUpperCase().equals("RANDOMOFFSET")) {
+			double l = Double.valueOf(fields[1]);
+			double r = Double.valueOf(fields[2]);
+			return DoubleVariableChange.RandomOffset(l,r);
+		}
+		
 		throw new CreationFailed("Invalid parameter string " + s);
 	}
 }

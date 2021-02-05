@@ -8,6 +8,10 @@ TODO: put the participants in the simmapping database and validate them against 
 TODO: validate the variable spec in a message is actually a message field
 
 TODO: extract the participants from the model... For now, we are just returning a static string
+
+TODO: do we need this for registering plugin... from the help page
+context.getNativeTypeDelegates().add(new ExtensionPointToolNativeTypeDelegate());
+
 *]
 [% for (fexpt in FuzzingExpt!FuzzingExperiment.allInstances()) {
 	var dirChosen = Simmapping!VariableDirection#INBOUND; 
@@ -84,14 +88,31 @@ operation generateMessageEntry(sel) {
 
 [%
 operation getParticipantsAsList(sel) : String {
-	return "gilda";
+	var pChoice = sel.participantChoice;
+	var s = "";	
+	if (pChoice.isKindOf(FuzzingExpt!SpecificParticipantChoice)) {
+		for (p in pChoice.participants) {
+			s = s + p.name;
+		}
+	} else {
+		// Otherwise, add all pariticpants from the model
+		for (p in Mission!NamedComponent.allInstances()) {
+			s = s + p.name;
+		}
+	}
+	
+	return s;
 }
 %]
-
 [* TODO: return the fuzzing engine and suitable parameters as a string 
 For now just returning a constant
 *]
+
 [%
+operation randomValueZeroToOne() {
+	var sampleTool = new Native("org.eclipse.epsilon.examples.tools.RandomGenForEGL");
+	return sampleTool.genRandom();
+}
 
 operation paramsToString(paramList) {
 	var ps = "";
@@ -125,10 +146,14 @@ operation paramsToString(paramList) {
 			}
 			
 			if (param.isKindOf(Simmapping!DoubleRangeOperationParameter)) {
+				// TODO: fix integration with Java
+				//ps = ps + param.lower + randomValueZeroToOne() * param.upper - param.lower;
 				ps = ps + param.upper;
 			}
 			
 			if (param.isKindOf(Simmapping!IntRangeOperationParameter)) {
+				// TODO: fix integration with Java
+				//ps = ps + param.upper + randomValueZeroToOne() * param.upper -  param.lower;
 				ps = ps + param.upper;
 			}
 			
@@ -140,7 +165,7 @@ operation paramsToString(paramList) {
 
 operation chooseFuzzingOperationAsString(sel) : String {
 	var allOpParams = sel.opParams;
-	chooseFuzzingOperationFromList(allOpParams, sel);
+	return chooseFuzzingOperationFromList(allOpParams, sel);
 }
 
 operation chooseFuzzingOperationFromList(allOpParams, error_name) : String {

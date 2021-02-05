@@ -25,7 +25,7 @@ public class GeneratedFuzzingSpec {
 	
 			 
 	
-	simMapping.addRecord("NULL-DETECTION_ELLA", "TESTMSG1'", "TESTMSG1", 
+	simMapping.addRecord("NULL-DETECTION_ELLA", "OBJECT_ID'", "OBJECT_ID", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
 		Optional.empty()
 	);
@@ -33,7 +33,7 @@ public class GeneratedFuzzingSpec {
 	
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/fuzz-configs/test.fuzz", m);
+	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/fuzz-configs/generated-fuzz.csv", m);
 	return fe;
 	}
 }

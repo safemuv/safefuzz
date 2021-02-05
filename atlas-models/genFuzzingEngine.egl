@@ -46,9 +46,10 @@ public class GeneratedFuzzingSpec {
 	[% } %]
 	
 	[* Add simulator message variables *]
-	[% for (mref in SimMapping!MessageReferences.allInstances()) { %]
-		[% var mname = mref.messageName; %]	
-		[% for (vspec in mref.vars) { %]
+	[% for (msg in SimMapping!FuzzingMessage.allInstances()) { %]
+		[% var mref = msg.messageRef;
+		   var mname = mref.name; %]	
+		[% for (vspec in msg.vars) { %]
 			[% var c = vspec.component; 
 			   var cname;
 			   var crelpathstr;
