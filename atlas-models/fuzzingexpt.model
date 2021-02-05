@@ -7,5 +7,6 @@
   <sels xsi:type="fuzzingexpt:MessageFuzzingSelection" xmi:id="_-8INwGaOEeuONYgSkWPWeQ">
     <opParams href="simmapping.model#_lDtCgGJBEeukWa_atNvm4w"/>
     <msgChoice href="simmapping.model#_uQqTAF9cEeuiLI5a8kQKyA"/>
+    <messageField href="simmapping.model#_vuAawF9cEeuiLI5a8kQKyA"/>
   </sels>
 </fuzzingexpt:FuzzingExperiment>

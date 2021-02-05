@@ -2,23 +2,28 @@
 [* For component-based fuzzing:
 should we use the component-based selection after all, instead of individual keys?
 If we are using algorithm replacement, yes, we will need to
-
 For now, represent it with a key-based fuzzing for the entry
+
+TODO: put the participants in the simmapping database and validate them against the choice
+TODO: validate the variable spec in a message is actually a message field
+
+TODO: extract the participants from the model... For now, we are just returning a static string
 *]
-[% for (fexpt in FuzzingExpt!FuzzingExperiment.allInstances()) { 
+[% for (fexpt in FuzzingExpt!FuzzingExperiment.allInstances()) {
+	var dirChosen = Simmapping!VariableDirection#INBOUND; 
 	for (sel in fexpt.sels) {
 		if (sel.isKindOf(FuzzingExpt!VariableFuzzingSelection)) { 
 			generateVariableEntry(sel);
 		}
 		if (sel.isKindOf(FuzzingExpt!ComponentFuzzingSelection)) { 
 			if (GENERATE_COMPONENT_AS_INDIVIDUAL_KEYS) {
-				generateComponentEntriesAsKeys(sel);
+				generateComponentEntriesAsKeys(sel, dirChosen);
 			} else {
-				generateComponentEntries(sel);
+				generateComponentEntries(sel, dirChosen);
 			}
 		}
 		if (sel.isKindOf(FuzzingExpt!MessageFuzzingSelection)) {
-			generateMessageEntries(sel);
+			generateMessageEntry(sel);
 		}
 	}
 }
@@ -26,45 +31,57 @@ For now, represent it with a key-based fuzzing for the entry
 [%
 operation generateVariableEntry(sel) {
 	var v = sel.varChoice;
-	var vname = v.variable;
+	var variable = v.variable;
 	var participants = getParticipantsAsList(sel);
 	var regexNum = 0;
-	var opString = chooseFuzzingOperationAsString(sel);
-		
-	%] 
-Key,[%= vname %],[%= participants %],[%= regexNum %],[%= opString %]
+	var opString = chooseFuzzingOperationAsString(variable.opParams);
+%]Key,[%= variable %],[%= participants %],[%= regexNum %],[%= opString %]
 [% } %]
 
+[* Generates a variable entry based upon the variable specification *]
 [%
-operation generateComponentEntries(sel) {
+operation generateVariableEntryFromVariable(v,participantsString) {
+	var regexNum = 0;
+	var opString = chooseFuzzingOperationAsString(v.opParams);
+%]Key,[%= v.variable %],[%= participantsString %],[%= regexNum %],[%= opString %]
+[% } %]
+
+
+[%
+operation generateComponentEntries(sel, dir) {
 	var c = sel.componentChoice;
 	var cname = c.name; 
 	var participants = getParticipantsAsList(sel);
 	var opString = chooseFuzzingOperationAsString(sel);
-	var dir = "INBOUND";
 %]Component,[%= cname %],[%= participants %],[%= dir %],[%= opString %]
 [% } %]
 
 [%
-operation generateComponentEntriesAsKeys(sel) {
+operation generateComponentEntriesAsKeys(sel, dirChosen) {
 	var c = sel.componentChoice;
 	var cname = c.name; 
-	var participants = getParticipantsAsList(sel);
+	var participantsString = getParticipantsAsList(sel);
 	var opString = chooseFuzzingOperationAsString(sel);
-	var dir = "INBOUND";
-%]COMPONENT AS KEYS !!!! TODO !!!!
-[% } %]
+
+	for (variable in c.vars) {
+		if (variable.dir = dirChosen) {
+			generateVariableEntryFromVariable(variable, participantsString);
+		}	
+	}
+} 
+%]
 
 [%
-operation generateMessageEntries(sel) {
+operation generateMessageEntry(sel) {
 	var m = sel.msgChoice;
 	var msg = m.messageRef;
-	var cname = msg.name; 
-%]Message,[%= cname %],!!!!!TODO OTHER MSGFIELDS!!!!![% } %]
+	var mname = msg.name;
+	var messageField = sel.messageField.variable;
+	var regexNum = 0;
+	var opString = chooseFuzzingOperationAsString(sel);
+%]Message,[%= mname %],[%= messageField %],[%= regexNum %],[%= opString %]
+[% } %]
 
-[* TODO: extract the participants from the model
-For now, just returning a single string
- *]
 [%
 operation getParticipantsAsList(sel) : String {
 	return "gilda";

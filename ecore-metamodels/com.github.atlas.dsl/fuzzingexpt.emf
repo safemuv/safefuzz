@@ -31,6 +31,8 @@ class VariableFuzzingSelection extends FuzzingSelection {
 
 class MessageFuzzingSelection extends FuzzingSelection {
 	ref Simmapping.FuzzingMessage[1] msgChoice;
+	ref Simmapping.VariableSpecification[1] messageField;
+	// TODO: need to validate that this varspec is a message field of this message!
 }
 
 class FuzzingExperiment {
