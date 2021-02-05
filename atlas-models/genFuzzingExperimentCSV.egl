@@ -34,7 +34,7 @@ operation generateVariableEntry(sel) {
 	var variable = v.variable;
 	var participants = getParticipantsAsList(sel);
 	var regexNum = 0;
-	var opString = chooseFuzzingOperationAsString(variable.opParams);
+	var opString = chooseFuzzingOperationFromList(variable.opParams);
 %]Key,[%= variable %],[%= participants %],[%= regexNum %],[%= opString %]
 [% } %]
 
@@ -42,7 +42,7 @@ operation generateVariableEntry(sel) {
 [%
 operation generateVariableEntryFromVariable(v,participantsString) {
 	var regexNum = 0;
-	var opString = chooseFuzzingOperationAsString(v.opParams);
+	var opString = chooseFuzzingOperationFromList(v.opParams, v);
 %]Key,[%= v.variable %],[%= participantsString %],[%= regexNum %],[%= opString %]
 [% } %]
 
@@ -92,7 +92,68 @@ operation getParticipantsAsList(sel) : String {
 For now just returning a constant
 *]
 [%
+
+operation paramsToString(paramList) {
+	var ps = "";
+	if (paramList.size() > 0) {
+		ps = ps + ",";
+		for (param in paramList) {
+			
+			// Constant params are merely entered directly
+			if (param.isKindOf(Simmapping!DoubleConstantOperationParameter)) {
+				ps = ps + param.value;
+			}
+			
+			if (param.isKindOf(Simmapping!IntConstantOperationParameter)) {
+				ps = ps + param.value;
+			}
+			
+			if (param.isKindOf(Simmapping!StringConstantOperationParameter)) {
+				ps = ps + param.value;
+			}
+			
+			if (param.isKindOf(Simmapping!DoubleListOperationParameter)) {
+				ps = ps + param.values.random();
+			}
+			
+			if (param.isKindOf(Simmapping!IntListOperationParameter)) {
+				ps = ps + param.values.random();
+			}
+			
+			if (param.isKindOf(Simmapping!StringListOperationParameter)) {
+				ps = ps + param.values.random();
+			}
+			
+			if (param.isKindOf(Simmapping!DoubleRangeOperationParameter)) {
+				ps = ps + param.upper;
+			}
+			
+			if (param.isKindOf(Simmapping!IntRangeOperationParameter)) {
+				ps = ps + param.upper;
+			}
+			
+			ps = ps + "|";
+		}
+	}
+	return ps;
+}
+
 operation chooseFuzzingOperationAsString(sel) : String {
-	return "DoubleVariableChange,Random|0.0|10.0"; 
+	var allOpParams = sel.opParams;
+	chooseFuzzingOperationFromList(allOpParams, sel);
+}
+
+operation chooseFuzzingOperationFromList(allOpParams, error_name) : String {
+	// TODO: choose one element at random	
+	var chosenOpParamSet = allOpParams.random();
+	var s = "";
+	
+	if (chosenOpParamSet.isDefined()) {
+		s = chosenOpParamSet.parent.operationClassName;
+	} else {
+		throw ("Error in simmapping model: no opParams given in simmmapping model for " + error_name + ":" + chosenOpParamSet);
+	}
+	s = s + paramsToString(chosenOpParamSet.params);
+	return s;
 }
 %]
