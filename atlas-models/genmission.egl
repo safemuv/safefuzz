@@ -148,6 +148,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
 		
+		[% if (goalAction.isKindOf(StayInRegion)) { %]
+		GoalAction ga[%= goalnum %] = new StayInRegion();
+		[% } %]
+		
 		[% if (goalAction.isKindOf(DiscoverObjects)) { %]
 		List<EnvironmentalObject> ga[%= goalnum %]Objs = new ArrayList<EnvironmentalObject>();
 		[% for (eo in goalAction.objects) { %]

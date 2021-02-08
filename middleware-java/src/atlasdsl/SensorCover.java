@@ -76,10 +76,8 @@ public class SensorCover extends Cover {
 			}
 			
 		} else { 
-			System.out.println("no region in CollectiveSensorCover");
-			throw new GoalActionSetupFailure(this);
-			// TODO: signal a failure somehow if there is no region returned
-			// throw new NoRegionForCoverageGoal();
+			System.out.println("No region in CollectiveSensorCover");
+			throw new GoalActionSetupFailure(this, "No region in CollectiveSensorCover");
 		}
 	}
 	

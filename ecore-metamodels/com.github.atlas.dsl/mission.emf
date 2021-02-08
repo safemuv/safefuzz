@@ -54,6 +54,10 @@ class Avoid extends GoalAction {
 	
 }
 
+class StayInRegion extends GoalAction {
+	
+}
+
 class AvoidOthers extends GoalAction {
 	attr double clearance;
 }

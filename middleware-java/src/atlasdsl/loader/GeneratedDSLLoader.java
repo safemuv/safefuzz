@@ -210,6 +210,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga1 = new AvoidOthers(4.0);
 		
 		
+		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
 			           new Point(1000.0, 1000.0, 0.0)));
@@ -235,6 +236,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalRegion grprimarySensorSweep = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
 			           new Point(1000.0, 1000.0, 0.0)));
@@ -252,6 +254,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1200.0);
 		
 		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR);
+		
 		
 		
 		
@@ -281,6 +284,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		List<EnvironmentalObject> ga4Objs = new ArrayList<EnvironmentalObject>();
 		ga4Objs.add(eo1);
 		ga4Objs.add(eo3);
@@ -297,6 +301,32 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		mission.addGoal("findTestObjects", findTestObjects);
+ 
+ 
+ 
+ 
+		
+		Robot [] grp5 = {rfrank,rgilda,rella,rbrian}; 
+		GoalParticipants gpstayInRegion = new StaticParticipants(grp5, mission);
+		
+		
+		
+		GoalTemporalConstraints gt5 = new GoalTemporalConstraints(0.0, 1200.0);
+		
+		
+		
+		GoalAction ga5 = new StayInRegion();
+		
+		
+		GoalRegion grstayInRegion = new StaticGoalRegion(
+			new Region(new Point(0.0, 0.0, 0.0),
+			           new Point(1000.0, 1000.0, 100.0)));
+		
+		
+		Goal stayInRegion = new Goal("stayInRegion", mission, gt5, gpstayInRegion, Optional.of(grstayInRegion), ga5);
+		
+		
+		mission.addGoal("stayInRegion", stayInRegion);
 	
 
 	
@@ -315,6 +345,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 	Message msgUUV_COORDINATE_UPDATE_INIITAL_ELLA = new Message("UUV_COORDINATE_UPDATE_INIITAL_ELLA", c1, rella);
 	mission.addMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA); 
+ 
+	Message msgTEST_MSG = new Message("TEST_MSG", rella, c1);
+	mission.addMessage(msgTEST_MSG); 
 	
 	 
 	
