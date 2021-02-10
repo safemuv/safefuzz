@@ -101,6 +101,7 @@ public class ATLASLog {
 		}
 	}
 
+	
 	public static void logCIInbound(String queueName, String text) {
 
 	}

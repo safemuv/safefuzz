@@ -315,12 +315,12 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalAction ga5 = new StayInRegion();
+		GoalAction ga5 = new StayInRegion(false);
 		
 		
 		GoalRegion grstayInRegion = new StaticGoalRegion(
-			new Region(new Point(0.0, 0.0, 0.0),
-			           new Point(1000.0, 1000.0, 100.0)));
+			new Region(new Point(-105.0, -230.0, -40.0),
+			           new Point(232.0, -15.0, 100.0)));
 		
 		
 		Goal stayInRegion = new Goal("stayInRegion", mission, gt5, gpstayInRegion, Optional.of(grstayInRegion), ga5);

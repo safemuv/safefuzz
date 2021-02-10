@@ -80,11 +80,15 @@ operation generateMessageEntry(sel) {
 	var m = sel.msgChoice;
 	var msg = m.messageRef;
 	var mname = msg.name;
-	var messageField = sel.messageField.variable;
-	var regexNum = 0;
-	var opString = chooseFuzzingOperationAsString(sel);
-%]Message,[%= mname %],[%= messageField %],[%= regexNum %],[%= opString %]
-[% } %]
+	var messageFields = m.vars;
+	for (mfieldspec in messageFields) {
+		var regexNum = 0;
+		var opString = chooseFuzzingOperationAsString(sel);
+		var mfield = mfieldspec.variable;
+%]Message,[%= mname %],[%= mfield %],[%= regexNum %],[%= opString %]
+[%	 }
+}
+%]
 
 [%
 operation getParticipantsAsList(sel) : String {

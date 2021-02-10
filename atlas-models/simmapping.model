@@ -11,9 +11,9 @@
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
     </components>
   </sims>
-  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_ELLA">
-    <messageRef href="mission.model#_HTGtQHfxEeq8sKdfSq6qug"/>
-    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="OBJECT_ID" reflectionName="OBJECT_ID'"/>
+  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_GILDA">
+    <messageRef href="mission.model#_J6OrEHfyEeq8sKdfSq6qug"/>
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="UHZ_SENSOR_REQUEST" reflectionName="UHZ_SENSOR_REQUEST'" opParams="_rTPqcGrzEeu3RLa6xSsB1A"/>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
     <paramSets xmi:id="_muKTcGHkEeuhOsiHBV6TXQ" name="DeleteEvent-fiftypercent">
@@ -28,6 +28,12 @@
       <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_uTft4GdaEeuo1oI7rQAtzg" name="Nature" value="RandomOffset"/>
       <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_2yq5oGdaEeuo1oI7rQAtzg" name="lowerValue"/>
       <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_tdzNMGWzEeuUFJZhgh9oFg" name="UpperValue" upper="100.0"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_ozaK8GrzEeu3RLa6xSsB1A" operationClassName="StringVariableChange">
+    <paramSets xmi:id="_rTPqcGrzEeu3RLa6xSsB1A" name="StringVariableChange-randomjunk">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_xhHh8GrzEeu3RLa6xSsB1A" name="Nature" value="NEWRANDOM"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_53YsgGr3Eeu3RLa6xSsB1A" name="maxLen" value="10"/>
     </paramSets>
   </operations>
 </simmapping:FuzzingSpecification>

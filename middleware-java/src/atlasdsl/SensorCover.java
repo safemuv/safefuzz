@@ -74,7 +74,6 @@ public class SensorCover extends Cover {
 			for (Region r : regions) {
 				posTrackers.put(r, new PositionTracker(r, samplesPerUnit));
 			}
-			
 		} else { 
 			System.out.println("No region in CollectiveSensorCover");
 			throw new GoalActionSetupFailure(this, "No region in CollectiveSensorCover");

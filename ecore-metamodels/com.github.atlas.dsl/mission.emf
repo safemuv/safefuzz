@@ -55,7 +55,7 @@ class Avoid extends GoalAction {
 }
 
 class StayInRegion extends GoalAction {
-	
+	attr boolean stopOnFirstViolation;
 }
 
 class AvoidOthers extends GoalAction {

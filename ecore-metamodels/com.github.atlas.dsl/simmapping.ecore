@@ -52,7 +52,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingMessage">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messageRef" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageRef" lowerBound="1"
+        eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
         containment="true"/>
   </eClassifiers>

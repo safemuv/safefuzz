@@ -25,7 +25,7 @@ public class GeneratedFuzzingSpec {
 	
 			 
 	
-	simMapping.addRecord("NULL-DETECTION_ELLA", "OBJECT_ID'", "OBJECT_ID", 
+	simMapping.addRecord("NULL-DETECTION_GILDA", "UHZ_DETECTION_REPORT'", "UHZ_DETECTION_REPORT", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
 		Optional.empty()
 	);

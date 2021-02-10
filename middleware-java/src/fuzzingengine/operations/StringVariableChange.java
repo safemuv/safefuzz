@@ -3,32 +3,32 @@ package fuzzingengine.operations;
 import java.util.Optional;
 import java.util.Random;
 
-import fuzzingengine.DoubleLambda;
+import fuzzingengine.StringLambda;
 
 public class StringVariableChange extends ValueFuzzingOperation {
-	private final double defaultFixedChange = 0.0;
-	private String fixedChange = Double.toString(defaultFixedChange);
-	private Optional<DoubleLambda> generateDouble = Optional.empty();
+	private final String defaultFixedChange = "JUNK";
+	private String fixedChange = defaultFixedChange;
+	private Optional<StringLambda> generateString = Optional.empty();
 	
-	public StringVariableChange(DoubleLambda generateDouble) {
-		this.generateDouble = Optional.of(generateDouble);
+	public StringVariableChange(StringLambda generateDouble) {
+		this.generateString = Optional.of(generateDouble);
 	}
 	
-	public StringVariableChange(double fixedChange) {
-		this.fixedChange = Double.toString(fixedChange);
+	public StringVariableChange(String fixedChange) {
+		this.fixedChange = fixedChange;
 	}
 	
-	public static StringVariableChange Random(double lower, double upper) {
+	public static StringVariableChange NewRandom(int sizeLimit) {
 		Random r = new Random();
-		double diff = upper - lower;
-		StringVariableChange op = new StringVariableChange(input -> lower + (diff * r.nextDouble()));
-		return op;
-	}
-	
-	public static StringVariableChange RandomOffset(double lower, double upper) {
-		Random r = new Random();
-		double diff = upper - lower;
-		StringVariableChange op = new StringVariableChange(input -> input + (lower + (diff * r.nextDouble())));
+		
+		StringLambda slam = (input -> {
+			int len = r.nextInt(sizeLimit);
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < len; i++)
+				sb.append(Character.toString((char)(r.nextInt(255))));
+			return sb.toString();
+		});
+		StringVariableChange op = new StringVariableChange(slam);
 		return op;
 	}
 
@@ -38,15 +38,21 @@ public class StringVariableChange extends ValueFuzzingOperation {
 
 	public String fuzzTransformString(String input) {
 		String changed = fixedChange;
-		if (generateDouble.isPresent()) {
-			DoubleLambda dl = generateDouble.get();
-			double d = Double.valueOf(input);
-			changed = Double.toString(dl.op(d));
+		if (generateString.isPresent()) {
+			StringLambda sl = generateString.get();
+			changed = sl.op(input);
 		}
 		return changed;
 	}
 
 	public static FuzzingOperation createFromParamString(String s) throws CreationFailed {
-		throw new CreationFailed("StringVariableChange unimplemented");
+		String fields [] = s.split("\\|");
+		System.out.println(fields[0]);
+		if (fields[0].toUpperCase().equals("NEWRANDOM")) {
+			int maxLen = Integer.valueOf(fields[1]);
+			return StringVariableChange.NewRandom(maxLen);
+		}
+
+		throw new CreationFailed("Invalid parameter string " + s);
 	}
 }

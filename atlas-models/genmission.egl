@@ -149,7 +149,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% } %]
 		
 		[% if (goalAction.isKindOf(StayInRegion)) { %]
-		GoalAction ga[%= goalnum %] = new StayInRegion();
+		[% var shouldStop = goalAction.stopOnFirstViolation; %]
+		GoalAction ga[%= goalnum %] = new StayInRegion([%= shouldStop %]);
 		[% } %]
 		
 		[% if (goalAction.isKindOf(DiscoverObjects)) { %]

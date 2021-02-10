@@ -75,10 +75,21 @@ public class FuzzingEngine {
 			if (vr == null) {
 				throw new InvalidMessage(messageName, "Simmapping key not present for message field name " + messageFieldName);
 			} else {
-				// TODO: handle case where the given message is not defined in the mission
+				// TODO: handle case where the given message is not defined in the mission 
 				FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
-				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getRegexp(), groupNum, op);
 
+				List<String> participants = new ArrayList<String>();
+				
+				for (Component cFrom : msg.getFrom()) {
+					if (cFrom instanceof Robot) {
+						participants.add(((Robot)cFrom).getName());
+					} else {
+						participants.add(((Computer)cFrom).getName());
+					}
+				}
+				
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants);
+				
 				// For all dests, have to set them as a participant for the fuzzing key record
 				List<Component> cDests = msg.getTo();
 				
