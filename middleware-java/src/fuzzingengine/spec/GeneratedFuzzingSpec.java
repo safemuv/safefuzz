@@ -25,9 +25,9 @@ public class GeneratedFuzzingSpec {
 	
 			 
 	
-	simMapping.addRecord("NULL-DETECTION_GILDA", "UHZ_DETECTION_REPORT'", "UHZ_DETECTION_REPORT", 
+	simMapping.addRecord("NULL-DETECTION_GILDA", "UHZ_CONFIG_REQUEST'", "UHZ_CONFIG_REQUEST", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
-		Optional.empty()
+		Optional.of("width=([0-9]+)")
 	);
 
 	

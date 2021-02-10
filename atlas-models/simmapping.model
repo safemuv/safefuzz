@@ -13,7 +13,9 @@
   </sims>
   <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_GILDA">
     <messageRef href="mission.model#_J6OrEHfyEeq8sKdfSq6qug"/>
-    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="UHZ_SENSOR_REQUEST" reflectionName="UHZ_SENSOR_REQUEST'" opParams="_rTPqcGrzEeu3RLa6xSsB1A"/>
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="UHZ_CONFIG_REQUEST" reflectionName="UHZ_CONFIG_REQUEST'" opParams="_PHeAUGs3EeupPeFqUdWE3Q">
+      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_mz5O0Gs2EeupPeFqUdWE3Q" regexp="width=([0-9]+)"/>
+    </vars>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
     <paramSets xmi:id="_muKTcGHkEeuhOsiHBV6TXQ" name="DeleteEvent-fiftypercent">
@@ -34,6 +36,12 @@
     <paramSets xmi:id="_rTPqcGrzEeu3RLa6xSsB1A" name="StringVariableChange-randomjunk">
       <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_xhHh8GrzEeu3RLa6xSsB1A" name="Nature" value="NEWRANDOM"/>
       <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_53YsgGr3Eeu3RLa6xSsB1A" name="maxLen" value="10"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_stF20Gs2EeupPeFqUdWE3Q" operationClassName="IntegerVariableChange">
+    <paramSets xmi:id="_PHeAUGs3EeupPeFqUdWE3Q" name="IntegerVarChange-0-30">
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_Rrbx4Gs3EeupPeFqUdWE3Q" name="lower"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_SJ8S0Gs3EeupPeFqUdWE3Q" name="upper" value="30"/>
     </paramSets>
   </operations>
 </simmapping:FuzzingSpecification>

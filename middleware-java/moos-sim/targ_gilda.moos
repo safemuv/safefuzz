@@ -13,7 +13,7 @@ Run = MOOSDB @ NewConsole = false
 Run = uProcessWatch @ NewConsole = false
 Run = pShare @ NewConsole = false
 Run = uSimMarine @ NewConsole = false
-//Run = pLogger @ NewConsole = false
+Run = pLogger @ NewConsole = false
 Run = pNodeReporter @ NewConsole = false
 Run = pMarinePID @ NewConsole = false
 Run = pHelmIvP @ NewConsole = false
@@ -48,8 +48,8 @@ ProcessConfig = pShare
 AppTick = 2
 CommsTick = 2
 input = route =  localhost:9203
+output = src_name=UHZ_CONFIG_REQUEST, dest_name=UHZ_CONFIG_REQUEST', route=localhost:9200
 output = src_name=Y, dest_name=B, route=localhost:9200
-output = src_name=TEST1, dest_name=TEST1', route=localhost:9200
 }
 
 ProcessConfig = uSimMarine
@@ -157,6 +157,11 @@ BRIDGE = src=UHZ_HAZARD_REPORT
 BRIDGE = src=UHZ_CONFIG_REQUEST
 BRIDGE = src=UHZ_SENSOR_REQUEST
 BRIDGE = src=HAZARDSET_REPORT
+BRIDGE = src=UHZ_SENSOR_CONFIG
+BRIDGE = src=UHZ_HAZARD_REPORT
+BRIDGE = src=UHZ_CONFIG_REQUEST
+BRIDGE = src=UHZ_SENSOR_REQUEST
+BRIDGE = src=HAZARDSET_REPORT
 }
 
 ProcessConfig = uFldHazardMgr
@@ -193,6 +198,6 @@ WATCH_VAR = NODE_REPORT_BRIAN
 WATCH_VAR = NODE_REPORT_LINDA
 WATCH_VAR = UHZ_DETECTION_REPORT
 WATCH_VAR = UHZ_HAZARD_REPORT
-WATCH_VAR = TESTXXX
+WATCH_VAR = UHZ_CONFIG_REQUEST'
 }
 

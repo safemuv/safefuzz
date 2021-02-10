@@ -127,6 +127,19 @@ hazard_file = hazards.txt
 sensor_config = width=25, exp=4, pclass=0.80
 sensor_config = width=50, exp=2, pclass=0.60
 sensor_config = width=10, exp=6, pclass=0.93
+sensor_config = width=2, exp=4, pclass=0.93
+sensor_config = width=3, exp=4, pclass=0.93
+sensor_config = width=4, exp=4, pclass=0.93
+sensor_config = width=5, exp=4, pclass=0.93
+sensor_config = width=6, exp=4, pclass=0.93
+sensor_config = width=7, exp=4, pclass=0.93
+sensor_config = width=8, exp=4, pclass=0.93
+sensor_config = width=9, exp=4, pclass=0.93
+sensor_config = width=10, exp=4, pclass=0.93
+sensor_config = width=11, exp=4, pclass=0.93
+sensor_config = width=12, exp=4, pclass=0.93
+
+min_reset_interval = 5
 max_turn_rate = 10.0
 }
 
@@ -148,6 +161,7 @@ WATCH_VAR = NODE_REPORT_BRIAN
 WATCH_VAR = NODE_REPORT_LINDA
 WATCH_VAR = UHZ_DETECTION_REPORT
 WATCH_VAR = UHZ_HAZARD_REPORT
-WATCH_VAR = TESTMSG1'
+WATCH_VAR = UHZ_CONFIG_REQUEST'
+WATCH_VAR = UHZ_CONFIG_REQUEST'
 }
 

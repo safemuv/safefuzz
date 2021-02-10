@@ -780,11 +780,11 @@ bool HazardSensor_MOOSApp::handleSensorConfig(const string& config,
       str_pd = value;
   }
 
-  // Part 2: Check for correctness of incoming request 
-  if((vname == "") || (vname != msg_src)) {
-    reportConfigWarning("Bad sensor config request from: "+vname + " src: "+msg_src);
-    return(false);
-  }
+ // Part 2: Check for correctness of incoming request 
+ //if((vname == "") || (vname != msg_src)) {
+ //  reportConfigWarning("Bad sensor config request from: "+vname + " src: "+msg_src);
+ //  return(false);
+ // }
 
   if(((str_width != "") && !isNumber(str_width)) || !isNumber(str_pd)) {
     reportConfigWarning("Bad sensor config request from: " + vname);

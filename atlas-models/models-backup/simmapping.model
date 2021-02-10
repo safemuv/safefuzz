@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="ASCII"?>
-<simmapping:VariableMappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
+<simmapping:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
   <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="MOOS-IVP" baseDirectory="/home/atlas/atlas/atlas-middleware/custom-moos">
-    <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST">
-      <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_4yUXoFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
-      <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_tRt0gFOVEeu-ze1bTRBqDw"/>
-    </vars>
-    <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER">
-      <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_8cC3YFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
-      <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_upkYQFOVEeu-ze1bTRBqDw"/>
-    </vars>
-    <vars xmi:id="_PctvEFbUEeu6WaQSprjfJg" component="_UPBngFbUEeu6WaQSprjfJg" variable="TESTXXX" reflectionName="TEST">
-      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_YpKQgFbUEeu6WaQSprjfJg" regexp="\\(([0-9]+),([0-9]+)\\)"/>
-    </vars>
-    <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine"/>
-    <components xmi:id="_UPBngFbUEeu6WaQSprjfJg" name="test" componentRelativePath="/bin/test"/>
+    <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="uSimMarine" componentRelativePath="/bin/uSimMarine">
+      <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST" opParams="_iVhRMGWzEeuUFJZhgh9oFg">
+        <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_4yUXoFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
+      </vars>
+      <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER" opParams="_iVhRMGWzEeuUFJZhgh9oFg">
+        <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_8cC3YFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
+      </vars>
+      <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
+    </components>
   </sims>
-</simmapping:VariableMappings>
+  <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_GILDA">
+    <messageRef href="mission.model#_J6OrEHfyEeq8sKdfSq6qug"/>
+    <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="UHZ_CONFIG_REQUEST" reflectionName="UHZ_CONFIG_REQUEST'" opParams="_PHeAUGs3EeupPeFqUdWE3Q">
+      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_mz5O0Gs2EeupPeFqUdWE3Q" regexp="width=([0-9]+)"/>
+    </vars>
+    <vars xmi:id="_u91XIGtGEeuDXsUS_kXeyA" variable="UHZ_CONFIG_REQUEST" reflectionName="UHZ_CONFIG_REQUEST'" opParams="_PHeAUGs3EeupPeFqUdWE3Q">
+      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_zgg4IGtGEeuDXsUS_kXeyA" regexp="pd=0.([0-9]+)"/>
+    </vars>
+  </messageRefs>
+  <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
+    <paramSets xmi:id="_muKTcGHkEeuhOsiHBV6TXQ" name="DeleteEvent-fiftypercent">
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_oxA8AGHkEeuhOsiHBV6TXQ" name="dropProbability" value="0.5"/>
+    </paramSets>
+    <paramSets xmi:id="_lDtCgGJBEeukWa_atNvm4w" name="Delete-everything">
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_m-la0GJBEeukWa_atNvm4w" name="dropProbability" value="1.0"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_g8j6MGWzEeuUFJZhgh9oFg" operationClassName="DoubleVariableChange">
+    <paramSets xmi:id="_iVhRMGWzEeuUFJZhgh9oFg" name="DoubleVariableChange-0-100-offset">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_uTft4GdaEeuo1oI7rQAtzg" name="Nature" value="RandomOffset"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_2yq5oGdaEeuo1oI7rQAtzg" name="lowerValue"/>
+      <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_tdzNMGWzEeuUFJZhgh9oFg" name="UpperValue" upper="100.0"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_ozaK8GrzEeu3RLa6xSsB1A" operationClassName="StringVariableChange">
+    <paramSets xmi:id="_rTPqcGrzEeu3RLa6xSsB1A" name="StringVariableChange-randomjunk">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_xhHh8GrzEeu3RLa6xSsB1A" name="Nature" value="NEWRANDOM"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_53YsgGr3Eeu3RLa6xSsB1A" name="maxLen" value="10"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_stF20Gs2EeupPeFqUdWE3Q" operationClassName="IntegerVariableChange">
+    <paramSets xmi:id="_PHeAUGs3EeupPeFqUdWE3Q" name="IntegerVarChange-0-30">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_uqk8kGtJEeuDXsUS_kXeyA" name="Nature" value="RANDOM"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_Rrbx4Gs3EeupPeFqUdWE3Q" name="lower"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_SJ8S0Gs3EeupPeFqUdWE3Q" name="upper" value="30"/>
+    </paramSets>
+  </operations>
+</simmapping:FuzzingSpecification>
