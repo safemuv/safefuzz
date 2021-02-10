@@ -138,8 +138,7 @@ sensor_config = width=9, exp=4, pclass=0.93
 sensor_config = width=10, exp=4, pclass=0.93
 sensor_config = width=11, exp=4, pclass=0.93
 sensor_config = width=12, exp=4, pclass=0.93
-
-min_reset_interval = 5
+min_reset_interval = 0.0001
 max_turn_rate = 10.0
 }
 

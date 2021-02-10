@@ -52,7 +52,7 @@
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sF2koKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
-      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="30.0"/>
+      <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
       <detections>MALICIOUS</detections>
       <detections>NORMAL</detections>
@@ -185,7 +185,7 @@
   </goals>
   <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-55.0" label="1"/>
   <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="185.0" y="-45.0" isHazard="true" label="2"/>
-  <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="100.0" y="-150.0" label="3"/>
+  <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="100.0" y="-132.0" label="3"/>
   <obstacles xmi:id="_H4VtYPdKEeqBFM0D9wIRaA" label="bigrock">
     <poly xmi:id="_JNsWwPdKEeqBFM0D9wIRaA">
       <points xmi:id="_KNtCQPdKEeqBFM0D9wIRaA" x="5.0" y="-70.0"/>

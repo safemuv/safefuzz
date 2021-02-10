@@ -163,8 +163,8 @@ public class MOOSCodeGen extends CARSCodeGen {
 			}
 
 			if (needShoresideObstacles) {
-				// TODO: specify a fixed region
-				Region r = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
+				// TODO: specify this region in the model
+				Region r = new Region(new Point(-150.0, -260.0), new Point(245.0, 20.0));
 				System.out.println("TEST: using a fixed region in obstacle code generation");
 				UFldObstacleSim uFldObstacleSim = new UFldObstacleSim(shoreside, r);
 				for (EnvironmentalObstacle eo : mission.getObstacles()) {

@@ -114,7 +114,7 @@ bool HazardMgr::Iterate()
 {
   AppCastingMOOSApp::Iterate();
 
-  if(!m_sensor_config_requested)
+//  if(!m_sensor_config_requested)
     postSensorConfigRequest();
 
   if(m_sensor_config_set)
