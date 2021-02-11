@@ -174,12 +174,12 @@
   </goals>
   <goals xmi:id="_aXwhkGmyEeut-7Jtw0RIUA" name="stayInRegion">
     <requirements xmi:id="_pitBwGmyEeut-7Jtw0RIUA" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_cuSUEGmyEeut-7Jtw0RIUA" participants="_gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _gWMvsHP-Eeqc6cv9mBHIKw _Y_ymkKyYEeqTYY1ormOQgg"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_cuSUEGmyEeut-7Jtw0RIUA" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:StayInRegion" xmi:id="_b51_YGmyEeut-7Jtw0RIUA"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_gAqDwGmyEeut-7Jtw0RIUA">
       <staticRegion xmi:id="_gkiM4GmyEeut-7Jtw0RIUA">
-        <corner1 xmi:id="_hTeWgGmyEeut-7Jtw0RIUA" x="-105.0" y="-230.0" z="-40.0"/>
-        <corner2 xmi:id="_hq6mIGmyEeut-7Jtw0RIUA" x="232.0" y="-15.0" z="100.0"/>
+        <corner1 xmi:id="_hTeWgGmyEeut-7Jtw0RIUA" x="-150.0" y="-260.0" z="-40.0"/>
+        <corner2 xmi:id="_hq6mIGmyEeut-7Jtw0RIUA" x="245.0" y="20.0" z="100.0"/>
       </staticRegion>
     </region>
   </goals>

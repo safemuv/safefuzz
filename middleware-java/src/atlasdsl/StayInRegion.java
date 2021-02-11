@@ -29,10 +29,10 @@ public class StayInRegion extends GoalAction {
 	
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
 		List<Robot> robots = participants.getParticipants();
-
 		try {
 			for (Robot r : robots) {
 				Point loc = r.getPointComponentProperty("location");
+				//System.out.println("StayInRegion: " + r.getName() + " is at " + loc);
 				if (!region.contains(loc)) {
 					GoalResultStatus grs;
 					if (stopOnFirstViolation) {

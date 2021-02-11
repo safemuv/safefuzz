@@ -78,7 +78,7 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
 		srgilda_1.setParent(rgilda);
-		srgilda_1.setDoubleComponentProperty("swathWidth", 30.0);
+		srgilda_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rgilda.addSubcomponent(srgilda_1);
 			
@@ -183,7 +183,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addObject(eo1);
 	EnvironmentalObject eo2 = new EnvironmentalObject(2, new Point(185.0,-45.0,0.0), true);
 	mission.addObject(eo2);
-	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(100.0,-150.0,0.0), false);
+	EnvironmentalObject eo3 = new EnvironmentalObject(3, new Point(100.0,-132.0,0.0), false);
 	mission.addObject(eo3);
 	
 	ArrayList<Point> eopoints0 = new ArrayList<Point>();
@@ -306,7 +306,7 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
 		
-		Robot [] grp5 = {rfrank,rgilda,rella,rbrian}; 
+		Robot [] grp5 = {rella, rgilda, rfrank, rhenry}; 
 		GoalParticipants gpstayInRegion = new StaticParticipants(grp5, mission);
 		
 		
@@ -319,8 +319,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalRegion grstayInRegion = new StaticGoalRegion(
-			new Region(new Point(-105.0, -230.0, -40.0),
-			           new Point(232.0, -15.0, 100.0)));
+			new Region(new Point(-150.0, -260.0, -40.0),
+			           new Point(245.0, 20.0, 100.0)));
 		
 		
 		Goal stayInRegion = new Goal("stayInRegion", mission, gt5, gpstayInRegion, Optional.of(grstayInRegion), ga5);

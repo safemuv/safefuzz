@@ -10,6 +10,7 @@ import atlasdsl.*;
 public class UFldHazardSensorProcess extends MOOSProcess {
 	private List<EnvironmentalObject> objects = new ArrayList<EnvironmentalObject>(); 
 	
+	
 	public UFldHazardSensorProcess(MOOSCommunity parent) {
 		super("uFldHazardSensor", parent);
 		setProperty("hazard_file", "hazards.txt");
@@ -18,11 +19,13 @@ public class UFldHazardSensorProcess extends MOOSProcess {
 		// These represent a curve which is used to configure detection probabilities
 		setProperty("sensor_config", "width=25, exp=4, pclass=0.80");
 		setProperty("sensor_config", "width=50, exp=2, pclass=0.60");
-		setProperty("sensor_config", "width=10, exp=6, pclass=0.93");
+
+		// Temporary fix to add additional properties for the sensor widths
+		for (int w = 2; w < 25; w++) {
+			setProperty("sensor_config", "width=" + w + ", exp=4, pclass=0.93");
+		}
 		
-		//TODO: Ensure it still produces detections while turning
-		// in simple test case test case. This can be removed when a full sweep 
-		// pattern is set up
+		setProperty("min_reset_interval", 0.0001);
 		setProperty("max_turn_rate", 10.0);
 	}
 	

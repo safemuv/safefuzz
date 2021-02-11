@@ -126,7 +126,6 @@ CommsTick = 2
 hazard_file = hazards.txt
 sensor_config = width=25, exp=4, pclass=0.80
 sensor_config = width=50, exp=2, pclass=0.60
-sensor_config = width=10, exp=6, pclass=0.93
 sensor_config = width=2, exp=4, pclass=0.93
 sensor_config = width=3, exp=4, pclass=0.93
 sensor_config = width=4, exp=4, pclass=0.93
@@ -138,7 +137,19 @@ sensor_config = width=9, exp=4, pclass=0.93
 sensor_config = width=10, exp=4, pclass=0.93
 sensor_config = width=11, exp=4, pclass=0.93
 sensor_config = width=12, exp=4, pclass=0.93
-min_reset_interval = 0.0001
+sensor_config = width=13, exp=4, pclass=0.93
+sensor_config = width=14, exp=4, pclass=0.93
+sensor_config = width=15, exp=4, pclass=0.93
+sensor_config = width=16, exp=4, pclass=0.93
+sensor_config = width=17, exp=4, pclass=0.93
+sensor_config = width=18, exp=4, pclass=0.93
+sensor_config = width=19, exp=4, pclass=0.93
+sensor_config = width=20, exp=4, pclass=0.93
+sensor_config = width=21, exp=4, pclass=0.93
+sensor_config = width=22, exp=4, pclass=0.93
+sensor_config = width=23, exp=4, pclass=0.93
+sensor_config = width=24, exp=4, pclass=0.93
+min_reset_interval = 1.0E-4
 max_turn_rate = 10.0
 }
 
