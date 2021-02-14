@@ -5,7 +5,7 @@
       <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_THRUST" reflectionName="DEZIRED_THRUST" opParams="_iVhRMGWzEeuUFJZhgh9oFg">
         <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_4yUXoFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
       </vars>
-      <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER" opParams="_iVhRMGWzEeuUFJZhgh9oFg">
+      <vars xmi:id="_71P2UEL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="DESIRED_RUDDER" reflectionName="DEZIRED_RUDDER" opParams="_Hir_MG53EeugaZcaoMfZwQ">
         <vtype xsi:type="simmapping:SimpleVariableType" xmi:id="_8cC3YFOaEeu-ze1bTRBqDw" vt="DOUBLE"/>
       </vars>
       <nature xsi:type="simmapping:BinaryFuzzing" xmi:id="_UKeU8F32Eeudl7r9rCrUPw"/>
@@ -14,7 +14,7 @@
   <messageRefs xmi:id="_uQqTAF9cEeuiLI5a8kQKyA" name="DETECTION_GILDA">
     <messageRef href="mission.model#_J6OrEHfyEeq8sKdfSq6qug"/>
     <vars xmi:id="_vuAawF9cEeuiLI5a8kQKyA" variable="UHZ_CONFIG_REQUEST" reflectionName="UHZ_CONFIG_REQUEST'" opParams="_PHeAUGs3EeupPeFqUdWE3Q">
-      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_mz5O0Gs2EeupPeFqUdWE3Q" regexp="width=([0-9]+)"/>
+      <vtype xsi:type="simmapping:RegexpVariableType" xmi:id="_mz5O0Gs2EeupPeFqUdWE3Q" regexp="width=([0-9]+)" groupNumToReplace="1"/>
     </vars>
   </messageRefs>
   <operations xmi:id="_lGaSgGHkEeuhOsiHBV6TXQ" operationClassName="DeleteEvent">
@@ -31,6 +31,11 @@
       <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_2yq5oGdaEeuo1oI7rQAtzg" name="lowerValue"/>
       <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_tdzNMGWzEeuUFJZhgh9oFg" name="UpperValue" upper="100.0"/>
     </paramSets>
+    <paramSets xmi:id="_Hir_MG53EeugaZcaoMfZwQ" name="DoubleVariableChange-0-100">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_Hir_MW53EeugaZcaoMfZwQ" name="Nature" value="Random"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_Hir_Mm53EeugaZcaoMfZwQ" name="lowerValue"/>
+      <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_Hir_M253EeugaZcaoMfZwQ" name="UpperValue" upper="100.0"/>
+    </paramSets>
   </operations>
   <operations xmi:id="_ozaK8GrzEeu3RLa6xSsB1A" operationClassName="StringVariableChange">
     <paramSets xmi:id="_rTPqcGrzEeu3RLa6xSsB1A" name="StringVariableChange-randomjunk">
@@ -39,9 +44,9 @@
     </paramSets>
   </operations>
   <operations xmi:id="_stF20Gs2EeupPeFqUdWE3Q" operationClassName="IntegerVariableChange">
-    <paramSets xmi:id="_PHeAUGs3EeupPeFqUdWE3Q" name="IntegerVarChange-0-30">
+    <paramSets xmi:id="_PHeAUGs3EeupPeFqUdWE3Q" name="IntegerVarChange-0-10">
       <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_Rrbx4Gs3EeupPeFqUdWE3Q" name="lower"/>
-      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_SJ8S0Gs3EeupPeFqUdWE3Q" name="upper" value="30"/>
+      <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_SJ8S0Gs3EeupPeFqUdWE3Q" name="upper" value="10"/>
     </paramSets>
   </operations>
 </simmapping:FuzzingSpecification>
