@@ -38,6 +38,10 @@ operation generateVariableEntry(sel) {
 	var variable = v.variable;
 	var participants = getParticipantsAsList(sel);
 	var regexNum = 0;
+	if (v.vtype.isKindOf(Simmapping!RegexpVariableType)) {
+		regexNum = v.vtype.groupNumToReplace;
+	}
+
 	var opString = chooseFuzzingOperationFromList(variable.opParams);
 %]Key,[%= variable %],[%= participants %],[%= regexNum %],[%= opString %]
 [% } %]
@@ -46,6 +50,9 @@ operation generateVariableEntry(sel) {
 [%
 operation generateVariableEntryFromVariable(v,participantsString) {
 	var regexNum = 0;
+	if (v.vtype.isKindOf(Simmapping!RegexpVariableType)) {
+		regexNum = v.vtype.groupNumToReplace;
+	}
 	var opString = chooseFuzzingOperationFromList(v.opParams, v);
 %]Key,[%= v.variable %],[%= participantsString %],[%= regexNum %],[%= opString %]
 [% } %]
@@ -84,8 +91,11 @@ operation generateMessageEntry(sel) {
 	for (mfieldspec in messageFields) {
 		var regexNum = 0;
 		var opString = chooseFuzzingOperationAsString(sel);
-		var mfield = mfieldspec.variable;
-%]Message,[%= mname %],[%= mfield %],[%= regexNum %],[%= opString %]
+		var varname = mfieldspec.variable;
+		if (mfieldspec.vtype.isKindOf(Simmapping!RegexpVariableType)) {
+			regexNum = mfieldspec.vtype.groupNumToReplace;
+		}		
+%]Message,[%= mname %],[%= varname %],[%= regexNum %],[%= opString %]
 [%	 }
 }
 %]

@@ -29,6 +29,7 @@ class ConstantType {
 
 class RegexpVariableType extends VariableType {
 	attr String regexp;
+	attr int groupNumToReplace;
 } 
 
 class GrammarVariableType {

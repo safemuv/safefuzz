@@ -20,6 +20,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupNumToReplace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"

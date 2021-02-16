@@ -1,0 +1,2 @@
+Key,DESIRED_THRUST,gilda,0,DoubleVariableChange,Random|0.0|100.0
+Key,DESIRED_RUDDER,gilda,0,DoubleVariableChange,Random|0.0|100.0

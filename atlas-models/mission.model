@@ -194,22 +194,22 @@
       <points xmi:id="_PrI7UPdKEeqBFM0D9wIRaA" x="9.0" y="-60.0"/>
     </poly>
   </obstacles>
-  <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
+  <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA">
     <fields xmi:id="_ItKQcHfxEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_GuJJkHfyEeq8sKdfSq6qug" name="DETECTION_FRANK" from="_gx4mIHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
+  <messages xmi:id="_GuJJkHfyEeq8sKdfSq6qug" name="DETECTION_FRANK">
     <fields xmi:id="_GuJJkXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_J6OrEHfyEeq8sKdfSq6qug" name="DETECTION_GILDA" from="_hNarkHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
+  <messages xmi:id="_J6OrEHfyEeq8sKdfSq6qug" name="DETECTION_GILDA">
     <fields xmi:id="_J6OrEXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY" from="_hkfHwHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
+  <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY">
     <fields xmi:id="_OIc_AXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INIITAL_ELLA" from="_fXV6wHP-Eeqc6cv9mBHIKw" to="_gWMvsHP-Eeqc6cv9mBHIKw">
+  <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INIITAL_ELLA">
     <fields xmi:id="_Xw3_QJp3Eeqgh-vrPhaKXw" name="coords"/>
   </messages>
-  <messages xmi:id="_B5vysFxNEeu3VcdoygRUQw" name="TEST_MSG" from="_gWMvsHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw"/>
+  <messages xmi:id="_B5vysFxNEeu3VcdoygRUQw" name="TEST_MSG"/>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-ELLA">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="speed" newValue="5.0"/>

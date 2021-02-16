@@ -31,10 +31,10 @@
       <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_2yq5oGdaEeuo1oI7rQAtzg" name="lowerValue"/>
       <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_tdzNMGWzEeuUFJZhgh9oFg" name="UpperValue" upper="100.0"/>
     </paramSets>
-    <paramSets xmi:id="_Hir_MG53EeugaZcaoMfZwQ" name="DoubleVariableChange-0-100">
+    <paramSets xmi:id="_Hir_MG53EeugaZcaoMfZwQ" name="DoubleVariableChange-40-40">
       <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_Hir_MW53EeugaZcaoMfZwQ" name="Nature" value="Random"/>
-      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_Hir_Mm53EeugaZcaoMfZwQ" name="lowerValue"/>
-      <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_Hir_M253EeugaZcaoMfZwQ" name="UpperValue" upper="100.0"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_Hir_Mm53EeugaZcaoMfZwQ" name="lowerValue" value="-40.0"/>
+      <params xsi:type="simmapping:DoubleRangeOperationParameter" xmi:id="_Hir_M253EeugaZcaoMfZwQ" name="UpperValue" upper="40.0"/>
     </paramSets>
   </operations>
   <operations xmi:id="_ozaK8GrzEeu3RLa6xSsB1A" operationClassName="StringVariableChange">
@@ -45,6 +45,7 @@
   </operations>
   <operations xmi:id="_stF20Gs2EeupPeFqUdWE3Q" operationClassName="IntegerVariableChange">
     <paramSets xmi:id="_PHeAUGs3EeupPeFqUdWE3Q" name="IntegerVarChange-0-10">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_f6gbAG7tEeu918kSA9-MHA" name="nature" value="RANDOM"/>
       <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_Rrbx4Gs3EeupPeFqUdWE3Q" name="lower"/>
       <params xsi:type="simmapping:IntConstantOperationParameter" xmi:id="_SJ8S0Gs3EeupPeFqUdWE3Q" name="upper" value="10"/>
     </paramSets>

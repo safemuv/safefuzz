@@ -8,7 +8,7 @@
     <componentChoice href="simmapping.model#_YQLbUEL1Eeut4tLYmKP6Ig"/>
   </sels>
   <sels xsi:type="fuzzingexpt:MessageFuzzingSelection" xmi:id="_icF4MGsiEeuSqLtk5acqfA">
-    <opParams href="simmapping.model#_rTPqcGrzEeu3RLa6xSsB1A"/>
+    <opParams href="simmapping.model#_PHeAUGs3EeupPeFqUdWE3Q"/>
     <msgChoice href="simmapping.model#_uQqTAF9cEeuiLI5a8kQKyA"/>
     <messageField href="simmapping.model#_vuAawF9cEeuiLI5a8kQKyA"/>
   </sels>
