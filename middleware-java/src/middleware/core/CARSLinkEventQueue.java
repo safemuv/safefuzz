@@ -1,5 +1,6 @@
 package middleware.core;
 
+import java.util.List;
 import java.util.Optional;
 
 import atlassharedclasses.ATLASObjectMapper;
@@ -26,23 +27,24 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 	public abstract void handleEventSpecifically(E event);
 	
 	public void handleEvent(E event) {
+		double time = core.getTime();
 		boolean handleSpecifically = true;
 		// Do the fuzzing specific parts of a CARS message
 		// If the message is on the list to fuzz... alter it
-		Optional<FuzzingOperation> op_o = fuzzingEngine.shouldFuzzCARSEvent(event);
+		List<FuzzingOperation> ops = fuzzingEngine.shouldFuzzCARSEvent(event, time);
 		E modifiedEvent = event;
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
-		if (op_o.isPresent()) {
-			FuzzingOperation fo = op_o.get();
-			modifiedEvent = fuzzingEngine.fuzzTransformEvent(event, fo);
-			if (reflectBackAsName.isPresent()) {
-				// Potentially reflect it back to the low-level CARS?
-				String reflectBackName = reflectBackAsName.get();
-				if (modifiedEvent instanceof CARSVariableUpdate) {
-					CARSVariableUpdate varUpdate = (CARSVariableUpdate)modifiedEvent;  
-					cTrans.sendBackEvent(varUpdate, reflectBackName);
-				}
+		for (FuzzingOperation op : ops) {
+			modifiedEvent = fuzzingEngine.fuzzTransformEvent(modifiedEvent, op);
+		}
+			
+		if (reflectBackAsName.isPresent()) {
+			// Potentially reflect it back to the low-level CARS?
+			String reflectBackName = reflectBackAsName.get();
+			if (modifiedEvent instanceof CARSVariableUpdate) {
+				CARSVariableUpdate varUpdate = (CARSVariableUpdate)modifiedEvent;  
+				cTrans.sendBackEvent(varUpdate, reflectBackName);
 			}
 		}
 		

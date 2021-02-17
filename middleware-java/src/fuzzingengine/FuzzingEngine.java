@@ -51,11 +51,11 @@ public class FuzzingEngine {
 		}
 	}
 	
-	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, FuzzingOperation op) throws MissingRobot {
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, double startTime, double endTime, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
 		List<String> vehicles = getVehicles(vehicleNameList);
 		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(), vr.getComponent(), vr.getRegexp(),
-				groupNum, op, vehicles);
+				groupNum, op, vehicles, startTime, endTime);
 		confs.addKeyRecord(fr);
 	}
 	
@@ -65,7 +65,7 @@ public class FuzzingEngine {
 		confs.addComponentRecord(cr);
 	}
 
-	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, FuzzingOperation op) throws InvalidMessage {
+	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, double startTime, double endTime, FuzzingOperation op) throws InvalidMessage {
 		Message msg = m.getMessage(messageName);
 		if (msg == null) {
 			throw new InvalidMessage(messageName, "Message not in model");
@@ -88,7 +88,7 @@ public class FuzzingEngine {
 					}
 				}
 				
-				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants);
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants, startTime, endTime);
 				
 				// For all dests, have to set them as a participant for the fuzzing key record
 				List<Component> cDests = msg.getTo();
@@ -132,16 +132,17 @@ public class FuzzingEngine {
 		return Optional.empty();
 	}
 
-	// TODO: this should be sensitive to the robot name and timing?
-	public <E> Optional<FuzzingOperation> shouldFuzzCARSEvent(E event) {
+	public <E> List<FuzzingOperation> shouldFuzzCARSEvent(E event, double time) {
+		List<FuzzingOperation> res = new ArrayList<FuzzingOperation>();
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
 			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
 			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
-			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key,vehicle);
+			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key,vehicle,time);
 			if (op_o.isPresent()) {
-				return op_o;
+				res.add(op_o.get());
+				return res;
 			} else {
 				Optional<String> componentName_o = cv.getSourceComponent();
 				if (componentName_o.isPresent()) {
@@ -150,19 +151,24 @@ public class FuzzingEngine {
 					// name, obtained from MOOS or other sim
 					Optional<FuzzingOperation> op_2 = confs.getOperationByOutboundComponentAndVehicle(componentName,vehicle);
 					if (op_2.isPresent()) {
-						return op_2;
+						res.add(op_2.get());
+						return res;
 					} else {
 						// Inbound operations have to be looked up based on the key name
 						// Check the simmapping to see if we have an active component for the key
-						return getOperationByInboundComponentAndVehicle(key, vehicle);
+						Optional<FuzzingOperation> op_o2 = getOperationByInboundComponentAndVehicle(key, vehicle);
+						if (op_o2.isPresent()) res.add(op_o2.get());
+						return res;
 					}
 				} else {
 					// TOOD: fix this for message based? - can this be merged with key based?
-					return confs.hasMessageKey(key);
+					Optional<FuzzingOperation> op_o3 = confs.hasMessageKey(key);
+					if (op_o3.isPresent()) res.add(op_o3.get());
+					return res;
 				}
 			}
 		} else {
-			return Optional.empty();
+			return res;
 		}
 	}
 
@@ -297,18 +303,19 @@ public class FuzzingEngine {
 					// Scan for key record in file
 					if (fields[0].toUpperCase().equals("KEY")) {
 						System.out.println("KEY based fuzzing");
-						String  varName = fields[1];
-						// TODO: parse the vehicle names from here
-						String vehicleNames = fields[2];
-						Integer groupNum = Integer.valueOf(fields[3]);
-						String opClass = fields[4];
-						String params = fields[5];
+						String varName = fields[1];
+						double startTime = Double.parseDouble(fields[2]);
+						double endTime = Double.parseDouble(fields[3]);
+						String vehicleNames = fields[4];
+						Integer groupNum = Integer.valueOf(fields[5]);
+						String opClass = fields[6];
+						String params = fields[7];
 						
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
 							try {
-								addFuzzingKeyOperation(varName, vehicleNames, groupNum, op);
+								addFuzzingKeyOperation(varName, vehicleNames, groupNum, startTime, endTime, op);
 							} catch (MissingRobot e) {
 								System.out.println("Missing robot: name = " + e.getName());
 								e.printStackTrace();
@@ -340,19 +347,19 @@ public class FuzzingEngine {
 					
 					// Scan for message
 					if (fields[0].toUpperCase().equals("MESSAGE")) {
-						System.out.println("Implement message-based fuzzing reader");
 						String messageName = fields[1];
-						// No vehicle names for messages - since they are pre-defined
-						String messageFieldName = fields[2];
-						Integer groupNum = Integer.valueOf(fields[3]);
-						String opClass = fields[4];
-						String params = fields[5];
+						double startTime = Double.parseDouble(fields[2]);
+						double endTime = Double.parseDouble(fields[3]);
+						String messageFieldName = fields[4];
+						Integer groupNum = Integer.valueOf(fields[5]);
+						String opClass = fields[6];
+						String params = fields[7];
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
 							// Where to get the regexp for the message fields? - in the model
 							try {
-								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, op);
+								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime, op);
 							} catch (InvalidMessage e) {
 								System.out.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
 								e.printStackTrace();

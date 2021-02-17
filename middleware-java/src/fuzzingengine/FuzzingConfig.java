@@ -115,14 +115,13 @@ public class FuzzingConfig {
 		componentLookup.put(cr.componentName, cr);
 	}
 
-	public Optional<FuzzingOperation> getOperationByKeyAndVehicle(String key, String vehicle) {
-		// TODO: maybe lookup based on both key and vehicle
+	public Optional<FuzzingOperation> getOperationByKeyAndVehicle(String key, String vehicle, double time) {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		if (fr != null) {
-			if (fr.hasVehicle(vehicle)) {
+			if (fr.isReadyAtTime(time) && fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
 			} else {
-				System.out.println("hasVehicle " + vehicle + " is false");
+				System.out.println("hasVehicle " + vehicle + " is false or timing not met");
 			}
 		}
 		return Optional.empty();

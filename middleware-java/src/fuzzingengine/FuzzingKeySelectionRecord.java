@@ -15,6 +15,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	String key;
 	Optional<String> reflectionKey;
 	Optional<String> component = Optional.empty();
+	double startTime;
+	double endTime;
 
 	Optional<String> regex;
 	Optional<Pattern> pattern;
@@ -38,7 +40,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 	
 	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex,
-			int groupNum, FuzzingOperation op, List<String> participants) {
+			int groupNum, FuzzingOperation op, List<String> participants, double startTime, double endTime) {
 		super(op);
 		this.key = key;
 		this.reflectionKey = reflectionKey;
@@ -46,6 +48,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.regex = regex;
 		this.groupNum = groupNum;
 		this.participants = participants;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		setupPattern();
 		setupParticipants();
 	}
@@ -101,5 +105,17 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 
 	public boolean hasVehicle(String vehicle) {
 		return participantsLookup.containsKey(vehicle);
+	}
+	
+	public double getStartTime() {
+		return startTime;
+	}
+	
+	public double getEndTime() {
+		return endTime;
+	}
+	
+	public boolean isReadyAtTime(double time) {
+		return (time >= startTime) && (time < endTime);
 	}
 }
