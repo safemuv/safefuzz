@@ -1,5 +1,7 @@
 package fuzzingengine.operations;
 
+import java.util.Optional;
+
 public abstract class EventFuzzingOperation extends FuzzingOperation {
 	public boolean isEventBased() {
 		return true;
@@ -9,5 +11,5 @@ public abstract class EventFuzzingOperation extends FuzzingOperation {
 		return false;
 	}
 	
-	public abstract <E> E fuzzTransformEvent(E event);
+	public abstract <E> Optional<E> fuzzTransformPotentialEvent(Optional<E> event);
 }

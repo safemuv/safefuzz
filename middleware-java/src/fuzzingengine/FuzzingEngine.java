@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 import java.lang.reflect.*;
 
@@ -29,15 +29,36 @@ import fuzzingengine.operations.ValueFuzzingOperation;
 import middleware.core.*;
 import middleware.logging.ATLASLog;
 
-public class FuzzingEngine {
+public class FuzzingEngine<E> {
 	Mission m;
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
 
+	private class FutureEvent {
+		private E e;
+		private double pendingTime;
+
+		public FutureEvent(E e, double pendingTime) {
+			this.e = e;
+			this.pendingTime = pendingTime;
+		}
+
+		public double getPendingTime() {
+			return pendingTime;
+		}
+
+		public E getEvent() {
+			return e;
+		}
+
+	}
+
+	PriorityQueue<FutureEvent> delayedEvents = new PriorityQueue<FutureEvent>();
+
 	public FuzzingEngine(Mission m) {
 		this.m = m;
 	}
-	
+
 	private List<String> getVehicles(String vehicleList) throws MissingRobot {
 		if (vehicleList.toUpperCase().equals("ALL")) {
 			return m.getAllRobotAndComputerNames();
@@ -50,22 +71,25 @@ public class FuzzingEngine {
 			return vehicleNames;
 		}
 	}
-	
-	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, double startTime, double endTime, FuzzingOperation op) throws MissingRobot {
+
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, double startTime,
+			double endTime, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
 		List<String> vehicles = getVehicles(vehicleNameList);
-		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(), vr.getComponent(), vr.getRegexp(),
-				groupNum, op, vehicles, startTime, endTime);
+		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
+				vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, startTime, endTime);
 		confs.addKeyRecord(fr);
 	}
-	
-	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList) throws MissingRobot {
+
+	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList)
+			throws MissingRobot {
 		List<String> vehicles = getVehicles(vehicleNameList);
 		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op, vehicles);
 		confs.addComponentRecord(cr);
 	}
 
-	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, double startTime, double endTime, FuzzingOperation op) throws InvalidMessage {
+	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, double startTime,
+			double endTime, FuzzingOperation op) throws InvalidMessage {
 		Message msg = m.getMessage(messageName);
 		if (msg == null) {
 			throw new InvalidMessage(messageName, "Message not in model");
@@ -73,40 +97,43 @@ public class FuzzingEngine {
 			String primedKeyName = messageFieldName + "'";
 			VariableSpecification vr = simmapping.getRecordForKey(primedKeyName);
 			if (vr == null) {
-				throw new InvalidMessage(messageName, "Simmapping key not present for message field name " + messageFieldName);
+				throw new InvalidMessage(messageName,
+						"Simmapping key not present for message field name " + messageFieldName);
 			} else {
-				// TODO: handle case where the given message is not defined in the mission 
+				// TODO: handle case where the given message is not defined in the mission
 				FuzzingMessageSelectionRecord mr = new FuzzingMessageSelectionRecord(messageFieldName, msg, op);
 
 				List<String> participants = new ArrayList<String>();
-				
+
 				for (Component cFrom : msg.getFrom()) {
 					if (cFrom instanceof Robot) {
-						participants.add(((Robot)cFrom).getName());
+						participants.add(((Robot) cFrom).getName());
 					} else {
-						participants.add(((Computer)cFrom).getName());
+						participants.add(((Computer) cFrom).getName());
 					}
 				}
-				
-				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName, Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants, startTime, endTime);
-				
+
+				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName,
+						Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants,
+						startTime, endTime);
+
 				// For all dests, have to set them as a participant for the fuzzing key record
 				List<Component> cDests = msg.getTo();
-				
+
 				for (Component c : cDests) {
 					String destName;
 					if (c instanceof Computer) {
-						Computer comp = (Computer)c;
+						Computer comp = (Computer) c;
 						destName = comp.getName();
 						kr.addParticipant(destName);
 						System.out.println("Adding participant " + destName);
 					}
-				} 
-				
+				}
+
 				for (Component c : cDests) {
 					String destName;
 					if (c instanceof Robot) {
-						Robot r = (Robot)c;
+						Robot r = (Robot) c;
 						destName = r.getName();
 						kr.addParticipant(destName);
 					}
@@ -117,8 +144,9 @@ public class FuzzingEngine {
 			}
 		}
 	}
-	
-	// need to test: look up the key in simmodel, is its specific component set as active
+
+	// need to test: look up the key in simmodel, is its specific component set as
+	// active
 	private Optional<FuzzingOperation> getOperationByInboundComponentAndVehicle(String key, String vehicle) {
 		VariableSpecification vr = simmapping.getRecordForKey(key);
 		if (vr != null) {
@@ -128,7 +156,7 @@ public class FuzzingEngine {
 				return confs.getOperationByOutboundComponentAndVehicle(comp.get(), vehicle);
 			}
 		}
-		
+
 		return Optional.empty();
 	}
 
@@ -139,7 +167,7 @@ public class FuzzingEngine {
 			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
 			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
-			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key,vehicle,time);
+			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
 			if (op_o.isPresent()) {
 				res.add(op_o.get());
 				return res;
@@ -149,7 +177,8 @@ public class FuzzingEngine {
 					String componentName = componentName_o.get();
 					// Outbound operations are looked up based on their event's component
 					// name, obtained from MOOS or other sim
-					Optional<FuzzingOperation> op_2 = confs.getOperationByOutboundComponentAndVehicle(componentName,vehicle);
+					Optional<FuzzingOperation> op_2 = confs.getOperationByOutboundComponentAndVehicle(componentName,
+							vehicle);
 					if (op_2.isPresent()) {
 						res.add(op_2.get());
 						return res;
@@ -157,13 +186,15 @@ public class FuzzingEngine {
 						// Inbound operations have to be looked up based on the key name
 						// Check the simmapping to see if we have an active component for the key
 						Optional<FuzzingOperation> op_o2 = getOperationByInboundComponentAndVehicle(key, vehicle);
-						if (op_o2.isPresent()) res.add(op_o2.get());
+						if (op_o2.isPresent())
+							res.add(op_o2.get());
 						return res;
 					}
 				} else {
 					// TOOD: fix this for message based? - can this be merged with key based?
 					Optional<FuzzingOperation> op_o3 = confs.hasMessageKey(key);
-					if (op_o3.isPresent()) res.add(op_o3.get());
+					if (op_o3.isPresent())
+						res.add(op_o3.get());
 					return res;
 				}
 			}
@@ -172,11 +203,11 @@ public class FuzzingEngine {
 		}
 	}
 
-	public <E> Optional<String> shouldReflectBackToCARS(E event) {
+	public Optional<String> shouldReflectBackToCARS(E event) {
 		if (event instanceof CARSVariableUpdate) {
 			CARSVariableUpdate cv = (CARSVariableUpdate) event;
 			String k = cv.getKey();
-			//return confs.getReflectionKey(k);
+			// return confs.getReflectionKey(k);
 			return simmapping.getReflectionKey(k);
 		}
 		return Optional.empty();
@@ -194,44 +225,47 @@ public class FuzzingEngine {
 		}
 	}
 
-	public <E> E fuzzTransformEvent(E event, FuzzingOperation op) {
+	public Optional<E> fuzzTransformEvent(Optional<E> event_o, FuzzingOperation op) {
 		if (op.isEventBased()) {
 			EventFuzzingOperation eop = (EventFuzzingOperation) op;
-			return eop.fuzzTransformEvent(event);
+			return eop.fuzzTransformPotentialEvent(event_o);
 		} else {
-			if (event instanceof CARSVariableUpdate) {
-				CARSVariableUpdate cv = (CARSVariableUpdate) event;
-				CARSVariableUpdate newUpdate = new CARSVariableUpdate(cv);
-				ValueFuzzingOperation vop = (ValueFuzzingOperation) op;
-				String key = cv.getKey();
-				String v = cv.getValue();
-				String newValue = v;
-				// Need to also look up the group number
-				Optional<Map.Entry<Pattern, Integer>> regexp_sel = confs.getPatternAndGroupNum(key);
-				if (!regexp_sel.isPresent()) {
-					newValue = vop.fuzzTransformString(v);
-				} else {
-					Pattern p = regexp_sel.get().getKey();
-					Integer groupNum = regexp_sel.get().getValue();
-					try {
-						newValue = replaceGroup(p, v, groupNum, vop);
-					} catch (FuzzingEngineMatchFailure e) {
-						ATLASLog.logFuzzing("FuzzingEngineMatchFailure - " + event + e);
-					}
-				}
+			if (event_o.isPresent()) {
+				E event = event_o.get();
+				if (event instanceof CARSVariableUpdate) {
+					CARSVariableUpdate cv = (CARSVariableUpdate) event;
+					CARSVariableUpdate newUpdate = new CARSVariableUpdate(cv);
+					ValueFuzzingOperation vop = (ValueFuzzingOperation) op;
+					String key = cv.getKey();
+					String v = cv.getValue();
+					String newValue = v;
 
-				newUpdate.setValue(newValue);
-				return (E) newUpdate;
-			} else {
-				return event;
-			}
+					Optional<Map.Entry<Pattern, Integer>> regexp_sel = confs.getPatternAndGroupNum(key);
+					if (!regexp_sel.isPresent()) {
+						newValue = vop.fuzzTransformString(v);
+					} else {		
+						Pattern p = regexp_sel.get().getKey();
+						Integer groupNum = regexp_sel.get().getValue();
+						try {
+							newValue = replaceGroup(p, v, groupNum, vop);
+						} catch (FuzzingEngineMatchFailure e) {
+							ATLASLog.logFuzzing("FuzzingEngineMatchFailure - " + event + e);
+						}
+					}
+
+					newUpdate.setValue(newValue);
+					return Optional.of((E)newUpdate);
+				} else {
+					return event_o;
+				}
+			} else return event_o;
 		}
 	}
 
 	public FuzzingSimMapping getSimMapping() {
 		return simmapping;
 	}
-	
+
 	public FuzzingConfig getConfig() {
 		return confs;
 	}
@@ -240,13 +274,13 @@ public class FuzzingEngine {
 		// Need to return: any variables from components enabled for binary fuzzing
 		// With either the component enabled for fuzzing
 		// Or the individual variable enabled
-		HashMap<String, String> vars = new HashMap<String,String>();
-		//for (confs.getAllKeysByComponent(component)) {
-		//	confs.getAllKeysByComponent
-		//}
-		
+		HashMap<String, String> vars = new HashMap<String, String>();
+		// for (confs.getAllKeysByComponent(component)) {
+		// confs.getAllKeysByComponent
+		// }
+
 		return vars;
-		
+
 	}
 
 	public void setSimMapping(FuzzingSimMapping simMapping) {
@@ -256,7 +290,7 @@ public class FuzzingEngine {
 	public List<String> getMessageKeys(String robotName, VariableDirection dir) {
 		return confs.getMessageKeys(robotName, dir);
 	}
-	
+
 	public Optional<FuzzingOperation> loadOperation(String className, String params) {
 		try {
 			Class<?> c = Class.forName("fuzzingengine.operations." + className);
@@ -264,7 +298,7 @@ public class FuzzingEngine {
 			Method method = c.getDeclaredMethod("createFromParamString", String.class);
 			Object res = method.invoke(null, params);
 			if (res instanceof FuzzingOperation) {
-				return Optional.of((FuzzingOperation)res);
+				return Optional.of((FuzzingOperation) res);
 			} else {
 				return Optional.empty();
 			}
@@ -289,17 +323,17 @@ public class FuzzingEngine {
 		try {
 			Files.readAllLines(Paths.get(fileName)).forEach(line -> {
 				if (line.charAt(0) != '#') {
-					String fields [] = line.split(",");
+					String fields[] = line.split(",");
 					System.out.println("0 - " + fields[0]);
 					int i = 0;
-					
+
 					for (final String token : fields) {
 						if (!token.isEmpty()) {
 							System.out.println("Token:" + i + " " + token);
 						}
 						i++;
 					}
-					
+
 					// Scan for key record in file
 					if (fields[0].toUpperCase().equals("KEY")) {
 						System.out.println("KEY based fuzzing");
@@ -310,7 +344,7 @@ public class FuzzingEngine {
 						Integer groupNum = Integer.valueOf(fields[5]);
 						String opClass = fields[6];
 						String params = fields[7];
-						
+
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
@@ -320,10 +354,10 @@ public class FuzzingEngine {
 								System.out.println("Missing robot: name = " + e.getName());
 								e.printStackTrace();
 							}
-							System.out.println("Installing fuzzing operation for " +varName + " - " + op);
+							System.out.println("Installing fuzzing operation for " + varName + " - " + op);
 						}
 					}
-					
+
 					// Scan for component record in file
 					if (fields[0].toUpperCase().equals("COMPONENT")) {
 						// TODO: parse the vehicle names from here
@@ -341,10 +375,11 @@ public class FuzzingEngine {
 							} catch (MissingRobot e) {
 								e.printStackTrace();
 							}
-							System.out.println("Installing fuzzing operation for component " + componentName + " - " + op);
+							System.out.println(
+									"Installing fuzzing operation for component " + componentName + " - " + op);
 						}
 					}
-					
+
 					// Scan for message
 					if (fields[0].toUpperCase().equals("MESSAGE")) {
 						String messageName = fields[1];
@@ -359,16 +394,18 @@ public class FuzzingEngine {
 							FuzzingOperation op = op_o.get();
 							// Where to get the regexp for the message fields? - in the model
 							try {
-								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime, op);
+								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime,
+										op);
 							} catch (InvalidMessage e) {
-								System.out.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
+								System.out
+										.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
 								e.printStackTrace();
 								// TODO: raise exception to indicate the conversion failed
 							}
-							System.out.println("Installing fuzzing operation for " + messageName + ":" + messageFieldName + " - " + op);
+							System.out.println("Installing fuzzing operation for " + messageName + ":"
+									+ messageFieldName + " - " + op);
 						}
 					}
-					
 
 				}
 			});
@@ -376,11 +413,11 @@ public class FuzzingEngine {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	// This gets the explicitly selected keys upon this component
-	public Map<String,String> getAllChanges(String component) {
-		Map<String,String> inOut = new HashMap<String,String>();
-				
+	public Map<String, String> getAllChanges(String component) {
+		Map<String, String> inOut = new HashMap<String, String>();
+
 		List<FuzzingKeySelectionRecord> recs = getConfig().getAllKeysByComponent(component);
 		for (FuzzingKeySelectionRecord kr : recs) {
 			if (kr.getReflectionKey().isPresent()) {
@@ -389,15 +426,30 @@ public class FuzzingEngine {
 		}
 		return inOut;
 	}
-	
+
 	// This gets the keys upon this component defined in the simmapping
-	public Map<String,String> getAllChangesDefinedOn(String component) {
-		Map<String,String> inOut = new HashMap<String,String>();
-		
+	public Map<String, String> getAllChangesDefinedOn(String component) {
+		Map<String, String> inOut = new HashMap<String, String>();
+
 		Set<VariableSpecification> recs = getSimMapping().getRecordsUponComponent(component);
 		for (VariableSpecification vr : recs) {
 			inOut.put(vr.getVariable(), vr.getReflectionName());
 		}
 		return inOut;
+	}
+
+	public void addToQueue(E e, double releaseTime) {
+		// TODO: define comparators for the release time
+		delayedEvents.add(new FutureEvent(e, releaseTime));
+	}
+
+	public List<E> pollEventsReady(double byTime) {
+		List<E> res = new ArrayList<E>();
+		FutureEvent fe = delayedEvents.peek();
+
+		if (fe.getPendingTime() < byTime) {
+			res.add(fe.getEvent());
+		}
+		return res;
 	}
 }

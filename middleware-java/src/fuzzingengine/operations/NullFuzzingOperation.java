@@ -1,7 +1,10 @@
 package fuzzingengine.operations;
 
+import java.util.Optional;
+
 public class NullFuzzingOperation extends EventFuzzingOperation {
-	public <E> E fuzzTransformEvent(E event) {
+	
+	public <E> Optional<E> fuzzTransformPotentialEvent(Optional<E> event) {
 		return event;
 	}
 }

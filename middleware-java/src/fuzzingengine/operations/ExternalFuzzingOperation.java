@@ -1,5 +1,7 @@
 package fuzzingengine.operations;
 
+import java.util.Optional;
+
 public class ExternalFuzzingOperation extends EventFuzzingOperation {
 
 	public ExternalFuzzingOperation() {
@@ -7,7 +9,7 @@ public class ExternalFuzzingOperation extends EventFuzzingOperation {
 		// Specify the fuzzing capability from the DSL
 	}
 
-	public <E> E fuzzTransformEvent(E event) {
+	public <E> Optional<E> fuzzTransformPotentialEvent(Optional<E> event) {
 		// TODO Auto-generated method stub
 		return event;
 	}
