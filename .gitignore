@@ -1,3 +1,9 @@
 middleware-java/logs/
+middleware-java/region*
 expt-working/logs/
 custom-moos/bin/
+custom-moos/build/
+custom-moos/lib/
+custom-moos/MOOS_Jul0519/MOOSCore/bin/
+custom-moos/MOOS_Jul0519/MOOSCore/lib/
+middleware-java/bin/

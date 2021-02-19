@@ -10,6 +10,7 @@ import middleware.carstranslations.CARSTranslations;
 
 public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implements Runnable {
 	private static final long serialVersionUID = 1L;
+	private static final boolean CHECK_FOR_QUEUE_EVENTS_BEFORE_ANY = true;
 	protected ATLASObjectMapper atlasOMapper;
 	protected ATLASCore core;
 	protected FuzzingEngine<E> fuzzingEngine;
@@ -35,6 +36,10 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 	}
 	
 	public void handleEvent(E event) {
+		if (CHECK_FOR_QUEUE_EVENTS_BEFORE_ANY) {
+			checkForQueuedEvents();
+		}
+		
 		double time = core.getTime();
 		
 		// TODO: Before handling custom events, check for pending events that are now due!
@@ -45,10 +50,17 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		Optional<E> modifiedEvent_o = Optional.of(event);
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
+		// Need to determine if ANY event in the chain requires enquining
+		// For now, just assume false
+		boolean shouldEnqueue = false;
+		double enqueueTime = 0.0;
+		
 		// Make the transformations on the event here
 		for (FuzzingOperation op : ops) {
 			if (modifiedEvent_o.isPresent()) {
 				modifiedEvent_o = fuzzingEngine.fuzzTransformEvent(modifiedEvent_o, op);
+				shouldEnqueue = shouldEnqueue || op.shouldEnqueue();
+				enqueueTime += op.enqueueTime();
 			}
 		}
 		
@@ -67,16 +79,9 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 				}
 			}
 			
-			// Need to determine if ANY event in the chain requires enquining
-			// For now, just assume false
-			boolean shouldEnqueue = false;//
-			
-			// Need to check if it requires enquing for future time processing
-			// How to handle future delays
-		
+			// How to handle precise future delays?
 			if (shouldEnqueue) {
-				// TODO: test time for now
-				double futureTime = time + 1.0;
+				double futureTime = time + enqueueTime;
 				fuzzingEngine.addToQueue(modifiedEvent, futureTime);
 			} else {
 				handleEventSpecifically(modifiedEvent);

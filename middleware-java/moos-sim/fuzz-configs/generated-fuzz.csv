@@ -1,3 +1,3 @@
-Key,DESIRED_THRUST,ella,0,DoubleVariableChange,RandomOffset|0.0|100.0|
-Key,DESIRED_RUDDER,ella,0,DoubleVariableChange,Random|-40.0|40.0|
-Message,DETECTION_GILDA,UHZ_CONFIG_REQUEST,1,IntegerVariableChange,RANDOM|0|10|
+Key,DESIRED_THRUST,0.0,300.0,ella,0,DoubleVariableChange,RandomOffset|0.0|100.0|
+Key,DESIRED_RUDDER,0.0,300.0,ella,0,DoubleVariableChange,Random|-40.0|40.0|
+Message,DETECTION_GILDA,0.0,300.0,UHZ_CONFIG_REQUEST,1,IntegerVariableChange,RANDOM|0|10|

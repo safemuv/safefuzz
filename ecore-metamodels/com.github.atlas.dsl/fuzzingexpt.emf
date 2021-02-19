@@ -16,9 +16,16 @@ class AllParticipantChoice extends ParticipantChoice {
 	
 }
 
+abstract class TimingSpec {
+	attr double startTime;
+	attr double endTime;
+	attr double limitCount;
+}
+
 abstract class FuzzingSelection {
 	val ParticipantChoice[1] participantChoice;
 	ref Simmapping.OperationParameterSet[*] opParams;
+	val TimingSpec[1] timspec;
 }
 
 class ComponentFuzzingSelection extends FuzzingSelection {
