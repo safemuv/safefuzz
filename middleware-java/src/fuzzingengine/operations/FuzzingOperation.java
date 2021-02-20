@@ -8,7 +8,12 @@ public abstract class FuzzingOperation {
 	public static FuzzingOperation createFromParamString(String s) throws CreationFailed {
 		throw new CreationFailed("Cannot create FuzzingOperation from string directly");
 	}
+	
 	public boolean shouldEnqueue() {
+		return false;
+	}
+	
+	public boolean shouldDelete() {
 		return false;
 	}
 	

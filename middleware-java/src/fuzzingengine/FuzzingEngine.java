@@ -34,26 +34,7 @@ public class FuzzingEngine<E> {
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
 
-	private class FutureEvent {
-		private E e;
-		private double pendingTime;
-
-		public FutureEvent(E e, double pendingTime) {
-			this.e = e;
-			this.pendingTime = pendingTime;
-		}
-
-		public double getPendingTime() {
-			return pendingTime;
-		}
-
-		public E getEvent() {
-			return e;
-		}
-
-	}
-
-	PriorityQueue<FutureEvent> delayedEvents = new PriorityQueue<FutureEvent>();
+	PriorityQueue<FutureEvent<E>> delayedEvents = new PriorityQueue<FutureEvent<E>>();
 
 	public FuzzingEngine(Mission m) {
 		this.m = m;
@@ -394,11 +375,9 @@ public class FuzzingEngine<E> {
 							FuzzingOperation op = op_o.get();
 							// Where to get the regexp for the message fields? - in the model
 							try {
-								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime,
-										op);
+								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime, op);
 							} catch (InvalidMessage e) {
-								System.out
-										.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
+								System.out.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
 								e.printStackTrace();
 								// TODO: raise exception to indicate the conversion failed
 							}
@@ -438,17 +417,21 @@ public class FuzzingEngine<E> {
 		return inOut;
 	}
 
-	public void addToQueue(E e, double releaseTime) {
+	public void addToQueue(E e, double releaseTime, Optional<String> reflectBackName) {
 		// TODO: define comparators for the release time
-		delayedEvents.add(new FutureEvent(e, releaseTime));
+		delayedEvents.add(new FutureEvent(e, releaseTime, reflectBackName));
 	}
 
-	public List<E> pollEventsReady(double byTime) {
-		List<E> res = new ArrayList<E>();
-		FutureEvent fe = delayedEvents.peek();
+	public List<FutureEvent<E>> pollEventsReady(double byTime) {
+		List<FutureEvent<E>> res = new ArrayList<FutureEvent<E>>();
+		FutureEvent<E> fe = delayedEvents.peek();
 
-		if (fe.getPendingTime() < byTime) {
-			res.add(fe.getEvent());
+		if (fe != null) {
+			if (fe.getPendingTime() < byTime) {
+				System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ", byTime=" + byTime);
+				FutureEvent<E> feRemoved = delayedEvents.remove();
+				res.add(feRemoved);
+			}
 		}
 		return res;
 	}

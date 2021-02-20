@@ -29,9 +29,24 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 	
 	public void checkForQueuedEvents() {
 		double time = core.getTime();
-		List<E> delayedEvents = fuzzingEngine.pollEventsReady(time);
-		for (E e : delayedEvents) {
-			handleEventSpecifically(e);
+		List<FutureEvent<E>> delayedEvents = fuzzingEngine.pollEventsReady(time);
+		for (FutureEvent<E> delayed : delayedEvents) {
+			Optional<String> reflectBackAsName = delayed.getReflectBackName();
+			E event = delayed.getEvent();
+			if (reflectBackAsName.isPresent()) {
+				reflectEventBack(event, reflectBackAsName.get());
+			}
+			
+			handleEventSpecifically(event);
+		}
+	}
+	
+	//@ Potentially reflect it back to the CARS
+	public void reflectEventBack(E event, String reflectBackName) {
+		
+		if (event instanceof CARSVariableUpdate) {
+			CARSVariableUpdate varUpdate = (CARSVariableUpdate)event;  
+			cTrans.sendBackEvent(varUpdate, reflectBackName);
 		}
 	}
 	
@@ -70,20 +85,15 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		// so, it will be ignored.
 		if (modifiedEvent_o.isPresent()) {
 			E modifiedEvent = modifiedEvent_o.get();
-			if (reflectBackAsName.isPresent()) {
-				// Potentially reflect it back to the CARS
-				String reflectBackName = reflectBackAsName.get();
-				if (modifiedEvent instanceof CARSVariableUpdate) {
-					CARSVariableUpdate varUpdate = (CARSVariableUpdate)modifiedEvent;  
-					cTrans.sendBackEvent(varUpdate, reflectBackName);
-				}
-			}
 			
-			// How to handle precise future delays?
 			if (shouldEnqueue) {
 				double futureTime = time + enqueueTime;
-				fuzzingEngine.addToQueue(modifiedEvent, futureTime);
+				fuzzingEngine.addToQueue(modifiedEvent, futureTime, reflectBackAsName);
 			} else {
+				// No enqueuing, reflect back to CARS then handle immediately
+				if (reflectBackAsName.isPresent()) {
+					reflectEventBack(modifiedEvent, reflectBackAsName.get());
+				}
 				handleEventSpecifically(modifiedEvent);
 			}
 		}
