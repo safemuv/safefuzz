@@ -4,20 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.uma.jmetal.solution.*;
 
 import atlasdsl.*;
-import atlasdsl.faults.Fault;
-import atlassharedclasses.FaultInstance;
+import exptrunner.FuzzingSelection;
 
-public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
+public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 	private static final long serialVersionUID = 1L;
 
-	// TODO: better way of propagating this constant - look it up somewhere else
-	private static final double MAX_SPEED_VALUE = 5.0;
-	
 	private Mission mission;
 	private boolean actuallyRun;
 	private String exptTag;
@@ -26,7 +21,7 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 	private Map<Object,Object> attributes = new HashMap<Object,Object>();
 	private Map<Integer,Double> objectives = new HashMap<Integer,Double>();
 	private Map<Integer,Double> constraints = new HashMap<Integer,Double>();
-	private List<FaultInstance> contents = new ArrayList<FaultInstance>();
+	private List<FuzzingSelection> contents = new ArrayList<FuzzingSelection>();
 	
 	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime) {
 		this.mission = mission;
@@ -41,14 +36,14 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		this.exptRunTime = other.exptRunTime;
 		this.contents = new ArrayList<FuzzingSelection>(other.contents.size());
 		
-		for (FaultInstance fi : contents) {
-			this.contents.add(new FaultInstance(fi));
+		for (FuzzingSelection fi : contents) {
+			this.contents.add(new FuzzingSelection(fi));
 		}
 	}
 	
-	public static FaultInstanceSetSolution empty(FaultInstanceSetSolution other) {
-		FaultInstanceSetSolution fi = new FaultInstanceSetSolution(other.mission, other.exptTag, other.actuallyRun, other.exptRunTime);
-		fi.contents = new ArrayList<FaultInstance>();
+	public static FuzzingSelectionsSolution empty(FuzzingSelectionsSolution other) {
+		FuzzingSelectionsSolution fi = new FuzzingSelectionsSolution(other.mission, other.exptTag, other.actuallyRun, other.exptRunTime);
+		fi.contents = new ArrayList<FuzzingSelection>();
 		return fi;
 	}
 		
@@ -60,20 +55,20 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		int size = objectives.size();
 		double [] res = new double [size];
 		for (int i = 0; i < size; i++) {
-			res[i] = getObjective(i);
+			res[i] = objectives.get(i);
 		}
 		return res;
 	}
 
-	public FaultInstance getVariable(int index) {
+	public FuzzingSelection getVariable(int index) {
 		return contents.get(index);
 	}
 
-	public List<FaultInstance> getVariables() {
+	public List<FuzzingSelection> getVariables() {
 		return contents;
 	}
 
-	public void setVariable(int index, FaultInstance variable) {
+	public void setVariable(int index, FuzzingSelection variable) {
 		contents.set(index, variable);
 	}
 
@@ -86,27 +81,17 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		return res;
 	}
 	
-	double faultInstanceIntensity(FaultInstance fi) {
+	double FuzzingSelectionIntensity(FuzzingSelection fs) {
 		// Assume the intensity is always 1 unless otherwise
 		double intensity = 1.0;
-		Fault f = fi.getFault();
-		Optional<String> extraData_opt = fi.getExtraDataOpt();
-		if (extraData_opt.isPresent()) {
-			String extraData = extraData_opt.get();
-			double exValue = Double.parseDouble(extraData);
-			// The speed faults intensity is relative to the max value
-			if (f.getName().contains("SPEEDFAULT")) {
-				intensity = exValue / MAX_SPEED_VALUE;
-			}
-		}
 		return intensity;
 	}
 	
 	private double totalActiveFaultTimeLengthScaledByIntensity() {
 		double total = 0.0;
-		for (FaultInstance fi : contents) {
-			if (fi.isActive()) {
-				total += faultInstanceIntensity(fi) * (fi.getEndTime() - fi.getStartTime());
+		for (FuzzingSelection fs : contents) {
+			if (fs.isActive()) {
+				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
 			}
 		}
 		return total;
@@ -136,20 +121,20 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		return constraints.size();
 	}
 
-	public Solution<FaultInstance> copy() {
+	public Solution<FuzzingSelection> copy() {
 		FuzzingSelectionsSolution copy = new FuzzingSelectionsSolution(this);
 		return copy;
 	}
 	
-	public List<FaultInstance> getFaultInstances() {
+	public List<FuzzingSelection> getFuzzingSelections() {
 		return contents;
 	}
 	
-	public void setContents(int index, FaultInstance fi) {
+	public void setContents(int index, FuzzingSelection fi) {
 		contents.set(index, fi);
 	}
 	
-	public void addContents(int index, FaultInstance fi) {
+	public void addContents(int index, FuzzingSelection fi) {
 		contents.add(index, fi);
 	}
 
@@ -177,9 +162,9 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		return contents.toString();
 	}
 
-	public List<FaultInstance> testAllFaultInstances(FaultInstanceLambdaBoolean test) {
-		List<FaultInstance> res = new ArrayList<FaultInstance>();
-		for (FaultInstance fi : contents) {
+	public List<FuzzingSelection> testAllFuzzingSelections(FuzzingSelectionLambdaBoolean test) {
+		List<FuzzingSelection> res = new ArrayList<FuzzingSelection>();
+		for (FuzzingSelection fi : contents) {
 			if (test.op(fi)) {
 				res.add(fi);
 			}
@@ -187,9 +172,9 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 		return res;
 	}
 	
-	public void setAllContents(List<FaultInstance> fis) {
+	public void setAllContents(List<FuzzingSelection> fis) {
 		int i = 0;
-		for (FaultInstance fi : fis) {
+		for (FuzzingSelection fi : fis) {
 			addContents(i, fi);
 			i++;
 		}
@@ -198,5 +183,27 @@ public class FuzzingSelectionsSolution implements Solution<FaultInstance> {
 	public double faultTimeTotal() {
 		
 		return totalActiveFaultTimeLengthScaledByIntensity();
+	}
+	
+	public void generateCSVFile(String filePath) {
+		// Generates the CSV file suitable for use in the experiments here
+	}
+
+	public List<FuzzingSelection> variables() {
+		return getVariables();
+	}
+
+	public double[] objectives() {
+		return getObjectives();
+	}
+
+	public double[] constraints() {
+		return getConstraints();
+	}
+
+	@Override
+	public Map<Object, Object> attributes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
