@@ -15,8 +15,6 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	String key;
 	Optional<String> reflectionKey;
 	Optional<String> component = Optional.empty();
-	double startTime;
-	double endTime;
 
 	Optional<String> regex;
 	Optional<Pattern> pattern;
@@ -106,16 +104,29 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public boolean hasVehicle(String vehicle) {
 		return participantsLookup.containsKey(vehicle);
 	}
-	
-	public double getStartTime() {
-		return startTime;
+
+	@Override
+	public FuzzingSelectionRecord dup() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public double getEndTime() {
-		return endTime;
+
+	public String generateCSVLine() {
+        List<String> str = new ArrayList<String>();
+        str.add("KEY");
+        str.add(key);
+        str.add(String.valueOf(startTime));
+        str.add(String.valueOf(endTime));
+        str.add(String.join("|", participants));
+        str.add(String.valueOf(groupNum));
+        str.add(String.valueOf(operation));
+        str.add(generateOpParams());
+        return String.join(",", str);
 	}
-	
-	public boolean isReadyAtTime(double time) {
-		return (time >= startTime) && (time < endTime);
+
+	@Override
+	public void checkConstraints() {
+		// TODO Auto-generated method stub
+		
 	}
 }

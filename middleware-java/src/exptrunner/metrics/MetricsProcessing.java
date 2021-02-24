@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import atlasdsl.Mission;
-import exptrunner.FuzzingSelection;
+import fuzzingengine.FuzzingSelectionRecord;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import exptrunner.jmetal.InvalidMetrics;
 

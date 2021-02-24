@@ -1,7 +1,7 @@
 package exptrunner.jmetal;
 
-import exptrunner.*;
+import fuzzingengine.FuzzingSelectionRecord;
 
 public interface FuzzingSelectionLambdaBoolean {
-	boolean op(FuzzingSelection fi);
+	boolean op(FuzzingSelectionRecord fi);
 }

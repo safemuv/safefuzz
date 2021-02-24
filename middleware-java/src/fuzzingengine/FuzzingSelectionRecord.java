@@ -3,6 +3,9 @@ package fuzzingengine;
 import fuzzingengine.operations.FuzzingOperation;
 
 abstract public class FuzzingSelectionRecord {
+	protected double startTime;
+	protected double endTime;
+	protected boolean isActive;
 	protected FuzzingOperation op;
 	
 	public FuzzingSelectionRecord(FuzzingOperation op) {
@@ -11,5 +14,35 @@ abstract public class FuzzingSelectionRecord {
 	
 	protected FuzzingOperation getOperation() {
 		return op;
+	}
+	
+	public double getStartTime() {
+		return startTime;
+	}
+	
+	public double getEndTime() {
+		return endTime;
+	}
+	
+	public boolean isReadyAtTime(double time) {
+		return (time >= startTime) && (time < endTime);
+	}
+	
+	public abstract FuzzingSelectionRecord dup();
+
+	public void absShiftTimes(double absTimeShift) {
+		
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public abstract String generateCSVLine();
+
+	public abstract void checkConstraints();
+	
+	protected String generateOpParams() {
+		return "";
 	}
 }

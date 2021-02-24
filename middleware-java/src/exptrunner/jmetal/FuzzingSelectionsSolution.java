@@ -1,5 +1,7 @@
 package exptrunner.jmetal;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +10,9 @@ import java.util.Map;
 import org.uma.jmetal.solution.*;
 
 import atlasdsl.*;
-import exptrunner.FuzzingSelection;
+import fuzzingengine.FuzzingSelectionRecord;
 
-public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
+public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecord> {
 	private static final long serialVersionUID = 1L;
 
 	private Mission mission;
@@ -21,7 +23,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 	private Map<Object,Object> attributes = new HashMap<Object,Object>();
 	private Map<Integer,Double> objectives = new HashMap<Integer,Double>();
 	private Map<Integer,Double> constraints = new HashMap<Integer,Double>();
-	private List<FuzzingSelection> contents = new ArrayList<FuzzingSelection>();
+	private List<FuzzingSelectionRecord> contents = new ArrayList<FuzzingSelectionRecord>();
 	
 	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime) {
 		this.mission = mission;
@@ -34,16 +36,16 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		this.mission = other.mission;
 		this.actuallyRun = other.actuallyRun;
 		this.exptRunTime = other.exptRunTime;
-		this.contents = new ArrayList<FuzzingSelection>(other.contents.size());
+		this.contents = new ArrayList<FuzzingSelectionRecord>(other.contents.size());
 		
-		for (FuzzingSelection fi : contents) {
-			this.contents.add(new FuzzingSelection(fi));
+		for (FuzzingSelectionRecord fi : contents) {
+			this.contents.add(fi.dup());
 		}
 	}
 	
 	public static FuzzingSelectionsSolution empty(FuzzingSelectionsSolution other) {
 		FuzzingSelectionsSolution fi = new FuzzingSelectionsSolution(other.mission, other.exptTag, other.actuallyRun, other.exptRunTime);
-		fi.contents = new ArrayList<FuzzingSelection>();
+		fi.contents = new ArrayList<FuzzingSelectionRecord>();
 		return fi;
 	}
 		
@@ -60,15 +62,15 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return res;
 	}
 
-	public FuzzingSelection getVariable(int index) {
+	public FuzzingSelectionRecord getVariable(int index) {
 		return contents.get(index);
 	}
 
-	public List<FuzzingSelection> getVariables() {
+	public List<FuzzingSelectionRecord> getVariables() {
 		return contents;
 	}
 
-	public void setVariable(int index, FuzzingSelection variable) {
+	public void setVariable(int index, FuzzingSelectionRecord variable) {
 		contents.set(index, variable);
 	}
 
@@ -81,7 +83,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return res;
 	}
 	
-	double FuzzingSelectionIntensity(FuzzingSelection fs) {
+	double FuzzingSelectionIntensity(FuzzingSelectionRecord fs) {
 		// Assume the intensity is always 1 unless otherwise
 		double intensity = 1.0;
 		return intensity;
@@ -89,7 +91,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 	
 	private double totalActiveFaultTimeLengthScaledByIntensity() {
 		double total = 0.0;
-		for (FuzzingSelection fs : contents) {
+		for (FuzzingSelectionRecord fs : contents) {
 			if (fs.isActive()) {
 				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
 			}
@@ -121,20 +123,20 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return constraints.size();
 	}
 
-	public Solution<FuzzingSelection> copy() {
+	public Solution<FuzzingSelectionRecord> copy() {
 		FuzzingSelectionsSolution copy = new FuzzingSelectionsSolution(this);
 		return copy;
 	}
 	
-	public List<FuzzingSelection> getFuzzingSelections() {
+	public List<FuzzingSelectionRecord> getFuzzingSelections() {
 		return contents;
 	}
 	
-	public void setContents(int index, FuzzingSelection fi) {
+	public void setContents(int index, FuzzingSelectionRecord fi) {
 		contents.set(index, fi);
 	}
 	
-	public void addContents(int index, FuzzingSelection fi) {
+	public void addContents(int index, FuzzingSelectionRecord fi) {
 		contents.add(index, fi);
 	}
 
@@ -162,9 +164,9 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return contents.toString();
 	}
 
-	public List<FuzzingSelection> testAllFuzzingSelections(FuzzingSelectionLambdaBoolean test) {
-		List<FuzzingSelection> res = new ArrayList<FuzzingSelection>();
-		for (FuzzingSelection fi : contents) {
+	public List<FuzzingSelectionRecord> testAllFuzzingSelections(FuzzingSelectionLambdaBoolean test) {
+		List<FuzzingSelectionRecord> res = new ArrayList<FuzzingSelectionRecord>();
+		for (FuzzingSelectionRecord fi : contents) {
 			if (test.op(fi)) {
 				res.add(fi);
 			}
@@ -172,9 +174,9 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return res;
 	}
 	
-	public void setAllContents(List<FuzzingSelection> fis) {
+	public void setAllContents(List<FuzzingSelectionRecord> fis) {
 		int i = 0;
-		for (FuzzingSelection fi : fis) {
+		for (FuzzingSelectionRecord fi : fis) {
 			addContents(i, fi);
 			i++;
 		}
@@ -185,11 +187,16 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return totalActiveFaultTimeLengthScaledByIntensity();
 	}
 	
-	public void generateCSVFile(String filePath) {
-		// Generates the CSV file suitable for use in the experiments here
+	public void generateCSVFile(String filePath) throws IOException {
+		FileWriter fw = new FileWriter(filePath);
+		for (FuzzingSelectionRecord fs : contents) {
+			String line = fs.generateCSVLine();
+			fw.write(line);
+		}
+		fw.close();		
 	}
 
-	public List<FuzzingSelection> variables() {
+	public List<FuzzingSelectionRecord> variables() {
 		return getVariables();
 	}
 
@@ -201,9 +208,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelection> {
 		return getConstraints();
 	}
 
-	@Override
 	public Map<Object, Object> attributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return getAttributes();
 	}
 }

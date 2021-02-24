@@ -1,7 +1,18 @@
 package exptrunner.operations;
 
-import atlassharedclasses.FaultInstance;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public interface MutationOperation {
-	public FaultInstance op(FaultInstance orig);
+import fuzzingengine.FuzzingSelectionRecord;
+
+public abstract class MutationOperation {
+	protected FileWriter mutationLog;
+	
+	// Performing the operation in place
+	public abstract void perform(FuzzingSelectionRecord orig) throws IOException;
+	public abstract String name();
+	
+	public MutationOperation(FileWriter mutationLog) {
+		this.mutationLog = mutationLog;
+	}
 }

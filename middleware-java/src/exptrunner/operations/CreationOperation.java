@@ -1,7 +1,7 @@
 package exptrunner.operations;
 
-import atlassharedclasses.FaultInstance;
+import fuzzingengine.FuzzingSelectionRecord;
 
 public interface CreationOperation {
-	public FaultInstance op(int index);
+	public FuzzingSelectionRecord op(int index);
 }

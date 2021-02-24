@@ -1,5 +1,6 @@
 package fuzzingengine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import atlasdsl.*;
@@ -11,6 +12,7 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
 	Message m;
 	String robotNameFrom;
 	String robotNameTo;
+	int regexNum = 0;
 
 	private String lookupFirstComponentName(List<Component> cs) {
 		Component c = cs.get(0);
@@ -55,5 +57,27 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
 	
 	public String getRobotTo() {
 		return robotNameTo;
+	}
+
+	public FuzzingSelectionRecord dup() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String generateCSVLine() {
+        List<String> str = new ArrayList<String>();
+        str.add("MESSAGE");
+        str.add(m.getName());
+        str.add(String.valueOf(startTime));
+        str.add(String.valueOf(endTime));
+        str.add(keyName);
+        str.add(String.valueOf(regexNum));
+        str.add(String.valueOf(operation));
+        str.add(generateOpParams());
+        return String.join(",", str);
+	}
+
+	public void checkConstraints() {
+		// TODO Auto-generated method stub
 	}
 }

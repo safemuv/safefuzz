@@ -26,6 +26,7 @@ import atlasdsl.faults.Fault;
 import atlassharedclasses.FaultInstance;
 import exptrunner.metrics.*;
 import exptrunner.runner.RunExperiment;
+import fuzzingengine.FuzzingSelectionRecord;
 import exptrunner.*;
 import utils.Pair;
 
@@ -110,9 +111,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 	private void setupInitialPopulation(FuzzingSelectionsSolution fiss) {
 		System.out.println("Setting up initial population...");
-
-		//List<Fault> allFaults = getFaultsAsList();
-		List<FuzzingSelection> allFaults = new ArrayList<FuzzingSelection>();
+		List<FuzzingSelectionRecord> allFaults = new ArrayList<FuzzingSelectionRecord>();
 		Collections.shuffle(allFaults, rng);
 		// TODO: setup the initial population; 
 		// This should be set up to confirm to the model
