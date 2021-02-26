@@ -53,6 +53,10 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		objectives.put(index,value);
 	}
 	
+	public double getObjective(int index) {
+		return objectives.get(index);
+	}
+	
 	public double[] getObjectives() {
 		int size = objectives.size();
 		double [] res = new double [size];

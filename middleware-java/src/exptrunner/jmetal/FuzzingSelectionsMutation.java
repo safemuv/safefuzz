@@ -38,7 +38,8 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		}
 
 		private MutationOperation chooseMutationOption() {
-			
+			// TODO: return one mutation accumulation
+			return (MutationOperation) mutationOps.keySet().toArray()[0];
 		}
 		
 		// TODO: split up this logic into files in exptrunner.operations
@@ -58,7 +59,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		}
 
 		private void mutatePossiblyMultipleTimes(FuzzingSelectionRecord input, int maxTimes) {
-			mutateFaultInstanceRandomly(input);
+			mutateFuzzingSelectionRandomly(input);
 			int extraMutations = rng.nextInt(maxTimes);
 			for (int i = 0; i < extraMutations; i++) {
 				mutateFuzzingSelectionRandomly(input);

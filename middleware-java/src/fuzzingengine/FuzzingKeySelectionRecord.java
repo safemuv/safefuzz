@@ -48,6 +48,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.participants = participants;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.op = op;
 		setupPattern();
 		setupParticipants();
 	}
@@ -116,10 +117,11 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
         str.add("KEY");
         str.add(key);
         str.add(String.valueOf(startTime));
+        
         str.add(String.valueOf(endTime));
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));
-        str.add(String.valueOf(operation));
+        str.add(String.valueOf(op));
         str.add(generateOpParams());
         return String.join(",", str);
 	}

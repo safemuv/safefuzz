@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import atlasdsl.*;
+import atlassharedclasses.FaultInstance;
 
 public class RunExperiment {
 
@@ -60,7 +62,7 @@ public class RunExperiment {
 		}
 	}
 
-	public static double doExperiment(Mission mission, String exptTag, FuzzingSelectionsSolution sol,
+	public static double doExperimentFromFile(Mission mission, String exptTag, String fileName,
 			boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 		Process middleware;
 
@@ -83,11 +85,8 @@ public class RunExperiment {
 			ciRunner = "run-ci-bo-alpha.sh";
 		}
 
-		String faultInstanceFileName = "expt_" + exptTag;
-		exptLog("Running experiment with fault instance file " + faultInstanceFileName);
-		// Generate a fault instance file for the experiment according to the experiment
-		// parameters
-		sol.generateCSVFile(ABS_WORKING_PATH + faultInstanceFileName);
+		exptLog("Running experiment with fuzzing CSV file " + fileName);
+
 		if (actuallyRun) {
 				// Launch the MOOS code, middleware and CI as separate subprocesses
 				// Always start the robots that are featured in both case studies
@@ -106,7 +105,7 @@ public class RunExperiment {
 				// Sleep until MOOS is ready
 				TimeUnit.MILLISECONDS.sleep(800);
 
-				String[] middlewareOpts = { faultInstanceFileName, "nogui" };
+				String[] middlewareOpts = { "nofault", "nogui" };
 				middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR, middlewareOpts, ABS_WORKING_PATH);
 
 				// Sleep until the middleware is ready, then start the CI
@@ -148,5 +147,14 @@ public class RunExperiment {
 
 	private static double extractResults(String string) {
 		return 0;
+	}
+
+	public static void doExperiment(Mission mission, String exptTag, FuzzingSelectionsSolution sol,
+			boolean actuallyRun, double timeLimit) throws IOException, InterruptedException {
+		String faultInstanceFileName = "expt_" + exptTag;
+		exptLog("Running experiment with generated fuzzing CSV file " + faultInstanceFileName);
+		String csvFile = ABS_WORKING_PATH + faultInstanceFileName;
+		sol.generateCSVFile(ABS_WORKING_PATH + faultInstanceFileName);
+		doExperimentFromFile(mission, exptTag, csvFile, actuallyRun, timeLimit);
 	}
 }

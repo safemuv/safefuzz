@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import atlassharedclasses.FaultInstance;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
+import fuzzingengine.FuzzingSelectionRecord;
 
 public abstract class ExptParams {
 	protected double runtime = 1200.0;
@@ -27,5 +28,5 @@ public abstract class ExptParams {
 		return solutionLog;
 	}
 	
-	public abstract List<FaultInstance> specificFaults();
+	public abstract List<FuzzingSelectionRecord> specificFaults();
 }

@@ -17,8 +17,6 @@ public class ExptHelper {
 		return process;
 	}
 	
-	// startNewJavaProcess("-jar atlas.jar", "middleware.core.ATLASMain", "test.fif", PATH);
-	// https://wiki.cantara.no/display/dev/Start+a+new+JVM+from+Java
 	public static ProcessBuilder createJVMProcess(final String optionsAsString, final String mainClass,
 			final String[] arguments) {
 		String jvm = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";

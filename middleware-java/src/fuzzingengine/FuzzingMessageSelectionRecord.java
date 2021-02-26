@@ -72,7 +72,7 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
         str.add(String.valueOf(endTime));
         str.add(keyName);
         str.add(String.valueOf(regexNum));
-        str.add(String.valueOf(operation));
+        str.add(String.valueOf(op));
         str.add(generateOpParams());
         return String.join(",", str);
 	}

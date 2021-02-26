@@ -12,17 +12,19 @@ import exptrunner.jmetal.InvalidMetrics;
 import exptrunner.metrics.MetricsProcessing;
 import faultgen.FaultFileIO;
 import faultgen.InvalidFaultFormat;
+import fuzzingengine.FuzzingSelectionRecord;
+import fuzzingengine.io.FuzzingIO;
 
 public class RepeatSingleExpt extends ExptParams {
 	private int runCountLimit;
 	private int runCount = 0;
-	private List<FaultInstance> fixedFaultInstances;
+	private List<FuzzingSelectionRecord> fixedFaultInstances;
 	private MetricsProcessing metricsProcessing;
 	private Mission mission;
 	
 	private FileWriter resFile;
-	// TODO: backport these changes into RepeatSingleExpt.java
 	private String resFileName = "repeatedLog.res";
+	private String faultFileName;
 	
 	private void setupResFile() {
 		try {
@@ -32,25 +34,14 @@ public class RepeatSingleExpt extends ExptParams {
 		}
 	}
 	
-	public RepeatSingleExpt(MetricsProcessing mp, double runtime, int runCountLimit, Mission mission, List<FaultInstance> fixedFaultInstances) {
+	public RepeatSingleExpt(MetricsProcessing mp, double runtime, int runCountLimit, Mission mission, String faultFileName, String resFaultFile) throws FileNotFoundException, InvalidFaultFormat {
 		super(runtime);
 		this.runCountLimit = runCountLimit;
 		this.runCount = 0;
 		this.metricsProcessing = mp;
 		this.mission = mission;
-		setupResFile();
-	}
-	
-	public RepeatSingleExpt(MetricsProcessing mp, double runtime, int runCountLimit, Mission mission, String faultFileName, int faultNumInFile, String resFaultFile) throws FileNotFoundException, InvalidFaultFormat {
-		super(runtime);
-		this.runCountLimit = runCountLimit;
-		this.runCount = 0;
-		this.metricsProcessing = mp;
-		this.mission = mission;
-		FaultFileIO io = new FaultFileIO(mission);
-		System.out.println("faultNumInFile = " + faultNumInFile);
-		//this.fixedFaultInstances = io.loadFaultsFromJMetalFile(faultFileName, faultNumInFile);
-		// TODO: load fuzzing selections from fixed CSV file
+		//this.fixedFaultInstances = FuzzingIO.loadFaultsFromCSV(faultFileName);
+		this.faultFileName = faultFileName;
 		this.resFileName = resFaultFile;
 		setupResFile();
 	}
@@ -74,7 +65,7 @@ public class RepeatSingleExpt extends ExptParams {
 		try {
 			metricsProcessing.readLogFiles(string, s);
 			for (int i = 0; i < s.getNumberOfObjectives(); i++) {
-				double m = s.getObjective(i);	
+				double m = s.getObjective(i);
 				resFile.write(m + ",");
 				System.out.println(metricsProcessing.getMetricByID(i) + "=" + m);
 			}
@@ -87,7 +78,7 @@ public class RepeatSingleExpt extends ExptParams {
 		}
 	}
 
-	public List<FaultInstance> specificFaults() {
+	public List<FuzzingSelectionRecord> specificFaults() {
 		return fixedFaultInstances;
 	}	
 }
