@@ -113,10 +113,9 @@ public class RunExperiment {
 
 				// CI not starting properly as a process, so call it via a script
 				exptLog("Starting CI");
-				
 				ExptHelper.startScript(ABS_MIDDLEWARE_PATH, ciRunner);
-
-
+			
+				TimeUnit.MILLISECONDS.sleep(3000);
 				// Wait until the end condition for the middleware
 				waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit );
 				exptLog("Middleware end time reached");

@@ -151,9 +151,8 @@ public class Mission {
 		obstacles.put(eob.getLabel(), eob);
 	}
 	
-	public List<EnvironmentalObstacle> getObstacles() {
-	    List<EnvironmentalObstacle> res = obstacles.values().stream().collect(Collectors.toList());
-	    return res;
+	public Map<String,EnvironmentalObstacle> getObstacles() {
+	    return obstacles; 
 	}
 	
 	public boolean hasObstacles() {

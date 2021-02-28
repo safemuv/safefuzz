@@ -2,6 +2,7 @@ package exptrunner.runner;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,19 @@ public class ExptHelper {
 
 		ProcessBuilder processBuilder = ExptHelper.createJVMProcess(optionsAsString, mainClass, arguments);
 		processBuilder.directory(new File(path));
+		
 		Process process = processBuilder.start();
+		InputStream stdout = process.getInputStream();
+		InputStream stderr = process.getErrorStream();
+		Thread threadOut = new Thread( new MyInputStreamSink( stdout, "out" ));
+		Thread threadErr = new Thread( new MyInputStreamSink( stderr, "err" ));
+
+		threadOut.setDaemon(true);
+		threadErr.setDaemon(true);
+		threadOut.setName( String.format("stdout reader" ));
+		threadErr.setName( String.format("stderr reader" ));
+		threadOut.start();
+		threadErr.start();
 		return process;
 	}
 	

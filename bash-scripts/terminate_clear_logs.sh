@@ -21,4 +21,6 @@ killall -9 uFldNodeComms
 killall -9 uFldShoreBroker
 killall -9 uFldHazardSensor
 pkill -f "atlas.jar"
+pkill -f "atlas-6robot-case-ci.jar"
+pkill -f "atlas-6robot-case.jar"
 cd /home/jharbin/academic/atlas/atlas-middleware/middleware-java/moos-sim && ./clean_logs.sh

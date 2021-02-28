@@ -167,7 +167,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				Region r = new Region(new Point(-150.0, -260.0), new Point(245.0, 20.0));
 				System.out.println("TEST: using a fixed region in obstacle code generation");
 				UFldObstacleSim uFldObstacleSim = new UFldObstacleSim(shoreside, r);
-				for (EnvironmentalObstacle eo : mission.getObstacles()) {
+				for (EnvironmentalObstacle eo : mission.getObstacles().values()) {
 					uFldObstacleSim.addDetectionObject(eo);
 				}
 				shoreside.addProcess(uFldObstacleSim);

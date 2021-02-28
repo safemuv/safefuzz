@@ -24,4 +24,8 @@ public class EnvironmentalObstacle {
 	public String getLabel() {
 		return label;
 	}
+	
+	public List<Point> getPoints() {
+		return polygon;
+	}
 }

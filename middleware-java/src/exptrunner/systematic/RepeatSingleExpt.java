@@ -6,14 +6,11 @@ import java.io.IOException;
 import java.util.List;
 
 import atlasdsl.Mission;
-import atlassharedclasses.FaultInstance;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import exptrunner.jmetal.InvalidMetrics;
 import exptrunner.metrics.MetricsProcessing;
-import faultgen.FaultFileIO;
 import faultgen.InvalidFaultFormat;
 import fuzzingengine.FuzzingSelectionRecord;
-import fuzzingengine.io.FuzzingIO;
 
 public class RepeatSingleExpt extends ExptParams {
 	private int runCountLimit;
@@ -61,7 +58,9 @@ public class RepeatSingleExpt extends ExptParams {
 	public void logResults(String string) {
 		// The FuzzingSelectionsSolution parameters
 		FuzzingSelectionsSolution s = new FuzzingSelectionsSolution(mission, "", true, 0.0);
-		s.setAllContents(fixedFaultInstances);
+		if (fixedFaultInstances != null) {
+			s.setAllContents(fixedFaultInstances);
+		}
 		try {
 			metricsProcessing.readLogFiles(string, s);
 			for (int i = 0; i < s.getNumberOfObjectives(); i++) {

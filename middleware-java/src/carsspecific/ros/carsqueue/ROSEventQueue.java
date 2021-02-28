@@ -123,27 +123,6 @@ public class ROSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 					String entityName = m.group(1);
 					double x = Double.parseDouble(m.group(2));
 					double y = Double.parseDouble(m.group(3));
-
-					// TODO: for now, assume the position sensor updates are provided directly
-					// by base position
-					GPSPositionReading gps = new GPSPositionReading(x, y, entityName);
-
-					try {
-						String msg = atlasOMapper.serialise(gps);
-
-						if (DEBUG_PRINT_DESERIALISED_MSGS) {
-							System.out.println("DEBUG: serialised message " + msg);
-						}
-						outputToCI.sendMessage(msg);
-					} catch (JsonProcessingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (JMSException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					// Find the corresponding robot object and update its location parameters
 					Robot r = mission.getRobot(entityName);
 					if (r != null) {
 						r.setPointComponentProperty("location", new Point(x, y));

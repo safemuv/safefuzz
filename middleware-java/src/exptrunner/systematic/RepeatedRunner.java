@@ -42,7 +42,6 @@ public class RepeatedRunner {
 			MetricsProcessing mp = new MetricsProcessing(mission, metricList, tempLog);
 			String resFileName = "repeatedfaults-"+fileTag+".res";
 			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, mission, faultFileName, resFileName);
-			// TODO: check this file name
 			runFixedCSVExpt(mission, faultFileName, ep, resFileName, true, runTime);
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {

@@ -20,6 +20,7 @@ public class MOOSSimulation implements CARSSimulation {
 		FileWriter missionFileExtLogs = mf.getOpenFile("launch-showconsole.sh");
 		
 		missionFile.write("#!/bin/sh\n\n");
+		missionFile.write(". ./set_paths.sh");
 		for (MOOSCommunity c : communities) {
 			String logAppendStr = " > console-logs/" + c.getCommunityName() + "-out 2> console-logs/" + c.getCommunityName() + "-err " ;
 			missionFile.write("pAntler " + c.getMissionFileName() + logAppendStr + launchSeperatelyStr + "\n");

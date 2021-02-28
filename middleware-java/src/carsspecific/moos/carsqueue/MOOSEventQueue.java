@@ -125,10 +125,11 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 					String entityName = m.group(1);
 					double x = Double.parseDouble(m.group(2));
 					double y = Double.parseDouble(m.group(3));
+					double speed = Double.parseDouble(m.group(4));
 
 					// TODO: for now, assume the position sensor updates are provided directly
 					// by base position
-					GPSPositionReading gps = new GPSPositionReading(x, y, entityName);
+					GPSPositionReading gps = new GPSPositionReading(x, y, speed, entityName);
 
 					try {
 						String msg = atlasOMapper.serialise(gps);
