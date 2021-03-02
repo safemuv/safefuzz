@@ -126,6 +126,8 @@ public class MetricsProcessing {
 		int avoidanceViolations = 0;
 		int maxObjectNum = 0;
 		int checkDetectionCount = 0;
+		
+		int outsideRegionViolations = 0;
 
 		double firstFaultTime = Double.MAX_VALUE;
 
@@ -158,6 +160,11 @@ public class MetricsProcessing {
 					if (time < firstFaultTime) {
 						firstFaultTime = time;
 					}
+				}
+				
+				if (goalClass.equals("atlasdsl.StayInRegion")) {
+					int count = Integer.parseInt(fields[1]);
+					outsideRegionViolations = Math.max(count,outsideRegionViolations);
 				}
 			}
 
@@ -230,6 +237,10 @@ public class MetricsProcessing {
 			if (metrics.contains(Metrics.COMBINED_MISSED_DETECTION_DIST_METRIC)) {
 				solution.setObjective(metricID++, -combinedDistMetric);
 				names.add("combinedMissedDetectionDistMetric");
+			}
+			
+			if (metrics.contains(Metrics.OUTSIDE_REGION_COUNT)) {
+				solution.setObjective(metricID++, -outsideRegionViolations);
 			}
 
 			if (metrics.contains(Metrics.OBSTACLE_AVOIDANCE_METRIC)) {

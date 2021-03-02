@@ -58,7 +58,7 @@ public class RepeatedRunner {
 	public static void main(String[] args) throws JMetalException, FileNotFoundException, InterruptedException {
 		List<Metrics> l = new ArrayList<Metrics>();
 		l.add(Metrics.PURE_MISSED_DETECTIONS);
-		l.add(Metrics.TIME_TOTAL_ABSOLUTE);
+		l.add(Metrics.OUTSIDE_REGION_COUNT);
 		runRepeatedFaultSet(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "6robot-4.fif", 200);
 	}
 }

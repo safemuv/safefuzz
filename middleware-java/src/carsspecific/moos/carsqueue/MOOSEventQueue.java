@@ -38,7 +38,7 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 	public MOOSEventQueue(ATLASCore core, Mission mission, int queueCapacity) {
 		super(core, queueCapacity, '.');
 		this.mission = mission;
-		nodeReportScanner = Pattern.compile("NAME=([^,]+),X=([^,]+),Y=([^,]+)");
+		nodeReportScanner = Pattern.compile("NAME=([^,]+),X=([^,]+),Y=([^,]+),SPD=([^,]+)");
 		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,]+)");
 		hazardScanner = Pattern.compile("vname=([^,]+),x=([^,]+),y=([^,]+),label=([^,]+),type=([^,]+),color=([^,]+),width=([^,]+)");
 		atlasOMapper = new ATLASObjectMapper();

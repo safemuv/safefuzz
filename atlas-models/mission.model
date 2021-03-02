@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission ../com.github.atlas.dsl/mission.ecore" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw">
   <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="ella">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
       <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="200.0" y="-85.0"/>
@@ -183,6 +183,17 @@
       </staticRegion>
     </region>
   </goals>
+  <goals xmi:id="_Zc7K0HrmEeu4teJ7JJepvg" name="trackDistances">
+    <requirements xmi:id="_sS9nQHrnEeu4teJ7JJepvg" latestFinishTime="1190.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_mxQSMHrnEeu4teJ7JJepvg" participants="_Y_ymkKyYEeqTYY1ormOQgg _gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
+    <action xsi:type="atlas:TrackDistances" xmi:id="_hnXnQHrnEeu4teJ7JJepvg"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_o7vMwHrnEeu4teJ7JJepvg">
+      <staticRegion xmi:id="_rNudgHrnEeu4teJ7JJepvg">
+        <corner1 xmi:id="_rNudgXrnEeu4teJ7JJepvg" x="-150.0" y="-260.0" z="-40.0"/>
+        <corner2 xmi:id="_rNudgnrnEeu4teJ7JJepvg" x="245.0" y="20.0" z="100.0"/>
+      </staticRegion>
+    </region>
+  </goals>
   <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-55.0" label="1"/>
   <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="185.0" y="-45.0" isHazard="true" label="2"/>
   <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="100.0" y="-132.0" label="3"/>
@@ -194,22 +205,21 @@
       <points xmi:id="_PrI7UPdKEeqBFM0D9wIRaA" x="9.0" y="-60.0"/>
     </poly>
   </obstacles>
-  <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA">
+  <messages xmi:id="_HTGtQHfxEeq8sKdfSq6qug" name="DETECTION_ELLA" from="_Y_ymmqyYEeqTYY1ormOQgg" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_ItKQcHfxEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_GuJJkHfyEeq8sKdfSq6qug" name="DETECTION_FRANK">
+  <messages xmi:id="_GuJJkHfyEeq8sKdfSq6qug" name="DETECTION_FRANK" from="_o5ESEHgDEeq8sKdfSq6qug" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_GuJJkXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_J6OrEHfyEeq8sKdfSq6qug" name="DETECTION_GILDA">
+  <messages xmi:id="_J6OrEHfyEeq8sKdfSq6qug" name="DETECTION_GILDA" from="_hNarkHP-Eeqc6cv9mBHIKw" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_J6OrEXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY">
+  <messages xmi:id="_OIc_AHfyEeq8sKdfSq6qug" name="DETECTION_HENRY" from="_zWcekH2jEeqRdcV7Ed4ZKQ" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_OIc_AXfyEeq8sKdfSq6qug" name="UUV_DETECTION_NAME"/>
   </messages>
-  <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INIITAL_ELLA">
+  <messages xmi:id="_Rg2LoJp3Eeqgh-vrPhaKXw" name="UUV_COORDINATE_UPDATE_INITIAL_ELLA" from="_Y_ymmqyYEeqTYY1ormOQgg" to="_fXV6wHP-Eeqc6cv9mBHIKw">
     <fields xmi:id="_Xw3_QJp3Eeqgh-vrPhaKXw" name="coords"/>
   </messages>
-  <messages xmi:id="_B5vysFxNEeu3VcdoygRUQw" name="TEST_MSG"/>
   <faults xmi:id="_Rz8j4HfzEeq8sKdfSq6qug" name="SPEEDFAULT-ELLA">
     <affectedTime xmi:id="_RtsfAHgAEeq8sKdfSq6qug" latestFaultEnd="1200.0" maxFaultLength="1200.0" maxFaultRepeatCount="3" faultProb="0.8"/>
     <impact xsi:type="atlas_2:MotionFault" xmi:id="_XGoOQH5xEeq-a6uhvTMjeQ" affectedComponent="_o5ESEHgDEeq8sKdfSq6qug" affectedProperty="speed" newValue="5.0"/>

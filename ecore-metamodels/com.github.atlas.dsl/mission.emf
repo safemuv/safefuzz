@@ -54,6 +54,10 @@ class Avoid extends GoalAction {
 	
 }
 
+class TrackDistances extends GoalAction {
+	
+}
+
 class StayInRegion extends GoalAction {
 	attr boolean stopOnFirstViolation;
 }

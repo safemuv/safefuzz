@@ -148,6 +148,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalAction ga[%= goalnum %] = new AvoidOthers([%= goalAction.clearance %]);
 		[% } %]
 		
+		[% if (goalAction.isKindOf(TrackDistances)) { %]
+		GoalAction ga[%= goalnum %] = new TrackDistances();
+		[% } %]
+		
 		[% if (goalAction.isKindOf(StayInRegion)) { %]
 		[% var shouldStop = goalAction.stopOnFirstViolation; %]
 		GoalAction ga[%= goalnum %] = new StayInRegion([%= shouldStop %]);

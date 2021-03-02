@@ -211,6 +211,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalRegion grmutualAvoidance = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
 			           new Point(1000.0, 1000.0, 0.0)));
@@ -237,6 +238,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalRegion grprimarySensorSweep = new StaticGoalRegion(
 			new Region(new Point(0.0, 0.0, 0.0),
 			           new Point(1000.0, 1000.0, 0.0)));
@@ -254,6 +256,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1200.0);
 		
 		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR);
+		
 		
 		
 		
@@ -285,6 +288,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		List<EnvironmentalObject> ga4Objs = new ArrayList<EnvironmentalObject>();
 		ga4Objs.add(eo1);
 		ga4Objs.add(eo3);
@@ -306,12 +310,13 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
 		
-		Robot [] grp5 = {rella, rgilda, rfrank, rhenry}; 
+		Robot [] grp5 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpstayInRegion = new StaticParticipants(grp5, mission);
 		
 		
 		
 		GoalTemporalConstraints gt5 = new GoalTemporalConstraints(0.0, 1200.0);
+		
 		
 		
 		
@@ -327,27 +332,52 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		mission.addGoal("stayInRegion", stayInRegion);
+ 
+ 
+ 
+ 
+ 
+		
+		Robot [] grp6 = {rbrian,rella,rfrank,rgilda,rhenry}; 
+		GoalParticipants gptrackDistances = new StaticParticipants(grp6, mission);
+		
+		
+		
+		GoalTemporalConstraints gt6 = new GoalTemporalConstraints(0.0, 1190.0);
+		
+		
+		
+		GoalAction ga6 = new TrackDistances();
+		
+		
+		
+		GoalRegion grtrackDistances = new StaticGoalRegion(
+			new Region(new Point(-150.0, -260.0, -40.0),
+			           new Point(245.0, 20.0, 100.0)));
+		
+		
+		Goal trackDistances = new Goal("trackDistances", mission, gt6, gptrackDistances, Optional.of(grtrackDistances), ga6);
+		
+		
+		mission.addGoal("trackDistances", trackDistances);
 	
 
 	
  
-	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", rella, c1);
+	Message msgDETECTION_ELLA = new Message("DETECTION_ELLA", srbrian_3, c1);
 	mission.addMessage(msgDETECTION_ELLA); 
  
-	Message msgDETECTION_FRANK = new Message("DETECTION_FRANK", rfrank, c1);
+	Message msgDETECTION_FRANK = new Message("DETECTION_FRANK", srella_2, c1);
 	mission.addMessage(msgDETECTION_FRANK); 
  
 	Message msgDETECTION_GILDA = new Message("DETECTION_GILDA", rgilda, c1);
 	mission.addMessage(msgDETECTION_GILDA); 
  
-	Message msgDETECTION_HENRY = new Message("DETECTION_HENRY", rhenry, c1);
+	Message msgDETECTION_HENRY = new Message("DETECTION_HENRY", srgilda_3, c1);
 	mission.addMessage(msgDETECTION_HENRY); 
  
-	Message msgUUV_COORDINATE_UPDATE_INIITAL_ELLA = new Message("UUV_COORDINATE_UPDATE_INIITAL_ELLA", c1, rella);
-	mission.addMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA); 
- 
-	Message msgTEST_MSG = new Message("TEST_MSG", rella, c1);
-	mission.addMessage(msgTEST_MSG); 
+	Message msgUUV_COORDINATE_UPDATE_INITIAL_ELLA = new Message("UUV_COORDINATE_UPDATE_INITIAL_ELLA", srbrian_3, c1);
+	mission.addMessage(msgUUV_COORDINATE_UPDATE_INITIAL_ELLA); 
 	
 	 
 	
@@ -481,7 +511,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	SubFieldSpec sf9 = new SubFieldSpec(0, 1, false);
 	PointMessageChange ps9 = PointMessageChange.forAbsolute(new Point(10.0, 10.0)); 
-	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INIITAL_ELLA, Optional.of(sf9), ps9);
+	FaultImpact fi9 = new MutateMessage(msgUUV_COORDINATE_UPDATE_INITIAL_ELLA, Optional.of(sf9), ps9);
 	
 	
 	

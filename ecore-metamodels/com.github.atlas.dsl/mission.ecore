@@ -25,6 +25,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Patrol" eSuperTypes="#//GoalAction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Cover" eSuperTypes="#//GoalAction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Avoid" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TrackDistances" eSuperTypes="#//GoalAction"/>
   <eClassifiers xsi:type="ecore:EClass" name="StayInRegion" eSuperTypes="#//GoalAction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopOnFirstViolation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
