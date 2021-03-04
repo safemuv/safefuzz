@@ -1,5 +1,6 @@
 package atlasdsl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,9 @@ public class StayInRegion extends GoalAction {
 	private boolean stopOnFirstViolation = false;
 	
 	private int violationIncidents = 0;
+	private final double TIME_THRESHOLD = 5.0;
+	
+	private HashMap<String,Double> robotLastViolationTime = new HashMap<String,Double>();
 	
 	public class MissingRegion extends Exception {
 		private static final long serialVersionUID = 1L;
@@ -29,6 +33,20 @@ public class StayInRegion extends GoalAction {
 		this.stopOnFirstViolation = stopOnFirstViolation;
 	}
 	
+	public boolean violationReadyToLog(String robotName, double currentTime) {
+		if (!robotLastViolationTime.containsKey(robotName)) {
+			robotLastViolationTime.put(robotName, Double.MIN_VALUE);
+		}
+		
+		double lastTime = robotLastViolationTime.get(robotName);
+		if ((currentTime - lastTime) >= TIME_THRESHOLD) {
+			robotLastViolationTime.put(robotName, currentTime);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
 		List<Robot> robots = participants.getParticipants();
 		try {
@@ -36,23 +54,25 @@ public class StayInRegion extends GoalAction {
 				Point loc = r.getPointComponentProperty("location");
 				//System.out.println("StayInRegion: " + r.getName() + " is at " + loc);
 				if (!region.contains(loc)) {
-					violationIncidents++;
-					
-					GoalResultStatus grs;
-					if (stopOnFirstViolation) {
-						grs = GoalResultStatus.VIOLATED;
-					} else {
-						grs = GoalResultStatus.CONTINUE;
-					}
-					
 					double time = core.getTime();
-					ATLASLog.logGoalMessage(this, violationIncidents + "," + time + "," + r.getName() + "," + loc);
-					GoalResult gr = new GoalResult(grs);
-					GoalResultField gf = new StringResultField("violatingRobot", r.getName());
-					GoalResultField pf = new PointResultField("location", loc);
-					gr.addField(gf);
-					gr.addField(pf);
-					return Optional.of(gr);
+					if (violationReadyToLog(r.getName(), time)) {
+						violationIncidents++;
+					
+						GoalResultStatus grs;
+						if (stopOnFirstViolation) {
+							grs = GoalResultStatus.VIOLATED;
+						} else {
+							grs = GoalResultStatus.CONTINUE;
+						}
+										
+						ATLASLog.logGoalMessage(this, violationIncidents + "," + time + "," + r.getName() + "," + loc);
+						GoalResult gr = new GoalResult(grs);
+						GoalResultField gf = new StringResultField("violatingRobot", r.getName());
+						GoalResultField pf = new PointResultField("location", loc);
+						gr.addField(gf);
+						gr.addField(pf);
+						return Optional.of(gr);
+					}
 				} else {
 					return Optional.empty();
 				}
@@ -68,6 +88,8 @@ public class StayInRegion extends GoalAction {
 	protected void setup(ATLASCore core, Mission mission, Goal g) throws GoalActionSetupFailure {
 		this.core = core;
 		Optional<GoalRegion> gr_o = g.getGoalRegion();
+		
+		
 		if (gr_o.isPresent()) {
 			GoalRegion gr = gr_o.get();
 			if (gr instanceof StaticGoalRegion) {

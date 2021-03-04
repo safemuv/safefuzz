@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description" uid="_8cWbMHzgEeu_SO-txPJAFA" selectedViews="_8czuMHzgEeu_SO-txPJAFA _8c7C8HzgEeu_SO-txPJAFA _8c7qAHzgEeu_SO-txPJAFA _8c_UYHzgEeu_SO-txPJAFA" version="14.3.1.202003261200">
+  <semanticResources>message.ecore</semanticResources>
+  <semanticResources>http://www.github.com/jrharbin-york/atlas-middleware/dsl/components</semanticResources>
+  <semanticResources>http://www.github.com/jrharbin-york/atlas-middleware/dsl/region</semanticResources>
+  <ownedViews xmi:type="viewpoint:DView" uid="_8czuMHzgEeu_SO-txPJAFA">
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
+  </ownedViews>
+  <ownedViews xmi:type="viewpoint:DView" uid="_8c7C8HzgEeu_SO-txPJAFA">
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Review']"/>
+  </ownedViews>
+  <ownedViews xmi:type="viewpoint:DView" uid="_8c7qAHzgEeu_SO-txPJAFA">
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Archetype']"/>
+  </ownedViews>
+  <ownedViews xmi:type="viewpoint:DView" uid="_8c_UYHzgEeu_SO-txPJAFA">
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Generation']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>
