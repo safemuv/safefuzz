@@ -133,7 +133,6 @@ public class FuzzingEngine<E> {
 		if (vr != null) {
 			Optional<String> comp = vr.getComponent();
 			if (comp.isPresent()) {
-				System.out.println("comp = " + comp);
 				return confs.getOperationByOutboundComponentAndVehicle(comp.get(), vehicle);
 			}
 		}
@@ -428,7 +427,7 @@ public class FuzzingEngine<E> {
 
 		if (fe != null) {
 			if (fe.getPendingTime() < byTime) {
-				System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ", byTime=" + byTime);
+		//		System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ", byTime=" + byTime);
 				FutureEvent<E> feRemoved = delayedEvents.remove();
 				res.add(feRemoved);
 			}

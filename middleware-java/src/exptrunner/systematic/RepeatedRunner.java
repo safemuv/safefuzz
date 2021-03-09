@@ -31,7 +31,7 @@ public class RepeatedRunner {
 		}
 	}
 	
-	public static void runRepeatedFaultSet(List<Metrics> metricList, String faultFileName, String fileTag, int runCount) {
+	public static void runRepeatedFuzzing(List<Metrics> metricList, String faultFileName, String fileTag, int runCount) {
 		DSLLoader loader = new GeneratedDSLLoader();
 		Mission mission;
 
@@ -40,7 +40,7 @@ public class RepeatedRunner {
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
 			MetricsProcessing mp = new MetricsProcessing(mission, metricList, tempLog);
-			String resFileName = "repeatedfaults-"+fileTag+".res";
+			String resFileName = "fuzzingexpt-"+fileTag+".res";
 			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, mission, faultFileName, resFileName);
 			runFixedCSVExpt(mission, faultFileName, ep, resFileName, true, runTime);
 			System.out.println("Done");
@@ -59,6 +59,6 @@ public class RepeatedRunner {
 		List<Metrics> l = new ArrayList<Metrics>();
 		l.add(Metrics.PURE_MISSED_DETECTIONS);
 		l.add(Metrics.OUTSIDE_REGION_COUNT);
-		runRepeatedFaultSet(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "6robot-4.fif", 200);
+		runRepeatedFuzzing(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "rudderfault", 200);
 	}
 }

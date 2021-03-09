@@ -27,7 +27,7 @@
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="simmapping.ecore#/"/>
       </ownedRepresentationDescriptors>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_5vrOAXzqEeu_SO-txPJAFA" name="Simmapping class diagram" repPath="#_5vlucHzqEeu_SO-txPJAFA" changeId="d9471f08-fb9e-4d22-bdca-e9c7ba5046f0">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_5vrOAXzqEeu_SO-txPJAFA" name="Simmapping class diagram" repPath="#_5vlucHzqEeu_SO-txPJAFA" changeId="c3472e38-e619-4f2c-b89d-6b3e1a9a5545">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="simmapping.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -4995,6 +4995,12 @@
             <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </endLabelStyleDescription>
         </computedStyleDescriptions>
+        <computedStyleDescriptions xmi:type="style:FlatContainerStyleDescription" xmi:id="_TPsTcIA_EeubXqj8tvr5vA" arcWidth="8" arcHeight="8" borderSizeComputationExpression="1" tooltipExpression="service:renderTooltip" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="10" backgroundStyle="Liquid">
+          <borderColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          <backgroundColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          <foregroundColor xmi:type="description:UserFixedColor" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@userColorsPalettes[name='Ecore%20Palette']/@entries[name='EClass']"/>
+        </computedStyleDescriptions>
       </data>
     </ownedAnnotationEntries>
     <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_6HgfMHzqEeu_SO-txPJAFA" name="VariableDirection" tooltipText="" width="12" height="10">
@@ -5227,15 +5233,13 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_6Hml0HzqEeu_SO-txPJAFA" name="FuzzingMessage" tooltipText="" outgoingEdges="_6ID42nzqEeu_SO-txPJAFA" incomingEdges="_6IFG_XzqEeu_SO-txPJAFA" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" uid="_6Hml0HzqEeu_SO-txPJAFA" name="FuzzingMessage" tooltipText="&#xA;ERROR : The feature 'eType' of 'EReference{platform:/resource/com.github.atlas.dsl/simmapping.ecore#//FuzzingMessage/messageRef}' contains an unresolved proxy 'EClass{http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message}'&#xA;ERROR : The feature 'eReferenceType' of 'EReference{platform:/resource/com.github.atlas.dsl/simmapping.ecore#//FuzzingMessage/messageRef}' contains an unresolved proxy 'EClass{http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message}'&#xA;ERROR : The feature 'eRawType' of 'EGenericType{platform:/resource/com.github.atlas.dsl/simmapping.ecore#//FuzzingMessage/messageRef/@eGenericType}' contains an unresolved proxy 'EClass{http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message}'&#xA;ERROR : The feature 'eClassifier' of 'EGenericType{platform:/resource/com.github.atlas.dsl/simmapping.ecore#//FuzzingMessage/messageRef/@eGenericType}' contains an unresolved proxy 'EClass{http://www.github.com/jrharbin-york/atlas-middleware/dsl/message#//Message}'" outgoingEdges="_6ID42nzqEeu_SO-txPJAFA" incomingEdges="_6IFG_XzqEeu_SO-txPJAFA" width="12" height="10">
       <target xmi:type="ecore:EClass" href="simmapping.ecore#//FuzzingMessage"/>
       <semanticElements xmi:type="ecore:EClass" href="simmapping.ecore#//FuzzingMessage"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
       <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
       <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
-      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_6Hml0XzqEeu_SO-txPJAFA" borderSize="1" borderSizeComputationExpression="1" backgroundStyle="Liquid" foregroundColor="255,252,216">
-        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
-      </ownedStyle>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_TPsTcoA_EeubXqj8tvr5vA" labelColor="239,41,41" description="_TPsTcIA_EeubXqj8tvr5vA" borderSize="1" borderSizeComputationExpression="1" borderColor="239,41,41" backgroundStyle="Liquid" foregroundColor="255,252,216"/>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
       <ownedElements xmi:type="diagram:DNodeListElement" uid="_6H5gxHzqEeu_SO-txPJAFA" name="name : EString" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="simmapping.ecore#//FuzzingMessage/name"/>
@@ -5245,7 +5249,7 @@
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
       </ownedElements>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_6H6H0XzqEeu_SO-txPJAFA" name=" messageRef : Message" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_6H6H0XzqEeu_SO-txPJAFA" name=" messageRef" tooltipText="">
         <target xmi:type="ecore:EReference" href="simmapping.ecore#//FuzzingMessage/messageRef"/>
         <semanticElements xmi:type="ecore:EReference" href="simmapping.ecore#//FuzzingMessage/messageRef"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_6H6u4HzqEeu_SO-txPJAFA" labelAlignment="LEFT" description="_6H6H0nzqEeu_SO-txPJAFA" color="114,159,207">
@@ -5590,6 +5594,7 @@
       <ownedStyle xmi:type="diagram:EdgeStyle" uid="_6ID41HzqEeu_SO-txPJAFA" description="_6ID40XzqEeu_SO-txPJAFA" routingStyle="manhattan" strokeColor="0,0,0">
         <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_6ID41nzqEeu_SO-txPJAFA" showIcon="false">
           <customFeatures>labelSize</customFeatures>
+          <labelFormat>bold</labelFormat>
         </centerLabelStyle>
         <endLabelStyle xmi:type="diagram:EndLabelStyle" uid="_6ID41XzqEeu_SO-txPJAFA" showIcon="false" labelColor="39,76,114">
           <customFeatures>labelSize</customFeatures>

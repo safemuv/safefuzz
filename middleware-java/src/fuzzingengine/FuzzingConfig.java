@@ -121,7 +121,7 @@ public class FuzzingConfig {
 			if (fr.isReadyAtTime(time) && fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
 			} else {
-				System.out.println("hasVehicle " + vehicle + " is false or timing not met");
+				//System.out.println("hasVehicle " + vehicle + " is false or timing not met");
 			}
 		}
 		return Optional.empty();

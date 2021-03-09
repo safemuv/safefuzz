@@ -95,7 +95,7 @@ public class ATLASLog {
 			// ever updating the file, even though all the other log files are?
 			// The writes should be infrequent though, so it shouldn't matter
 			getLog().goalLog.flush();
-			System.out.println("logGoalMessage:" + msg + "\n");
+			//System.out.println("logGoalMessage:" + msg + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -13,7 +13,7 @@ public abstract class CARSTranslations {
 		String vehicleName = event.getVehicleName();
 		String key = reflectBackName;
 		String value = event.getValue();
-		System.out.println("sendBackEvent: vehicleName=" + vehicleName + ",key=" + key + ",value=" + value);
+		//System.out.println("sendBackEvent: vehicleName=" + vehicleName + ",key=" + key + ",value=" + value);
 		sendCARSUpdate(vehicleName, key, value);
 	}
 }
