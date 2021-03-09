@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.safemuv.platform</groupId>            
+  <artifactId>com.github.safemuv.platform</artifactId>      
+  <version>0.1-SNAPSHOT</version> 
+
+  <name>com.github.safemuv.platform</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>   
+    <maven.compiler.target>11</maven.compiler.target>   
+  </properties>
+
+  <build>
+    <sourceDirectory>src/</sourceDirectory>
+  </build>
+
+  <dependencies>
+	<dependency>
+	    <groupId>activemq</groupId>
+	    <artifactId>activemq</artifactId>
+	    <version>5.15.10</version>
+	    <scope>system</scope>
+	    <systemPath>/home/safemuv/academic/atlas/atlas-middleware/jar-dependencies/activemq-all-5.15.10.jar</systemPath>
+	</dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.locationtech.jts</groupId>
+            <artifactId>jts-core</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-core</artifactId>
+            <version>5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-exec</artifactId>
+            <version>5.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-lab</artifactId>
+            <version>5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-algorithm</artifactId>
+            <version>5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal-auto</artifactId>
+            <version>5.10</version>
+        </dependency>
+  </dependencies>
+</project>
