@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import fuzzingengine.DoubleLambda;
+import middleware.logging.ATLASLog;
 
 public class DoubleVariableChange extends ValueFuzzingOperation {
 	private final double defaultFixedChange = 0.0;
@@ -25,7 +26,21 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 		return op;
 	}
 	
+	public static DoubleVariableChange Random(double lower, double upper, long seed) {
+		Random r = new Random(seed);
+		double diff = upper - lower;
+		DoubleVariableChange op = new DoubleVariableChange(input -> lower + (diff * r.nextDouble()));
+		return op;
+	}
+	
 	public static DoubleVariableChange RandomOffset(double lower, double upper) {
+		Random r = new Random();
+		double diff = upper - lower;
+		DoubleVariableChange op = new DoubleVariableChange(input -> input + (lower + (diff * r.nextDouble())));
+		return op;
+	}
+	
+	public static DoubleVariableChange RandomOffset(double lower, double upper, long seed) {
 		Random r = new Random();
 		double diff = upper - lower;
 		DoubleVariableChange op = new DoubleVariableChange(input -> input + (lower + (diff * r.nextDouble())));
@@ -42,6 +57,7 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 			DoubleLambda dl = generateDouble.get();
 			double d = Double.valueOf(input);
 			changed = Double.toString(dl.op(d));
+			ATLASLog.logFuzzing("DoubleVariableChange - input = " + input + ",output=" + changed);
 		}
 		return changed;
 	}
@@ -59,6 +75,20 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 			double l = Double.valueOf(fields[1]);
 			double r = Double.valueOf(fields[2]);
 			return DoubleVariableChange.RandomOffset(l,r);
+		}
+		
+		if (fields[0].toUpperCase().equals("RANDOMWITHSEED")) {
+			double l = Double.valueOf(fields[1]);
+			double r = Double.valueOf(fields[2]);
+			long seed = Long.valueOf(fields[3]);
+			return DoubleVariableChange.Random(l,r,seed);
+		}
+		
+		if (fields[0].toUpperCase().equals("RANDOMOFFSETWITHSEED")) {
+			double l = Double.valueOf(fields[1]);
+			double r = Double.valueOf(fields[2]);
+			long seed = Long.valueOf(fields[3]);
+			return DoubleVariableChange.RandomOffset(l,r,seed);
 		}
 		
 		throw new CreationFailed("Invalid parameter string " + s);

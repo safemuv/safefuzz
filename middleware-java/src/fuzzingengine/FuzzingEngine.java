@@ -2,6 +2,7 @@ package fuzzingengine;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -387,9 +388,14 @@ public class FuzzingEngine<E> {
 
 				}
 			});
-		} catch (IOException ex) {
-			ex.printStackTrace();
+			
+		} catch (NoSuchFileException ex) {
+			System.out.println("Fuzzing file " + fileName + " not found - performing a null fuzzing experiment");
 		}
+		
+		catch (IOException ex) {
+			ex.printStackTrace();
+		} 
 	}
 
 	// This gets the explicitly selected keys upon this component

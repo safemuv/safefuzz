@@ -53,6 +53,8 @@ class FuzzingComponent {
     attr String componentRelativePath;
     val VariableSpecification[*] vars;
     val FuzzingNature nature;
+    // TODO: potential change
+    //ref Atlas.NamedComponent[0..*] vehicles;
 }
 
 class VariableSpecification {

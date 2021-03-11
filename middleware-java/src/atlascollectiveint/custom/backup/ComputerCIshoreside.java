@@ -145,18 +145,33 @@ class ComputerCIshoreside {
 
 		Map<String, Region> regionAssignments = staticRegionSplit(fullRegion, sweepRobots);
 		CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
+
+		// Start all the robots first
+		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
+			String robot = e.getKey();
+			Region region = e.getValue();
+			CollectiveIntLog.logCI("Starting sweep robot " + robot);
+			API.startVehicle(robot);
+		}
+		
+		// Then wait a fixed time
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Then set the region assignments
 		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 			String robot = e.getKey();
 			Region region = e.getValue();
 			API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
 					("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
-
-			CollectiveIntLog.logCI("Starting sweep robot " + robot);
-			API.startVehicle(robot);
 			
 			CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 			robotSweepRegions.put(robot, region);
 		}
+
 
 		for (String robot : cameraRobots) {
 			CollectiveIntLog.logCI("Starting camera robot " + robot);
