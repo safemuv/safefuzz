@@ -155,11 +155,13 @@ class ComputerCIshoreside {
 		}
 		
 		// Then wait a fixed time
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		// This has been removed since it should not be necessary now the BHV_Loiter non-convex
+		// fix is done
+		//try {
+		//	Thread.sleep(1000);
+		//} catch (InterruptedException e1) {
+		//	e1.printStackTrace();
+		//}
 		
 		// Then set the region assignments
 		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {

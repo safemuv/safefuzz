@@ -28,6 +28,7 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 	
 	public static DoubleVariableChange Random(double lower, double upper, long seed) {
 		Random r = new Random(seed);
+		System.out.println("DoubleVariableChange - Creating random generator with seed " + seed);
 		double diff = upper - lower;
 		DoubleVariableChange op = new DoubleVariableChange(input -> lower + (diff * r.nextDouble()));
 		return op;
@@ -41,7 +42,8 @@ public class DoubleVariableChange extends ValueFuzzingOperation {
 	}
 	
 	public static DoubleVariableChange RandomOffset(double lower, double upper, long seed) {
-		Random r = new Random();
+		Random r = new Random(seed);
+		System.out.println("DoubleVariableChange - Creating random generator with seed " + seed);
 		double diff = upper - lower;
 		DoubleVariableChange op = new DoubleVariableChange(input -> input + (lower + (diff * r.nextDouble())));
 		return op;
