@@ -1,0 +1,13 @@
+--- ivp/src/lib_behaviors-marine/BHV_Loiter.cpp	2021-03-13 14:46:13.595113815 +0000
++++ ivp/src/lib_behaviors-marine/BHV_Loiter.fix	2021-03-13 14:46:35.979630290 +0000
+@@ -101,8 +101,8 @@
+     XYPolygon new_poly = string2Poly(value);
+     cout << "new_poly size: " << new_poly.size() << endl;
+ 
+-    if(!new_poly.is_convex())  // Should be convex - false otherwise
+-      return(false);
++//  if(!new_poly.is_convex())  // Should be convex - false otherwise
++//	return(false);
+     new_poly.apply_snap(0.1); // snap to tenth of meter
+     m_loiter_engine.setPoly(new_poly);
+     m_loiter_engine.setClockwise(m_clockwise);
