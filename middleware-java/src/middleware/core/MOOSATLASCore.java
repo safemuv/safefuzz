@@ -8,7 +8,7 @@ import carsspecific.moos.translations.MOOSTranslations;
 import middleware.carstranslations.CARSTranslations;
 
 public class MOOSATLASCore extends ATLASCore {
-	private int MOOS_QUEUE_CAPACITY = 300;
+	private int MOOS_QUEUE_CAPACITY = 2000;
 	
 	// This is used when testing out the pShare event queue forwarding approach over UDP. 
 	// Since we are not doing this anymore, it is disabled
