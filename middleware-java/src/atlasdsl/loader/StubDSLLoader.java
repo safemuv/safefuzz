@@ -30,7 +30,7 @@ public class StubDSLLoader implements DSLLoader {
 	
 	public Mission loadMission() throws DSLLoadFailed {
 		// TODO: get these consistent with the values in the report object diagram
-		Mission mission = new Mission();
+		Mission mission = new Mission(1200.0);
 		Computer shoreside = new Computer("shoreside");
 		mission.addComputer(shoreside);
 		
@@ -45,7 +45,7 @@ public class StubDSLLoader implements DSLLoader {
 		mission.addObject(new EnvironmentalObject(new Point(135.0,-160.0), false));
 
 		// Define the mission layer
-		double MISSION_END_TIME = 1000.0;
+		double MISSION_END_TIME = 1200.0;
 		double AVOIDANCE_CLEARANCE = 3.0;
 		
 		Region fullRegion = new Region(new Point(-50.0,-230.0), new Point(200.0,-30.0));

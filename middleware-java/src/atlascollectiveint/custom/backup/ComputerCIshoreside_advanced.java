@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside_tworobots {
+class ComputerCIshoreside_advanced {
+
+	// The shoreside CI's copy of the robot information
 	private static List<String> sweepRobots = new ArrayList<String>();
 	private static List<String> cameraRobots = new ArrayList<String>();
 	private static List<String> allRobots = new ArrayList<String>();
@@ -89,12 +91,20 @@ class ComputerCIshoreside_tworobots {
 
 	public static void setRobotNamesAndRegion() {
 		// For now, hardcode in statically the names of the robots
-		sweepRobots.add("henry");
+		sweepRobots.add("frank");
 		sweepRobots.add("gilda");
+		sweepRobots.add("henry");
+		sweepRobots.add("ella");
+		cameraRobots.add("brian");
+		cameraRobots.add("linda");
 
 		robotSpeeds.put("frank", 1.5);
+		robotSpeeds.put("gilda", 1.5);
+		robotSpeeds.put("henry", 1.5);
 		robotSpeeds.put("ella", 1.6);
 
+		robotSpeeds.put("brian", 0.75);
+		robotSpeeds.put("linda", 0.75);
 
 		for (String r : sweepRobots) {
 			robotIsConfirming.put(r, false);
@@ -108,22 +118,38 @@ class ComputerCIshoreside_tworobots {
 
 		fullRegion = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
 	}
+	
+	/** Returns the region size proportion from the speeds*/
+	public static Map<String, Double> regionProportionsFromSpeeds() {
+		HashMap<String, Double> regionProportions = new HashMap<String, Double>();
+		double totalSpeed = 0.0;
+		for (Map.Entry<String,Double> rs : robotSpeeds.entrySet()) {
+			totalSpeed += rs.getValue();
+		}
+		
+		for (Map.Entry<String,Double> rs : robotSpeeds.entrySet()) {
+			regionProportions.put(rs.getKey(), rs.getValue() / totalSpeed);
+		}
+		
+		return regionProportions;
+	}
 
-	public static Map<String, Region> staticRegionSplit(Region fullRegion, List<String> robots) {
+	public static Map<String, Region> staticRegionSplitBySpeeds(Region fullRegion, List<String> robots) {
 		HashMap<String, Region> assignments = new HashMap<String, Region>();
 
 		int count = robots.size();
-		int hcount = (int) Math.floor(count / 2);
-		int vcount = (int) Math.min(VERTICAL_ROWS_STATIC_SPLIT, count);
-		double subwidth = fullRegion.width() / hcount;
+		int hcount = count / 2;
+		int vcount = VERTICAL_ROWS_STATIC_SPLIT;
 		double subheight = fullRegion.height() / vcount;
-		for (int i = 0; i < count; i++) {
-			String robot = robots.get(i);
-			// TODO: fix these expressions
+		
+		int i = 0;
+		for (Map.Entry<String,Double> rs : regionProportionsFromSpeeds().entrySet()) { 
+			double subwidth = fullRegion.width() * rs.getValue();
 			double xl = fullRegion.left() + i % hcount * subwidth;
 			double yb = fullRegion.bottom() + i / vcount * subheight;
 			Region subr = new Region(xl, yb, xl + subwidth, yb + subheight);
-			assignments.put(robot, subr);
+			assignments.put(rs.getKey(), subr);
+			i++;
 		}
 		return assignments;
 	}
@@ -133,20 +159,28 @@ class ComputerCIshoreside_tworobots {
 
 		setRobotNamesAndRegion();
 
-		Map<String, Region> regionAssignments = staticRegionSplit(fullRegion, sweepRobots);
+		Map<String, Region> regionAssignments = staticRegionSplitBySpeeds(fullRegion, sweepRobots);
 		CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
+
+		// Start all the robots first
+		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
+			String robot = e.getKey();
+			Region region = e.getValue();
+			CollectiveIntLog.logCI("Starting sweep robot " + robot);
+			API.startVehicle(robot);
+		}
+		
+		// Then set the region assignments
 		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 			String robot = e.getKey();
 			Region region = e.getValue();
 			API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
 					("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
-
-			CollectiveIntLog.logCI("Starting sweep robot " + robot);
-			API.startVehicle(robot);
 			
 			CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 			robotSweepRegions.put(robot, region);
 		}
+
 
 		for (String robot : cameraRobots) {
 			CollectiveIntLog.logCI("Starting camera robot " + robot);
@@ -155,49 +189,48 @@ class ComputerCIshoreside_tworobots {
 			CollectiveIntLog.logCI("Starting camera robot " + robot);
 		}
 	}
-
-	public static void SONARDetectionHook(SensorDetection detection, String robotName) {
-		// On a detection, if the detection is the first time...
-		// Send a second robot in to confirm
-		// Need to scan the positions to find the best choice
-
+	
+	public static void verifyOneRobot(SensorDetection detection, List<String> candidateRobots, String detectingRobotName) {
 		Point loc = (Point) detection.getField("location");
+		Optional<String> rName_o = chooseRobot(loc, candidateRobots, detectingRobotName);
+		if (rName_o.isPresent()) {
+			String rName = rName_o.get();
+			API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP,
+					("UUV_COORDINATE_UPDATE_VERIFY_" + rName.toUpperCase()));
+			CollectiveIntLog.logCI("Setting robot " + rName + " to verify detection");
+
+			// Need to send this robot back to its original action after some time...
+			// Register a one-off timer to return the robot to its original activity
+			OneOffTimer treturn = OneOffTimer.afterDelay(TIME_SPENT_VERIFYING, (t -> {
+				CollectiveIntLog.logCI("Verification timer expired for robot " + rName);
+				Region origRegion = robotSweepRegions.get(rName);
+				if (origRegion != null) {
+					// Set the robot as available for future detections
+					robotIsConfirming.put(rName, false);
+					CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
+					API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
+							("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
+				}
+			}));
+
+			API.registerTimer(rName, treturn);
+
+		} else {
+			CollectiveIntLog.logCI("ERROR: No robots avaiable to confirm the detection");
+		}
+	}
+	
+	public static void SONARDetectionHook(SensorDetection detection, String robotName) {
 		int label = (Integer) detection.getField("objectID");
 		String detectionType = (String) detection.getField("type");
 
-		List<String> candidateRobots;
-		if (detectionType.equals("benign")) {
-			candidateRobots = allRobots;
-		} else {
-			candidateRobots = cameraRobots; 
-		}
-				
+		// Benign objects get only one verification. Malicioous objects will get two
 		if (freshDetection(label)) {
-			Optional<String> rName_o = chooseRobot(loc, candidateRobots, robotName);
-			if (rName_o.isPresent()) {
-				String rName = rName_o.get();
-				API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP,
-						("UUV_COORDINATE_UPDATE_VERIFY_" + rName.toUpperCase()));
-				CollectiveIntLog.logCI("Setting robot " + rName + " to verify detection");
-
-				// Need to send this robot back to its original action after some time...
-				// Register a one-off timer to return the robot to its original activity
-				OneOffTimer treturn = OneOffTimer.afterDelay(TIME_SPENT_VERIFYING, (t -> {
-					CollectiveIntLog.logCI("Verification timer expired for robot " + rName);
-					Region origRegion = robotSweepRegions.get(rName);
-					if (origRegion != null) {
-						// Set the robot as available for future detections
-						robotIsConfirming.put(rName, false);
-						CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
-						API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
-								("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
-					}
-				}));
-
-				API.registerTimer(rName, treturn);
-
+			if (detectionType.equals("benign")) {
+				verifyOneRobot(detection, sweepRobots, robotName);
 			} else {
-				CollectiveIntLog.logCI("ERROR: No robots avaiable to confirm the detection");
+				verifyOneRobot(detection, sweepRobots, robotName);
+				verifyOneRobot(detection, cameraRobots, robotName);
 			}
 		}
 	}

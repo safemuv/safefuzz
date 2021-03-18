@@ -1,4 +1,4 @@
-package atlascollectiveint.custom.backup;
+package atlascollectiveint.custom.backup.tworobots;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -14,9 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
-
-	// The shoreside CI's copy of the robot information
+class ComputerCIshoreside_tworobots {
 	private static List<String> sweepRobots = new ArrayList<String>();
 	private static List<String> cameraRobots = new ArrayList<String>();
 	private static List<String> allRobots = new ArrayList<String>();
@@ -88,48 +86,15 @@ class ComputerCIshoreside {
 			return Optional.empty();
 		}
 	}
-	
-    // The shoreside chooses a robot to use to confirm detections, 
-    // excluding the detecting one obviously!
-    private static Optional<String> chooseRobotNear(Point loc, String excludeRobot) {
-
-    	Map<String,Double> dists = robotDistancesTo(loc);
-    	Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()
-    			// Check it isn't the exclude robot
-    			.filter(e -> e.getKey().compareTo(excludeRobot) != 0)
-    			// Check robot is not already confirming!
-    			.filter(e -> !robotIsConfirming.get(e.getKey()))
-    			.sorted(Map.Entry.comparingByValue())
-    			.findFirst();
-    	// TODO: check sort order here
-    	
-    	if (res.isPresent()) {
-    		// If a robot found, set it as confirming a detection
-    		String chosen = res.get().getKey();
-    		robotIsConfirming.put(chosen, true);
-    		return Optional.of(res.get().getKey());
-    	} else {
-    		// If no robots are known, it will be empty  
-    		return Optional.empty();
-    	}    	
-    }
 
 	public static void setRobotNamesAndRegion() {
 		// For now, hardcode in statically the names of the robots
-		sweepRobots.add("frank");
-		sweepRobots.add("gilda");
 		sweepRobots.add("henry");
-		sweepRobots.add("ella");
-		cameraRobots.add("brian");
-		cameraRobots.add("linda");
+		sweepRobots.add("gilda");
 
 		robotSpeeds.put("frank", 1.5);
-		robotSpeeds.put("gilda", 1.5);
-		robotSpeeds.put("henry", 1.5);
 		robotSpeeds.put("ella", 1.6);
 
-		robotSpeeds.put("brian", 0.75);
-		robotSpeeds.put("linda", 0.75);
 
 		for (String r : sweepRobots) {
 			robotIsConfirming.put(r, false);
@@ -148,8 +113,8 @@ class ComputerCIshoreside {
 		HashMap<String, Region> assignments = new HashMap<String, Region>();
 
 		int count = robots.size();
-		int hcount = count / 2;
-		int vcount = VERTICAL_ROWS_STATIC_SPLIT;
+		int hcount = (int) Math.floor(count / 2);
+		int vcount = (int) Math.min(VERTICAL_ROWS_STATIC_SPLIT, count);
 		double subwidth = fullRegion.width() / hcount;
 		double subheight = fullRegion.height() / vcount;
 		for (int i = 0; i < count; i++) {
@@ -170,35 +135,18 @@ class ComputerCIshoreside {
 
 		Map<String, Region> regionAssignments = staticRegionSplit(fullRegion, sweepRobots);
 		CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
-
-		// Start all the robots first
-		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
-			String robot = e.getKey();
-			Region region = e.getValue();
-			CollectiveIntLog.logCI("Starting sweep robot " + robot);
-			API.startVehicle(robot);
-		}
-		
-		// Then wait a fixed time
-		// This has been removed since it should not be necessary now the BHV_Loiter non-convex
-		// fix is done
-		//try {
-		//	Thread.sleep(1000);
-		//} catch (InterruptedException e1) {
-		//	e1.printStackTrace();
-		//}
-		
-		// Then set the region assignments
 		for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 			String robot = e.getKey();
 			Region region = e.getValue();
 			API.setPatrolAroundRegion(robot, region, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
 					("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
+
+			CollectiveIntLog.logCI("Starting sweep robot " + robot);
+			API.startVehicle(robot);
 			
 			CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 			robotSweepRegions.put(robot, region);
 		}
-
 
 		for (String robot : cameraRobots) {
 			CollectiveIntLog.logCI("Starting camera robot " + robot);

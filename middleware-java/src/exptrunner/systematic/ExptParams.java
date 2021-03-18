@@ -2,12 +2,11 @@ package exptrunner.systematic;
 
 import java.util.HashMap;
 import java.util.List;
-import atlassharedclasses.FaultInstance;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import fuzzingengine.FuzzingSelectionRecord;
 
 public abstract class ExptParams {
-	protected double runtime = 1200.0;
+	protected double runtime;
 	
 	protected HashMap<FuzzingSelectionsSolution,Double> solutionLog = new HashMap<FuzzingSelectionsSolution,Double>();
 

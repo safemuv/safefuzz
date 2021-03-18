@@ -20,13 +20,12 @@
   </build>
 
   <dependencies>
-	<dependency>
-	    <groupId>activemq</groupId>
-	    <artifactId>activemq</artifactId>
-	    <version>5.15.10</version>
-	    <scope>system</scope>
-	    <systemPath>/home/safemuv/academic/atlas/atlas-middleware/jar-dependencies/activemq-all-5.15.10.jar</systemPath>
-	</dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+            <version>5.15.10</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

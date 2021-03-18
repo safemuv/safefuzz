@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
+class ComputerCIshoreside_original {
 
 	// The shoreside CI's copy of the robot information
 	private static List<String> sweepRobots = new ArrayList<String>();
@@ -66,8 +66,8 @@ class ComputerCIshoreside {
 		}
 	}
 
-	// The shoreside chooses a robot to use to confirm detections,
-	// excluding the detecting one obviously!
+	/** The shoreside chooses a robot to use to confirm detections,
+	// excluding the detecting one obviously! **/
 	private static Optional<String> chooseRobot(Point loc, List<String> allowedRobots, String excludeRobot) {
 		Map<String, Double> dists = robotDistancesTo(loc);
 		Optional<Map.Entry<String, Double>> res = dists.entrySet().stream()

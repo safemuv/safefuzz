@@ -1,7 +1,5 @@
 package atlassharedclasses;
 
-import java.util.stream.Collectors;
-
 public class Region {
 	private Point point1;
 	private Point point2;

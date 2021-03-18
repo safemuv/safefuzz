@@ -112,5 +112,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="faults" upperBound="-1"
         eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults#//Fault"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -136,4 +136,5 @@ class Mission {
 	val Atlas.EnvironmentalObstacle[*] obstacles;
 	val Atlas.Message[*] messages;
 	val Atlas.Fault[*] faults;
+	attr double endTime;
 }

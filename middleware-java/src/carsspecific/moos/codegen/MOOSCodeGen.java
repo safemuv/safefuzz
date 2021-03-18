@@ -2,7 +2,6 @@ package carsspecific.moos.codegen;
 
 import carsspecific.moos.moosmapping.*;
 import fuzzingengine.FuzzingEngine;
-import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.MissingComponentPath;
 import middleware.atlascarsgenerator.*;
@@ -22,7 +21,7 @@ import atlassharedclasses.Region;
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
-// FIX: maybe move to MOOSSimulation?
+// TODO: maybe move to MOOSSimulation?
 
 public class MOOSCodeGen extends CARSCodeGen {
 	// TODO: how to specify the sensor behaviour
@@ -40,7 +39,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 		// Shoreside or other monitoring computers have to have uFldHazardSensor
 		// variables have to be added
 		// if an unexpected sensor is present, raise an exception?
-
 	}
 
 	// This performs the necessary processing to set up actuators

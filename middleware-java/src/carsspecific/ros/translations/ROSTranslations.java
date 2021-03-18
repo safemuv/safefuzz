@@ -1,12 +1,12 @@
 package carsspecific.ros.translations;
 
 import java.util.HashMap;
-import javax.jms.JMSException;
+import java.util.List;
+import atlassharedclasses.Point;
 import middleware.carstranslations.CARSTranslations;
 import middleware.core.ActiveMQProducer;
 
 public class ROSTranslations extends CARSTranslations {
-	
 	HashMap<String,ActiveMQProducer> producers;
 	
 	public ROSTranslations() {
@@ -18,19 +18,14 @@ public class ROSTranslations extends CARSTranslations {
 	}
 	
 	public synchronized void sendCARSUpdate(String robotName, Object key, Object value) {
-		Double endTimeOfUpdate = 1000000.0;
-		String keyStr = key.toString();
-		String valueStr = value.toString();
-		String msg = endTimeOfUpdate.toString() + "|" + keyStr + "=" + valueStr;
-		ActiveMQProducer prod = producers.get(robotName); 
-		try {
-			prod.sendMessage(msg);
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
+		System.out.println("ROSTranslations: sendCARSUpdate unimplemented");
 	}
 	
 	public synchronized void startRobot(String robotName) { 
-		sendCARSUpdate(robotName, "MOOS_MANUAL_OVERRIDE", "false");
+		System.out.println("ROSTranslations: startRobot unimplemented");
+	}
+
+	public void setCoordinates(String robotName, List<Point> coords) {
+		System.out.println("ROSTranslations: setCoordinates unimplemented");	
 	}
 }

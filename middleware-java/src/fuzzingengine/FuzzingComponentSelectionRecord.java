@@ -3,7 +3,6 @@ package fuzzingengine;
 import java.util.HashMap;
 import java.util.List;
 
-import atlasdsl.Robot;
 import fuzzingengine.operations.FuzzingOperation;
 
 public class FuzzingComponentSelectionRecord extends FuzzingSelectionRecord {

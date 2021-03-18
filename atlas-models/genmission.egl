@@ -17,8 +17,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 	[% for (m in M!Mission.allInstances()) { %]
 	[% 	var robotNum = 0; 
 		var computerNum = 0; 
-	%]	
-	Mission mission = new Mission();
+	%]
+	final double MISSION_END_TIME = [%= m.endTime %];
+	Mission mission = new Mission(MISSION_END_TIME);
 	
 	[% for (c in m.computers) { %]
 	[% var computerName = "c" + computerNum++;	%]

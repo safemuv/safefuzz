@@ -22,7 +22,7 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		progressChar = '.';
 		this.progressChar = progressChar;
 		this.fuzzingEngine = core.getFuzzingEngine();
-		this.cTrans = core.getCARSTranslationOutput();
+		this.cTrans = core.getCARSTranslator();
 	}
 	
 	public abstract void handleEventSpecifically(E event);

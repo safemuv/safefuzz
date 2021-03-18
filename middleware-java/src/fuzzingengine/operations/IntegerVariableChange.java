@@ -2,8 +2,6 @@ package fuzzingengine.operations;
 
 import java.util.Optional;
 import java.util.Random;
-
-import fuzzingengine.DoubleLambda;
 import fuzzingengine.IntLambda;
 
 public class IntegerVariableChange extends ValueFuzzingOperation {

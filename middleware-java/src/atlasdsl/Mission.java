@@ -22,6 +22,12 @@ public class Mission {
 	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
 	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
 	
+	private double endTime;
+	
+	public Mission(double endTime) {
+		this.endTime = endTime;
+	}
+	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
 	}
@@ -169,5 +175,9 @@ public class Mission {
 			names.add(c.getName());
 		}		
 		return names;
+	}
+	
+	public double getEndTime() {
+		return endTime;
 	}
 }

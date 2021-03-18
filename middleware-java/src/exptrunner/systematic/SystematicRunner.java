@@ -32,7 +32,6 @@
 //	private static final double LOW_RESULT_PROPORTION = 0.1;
 //	private static final int BEST_VERIFY_COUNT = 0;
 //	private static final int WORST_VERIFY_COUNT = 0;
-//	private static double runTime = 1200.0;
 //	
 //	//public static void runGeneralExpt(Mission mission, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 //		//while (!eparams.completed()) {
@@ -53,6 +52,7 @@
 //			if (f_o.isPresent()) {
 //				String resFileName = faultName;
 //				Fault f = f_o.get();
+//				double runTime = mission.getEndTime();
 //				Optional<String> speedOverride_o = Optional.of(Double.toString(additionalDataVal));
 //				resFileName = resFileName + "_coverage_" + additionalDataVal + ".res";
 //				FileWriter tempLog = new FileWriter("tempLog-" + faultName + ".res");

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
@@ -46,20 +45,13 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		}
 		
 		// Set these producers so they are ready for the CARS translations to use
-		core.getCARSTranslationOutput().setOutputProducers(producers);
+		core.getCARSTranslator().setOutputProducers(producers);
 	}
 	
 	// This is used by active faults to inject their immediate effects
 	// upon the low-level CARS simulation
 	public void sendToCARS(Robot r, String key, String value) {
-		core.getCARSTranslationOutput().sendCARSUpdate(r.getName(), key, value);
-	}
-	
-	private static String pointListToPolyString(List<Point> coords) {
-		String coordsJoined = coords.stream()
-				.map(p -> p.toStringBareCSV())
-				.collect(Collectors.joining(":"));
-		return coordsJoined;
+		core.getCARSTranslator().sendCARSUpdate(r.getName(), key, value);
 	}
 	
 	public void handleEvent(CIEvent event) {
@@ -89,7 +81,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			StartVehicle startCmd = (StartVehicle)ciCmd;
 			// TODO: Check for any fault impacting the command here?
 			System.out.println("CIEventQueue - StartVehicle received");
-			core.getCARSTranslationOutput().startRobot(robotName);
+			core.getCARSTranslator().startRobot(robotName);
 		}
 		
 		if (ciCmd instanceof SetCoordinates) {
@@ -124,10 +116,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 				}
 			}
 			
-			// TODO: this contains MOOS-specific conversion here - push into the MOOS layer
-			String polyUpdate = "polygon=" + pointListToPolyString(modifiedCoords) + ":label," + robotName + "_LOITER";
-			System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
-			core.getCARSTranslationOutput().sendCARSUpdate(robotName, "UP_LOITER", polyUpdate);
+			core.getCARSTranslator().setCoordinates(robotName, modifiedCoords);
 		}
 	}
 }

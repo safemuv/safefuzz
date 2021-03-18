@@ -238,7 +238,7 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 
 					if (ALWAYS_REQUEST_CLASSIFICATION) {
 						// Request classification of the detection from CARS
-						core.getCARSTranslationOutput().sendCARSUpdate("shoreside", "UHZ_CLASSIFY_REQUEST",
+						core.getCARSTranslator().sendCARSUpdate("shoreside", "UHZ_CLASSIFY_REQUEST",
 								"vname=" + vname + ",label=" + objectID);
 					}
 

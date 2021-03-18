@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import atlasdsl.Component;
-import atlasdsl.Robot;
 import fuzzingengine.operations.FuzzingOperation;
 
 public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {

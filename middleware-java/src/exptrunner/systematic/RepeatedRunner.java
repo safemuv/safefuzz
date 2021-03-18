@@ -20,8 +20,7 @@ import exptrunner.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
-	private static double runTime = 1200.0;
-	
+
 	public static void runFixedCSVExpt(Mission mission, String fixedCSVFuzzingFile, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 		while (!eparams.completed()) {
 			eparams.printState();
@@ -37,6 +36,7 @@ public class RepeatedRunner {
 
 		try {
 			mission = loader.loadMission();
+			double runTime = mission.getEndTime();
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
 			MetricsProcessing mp = new MetricsProcessing(mission, metricList, tempLog);

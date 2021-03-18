@@ -1,6 +1,5 @@
 package test.variablechange;
 
-import fuzzingengine.*;
 import middleware.core.CARSVariableUpdate;
 import middleware.core.CARSVariableUpdate.VariableInvalid;
 

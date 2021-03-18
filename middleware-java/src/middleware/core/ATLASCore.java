@@ -23,8 +23,7 @@ public abstract class ATLASCore {
 	protected ATLASEventQueue<?> carsIncoming;
 	protected ATLASEventQueue<?> fromCI;
 	
-	// TODO: read this from the interface
-	private double timeLimit = 1200.0;
+	private double timeLimit;
 	
 	protected ActiveMQProducer outputToCI;
 	private final int CI_QUEUE_CAPACITY = 100;
@@ -47,6 +46,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
+		this.timeLimit = mission.getEndTime();
 		this.monitor = new MissionMonitor(this, mission);
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
@@ -54,7 +54,7 @@ public abstract class ATLASCore {
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission);
 	}
 	
-	public CARSTranslations getCARSTranslationOutput() {
+	public CARSTranslations getCARSTranslator() {
 		return carsOutput;
 	}
 	

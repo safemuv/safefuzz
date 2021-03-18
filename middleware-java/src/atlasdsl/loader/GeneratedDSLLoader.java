@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	
-	Mission mission = new Mission();
+	final double MISSION_END_TIME = 1200.0;
+	Mission mission = new Mission(MISSION_END_TIME);
 	
 	Computer c1 = new Computer("shoreside");
 	mission.addComputer(c1);
