@@ -171,7 +171,7 @@ public class TrackDistances extends GoalAction {
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
 		// If completion time is exceeded, write the results file
 		double time = core.getTime();
-		if (time > completionTime && !writtenYet) {
+		if ((time > completionTime) && !writtenYet) {
 			writeResultsOut();
 			return Optional.empty();
 		}

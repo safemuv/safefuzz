@@ -8,6 +8,7 @@ import atlassharedclasses.ATLASObjectMapper;
 
 public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implements Runnable {
 	private static final long serialVersionUID = 1L;
+	private static final boolean PRINT_QUEUE_SIZE = false;
 	protected ATLASObjectMapper atlasOMapper;
 	protected ATLASCore core;
 	
@@ -20,6 +21,7 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 	
 	public ATLASEventQueue(ATLASCore core, int capacity, char progressChar) {
 		super(capacity);
+		this.core = core;
 	}
 	
 	public void registerAfterHook(VoidLambda v) {
@@ -50,7 +52,11 @@ public abstract class ATLASEventQueue<E> extends ArrayBlockingQueue<E> implement
 		while (continueLoop) {
 			try {
 				E e = take();
-				printCharIfReady();
+				if (PRINT_QUEUE_SIZE) {
+					System.out.println(core.getTime() + "Queue pending elements = " + this.size());
+				} else {
+					printCharIfReady();
+				}
 				
 				for (VoidLambda v : afterHooks) {
 					v.op();

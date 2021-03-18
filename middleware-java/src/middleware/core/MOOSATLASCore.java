@@ -7,8 +7,8 @@ import carsspecific.moos.translations.MOOSTranslations;
 import middleware.carstranslations.CARSTranslations;
 
 public class MOOSATLASCore extends ATLASCore {
-	private int MOOS_QUEUE_CAPACITY = 300;
-		
+	private int MOOS_QUEUE_CAPACITY = 2000;
+	
 	public MOOSATLASCore(Mission mission) {
 		super(mission);
 		carsOutput = (CARSTranslations) new MOOSTranslations();
