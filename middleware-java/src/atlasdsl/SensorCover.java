@@ -21,6 +21,10 @@ public class SensorCover extends Cover {
 	private boolean collective = true;
 	private double density;
 	private int samplesPerUnit = DEFAULT_SAMPLES_PER_UNIT;
+	
+	private int verificationsBenign;
+	private int verificationsMalicious; 
+	
 	private SensorType sensor;
 	
 	// Parent goal and GoalRegion reference - set within setup
@@ -34,10 +38,12 @@ public class SensorCover extends Cover {
 	
 	private List<GoalResult> pendingPartialResults = new ArrayList<GoalResult>();
 	
-	public SensorCover(double density, int samplesPerUnit, SensorType sensor) {
+	public SensorCover(double density, int samplesPerUnit, SensorType sensor, int verificationsBenign, int verificationsMalicious) {
 		this.density = density;
 		this.samplesPerUnit = samplesPerUnit;
 		this.sensor = sensor;
+		this.verificationsBenign = verificationsBenign;
+		this.verificationsMalicious = verificationsMalicious;
 	}
 	
 	private void setupSensorWatchers(ATLASCore core) {
@@ -132,5 +138,13 @@ public class SensorCover extends Cover {
 	
 	public Map<Region,PositionTracker> getPosTrackers() {
 		return posTrackers;
+	}
+	
+	public int verificationsBenign() {
+		return verificationsBenign;
+	}
+	
+	public int verificationsMalicious() {
+		return verificationsMalicious;
 	}
 }

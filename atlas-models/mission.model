@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission ../com.github.atlas.dsl/mission.ecore" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission" xmlns:atlas_1="http://www.github.com/jrharbin-york/atlas-middleware/dsl/components" xmlns:atlas_2="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
   <robots xmi:id="_gWMvsHP-Eeqc6cv9mBHIKw" name="ella">
     <componentProperties xsi:type="atlas_1:PointProperty" xmi:id="_AVi8AHQREeqc6cv9mBHIKw" name="startLocation">
       <value xmi:id="_Bnz1IHQREeqc6cv9mBHIKw" x="200.0" y="-85.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_QVLBcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_SNd_0HQREeqc6cv9mBHIKw" name="startSpeed" value="1.6"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_olp0UKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_olp0UKl7EeqQLbqZOrinhg" name="maxDepth"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_l8itIHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_pBGIoHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_4QN-kHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -28,7 +28,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_UhIrkHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_VG2AsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_qmiuAKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_qmiuAKl7EeqQLbqZOrinhg" name="maxDepth"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_manJMHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_q_mcsHQREeqc6cv9mBHIKw" name="swathWidth" value="20.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_6xuSAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -50,7 +50,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_YsJTcHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_bPPiUHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sF2koKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sF2koKl7EeqQLbqZOrinhg" name="maxDepth"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_m0EyEHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_sttkUHQREeqc6cv9mBHIKw" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_9N0hAHRbEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -72,7 +72,7 @@
     </componentProperties>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_db6OMHQREeqc6cv9mBHIKw" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_d36NsHQREeqc6cv9mBHIKw" name="startSpeed" value="1.5"/>
-    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_tpyckKl7EeqQLbqZOrinhg" name="maxDepth" value="20.0"/>
+    <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_tpyckKl7EeqQLbqZOrinhg" name="maxDepth"/>
     <subcomponents xsi:type="atlas_1:Sensor" xmi:id="_nMlYsHP-Eeqc6cv9mBHIKw">
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_utK6oHQREeqc6cv9mBHIKw" name="swathWidth" value="25.0"/>
       <componentProperties xsi:type="atlas_1:DoubleProperty" xmi:id="_AEfzMHRcEeqNXdfjikxLMQ" name="detectionProb" value="0.99"/>
@@ -147,18 +147,18 @@
   <goals xmi:id="_iULp4HP_Eeqc6cv9mBHIKw" name="primarySensorSweep">
     <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_gWMvsHP-Eeqc6cv9mBHIKw _gx4mIHP-Eeqc6cv9mBHIKw _hNarkHP-Eeqc6cv9mBHIKw _hkfHwHP-Eeqc6cv9mBHIKw"/>
-    <action xsi:type="atlas:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true"/>
+    <action xsi:type="atlas:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true" verificationsMalicious="1" verificationsBenign="2"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_kLrXAHP_Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_eJ7agHQAEeqc6cv9mBHIKw">
-        <corner1 xmi:id="_f1fkcHQAEeqc6cv9mBHIKw"/>
-        <corner2 xmi:id="_h159AHQAEeqc6cv9mBHIKw" x="1000.0" y="1000.0"/>
+        <corner1 xmi:id="_f1fkcHQAEeqc6cv9mBHIKw" x="-50.0" y="230.0"/>
+        <corner2 xmi:id="_h159AHQAEeqc6cv9mBHIKw" x="200.0" y="-30.0"/>
       </staticRegion>
     </region>
   </goals>
   <goals xmi:id="_isDXUHP_Eeqc6cv9mBHIKw" name="verifySensorDetections">
     <requirements xmi:id="_MLuLsHQEEeqc6cv9mBHIKw" dependencies="_iULp4HP_Eeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
     <participants xsi:type="atlas:RelativeParticipants" xmi:id="_KVVR0HQEEeqc6cv9mBHIKw" parentGoal="_iULp4HP_Eeqc6cv9mBHIKw" staticRobots="_zbOjAHQCEeqc6cv9mBHIKw" setOperation="SUBTRACT" fieldName="UUV_NAME" participantLimit="1"/>
-    <action xsi:type="atlas:SensorCover" xmi:id="_D37MsHQIEeqc6cv9mBHIKw" density="5.0" samplesPerUnit="1"/>
+    <action xsi:type="atlas:SensorCover" xmi:id="_D37MsHQIEeqc6cv9mBHIKw" density="5.0" samplesPerUnit="1" verificationsMalicious="1" verificationsBenign="2"/>
     <region xsi:type="atlas:DynamicGoalRegion" xmi:id="_klx5EHP_Eeqc6cv9mBHIKw" relativeToGoal="_iULp4HP_Eeqc6cv9mBHIKw" relativeToGoalField="UUV_DETECTION_COORD" relativeRange="30.0"/>
   </goals>
   <goals xmi:id="_D87cEIiOEeqQioZ_JAeWZg" name="findTestObjects">

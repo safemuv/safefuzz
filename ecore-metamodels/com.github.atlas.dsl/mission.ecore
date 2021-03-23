@@ -43,6 +43,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" eType="ecore:EEnum http://www.github.com/jrharbin-york/atlas-middleware/dsl/components#//SensorType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="collective" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verificationsMalicious"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verificationsBenign" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
   <eClassifiers xsi:type="ecore:EEnum" name="logicOps">

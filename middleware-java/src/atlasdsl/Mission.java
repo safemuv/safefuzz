@@ -4,6 +4,7 @@ import atlassharedclasses.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,15 @@ public class Mission {
 	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
+	}
+	
+	public Map<Robot,Double> getAllRobotSpeeds() throws MissingProperty {
+		Map<Robot,Double> robotSpeeds = new HashMap<Robot,Double>();
+		for (Robot robot : getAllRobots()) {
+			double speed = robot.getDoubleComponentProperty("startSpeed");
+			robotSpeeds.put(robot, speed);
+		}
+		return robotSpeeds;
 	}
 	
 	public List<Goal> getAllGoals() {
@@ -179,5 +189,9 @@ public class Mission {
 	
 	public double getEndTime() {
 		return endTime;
+	}
+
+	public Goal getGoalByName(String name) {
+		return goals.get(name);
 	}
 }

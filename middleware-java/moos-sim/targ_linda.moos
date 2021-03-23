@@ -2,7 +2,7 @@ ServerHost = localhost
 ServerPort = 9006
 Simulator = true
 community = linda
-MOOSTimeWarp = 10
+MOOSTimeWarp = 5
 LatOrigin = 43.825300
 LongOrigin = -70.330400
 

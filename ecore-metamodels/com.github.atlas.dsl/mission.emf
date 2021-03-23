@@ -76,6 +76,8 @@ class SensorCover extends Cover {
 	attr int samplesPerUnit;
 	attr Atlas.SensorType sensortype;
 	attr boolean collective;
+	attr int verificationsMalicious;
+	attr int verificationsBenign;
 }
 
 abstract class GoalParticipants {
