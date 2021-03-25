@@ -142,7 +142,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[* Goal actions *]
 		[% var goalAction = g.action; %]
 		[% if (goalAction.isKindOf(SensorCover)) { %]
-		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %]);
+		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %], [%= goalAction.verificationsMalicious %], [%= goalAction.verificationsBenign %]);
 		[% } %]
 		
 		[% if (goalAction.isKindOf(AvoidOthers)) { %]

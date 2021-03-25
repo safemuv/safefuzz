@@ -1,0 +1,30 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/ciexpt", prefix="ciexpt")
+package CIExpt;
+
+class IntegerRange {
+	attr int min;
+	attr int max;
+}
+
+// Specify the form of an individual sensor option and its cost
+class SensorOption {
+	attr String name;
+	attr double sensorRange;
+	attr double detectionMissProb;
+	attr double classifyErrorProb;
+	attr double sensorCost;
+}
+
+// Represents a single robot
+class RobotOption {
+	val SensorOption[*] sensorOptions; // Specify the number of integers
+	attr double baseCost;
+}
+
+class CIExperiment {
+	val RobotOption[*] robots;
+	val IntegerRange robotCount;
+	val IntegerRange benignVerifications;
+	val IntegerRange maliciousVerifications;
+	attr double costLimit;
+}

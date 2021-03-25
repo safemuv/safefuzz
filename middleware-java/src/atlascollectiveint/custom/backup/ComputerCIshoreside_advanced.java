@@ -219,10 +219,6 @@ class ComputerCIshoreside_advanced {
 		mission = dslloader.loadMission();
 		// Things to load from the database:
 		// the number of robots and their speed properties
-
-		// the number of verfications - a property on the sensor coverage goal
-		// need to extract the verifyRobotDetections goal - get the relative
-		// participants property
 	}
 
 	public static HashMap<String, Double> getRobotNamesAndSpeeds() throws MissingProperty {
@@ -315,13 +311,17 @@ class ComputerCIshoreside_advanced {
 		int label = (Integer) detection.getField("objectID");
 		String detectionType = (String) detection.getField("type");
 
-		// Benign objects get only one verification. Malicioous objects will get two
 		if (freshDetection(label)) {
 			if (detectionType.equals("benign")) {
-				verifyOneRobot(detection, sweepRobots, robotName);
+				for (int i = 0; i < numberOfVerificationsBenign; i++) {
+					verifyOneRobot(detection, sweepRobots, robotName);
+				}
 			} else {
-				verifyOneRobot(detection, sweepRobots, robotName);
 				verifyOneRobot(detection, cameraRobots, robotName);
+				int numV = Math.max(numberOfVerificationsMalicious, 0);
+				for (int i = 0; i < numV; i++) {
+					verifyOneRobot(detection, sweepRobots, robotName);
+				}
 			}
 		}
 	}

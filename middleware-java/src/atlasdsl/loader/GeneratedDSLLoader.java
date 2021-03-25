@@ -19,7 +19,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rella.setPointComponentProperty("startLocation", new Point(200.0,-85.0,0.0));
 		rella.setDoubleComponentProperty("maxSpeed", 5.0);
 		rella.setDoubleComponentProperty("startSpeed", 1.6);
-		rella.setDoubleComponentProperty("maxDepth", 20.0);
+		rella.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
 		Sensor srella_1 = new Sensor(SensorType.SONAR);
@@ -46,7 +46,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rfrank.setPointComponentProperty("startLocation", new Point(-85.0,-150.0,0.0));
 		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
 		rfrank.setDoubleComponentProperty("startSpeed", 1.5);
-		rfrank.setDoubleComponentProperty("maxDepth", 20.0);
+		rfrank.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
 		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
@@ -73,7 +73,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.setPointComponentProperty("startLocation", new Point(190.0,-150.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
 		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
-		rgilda.setDoubleComponentProperty("maxDepth", 20.0);
+		rgilda.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
@@ -100,7 +100,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rhenry.setPointComponentProperty("startLocation", new Point(-85.0,-45.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
 		rhenry.setDoubleComponentProperty("startSpeed", 1.5);
-		rhenry.setDoubleComponentProperty("maxDepth", 20.0);
+		rhenry.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
@@ -233,15 +233,15 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 1200.0);
 		
-		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR);
+		GoalAction ga2 = new SensorCover(10.0, 1, SensorType.SONAR, 1, 2);
 		
 		
 		
 		
 		
 		GoalRegion grprimarySensorSweep = new StaticGoalRegion(
-			new Region(new Point(0.0, 0.0, 0.0),
-			           new Point(1000.0, 1000.0, 0.0)));
+			new Region(new Point(-50.0, 230.0, 0.0),
+			           new Point(200.0, -30.0, 0.0)));
 		
 		
 		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, gt2, gpprimarySensorSweep, Optional.of(grprimarySensorSweep), ga2);
@@ -255,7 +255,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1200.0);
 		
-		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR);
+		GoalAction ga3 = new SensorCover(5.0, 1, SensorType.SONAR, 1, 2);
 		
 		
 		
