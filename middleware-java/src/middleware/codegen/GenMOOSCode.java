@@ -13,6 +13,8 @@ import middleware.atlascarsgenerator.ConversionFailed;
 import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
 public class GenMOOSCode {
+	private final static boolean GENERATE_NEW_CI_CODE = false;
+	
 	public static void testCodeGenerationMOOS(String code_dir) throws DSLLoadFailed {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
@@ -28,8 +30,9 @@ public class GenMOOSCode {
 			System.out.println("DSL conversion completed");
 			moossim.generateCARSInterface(code_dir);
 			System.out.println("Code generation completed");
-			javaCI.generateCollectiveIntFiles("src/atlascollectiveint/custom", CollectiveIntGenTypes.ALL_COMPUTERS);
-			
+			if (GENERATE_NEW_CI_CODE) {
+				javaCI.generateCollectiveIntFiles("src/atlascollectiveint/custom", CollectiveIntGenTypes.ALL_COMPUTERS);
+			}
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
 		}

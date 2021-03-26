@@ -4,6 +4,7 @@ import atlassharedclasses.*;
 import atlasdsl.SensorType;
 import java.util.Optional;
 
+import atlascollectiveint.custom.ComputerCIshoreside;
 import atlascollectiveintgenerator.CollectiveInt;
 import atlassharedclasses.ATLASSharedResult;
 

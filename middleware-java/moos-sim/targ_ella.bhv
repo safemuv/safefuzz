@@ -108,7 +108,7 @@ name = constdepth
 pwt = 100
 condition = CONSTDEPTH==true
 updates = UP_DEPTH
-depth = 5
+depth = 0.0
 duration = no-time-limit
 peakwidth = 3
 basewidth = 2

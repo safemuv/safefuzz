@@ -60,7 +60,7 @@ public class StubDSLLoader implements DSLLoader {
 		
 		GoalParticipants allRobots = (new StaticParticipants(StaticParticipants.Spec.ALL_ROBOTS, mission));
 		Goal mutualAvoidance = new Goal("mutualAvoidance", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), allRobots, Optional.empty(),	new AvoidOthers(AVOIDANCE_CLEARANCE));
-		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR));
+		Goal primarySensorSweep = new Goal("primarySensorSweep", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), allRobots, Optional.of(staticRegion), new SensorCover(10.0, 1, SensorType.SONAR, 1, 2));
 		
 		RelativeParticipants rp = new RelativeParticipants(primarySensorSweep, ((StaticParticipants)allRobots), "DETECTION_UUV_NAME", RelativeParticipants.LogicOps.SUBTRACT, 1);
 		double verifySweepRange = 30.0;
@@ -68,7 +68,7 @@ public class StubDSLLoader implements DSLLoader {
 		// Need a concept of the goal action on the sensor detection and deactivation
 		Goal verifySensor = new Goal("verifySensor", mission, new GoalTemporalConstraints(0.0, MISSION_END_TIME), rp, 
 				Optional.of(new DynamicGoalRegion(primarySensorSweep, "detectionCoord", verifySweepRange)),
-				new SensorCover(20.0, 1, SensorType.SONAR));
+				new SensorCover(20.0, 1, SensorType.SONAR, 1, 2));
 		
 		try {
 			verifySensor.setDependencyOn(primarySensorSweep);

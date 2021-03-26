@@ -8,6 +8,8 @@ public class PHelmIvpProcess extends MOOSProcess {
 	// The number of divisions into which valid speeds is divided - e.g. 26 permits granularity of 0.05 over the range 0 -> 5 m/s 
 	private int NUM_SPEED_DIVISIONS = 26;
 	
+	private final double EXTRA_DEPTH_SHIFT = 0.01;
+	
 	private boolean verboseHelm = true;
 	
 	public PHelmIvpProcess(MOOSCommunity parent, Point startPos, String vehicleName, double startSpeed, double maxSpeed, double maxDepth) {
@@ -22,9 +24,10 @@ public class PHelmIvpProcess extends MOOSProcess {
 		setProperty("Behaviors", parentBHVFile);
 		setProperty("Domain", "course:0:359:360");
 		
-		setProperty("Domain", "depth:0:" + Double.toString(maxDepth) + ":" + Integer.toString((int)(Math.ceil(maxDepth) + 1)) + ":optional");
+		int depthSteps = Math.min(2, (int)(Math.ceil(maxDepth) + 2));
+		setProperty("Domain", "depth:0:" + Double.toString(EXTRA_DEPTH_SHIFT + maxDepth) + ":" + Integer.toString(depthSteps) + ":optional");
 		
-		setupBehaviours(vehicleName, startPos);
+		setupBehaviours(vehicleName, startPos, maxDepth);
 		setupBehaviourVars();
 		
 		// The domain has to be set using the maximum speed here
@@ -71,7 +74,7 @@ public class PHelmIvpProcess extends MOOSProcess {
 		setModeProperties.put("CONSTHEADING", msd5);
 	}
 	
-	private void setupBehaviours(String vehicleName, Point startPos) {
+	private void setupBehaviours(String vehicleName, Point startPos, double maxDepth) {
 		String startPosAsString = startPos.toString();
 		
 		double loiterSpeed = startSpeed;
@@ -89,6 +92,6 @@ public class PHelmIvpProcess extends MOOSProcess {
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 		addBehaviour(new HelmBehaviourConstantHeading(this));
 		addBehaviour(new HelmBehaviourConstantSpeed(this));
-		addBehaviour(new HelmBehaviourConstantDepth(this));
+		addBehaviour(new HelmBehaviourConstantDepth(this, maxDepth));
 	}
 }

@@ -18,16 +18,17 @@ import exptrunner.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
-	public static void runFixedCSVExpt(Mission mission, String fixedCSVFuzzingFile, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
+	public static void runFixedCIExpt(Mission mission, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 		while (!eparams.completed()) {
 			eparams.printState();
-			RunExperiment.doExperimentFromFile(mission, exptTag, fixedCSVFuzzingFile, actuallyRun, timeLimit);
+			String nullCSVFuzzingFile = "/home/jharbin/academic/atlas/atlas-middleware/null-fuzzing-file.fif";
+			RunExperiment.doExperimentFromFile(mission, exptTag, nullCSVFuzzingFile, actuallyRun, timeLimit);
 			eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
 			eparams.advance();
 		}
 	}
 	
-	public static void runRepeatedCIExperiment(List<Metrics> metricList, String faultFileName, String fileTag, int runCount) {
+	public static void runRepeatedCIExperiment(List<Metrics> metricList, String fileTag, int runCount) {
 		DSLLoader loader = new GeneratedDSLLoader();
 		Mission mission;
 
@@ -40,7 +41,7 @@ public class RepeatedRunner {
 			String resFileName = "ciexpt-"+fileTag+".res";
 			// TODO: register the CIExpt model content in the experiment params
 			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, mission, resFileName);
-			runFixedCSVExpt(mission, faultFileName, ep, resFileName, true, runTime);
+			runFixedCIExpt(mission, ep, resFileName, true, runTime);
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {
 			e.printStackTrace();
@@ -59,6 +60,6 @@ public class RepeatedRunner {
 		l.add(Metrics.OUTSIDE_REGION_COUNT);
 		// TODO: other metrics to track... the total distance robots travel
 		// TODO: track the total cost of the configuration
-		runRepeatedCIExperiment(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "rudderfault", 200);
+		runRepeatedCIExperiment(l, "ciexpt", 200);
 	}
 }

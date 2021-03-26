@@ -1,2 +1,0 @@
-Key,DESIRED_THRUST,0.0,1200.0,ella,0,DoubleVariableChange,RandomOffsetWithSeed|0.0|32.0|343754321
-Key,DESIRED_RUDDER,0.0,1200.0,ella,0,DelayFuzzingOperation,FIXED|5.0

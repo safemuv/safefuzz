@@ -229,14 +229,13 @@ class ComputerCIshoreside_advanced {
 		}
 		return rSpeeds;
 	}
-	
-
 
 	public static void init() {
 		try {
-			// Load some information from the vehicles
-			loadDSL();
-			robotSpeeds = getRobotNamesAndSpeeds();		
+			System.out.println("init");
+			// Load the DSL contents, and load some information from the vehicles
+			setSystemStateFromModel();
+			System.out.println("robotSpeeds = " + robotSpeeds);
 
 			Map<String, Region> regionAssignments = staticRegionSplitBySpeeds(fullRegion, sweepRobots);
 			CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());

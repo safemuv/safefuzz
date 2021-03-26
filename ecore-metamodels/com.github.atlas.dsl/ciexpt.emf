@@ -15,9 +15,9 @@ class SensorOption {
 	attr double sensorCost;
 }
 
-// Represents a single robot
+// Represents a single specification for a particular robot we can use
 class RobotOption {
-	val SensorOption[*] sensorOptions; // Specify the number of integers
+	val SensorOption[*] sensorOptions;
 	attr double baseCost;
 }
 
