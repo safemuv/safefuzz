@@ -1,5 +1,5 @@
 ServerHost = localhost
-ServerPort = 9003
+ServerPort = 9002
 Simulator = true
 community = gilda
 MOOSTimeWarp = 10
@@ -47,7 +47,7 @@ ProcessConfig = pShare
 {
 AppTick = 2
 CommsTick = 2
-input = route =  localhost:9203
+input = route =  localhost:9202
 output = src_name=Y, dest_name=B, route=localhost:9200
 }
 
@@ -189,7 +189,6 @@ ACTIVEMQ_TOPIC_CONS = FAULTS-SIM-TO-ATLAS-targ_gilda.moos
 WATCH_VAR = VAR_X
 WATCH_VAR = VAR_Y
 WATCH_VAR = DB_UPTIME
-WATCH_VAR = NODE_REPORT_ELLA
 WATCH_VAR = NODE_REPORT_FRANK
 WATCH_VAR = NODE_REPORT_GILDA
 WATCH_VAR = NODE_REPORT_HENRY

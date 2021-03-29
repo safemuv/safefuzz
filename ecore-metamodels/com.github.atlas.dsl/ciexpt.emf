@@ -1,6 +1,8 @@
 @namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/ciexpt", prefix="ciexpt")
 package CIExpt;
 
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+
 class IntegerRange {
 	attr int min;
 	attr int max;
@@ -17,8 +19,10 @@ class SensorOption {
 
 // Represents a single specification for a particular robot we can use
 class RobotOption {
-	val SensorOption[*] sensorOptions;
+	ref SensorOption[*] sensorOptions;
 	attr double baseCost;
+	attr double costPerDistance;
+	ref Atlas.Robot robotRef;
 }
 
 class CIExperiment {

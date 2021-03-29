@@ -11,7 +11,7 @@ import atlassharedclasses.*;
 public class API {
 	// TODO: to add to the API - speed change requests from the CI
 	
-	private static boolean DEBUG_POLYGON_COORDS = false;
+	private static boolean DEBUG_POLYGON_COORDS = true;
 	
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	private static CollectiveInt ci;
@@ -43,7 +43,7 @@ public class API {
 	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		System.out.println("region =\n" + r);
-		System.out.println("coords =\n" + coords);
+		//System.out.println("coords =\n" + coords);
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
 		}
