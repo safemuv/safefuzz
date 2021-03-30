@@ -1,4 +1,4 @@
-package atlascollectiveint.custom;
+package atlascollectiveint.custom.backup;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
+class ComputerCIshoreside_advanced {
 
 	private static Mission mission;
 

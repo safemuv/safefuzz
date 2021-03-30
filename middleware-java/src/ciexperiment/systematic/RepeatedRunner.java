@@ -14,15 +14,15 @@ import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
-import exptrunner.runner.RunExperiment;
+import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
 	public static void runFixedCIExpt(Mission mission, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 		while (!eparams.completed()) {
 			eparams.printState();
-			String nullCSVFuzzingFile = "/home/jharbin/academic/atlas/atlas-middleware/null-fuzzing-file.fif";
-			RunExperiment.doExperimentFromFile(mission, exptTag, nullCSVFuzzingFile, actuallyRun, timeLimit);
+			RunExperiment.doExperimentFromFile(mission, exptTag, actuallyRun, timeLimit);
+			// TODO: path to replace
 			eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
 			eparams.advance();
 		}
