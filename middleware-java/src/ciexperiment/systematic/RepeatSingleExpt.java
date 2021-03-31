@@ -18,6 +18,7 @@ public class RepeatSingleExpt extends ExptParams {
 	private List<FuzzingSelectionRecord> fixedFaultInstances;
 	private MetricsProcessing metricsProcessing;
 	private Mission mission;
+	private Mission exptMission;
 	
 	private FileWriter resFile;
 	private String resFileName = "repeatedLog.res";
@@ -36,6 +37,7 @@ public class RepeatSingleExpt extends ExptParams {
 		this.runCount = 0;
 		this.metricsProcessing = mp;
 		this.mission = mission;
+		this.exptMission = mission;
 		this.resFileName = resFaultFile;
 		setupResFile();
 	}
@@ -50,8 +52,10 @@ public class RepeatSingleExpt extends ExptParams {
 
 	public void advance() {
 		runCount++;
-		// TODO: run EOL code to generate a fresh model from the CIExpt configuration 
 		// Ensure the necessary content is stored to track e.g. the configuration cost
+		
+		// TODO: this needs to call GenerateModelsExecutor in order to generate a fresh model from the CIExpt configuration 
+		// Then load it to the exptMission object
 	}
 
 	public void logResults(String string) {
@@ -78,5 +82,9 @@ public class RepeatSingleExpt extends ExptParams {
 
 	public List<FuzzingSelectionRecord> specificFaults() {
 		return fixedFaultInstances;
+	}
+
+	public Mission getCurrentMissionObject() {
+		return exptMission;
 	}	
 }

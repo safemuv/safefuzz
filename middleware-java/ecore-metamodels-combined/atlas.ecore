@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Atlas" nsURI="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas"
+    nsPrefix="atlas">
+  <eClassifiers xsi:type="ecore:EClass" name="Region" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Point">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rectangle" eSuperTypes="#//Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="corner1" lowerBound="1"
+        eType="#//Point" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="corner2" lowerBound="1"
+        eType="#//Point" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Circle" eSuperTypes="#//Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="centre" lowerBound="1"
+        eType="#//Point" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="2"
+        upperBound="-1" eType="#//Point" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Polygon" eSuperTypes="#//Region">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="3"
+        upperBound="-1" eType="#//Point" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnvironmentalObject" eSuperTypes="#//Point">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isHazard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnvironmentalObstacle">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="poly" eType="#//Polygon"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultTimeProperties">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="earliestFaultStart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latestFaultEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxFaultLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxFaultRepeatCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="faultProb" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FaultImpact" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageImpact" abstract="true" eSuperTypes="#//FaultImpact">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="affectedMessage" lowerBound="1"
+        eType="#//Message"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DelayMessage" eSuperTypes="#//MessageImpact">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="delayLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeleteMessage" eSuperTypes="#//MessageImpact"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubFieldSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="randomSelection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldStartNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldRangeLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MutateMessage" eSuperTypes="#//MessageImpact">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="affectedField" lowerBound="1"
+        eType="#//MessageField"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" lowerBound="1"
+        eType="#//MessageChange" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subfieldSpec" eType="#//SubFieldSpec"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageChange" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntMessageChange" eSuperTypes="#//MessageChange">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="absoluteValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="incrementValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringMessageChange" eSuperTypes="#//MessageChange">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="absoluteValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatMessageChange" eSuperTypes="#//MessageChange">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="absoluteValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="incrementValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multFactor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PointMessageChange" eSuperTypes="#//MessageChange">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="absoluteValue" eType="#//Point"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maxOffsetValue" eType="#//Point"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentImpact" abstract="true" eSuperTypes="#//FaultImpact">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="affectedComponent" lowerBound="1"
+        eType="#//Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DisabledComponent" eSuperTypes="#//ComponentImpact"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MotionFault" eSuperTypes="#//ComponentImpact">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="affectedProperty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnergyLoss" eSuperTypes="#//ComponentImpact">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedEnergyLoss" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fault">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="affectedRegion" eType="#//Region"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="affectedTime" lowerBound="1"
+        eType="#//FaultTimeProperties" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="impact" lowerBound="1"
+        eType="#//FaultImpact" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Message">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//Component"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" lowerBound="1"
+        upperBound="-1" eType="#//MessageField" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//Component" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentProperty" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntProperty" eSuperTypes="#//ComponentProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PointProperty" eSuperTypes="#//ComponentProperty">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Point"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringProperty" eSuperTypes="#//ComponentProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleProperty" eSuperTypes="#//ComponentProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="componentProperties" upperBound="-1"
+        eType="#//ComponentProperty" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedComponent" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Subcomponent" abstract="true" eSuperTypes="#//Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Robot" eSuperTypes="#//NamedComponent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" upperBound="-1"
+        eType="#//Subcomponent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Computer" eSuperTypes="#//NamedComponent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subcomponents" upperBound="-1"
+        eType="#//Subcomponent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SensorType">
+    <eLiterals name="SONAR" value="1"/>
+    <eLiterals name="GPS_POSITION" value="2"/>
+    <eLiterals name="CAMERA" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ActuatorType">
+    <eLiterals name="MOTOR" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sensor" eSuperTypes="#//Subcomponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//SensorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="detections" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actuator" eSuperTypes="#//Subcomponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ActuatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commands" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessingUnit" eSuperTypes="#//Subcomponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MotionSource" eSuperTypes="#//Subcomponent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxSpeed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="energyRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="energyPerDistance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="params" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnergyResource" abstract="true" eSuperTypes="#//Subcomponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Battery" eSuperTypes="#//EnergyResource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalEnergy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnergySource" eSuperTypes="#//EnergyResource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="productionRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatResultField" eSuperTypes="#//GoalResultField">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RobotResultField" eSuperTypes="#//GoalResultField"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PointResultField" eSuperTypes="#//GoalResultField"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalResult">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//GoalResultField" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalAction" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Visit" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Patrol" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Cover" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Avoid" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TrackDistances" eSuperTypes="#//GoalAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StayInRegion" eSuperTypes="#//GoalAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stopOnFirstViolation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AvoidOthers" eSuperTypes="#//GoalAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clearance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjects" eSuperTypes="#//GoalAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="#//EnvironmentalObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="robotsNeededPerObject"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensorCover" eSuperTypes="#//Cover">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="density" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="samplesPerUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sensortype" eType="#//SensorType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="collective" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verificationsMalicious"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verificationsBenign" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalParticipants" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="logicOps">
+    <eLiterals name="ADD" value="1"/>
+    <eLiterals name="SUBTRACT" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelativeParticipants" eSuperTypes="#//GoalParticipants">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentGoal" eType="#//Goal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRobots" eType="#//StaticParticipants"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="setOperation" eType="#//logicOps"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fieldName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticParticipants" eSuperTypes="#//GoalParticipants">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
+        eType="#//Robot"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalTemporalConstraints">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+        eType="#//Goal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="earliestStartTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latestFinishTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GoalRegion" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticGoalRegion" eSuperTypes="#//GoalRegion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticRegion" eType="#//Rectangle"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicGoalRegion" eSuperTypes="#//GoalRegion">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relativeToGoal" lowerBound="1"
+        eType="#//Goal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeToGoalField" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeRange" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Goal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requirements" eType="#//GoalTemporalConstraints"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" eType="#//GoalParticipants"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" eType="#//GoalAction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="#//GoalRegion"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mission">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robots" upperBound="-1"
+        eType="#//Robot" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="computers" upperBound="-1"
+        eType="#//Computer" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//Region" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="goals" upperBound="-1"
+        eType="#//Goal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"
+        eType="#//EnvironmentalObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="obstacles" upperBound="-1"
+        eType="#//EnvironmentalObstacle" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messages" upperBound="-1"
+        eType="#//Message" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="faults" upperBound="-1"
+        eType="#//Fault" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+</ecore:EPackage>

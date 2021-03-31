@@ -18,30 +18,33 @@ import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
-	public static void runFixedCIExpt(Mission mission, ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
+	public static void runFixedCIExpt(ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
+		// The core logic for the loop
 		while (!eparams.completed()) {
 			eparams.printState();
+			// Modify the mission from the parameters - and load the modified mission file here
+			Mission mission = eparams.getCurrentMissionObject();
 			RunExperiment.doExperimentFromFile(mission, exptTag, actuallyRun, timeLimit);
 			// TODO: path to replace
 			eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
 			eparams.advance();
+			// This modifies the mission state
 		}
 	}
 	
 	public static void runRepeatedCIExperiment(List<Metrics> metricList, String fileTag, int runCount) {
 		DSLLoader loader = new GeneratedDSLLoader();
-		Mission mission;
 
 		try {
-			mission = loader.loadMission();
-			double runTime = mission.getEndTime();
+			Mission baseMission = loader.loadMission();
+			double runTime = baseMission.getEndTime();
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
-			MetricsProcessing mp = new MetricsProcessing(mission, metricList, tempLog);
+			MetricsProcessing mp = new MetricsProcessing(baseMission, metricList, tempLog);
 			String resFileName = "ciexpt-"+fileTag+".res";
 			// TODO: register the CIExpt model content in the experiment params
-			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, mission, resFileName);
-			runFixedCIExpt(mission, ep, resFileName, true, runTime);
+			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, baseMission, resFileName);
+			runFixedCIExpt(ep, resFileName, true, runTime);
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {
 			e.printStackTrace();

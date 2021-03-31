@@ -1,9 +1,8 @@
 package ciexperiment.systematic;
 
 import java.util.HashMap;
-import java.util.List;
+import atlasdsl.Mission;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
-import fuzzingengine.FuzzingSelectionRecord;
 
 public abstract class ExptParams {
 	protected double runtime;
@@ -27,5 +26,5 @@ public abstract class ExptParams {
 		return solutionLog;
 	}
 	
-	public abstract List<FuzzingSelectionRecord> specificFaults();
+	public abstract Mission getCurrentMissionObject();
 }

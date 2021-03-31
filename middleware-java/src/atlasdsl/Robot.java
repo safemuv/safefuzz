@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 public class Robot extends Component {
 	private String robotname;
 	private VehicleType vtype;
