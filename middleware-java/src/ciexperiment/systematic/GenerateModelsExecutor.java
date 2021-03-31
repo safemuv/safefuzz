@@ -100,6 +100,7 @@ public class GenerateModelsExecutor {
 			// !!! At the end of the mutation for the model to be saved we need to call dispose(). Otherwise it is not saved.
 			targetModel.dispose();
 			sourceModel.close();
+			targetModel.close();
 		
 			// !!! END OF MUTATION LOGIC !!!
 			
