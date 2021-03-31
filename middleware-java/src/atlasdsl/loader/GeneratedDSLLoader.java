@@ -61,11 +61,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		srgilda_2.setParent(rgilda);
 		rgilda.addSubcomponent(srgilda_2);
 			
-			
- 
-			
-			MotionSource srgilda_3 = new MotionSource();
-			rgilda.addSubcomponent(srgilda_3);
+		MotionSource srgilda_3 = new MotionSource();
+		rgilda.addSubcomponent(srgilda_3);
 			
 			
 		mission.addRobot(rgilda);
@@ -78,7 +75,7 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
 		srhenry_1.setParent(rhenry);
-		srhenry_1.setDoubleComponentProperty("swathWidth", 25.0);
+		srhenry_1.setDoubleComponentProperty("swathWidth", 10.0);
 		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
 		rhenry.addSubcomponent(srhenry_1);
 			

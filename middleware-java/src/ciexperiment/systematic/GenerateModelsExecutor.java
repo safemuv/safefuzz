@@ -12,6 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.eclipse.emf.common.util.URI;
@@ -21,25 +22,35 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.epsilon.common.util.StringProperties;
+import org.eclipse.epsilon.egl.EglFileGeneratingTemplate;
+import org.eclipse.epsilon.egl.EglFileGeneratingTemplateFactory;
+import org.eclipse.epsilon.egl.EglTemplateFactoryModuleAdapter;
+import org.eclipse.epsilon.egl.exceptions.EglRuntimeException;
 import org.eclipse.epsilon.emc.emf.EmfModel;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.models.IRelativePathResolver;
 
-public class GenerateModelsExecutor {
 
-	public void transformModel(String modelFilePath) throws InvocationTargetException, InterruptedException {
+public class GenerateModelsExecutor {
+	
+	private final String METAMODEL_FILE = "ecore-metamodels-combined/atlas.ecore";
+
+	/** Returns the string giving the name of the transformed model */
+	public Optional<String> transformModel(String modelFilePath) throws InvocationTargetException, InterruptedException {
 		try {
 			//registerMMs();		
 			EmfModel sourceModel = new EmfModel();
 			sourceModel.setName("Source");
 			
+			// TODO: replace with calls to loadmodel()
 			System.out.println("Model " + modelFilePath + ": starting load");
 			ArrayList<String> metamodelFiles = new ArrayList<String>();
-			metamodelFiles.add(new File("ecore-metamodels-combined/atlas.ecore").getAbsolutePath());
+			metamodelFiles.add(new File(METAMODEL_FILE).getAbsolutePath());
 			sourceModel.setMetamodelFiles(metamodelFiles);
 			sourceModel.setModelFile(new File(modelFilePath).getAbsolutePath());
 			sourceModel.load();
@@ -75,6 +86,7 @@ public class GenerateModelsExecutor {
 			targetModel.setMetamodelFiles(metamodelFiles);
 			targetModel.setName("Target");
 			targetModel.setModelFile(copied.toString());
+			targetModel.setStoredOnDisposal(true);
 			targetModel.load();
 		    
 		    // Simple queries to get objects by type and their attributes
@@ -83,6 +95,7 @@ public class GenerateModelsExecutor {
 			for (EObject obj : mutableObjects) {
 				EStructuralFeature nameAttr = obj.eClass().getEStructuralFeature("name");
 				System.out.println("FOUND ROBOT NAME = " + obj.eGet(nameAttr));
+
 			}
 			
 			// Testing removing robot frank from the model
@@ -91,8 +104,20 @@ public class GenerateModelsExecutor {
 			for (EObject eObj : elementsToBeRemoved) {
 				EStructuralFeature nameAttr = eObj.eClass().getEStructuralFeature("name");
 				if (eObj.eGet(nameAttr).equals("frank")) {
+				
+					
+//					TreeIterator<EObject> eobjContents = eObj.eAllContents();
+//					while (eobjContents.hasNext()) {
+//						EObject nextChild = eobjContents.next();
+//						System.out.println("Removing object " + nextChild.toString());
+//						targetModel.deleteElement((Object) nextChild);
+//
+//					}
+					
 					System.out.println("Removing frank");
-					targetModel.deleteElement((Object)eObj);
+					//targetModel.deleteElement((Object)eObj);
+					EcoreUtil.delete(eObj, true);
+					
 					break;
 				}
 			}
@@ -101,6 +126,8 @@ public class GenerateModelsExecutor {
 			targetModel.dispose();
 			sourceModel.close();
 			targetModel.close();
+			
+			return Optional.of(copied.toString());
 		
 			// !!! END OF MUTATION LOGIC !!!
 			
@@ -114,37 +141,43 @@ public class GenerateModelsExecutor {
 		} catch (EolRuntimeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
 		}
+		return Optional.empty();
 	}
 	
-//	public void executeEGL(String modelFilePath) {
-//		
-//		//emf source (your mission model)
-//		EmfModel sourceModelForEGL = createAndLoadAnEmfModel(
-//				"http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission,http://www.github.com/jrharbin-york/atlas-middleware/dsl/region,http://www.github.com/jrharbin-york/atlas-middleware/dsl/message,http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing,http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults,http://www.github.com/jrharbin-york/atlas-middleware/dsl/components",
-//				modelFilePath, "Source", "true", "true");
-//
-//		//egl factory and module
-//		EglFileGeneratingTemplateFactory factory = new EglFileGeneratingTemplateFactory();
-//		EglTemplateFactoryModuleAdapter eglModule = new EglTemplateFactoryModuleAdapter(factory);
-//		eglModule.getContext().getModelRepository().addModel(sourceModelForEGL);
-//
-//		// Point to where the EGL file is located
-//		// TODO: replace the egl file path 
-//		String rawLocation = "/home/atlas/atlas/atlas-middleware/atlas-models/genmission.egl";
-//		java.net.URI EglFile = new java.net.URI(rawLocation);
-//
-//		EglFileGeneratingTemplate template = (EglFileGeneratingTemplate) factory.load(EglFile);
-//		template.process();
-//		
-//		// Set the target file, ie. where the results will be generated to.
-//		// TODO: replace the path for the Java generated DSL here
-//		File target = new File(modelFilePath + "GeneratedFile.txt");
-//		target.createNewFile();
-//		template.generate(target.toURI().toString());
-//		// !!! END OF EGL EXECUTION FROM JAVA !!!
-//	}
+	private EmfModel loadModel(String metaModelFilePath, String modelFilePath, String modelName) throws EolModelLoadingException {
+	    EmfModel model =  new EmfModel();
+		ArrayList<String> metamodelFilesTarget = new ArrayList<String>();
+		metamodelFilesTarget.add(new File(metaModelFilePath).getAbsolutePath());
+		model.setMetamodelFiles(metamodelFilesTarget);
+		model.setName("Target");
+		model.setModelFile(modelFilePath);
+		model.setStoredOnDisposal(true);
+		model.load();
+		return model;
+	}
+	
+	public void executeEGL(String sourceModelFile, String eglOutput) throws EglRuntimeException, URISyntaxException, IOException, EolModelLoadingException {
+		EmfModel sourceModelForEGL = loadModel(METAMODEL_FILE, sourceModelFile, "Target");
+		//egl factory and module
+		EglFileGeneratingTemplateFactory factory = new EglFileGeneratingTemplateFactory();
+		EglTemplateFactoryModuleAdapter eglModule = new EglTemplateFactoryModuleAdapter(factory);
+		eglModule.getContext().getModelRepository().addModel(sourceModelForEGL);
+
+		//String rawLocation = "ecore-metamodels/genmission.egl";
+		//java.net.URI EglFile = new java.net.URI(new File(rawLocation).getAbsolutePath());
+		java.net.URI EglFile = new java.net.URI("file:///home/atlas/atlas/atlas-middleware/middleware-java/ecore-metamodels/genmission.egl");
+		System.out.println(EglFile);
+		
+		EglFileGeneratingTemplate template = (EglFileGeneratingTemplate)factory.load(EglFile);
+		template.process();
+				
+		// Set the target file, ie. where the results will be generated to.
+		// TODO: replace the path for the Java generated DSL here
+		File target = new File(eglOutput);
+		target.createNewFile();
+		template.generate(target.toURI().toString());
+	}
 	
 	private void registerMMs() {
 		ResourceSet resSet = new ResourceSetImpl();

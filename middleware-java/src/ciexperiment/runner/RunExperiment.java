@@ -87,6 +87,8 @@ public class RunExperiment {
 				ExptHelper.startScript(absMOOSPATH, launchScriptName);
 			}	
 
+			exptLog("Generating MOOS Code");
+			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
 
 				exptLog("Started MOOS launch scripts");
 				// Sleep until MOOS is ready
@@ -94,7 +96,7 @@ public class RunExperiment {
 
 				String[] middlewareOpts = { "nofault", "nogui" };
 				
-				ExptHelper.startScript(ABS_SCRIPT_PATH, "start_middleware.sh");
+				ExptHelper.startScript(ABS_WORKING_PATH, "start_middleware.sh");
 				//middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR, middlewareOpts, ABS_WORKING_PATH);
 
 				// Sleep until the middleware is ready, then start the CI
@@ -102,7 +104,7 @@ public class RunExperiment {
 
 				// CI not starting properly as a process, so call it via a script
 				exptLog("Starting CI");
-				ExptHelper.startScript(ABS_SCRIPT_PATH, "start_ci.sh");
+				ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh");
 			
 				TimeUnit.MILLISECONDS.sleep(3000);
 				// Wait until the end condition for the middleware
