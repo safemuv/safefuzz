@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import utils.ExptHelper;
 
-import exptrunner.jmetal.FuzzingSelectionsSolution;
 import atlasdsl.*;
 
 public class RunExperiment {
@@ -19,7 +18,7 @@ public class RunExperiment {
 	private final static String ABS_MOOS_PATH_BASE = "/home/jharbin//academic/atlas/atlas-middleware/middleware-java/moos-sim/";
 
 	private final static boolean CLEAR_MOOS_LOGS_EACH_TIME = true;
-	
+
 	// This is an emergency time cutout if the failsafe is not operating normally
 	private static double failsafeTimeLimit = 300;
 
@@ -27,20 +26,21 @@ public class RunExperiment {
 		System.out.println(s);
 	}
 
-	private static void waitUntilMiddlewareTime(double time, double wallClockTimeOutSeconds) throws FileNotFoundException {
+	private static void waitUntilMiddlewareTime(double time, double wallClockTimeOutSeconds)
+			throws FileNotFoundException {
 		String pathToFile = ABS_MIDDLEWARE_PATH + "/logs/atlasTime.log";
 		String target = Double.toString(time);
 		boolean finished = false;
 		long timeStart = System.currentTimeMillis();
-		
+
 		BufferedReader reader = new BufferedReader(new FileReader(pathToFile));
 		try {
 			while (!finished) {
 				TimeUnit.MILLISECONDS.sleep(100);
-				if (((System.currentTimeMillis() - timeStart)/1000) > wallClockTimeOutSeconds) {
+				if (((System.currentTimeMillis() - timeStart) / 1000) > wallClockTimeOutSeconds) {
 					finished = true;
-				}				
-				while (reader.ready()) {				
+				}
+				while (reader.ready()) {
 					String line = reader.readLine();
 					Double lineVal = Double.valueOf(line);
 					exptLog(line + "-" + target);
@@ -62,80 +62,83 @@ public class RunExperiment {
 		}
 	}
 
-	public static double doExperimentFromFile(Mission mission, String exptTag,
-			boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
+	public static double doExperimentFromFile(Mission mission, String exptTag, boolean actuallyRun, double timeLimit)
+			throws InterruptedException, IOException {
 		Process middleware;
 
 		double returnValue = 0;
 		String absATLASJAR;
 		String absMOOSPATH;
 		String ciRunner;
-		
+
 		exptLog("Using custom generated mission");
 		absATLASJAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas-6robot-case.jar";
 		absMOOSPATH = ABS_MOOS_PATH_BASE;
 		ciRunner = "run-ci-6robot.sh";
-		
+
 		if (actuallyRun) {
+			exptLog("Generating MOOS code");
+			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
+			
 			for (Computer c : mission.getAllComputers()) {
 				String launchScriptName = "launch_" + c.getName() + ".sh";
 				ExptHelper.startScript(absMOOSPATH, launchScriptName);
 			}
-			
+
 			for (Robot r : mission.getAllRobots()) {
 				String launchScriptName = "launch_" + r.getName() + ".sh";
 				ExptHelper.startScript(absMOOSPATH, launchScriptName);
-			}	
-
-			exptLog("Generating MOOS Code");
-			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
-
-				exptLog("Started MOOS launch scripts");
-				// Sleep until MOOS is ready
-				TimeUnit.MILLISECONDS.sleep(800);
-
-				String[] middlewareOpts = { "nofault", "nogui" };
-				
-				ExptHelper.startScript(ABS_WORKING_PATH, "start_middleware.sh");
-				//middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR, middlewareOpts, ABS_WORKING_PATH);
-
-				// Sleep until the middleware is ready, then start the CI
-				TimeUnit.MILLISECONDS.sleep(1000);
-
-				// CI not starting properly as a process, so call it via a script
-				exptLog("Starting CI");
-				ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh");
-			
-				TimeUnit.MILLISECONDS.sleep(3000);
-				// Wait until the end condition for the middleware
-				waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit );
-				exptLog("Middleware end time reached");
-				exptLog("Destroying middleware processes");
-				//middleware.destroy();
-
-				if (CLEAR_MOOS_LOGS_EACH_TIME) {
-					ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate_clear_logs.sh");
-				} else {
-					ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
-				}
-
-				exptLog("Kill MOOS / Java processes command sent");
-				exptLog("Destroy commands completed");
 			}
 
-			// Read and process the result files from the experiment
-			returnValue = extractResults(ABS_WORKING_PATH + "logs");
+			exptLog("Started MOOS launch scripts");
+			// Sleep until MOOS is ready
+			TimeUnit.MILLISECONDS.sleep(800);
 
-			if (actuallyRun) {
-				exptLog("Waiting to restart experiment");
-				// Wait 10 seconds before ending
-				TimeUnit.MILLISECONDS.sleep(10000);
+			String[] middlewareOpts = { "nofault", "nogui" };
+
+			ExptHelper.startScript(ABS_WORKING_PATH, "start_middleware.sh");
+			// middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR,
+			// middlewareOpts, ABS_WORKING_PATH);
+
+			// Sleep until the middleware is ready, then start the CI
+			TimeUnit.MILLISECONDS.sleep(1000);
+
+			// CI not starting properly as a process, so call it via a script
+			exptLog("Starting CI");
+			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh");
+
+			TimeUnit.MILLISECONDS.sleep(3000);
+			// Wait until the end condition for the middleware
+			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
+			exptLog("Middleware end time reached");
+
+			if (CLEAR_MOOS_LOGS_EACH_TIME) {
+				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate_clear_logs.sh");
+			} else {
+				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
 			}
-			
-			return returnValue;
+
+			exptLog("Kill MOOS / Java processes command sent");
+			exptLog("Destroy commands completed");
+		}
+
+		// Read and process the result files from the experiment
+		returnValue = extractResults(ABS_WORKING_PATH + "logs");
+
+		if (actuallyRun) {
+			exptLog("Waiting to restart experiment");
+			// Wait 10 seconds before ending
+			TimeUnit.MILLISECONDS.sleep(10000);
+		}
+
+		return returnValue;
 	}
 
 	private static double extractResults(String string) {
 		return 0;
+	}
+
+	public static void compileLoader() throws IOException {
+		ExptHelper.startScript(ABS_WORKING_PATH, "compile_dsl_loader.sh");
 	}
 }

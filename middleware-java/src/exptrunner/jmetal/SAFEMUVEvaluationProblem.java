@@ -100,13 +100,13 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		}
 	}
 
-	public FuzzingSelectionsSolution evaluate(FuzzingSelectionsSolution solution) {
+	public void evaluate(FuzzingSelectionsSolution solution) {
 		try {
 			performSAFEMUVExperiment(solution);
 		} catch (InvalidMetrics e) {
 			e.printStackTrace();
 		}
-		return solution;
+		//return solution;
 	}
 
 	private void setupInitialPopulation(FuzzingSelectionsSolution fiss) {

@@ -35,37 +35,30 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundExce
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.models.IRelativePathResolver;
 
-
 public class GenerateModelsExecutor {
 	
 	private final String METAMODEL_FILE = "ecore-metamodels-combined/atlas.ecore";
+	private final boolean DEBUG_MODEL_TRANSFORMS = true;
 
+	private void removeRobot(EmfModel targetModel, String robotName) throws EolModelElementTypeNotFoundException {
+		Collection<EObject> elementsToBeRemoved = new ArrayList<EObject>();
+		elementsToBeRemoved = targetModel.getAllOfKind("Robot");
+		for (EObject eObj : elementsToBeRemoved) {
+			EStructuralFeature nameAttr = eObj.eClass().getEStructuralFeature("name");
+			if (eObj.eGet(nameAttr).equals(robotName)) {
+				if (DEBUG_MODEL_TRANSFORMS) {
+					System.out.println("Removing " + robotName);
+				}
+				EcoreUtil.delete(eObj, true);
+				break;
+			}
+		}
+	}
+	
 	/** Returns the string giving the name of the transformed model */
 	public Optional<String> transformModel(String modelFilePath) throws InvocationTargetException, InterruptedException {
 		try {
-			//registerMMs();		
-			EmfModel sourceModel = new EmfModel();
-			sourceModel.setName("Source");
-			
-			// TODO: replace with calls to loadmodel()
-			System.out.println("Model " + modelFilePath + ": starting load");
-			ArrayList<String> metamodelFiles = new ArrayList<String>();
-			metamodelFiles.add(new File(METAMODEL_FILE).getAbsolutePath());
-			sourceModel.setMetamodelFiles(metamodelFiles);
-			sourceModel.setModelFile(new File(modelFilePath).getAbsolutePath());
-			sourceModel.load();
-			System.out.println("Model " + modelFilePath + ": loaded OK!");
-						
-			// This is based on one version of a Mission MM where Robots extend a class called "MutableComponent".
-			// This is just an example. If you need to use it with your updated MM, change the models in the "models" folder
-			// In order to run you need to run this as a new Eclipse Application, create a project, create the model you
-			// want to mutate, right click on it and select "SESAME --> Generate Models". The code located in here will be executed.
-			
-			// !!! HERE WE WRITE THE LOGIC FOR MUTATION OF MODELS !!!
-			
-			//System.out.println(sourceModel.allContents());
-			//System.out.println(sourceModel.getAllOfKind("MutableComponent"));
-			
+			EmfModel sourceModel = this.loadModel(METAMODEL_FILE, modelFilePath, "Source");
 			
 			// Copy Model
 			UUID uuid = UUID.randomUUID();
@@ -79,15 +72,7 @@ public class GenerateModelsExecutor {
 			}
 		    
 		    System.out.println("New path for model = " + copied);
-		    
-		    EmfModel targetModel =  new EmfModel();
-			ArrayList<String> metamodelFilesTarget = new ArrayList<String>();
-			metamodelFilesTarget.add(new File("ecore-metamodels-combined/atlas.ecore").getAbsolutePath());
-			targetModel.setMetamodelFiles(metamodelFiles);
-			targetModel.setName("Target");
-			targetModel.setModelFile(copied.toString());
-			targetModel.setStoredOnDisposal(true);
-			targetModel.load();
+		    EmfModel targetModel = loadModel(METAMODEL_FILE, copied.toString(), "Target");
 		    
 		    // Simple queries to get objects by type and their attributes
 			Collection<EObject> mutableObjects = new ArrayList<EObject>();
@@ -95,43 +80,18 @@ public class GenerateModelsExecutor {
 			for (EObject obj : mutableObjects) {
 				EStructuralFeature nameAttr = obj.eClass().getEStructuralFeature("name");
 				System.out.println("FOUND ROBOT NAME = " + obj.eGet(nameAttr));
-
 			}
 			
+			// REMOVAL CODE START
 			// Testing removing robot frank from the model
-			Collection<EObject> elementsToBeRemoved = new ArrayList<EObject>();
-			elementsToBeRemoved = targetModel.getAllOfKind("Robot");
-			for (EObject eObj : elementsToBeRemoved) {
-				EStructuralFeature nameAttr = eObj.eClass().getEStructuralFeature("name");
-				if (eObj.eGet(nameAttr).equals("frank")) {
-				
-					
-//					TreeIterator<EObject> eobjContents = eObj.eAllContents();
-//					while (eobjContents.hasNext()) {
-//						EObject nextChild = eobjContents.next();
-//						System.out.println("Removing object " + nextChild.toString());
-//						targetModel.deleteElement((Object) nextChild);
-//
-//					}
-					
-					System.out.println("Removing frank");
-					//targetModel.deleteElement((Object)eObj);
-					EcoreUtil.delete(eObj, true);
-					
-					break;
-				}
-			}
+			removeRobot(targetModel, "frank");
+			// REMOVAL CODE END
 			
-			// !!! At the end of the mutation for the model to be saved we need to call dispose(). Otherwise it is not saved.
 			targetModel.dispose();
 			sourceModel.close();
 			targetModel.close();
 			
-			return Optional.of(copied.toString());
-		
-			// !!! END OF MUTATION LOGIC !!!
-			
-
+			return Optional.of(copied.toString());			
 		} catch (EolModelLoadingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

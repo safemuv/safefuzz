@@ -3,10 +3,16 @@ package ciexperiment.systematic;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import org.eclipse.epsilon.egl.exceptions.EglRuntimeException;
+import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -16,22 +22,54 @@ import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
+import utils.ExptHelper;
 
 public class RepeatedRunner {
+	private static final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
+
 	public static void runFixedCIExpt(ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
+		
+		GenerateModelsExecutor modelLoader = new GenerateModelsExecutor();
 		// The core logic for the loop
 		while (!eparams.completed()) {
 			eparams.printState();
 			// Modify the mission from the parameters - and load the modified mission file here
-			Mission mission = eparams.getCurrentMissionObject();
-			RunExperiment.doExperimentFromFile(mission, exptTag, actuallyRun, timeLimit);
-			// TODO: path to replace
-			eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
-			eparams.advance();
-			// This modifies the mission state
+			try {
+				Optional<String> file_opt = modelLoader.transformModel("test-experiment-models/mission-basis.model");
+				if (file_opt.isPresent()) {
+					String file = file_opt.get();
+					modelLoader.executeEGL(file, EMF_OUTPUT_PATH);
+					// TODO: mission loader - compile it
+					RunExperiment.compileLoader();
+					Mission mission = getCurrentMission();
+					RunExperiment.doExperimentFromFile(mission, exptTag, actuallyRun, timeLimit);
+					eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
+					eparams.advance();
+				}
+			} catch (InvocationTargetException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EolModelLoadingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EglRuntimeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DSLLoadFailed e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
+	private static Mission getCurrentMission() throws DSLLoadFailed {
+		DSLLoader dl = new GeneratedDSLLoader();
+		return dl.loadMission();
+	}
+
 	public static void runRepeatedCIExperiment(List<Metrics> metricList, String fileTag, int runCount) {
 		DSLLoader loader = new GeneratedDSLLoader();
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.uma.jmetal.util.errorchecking.JMetalException;
+//import org.uma.jmetal.util.errorchecking.JMetalException;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -55,10 +55,10 @@ public class RepeatedRunner {
 		}
 	}
 	
-	public static void main(String[] args) throws JMetalException, FileNotFoundException, InterruptedException {
-		List<Metrics> l = new ArrayList<Metrics>();
-		l.add(Metrics.PURE_MISSED_DETECTIONS);
-		l.add(Metrics.OUTSIDE_REGION_COUNT);
-		runRepeatedFuzzing(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "rudderfault", 200);
-	}
+//	public static void main(String[] args) throws JMetalException, FileNotFoundException, InterruptedException {
+//		List<Metrics> l = new ArrayList<Metrics>();
+//		l.add(Metrics.PURE_MISSED_DETECTIONS);
+//		l.add(Metrics.OUTSIDE_REGION_COUNT);
+//		runRepeatedFuzzing(l, "/home/atlas/academic/atlas/atlas-middleware/bash-scripts/jmetal-expts/res-keep/test-fif/null.fif", "rudderfault", 200);
+//	}
 }

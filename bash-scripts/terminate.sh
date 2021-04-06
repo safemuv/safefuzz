@@ -20,6 +20,12 @@ killall -9 pBasicContactMgr
 killall -9 uFldNodeComms
 killall -9 uFldShoreBroker
 killall -9 uFldHazardSensor
-pkill -f "atlas.jar"
-pkill -f "atlas-6robot-case-ci.jar"
-pkill -f "atlas-6robot-case.jar"
+# Not using JAR files to launch it any more!
+#pkill -f "atlas.jar"
+#pkill -f "atlas-6robot-case-ci.jar"
+#pkill -f "atlas-6robot-case.jar"
+# Instead kill by finding
+# not sure why pkill not working
+kill $(ps aux | grep '[r]unner.CollectiveIntRunner' | awk '{print $2}')
+kill $(ps aux | grep '[c]ore.ATLASMain' | awk '{print $2}')
+
