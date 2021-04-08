@@ -1,10 +1,18 @@
 package carsspecific.moos.moosmapping;
 
 public class HelmBehaviourAvoidance extends MOOSBehaviour {
-	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName) {
-		super("BHV_AvoidCollision", parent);
+	private static final int DEFAULT_PRIORITY_FOR_AVOIDANCE = 200;
+	
+	public static enum AvoidanceBehaviourVersion {
+		STANDARD,
+		V19
+	}
+	
+	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName, int priority, AvoidanceBehaviourVersion ver) {
+		// Use the ternary operator to determine the superclass call based upon the avoidance version selected
+		super((ver == AvoidanceBehaviourVersion.V19 ? "BHV_AvdColregsV19" : "BHV_AvoidCollision"), parent);
 		setProperty("name", "avdcollision_");
-		setProperty("pwt", 200);
+		setProperty("pwt", priority);
 		setProperty("condition", "(AVOID=true) and (CONSTHEADING=false)");
 		setProperty("updates", "CONTACT_INFO");
 		setProperty("endflag", "CONTACT_RESOLVED = $[CONTACT]");
@@ -20,5 +28,19 @@ public class HelmBehaviourAvoidance extends MOOSBehaviour {
 		setProperty("max_util_cpa_dist", 7);
 		setProperty("pwt_grade", "linear");
 		setProperty("bearing_line_config", "white:0, green:0.65, yellow:0.8, red:1.0");
+		
+		// Set additional properties if using V19 for it
+		if (ver == AvoidanceBehaviourVersion.V19) {
+			setProperty("giveway_bow_dist", 10);
+			setProperty("use_refinery", true);
+		}
+	}
+		
+	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName, int priority) {
+		this(parent, vehicleName, priority, AvoidanceBehaviourVersion.STANDARD);
+	}
+	
+	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName, AvoidanceBehaviourVersion ver) {
+		this(parent, vehicleName, DEFAULT_PRIORITY_FOR_AVOIDANCE, ver);
 	}
 }

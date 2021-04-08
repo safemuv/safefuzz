@@ -6,7 +6,7 @@ public class HelmBehaviourLoiter extends MOOSBehaviour {
 	public HelmBehaviourLoiter(MOOSProcess parent, String vehicleName, String loiterPos, double loiterSpeed, double radius, double nm_radius) {
 		super("BHV_Loiter", parent);
 		setProperty("name", "loiter");
-		setProperty("pwt", 100);
+		//setProperty("pwt", 100);
 		setProperty("condition", "MODE==LOITERING");
 		setProperty("updates", "UP_LOITER");
 		setProperty("runflag", "VEHICLE_UNDERWAY = TRUE");

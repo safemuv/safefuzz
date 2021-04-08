@@ -213,6 +213,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AvoidOthers" eSuperTypes="#//GoalAction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clearance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="advancedAvoidance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DiscoverObjects" eSuperTypes="#//GoalAction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="objects" upperBound="-1"

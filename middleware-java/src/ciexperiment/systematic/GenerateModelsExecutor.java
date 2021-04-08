@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import org.eclipse.emf.common.util.URI;
@@ -36,9 +37,13 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.models.IRelativePathResolver;
 
 public class GenerateModelsExecutor {
-	
 	private final String METAMODEL_FILE = "ecore-metamodels-combined/atlas.ecore";
 	private final boolean DEBUG_MODEL_TRANSFORMS = true;
+	Random rng;
+	
+	public GenerateModelsExecutor() {
+		rng = new Random();
+	}
 
 	private void removeRobot(EmfModel targetModel, String robotName) throws EolModelElementTypeNotFoundException {
 		Collection<EObject> elementsToBeRemoved = new ArrayList<EObject>();
@@ -73,7 +78,6 @@ public class GenerateModelsExecutor {
 		    
 		    System.out.println("New path for model = " + copied);
 		    EmfModel targetModel = loadModel(METAMODEL_FILE, copied.toString(), "Target");
-		    
 		    // Simple queries to get objects by type and their attributes
 			Collection<EObject> mutableObjects = new ArrayList<EObject>();
 			mutableObjects = sourceModel.getAllOfKind("Robot");
@@ -83,8 +87,18 @@ public class GenerateModelsExecutor {
 			}
 			
 			// REMOVAL CODE START
-			// Testing removing robot frank from the model
-			removeRobot(targetModel, "frank");
+			// Testing removing a randomly chosen robot from the model
+			double test = rng.nextDouble();
+			System.out.println("testval = " + test);
+			if (test < 0.25) {
+				removeRobot(targetModel, "frank");
+			} else if (test < 0.5) {
+				removeRobot(targetModel, "ella");
+			} else if (test < 0.75) {
+				removeRobot(targetModel, "gilda");
+			} else {
+				removeRobot(targetModel, "henry");
+			}
 			// REMOVAL CODE END
 			
 			targetModel.dispose();

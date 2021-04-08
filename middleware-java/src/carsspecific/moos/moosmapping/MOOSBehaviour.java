@@ -6,6 +6,7 @@ import java.io.IOException;
 public class MOOSBehaviour extends MOOSElement {
 	private String name;
 	private MOOSProcess parentProcess;
+	protected int priority = 100;
 	
 	public void generateCode(FileWriter bhvFile) throws IOException {
 		bhvFile.write("Behavior = " + name + " \n{\n");
@@ -16,6 +17,7 @@ public class MOOSBehaviour extends MOOSElement {
 	public MOOSBehaviour(String name, MOOSProcess parentProcess) {
 		this.name = name;
 		this.setParentProcess(parentProcess);
+		setProperty("pwt", priority);
 	}
 
 	public MOOSProcess getParentProcess() {

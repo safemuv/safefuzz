@@ -116,11 +116,6 @@ public class MOOSCodeGen extends CARSCodeGen {
 				moossim.addCommunity(rprocess);
 				System.out.println("Adding community for robot: " + r.getName());
 
-				// TODO: robot properties, such as maximum speed, should be propagated to the
-				// robot community here
-				// TODO: AvoidCollision should be added to the new Robot's Helm behaviours when
-				// an an avoidance goal exists
-
 				Sensor s;
 				// Check for particular sensors and add the necessary processes
 				if ((s = (r.getSensor(SensorType.SONAR))) != null) {
@@ -154,6 +149,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 					MOOSProcess pObstacleMgr = new PObstacleMgrProcess(rprocess);
 					MOOSProcess helmProcess = rprocess.getProcess("pHelmIvP");
 					String rname = r.getName();
+					// TODO: put in priorities for the behaviours
 					MOOSBehaviour avoidBHV = new HelmBehaviourAvoidObstacles(helmProcess, rname);
 					helmProcess.addBehaviour(avoidBHV);
 					rprocess.addProcess(pObstacleMgr);

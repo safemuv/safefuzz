@@ -282,6 +282,7 @@ class StayInRegion extends GoalAction {
 
 class AvoidOthers extends GoalAction {
 	attr double clearance;
+	attr boolean advancedAvoidance;
 }
 
 class DiscoverObjects extends GoalAction {

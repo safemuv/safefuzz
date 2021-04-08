@@ -7,7 +7,7 @@ public class HelmBehaviourWaypoint extends MOOSBehaviour {
 	public HelmBehaviourWaypoint(MOOSProcess parent, String vehicleName, Point startPos, double speed, double radius, double nm_radius) {
 		super("BHV_Waypoint", parent);
 		setProperty("name", "waypt_return");
-		setProperty("pwt", 100);
+		//setProperty("pwt", 100);
 		// TODO: Waypoints should be more general than just returning!
 		setProperty("condition", "MODE==RETURNING");
 		setProperty("updates", "RETURN_UPDATES");

@@ -22,7 +22,6 @@ import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
-import utils.ExptHelper;
 
 public class RepeatedRunner {
 	private static final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
@@ -39,8 +38,11 @@ public class RepeatedRunner {
 				if (file_opt.isPresent()) {
 					String file = file_opt.get();
 					modelLoader.executeEGL(file, EMF_OUTPUT_PATH);
-					// TODO: mission loader - compile it
+					// Mission loader - recompile it
+					System.out.println("Recompiling loader");
 					RunExperiment.compileLoader();
+					Thread.sleep(3000);
+					System.out.println("Loader recompilation done");
 					Mission mission = getCurrentMission();
 					RunExperiment.doExperimentFromFile(mission, exptTag, actuallyRun, timeLimit);
 					eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
@@ -62,6 +64,7 @@ public class RepeatedRunner {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			Thread.sleep(1000);
 		}
 	}
 	
