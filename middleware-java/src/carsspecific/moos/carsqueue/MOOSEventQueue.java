@@ -149,7 +149,26 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 					// Find the corresponding robot object and update its location parameters
 					Robot r = mission.getRobot(entityName);
 					if (r != null) {
+						Point newLocation = new Point(x,y);
+						core.registerEnergyUsage(r, newLocation);
 						r.setPointComponentProperty("location", new Point(x, y));
+						EnergyUpdate eu = core.getRobotEnergyReading();
+						
+						try {
+							String msg = atlasOMapper.serialise(eu);
+
+							if (DEBUG_PRINT_DESERIALISED_MSGS) {
+								System.out.println("DEBUG: serialised message " + msg);
+							}
+							outputToCI.sendMessage(msg);
+						} catch (JsonProcessingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (JMSException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
 					} else {
 						Computer c = mission.getComputer(entityName);
 						if (c != null) {

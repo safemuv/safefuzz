@@ -176,4 +176,19 @@ public abstract class ATLASCore {
 	public double getTimeLimit() {
 		return timeLimit;
 	}
+
+	public void registerEnergyUsage(Robot r, Point newLocation) {
+		
+	}
+
+	public EnergyUpdate getRobotEnergyReading() {
+
+		return null;
+	}
+	
+	public void setupEnergyOnRobots() {
+		for (Robot r : mission.getAllRobots()) {
+			r.setupRobotEnergy();
+		}
+	}
 }

@@ -5,10 +5,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import atlassharedclasses.Point;
+
 public class Robot extends Component {
+	private static final boolean ROBOT_ENERGY_DEBUGGING = false;
 	private String robotname;
 	private VehicleType vtype;
 	private List<Subcomponent> contains = new ArrayList<Subcomponent>();
+	
+	private double currentEnergy = 0.0;
+	private double startingEnergy = 0.0;
 	
 	public Robot(String robotname) {
 		this.robotname = robotname;
@@ -57,6 +63,14 @@ public class Robot extends Component {
 			return Optional.of((MotionSource)mss.get(0));
 		} else return Optional.empty();
 	}
+	
+	public List<Battery> getBatteries() {
+		List<Battery> mss = contains.stream()
+				.map(sc -> (Battery)sc)
+				.filter(sc -> (Battery)sc instanceof Battery)
+				.collect(Collectors.toList());
+		return mss;
+	}
 
 	public Optional<Sensor> getFirstSensor() {
 		List<Sensor> sensors = getAllSensors();
@@ -65,5 +79,46 @@ public class Robot extends Component {
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	public void setupRobotEnergy() {
+		// Enumerate all the Battery devices for the robot
+		for (Battery b : getBatteries()) {
+			currentEnergy += b.getMaxEnergy();
+			startingEnergy += b.getMaxEnergy();
+		}
+	}
+	
+	public void registerEnergyUsage(Point newLocation) {
+		// Get the current location and the MotionSource
+		Optional<MotionSource> ms_o = getMotionSource();
+		if (ms_o.isPresent()) {
+			try {
+				Point currentLocation = getPointComponentProperty("location");
+				double distanceTravelled = currentLocation.distanceTo(newLocation);
+				MotionSource ms = ms_o.get();
+				double energyConsumed = ms.getEnergyPerDistance() * distanceTravelled;
+				currentEnergy -= energyConsumed;
+				if (ROBOT_ENERGY_DEBUGGING) {
+					System.out.println("Robot " + getName() + " distanceTravelled = " + distanceTravelled +",energyConsumed = " + energyConsumed + ",currentEnergy = " + currentEnergy);
+				}
+				
+			} catch (MissingProperty e) {
+				System.out.println("Missing properties in registerEnergyUsage - location for robot " + getName());
+				e.printStackTrace();
+			}
+		
+		} else {
+			System.out.println("No Motion source - energy update ignored");
+		}
+	}
+	
+	public double getEnergyProportionRemaining() {
+		return ((double)currentEnergy) / ((double)startingEnergy);
+	}
+
+	public void depleteEnergy(double fixedEnergyLoss) {
+		currentEnergy -= fixedEnergyLoss;
+		System.out.println("depleteEnergy: robot " + getName() + " experienced energy loss of " + fixedEnergyLoss + ",currentEnergy = " + currentEnergy);
 	}
 }

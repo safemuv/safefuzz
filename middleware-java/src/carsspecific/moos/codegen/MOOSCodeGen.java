@@ -21,8 +21,6 @@ import atlassharedclasses.Region;
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 
-// TODO: maybe move to MOOSSimulation?
-
 public class MOOSCodeGen extends CARSCodeGen {
 	// TODO: how to specify the sensor behaviour
 	public MOOSCodeGen(Mission m, Optional<FuzzingEngine> fe_o) {

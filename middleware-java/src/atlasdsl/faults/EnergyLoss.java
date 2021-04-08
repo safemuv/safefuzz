@@ -2,11 +2,10 @@ package atlasdsl.faults;
 
 import java.util.Optional;
 
-import atlasdsl.Battery;
-import atlasdsl.Component;
-import atlasdsl.InvalidComponentType;
+import atlasdsl.*;
 import middleware.core.ATLASCore;
 
+// TODO: need to change this to refer to the parent Robot
 public class EnergyLoss extends ComponentImpact {
 	private int fixedEnergyLoss;
 	
@@ -23,7 +22,11 @@ public class EnergyLoss extends ComponentImpact {
 	
 	public void immediateEffects(ATLASCore core, Optional<String> additionalData) {
 		Battery b = (Battery)affectedComponent;
-		b.depleteEnergy(fixedEnergyLoss);
+		
+		if (b.getParent() instanceof Robot) {
+			Robot r = (Robot)b.getParent();
+			r.depleteEnergy(fixedEnergyLoss);
+		}
 	}
 
 	public void completionEffects(ATLASCore core, Optional<String> additionalData) {

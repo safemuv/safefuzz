@@ -5,7 +5,7 @@ public class HelmBehaviourStationKeep extends MOOSBehaviour {
 		super("BHV_StationKeep", parent);
 		// TODO: pull out these radii properties to the constructor
 		setProperty("name", "station-keep");
-		setProperty("pwt", 100);
+		//setProperty("pwt", 100);
 		//setProperty("condition", "MODE==STATION_KEEPING");
 		setProperty("inner_radius", 5);
 		setProperty("outer_radius", 10);

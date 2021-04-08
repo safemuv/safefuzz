@@ -40,6 +40,10 @@ public class HelmBehaviourAvoidance extends MOOSBehaviour {
 		this(parent, vehicleName, priority, AvoidanceBehaviourVersion.STANDARD);
 	}
 	
+	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName) {
+		this(parent, vehicleName, DEFAULT_PRIORITY_FOR_AVOIDANCE, AvoidanceBehaviourVersion.STANDARD);
+	}
+	
 	public HelmBehaviourAvoidance(MOOSProcess parent, String vehicleName, AvoidanceBehaviourVersion ver) {
 		this(parent, vehicleName, DEFAULT_PRIORITY_FOR_AVOIDANCE, ver);
 	}
