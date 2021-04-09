@@ -52,6 +52,7 @@ public abstract class ATLASCore {
 		queues.add(fromCI);
 		faultGen = new FaultGenerator(this,mission);
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission);
+		setupEnergyOnRobots();
 	}
 	
 	public CARSTranslations getCARSTranslator() {

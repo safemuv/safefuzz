@@ -7,10 +7,10 @@ import atlassharedclasses.*;
 import java.lang.Double;
 import java.lang.String;
 
-class ComputerCIshoreside {
-	static final double TIME_SPENT_VERIFYING = 300;
-	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
-	static Region region2 = new Region(new Point(-75, -100), new Point(-35, -60));
+class ComputerCIshoreside2 {
+	static final double TIME_SPENT_VERIFYING = 150;
+	static Region region1 = new Region(new Point(170, -113), new Point(209, -73));
+	static Region region2 = new Region(new Point(-75, -113), new Point(-35, -73));
 	static Region gildaRegion = region1;
 	static Region henryRegion = region2;
 	
@@ -28,6 +28,7 @@ class ComputerCIshoreside {
 	}
 	
 	public static void init() {
+		System.out.println("ComputerCIShoreside 2 ---------------------------------");
 		API.startVehicle("gilda");
 		API.startVehicle("henry");
 		setVehicleRegions();
@@ -54,6 +55,6 @@ class ComputerCIshoreside {
 	}
 	
 	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
-		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
+		System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
 }

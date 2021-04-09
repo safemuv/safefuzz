@@ -81,8 +81,8 @@ public class Robot extends Component {
 	
 	public List<Battery> getBatteries() {
 		List<Battery> mss = contains.stream()
+				.filter(sc -> sc instanceof Battery)
 				.map(sc -> (Battery)sc)
-				.filter(sc -> (Battery)sc instanceof Battery)
 				.collect(Collectors.toList());
 		return mss;
 	}
@@ -101,6 +101,7 @@ public class Robot extends Component {
 		for (Battery b : getBatteries()) {
 			currentEnergy += b.getMaxEnergy();
 			startingEnergy += b.getMaxEnergy();
+			System.out.println("Robot " + getName() + " found battery of capacity " + b.getMaxEnergy());
 		}
 	}
 	

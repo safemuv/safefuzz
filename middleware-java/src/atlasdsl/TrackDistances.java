@@ -48,6 +48,8 @@ public class TrackDistances extends GoalAction {
 	protected Map<EnvironmentalObject, Double> objectDistances = new HashMap<EnvironmentalObject, Double>();
 	protected Map<EnvironmentalObject, Double> sensorWorkingDistances = new HashMap<EnvironmentalObject, Double>();
 	
+	protected Map<String,Double> robotEnergy = new HashMap<String,Double>();
+	
 	protected Map<String, Geometry> obstacleGeometry = new HashMap<String, Geometry>();
 	protected Map<String, HashMap<String,CollisionRecord>> collisions  = new HashMap<String,HashMap<String,CollisionRecord>>();
 	
@@ -122,6 +124,18 @@ public class TrackDistances extends GoalAction {
 	private void writeResultsOut() {
 		writtenYet = true;
 		try {
+			FileWriter output = new FileWriter("logs/robotEnergyAtEnd.log");
+			for (Map.Entry<String, Double> eo_d : robotEnergy.entrySet()) {
+				String robotName = eo_d.getKey();
+				double energy = eo_d.getValue();				
+				output.write(robotName + "," + energy + "\n");
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			FileWriter output = new FileWriter("logs/objectPositions.log");
 			for (Map.Entry<EnvironmentalObject, Double> eo_d : objectDistances.entrySet()) {
 				EnvironmentalObject eo = eo_d.getKey();
@@ -169,8 +183,13 @@ public class TrackDistances extends GoalAction {
 	}
 
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
-		// If completion time is exceeded, write the results file
 		double time = core.getTime();
+		
+		for (Robot r : mission.getAllRobots()) {
+			robotEnergy.put(r.getName(), r.getEnergyRemaining());
+		}
+
+		// If completion time is exceeded, write the results file
 		if ((time > completionTime) && !writtenYet) {
 			writeResultsOut();
 			return Optional.empty();
