@@ -27,14 +27,7 @@ public class ATLASSharedResult {
 			return Optional.of((GPSPositionReading)contents);
 		} else return Optional.empty();
 	}
-	
-	// TODO: remove SonarDetection when the sensor types are fully
-	// generalised, replace with SensorDetection
-	//public Optional<SonarDetection> getSonarDetection() {
-//		if (contentsClass == SonarDetection.class) {
-			//return Optional.of((SonarDetection)contents);
-		//} else return Optional.empty();
-	//}
+
 	
 	public Optional<SensorDetection> getSensorDetection() {
 		if (contentsClass == SensorDetection.class) {
@@ -51,6 +44,12 @@ public class ATLASSharedResult {
 	public Optional<ATLASTimeUpdate> getATLASTimeUpdate() {
 		if (contentsClass == ATLASTimeUpdate.class) {
 			return Optional.of((ATLASTimeUpdate)contents);
+		} else return Optional.empty();
+	}
+	
+	public Optional<EnergyUpdate> getEnergyUpdate() {
+		if (contentsClass == EnergyUpdate.class) {
+			return Optional.of((EnergyUpdate)contents);
 		} else return Optional.empty();
 	}
 }

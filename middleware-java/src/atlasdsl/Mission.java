@@ -19,6 +19,7 @@ public class Mission {
 	private Map<String,Region> regions = new LinkedHashMap<String,Region>();
 	private Map<Integer,EnvironmentalObject> objects = new LinkedHashMap<Integer,EnvironmentalObject>();
 	private Map<String,EnvironmentalObstacle> obstacles = new LinkedHashMap<String,EnvironmentalObstacle>();
+	private Region obstacleRegion;
 	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
 	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
 	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
@@ -82,6 +83,7 @@ public class Mission {
 	
 	public void addRobot(Robot r) {
 		robots.put(r.getName(), r);
+		r.checkPropertiesAndSetupState();
 	}
 	
 	public void addMessage(Message m) {
@@ -193,5 +195,17 @@ public class Mission {
 
 	public Goal getGoalByName(String name) {
 		return goals.get(name);
+	}
+
+	public boolean hasEnvObjects() {
+		return objects.size() > 0;
+	}
+	
+	public void setObstacleRegion(Region r) {
+		obstacleRegion = r;
+	}
+	
+	public Region getObstacleRegion() {
+		return obstacleRegion;
 	}
 }

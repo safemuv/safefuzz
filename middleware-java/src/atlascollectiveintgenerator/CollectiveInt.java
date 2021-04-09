@@ -4,6 +4,7 @@ import atlasdsl.loader.*;
 import atlascollectiveint.api.*;
 import atlassharedclasses.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,8 +19,9 @@ import atlasdsl.*;
 
 public class CollectiveInt {
 	private Mission mission;
+	protected Class<?> ciClass;
+	//protected Object ciInstance;
 	
-	// TODO: better way to handle CI time. We cannot have multiple CI processes here? 
 	protected static double timeNow = 0.0;
 	
 	public static double getTimeNow() {
@@ -30,8 +32,13 @@ public class CollectiveInt {
 	protected HashMap<String, CollectiveIntActiveMQProducer> moosProducers = new LinkedHashMap<String, CollectiveIntActiveMQProducer>();
 	protected HashMap<String, Timer> timers = new LinkedHashMap<String,Timer>();
 	
+	public CollectiveInt(String cIClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		ciClass = Class.forName(cIClassName);
+		System.out.println("ciClass = " + ciClass);
+		//ciInstance = ciClass.getDeclaredConstructor().newInstance();
+	}
+	
 	protected void handleMessage(ATLASSharedResult a) {
-		
 		if (a.getContentsClass() == ATLASTimeUpdate.class) {
 			Optional<ATLASTimeUpdate> a_o = a.getATLASTimeUpdate();
 			if (a_o.isPresent()) {
@@ -66,7 +73,6 @@ public class CollectiveInt {
 	protected void updateTime(double newTime) {
 		if (timeNow < newTime) {
 			timeNow = newTime;
-			//System.out.println("time = " + timeNow + "-" + timers.size() + " timers registered");
 		}
 	}
 

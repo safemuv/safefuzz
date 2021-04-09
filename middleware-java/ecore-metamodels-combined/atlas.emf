@@ -33,6 +33,10 @@ class EnvironmentalObject extends Point {
 	attr int label;
 }
 
+class EnvironmentalObstacleRegion {
+	val Rectangle region;
+}
+
 class EnvironmentalObstacle {
 	val Polygon poly;
 	attr String label;
@@ -353,6 +357,7 @@ class Mission {
 	val Goal[*] goals;
 	val EnvironmentalObject[*] objects;
 	val EnvironmentalObstacle[*] obstacles;
+	val EnvironmentalObstacleRegion obstacleRegion;
 	val Message[*] messages;
 	val Fault[*] faults;
 	attr double endTime;

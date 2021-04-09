@@ -178,12 +178,11 @@ public abstract class ATLASCore {
 	}
 
 	public void registerEnergyUsage(Robot r, Point newLocation) {
-		
+		r.registerEnergyUsage(newLocation);
 	}
 
-	public EnergyUpdate getRobotEnergyReading() {
-
-		return null;
+	public double getRobotEnergyRemaining(Robot r) {
+		return r.getEnergyRemaining();
 	}
 	
 	public void setupEnergyOnRobots() {

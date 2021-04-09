@@ -138,6 +138,11 @@ public class MOOSCodeGen extends CARSCodeGen {
 					rprocess.addProcess(sonar_proc);
 					shoresideSonar = true;
 				}
+				
+				// If there are no objects, there is no need for a hazard layout
+				//if (!mission.hasEnvObjects()) {
+//					shoresideSonar = false;
+				//}
 
 				// If there are any environmental obstacles, then the shoreside needs to include
 				// uFldObstacleSim
@@ -151,13 +156,16 @@ public class MOOSCodeGen extends CARSCodeGen {
 					MOOSBehaviour avoidBHV = new HelmBehaviourAvoidObstacles(helmProcess, rname);
 					helmProcess.addBehaviour(avoidBHV);
 					rprocess.addProcess(pObstacleMgr);
+					
+					// Fix for code generation: Need to include the bridging for variable
+					// VEHICLE_CONNECT in the generated code
+					MOOSProcess pNodeBroker = rprocess.getProcess("uFldNodeBroker");
+					pNodeBroker.setProperty("BRIDGE", "src=VEHICLE_CONNECT");
 				}
 			}
 
 			if (needShoresideObstacles) {
-				// TODO: specify this region in the model
-				Region r = new Region(new Point(-150.0, -260.0), new Point(245.0, 20.0));
-				System.out.println("TEST: using a fixed region in obstacle code generation");
+				Region r = mission.getObstacleRegion();
 				UFldObstacleSim uFldObstacleSim = new UFldObstacleSim(shoreside, r);
 				for (EnvironmentalObstacle eo : mission.getObstacles().values()) {
 					uFldObstacleSim.addDetectionObject(eo);

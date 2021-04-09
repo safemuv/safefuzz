@@ -16,9 +16,24 @@ public class Robot extends Component {
 	private double currentEnergy = 0.0;
 	private double startingEnergy = 0.0;
 	
+	private void setInitialLocation() throws MissingProperty {
+		// Need to set the initial location property for the robot from startLocation
+		// Otherwise the energy updates will fail
+		Point loc = getPointComponentProperty("startLocation");
+		setPointComponentProperty("location", new Point(loc.getX(), loc.getY()));
+	}
+	
 	public Robot(String robotname) {
 		this.robotname = robotname;
 		this.vtype = VehicleType.KAYAK;
+	}
+	
+	public void checkPropertiesAndSetupState() {
+		try {
+			setInitialLocation();
+		} catch (MissingProperty e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getName() {
@@ -115,6 +130,10 @@ public class Robot extends Component {
 	
 	public double getEnergyProportionRemaining() {
 		return ((double)currentEnergy) / ((double)startingEnergy);
+	}
+	
+	public double getEnergyRemaining() {
+		return currentEnergy;
 	}
 
 	public void depleteEnergy(double fixedEnergyLoss) {

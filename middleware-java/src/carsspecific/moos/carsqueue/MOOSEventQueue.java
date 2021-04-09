@@ -152,8 +152,9 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 						Point newLocation = new Point(x,y);
 						core.registerEnergyUsage(r, newLocation);
 						r.setPointComponentProperty("location", new Point(x, y));
-						EnergyUpdate eu = core.getRobotEnergyReading();
 						
+						// Send out an energy update to the CI
+						EnergyUpdate eu = new EnergyUpdate(core.getRobotEnergyRemaining(r), r.getName());
 						try {
 							String msg = atlasOMapper.serialise(eu);
 

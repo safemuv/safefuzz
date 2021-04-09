@@ -13,14 +13,11 @@
       <detections>MALICIOUS</detections>
       <detections>NORMAL</detections>
     </subcomponents>
-    <subcomponents xsi:type="atlas:MotionSource" xmi:id="_o5ESEHgDEeq8sKdfSq6qug" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
     <subcomponents xsi:type="atlas:Sensor" xmi:id="_zjBP4H2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
       <detections>POS</detections>
     </subcomponents>
+    <subcomponents xsi:type="atlas:MotionSource" xmi:id="_3M7fYJjAEeupvP-LTyWrLg" energyPerDistance="1.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_4ysjUJjAEeupvP-LTyWrLg" totalEnergy="10000"/>
   </robots>
   <robots xmi:id="_gx4mIHP-Eeqc6cv9mBHIKw" name="henry">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_C4ey0HQREeqc6cv9mBHIKw" name="startLocation">
@@ -38,11 +35,8 @@
     <subcomponents xsi:type="atlas:Sensor" xmi:id="_2LNaIH2AEeqRdcV7Ed4ZKQ" type="GPS_POSITION">
       <detections>POS</detections>
     </subcomponents>
-    <subcomponents xsi:type="atlas:MotionSource" xmi:id="_txN7cH2jEeqRdcV7Ed4ZKQ" maxSpeed="5.0">
-      <params>HEADING</params>
-      <params>SPEED</params>
-      <params>COURSE</params>
-    </subcomponents>
+    <subcomponents xsi:type="atlas:MotionSource" xmi:id="_68QQ0JjAEeupvP-LTyWrLg" energyPerDistance="1.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_8Is10JjAEeupvP-LTyWrLg" totalEnergy="10000"/>
   </robots>
   <computers xmi:id="_fXV6wHP-Eeqc6cv9mBHIKw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
@@ -127,4 +121,10 @@
       <points xmi:id="_0OihOReTEeuAQ6XAB6J9bg" x="100.0" y="-38.0"/>
     </poly>
   </obstacles>
+  <obstacleRegion xmi:id="_qe5KsJi5EeupvP-LTyWrLg">
+    <region xmi:id="_rks8MJi5EeupvP-LTyWrLg">
+      <corner1 xmi:id="_DW6NIJi6EeupvP-LTyWrLg" x="30.0" y="-140.0"/>
+      <corner2 xmi:id="_DvGDoJi6EeupvP-LTyWrLg" x="120.0" y="-20.0"/>
+    </region>
+  </obstacleRegion>
 </atlas:Mission>

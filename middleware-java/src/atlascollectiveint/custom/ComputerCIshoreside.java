@@ -8,7 +8,7 @@ import java.lang.Double;
 import java.lang.String;
 
 class ComputerCIshoreside {
-	static final double TIME_SPENT_VERIFYING = 500;
+	static final double TIME_SPENT_VERIFYING = 150;
 	static Region region1 = new Region(new Point(170, -113), new Point(209, -73));
 	static Region region2 = new Region(new Point(-75, -113), new Point(-35, -73));
 	static Region gildaRegion = region1;
