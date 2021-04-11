@@ -18,4 +18,6 @@ public abstract class CARSTranslations {
 		String value = event.getValue();
 		sendCARSUpdate(vehicleName, key, value);
 	}
+	
+	public abstract void returnHome(String robotName);
 }

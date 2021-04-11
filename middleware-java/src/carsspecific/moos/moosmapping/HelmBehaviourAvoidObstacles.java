@@ -7,7 +7,7 @@ public class HelmBehaviourAvoidObstacles extends MOOSBehaviour {
 		super("BHV_AvoidObstacle", parent);
 		setProperty("name", "avd_obstacles_");
 		setProperty("pwt", priority);
-		setProperty("condition", "(DEPLOY = true) and (CONSTHEADING = false)");
+		setProperty("condition", "(AVOID = true) and (CONSTHEADING = false)");
 		setProperty("templating", "spawn");
 		setProperty("updates", "OBSTACLE_ALERT");
 		setProperty("allowable_ttc", 5);

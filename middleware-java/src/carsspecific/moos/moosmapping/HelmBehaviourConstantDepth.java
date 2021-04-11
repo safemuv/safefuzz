@@ -5,7 +5,7 @@ public class HelmBehaviourConstantDepth extends MOOSBehaviour {
 		super("BHV_ConstantDepth", parent);
 		setProperty("name", "constdepth");
 		//setProperty("pwt", 100);
-		setProperty("condition", "CONSTDEPTH==true");
+		setProperty("condition", "(CONSTDEPTH==true)");
 		setProperty("updates", "UP_DEPTH"); 
 		setProperty("depth", depth);
 		setProperty("duration", "no-time-limit");

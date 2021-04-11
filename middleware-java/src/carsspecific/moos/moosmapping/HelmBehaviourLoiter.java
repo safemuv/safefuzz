@@ -7,7 +7,7 @@ public class HelmBehaviourLoiter extends MOOSBehaviour {
 		super("BHV_Loiter", parent);
 		setProperty("name", "loiter");
 		//setProperty("pwt", 100);
-		setProperty("condition", "MODE==LOITERING");
+		setProperty("condition", "false");
 		setProperty("updates", "UP_LOITER");
 		setProperty("runflag", "VEHICLE_UNDERWAY = TRUE");
 		setProperty("endflag", "VEHICLE_UNDERWAY = FALSE");

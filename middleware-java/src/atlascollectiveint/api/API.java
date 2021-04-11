@@ -80,4 +80,10 @@ public class API {
 		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
 		prod.send(cmd, robotName);
 	}
+	
+	public static void returnHome(String robotName) {
+		BehaviourCommand cmd = new ReturnHome();
+		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
+		prod.send(cmd, robotName);
+	}
 }

@@ -5,7 +5,7 @@ public class HelmBehaviourConstantHeading extends MOOSBehaviour {
 		super("BHV_ConstantHeading", parent);
 		setProperty("name", "constheading_");
 		//setProperty("pwt", 100);
-		setProperty("condition", "MODE==CONSTHEADING");
+		setProperty("condition", "(CONSTHEADING=true)");
 		setProperty("updates", "UP_HEADING");
 		setProperty("heading", 0.0);
 		setProperty("duration", "no-time-limit");

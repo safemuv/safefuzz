@@ -38,40 +38,14 @@ public class PHelmIvpProcess extends MOOSProcess {
 	}
 	
 	private void setupBehaviourVars() {
-
 		moosBehaviourInitVals.put("DEPLOY", true);
-		moosBehaviourInitVals.put("RETURN", false);
+		moosBehaviourInitVals.put("WAYPOINT", false);
 		moosBehaviourInitVals.put("STATION_KEEP", false);
-		moosBehaviourInitVals.put("LOITER", true);
+		//moosBehaviourInitVals.put("LOITER", true);
 		moosBehaviourInitVals.put("CONSTHEADING", false);
 		moosBehaviourInitVals.put("CONSTDEPTH", true);
-		
 		// TODO: this should be conditionally set if an avoidance goal is present
 		moosBehaviourInitVals.put("AVOID", true);
-				
-		MOOSSetModeDetails msd1 = new MOOSSetModeDetails("ACTIVE", "INACTIVE");
-		msd1.setProperty("DEPLOY", true);
-		setModeProperties.put("ACTIVE", msd1);
-		
-		MOOSSetModeDetails msd2 = new MOOSSetModeDetails("STATION-KEEPING");
-		msd2.setProperty("MODE", "ACTIVE");
-		msd2.setProperty("STATION_KEEP", true);
-		setModeProperties.put("STATION-KEEPING", msd2);
-		
-		MOOSSetModeDetails msd3 = new MOOSSetModeDetails("RETURNING");
-		msd3.setProperty("MODE", "ACTIVE");
-		msd3.setProperty("RETURN", true);
-		setModeProperties.put("RETURNING", msd3);
-		
-		MOOSSetModeDetails msd4 = new MOOSSetModeDetails("LOITERING");
-		msd4.setProperty("MODE", "ACTIVE");
-		msd4.setProperty("LOITER", true);
-		setModeProperties.put("LOITERING", msd4);
-		
-		MOOSSetModeDetails msd5 = new MOOSSetModeDetails("CONSTHEADING");
-		msd5.setProperty("MODE", "ACTIVE");
-		msd5.setProperty("CONSTHEADING", true);
-		setModeProperties.put("CONSTHEADING", msd5);
 	}
 	
 	private void setupBehaviours(String vehicleName, Point startPos, double maxDepth) {
@@ -85,10 +59,10 @@ public class PHelmIvpProcess extends MOOSProcess {
 		double waypointRadius = 3.0;
 		double waypointNMRadius = 15.0;
 		
-		addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
+		//addBehaviour(new HelmBehaviourLoiter(this, vehicleName, startPosAsString, loiterSpeed, loiterRadius, loiterNMRadius));
 		addBehaviour(new HelmBehaviourAvoidance(this, vehicleName));
 		// StationKeeping is not needed for current scenario
-		//addBehaviour(new HelmBehaviourStationKeep(this));
+		addBehaviour(new HelmBehaviourStationKeep(this, startPos));
 		addBehaviour(new HelmBehaviourWaypoint(this, vehicleName, startPos, waypointSpeed, waypointRadius, waypointNMRadius));
 		addBehaviour(new HelmBehaviourConstantHeading(this));
 		addBehaviour(new HelmBehaviourConstantSpeed(this));

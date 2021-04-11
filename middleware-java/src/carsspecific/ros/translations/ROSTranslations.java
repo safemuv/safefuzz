@@ -28,4 +28,8 @@ public class ROSTranslations extends CARSTranslations {
 	public void setCoordinates(String robotName, List<Point> coords) {
 		System.out.println("ROSTranslations: setCoordinates unimplemented");	
 	}
+
+	public void returnHome(String robotName) {
+		System.out.println("ROSTranslations: setCoordinates unimplemented");			
+	}
 }

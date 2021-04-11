@@ -1,4 +1,4 @@
-package atlascollectiveint.custom.backup;
+package atlascollectiveint.expt.casestudy1;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class ComputerCIshoreside {
+public class ComputerCIshoreside_standard {
 
 	// The shoreside CI's copy of the robot information
 	private static List<String> sweepRobots = new ArrayList<String>();

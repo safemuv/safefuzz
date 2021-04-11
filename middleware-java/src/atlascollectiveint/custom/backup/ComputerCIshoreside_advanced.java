@@ -366,4 +366,8 @@ class ComputerCIshoreside_advanced {
 		CollectiveIntLog.logCI(
 				"Camera detection of object ID " + objectID + "at location" + " type " + detectionType + robotName);
 	}
+	
+	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
+		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
+	}
 }

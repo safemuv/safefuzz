@@ -77,6 +77,10 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			System.out.println("CIEventQueue - ActivateBehaviour received");
 		}
 		
+		if (ciCmd instanceof ReturnHome) {
+			core.getCARSTranslator().returnHome(robotName);
+		}
+		
 		if (ciCmd instanceof StartVehicle) {
 			StartVehicle startCmd = (StartVehicle)ciCmd;
 			// TODO: Check for any fault impacting the command here?
