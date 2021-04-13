@@ -1,7 +1,7 @@
 package ciexperiment.systematic;
 
 import java.util.HashMap;
-import atlasdsl.Mission;
+import java.util.Optional;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 
 public abstract class ExptParams {
@@ -26,5 +26,5 @@ public abstract class ExptParams {
 		return solutionLog;
 	}
 	
-	public abstract Mission getCurrentMissionObject();
+	public abstract Optional<String> getNextFileName();
 }

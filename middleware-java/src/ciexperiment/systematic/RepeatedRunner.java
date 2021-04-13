@@ -3,7 +3,6 @@ package ciexperiment.systematic;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,20 +24,24 @@ import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
 	private static final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
+	
+	public static ModelsTransformer modelTransformer = new ModelsTransformer();
+	public static ModelEGLExecutor modelExecutor = new ModelEGLExecutor();
 
 	public static void runFixedCIExpt(ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit) throws InterruptedException, IOException {
 		
-		GenerateModelsExecutor modelLoader = new GenerateModelsExecutor();
+		
 		// The core logic for the loop
 		while (!eparams.completed()) {
 			eparams.printState();
 			// Modify the mission from the parameters - and load the modified mission file here
 			try {
-				Optional<String> file_opt = modelLoader.transformModel("test-experiment-models/mission-basis.model");
-				if (file_opt.isPresent()) {
-					String file = file_opt.get();
-					modelLoader.executeEGL(file, EMF_OUTPUT_PATH);
+				
+				Optional<String> nextFile_o = eparams.getNextFileName();
+				if (nextFile_o.isPresent()) {
+					String file = nextFile_o.get();
 					// Mission loader - recompile it
+					modelExecutor.executeEGL(file, EMF_OUTPUT_PATH);
 					System.out.println("Recompiling loader");
 					RunExperiment.compileLoader();
 					Thread.sleep(3000);
@@ -48,7 +51,7 @@ public class RepeatedRunner {
 					eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
 					eparams.advance();
 				}
-			} catch (InvocationTargetException | InterruptedException e) {
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (EolModelLoadingException e) {
@@ -84,7 +87,9 @@ public class RepeatedRunner {
 			MetricsProcessing mp = new MetricsProcessing(baseMission, metricList, tempLog);
 			String resFileName = "ciexpt-"+fileTag+".res";
 			// TODO: register the CIExpt model content in the experiment params
-			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, baseMission, resFileName);
+			
+			List<String> missionFiles = modelTransformer.transformModel("experiment-models/casestudy2/mission-basis.model");
+			ExptParams ep = new RunOnSetOfModels(mp, runTime, missionFiles, resFileName);
 			runFixedCIExpt(ep, resFileName, true, runTime);
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {
@@ -94,6 +99,9 @@ public class RepeatedRunner {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (InvalidFaultFormat e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

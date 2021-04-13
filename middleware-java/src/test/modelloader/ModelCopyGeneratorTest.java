@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.eclipse.epsilon.egl.exceptions.EglRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 
-import ciexperiment.systematic.GenerateModelsExecutor;
+import ciexperiment.systematic.backup.GenerateModelsExecutor;
 
 public class ModelCopyGeneratorTest {
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {

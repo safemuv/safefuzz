@@ -119,6 +119,9 @@ public class MOOSCodeGen extends CARSCodeGen {
 				if ((s = (r.getSensor(SensorType.SONAR))) != null) {
 					double sensorWidth = s.getDoubleComponentProperty("swathWidth");
 					double detectionProb = s.getDoubleComponentProperty("detectionProb");
+					
+					// TODO: support multiple sensors with a numeric id for name
+					
 					MOOSProcess sonar_proc = new UFldHazardMgrProcess(rprocess, r.getName(), sensorWidth,
 							detectionProb);
 					rprocess.addProcess(sonar_proc);

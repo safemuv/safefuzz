@@ -8,7 +8,9 @@ import java.lang.Double;
 import java.lang.String;
 
 public class ComputerCIshoreside_standard {
-	static final double TIME_SPENT_VERIFYING = 300;
+	
+	static final double TIME_BEFORE_SWITCHING = 150;
+	
 	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
 	static Region region2 = new Region(new Point(-75, -100), new Point(-35, -60));
 	static Region gildaRegion = region1;
@@ -32,7 +34,7 @@ public class ComputerCIshoreside_standard {
 		API.startVehicle("henry");
 		setVehicleRegions();
 		
-		PeriodicTimer tSwitchRegion = new PeriodicTimer(TIME_SPENT_VERIFYING, (t -> {
+		PeriodicTimer tSwitchRegion = new PeriodicTimer(TIME_BEFORE_SWITCHING, (t -> {
 			alternateRegions();
 			setVehicleRegions();
 		}));

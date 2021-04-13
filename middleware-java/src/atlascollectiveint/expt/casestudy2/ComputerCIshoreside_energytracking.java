@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class ComputerCIshoreside_energytracking {
 	
-	static final double TIME_SPENT_VERIFYING = 300;
-	static final double ENERGY_CRITICAL_LEVEL = 8000.0;
+	static final double TIME_BEFORE_SWITCHING = 300;
+	static final double ENERGY_CRITICAL_LEVEL = 1000.0;
 	
 	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
 	static Region region2 = new Region(new Point(-75, -100), new Point(-35, -60));
@@ -39,7 +39,7 @@ public class ComputerCIshoreside_energytracking {
 		API.startVehicle("henry");
 		setVehicleRegions();
 		
-		PeriodicTimer tSwitchRegion = new PeriodicTimer(TIME_SPENT_VERIFYING, (t -> {
+		PeriodicTimer tSwitchRegion = new PeriodicTimer(TIME_BEFORE_SWITCHING, (t -> {
 			alternateRegions();
 			setVehicleRegions();
 		}));
@@ -63,8 +63,8 @@ public class ComputerCIshoreside_energytracking {
 	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
 		if (!missionEnded.containsKey(robotName)) {
 			if (energyUpdate.getEnergyValue() < ENERGY_CRITICAL_LEVEL) {
-				CollectiveIntLog.logCI("Robot name energy is " + energyUpdate.getEnergyValue() + " returning home");
-				System.out.println("Robot name energy is " + energyUpdate.getEnergyValue() + " returning home");
+				CollectiveIntLog.logCI("Robot name " + robotName + ": energy is " + energyUpdate.getEnergyValue() + " returning home");
+				System.out.println("Robot name " + robotName + " energy is " + energyUpdate.getEnergyValue() + " returning home");
 				API.returnHome(robotName);
 				missionEnded.put(robotName, true);
 			}
