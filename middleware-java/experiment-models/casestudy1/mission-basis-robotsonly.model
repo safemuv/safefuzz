@@ -2,10 +2,6 @@
 <atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
   <mutProgram xmi:id="_xHiP8JxZEeuXP_f35b_qpg">
     <mutationGroups xmi:id="_7HP2YJzSEeun4sDYCEayRA" minRequiredFromGroup="2" maxRequiredFromGroup="4" members="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
-    <mutationGroups xmi:id="_U5CeAJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_LLIJtZzTEeun4sDYCEayRA _LLIJuJzTEeun4sDYCEayRA"/>
-    <mutationGroups xmi:id="_Xw-7gJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_I_DTtZzTEeun4sDYCEayRA _I_DTuJzTEeun4sDYCEayRA"/>
-    <mutationGroups xmi:id="_akascJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_O1hYQJxZEeuXP_f35b_qpg _73tjEJxbEeuni_WJaXBVWw"/>
-    <mutationGroups xmi:id="_dpzwEJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_KOUjNZzTEeun4sDYCEayRA _KOUjOJzTEeun4sDYCEayRA"/>
   </mutProgram>
   <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="gilda" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
@@ -81,7 +77,7 @@
   </goals>
   <goals xmi:id="_iULp4HP_Eeqc6cv9mBHIKw" name="primarySensorSweep">
     <requirements xmi:id="_Lw1mgHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw" participants="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_04o8MHQCEeqc6cv9mBHIKw"/>
     <action xsi:type="atlas:SensorCover" xmi:id="_mTgCUHQDEeqc6cv9mBHIKw" density="10.0" samplesPerUnit="1" collective="true" verificationsMalicious="1" verificationsBenign="2"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_kLrXAHP_Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_eJ7agHQAEeqc6cv9mBHIKw">
@@ -98,7 +94,7 @@
   </goals>
   <goals xmi:id="_D87cEIiOEeqQioZ_JAeWZg" name="findTestObjects">
     <requirements xmi:id="_LL8yQIi0EeqQioZ_JAeWZg" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg" participants="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_tn8sYIi0EeqQioZ_JAeWZg"/>
     <action xsi:type="atlas:DiscoverObjects" xmi:id="_S0efIIiOEeqQioZ_JAeWZg" objects="_DXIVsHRpEeqNXdfjikxLMQ _EPx08HRpEeqNXdfjikxLMQ _D2ADAHRpEeqNXdfjikxLMQ" robotsNeededPerObject="2"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vcl50Ii0EeqQioZ_JAeWZg">
       <staticRegion xmi:id="_wBWMsIi0EeqQioZ_JAeWZg">
@@ -109,7 +105,7 @@
   </goals>
   <goals xmi:id="_aXwhkGmyEeut-7Jtw0RIUA" name="stayInRegion">
     <requirements xmi:id="_pitBwGmyEeut-7Jtw0RIUA" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_cuSUEGmyEeut-7Jtw0RIUA" participants="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_cuSUEGmyEeut-7Jtw0RIUA"/>
     <action xsi:type="atlas:StayInRegion" xmi:id="_b51_YGmyEeut-7Jtw0RIUA"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_gAqDwGmyEeut-7Jtw0RIUA">
       <staticRegion xmi:id="_gkiM4GmyEeut-7Jtw0RIUA">
@@ -120,7 +116,7 @@
   </goals>
   <goals xmi:id="_Zc7K0HrmEeu4teJ7JJepvg" name="trackDistances">
     <requirements xmi:id="_sS9nQHrnEeu4teJ7JJepvg" latestFinishTime="1190.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_mxQSMHrnEeu4teJ7JJepvg" participants="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_mxQSMHrnEeu4teJ7JJepvg"/>
     <action xsi:type="atlas:TrackDistances" xmi:id="_hnXnQHrnEeu4teJ7JJepvg"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_o7vMwHrnEeu4teJ7JJepvg">
       <staticRegion xmi:id="_rNudgHrnEeu4teJ7JJepvg">

@@ -33,7 +33,7 @@
   <computers xmi:id="_vmC9UJyAEeuni_WJaXBVWw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance" priority="100">
     <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_MGfmMJxZEeuXP_f35b_qpg _eGUBwJxZEeuXP_f35b_qpg"/>
     <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="4.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
@@ -44,7 +44,7 @@
   </goals>
   <goals xmi:id="_TppaAAjqEeuL7OuiDbZQfQ" name="trackDistances" priority="100">
     <requirements xmi:id="_WR3ZcAjqEeuL7OuiDbZQfQ" latestFinishTime="1201.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_aknBAAjqEeuL7OuiDbZQfQ"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_aknBAAjqEeuL7OuiDbZQfQ" participants="_MGfmMJxZEeuXP_f35b_qpg _eGUBwJxZEeuXP_f35b_qpg"/>
     <action xsi:type="atlas:TrackDistances" xmi:id="_ubSQgAjqEeuL7OuiDbZQfQ"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_fBfcAAjqEeuL7OuiDbZQfQ">
       <staticRegion xmi:id="_flkZcAjqEeuL7OuiDbZQfQ">
