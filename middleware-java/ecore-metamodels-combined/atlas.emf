@@ -166,7 +166,26 @@ class DoubleProperty extends ComponentProperty {
 
 class Component {
 	// TODO: should have maps here
+	attr String name;
+	attr Boolean mutable = false;
  	val ComponentProperty[] componentProperties;
+ 	val Component[*] subcomponents;
+ }
+
+class MutationProgram {
+	attr MutationAlgorithm mutAlg;
+	val MutationGroup[*] mutationGroups;
+}
+
+class MutationGroup {
+	attr int minRequiredFromGroup = 0;
+	attr int maxRequiredFromGroup = 0;
+	ref Component[*] members;
+}
+
+enum MutationAlgorithm {
+	RANDOM_SEARCH;
+	GA_SEARCH;
 }
 
 class NamedComponent extends Component {
@@ -177,12 +196,10 @@ abstract class Subcomponent extends Component {
  
 }
 
-class Robot extends NamedComponent {
- 	val Subcomponent[0..*]#parent subcomponents;
+class Robot extends Component {
 }
 
-class Computer extends NamedComponent {
- 	val Subcomponent[0..*]#parent subcomponents;
+class Computer extends Component {
 }
 
 enum SensorType {
@@ -344,6 +361,7 @@ class DynamicGoalRegion extends GoalRegion {
 
 class Goal {
 	attr String name;
+	attr int priority;
 	val GoalTemporalConstraints requirements;
 	val GoalParticipants participants;
 	val GoalAction action;
@@ -351,6 +369,7 @@ class Goal {
 }
 
 class Mission {
+	val MutationProgram[1] mutProgram;
 	val Robot[*] robots;
 	val Computer[*] computers;
 	val Region[*] regions;

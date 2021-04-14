@@ -76,7 +76,7 @@ public class RepeatedRunner {
 		return dl.loadMission();
 	}
 
-	public static void runRepeatedCIExperiment(List<Metrics> metricList, String fileTag, int runCount) {
+	public static void runCIExperiment(String sourceModelFile, List<Metrics> metricList, String fileTag, int runCount) {
 		DSLLoader loader = new GeneratedDSLLoader();
 
 		try {
@@ -88,7 +88,12 @@ public class RepeatedRunner {
 			String resFileName = "ciexpt-"+fileTag+".res";
 			// TODO: register the CIExpt model content in the experiment params
 			
-			List<String> missionFiles = modelTransformer.transformModel("experiment-models/casestudy2/mission-basis.model");
+			System.out.println("Model generation beginning for " + sourceModelFile);
+			List<String> missionFiles = modelTransformer.retriveAllModels(sourceModelFile);
+			System.out.println("Model generation completed successfully!");
+			Thread.sleep(10000);
+			
+			
 			ExptParams ep = new RunOnSetOfModels(mp, runTime, missionFiles, resFileName);
 			runFixedCIExpt(ep, resFileName, true, runTime);
 			System.out.println("Done");
@@ -112,6 +117,8 @@ public class RepeatedRunner {
 		l.add(Metrics.OUTSIDE_REGION_COUNT);
 		// TODO: other metrics to track... the total distance robots travel
 		// TODO: track the total cost of the configuration
-		runRepeatedCIExperiment(l, "ciexpt", 200);
+		
+		String sourceModelFile = "experiment-models/casestudy1/mission-basis.model";
+		runCIExperiment(sourceModelFile, l, "ciexpt", 200);
 	}
 }

@@ -40,13 +40,13 @@ import com.google.common.collect.Sets;
 
 public class ModelsTransformer {
 
-	public List<String> transformModel(String sourceModelFileName) throws Exception {
-		List<String> outputFiles = new ArrayList<String>();
+	public ArrayList<String> retriveAllModels(String baseModel) throws Exception {
+
 		ArrayList<String> mmURIS = registerMMs();
 
 		EmfModel sourceModel = new EmfModel();
 		sourceModel.setName("Source");
-		File sourceModelFile = new File(sourceModelFileName);
+		File sourceModelFile = new File(baseModel);
 		sourceModel.setModelFile(sourceModelFile.getAbsolutePath());
 		sourceModel.setMetamodelUris(mmURIS);
 
@@ -60,7 +60,7 @@ public class ModelsTransformer {
 
 		for (EObject obj : sourceModel.getAllOfKind("Component")) {
 			EStructuralFeature mutable = obj.eClass().getEStructuralFeature("mutable");
-			if ((Boolean)obj.eGet(mutable)) {
+			if ((Boolean) obj.eGet(mutable)) {
 				mutableObjects.add(obj);
 			}
 		}
@@ -87,7 +87,7 @@ public class ModelsTransformer {
 				mg.getMemberIds().add(memberId);
 			}
 			allMutationGroupsWithMemberIds.add(mg);
-			
+
 		}
 
 		List<EObject> missions = (List<EObject>) sourceModel.getAllOfType("Mission");
@@ -105,16 +105,17 @@ public class ModelsTransformer {
 //				System.out.println("----");
 
 //				System.out.println("mutableIdsInTheSet: " + mutableIdsInTheSet);
-				
+
 				// Reject if parent not in the set (i.e., is not included in the mutated model)
 //				System.out.println("Mutable Size: " + aSet.size());
 				for (EObject aMutableObjectInTheSet : aSet) {
 					EStructuralFeature objectName = aMutableObjectInTheSet.eClass().getEStructuralFeature("name");
-//					System.out.println("Name: " + aMutableObjectInTheSet.eGet(objectName));
+					System.out.println("Name: " + aMutableObjectInTheSet.eGet(objectName));
 					EObject parent = (EObject) sourceModel.getContainerOf(aMutableObjectInTheSet);
 					String parentId = sourceModel.getElementId(parent);
 //					System.out.println("Parent ID: " + parentId);
-					//FIXME: If parent is not mutable, then sets containing children are rejected. We need to reject if mutable and non-existing in the current set instead.
+					// FIXME: If parent is not mutable, then sets containing children are rejected.
+					// We need to reject if mutable and non-existing in the current set instead.
 					if (parentId.equals(missionId)) {
 //						System.out.println("Top Element");
 					} else if (!mutableIdsInTheSet.contains(parentId)) {
@@ -124,7 +125,7 @@ public class ModelsTransformer {
 					}
 				}
 //				System.out.println("End of Parent Check. Rejected? " + rejected);
-				
+
 				// If not already rejected, check if group rules are violated.
 
 				if (!rejected) {
@@ -135,22 +136,38 @@ public class ModelsTransformer {
 					for (EObject aMutableObjectInTheSet : aSet) {
 						for (MutationGroup mg : allMutationGroupsWithMemberIds) {
 							if (mg.getMemberIds().contains(sourceModel.getElementId(aMutableObjectInTheSet))) {
-								groupIdToCountersMap.put(mg.getGroupID(),groupIdToCountersMap.get(mg.getGroupID()) + 1);
+								groupIdToCountersMap.put(mg.getGroupID(),
+										groupIdToCountersMap.get(mg.getGroupID()) + 1);
 							}
 						}
 
 					}
-					System.out.println("groupIdToCountersMap: " + groupIdToCountersMap);
 					for (MutationGroup mg : allMutationGroupsWithMemberIds) {
 						String mgId = mg.getGroupID();
 						int mgMax = mg.getMaxLimit();
 						int mgMin = mg.getMinLimit();
 						int mgCounter = groupIdToCountersMap.get(mgId);
 						if (mgCounter > mgMax || mgCounter < mgMin) {
-							rejected = true;
+							// Reject if and only if the mutation group violates the limits AND the parent of this group is in the mutated model.
+							// This needs to be done in cases where the lower limit is > 0, but these elements do not appear at all in the mutated model
+							// Which is OK because maybe the parent does not appear at all. Thus we don't want to reject this set completely because it
+							// does not contain e.g. sensors which is ok not to be contained as the parent is not appearing in this mutation.
+							EObject oneChild = (EObject) sourceModel.getElementById(mg.getMemberIds().get(0));
+							EObject parent = oneChild.eContainer();
+							EStructuralFeature childName = oneChild.eClass().getEStructuralFeature("name");
+							EStructuralFeature parentName = parent.eClass().getEStructuralFeature("name");
+							String parentId = sourceModel.getElementId(parent);
+							System.out.println("One Child: " + oneChild.eGet(childName));
+//							System.out.println("The parent: " + parent.eGet(parentName));
+
+							if (aSet.contains(parent) || parentId.equals(missionId)) {
+								System.out.println("Rejected");
+								rejected = true;
+							}
 							break;
 						}
 					}
+					System.out.println("+++++");
 				}
 				if (!rejected) {
 					allAcceptableSets.add(aSet);
@@ -161,6 +178,7 @@ public class ModelsTransformer {
 
 		}
 		System.out.println("allAcceptableSets: " + allAcceptableSets.size());
+		ArrayList<String> allTheCreatedModels = new ArrayList<String>();
 		for (Set<EObject> aSet : allAcceptableSets) {
 			// Copy Model
 			UUID uuid = UUID.randomUUID();
@@ -177,6 +195,7 @@ public class ModelsTransformer {
 			EmfModel targetModel = new EmfModel();
 			targetModel.setName("Target");
 			File targetModelFile = new File(copied.toAbsolutePath().toString());
+			allTheCreatedModels.add(targetModelFile.getAbsolutePath());
 			targetModel.setModelFile(targetModelFile.getAbsolutePath());
 			targetModel.setMetamodelUris(mmURIS);
 			targetModel.setStoredOnDisposal(true);
@@ -186,15 +205,54 @@ public class ModelsTransformer {
 				String id = sourceModel.getElementId(elementToRemove);
 				System.out.println(id);
 				EObject elementFromTarget = (EObject) targetModel.getElementById(id);
-				targetModel.deleteElement(elementFromTarget);
+				if (elementFromTarget != null) {
+					EcoreUtil.delete(elementFromTarget, true);
+//					targetModel.deleteElement(elementFromTarget);
+
+				}
 			}
 			targetModel.dispose();
-			outputFiles.add(copied.toString());
 		}
 		
+		return allTheCreatedModels;
+
+		// !!! END OF MUTATION LOGIC !!!
+
+		// !!! START OF EGL EXECUTION FROM JAVA !!!
+
+//		// emf source (your mission model)
+//		EmfModel sourceModelForEGL = new EmfModel();
+//		sourceModelForEGL.setName("Source");
+//		File sourceModelForEGLFile = new File("models/mission.model");
+//		sourceModelForEGL.setModelFile(sourceModelForEGLFile.getAbsolutePath());
+//		
+//		sourceModelForEGL.setMetamodelUris(mmURIS);
+//		
+//		sourceModelForEGL.load();
+//
+//		// egl factory and module
+//		EglFileGeneratingTemplateFactory factory = new EglFileGeneratingTemplateFactory();
+//		EglTemplateFactoryModuleAdapter eglModule = new EglTemplateFactoryModuleAdapter(factory);
+//		eglModule.getContext().getModelRepository().addModel(sourceModelForEGL);
+//
+//		// Point to where the EGL file is located
+//		// TODO: replace the egl file path. Make it dynamic.
+//		String rawLocation = "files/myEGLFile.egl";
+//		
+//		File EglFile = new File(rawLocation);
+////		System.out.println(EglFile.toURI());
+//		EglFileGeneratingTemplate template = (EglFileGeneratingTemplate) factory.load(EglFile);
+//		template.process();
+//
+//		// Set the target file, ie. where the results will be generated to.
+//		// TODO: replace the path for the Java generated DSL here. Make it dynamic.
+//		File target = new File("files/GeneratedFile2.txt");
+//		target.createNewFile();
+//		template.generate(target.toURI().toString());
+//
+//		// !!! END OF EGL EXECUTION FROM JAVA !!!
 		
-		
-		return outputFiles;
+
 	}
 
 	protected EmfModel createEmfModel(String name, String model, String metamodel, boolean readOnLoad,
@@ -226,25 +284,25 @@ public class ModelsTransformer {
 		EPackage.Registry.INSTANCE.put(pkgMission.getNsURI(), pkgMission);
 		mmURIs.add(pkgMission.getNsURI());
 
-//		Resource componentsMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels/components.ecore"));
+//		Resource componentsMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels-thanos/components.ecore"));
 //		componentsMM.load(null);
 //		EPackage pkgComponents = (EPackage) componentsMM.getContents().get(0);
 //		EPackage.Registry.INSTANCE.put(pkgComponents.getNsURI(), pkgComponents);
 //		mmURIs.add(pkgComponents.getNsURI());
 //
-//		Resource regionMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels/region.ecore"));
+//		Resource regionMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels-thanos/region.ecore"));
 //		regionMM.load(null);
 //		EPackage pkgRegion = (EPackage) regionMM.getContents().get(0);
 //		EPackage.Registry.INSTANCE.put(pkgRegion.getNsURI(), pkgRegion);
 //		mmURIs.add(pkgRegion.getNsURI());
 //
-//		Resource faultsMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels/faults.ecore"));
+//		Resource faultsMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels-thanos/faults.ecore"));
 //		faultsMM.load(null);
 //		EPackage pkgFaults = (EPackage) faultsMM.getContents().get(0);
 //		EPackage.Registry.INSTANCE.put(pkgFaults.getNsURI(), pkgFaults);
 //		mmURIs.add(pkgFaults.getNsURI());
 //
-//		Resource messageMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels/message.ecore"));
+//		Resource messageMM = xmiFactory.createResource(URI.createFileURI("ecore-metamodels-thanos/message.ecore"));
 //		messageMM.load(null);
 //		EPackage pkgMessage = (EPackage) messageMM.getContents().get(0);
 //		EPackage.Registry.INSTANCE.put(pkgMessage.getNsURI(), pkgMessage);

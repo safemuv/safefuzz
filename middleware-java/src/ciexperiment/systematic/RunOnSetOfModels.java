@@ -66,6 +66,10 @@ public class RunOnSetOfModels extends ExptParams {
 	}
 
 	public Optional<String> getNextFileName() {
-		return null;
+		if (modelFilePaths.size() > 0) {
+			return Optional.of(modelFilePaths.get(0));
+		} else {
+			return Optional.empty();
+		}
 	}
 }
