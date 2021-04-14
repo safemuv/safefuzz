@@ -66,7 +66,7 @@
   <computers xmi:id="_vmC9UJyAEeuni_WJaXBVWw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance">
     <requirements xmi:id="_LWQjUHQEEeqc6cv9mBHIKw" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_zbOjAHQCEeqc6cv9mBHIKw" participants="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:AvoidOthers" xmi:id="_kqonEHQDEeqc6cv9mBHIKw" clearance="4.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_l2ZbIHP5Eeqc6cv9mBHIKw">
       <staticRegion xmi:id="_mgPpYHP5Eeqc6cv9mBHIKw">
