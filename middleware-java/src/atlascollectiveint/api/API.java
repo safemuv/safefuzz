@@ -39,6 +39,25 @@ public class API {
 	private static CollectiveIntActiveMQProducer getProducerFor(String robotName) {
 		return producers.get(robotName);
 	}
+	
+	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {
+		producers.put(communityName, producer);
+	}
+	
+	public static void setCIReference(CollectiveInt ciRef) {
+		ci = ciRef;
+	}
+	
+	// TODO: should have a mode, what to do when an invalid robot name is entered
+	// if it is invalid, whether to ignore or throw an exception for the call
+	private static void sendOrIgnore(BehaviourCommand cmd, String robotName) {
+		CollectiveIntActiveMQProducer prod = producers.get(robotName);
+		if (prod != null) {
+			prod.send(cmd, robotName);
+		}
+	}
+	
+	///////////////////////////////// API COMMANDS HERE //////////////////////////////////////////////////////////
 		
 	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
@@ -48,27 +67,17 @@ public class API {
 			System.out.println("coords=" + coords.toString());
 		}
 		BehaviourCommand cmd = new SetCoordinates(coords, MessageName);
-		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.send(cmd, robotName);
+		sendOrIgnore(cmd, robotName);
 	}
 	
 	public static void startVehicle(String robotName) {
 		BehaviourCommand cmd = new StartVehicle(robotName);
-		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.send(cmd, robotName);
+		sendOrIgnore(cmd, robotName);
 	}
 	
 	public static void setSweepAroundPoint(String robotName, Point p, double size, double stepSize, String messageName) {
 		Region r = Region.squareAroundPoint(p, size);
 		setPatrolAroundRegion(robotName, r, stepSize, messageName);
-	}
-	
-	public static void registerNewProducer(String communityName, CollectiveIntActiveMQProducer producer) {
-		producers.put(communityName, producer);
-	}
-	
-	public static void setCIReference(CollectiveInt ciRef) {
-		ci = ciRef;
 	}
 
 	public static void registerTimer(String timerName, Timer timer) {
@@ -77,13 +86,11 @@ public class API {
 	
 	public static void setDepth(String robotName, double depth, String messageName) {
 		BehaviourCommand cmd = new SetDepth(depth, messageName);
-		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.send(cmd, robotName);
+		sendOrIgnore(cmd, robotName);
 	}
 	
 	public static void returnHome(String robotName) {
 		BehaviourCommand cmd = new ReturnHome();
-		CollectiveIntActiveMQProducer prod = getProducerFor(robotName);
-		prod.send(cmd, robotName);
+		sendOrIgnore(cmd, robotName);
 	}
 }

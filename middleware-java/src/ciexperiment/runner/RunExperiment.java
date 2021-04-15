@@ -62,7 +62,7 @@ public class RunExperiment {
 		}
 	}
 
-	public static double doExperimentFromFile(Mission mission, String exptTag, boolean actuallyRun, double timeLimit)
+	public static double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String ciClass)
 			throws InterruptedException, IOException {
 		Process middleware;
 
@@ -79,20 +79,12 @@ public class RunExperiment {
 		if (actuallyRun) {
 			exptLog("Generating MOOS code");
 			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
-			
-			for (Computer c : mission.getAllComputers()) {
-				String launchScriptName = "launch_" + c.getName() + ".sh";
-				ExptHelper.startScript(absMOOSPATH, launchScriptName);
-			}
-
-			for (Robot r : mission.getAllRobots()) {
-				String launchScriptName = "launch_" + r.getName() + ".sh";
-				ExptHelper.startScript(absMOOSPATH, launchScriptName);
-			}
-
-			exptLog("Started MOOS launch scripts");
+			// Add a wait until it it ready
+			Thread.sleep(3000);
+			exptLog("Starting MOOS launch scripts");
+			ExptHelper.startScript(ABS_WORKING_PATH, "launch_moos_sim.sh");
 			// Sleep until MOOS is ready
-			TimeUnit.MILLISECONDS.sleep(800);
+			TimeUnit.MILLISECONDS.sleep(1000);
 
 			String[] middlewareOpts = { "nofault", "nogui" };
 
@@ -105,7 +97,7 @@ public class RunExperiment {
 
 			// CI not starting properly as a process, so call it via a script
 			exptLog("Starting CI");
-			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh");
+			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh " + ciClass);
 
 			TimeUnit.MILLISECONDS.sleep(3000);
 			// Wait until the end condition for the middleware
@@ -139,6 +131,6 @@ public class RunExperiment {
 	}
 
 	public static void compileLoader() throws IOException {
-		ExptHelper.startScript(ABS_WORKING_PATH, "compile_dsl_loader.sh");
+		ExptHelper.startScript(ABS_SCRIPT_PATH, "compile_dsl_loader.sh");
 	}
 }
