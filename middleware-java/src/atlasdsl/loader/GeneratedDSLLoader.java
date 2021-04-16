@@ -15,19 +15,65 @@ public class GeneratedDSLLoader implements DSLLoader {
 	Computer c1 = new Computer("shoreside");
 	mission.addComputer(c1);
 	
+		Robot rhenry = new Robot("henry");
+		rhenry.setPointComponentProperty("startLocation", new Point(-8.0,0.0,0.0));
+		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
+		rhenry.setDoubleComponentProperty("startSpeed", 1.5);
+		rhenry.setDoubleComponentProperty("maxDepth", 0.0);
+		
+ 
+		Sensor srhenry_1 = new Sensor(SensorType.SONAR);
+		srhenry_1.setParent(rhenry);
+		srhenry_1.setDoubleComponentProperty("swathWidth", 10.0);
+		srhenry_1.setDoubleComponentProperty("detectionProb", 0.99);
+		rhenry.addSubcomponent(srhenry_1);
+			
+			
+			
+			
+ 
+			
+			
+			Battery srhenry_2 = new Battery(2800);
+			rhenry.addSubcomponent(srhenry_2);
+			
+			
+ 
+			
+			MotionSource srhenry_3 = new MotionSource(3.0);
+			rhenry.addSubcomponent(srhenry_3);
+			
+			
+			
+			
+		mission.addRobot(rhenry);
 		Robot rgilda = new Robot("gilda");
 		rgilda.setPointComponentProperty("startLocation", new Point(15.0,0.0,0.0));
 		rgilda.setDoubleComponentProperty("maxSpeed", 5.0);
-		rgilda.setDoubleComponentProperty("startSpeed", 1.5);
+		rgilda.setDoubleComponentProperty("startSpeed", 3.0);
 		rgilda.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
 		srgilda_1.setParent(rgilda);
-		srgilda_1.setDoubleComponentProperty("swathWidth", 10.0);
-		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
+		srgilda_1.setDoubleComponentProperty("swathWidth", 20.0);
+		srgilda_1.setDoubleComponentProperty("detectionProb", 0.95);
 		rgilda.addSubcomponent(srgilda_1);
 			
+			
+			
+			
+ 
+			
+			
+			Battery srgilda_2 = new Battery(2800);
+			rgilda.addSubcomponent(srgilda_2);
+			
+			
+ 
+			
+			MotionSource srgilda_3 = new MotionSource(3.0);
+			rgilda.addSubcomponent(srgilda_3);
 			
 			
 			
@@ -98,8 +144,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
  
+ 
 		
-		Robot [] grp1 = {rgilda}; 
+		Robot [] grp1 = {rhenry,rgilda}; 
 		GoalParticipants gpmutualAvoidance = new StaticParticipants(grp1, mission);
 		
 		
@@ -108,6 +155,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalAction ga1 = new AvoidOthers(4.0);
+		
 		
 		
 		
@@ -122,13 +170,15 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("mutualAvoidance", mutualAvoidance);
  
+ 
 		
-		Robot [] grp2 = {rgilda}; 
+		Robot [] grp2 = {rhenry,rgilda}; 
 		GoalParticipants gptrackDistances = new StaticParticipants(grp2, mission);
 		
 		
 		
 		GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, 1201.0);
+		
 		
 		
 		
@@ -145,6 +195,32 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		mission.addGoal("trackDistances", trackDistances);
+ 
+ 
+		
+		Robot [] grp3 = {rhenry,rgilda}; 
+		GoalParticipants gpreturnOnLowEnergy = new StaticParticipants(grp3, mission);
+		
+		
+		
+		GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, 1200.0);
+		
+		
+		
+		GoalAction ga3 = new ReturnOnLowEnergy(750.0);
+		
+		
+		
+		
+		GoalRegion grreturnOnLowEnergy = new StaticGoalRegion(
+			new Region(new Point(0.0, 0.0, 0.0),
+			           new Point(0.0, 0.0, 0.0)));
+		
+		
+		Goal returnOnLowEnergy = new Goal("returnOnLowEnergy", mission, gt3, gpreturnOnLowEnergy, Optional.of(grreturnOnLowEnergy), ga3);
+		
+		
+		mission.addGoal("returnOnLowEnergy", returnOnLowEnergy);
 	
 
 	

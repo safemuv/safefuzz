@@ -163,8 +163,9 @@ public class ModelsTransformer {
 							if (aSet.contains(parent) || parentId.equals(missionId)) {
 								System.out.println("Rejected");
 								rejected = true;
+								break;
 							}
-							break;
+
 						}
 					}
 					System.out.println("+++++");

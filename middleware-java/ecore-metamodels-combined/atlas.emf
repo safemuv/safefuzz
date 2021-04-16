@@ -295,6 +295,10 @@ class TrackDistances extends GoalAction {
 	
 }
 
+class ReturnOnLowEnergy extends GoalAction {
+	attr double energyThreshold;
+}
+
 class StayInRegion extends GoalAction {
 	attr boolean stopOnFirstViolation;
 }

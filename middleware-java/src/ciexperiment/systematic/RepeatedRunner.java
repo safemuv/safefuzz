@@ -50,7 +50,7 @@ public class RepeatedRunner {
 						Thread.sleep(3000);
 						System.out.println("Loader recompilation done");
 						RunExperiment.doExperimentFromFile(exptTag, actuallyRun, timeLimit, ciOption);
-						eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
+						eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs", file, ciOption);
 					}
 					
 					eparams.advance();
@@ -114,6 +114,7 @@ public class RepeatedRunner {
 		List<Metrics> l = new ArrayList<Metrics>();
 		// TODO: set correct metrics here
 		l.add(Metrics.PURE_MISSED_DETECTIONS);
+		l.add(Metrics.AVOIDANCE_METRIC);
 		l.add(Metrics.OUTSIDE_REGION_COUNT);
 		String sourceModelFile = "experiment-models/casestudy1/mission-basis.model";
 		String standardCI = "atlascollectiveint.expt.casestudy1.ComputerCIshoreside_standard"; 
@@ -128,8 +129,10 @@ public class RepeatedRunner {
 	public static void expt_caseStudy2() {
 		List<Metrics> l = new ArrayList<Metrics>();
 		// TODO: set correct metrics here
-		l.add(Metrics.PURE_MISSED_DETECTIONS);
-		l.add(Metrics.OUTSIDE_REGION_COUNT);
+		l.add(Metrics.OBSTACLE_AVOIDANCE_METRIC);
+		l.add(Metrics.AVOIDANCE_METRIC);
+		l.add(Metrics.TOTAL_ENERGY_AT_END);
+		l.add(Metrics.MEAN_ENERGY_AT_END);
 		String sourceModelFile = "experiment-models/casestudy2/mission-basis.model";
 		String standardCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_standard";
 		String energyTrackingCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_energytracking";

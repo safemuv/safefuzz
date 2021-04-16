@@ -45,12 +45,12 @@ public class RunOnSetOfModels extends ExptParams {
 		modelFilePaths.remove(0);
 	}
 
-
-	public void logResults(String string) {
-		// The FuzzingSelectionsSolution parameters
+	public void logResults(String logDir, String modelFile, String ciClass) {
 		FuzzingSelectionsSolution s = new FuzzingSelectionsSolution(null, "", true, 0.0);
+		System.out.println("Writing results to result file: " + resFileName);
 		try {
-			metricsProcessing.readLogFiles(string, s);
+			metricsProcessing.readLogFiles(logDir, s);
+			resFile.write(modelFile + "," + ciClass + ",");
 			for (int i = 0; i < s.getNumberOfObjectives(); i++) {
 				double m = s.getObjective(i);
 				resFile.write(m + ",");

@@ -117,9 +117,11 @@ public class MetricsProcessing {
 		// Write it out to a common result file - with the fault info
 		File f = new File(logFileDir + "/goalLog.log");
 		// TODO: fix path
-		File pf = new File("/home/atlas/atlas/atlas-middleware/expt-working/logs/objectPositions.log");
-		File robotDistFile = new File("/home/atlas/atlas/atlas-middleware/expt-working/logs/robotDistances.log");
-		File obstacleFile = new File("/home/atlas/atlas/atlas-middleware/expt-working/logs/obstacleCollisions.log");
+		File pf = new File(logFileDir + "/objectPositions.log");
+		File robotDistFile = new File(logFileDir + "/robotDistances.log");
+		File obstacleFile = new File(logFileDir + "/obstacleCollisions.log");
+		File energyFile = new File(logFileDir + "/robotEnergyAtEnd.log");
+		
 		int detections = 0;
 		int missedDetections = 0;
 		int avoidanceViolations = 0;
@@ -133,6 +135,8 @@ public class MetricsProcessing {
 		// The map entry stores as a pair the number of detections and the latest time
 		Map<Integer, List<Double>> detectionInfo = new HashMap<Integer, List<Double>>();
 
+
+		
 		Scanner reader;
 		try {
 			reader = new Scanner(f);
@@ -228,23 +232,62 @@ public class MetricsProcessing {
 			int constraintID = 0;
 			List<String> names = new ArrayList<String>();
 
+			if (metrics.contains(Metrics.TOTAL_ENERGY_AT_END) || metrics.contains(Metrics.MEAN_ENERGY_AT_END)) {
+				Scanner energyReader;
+				try {
+					energyReader = new Scanner(energyFile);
+					double energyTotal = 0.0;
+					double count = 0;
+					
+					while (energyReader.hasNextLine()) {
+						String line = energyReader.nextLine();
+						String [] fields = line.split(",");
+						String name = fields[0];
+						Double energyOnRobot = Double.parseDouble(fields[1]);
+						System.out.println("Robot " + name + " has energy " + energyOnRobot);
+						energyTotal += energyOnRobot;
+						count++;
+					}
+					
+					if (metrics.contains(Metrics.TOTAL_ENERGY_AT_END)) {
+						solution.setObjective(metricID++, energyTotal);
+						names.add("totalEnergy");
+					}
+					
+					if (metrics.contains(Metrics.MEAN_ENERGY_AT_END)) {
+						double meanEnergy = energyTotal / count;
+						solution.setObjective(metricID++, meanEnergy);
+						names.add("meanEnergy");
+					}	
+					energyReader.close();
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					
+				}
+			}
+			
+			
+			
+			
+			
 			if (metrics.contains(Metrics.PURE_MISSED_DETECTIONS)) {
-				solution.setObjective(metricID++, -missedDetections);
+				solution.setObjective(metricID++, missedDetections);
 				names.add("missedDetections");
 			}
 			
 			if (metrics.contains(Metrics.COMBINED_MISSED_DETECTION_DIST_METRIC)) {
-				solution.setObjective(metricID++, -combinedDistMetric);
+				solution.setObjective(metricID++, combinedDistMetric);
 				names.add("combinedMissedDetectionDistMetric");
 			}
 			
 			if (metrics.contains(Metrics.OUTSIDE_REGION_COUNT)) {
-				solution.setObjective(metricID++, -outsideRegionViolations);
+				solution.setObjective(metricID++, outsideRegionViolations);
 			}
 
 			if (metrics.contains(Metrics.OBSTACLE_AVOIDANCE_METRIC)) {
-				if (mission.getAllRobots().size() == 2) {
-					// Check we're using the right case study!
 					int obstacleCollisionCount = readObstacleFileObsCount(obstacleFile);
 					if (obstacleCollisionCount == 0) {
 						solution.setConstraint(constraintID++, -100);
@@ -252,15 +295,12 @@ public class MetricsProcessing {
 						solution.setConstraint(constraintID++, 0);
 					}
 
-					solution.setObjective(metricID++, -obstacleCollisionCount);
+					solution.setObjective(metricID++, obstacleCollisionCount);
 					names.add("obstacleCollisions");
-				} else {
-					throw new InvalidMetrics(Metrics.OBSTACLE_AVOIDANCE_METRIC, "Cannot be used on this case study");
-				}
 			}
 
 			if (metrics.contains(Metrics.AVOIDANCE_METRIC)) {
-				solution.setObjective(metricID++, -avoidanceMetric);
+				solution.setObjective(metricID++, avoidanceMetric);
 				names.add("avoidanceMetric");
 			}
 

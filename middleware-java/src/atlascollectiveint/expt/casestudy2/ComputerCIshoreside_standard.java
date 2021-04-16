@@ -10,6 +10,7 @@ import java.lang.String;
 public class ComputerCIshoreside_standard {
 	
 	static final double TIME_BEFORE_SWITCHING = 150;
+	static final double TIME_TO_AUTO_RETURN = 1050;
 	
 	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
 	static Region region2 = new Region(new Point(-75, -100), new Point(-35, -60));
@@ -39,6 +40,13 @@ public class ComputerCIshoreside_standard {
 			setVehicleRegions();
 		}));
 		
+		// Set all the robots to return at a given time
+		OneOffTimer tReturn = OneOffTimer.atTime(TIME_TO_AUTO_RETURN, (t -> {
+			API.returnHome("gilda");
+			API.returnHome("henry");
+		}));
+		
+		API.registerTimer("returnHome", tReturn);
 		API.registerTimer("switchRegions", tSwitchRegion);
 	}
 
