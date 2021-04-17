@@ -67,7 +67,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 		this.tempLog = new FileWriter("tempLog-" + fileName + ".res");
-		metricsProcessing = new MetricsProcessing(mission, metrics, tempLog);
+		metricsProcessing = new MetricsProcessing(metrics, tempLog);
 		System.out.println(metrics.toString());
 		
 	}
@@ -94,7 +94,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		try {
 			// TODO: should we generate the CSV file first or pass in the solution to do it?
 			RunExperiment.doExperiment(mission, exptTag, solution, actuallyRun, exptRunTime);
-			metricsProcessing.readLogFiles(logFileDir, solution);
+			//metricsProcessing.readLogFiles(logFileDir, solution);
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}

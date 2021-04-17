@@ -39,7 +39,7 @@ public class RepeatedRunner {
 			double runTime = mission.getEndTime();
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
-			MetricsProcessing mp = new MetricsProcessing(mission, metricList, tempLog);
+			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
 			String resFileName = "fuzzingexpt-"+fileTag+".res";
 			ExptParams ep = new RepeatSingleExpt(mp, runTime, runCount, mission, faultFileName, resFileName);
 			runFixedCSVExpt(mission, faultFileName, ep, resFileName, true, runTime);

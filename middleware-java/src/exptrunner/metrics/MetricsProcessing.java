@@ -14,26 +14,27 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import atlasdsl.Mission;
-import exptrunner.jmetal.FuzzingSelectionsSolution;
 import exptrunner.jmetal.InvalidMetrics;
 
 public class MetricsProcessing {
-	private Mission mission;
 	private List<Metrics> metrics;
 	private FileWriter tempLog;
 	
-	private int metricID;
-	private int constraintCount;
+	public enum MetricStateKeys {
+		BENIGN_OBJECTS_IN_MISSION,
+		MALICIOUS_OBJECTS_IN_MISSION,
+		VERIFICATIONS_PER_BENIGN_OBJECT,
+		VERIFICATIONS_PER_MALICIOUS_OBJECT,
+	}
 	
-	public MetricsProcessing(Mission mission, List<Metrics> metrics, FileWriter tempLog) {
+	private HashMap<MetricStateKeys,Object> metricState = new HashMap<MetricStateKeys,Object>();
+	
+	public MetricsProcessing(List<Metrics> metrics, FileWriter tempLog) {
 		this.metrics = metrics;
-		this.metricID = 0;
-		this.constraintCount = 0;
-		this.mission = mission;
 		this.tempLog = tempLog;
 	}
 	
-	private static final int DETECTIONS_PER_OBJECT_EXPECTED = 2;
+//	private static final int DETECTIONS_PER_OBJECT_EXPECTED = 2;
 	
 	public List<Metrics> getMetrics() {
 		return metrics;
@@ -112,7 +113,13 @@ public class MetricsProcessing {
 		return missedTotal;
 	}
 	
-	public void readLogFiles(String logFileDir, FuzzingSelectionsSolution solution) throws InvalidMetrics {
+	public Map<Metrics,Object> readMetricsFromLogFiles(String logFileDir) throws InvalidMetrics {
+		
+		int objectsInMission = 0;
+		if (metricState.containsKey(MetricStateKeys.BENIGN_OBJECTS_IN_MISSION)) {
+			objectsInMission = (int)metricState.get(MetricStateKeys.OBJECTS_IN_MISSION);
+		}
+		
 		// Read the goal result file here - process the given goals
 		// Write it out to a common result file - with the fault info
 		File f = new File(logFileDir + "/goalLog.log");
@@ -130,12 +137,12 @@ public class MetricsProcessing {
 		int outsideRegionViolations = 0;
 
 		double firstFaultTime = Double.MAX_VALUE;
+		
+		Map<Metrics,Object> metricResults = new HashMap<Metrics,Object>();
 
 		// The map entry stores as a pair the number of detections and the latest time
 		Map<Integer, List<Double>> detectionInfo = new HashMap<Integer, List<Double>>();
 
-
-		
 		Scanner reader;
 		try {
 			reader = new Scanner(f);
@@ -170,7 +177,7 @@ public class MetricsProcessing {
 				}
 			}
 
-			missedDetections = Math.max(0, ((mission.getEnvironmentalObjects().size() * DETECTIONS_PER_OBJECT_EXPECTED)
+			missedDetections = Math.max(0, ((objectsInMission * DETECTIONS_PER_OBJECT_EXPECTED)
 					- checkDetectionCount));
 			reader.close();
 
@@ -185,12 +192,9 @@ public class MetricsProcessing {
 
 		double missedDetectionFactor = 10.0;
 		double avoidanceFactor = 10.0;
-		int objectCount = mission.getEnvironmentalObjects().size();
 
 		double combinedDistMetric = missedDetections;
 		double avoidanceMetric = avoidanceViolations;
-		double timeProp = solution.faultCostProportion();
-		double timeTotal = solution.faultTimeTotal();
 
 		try {
 			reader = new Scanner(pf);
@@ -223,8 +227,7 @@ public class MetricsProcessing {
 			avoidanceMetric += (avoidanceViolations * avoidanceFactor);
 			reader.close();
 
-			double detectionCompletionTime = detectionCompletionTime(detectionInfo, objectCount);
-			int numFaults = solution.numberOfFuzzingSelections();
+			double detectionCompletionTime = detectionCompletionTime(detectionInfo, objectsInMission);
 
 			// Set the output metrics
 			int metricID = 0;
@@ -249,14 +252,16 @@ public class MetricsProcessing {
 					}
 					
 					if (metrics.contains(Metrics.TOTAL_ENERGY_AT_END)) {
-						solution.setObjective(metricID++, energyTotal);
-						names.add("totalEnergy");
+						metricResults.put(Metrics.TOTAL_ENERGY_AT_END, energyTotal);
+						//solution.setObjective(metricID++, energyTotal);
+						//names.add("totalEnergy");
 					}
 					
 					if (metrics.contains(Metrics.MEAN_ENERGY_AT_END)) {
 						double meanEnergy = energyTotal / count;
-						solution.setObjective(metricID++, meanEnergy);
-						names.add("meanEnergy");
+						metricResults.put(Metrics.MEAN_ENERGY_AT_END, meanEnergy);
+						//solution.setObjective(metricID++, meanEnergy);
+						//names.add("meanEnergy");
 					}	
 					energyReader.close();
 					
@@ -268,85 +273,78 @@ public class MetricsProcessing {
 				}
 			}
 			
-			
-			
-			
-			
 			if (metrics.contains(Metrics.PURE_MISSED_DETECTIONS)) {
-				solution.setObjective(metricID++, missedDetections);
-				names.add("missedDetections");
+				//solution.setObjective(metricID++, missedDetections);
+				//names.add("missedDetections");
+				metricResults.put(Metrics.PURE_MISSED_DETECTIONS, missedDetections);
 			}
 			
 			if (metrics.contains(Metrics.COMBINED_MISSED_DETECTION_DIST_METRIC)) {
-				solution.setObjective(metricID++, combinedDistMetric);
-				names.add("combinedMissedDetectionDistMetric");
+				//solution.setObjective(metricID++, combinedDistMetric);
+				//names.add("combinedMissedDetectionDistMetric");
+				metricResults.put(Metrics.COMBINED_MISSED_DETECTION_DIST_METRIC, combinedDistMetric);
 			}
 			
 			if (metrics.contains(Metrics.OUTSIDE_REGION_COUNT)) {
-				solution.setObjective(metricID++, outsideRegionViolations);
+				//solution.setObjective(metricID++, outsideRegionViolations);
+				metricResults.put(Metrics.OUTSIDE_REGION_COUNT, outsideRegionViolations);
 			}
 
 			if (metrics.contains(Metrics.OBSTACLE_AVOIDANCE_METRIC)) {
 					int obstacleCollisionCount = readObstacleFileObsCount(obstacleFile);
-					if (obstacleCollisionCount == 0) {
-						solution.setConstraint(constraintID++, -100);
-					} else {
-						solution.setConstraint(constraintID++, 0);
-					}
+//					if (obstacleCollisionCount == 0) {
+//						solution.setConstraint(constraintID++, -100);
+//					} else {
+//						solution.setConstraint(constraintID++, 0);
+//					}
 
-					solution.setObjective(metricID++, obstacleCollisionCount);
-					names.add("obstacleCollisions");
+					//solution.setObjective(metricID++, obstacleCollisionCount);
+					//names.add("obstacleCollisions");
+					metricResults.put(Metrics.OBSTACLE_AVOIDANCE_METRIC, obstacleCollisionCount);
 			}
 
 			if (metrics.contains(Metrics.AVOIDANCE_METRIC)) {
-				solution.setObjective(metricID++, avoidanceMetric);
-				names.add("avoidanceMetric");
-			}
-
-			if (metrics.contains(Metrics.TIME_PROP)) {
-				solution.setObjective(metricID++, timeProp);
-				names.add("timeProp");
-			}
-
-			if (metrics.contains(Metrics.TIME_TOTAL_ABSOLUTE)) {
-				solution.setObjective(metricID++, timeTotal);
-				names.add("timeTotal");
-			}
-
-			if (metrics.contains(Metrics.NUM_FAULTS)) {
-				solution.setObjective(metricID++, numFaults);
-				names.add("numFaults");
-			}
-
-			if (metrics.contains(Metrics.FIRST_FAULT_TIME)) {
-				solution.setObjective(metricID++, firstFaultTime);
-				names.add("firstFaultTime");
+				//solution.setObjective(metricID++, avoidanceMetric);
+				//names.add("avoidanceMetric");
+				metricResults.put(Metrics.AVOIDANCE_METRIC, avoidanceMetric);
 			}
 
 			if (metrics.contains(Metrics.DETECTION_COMPLETION_TIME)) {
-				solution.setObjective(metricID++, detectionCompletionTime);
-				names.add("detectionCompletionTime");
+				//solution.setObjective(metricID++, detectionCompletionTime);
+				//names.add("detectionCompletionTime");
+				metricResults.put(Metrics.DETECTION_COMPLETION_TIME,detectionCompletionTime);
 			}
 
-			constraintCount = constraintID;
-
 			String info = String.join(",", names);
-			String logRes = Arrays.stream(solution.getObjectives()).mapToObj(Double::toString)
-					.collect(Collectors.joining(","));
+		
+			String logRes = metricResults.entrySet().stream().
+					map(e -> e.getKey() + "=" + e.getValue()).
+					collect(Collectors.joining(","));
 
-			System.out.println(solution.hashCode() + ":" + solution + "\n");
 			System.out.println(info + "\n");
 			System.out.println(logRes + "\n");
 			tempLog.write(logRes + "\n");
 			tempLog.flush();
+			
+			
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return metricResults;
 	}
 
 	public Metrics getMetricByID(int i) {
 		return metrics.get(i);
+	}
+	
+	public void setMetricState(String string, Object o) {
+		metricState.put(string,o);
+	}
+	
+	public void clearMetricState() {
+		metricState.clear();
 	}
 }

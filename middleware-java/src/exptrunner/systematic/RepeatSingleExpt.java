@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import atlasdsl.Mission;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import exptrunner.jmetal.InvalidMetrics;
+import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 import faultgen.InvalidFaultFormat;
 import fuzzingengine.FuzzingSelectionRecord;
@@ -55,19 +57,17 @@ public class RepeatSingleExpt extends ExptParams {
 		runCount++;
 	}
 
-	public void logResults(String string) {
-		// The FuzzingSelectionsSolution parameters
-		FuzzingSelectionsSolution s = new FuzzingSelectionsSolution(mission, "", true, 0.0);
-		if (fixedFaultInstances != null) {
-			s.setAllContents(fixedFaultInstances);
-		}
+	public void logResults(String logDir) {
+		System.out.println("Writing results to result file: " + resFileName);
 		try {
-			metricsProcessing.readLogFiles(string, s);
-			for (int i = 0; i < s.getNumberOfObjectives(); i++) {
-				double m = s.getObjective(i);
-				resFile.write(m + ",");
-				System.out.println(metricsProcessing.getMetricByID(i) + "=" + m);
+			Map<Metrics,Object> metricRes = metricsProcessing.readMetricsFromLogFiles(logDir);
+			for (Map.Entry<Metrics,Object> entry : metricRes.entrySet()) {
+				Metrics m = entry.getKey();
+				Object val = entry.getValue();
+				System.out.println(m + "=" + val);
+				resFile.write(entry.getValue().toString() + ",");
 			}
+			
 			resFile.write("\n");
 			resFile.flush();
 		} catch (InvalidMetrics e1) {

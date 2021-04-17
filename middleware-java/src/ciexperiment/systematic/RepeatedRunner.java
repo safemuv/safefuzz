@@ -85,7 +85,7 @@ public class RepeatedRunner {
 			double runTime = baseMission.getEndTime();
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
-			MetricsProcessing mp = new MetricsProcessing(baseMission, metricList, tempLog);
+			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
 			String resFileName = "ciexpt-"+fileTag+".res";
 			System.out.println("Model generation beginning for " + sourceModelFile);
 			List<String> missionFiles = modelTransformer.retriveAllModels(sourceModelFile);

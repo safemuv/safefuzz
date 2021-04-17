@@ -4,9 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import exptrunner.jmetal.FuzzingSelectionsSolution;
 import exptrunner.jmetal.InvalidMetrics;
+import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 import faultgen.InvalidFaultFormat;
 
@@ -46,16 +48,17 @@ public class RunOnSetOfModels extends ExptParams {
 	}
 
 	public void logResults(String logDir, String modelFile, String ciClass) {
-		FuzzingSelectionsSolution s = new FuzzingSelectionsSolution(null, "", true, 0.0);
 		System.out.println("Writing results to result file: " + resFileName);
 		try {
-			metricsProcessing.readLogFiles(logDir, s);
+			Map<Metrics,Object> metricRes = metricsProcessing.readMetricsFromLogFiles(logDir);
 			resFile.write(modelFile + "," + ciClass + ",");
-			for (int i = 0; i < s.getNumberOfObjectives(); i++) {
-				double m = s.getObjective(i);
-				resFile.write(m + ",");
-				System.out.println(metricsProcessing.getMetricByID(i) + "=" + m);
+			for (Map.Entry<Metrics,Object> entry : metricRes.entrySet()) {
+				Metrics m = entry.getKey();
+				Object val = entry.getValue();
+				System.out.println(m + "=" + val);
+				resFile.write(entry.getValue().toString() + ",");
 			}
+			
 			resFile.write("\n");
 			resFile.flush();
 		} catch (InvalidMetrics e1) {
