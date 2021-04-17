@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
   <mutProgram xmi:id="_xHiP8JxZEeuXP_f35b_qpg">
-    <mutationGroups xmi:id="_7HP2YJzSEeun4sDYCEayRA" minRequiredFromGroup="2" maxRequiredFromGroup="4" members="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
+    <mutationGroups xmi:id="_7HP2YJzSEeun4sDYCEayRA" minRequiredFromGroup="3" maxRequiredFromGroup="4" members="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
     <mutationGroups xmi:id="_U5CeAJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_LLIJtZzTEeun4sDYCEayRA _LLIJuJzTEeun4sDYCEayRA"/>
     <mutationGroups xmi:id="_Xw-7gJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_I_DTtZzTEeun4sDYCEayRA _I_DTuJzTEeun4sDYCEayRA"/>
     <mutationGroups xmi:id="_akascJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_O1hYQJxZEeuXP_f35b_qpg _73tjEJxbEeuni_WJaXBVWw"/>
@@ -9,7 +9,7 @@
   </mutProgram>
   <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="gilda" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
-      <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg"/>
+      <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="40.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_aQj4MJxZEeuXP_f35b_qpg" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_bngdAJxZEeuXP_f35b_qpg" name="startSpeed" value="1.5"/>
@@ -25,7 +25,7 @@
   </robots>
   <robots xmi:id="_I_DTsJzTEeun4sDYCEayRA" name="frank" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_I_DTsZzTEeun4sDYCEayRA" name="startLocation">
-      <value xmi:id="_I_DTspzTEeun4sDYCEayRA"/>
+      <value xmi:id="_I_DTspzTEeun4sDYCEayRA" x="-20.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_I_DTs5zTEeun4sDYCEayRA" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_I_DTtJzTEeun4sDYCEayRA" name="startSpeed" value="1.5"/>
@@ -57,7 +57,7 @@
   </robots>
   <robots xmi:id="_LLIJsJzTEeun4sDYCEayRA" name="ella" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_LLIJsZzTEeun4sDYCEayRA" name="startLocation">
-      <value xmi:id="_LLIJspzTEeun4sDYCEayRA"/>
+      <value xmi:id="_LLIJspzTEeun4sDYCEayRA" x="20.0"/>
     </componentProperties>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_LLIJs5zTEeun4sDYCEayRA" name="maxSpeed" value="5.0"/>
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_LLIJtJzTEeun4sDYCEayRA" name="startSpeed" value="1.5"/>

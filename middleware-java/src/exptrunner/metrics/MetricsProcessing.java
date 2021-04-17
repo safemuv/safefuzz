@@ -116,7 +116,6 @@ public class MetricsProcessing {
 		// Read the goal result file here - process the given goals
 		// Write it out to a common result file - with the fault info
 		File f = new File(logFileDir + "/goalLog.log");
-		// TODO: fix path
 		File pf = new File(logFileDir + "/objectPositions.log");
 		File robotDistFile = new File(logFileDir + "/robotDistances.log");
 		File obstacleFile = new File(logFileDir + "/obstacleCollisions.log");

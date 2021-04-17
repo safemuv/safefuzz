@@ -125,7 +125,9 @@ public class Robot extends Component {
 			}
 		
 		} else {
-			System.out.println("No Motion source - energy update ignored");
+			if (ROBOT_ENERGY_DEBUGGING) {
+				System.out.println("No Motion source - energy update ignored");
+			}
 		}
 	}
 	

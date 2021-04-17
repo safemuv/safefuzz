@@ -112,10 +112,8 @@ public class RepeatedRunner {
 	
 	public static void expt_caseStudy1() {
 		List<Metrics> l = new ArrayList<Metrics>();
-		// TODO: set correct metrics here
 		l.add(Metrics.PURE_MISSED_DETECTIONS);
-		l.add(Metrics.AVOIDANCE_METRIC);
-		l.add(Metrics.OUTSIDE_REGION_COUNT);
+		l.add(Metrics.DETECTION_COMPLETION_TIME);
 		String sourceModelFile = "experiment-models/casestudy1/mission-basis.model";
 		String standardCI = "atlascollectiveint.expt.casestudy1.ComputerCIshoreside_standard"; 
 		String advancedCI = "atlascollectiveint.expt.casestudy1.ComputerCIshoreside_advanced"; 
@@ -128,7 +126,6 @@ public class RepeatedRunner {
 	
 	public static void expt_caseStudy2() {
 		List<Metrics> l = new ArrayList<Metrics>();
-		// TODO: set correct metrics here
 		l.add(Metrics.OBSTACLE_AVOIDANCE_METRIC);
 		l.add(Metrics.AVOIDANCE_METRIC);
 		l.add(Metrics.TOTAL_ENERGY_AT_END);
@@ -144,7 +141,7 @@ public class RepeatedRunner {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-		//expt_caseStudy1();
-		expt_caseStudy2();
+		expt_caseStudy1();
+		//expt_caseStudy2();
 	}
 }

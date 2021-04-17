@@ -166,7 +166,7 @@ public class ComputerCIshoreside_standard {
 	public static Map<String, Double> regionProportionsConstant(List<String> robots) {
 		HashMap<String, Double> regionProportions = new HashMap<String, Double>();
 
-		double constantProp = 1 / robots.size();
+		double constantProp = 1.0 / robots.size();
 		for (Map.Entry<String, Double> rs : robotSpeeds.entrySet()) {
 			// only count the named robots
 			if (robots.contains(rs.getKey())) {

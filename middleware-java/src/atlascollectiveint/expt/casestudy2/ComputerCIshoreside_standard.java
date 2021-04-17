@@ -9,7 +9,7 @@ import java.lang.String;
 
 public class ComputerCIshoreside_standard {
 	
-	static final double TIME_BEFORE_SWITCHING = 150;
+	static final double TIME_BEFORE_SWITCHING = 10000;
 	static final double TIME_TO_AUTO_RETURN = 1050;
 	
 	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
@@ -25,9 +25,9 @@ public class ComputerCIshoreside_standard {
 	
 	public static void setVehicleRegions() {
 		API.setPatrolAroundRegion("gilda", gildaRegion, 10,
-				"UUV_COORDINATE_UPDATE_INIITAL_GILDA");
+				"UUV_COORDINATE_UPDATE_INITIAL_GILDA");
 		API.setPatrolAroundRegion("henry", henryRegion, 10,
-				"UUV_COORDINATE_UPDATE_INIITAL_HENRY");
+				"UUV_COORDINATE_UPDATE_INITIAL_HENRY");
 	}
 	
 	public static void init() {
