@@ -157,7 +157,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[* Goal actions *]
 		[% var goalAction = g.action; %]
 		[% if (goalAction.isKindOf(SensorCover)) { %]
-		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %], [%= goalAction.verificationsMalicious %], [%= goalAction.verificationsBenign %]);
+		GoalAction ga[%= goalnum %] = new SensorCover([%= goalAction.density %], [%= goalAction.samplesPerUnit %], SensorType.[%= goalAction.sensortype %]);
 		[% } %]
 		
 		[% if (goalAction.isKindOf(AvoidOthers)) { %]
@@ -182,7 +182,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% for (eo in goalAction.objects) { %]
 		ga[%= goalnum %]Objs.add(eo[%= EObjectLookup.get(eo) %]);
 		[% } %]
-		GoalAction ga[%= goalnum %] = new DiscoverObjects(ga[%= goalnum %]Objs, [%= goalAction.robotsNeededPerObject %]);
+		GoalAction ga[%= goalnum %] = new DiscoverObjects(ga[%= goalnum %]Objs, [%= goalAction.verificationsBenign %], [%= goalAction.verificationsMalicious %]);
 		
 		[% } %]
 		

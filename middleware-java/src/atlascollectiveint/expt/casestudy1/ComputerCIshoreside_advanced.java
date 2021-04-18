@@ -2,6 +2,7 @@ package atlascollectiveint.expt.casestudy1;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
+import atlasdsl.DiscoverObjects;
 import atlasdsl.Goal;
 import atlasdsl.GoalAction;
 import atlasdsl.GoalRegion;
@@ -140,18 +141,16 @@ public class ComputerCIshoreside_advanced {
 			allRobots.add(r);
 		}
 		
-		// TODO: how to modify the model to specify this for benign vs malicious?
-		// And broken down by the type of the vehicle needed
-
 		Goal sensorSweep = mission.getGoalByName("primarySensorSweep");
-		GoalAction sensorSweepAct = sensorSweep.getAction();
-		Goal sensorVerify = mission.getGoalByName("verifySensorDetections"); 
-		GoalAction sensorVerifyAct = sensorVerify.getAction();
+		Goal discoverObjects = mission.getGoalByName("findTestObjects"); 
+		GoalAction discoverObjectAct = discoverObjects.getAction();
 		
-		if (sensorVerifyAct instanceof SensorCover) {
-			SensorCover sc = (SensorCover)sensorVerifyAct;
-			numberOfVerificationsMalicious = sc.verificationsMalicious();
-			numberOfVerificationsBenign = sc.verificationsBenign();
+		if (discoverObjectAct instanceof DiscoverObjects) {
+			DiscoverObjects dobj = (DiscoverObjects)discoverObjectAct;
+			numberOfVerificationsMalicious = dobj.verificationsMalicious();
+			numberOfVerificationsBenign = dobj.verificationsBenign();
+			System.out.println("numberOfVerificationsMalicious = " + numberOfVerificationsMalicious);
+			System.out.println("numberOfVerificationsBenign = " + numberOfVerificationsBenign);
 		}
 		
 		Optional<GoalRegion> r_o = sensorSweep.getGoalRegion();
@@ -345,7 +344,6 @@ public class ComputerCIshoreside_advanced {
 					verifyOneRobot(detection, sweepRobots, robotName);
 				}
 			} else {
-				verifyOneRobot(detection, cameraRobots, robotName);
 				int numV = Math.max(numberOfVerificationsMalicious, 0);
 				for (int i = 0; i < numV; i++) {
 					verifyOneRobot(detection, sweepRobots, robotName);

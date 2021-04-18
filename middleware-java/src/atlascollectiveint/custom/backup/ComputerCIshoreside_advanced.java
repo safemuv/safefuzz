@@ -2,6 +2,7 @@ package atlascollectiveint.custom.backup;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
+import atlasdsl.DiscoverObjects;
 import atlasdsl.Goal;
 import atlasdsl.GoalAction;
 import atlasdsl.GoalRegion;
@@ -140,18 +141,14 @@ class ComputerCIshoreside_advanced {
 			allRobots.add(r);
 		}
 		
-		// TODO: how to modify the model to specify this for benign vs malicious?
-		// And broken down by the type of the vehicle needed
-
 		Goal sensorSweep = mission.getGoalByName("primarySensorSweep");
-		GoalAction sensorSweepAct = sensorSweep.getAction();
 		Goal sensorVerify = mission.getGoalByName("verifySensorDetections"); 
 		GoalAction sensorVerifyAct = sensorVerify.getAction();
 		
-		if (sensorVerifyAct instanceof SensorCover) {
-			SensorCover sc = (SensorCover)sensorVerifyAct;
-			numberOfVerificationsMalicious = sc.verificationsMalicious();
-			numberOfVerificationsBenign = sc.verificationsBenign();
+		if (sensorVerifyAct instanceof DiscoverObjects) {
+			DiscoverObjects dobj = (DiscoverObjects)sensorVerifyAct;
+			numberOfVerificationsMalicious = dobj.verificationsMalicious();
+			numberOfVerificationsBenign = dobj.verificationsBenign();
 		}
 		
 		Optional<GoalRegion> r_o = sensorSweep.getGoalRegion();

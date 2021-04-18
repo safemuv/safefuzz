@@ -310,7 +310,8 @@ class AvoidOthers extends GoalAction {
 
 class DiscoverObjects extends GoalAction {
 	ref EnvironmentalObject[*] objects;
-	attr int robotsNeededPerObject;
+	attr int verificationsMalicious;
+	attr int verificationsBenign;
 }
 
 class SensorCover extends Cover {
@@ -318,8 +319,6 @@ class SensorCover extends Cover {
 	attr int samplesPerUnit;
 	attr SensorType sensortype;
 	attr boolean collective;
-	attr int verificationsMalicious;
-	attr int verificationsBenign;
 }
 
 abstract class GoalParticipants {

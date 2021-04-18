@@ -2,6 +2,7 @@ package atlascollectiveint.custom;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
+import atlasdsl.DiscoverObjects;
 import atlasdsl.Goal;
 import atlasdsl.GoalAction;
 import atlasdsl.GoalRegion;
@@ -45,8 +46,8 @@ class ComputerCIshoreside {
 	private static final Region DEFAULT_REGION = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
 	private static Region fullRegion = DEFAULT_REGION;
 	
-	private static int numberOfVerificationsMalicious;
-	private static int numberOfVerificationsBenign;
+	private static int numberOfVerificationsMalicious = 0;
+	private static int numberOfVerificationsBenign = 0;
 	
 	private static final double SWEEP_RADIUS = 50.0;
 	private static final double VERTICAL_STEP_SIZE_INITIAL_SWEEP = 30;
@@ -144,16 +145,17 @@ class ComputerCIshoreside {
 		// And broken down by the type of the vehicle needed
 
 		Goal sensorSweep = mission.getGoalByName("primarySensorSweep");
-		GoalAction sensorSweepAct = sensorSweep.getAction();
 		Goal sensorVerify = mission.getGoalByName("verifySensorDetections"); 
 		GoalAction sensorVerifyAct = sensorVerify.getAction();
 		
-		if (sensorVerifyAct instanceof SensorCover) {
-			SensorCover sc = (SensorCover)sensorVerifyAct;
-			numberOfVerificationsMalicious = sc.verificationsMalicious();
-			numberOfVerificationsBenign = sc.verificationsBenign();
+		if (sensorVerifyAct instanceof DiscoverObjects) {
+			DiscoverObjects dobj = (DiscoverObjects)sensorVerifyAct;
+			numberOfVerificationsMalicious = dobj.verificationsMalicious();
+			numberOfVerificationsBenign = dobj.verificationsBenign();
+			System.out.println("numberOfVerificationsMalicious = " + numberOfVerificationsMalicious);
+			System.out.println("numberOfVerificationsBenign = " + numberOfVerificationsBenign);
 		}
-		
+				
 		Optional<GoalRegion> r_o = sensorSweep.getGoalRegion();
 		if (r_o.isPresent()) {
 				r_o.get();

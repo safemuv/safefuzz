@@ -1,5 +1,7 @@
 package atlasdsl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,18 +34,32 @@ public class DiscoverObjects extends GoalAction {
 	
 	// A map per object, which names the robots that have located this particular object
 	private Map<EnvironmentalObject,Map<String,DiscoveryRecord>> locatedObjects = new HashMap<EnvironmentalObject,Map<String,DiscoveryRecord>>();
+	private Map<Integer,Integer> remainingDetections = new HashMap<Integer,Integer>();
+		
 	private Optional<GoalResult> result = Optional.empty();
-	private int robotsNeededPerObject;
-	// TODO: need to ask the core for the detection logs! - stored when oncoming from the simulator
-	// may be impacted by faults
+	
+	private int verificationsNeededForBenignObject;
+	private int verificationsNeededForMaliciousObject;
+	
 	private ATLASCore core;
 	private Mission mission;
 	
-	public DiscoverObjects(List<EnvironmentalObject> targetObjects, int robotsNeededPerObject) {
+	public DiscoverObjects(List<EnvironmentalObject> targetObjects, int robotsNeededPerBenignObject, int robotsNeededPerMaliciousObject) {
 		System.out.println("DiscoverObjects created");
-		this.robotsNeededPerObject = robotsNeededPerObject;
+		this.verificationsNeededForBenignObject = robotsNeededPerBenignObject;
+		this.verificationsNeededForMaliciousObject = robotsNeededPerMaliciousObject;
+		
 		for (EnvironmentalObject eo : targetObjects) {
 			locatedObjects.put(eo, new HashMap<String,DiscoveryRecord>());
+			// Add one to these values to account for the original verification
+			int remaining;
+			if (eo.isHazard()) {
+				remaining = 1 + robotsNeededPerMaliciousObject;
+			} else {
+				remaining = 1 + robotsNeededPerBenignObject;
+			}
+			remainingDetections.put(eo.getLabel(), remaining);
+			ATLASLog.logGoalMessage(this, "LOOKINGFOR," + eo.getLabel() + "," + remaining);
 		}
 	}
 	
@@ -53,6 +69,8 @@ public class DiscoverObjects extends GoalAction {
 		for (Entry<EnvironmentalObject, Map<String, DiscoveryRecord>> me : locatedObjects.entrySet()) {
 			EnvironmentalObject eo = me.getKey();
 			Map<String, DiscoveryRecord> robots = me.getValue();
+			int robotsNeededPerObject = eo.isHazard() ? verificationsNeededForMaliciousObject : verificationsNeededForBenignObject; 
+			
 			if (robots.size() < robotsNeededPerObject) {
 				complete = false;
 			}
@@ -69,7 +87,7 @@ public class DiscoverObjects extends GoalAction {
 		return result;
 	}
 	
-	private void registerRobotDetection(int objectID, String robotName, double time) {
+	private void registerRobotDetection(int objectID, String robotName, double time, String type) {
 		Optional<EnvironmentalObject> eo_o = mission.getEnvironmentalObject(objectID);
 		
 		if (eo_o.isPresent()) {
@@ -79,7 +97,11 @@ public class DiscoverObjects extends GoalAction {
 			// Add the robot to the map - if it is the first detection for that robotName
 			if (m.get(robotName) == null) {
 				DiscoveryRecord dr = new DiscoveryRecord(objectID, (Point)(eo), robotName, time);
-				ATLASLog.logGoalMessage(this, time + "," + robotName + "," + Integer.toString(objectID));
+				// decrement it, but not beyond zero
+				int newDetections = Math.max(0, remainingDetections.get(objectID)-1);
+				remainingDetections.put(objectID, newDetections);
+				int remainingDetectionsForObject = remainingDetections.get(objectID);
+				ATLASLog.logGoalMessage(this, "FOUND," + time + "," + robotName + "," + Integer.toString(objectID) + "," + remainingDetectionsForObject);
 				m.put(robotName,dr);
 			}
 		}
@@ -89,14 +111,19 @@ public class DiscoverObjects extends GoalAction {
 		this.mission = mission;
 		core.setupSensorWatcher((detection) -> 
 		{
-			// Need to dispatch on the sensor type!
-			// For now, all sensors trigger it!
-			//if (detection.getSensorType() == SensorType.SONAR) {
 				double time = core.getTime();
-				int objectID = (int) detection.getField("objectID");
+				int objectID = (int)detection.getField("objectID");
 				String robotName = (String) detection.getField("robotName");
-				registerRobotDetection(objectID,robotName,time);
-			//}
+				String type = (String)detection.getField("type");
+				registerRobotDetection(objectID,robotName,time,type);
 		});
+	}
+	
+	public int verificationsBenign() {
+		return verificationsNeededForBenignObject;
+	}
+	
+	public int verificationsMalicious() {
+		return verificationsNeededForMaliciousObject;
 	}
 }

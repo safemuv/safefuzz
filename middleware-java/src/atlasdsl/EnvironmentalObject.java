@@ -44,4 +44,16 @@ public class EnvironmentalObject extends Point {
 		if (isHazard) typeStr = "hazard";
 		return "hazard=" + super.toString() +  ",label=" + label + ",type=" + typeStr + ",color=" + color + ",width=" + width;			
 	}
+	
+	public boolean isHazard() {
+		return isHazard;
+	}
+	
+	public boolean isMalicious() {
+		return isHazard;
+	}
+	
+	public boolean isBenign() {
+		return !isHazard;
+	}
 }

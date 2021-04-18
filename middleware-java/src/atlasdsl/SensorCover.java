@@ -38,12 +38,10 @@ public class SensorCover extends Cover {
 	
 	private List<GoalResult> pendingPartialResults = new ArrayList<GoalResult>();
 	
-	public SensorCover(double density, int samplesPerUnit, SensorType sensor, int verificationsBenign, int verificationsMalicious) {
+	public SensorCover(double density, int samplesPerUnit, SensorType sensor) {
 		this.density = density;
 		this.samplesPerUnit = samplesPerUnit;
 		this.sensor = sensor;
-		this.verificationsBenign = verificationsBenign;
-		this.verificationsMalicious = verificationsMalicious;
 	}
 	
 	private void setupSensorWatchers(ATLASCore core) {
@@ -140,11 +138,5 @@ public class SensorCover extends Cover {
 		return posTrackers;
 	}
 	
-	public int verificationsBenign() {
-		return verificationsBenign;
-	}
-	
-	public int verificationsMalicious() {
-		return verificationsMalicious;
-	}
+
 }

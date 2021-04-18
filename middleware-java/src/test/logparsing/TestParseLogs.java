@@ -23,7 +23,7 @@ public class TestParseLogs {
 			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
 			
 			// TODO: where to pass the number of verifications for the objects?
-			mp.setMetricState(MetricStateKeys.OBJECTS_IN_MISSION, 3);
+			mp.setMetricState(MetricStateKeys.MISSION_END_TIME, 1200.0);
 			
 			Map<Metrics,Object> metrics = mp.readMetricsFromLogFiles("/home/atlas/atlas/atlas-middleware/test-logfiles/logs");
 			tempLog.close();

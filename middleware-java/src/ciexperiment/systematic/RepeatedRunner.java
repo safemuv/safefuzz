@@ -19,6 +19,7 @@ import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
+import exptrunner.metrics.MetricsProcessing.MetricStateKeys;
 import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
@@ -86,6 +87,7 @@ public class RepeatedRunner {
 			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
 			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
 			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
+			mp.setMetricState(MetricStateKeys.MISSION_END_TIME, baseMission.getEndTime());
 			String resFileName = "ciexpt-"+fileTag+".res";
 			System.out.println("Model generation beginning for " + sourceModelFile);
 			List<String> missionFiles = modelTransformer.retriveAllModels(sourceModelFile);
