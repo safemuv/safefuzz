@@ -10,12 +10,12 @@ public class HelmBehaviourWaypoint extends MOOSBehaviour {
 		setProperty("updates", "UP_WAYPOINT");
 		// TODO: this will automatically end the mission when station_keep activated
 		// maybe add STATION_KEEP=false in condition
-		//setProperty("endflag", "STATION_KEEP = true");
+		setProperty("endflag", "WAYPOINT_COMPLETE=true");
 		setProperty("speed", speed);
 		setProperty("radius", radius);
 		setProperty("nm_radius", nm_radius);
 		setProperty("points", startPos.toStringBareCSV());
-		setProperty("repeat", 10);
+		setProperty("repeat", 1);
 		setProperty("lead", 8);
 	}
 }

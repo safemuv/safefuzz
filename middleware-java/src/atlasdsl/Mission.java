@@ -24,6 +24,8 @@ public class Mission {
 	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
 	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
 	
+	private List<String> behaviourVariables = new ArrayList<String>();
+	
 	private double endTime;
 	
 	public Mission(double endTime) {
@@ -207,5 +209,13 @@ public class Mission {
 	
 	public Region getObstacleRegion() {
 		return obstacleRegion;
+	}
+	
+	public void addBehaviourVariable(String var) {
+		behaviourVariables.add(var);
+	}
+
+	public List<String> getBehaviourVariableNames() {
+		return behaviourVariables;
 	}
 }

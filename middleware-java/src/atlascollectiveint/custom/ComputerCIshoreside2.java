@@ -57,4 +57,6 @@ class ComputerCIshoreside2 {
 	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
 		System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
+	
+
 }

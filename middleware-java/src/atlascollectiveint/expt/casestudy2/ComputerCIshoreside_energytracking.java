@@ -20,7 +20,7 @@ public class ComputerCIshoreside_energytracking {
 	
 	static Mission mission;
 	
-	static final double TIME_BEFORE_SWITCHING = 300;
+	static final double TIME_BEFORE_SWITCHING = 500;
 	static double ENERGY_CRITICAL_LEVEL = 0.0;
 	
 	static Region region1 = new Region(new Point(170, -100), new Point(209, -60));
@@ -96,5 +96,9 @@ public class ComputerCIshoreside_energytracking {
 				missionEnded.put(robotName, true);
 			}
 		}
+	}
+	
+	public static void BehaviourVariableHook(String key, String value, String robotName) {
+		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
 	}
 }

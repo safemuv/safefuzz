@@ -52,4 +52,10 @@ public class ATLASSharedResult {
 			return Optional.of((EnergyUpdate)contents);
 		} else return Optional.empty();
 	}
+	
+	public Optional<BehaviourVariableUpdate> getBehaviourUpdate() {
+		if (contentsClass == BehaviourVariableUpdate.class) {
+			return Optional.of((BehaviourVariableUpdate)contents);
+		} else return Optional.empty();
+	}
 }

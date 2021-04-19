@@ -42,6 +42,7 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 		detectionScanner = Pattern.compile("x=([^,]+),y=([^,]+),label=([^,]+),vname=([^,]+)");
 		hazardScanner = Pattern.compile("vname=([^,]+),x=([^,]+),y=([^,]+),label=([^,]+),type=([^,]+),color=([^,]+),width=([^,]+)");
 		atlasOMapper = new ATLASObjectMapper();
+		
 		outputToCI = core.getCIProducer();
 	}
 
@@ -176,6 +177,29 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 							System.out.println("Robot or computer " + mup.getVehicleName()
 									+ " not found in middleware internal state");
 						}
+					}
+				}
+			}
+			
+			for (String bvname : mission.getBehaviourVariableNames()) {
+				if (mup.keyStartMatches(bvname)) {
+					String val = mup.getValue();
+					String [] lines = mup.getKey().split("_");
+					
+					if (lines.length > 0) {
+						String vname = lines[lines.length - 1]; 
+						BehaviourVariableUpdate bup = new BehaviourVariableUpdate(vname, bvname, val);
+						try {
+							String msg = atlasOMapper.serialise(bup);
+							System.out.println("behaviour variable: sending " + msg);
+							outputToCI.sendMessage(msg);
+						} catch (JsonProcessingException e1) {
+							e1.printStackTrace();
+						} catch (JMSException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						System.out.println("Behaviour variable update " + mup.getKey() + " malformed - could not recognise valid vehicle name");
 					}
 				}
 			}

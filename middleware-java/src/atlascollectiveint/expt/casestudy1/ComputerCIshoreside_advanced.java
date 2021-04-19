@@ -368,4 +368,8 @@ public class ComputerCIshoreside_advanced {
 	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
+	
+	public static void BehaviourVariableHook(String key, String value, String robotName) {
+		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
+	}
 }

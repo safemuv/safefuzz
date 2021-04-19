@@ -217,7 +217,11 @@ public class MOOSCodeGen extends CARSCodeGen {
 
 			for (MOOSCommunity c : moossim.getAllCommunities()) {
 				c.registerSharedVars(moosSharedVars);
-
+				
+				// This will register ALL the behaviour variables
+				// regardless of whether the behaviours are active
+				c.registerSharedVars(mission.getBehaviourVariableNames());
+				
 				// ATLASDBWatch process must be created in the each community
 				// to watch the given variables for the middleware
 				createATLASLink(c, middlewareVars, atlasPort);
@@ -237,9 +241,7 @@ public class MOOSCodeGen extends CARSCodeGen {
 				PShareProcess ps = (PShareProcess)c.getProcess("pShare");
 				ps.setCatchAllOutputRecord();
 			}
-
-			// This returns a MOOS community without any faults
-			// There will be a later stage to modify the community to inject faults.
+			
 			return moossim;
 		} catch (MissingProperty mp) {
 			System.out.println("Conversion failed: component " + mp.getComponent() + " is missing property "
