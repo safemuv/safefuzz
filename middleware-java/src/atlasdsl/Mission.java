@@ -26,10 +26,12 @@ public class Mission {
 	
 	private List<String> behaviourVariables = new ArrayList<String>();
 	
+	private boolean stopOnNoEnergy;
 	private double endTime;
 	
-	public Mission(double endTime) {
+	public Mission(double endTime, boolean stopOnNoEnergy) {
 		this.endTime = endTime;
+		this.stopOnNoEnergy = stopOnNoEnergy;
 	}
 	
 	public List<Robot> getAllRobots() {
@@ -217,5 +219,9 @@ public class Mission {
 
 	public List<String> getBehaviourVariableNames() {
 		return behaviourVariables;
+	}
+	
+	public boolean stopOnNoEnergy() {
+		return stopOnNoEnergy;
 	}
 }

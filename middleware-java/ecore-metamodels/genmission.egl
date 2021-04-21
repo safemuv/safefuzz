@@ -18,7 +18,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		var computerNum = 0; 
 	%]
 	final double MISSION_END_TIME = [%= m.endTime %];
-	Mission mission = new Mission(MISSION_END_TIME);
+	final boolean STOP_ON_NO_ENERGY = [%= m.stopVehicleOnNoEnergy %];
+	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
 	[% for (c in m.computers) { %]
 	[% var computerName = "c" + computerNum++;	%]
@@ -286,6 +287,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 	mission.addFault(f[%= faultNum %]);
 	[% } %]
 	
+	[% for (bv in BehaviourVariable.allInstances()) { %]
+	 	mission.addBehaviourVariable("[%= bv.varName %]");
+	[% } %]
+		
 	[%} %] [* end Mission loop *]
 	return mission;
 	}

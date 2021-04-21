@@ -81,17 +81,18 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			core.getCARSTranslator().returnHome(robotName);
 		}
 		
-		if (ciCmd instanceof StartVehicle) {
-			StartVehicle startCmd = (StartVehicle)ciCmd;
-			// TODO: Check for any fault impacting the command here?
+		if (ciCmd instanceof VehicleStartStopCommand) {
+			VehicleStartStopCommand startCmd = (VehicleStartStopCommand)ciCmd;
+			boolean newStatus = startCmd.getNewStatus();
 			System.out.println("CIEventQueue - StartVehicle received");
-			core.getCARSTranslator().startRobot(robotName);
+			core.getCARSTranslator().vehicleStatusChange(robotName, newStatus);
 		}
 		
 		if (ciCmd instanceof SetCoordinates) {
 			SetCoordinates setCmd = (SetCoordinates)ciCmd;
 			// put the faults that impact the coordinate processing here
 			List<Point> coordinates = setCmd.getCoordinates();
+			int repeatCount = setCmd.getRepeatCount();
 
 			// Check for faults impacting the coordinates here
 			List<FaultInstance> fs = core.activeFaultsOfClass(MutateMessage.class);
@@ -120,7 +121,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 				}
 			}
 			
-			core.getCARSTranslator().setCoordinates(robotName, modifiedCoords);
+			core.getCARSTranslator().setCoordinates(robotName, modifiedCoords, repeatCount);
 		}
 	}
 }

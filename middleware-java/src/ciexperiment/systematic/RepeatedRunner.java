@@ -132,6 +132,9 @@ public class RepeatedRunner {
 		l.add(Metrics.AVOIDANCE_METRIC);
 		l.add(Metrics.TOTAL_ENERGY_AT_END);
 		l.add(Metrics.MEAN_ENERGY_AT_END);
+		l.add(Metrics.TOTAL_FINAL_DISTANCE_AT_END);
+		l.add(Metrics.MEAN_FINAL_DISTANCE_AT_END);
+		l.add(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT);
 		String sourceModelFile = "experiment-models/casestudy2/mission-basis.model";
 		String standardCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_standard";
 		String energyTrackingCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_energytracking";
@@ -143,7 +146,7 @@ public class RepeatedRunner {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-		expt_caseStudy1();
-		//expt_caseStudy2();
+		//expt_caseStudy1();
+		expt_caseStudy2();
 	}
 }

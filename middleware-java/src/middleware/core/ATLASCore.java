@@ -1,7 +1,9 @@
 package middleware.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,8 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 // This code will be combined with the simulator-specific code
 // during code generation
 public abstract class ATLASCore {
+	protected boolean stopOnNoEnergy = false;
+	
 	protected ATLASEventQueue<?> carsIncoming;
 	protected ATLASEventQueue<?> fromCI;
 	
@@ -32,6 +36,8 @@ public abstract class ATLASCore {
 	protected CARSTranslations carsOutput;
 	
 	protected FuzzingEngine fuzzEngine;
+	
+	protected Map<String,Boolean> vehicleBatteryFlat = new HashMap<String,Boolean>(); 
 	
 	private GUITest gui;
 
@@ -46,6 +52,7 @@ public abstract class ATLASCore {
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
+		stopOnNoEnergy = mission.stopOnNoEnergy();
 		this.timeLimit = mission.getEndTime();
 		this.monitor = new MissionMonitor(this, mission);
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
@@ -180,6 +187,14 @@ public abstract class ATLASCore {
 
 	public void registerEnergyUsage(Robot r, Point newLocation) {
 		r.registerEnergyUsage(newLocation);
+		if (stopOnNoEnergy) {
+			String robotName = r.getName();
+			if (r.noEnergyRemaining() && !vehicleBatteryFlat.containsKey(robotName)) {
+				vehicleBatteryFlat.put(robotName, true);
+				getCARSTranslator().stopVehicle(r.getName());
+				System.out.println("STOPPING VEHICLE " + r.getName() + " due to no energy remaining");
+			}
+		}
 	}
 
 	public double getRobotEnergyRemaining(Robot r) {

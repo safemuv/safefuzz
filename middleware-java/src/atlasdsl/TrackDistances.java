@@ -49,6 +49,7 @@ public class TrackDistances extends GoalAction {
 	protected Map<EnvironmentalObject, Double> sensorWorkingDistances = new HashMap<EnvironmentalObject, Double>();
 	
 	protected Map<String,Double> robotEnergy = new HashMap<String,Double>();
+	protected Map<Robot,Double> finalDists = new HashMap<Robot,Double>();
 	
 	protected Map<String, Geometry> obstacleGeometry = new HashMap<String, Geometry>();
 	protected Map<String, HashMap<String,CollisionRecord>> collisions  = new HashMap<String,HashMap<String,CollisionRecord>>();
@@ -124,6 +125,18 @@ public class TrackDistances extends GoalAction {
 	private void writeResultsOut() {
 		writtenYet = true;
 		try {
+			FileWriter output = new FileWriter("logs/robotDistancesAtEnd.log");
+			for (Map.Entry<Robot, Double> eo_d : finalDists.entrySet()) {
+				Robot r = eo_d.getKey();
+				double dist = eo_d.getValue();				
+				output.write(r.getName() + "," + dist + "\n");
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			FileWriter output = new FileWriter("logs/robotEnergyAtEnd.log");
 			for (Map.Entry<String, Double> eo_d : robotEnergy.entrySet()) {
 				String robotName = eo_d.getKey();
@@ -181,7 +194,19 @@ public class TrackDistances extends GoalAction {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private void getFinalDistFromStart() {
+		for (Robot r : mission.getAllRobots()) {
+			try {
+				Point currentLocation = r.getPointComponentProperty("location");
+				double finalDist = r.getPointComponentProperty("startLocation").distanceTo(currentLocation);
+				finalDists.put(r, finalDist);
+			} catch (MissingProperty m) {
+				System.out.println("WARNING: TrackDistances couldn't report final distance due to missing properties for robot " + r.getName());
+			}
+		}
+	}
+	
 	protected Optional<GoalResult> test(Mission mission, GoalParticipants participants) {
 		double time = core.getTime();
 		
@@ -191,6 +216,7 @@ public class TrackDistances extends GoalAction {
 
 		// If completion time is exceeded, write the results file
 		if ((time > completionTime) && !writtenYet) {
+			getFinalDistFromStart();
 			writeResultsOut();
 			return Optional.empty();
 		}

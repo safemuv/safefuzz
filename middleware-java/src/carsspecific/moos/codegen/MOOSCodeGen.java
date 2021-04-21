@@ -217,14 +217,21 @@ public class MOOSCodeGen extends CARSCodeGen {
 
 			for (MOOSCommunity c : moossim.getAllCommunities()) {
 				c.registerSharedVars(moosSharedVars);
+				String vehicleName = c.getCommunityName();
+				
+				List<String> middlewareVarsForCommunity = new ArrayList<String>(middlewareVars);
 				
 				// This will register ALL the behaviour variables
 				// regardless of whether the behaviours are active
-				c.registerSharedVars(mission.getBehaviourVariableNames());
+				// The vehicle name needs to be appended to the name in the
+				// generated code
+				for (String bv : mission.getBehaviourVariableNames()) {
+					middlewareVarsForCommunity.add(bv + "_" + vehicleName.toUpperCase());
+				}
 				
 				// ATLASDBWatch process must be created in the each community
 				// to watch the given variables for the middleware
-				createATLASLink(c, middlewareVars, atlasPort);
+				createATLASLink(c, middlewareVarsForCommunity, atlasPort);
 			}
 
 			// If there is a fuzzing engine, perform the fuzzing conversion

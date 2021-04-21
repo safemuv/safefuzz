@@ -323,7 +323,7 @@ public class ComputerCIshoreside_advanced {
 					robotIsConfirming.put(rName, false);
 					CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
 					API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
-							("UUV_COORDINATE_UPDATE_INIITAL_" + rName.toUpperCase()));
+							("UUV_COORDINATE_UPDATE_INIITIAL_" + rName.toUpperCase()));
 				}
 			}));
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1800.0">
   <mutProgram xmi:id="_xHiP8JxZEeuXP_f35b_qpg">
     <mutationGroups xmi:id="_7HP2YJzSEeun4sDYCEayRA" minRequiredFromGroup="3" maxRequiredFromGroup="4" members="_LLIJsJzTEeun4sDYCEayRA _I_DTsJzTEeun4sDYCEayRA _MGfmMJxZEeuXP_f35b_qpg _KOUjMJzTEeun4sDYCEayRA"/>
     <mutationGroups xmi:id="_U5CeAJ0WEeuIzfTA-1Y_Kw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_LLIJtZzTEeun4sDYCEayRA _LLIJuJzTEeun4sDYCEayRA"/>

@@ -29,8 +29,7 @@ public class StubDSLLoader implements DSLLoader {
 	}
 	
 	public Mission loadMission() throws DSLLoadFailed {
-		// TODO: get these consistent with the values in the report object diagram
-		Mission mission = new Mission(1200.0);
+		Mission mission = new Mission(1200.0, false);
 		Computer shoreside = new Computer("shoreside");
 		mission.addComputer(shoreside);
 		

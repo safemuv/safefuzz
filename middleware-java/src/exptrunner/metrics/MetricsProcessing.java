@@ -19,26 +19,23 @@ import exptrunner.jmetal.InvalidMetrics;
 public class MetricsProcessing {
 	private List<Metrics> metrics;
 	private FileWriter tempLog;
-	
+
 	public enum MetricStateKeys {
-		MISSION_END_TIME,
-		BENIGN_OBJECTS_IN_MISSION,
-		MALICIOUS_OBJECTS_IN_MISSION,
-		VERIFICATIONS_PER_BENIGN_OBJECT,
+		MISSION_END_TIME, BENIGN_OBJECTS_IN_MISSION, MALICIOUS_OBJECTS_IN_MISSION, VERIFICATIONS_PER_BENIGN_OBJECT,
 		VERIFICATIONS_PER_MALICIOUS_OBJECT,
 	}
-	
-	private HashMap<MetricStateKeys,Object> metricState = new HashMap<MetricStateKeys,Object>();
-	
+
+	private HashMap<MetricStateKeys, Object> metricState = new HashMap<MetricStateKeys, Object>();
+
 	public MetricsProcessing(List<Metrics> metrics, FileWriter tempLog) {
 		this.metrics = metrics;
 		this.tempLog = tempLog;
 	}
-	
+
 	public List<Metrics> getMetrics() {
 		return metrics;
 	}
-	
+
 	public int readObstacleFileObsCount(File obstacleFile) {
 		Scanner reader;
 		int count = 0;
@@ -59,7 +56,7 @@ public class MetricsProcessing {
 		}
 		return count;
 	}
-	
+
 	public void registerDetectionAtTime(Map<Integer, List<Double>> detectionInfo, double time, int label) {
 		if (!detectionInfo.containsKey(label)) {
 			detectionInfo.put(label, new ArrayList<Double>());
@@ -67,18 +64,18 @@ public class MetricsProcessing {
 		detectionInfo.get(label).add(time);
 	}
 
-	public Map<Metrics,Object> processMissedDetections(Map<Integer,Integer> remainingDetectionsTracker, double finalDetectionTime, Map<Metrics,Object> metricResults) {
+	public Map<Metrics, Object> processMissedDetections(Map<Integer, Integer> remainingDetectionsTracker,
+			double finalDetectionTime, Map<Metrics, Object> metricResults) {
 		// Set PURE_MISSED_DETECTIONS if needed
-		
+
 		int totalMissedDetections = 0;
-		for (Map.Entry<Integer,Integer> entry : remainingDetectionsTracker.entrySet()) {
+		for (Map.Entry<Integer, Integer> entry : remainingDetectionsTracker.entrySet()) {
 			totalMissedDetections += entry.getValue();
 		}
-		
+
 		if (metrics.contains(Metrics.PURE_MISSED_DETECTIONS)) {
 			metricResults.put(Metrics.PURE_MISSED_DETECTIONS, totalMissedDetections);
 		}
-		
 
 		if (metrics.contains(Metrics.DETECTION_COMPLETION_TIME)) {
 			double endTime;
@@ -86,16 +83,16 @@ public class MetricsProcessing {
 				endTime = finalDetectionTime;
 				metricResults.put(Metrics.DETECTION_COMPLETION_TIME, finalDetectionTime);
 			} else {
-				endTime = (double)metricState.get(MetricStateKeys.MISSION_END_TIME); 
+				endTime = (double) metricState.get(MetricStateKeys.MISSION_END_TIME);
 			}
 			metricResults.put(Metrics.DETECTION_COMPLETION_TIME, endTime);
 		}
-		
+
 		return metricResults;
 	}
-	
-	public Map<Metrics,Object> readMetricsFromLogFiles(String logFileDir) throws InvalidMetrics {
-		
+
+	public Map<Metrics, Object> readMetricsFromLogFiles(String logFileDir) throws InvalidMetrics {
+
 		// Read the goal result file here - process the given goals
 		// Write it out to a common result file - with the fault info
 		File f = new File(logFileDir + "/goalLog.log");
@@ -103,18 +100,19 @@ public class MetricsProcessing {
 		File robotDistFile = new File(logFileDir + "/robotDistances.log");
 		File obstacleFile = new File(logFileDir + "/obstacleCollisions.log");
 		File energyFile = new File(logFileDir + "/robotEnergyAtEnd.log");
-		
+		File distFile = new File(logFileDir + "/robotDistancesAtEnd.log");
+
 		int detections = 0;
 		int avoidanceViolations = 0;
 		int checkDetectionCount = 0;
 		double finalDetectionTime = 0.0;
-		
+
 		int outsideRegionViolations = 0;
 
 		double firstFaultTime = Double.MAX_VALUE;
-		
-		Map<Metrics,Object> metricResults = new HashMap<Metrics,Object>();
-		Map<Integer,Integer> remainingDetectionsTracker = new HashMap<Integer,Integer>();
+
+		Map<Metrics, Object> metricResults = new HashMap<Metrics, Object>();
+		Map<Integer, Integer> remainingDetectionsTracker = new HashMap<Integer, Integer>();
 
 		// The map entry stores as a pair the number of detections and the latest time
 		Map<Integer, List<Double>> detectionInfo = new HashMap<Integer, List<Double>>();
@@ -128,13 +126,13 @@ public class MetricsProcessing {
 				String goalClass = fields[0];
 				if (goalClass.equals("atlasdsl.DiscoverObjects")) {
 					String nature = fields[1];
-					
+
 					if (nature.equals("LOOKINGFOR")) {
 						int objectID = Integer.parseInt(fields[2]);
 						int remainingDetections = Integer.parseInt(fields[3]);
 						remainingDetectionsTracker.put(objectID, remainingDetections);
 					}
-					
+
 					if (nature.equals("FOUND")) {
 						double time = Double.parseDouble(fields[2]);
 						String robot = fields[3];
@@ -142,11 +140,11 @@ public class MetricsProcessing {
 						int remainingDetections = Integer.parseInt(fields[5]);
 						checkDetectionCount++;
 						registerDetectionAtTime(detectionInfo, time, objectID);
-					
+
 						if (time > finalDetectionTime) {
 							finalDetectionTime = time;
 						}
-					
+
 						remainingDetectionsTracker.put(objectID, remainingDetections);
 					}
 				}
@@ -158,10 +156,10 @@ public class MetricsProcessing {
 						firstFaultTime = time;
 					}
 				}
-				
+
 				if (goalClass.equals("atlasdsl.StayInRegion")) {
 					int count = Integer.parseInt(fields[1]);
-					outsideRegionViolations = Math.max(count,outsideRegionViolations);
+					outsideRegionViolations = Math.max(count, outsideRegionViolations);
 				}
 			}
 
@@ -190,7 +188,6 @@ public class MetricsProcessing {
 				System.out.println("Robot dist to label " + label + "=" + dist + "\n");
 			}
 
-
 			reader.close();
 
 			reader = new Scanner(robotDistFile);
@@ -207,49 +204,102 @@ public class MetricsProcessing {
 
 			List<String> names = new ArrayList<String>();
 
+			if (metrics.contains(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT)) {
+				Scanner swReader;
+				swReader = new Scanner("/tmp/waypointCount.log");
+				double count = 0;
+
+				while (swReader.hasNextLine()) {
+					String line = swReader.nextLine();
+					String[] fields = line.split(",");
+					String name = fields[0];
+					int energyOnRobot = Integer.parseInt(fields[1]);
+					System.out.println("Robot " + name + " has energy " + energyOnRobot);
+					count += energyOnRobot;
+				}
+
+				if (metrics.contains(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT)) {
+					metricResults.put(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT, count);
+				}
+				swReader.close();
+			}
+
+			if (metrics.contains(Metrics.TOTAL_FINAL_DISTANCE_AT_END)
+					|| metrics.contains(Metrics.MEAN_FINAL_DISTANCE_AT_END)) {
+				Scanner distReader;
+				try {
+					distReader = new Scanner(distFile);
+					double distTotal = 0.0;
+					double count = 0;
+
+					while (distReader.hasNextLine()) {
+						String line = distReader.nextLine();
+						String[] fields = line.split(",");
+						String name = fields[0];
+						Double distForRobot = Double.parseDouble(fields[1]);
+						System.out.println("Robot " + name + " has energy " + distForRobot);
+						distTotal += distForRobot;
+						count++;
+					}
+
+					if (metrics.contains(Metrics.TOTAL_FINAL_DISTANCE_AT_END)) {
+						metricResults.put(Metrics.TOTAL_FINAL_DISTANCE_AT_END, distTotal);
+					}
+
+					if (metrics.contains(Metrics.MEAN_FINAL_DISTANCE_AT_END)) {
+						double meanEnergy = distTotal / count;
+						metricResults.put(Metrics.MEAN_FINAL_DISTANCE_AT_END, meanEnergy);
+					}
+					distReader.close();
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+
 			if (metrics.contains(Metrics.TOTAL_ENERGY_AT_END) || metrics.contains(Metrics.MEAN_ENERGY_AT_END)) {
 				Scanner energyReader;
 				try {
 					energyReader = new Scanner(energyFile);
 					double energyTotal = 0.0;
 					double count = 0;
-					
+
 					while (energyReader.hasNextLine()) {
 						String line = energyReader.nextLine();
-						String [] fields = line.split(",");
+						String[] fields = line.split(",");
 						String name = fields[0];
 						Double energyOnRobot = Double.parseDouble(fields[1]);
 						System.out.println("Robot " + name + " has energy " + energyOnRobot);
 						energyTotal += energyOnRobot;
 						count++;
 					}
-					
+
 					if (metrics.contains(Metrics.TOTAL_ENERGY_AT_END)) {
 						metricResults.put(Metrics.TOTAL_ENERGY_AT_END, energyTotal);
 					}
-					
+
 					if (metrics.contains(Metrics.MEAN_ENERGY_AT_END)) {
 						double meanEnergy = energyTotal / count;
 						metricResults.put(Metrics.MEAN_ENERGY_AT_END, meanEnergy);
-					}	
+					}
 					energyReader.close();
-					
+
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} finally {
-					
+
 				}
 			}
-			
+
 			metricResults = processMissedDetections(remainingDetectionsTracker, finalDetectionTime, metricResults);
-			
+
 			if (metrics.contains(Metrics.OUTSIDE_REGION_COUNT)) {
 				metricResults.put(Metrics.OUTSIDE_REGION_COUNT, outsideRegionViolations);
 			}
 
 			if (metrics.contains(Metrics.OBSTACLE_AVOIDANCE_METRIC)) {
-					int obstacleCollisionCount = readObstacleFileObsCount(obstacleFile);
-					metricResults.put(Metrics.OBSTACLE_AVOIDANCE_METRIC, obstacleCollisionCount);
+				int obstacleCollisionCount = readObstacleFileObsCount(obstacleFile);
+				metricResults.put(Metrics.OBSTACLE_AVOIDANCE_METRIC, obstacleCollisionCount);
 			}
 
 			if (metrics.contains(Metrics.AVOIDANCE_METRIC)) {
@@ -257,34 +307,32 @@ public class MetricsProcessing {
 			}
 
 			String info = String.join(",", names);
-		
-			String logRes = metricResults.entrySet().stream().
-					map(e -> e.getKey() + "=" + e.getValue()).
-					collect(Collectors.joining(","));
+
+			String logRes = metricResults.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue())
+					.collect(Collectors.joining(","));
 
 			System.out.println(info + "\n");
 			System.out.println(logRes + "\n");
 			tempLog.write(logRes + "\n");
 			tempLog.flush();
-			
-			
+
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return metricResults;
 	}
 
 	public Metrics getMetricByID(int i) {
 		return metrics.get(i);
 	}
-	
+
 	public void setMetricState(MetricStateKeys key, Object o) {
-		metricState.put(key,o);
+		metricState.put(key, o);
 	}
-	
+
 	public void clearMetricState() {
 		metricState.clear();
 	}

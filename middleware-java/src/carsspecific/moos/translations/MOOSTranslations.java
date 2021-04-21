@@ -37,8 +37,20 @@ public class MOOSTranslations extends CARSTranslations {
 		}
 	}
 	
-	public synchronized void startRobot(String robotName) { 
+	public synchronized void stopVehicle(String robotName) {
+		sendCARSUpdate(robotName, "MOOS_MANUAL_OVERRIDE", "true");
+	}
+	
+	public synchronized void startVehicle(String robotName) {
 		sendCARSUpdate(robotName, "MOOS_MANUAL_OVERRIDE", "false");
+	}
+	
+	public synchronized void vehicleStatusChange(String robotName, boolean newStatus) {
+		if (newStatus) {
+			startVehicle(robotName);
+		} else {
+			stopVehicle(robotName);
+		}
 	}
 	
 	private static String pointListToMOOSPolyString(List<Point> coords) {
@@ -49,6 +61,11 @@ public class MOOSTranslations extends CARSTranslations {
 	}
 	
 	public synchronized void setCoordinates(String robotName, List<Point> coords) {
+		setCoordinates(robotName, coords, SET_COORDINATES_REPEAT_COUNT);
+	}
+	
+	public synchronized void setCoordinates(String robotName, List<Point> coords, int repeatCount) {
+		sendCARSUpdate(robotName, "UP_WAYPOINT", "repeat=" + repeatCount);
 		String polyUpdate = "polygon=" + pointListToMOOSPolyString(coords) + ":label," + robotName + "_LOITER";
 		System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
 		sendCARSUpdate(robotName, "UP_WAYPOINT", polyUpdate);

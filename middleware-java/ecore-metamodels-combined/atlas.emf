@@ -369,6 +369,16 @@ class Goal {
 	val GoalParticipants participants;
 	val GoalAction action;
 	val GoalRegion[0..1] region;
+	ref Behaviour[*] behaviours;
+}
+
+class BehaviourVariable {
+	attr String varName;
+}
+
+class Behaviour {
+	attr String className;
+	val BehaviourVariable[*] bvars;
 }
 
 class Mission {
@@ -377,10 +387,12 @@ class Mission {
 	val Computer[*] computers;
 	val Region[*] regions;
 	val Goal[*] goals;
+	val Behaviour[*] behaviours;
 	val EnvironmentalObject[*] objects;
 	val EnvironmentalObstacle[*] obstacles;
 	val EnvironmentalObstacleRegion obstacleRegion;
 	val Message[*] messages;
 	val Fault[*] faults;
 	attr double endTime;
+	attr boolean stopVehicleOnNoEnergy;
 }

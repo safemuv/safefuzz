@@ -9,9 +9,10 @@ import atlascollectiveintgenerator.CollectiveIntActiveMQProducer;
 import atlassharedclasses.*;
 
 public class API {
-	// TODO: to add to the API - speed change requests from the CI
+	// TODO: to add to the API - speed change requests from the CI?
 	
 	private static boolean DEBUG_POLYGON_COORDS = true;
+	private static int DEFAULT_PATROL_REPEAT_COUNT = 10;
 	
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	private static CollectiveInt ci;
@@ -59,19 +60,27 @@ public class API {
 	
 	///////////////////////////////// API COMMANDS HERE //////////////////////////////////////////////////////////
 		
-	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
+	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName, int repeatCount) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		System.out.println("region =\n" + r);
-		//System.out.println("coords =\n" + coords);
 		if (DEBUG_POLYGON_COORDS) {
 			System.out.println("coords=" + coords.toString());
 		}
-		BehaviourCommand cmd = new SetCoordinates(coords, MessageName);
+		BehaviourCommand cmd = new SetCoordinates(coords, repeatCount, MessageName);
 		sendOrIgnore(cmd, robotName);
 	}
 	
+	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
+		setPatrolAroundRegion(robotName, r, stepSize, MessageName, DEFAULT_PATROL_REPEAT_COUNT);
+	}
+	
 	public static void startVehicle(String robotName) {
-		BehaviourCommand cmd = new StartVehicle(robotName);
+		BehaviourCommand cmd = new VehicleStartStopCommand(robotName, true);
+		sendOrIgnore(cmd, robotName);
+	}
+	
+	public static void stopVehicle(String robotName) {
+		BehaviourCommand cmd = new VehicleStartStopCommand(robotName, false);
 		sendOrIgnore(cmd, robotName);
 	}
 	

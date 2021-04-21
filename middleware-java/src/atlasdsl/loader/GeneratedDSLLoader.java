@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
 	final double MISSION_END_TIME = 1200.0;
-	Mission mission = new Mission(MISSION_END_TIME);
+	final boolean STOP_ON_NO_ENERGY = true;
+	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
 	Computer c1 = new Computer("shoreside");
 	mission.addComputer(c1);
@@ -221,9 +222,40 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		mission.addGoal("returnOnLowEnergy", returnOnLowEnergy);
+ 
+ 
+		
+		Robot [] grp4 = {rhenry,rgilda}; 
+		GoalParticipants gpmultipleSensorSweeps = new StaticParticipants(grp4, mission);
+		
+		
+		
+		GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, 1200.0);
+		
+		GoalAction ga4 = new SensorCover(0.0, 0, SensorType.SONAR);
+		
+		
+		
+		
+		
+		
+		GoalRegion grmultipleSensorSweeps = new StaticGoalRegion(
+			new Region(new Point(30.0, -140.0, 0.0),
+			           new Point(120.0, -20.0, 0.0)));
+		
+		
+		Goal multipleSensorSweeps = new Goal("multipleSensorSweeps", mission, gt4, gpmultipleSensorSweeps, Optional.of(grmultipleSensorSweeps), ga4);
+		
+		
+		mission.addGoal("multipleSensorSweeps", multipleSensorSweeps);
 	
-		mission.addBehaviourVariable("WAYPOINT_COMPLETE");
+
 	
+	
+	
+	 	mission.addBehaviourVariable("WAYPOINT_COMPLETE");
+	
+		
 	return mission;
 	}
 }

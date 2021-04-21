@@ -115,6 +115,7 @@ public class Robot extends Component {
 				MotionSource ms = ms_o.get();
 				double energyConsumed = ms.getEnergyPerDistance() * distanceTravelled;
 				currentEnergy -= energyConsumed;
+				currentEnergy = Math.max(currentEnergy, 0.0);
 				if (ROBOT_ENERGY_DEBUGGING) {
 					System.out.println("Robot " + getName() + " distanceTravelled = " + distanceTravelled +",energyConsumed = " + energyConsumed + ",currentEnergy = " + currentEnergy);
 				}
@@ -142,5 +143,9 @@ public class Robot extends Component {
 	public void depleteEnergy(double fixedEnergyLoss) {
 		currentEnergy -= fixedEnergyLoss;
 		System.out.println("depleteEnergy: robot " + getName() + " experienced energy loss of " + fixedEnergyLoss + ",currentEnergy = " + currentEnergy);
+	}
+	
+	public boolean noEnergyRemaining() {
+		return (currentEnergy <= 0.0);
 	}
 }
