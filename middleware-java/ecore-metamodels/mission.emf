@@ -1,0 +1,161 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/mission", prefix="atlas")
+package Atlas;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults";
+
+class GoalResultField {
+	attr String name;
+}
+
+class IntResultField extends GoalResultField {
+	attr int value;
+}
+
+class StringResultField extends GoalResultField {
+	attr String value;
+}
+
+class FloatResultField extends GoalResultField {
+	attr float value;
+}
+
+class RobotResultField extends GoalResultField {
+	
+}
+
+class PointResultField extends GoalResultField {
+	
+}
+
+class GoalResult {
+	val GoalResultField[0..*] contents;	
+}
+
+abstract class GoalAction {
+	
+}
+
+class Visit extends GoalAction {
+	
+}
+
+class Patrol extends GoalAction {
+	
+}
+
+class Cover extends GoalAction {
+	
+}
+
+class Avoid extends GoalAction {
+	
+}
+
+class TrackDistances extends GoalAction {
+	
+}
+
+class ReturnOnLowEnergy extends GoalAction {
+	attr double energyThreshold;
+}
+
+class StayInRegion extends GoalAction {
+	attr boolean stopOnFirstViolation;
+}
+
+class AvoidOthers extends GoalAction {
+	attr double clearance;
+	attr boolean advancedAvoidance;
+}
+
+class DiscoverObjects extends GoalAction {
+	ref Atlas.EnvironmentalObject[*] objects;
+	attr int verificationsMalicious;
+	attr int verificationsBenign;
+}
+
+class SensorCover extends Cover {
+	attr double density;
+	attr int samplesPerUnit;
+	attr Atlas.SensorType sensortype;
+	attr boolean collective;
+}
+
+abstract class GoalParticipants {
+	
+}
+
+enum logicOps {
+	ADD = 1;
+	SUBTRACT = 2;
+}
+
+class RelativeParticipants extends GoalParticipants {
+	ref Goal parentGoal;
+	ref StaticParticipants staticRobots;
+	attr logicOps setOperation;
+	attr String fieldName;
+	attr int participantLimit;
+}
+
+class StaticParticipants extends GoalParticipants {
+	ref Atlas.Robot[*] participants;
+}
+
+class GoalTemporalConstraints {
+	ref Goal[*] dependencies;
+	attr double earliestStartTime;
+	attr double latestFinishTime;
+}
+
+abstract class GoalRegion {
+	
+}
+
+class StaticGoalRegion extends GoalRegion {
+	val Atlas.Rectangle staticRegion;
+}
+
+class DynamicGoalRegion extends GoalRegion {
+	ref Goal[1] relativeToGoal;
+	attr String relativeToGoalField;
+	attr double relativeRange;
+}
+
+class Goal {
+	attr String name;
+	attr int priority;
+	val GoalTemporalConstraints requirements;
+	val GoalParticipants participants;
+	val GoalAction action;
+	val GoalRegion[0..1] region;
+	ref Behaviour[*] behaviours;
+}
+
+class BehaviourVariable {
+	attr String varName;
+}
+
+class Behaviour {
+	attr String className;
+	val BehaviourVariable[*] bvars;
+}
+
+class Mission {
+	val Atlas.MutationProgram[1] mutProgram;
+	val Atlas.Robot[*] robots;
+	val Atlas.Computer[*] computers;
+	val Atlas.Region[*] regions;
+	val Goal[*] goals;
+	val Behaviour[*] behaviours;
+	val Atlas.EnvironmentalObject[*] objects;
+	val Atlas.EnvironmentalObstacle[*] obstacles;
+	val Atlas.EnvironmentalObstacleRegion obstacleRegion;
+	val Atlas.Message[*] messages;
+	val Atlas.Fault[*] faults;
+	attr double endTime;
+	attr boolean stopVehicleOnNoEnergy;
+}

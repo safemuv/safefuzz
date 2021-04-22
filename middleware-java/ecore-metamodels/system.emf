@@ -1,0 +1,83 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/system", prefix="atlas")
+package Atlas;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults";
+
+// System mapping model: map abstract components (under ATLAS component layer) to real process implementations
+// Abstract sensor may be depedent on multiple processes on different robots!
+// For components, specify the variables they contain and their links from source to dest
+// System mapping model: links to these
+
+class SystemModel {
+	val Simulator[*] sims;
+}
+
+class Simulator {
+	attr String name;
+	val SimEntity[*] entities;
+}
+
+enum EntityNature {
+	ROBOT = 1;
+	COMPUTER = 2;
+	ROUTING_NODE = 3;
+	//...
+}
+
+enum BasicVariableType {
+	CUSTOM = 1;
+	STRING = 2;
+	DOUBLE = 3;
+}
+
+
+// This represents e.g. different classes of robots
+class SimEntity {
+	attr String name;
+	attr EntityNature nature;
+}
+
+// This represents e.g. a MOOS or ROS process
+class LowLevelComponent {
+	attr String name;
+	ref Atlas.Component[*] generalComponents;
+	//val ComponentImplementation[*]#parent impls; 
+}
+
+// For, e.g. handling multiple implementations of an algorithm
+class ComponentImplementation {
+	attr String a;
+	readonly ref LowLevelComponent[1]#impls parent;
+	attr String path; // or other identifying details for name?
+}
+
+class CommunicationChannel {
+	val LowLevelComponent[1..*] sources;
+	val LowLevelComponent[1..*] dests;
+	ref Atlas.Message[1] generalMessage; // link a comms channel to a general message
+	val ChannelVariable cvar;
+	// Dependencies between channels - to represent e.g. sequencing of messages?
+}
+
+abstract class ChannelVariable {
+	
+}
+
+class BasicVariable extends ChannelVariable {
+	attr String variable;
+	val BasicVariableType vtype;
+	readonly ref CommunicationChannel parent;
+	// Formatting information
+}
+
+class MultiFieldVariable extends ChannelVariable {
+	attr String variableName;
+	val String key;
+	readonly ref CommunicationChannel parent;
+}
+
+// How to represent e.g. vname=<>,width=<>,pd=<>
+// Variable has multiple fields in a CSV, each is a seperate field in a message? Seperate channel
