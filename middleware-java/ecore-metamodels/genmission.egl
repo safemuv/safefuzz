@@ -52,6 +52,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 			[% var subID = "s" + robotName + "_" + subCNum++; %] 
 			[% componentLookup.put(subc, subID); %]
 			[% if (subc.isKindOf(Sensor)) { %]
+		// SENSORNAME=[%= subc.name %]
 		Sensor [%= subID %] = new Sensor(SensorType.[%= subc.type %]);
 		[%= subID %].setParent([%= robotName %]);
 				[* set subcomponent properties here *]

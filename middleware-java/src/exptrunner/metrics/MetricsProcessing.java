@@ -5,15 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import atlasdsl.Mission;
 import exptrunner.jmetal.InvalidMetrics;
 
 public class MetricsProcessing {
@@ -206,11 +203,12 @@ public class MetricsProcessing {
 
 			if (metrics.contains(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT)) {
 				Scanner swReader;
-				swReader = new Scanner("/tmp/waypointCount.log");
+				swReader = new Scanner(new File("/tmp/waypointCount.log"));
 				double count = 0;
 
 				while (swReader.hasNextLine()) {
 					String line = swReader.nextLine();
+					System.out.println("line = " + line);
 					String[] fields = line.split(",");
 					String name = fields[0];
 					int energyOnRobot = Integer.parseInt(fields[1]);

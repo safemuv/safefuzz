@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import utils.ExptHelper;
 
-import atlasdsl.*;
-
 public class RunExperiment {
 
 	// TODO: no more fixed paths
