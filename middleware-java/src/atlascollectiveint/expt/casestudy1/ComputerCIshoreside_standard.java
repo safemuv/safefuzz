@@ -261,7 +261,7 @@ public class ComputerCIshoreside_standard {
 				}
 				
 				API.setPatrolAroundRegion(robot, region, sensorWidth,
-						("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
+						("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()), 1);
 
 				CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 				robotSweepRegions.put(robot, region);
@@ -349,7 +349,12 @@ public class ComputerCIshoreside_standard {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
 	
-	public static void BehaviourVariableHook(String key, String value, String robotName) {
+	public static void BehaviourVariableHook(String key, String value, String robotName_uc) {
+		String robotName = robotName_uc.toLowerCase();
 		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
+		
+		if (!robotIsConfirming.get(robotName)) {
+			API.returnHome(robotName.toLowerCase());
+		}
 	}
 }

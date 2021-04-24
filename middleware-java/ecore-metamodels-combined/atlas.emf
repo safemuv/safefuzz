@@ -188,14 +188,6 @@ enum MutationAlgorithm {
 	GA_SEARCH;
 }
 
-class NamedComponent extends Component {
- attr String name; 
-}
-
-abstract class Subcomponent extends Component {
- 
-}
-
 class Robot extends Component {
 }
 
@@ -212,26 +204,26 @@ enum ActuatorType {
  MOTOR = 1;
 }
 
-class Sensor extends Subcomponent {
+class Sensor extends Component {
  attr SensorType type;
  attr String[1..*] detections;
 }
 
-class Actuator extends Subcomponent {
+class Actuator extends Component {
  attr ActuatorType type;
  attr String[1..*] commands;
 }
 
-class ProcessingUnit extends Subcomponent {
+class ProcessingUnit extends Component {
  
 }
 
-class MotionSource extends Subcomponent {
+class MotionSource extends Component {
  	attr double energyPerDistance;
  	attr String[0..*] params;
 }
 
-abstract class EnergyResource extends Subcomponent {
+abstract class EnergyResource extends Component {
  
 }
 

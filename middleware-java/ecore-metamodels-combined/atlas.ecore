@@ -165,10 +165,6 @@
     <eLiterals name="RANDOM_SEARCH"/>
     <eLiterals name="GA_SEARCH" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NamedComponent" eSuperTypes="#//Component">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Subcomponent" abstract="true" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="Robot" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="Computer" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EEnum" name="SensorType">
@@ -179,23 +175,23 @@
   <eClassifiers xsi:type="ecore:EEnum" name="ActuatorType">
     <eLiterals name="MOTOR" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Sensor" eSuperTypes="#//Subcomponent">
+  <eClassifiers xsi:type="ecore:EClass" name="Sensor" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//SensorType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="detections" lowerBound="1"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Actuator" eSuperTypes="#//Subcomponent">
+  <eClassifiers xsi:type="ecore:EClass" name="Actuator" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ActuatorType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="commands" lowerBound="1"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProcessingUnit" eSuperTypes="#//Subcomponent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MotionSource" eSuperTypes="#//Subcomponent">
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessingUnit" eSuperTypes="#//Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MotionSource" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="energyPerDistance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="params" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EnergyResource" abstract="true" eSuperTypes="#//Subcomponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EnergyResource" abstract="true" eSuperTypes="#//Component"/>
   <eClassifiers xsi:type="ecore:EClass" name="Battery" eSuperTypes="#//EnergyResource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalEnergy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>

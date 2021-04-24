@@ -369,7 +369,13 @@ public class ComputerCIshoreside_advanced {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
 	
-	public static void BehaviourVariableHook(String key, String value, String robotName) {
+	public static void BehaviourVariableHook(String key, String value, String robotName_uc) {
+		String robotName = robotName_uc.toLowerCase();
 		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
+		
+		if (!robotIsConfirming.get(robotName)) {
+			API.returnHome(robotName.toLowerCase());
+		}
+		// Need to get the time and put it in here... don't do the returning, simply log the time
 	}
 }

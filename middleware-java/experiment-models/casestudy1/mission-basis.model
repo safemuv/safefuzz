@@ -133,6 +133,9 @@
       </staticRegion>
     </region>
   </goals>
+  <behaviours xmi:id="_YhyHgKSDEeuQyL0nmvHVPQ" className="BHV_Waypoint">
+    <bvars xmi:id="_aKrX8KSDEeuQyL0nmvHVPQ" varName="WAYPOINT_COMPLETE"/>
+  </behaviours>
   <objects xmi:id="_DXIVsHRpEeqNXdfjikxLMQ" y="-55.0" label="1"/>
   <objects xmi:id="_D2ADAHRpEeqNXdfjikxLMQ" x="185.0" y="-45.0" isHazard="true" label="2"/>
   <objects xmi:id="_EPx08HRpEeqNXdfjikxLMQ" x="80.0" y="-100.0" label="3"/>

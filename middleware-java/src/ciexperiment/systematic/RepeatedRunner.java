@@ -146,7 +146,7 @@ public class RepeatedRunner {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-		//expt_caseStudy1();
-		expt_caseStudy2();
+		expt_caseStudy1();
+		//expt_caseStudy2();
 	}
 }
