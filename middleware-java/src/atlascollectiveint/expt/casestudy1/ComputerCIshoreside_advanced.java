@@ -16,6 +16,8 @@ import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import atlassharedclasses.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.Double;
 import java.lang.String;
 import java.util.ArrayList;
@@ -42,9 +44,14 @@ public class ComputerCIshoreside_advanced {
 	private static HashMap<String, Region> robotSweepRegions = new LinkedHashMap<String, Region>();
 	private static HashMap<String, Double> robotSpeeds = new LinkedHashMap<String, Double>();
 	
+	private static HashMap<String, Double> robotCompleteTimes = new LinkedHashMap<String,Double>();
+	
 	
 	private static final Region DEFAULT_REGION = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
 	private static Region fullRegion = DEFAULT_REGION;
+	
+	private static final double END_TIME = 1800.0;
+	private static final double END_TIME_OFFSET = 10.0;
 	
 	private static int numberOfVerificationsMalicious;
 	private static int numberOfVerificationsBenign;
@@ -294,6 +301,13 @@ public class ComputerCIshoreside_advanced {
 				CollectiveIntLog.logCI("Starting camera robot " + robot);
 			}
 			
+			// Record the count at the endtime
+			OneOffTimer tEnd = OneOffTimer.atTime((END_TIME - END_TIME_OFFSET), (t -> {
+				recordTimings();
+			}));
+			
+			API.registerTimer("recordTimings", tEnd);
+			
 		} catch (DSLLoadFailed e1) {
 			CollectiveIntLog.logCI("DSL Loading Failed");
 			e1.printStackTrace();
@@ -301,6 +315,22 @@ public class ComputerCIshoreside_advanced {
 			CollectiveIntLog.logCI("Missing property during processing");
 			e1.printStackTrace();
 		}
+	}
+	
+	private static void recordTimings() {
+		try {
+			FileWriter output = new FileWriter("/tmp/completeTimings.log");
+			for (String robotName : sweepRobots) {
+				double time = END_TIME;
+				if (robotCompleteTimes.containsKey(robotName)) {
+					time = robotCompleteTimes.get(robotName);
+				}
+				output.write(robotName + "," + time + "\n");
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	public static void verifyOneRobot(SensorDetection detection, List<String> candidateRobots,
@@ -369,13 +399,15 @@ public class ComputerCIshoreside_advanced {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
 	
-	public static void BehaviourVariableHook(String key, String value, String robotName_uc) {
+	public static void BehaviourVariableHook(String key, String value, String robotName_uc, Double timeNow) {
 		String robotName = robotName_uc.toLowerCase();
 		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
 		
 		if (!robotIsConfirming.get(robotName)) {
-			API.returnHome(robotName.toLowerCase());
+			if (!robotCompleteTimes.containsKey(robotName)) {
+				robotCompleteTimes.put(robotName, timeNow);
+				//API.returnHome(robotName.toLowerCase());
+			}
 		}
-		// Need to get the time and put it in here... don't do the returning, simply log the time
 	}
 }

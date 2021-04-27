@@ -104,7 +104,7 @@ public class ComputerCIshoreside_standard {
 
 	}
 	
-	public static void BehaviourVariableHook(String key, String value, String robotName) {
+	public static void BehaviourVariableHook(String key, String value, String robotName, Double timeNow) {
 		incrementCompleteCount(robotName);
 		System.out.println("Waypoint complete count incremented for " + robotName + " to " + waypointCompleteCounts.get(robotName));
 	}

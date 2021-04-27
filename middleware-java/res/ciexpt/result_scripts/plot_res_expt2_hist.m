@@ -1,6 +1,6 @@
-function plot_res_expt2_hist(metric_col, filename, metric_name,xmin,xmax)
-	m = dlmread("ciexpt-casestudy2.res", ",");
-inds_even = 2*(1:size(m)/2);
+function plot_res_expt2_hist(resfile, metric_col, filename, metric_name,xmin,xmax)
+	m = dlmread(resfile, ",");
+	inds_even = 2*(1:size(m)/2);
 	inds_odd = inds_even-1;
 	even_rows = m(inds_even,:)
 	odd_rows = m(inds_odd,:)

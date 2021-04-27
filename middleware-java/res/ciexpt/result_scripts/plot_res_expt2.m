@@ -1,5 +1,5 @@
-function plot_res_expt2_int_metric(metric_col, filename, metric_name)
-	m = dlmread("ciexpt-casestudy2.res", ",");
+function plot_res_expt2_int_metric(resfile, metric_col, filename, metric_name)
+	m = dlmread(resfile, ",");
         inds_even = 2*(1:size(m)/2)
 	inds_odd = inds_even-1;
 	even_rows = m(inds_even,:)

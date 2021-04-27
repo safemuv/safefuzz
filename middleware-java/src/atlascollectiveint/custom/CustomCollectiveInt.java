@@ -28,7 +28,7 @@ public class CustomCollectiveInt extends CollectiveInt {
 		gpsMethod = ciClass.getDeclaredMethod("GPS_POSITIONDetectionHook", Double.class, Double.class, String.class);
 		cameraMethod = ciClass.getDeclaredMethod("CAMERADetectionHook", SensorDetection.class, String.class);
 		energyMethod = ciClass.getDeclaredMethod("EnergyUpdateHook", EnergyUpdate.class, String.class);
-		bvUpdateMethod = ciClass.getDeclaredMethod("BehaviourVariableHook", String.class, String.class, String.class);
+		bvUpdateMethod = ciClass.getDeclaredMethod("BehaviourVariableHook", String.class, String.class, String.class, Double.class);
 		initMethod = ciClass.getDeclaredMethod("init");
 		System.out.println("Looked up all methods on CI class successfully");
 	}
@@ -78,7 +78,7 @@ public class CustomCollectiveInt extends CollectiveInt {
 				Optional<BehaviourVariableUpdate> bv_o = a.getBehaviourUpdate();
 				if (bv_o.isPresent()) {
 					BehaviourVariableUpdate bv = bv_o.get();
-					bvUpdateMethod.invoke(null, bv.getVariableName(), bv.getVariableValue(), bv.getVehicleName());
+					bvUpdateMethod.invoke(null, bv.getVariableName(), bv.getVariableValue(), bv.getVehicleName(), timeNow);
 				}
 			}
 			

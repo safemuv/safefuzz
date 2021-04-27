@@ -130,7 +130,7 @@ public class ComputerCIshoreside_energytracking {
 		}
 	}
 	
-	public static void BehaviourVariableHook(String key, String value, String robotNameUppercase) {
+	public static void BehaviourVariableHook(String key, String value, String robotNameUppercase, Double timeNow) {
 		String robotName = robotNameUppercase.toLowerCase();
 		incrementCompleteCount(robotName);
 		System.out.println("Waypoint complete count incremented for " + robotName + " to " + waypointCompleteCounts.get(robotName));

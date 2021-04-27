@@ -23,13 +23,13 @@ import exptrunner.metrics.MetricsProcessing.MetricStateKeys;
 import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
-public class RepeatedRunner {
+public class RepeatedRunnerSingleModel {
 	private static final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
 	
 	public static ModelsTransformer modelTransformer = new ModelsTransformer();
 	public static ModelEGLExecutor modelExecutor = new ModelEGLExecutor();
 
-	public static void runCIExptLoop(ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit, List<String> ciOptions) throws InterruptedException, IOException {
+	public static void runCIRepeatedModel(ExptParams eparams, String exptTag, boolean actuallyRun, double timeLimit, List<String> ciOptions) throws InterruptedException, IOException {
 		// The core logic for the loop
 		while (!eparams.completed()) {
 			eparams.printState();
@@ -72,13 +72,9 @@ public class RepeatedRunner {
 			Thread.sleep(1000);
 		}
 	}
-	
-	private static Mission getCurrentMission() throws DSLLoadFailed {
-		DSLLoader dl = new GeneratedDSLLoader();
-		return dl.loadMission();
-	}
 
-	public static void runCIExperiment(String sourceModelFile, List<Metrics> metricList, String fileTag, List<String> ciOptions) {
+
+	public static void runCIExperimentSingleModel(String sourceModelFile, List<Metrics> metricList, String fileTag, List<String> ciOptions, int count) {
 		DSLLoader loader = new GeneratedDSLLoader();
 
 		try {
@@ -89,13 +85,9 @@ public class RepeatedRunner {
 			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
 			mp.setMetricState(MetricStateKeys.MISSION_END_TIME, baseMission.getEndTime());
 			String resFileName = "ciexpt-"+fileTag+".res";
-			System.out.println("Model generation beginning for " + sourceModelFile);
-			List<String> missionFiles = modelTransformer.retriveAllModels(sourceModelFile);
-			System.out.println("Model generation completed successfully!");
-			Thread.sleep(10000);
-			System.out.println("Starting experiment set");
-			ExptParams ep = new RunOnSetOfModels(mp, runTime, missionFiles, resFileName);
-			runCIExptLoop(ep, resFileName, true, runTime, ciOptions);
+			System.out.println("Starting experiment set - repeated run for " + sourceModelFile);
+			ExptParams ep = new RunSameModel(mp, runTime, sourceModelFile, resFileName, count);
+			runCIRepeatedModel(ep, resFileName, true, runTime, ciOptions);
 			
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {
@@ -103,8 +95,6 @@ public class RepeatedRunner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (InvalidFaultFormat e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -124,10 +114,10 @@ public class RepeatedRunner {
 		ArrayList<String> ciOptions = new ArrayList<String>();
 		ciOptions.add(standardCI);
 		ciOptions.add(advancedCI);
-		runCIExperiment(sourceModelFile, l, "casestudy1", ciOptions);
+		runCIExperimentSingleModel(sourceModelFile, l, "casestudy1", ciOptions, 1);
 	}
 	
-	public static void expt_caseStudy2() {
+	public static void expt_test() {
 		List<Metrics> l = new ArrayList<Metrics>();
 		l.add(Metrics.OBSTACLE_AVOIDANCE_METRIC);
 		l.add(Metrics.AVOIDANCE_METRIC);
@@ -144,9 +134,9 @@ public class RepeatedRunner {
 		ciOptions.add(standardCI);
 		ciOptions.add(energyTrackingCI);
 		// Standard is threshold of 750 mAh for return
-		runCIExperiment("experiment-models/casestudy2/mission-basis.model", l, "casestudy2-threshold750", ciOptions);
-		runCIExperiment("experiment-models/casestudy2/mission-basis-threshold500.model", l, "casestudy2-threshold500", ciOptions);
-		runCIExperiment("experiment-models/casestudy2/mission-basis-threshold250.model", l, "casestudy2-threshold250", ciOptions);
+		runCIExperimentSingleModel("experiment-models/casestudy2/mission-basis.model", l, "casestudy2-threshold750", ciOptions, 1);
+		runCIExperimentSingleModel("experiment-models/casestudy2/mission-basis-threshold500.model", l, "casestudy2-threshold500", ciOptions, 1);
+		runCIExperimentSingleModel("experiment-models/casestudy2/mission-basis-threshold250.model", l, "casestudy2-threshold250", ciOptions, 1);
 		
 	}
 	
@@ -154,6 +144,6 @@ public class RepeatedRunner {
 		// TODO: be sure to run the genmission run configuration for the particular mission
 		// otherwise the runtime will not be correct
 		//expt_caseStudy1();
-		expt_caseStudy2();
+		expt_test();
 	}
 }

@@ -201,6 +201,29 @@ public class MetricsProcessing {
 
 			List<String> names = new ArrayList<String>();
 
+			if (metrics.contains(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI)) {
+				Scanner swReader;
+				swReader = new Scanner(new File("/tmp/completeTimings.log"));
+				double worstCase = 0.0;
+
+				while (swReader.hasNextLine()) {
+					String line = swReader.nextLine();
+					System.out.println("line = " + line);
+					String[] fields = line.split(",");
+					String name = fields[0];
+					double time = Double.parseDouble(fields[1]);
+					System.out.println("Robot " + name + " finished at time " + time);
+					if (time > worstCase) {
+						worstCase = time;
+					}
+				}
+
+				if (metrics.contains(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI)) {
+					metricResults.put(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI, worstCase);
+				}
+				swReader.close();
+			}
+			
 			if (metrics.contains(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT)) {
 				Scanner swReader;
 				swReader = new Scanner(new File("/tmp/waypointCount.log"));
@@ -211,9 +234,9 @@ public class MetricsProcessing {
 					System.out.println("line = " + line);
 					String[] fields = line.split(",");
 					String name = fields[0];
-					int energyOnRobot = Integer.parseInt(fields[1]);
-					System.out.println("Robot " + name + " has energy " + energyOnRobot);
-					count += energyOnRobot;
+					int waypointCount = Integer.parseInt(fields[1]);
+					System.out.println("Robot " + name + " has waypoint count " + waypointCount);
+					count += waypointCount;
 				}
 
 				if (metrics.contains(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT)) {
@@ -235,7 +258,7 @@ public class MetricsProcessing {
 						String[] fields = line.split(",");
 						String name = fields[0];
 						Double distForRobot = Double.parseDouble(fields[1]);
-						System.out.println("Robot " + name + " has energy " + distForRobot);
+						System.out.println("Robot " + name + " has distance at end " + distForRobot);
 						distTotal += distForRobot;
 						count++;
 					}

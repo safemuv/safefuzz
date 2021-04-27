@@ -40,7 +40,7 @@ public class ResultsAnalyser {
 		return sensorNames;
 	}
 	
-	public static void runAnalysisLoop(String sourceResFile, String outputFile, String ciChosen, int colnum, int value) throws InterruptedException, IOException, EolModelLoadingException, EglRuntimeException, URISyntaxException {
+	public static void runAnalysisLoop(String sourceResFile, String outputFile, String ciChosen, SpecMatcher spec) throws InterruptedException, IOException, EolModelLoadingException, EglRuntimeException, URISyntaxException {
 		File f = new File(sourceResFile);
 		Scanner s = new Scanner(f);
 		FileWriter fOut = new FileWriter(outputFile);
@@ -50,7 +50,7 @@ public class ResultsAnalyser {
 			String modelFile = fields[0];
 			String ciName = fields[1];
 			 			
-			if (Integer.valueOf(fields[colnum]) == value) {
+			if (spec.lineMatches(fields)) {
 				if (ciName.contains(ciChosen)) {
 					System.out.println("FOUND MATCH - line " + line);
 					// Invoke something that appends the necessary model parameters to the model file 
@@ -68,16 +68,35 @@ public class ResultsAnalyser {
 		fOut.close();
 	}
 	
-	public static void main(String[] args) {
-		// Load the result file
-		String filepath = "/home/atlas/atlas/atlas-middleware/middleware-java/tempres/20_04_2021/ciexpt-casestudy1.res";
+	public static void printAllConfigs(String filepath) {
 		try {
-			runAnalysisLoop(filepath, "optimal-standard-ci.res", "ComputerCIshoreside_standard", 2, 0);
-			runAnalysisLoop(filepath, "3missed-standard-ci.res", "ComputerCIshoreside_standard", 2, 3);
+			SpecMatcher smAlways = new SpecMatcherAlways();
+			runAnalysisLoop(filepath, "allconfigs-standard-ci.res", "ComputerCIshoreside_standard", smAlways);
 		} catch (EolModelLoadingException | EglRuntimeException | InterruptedException | IOException
 				| URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public static void printConfigsForExpt1(String filepath) {
+		try {
+			SpecMatcher smOptimal = new SpecMatcherIntValue(2, 0);
+			SpecMatcher sm3Missed = new SpecMatcherIntValue(2, 3);
+			
+			runAnalysisLoop(filepath, "optimal-standard-ci.res", "ComputerCIshoreside_standard", smOptimal);
+			runAnalysisLoop(filepath, "3missed-standard-ci.res", "ComputerCIshoreside_standard", sm3Missed);
+		} catch (EolModelLoadingException | EglRuntimeException | InterruptedException | IOException
+				| URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String [] args) {
+		String filepath = "/home/atlas/atlas/atlas-middleware/middleware-java/res/ciexpt/2021_04_25/ciexpt-casestudy1.res";
+		printAllConfigs(filepath);
+		printConfigsForExpt1(filepath);
+	}
+	
 }
