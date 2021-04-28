@@ -1,6 +1,7 @@
 function plot_res_expt1
-	miss_col = 3;
-	time_col = 4;
+	miss_col = 4;
+	time_col = 3;
+	markersize = 8;
 
 	m = dlmread("ciexpt-casestudy1.res", ",");
 	inds_even = 2*(1:length(m)/2)
@@ -12,8 +13,19 @@ function plot_res_expt1
 	advanced_timing = even_rows(:,time_col);
 	standard_timing = odd_rows(:,time_col);
 
+        clf();
+        hold on;
+        plot(standard_missed, standard_timing, "ro", "MarkerSize", markersize);
+	%%        plot(advanced_missed, advanced_timing, "bx", "MarkerSize", markersize);
+        %%        legend("Standard CI", "Advanced CI", 4);
+        title("Missed detections versus sweep completion timing for case study 1 - standard CI only");
+        print("-dpdf", "casestudy1_missed_vs_timing_standardonly.pdf");
+
 	clf();
-	plot(standard_missed, standard_timing, "o", "MarkerSize", 5);
-	title("Missed detections versus timing for case study 1 under the standard CI");
+	hold on;
+	plot(standard_missed, standard_timing, "ro", "MarkerSize", markersize);
+	plot(advanced_missed, advanced_timing, "bx", "MarkerSize", markersize);
+	legend("Standard CI", "Advanced CI", 4);
+	title("Missed detections versus sweep completion timing for case study 1");
 	print("-dpdf", "casestudy1_missed_vs_timing.pdf");
 endfunction
