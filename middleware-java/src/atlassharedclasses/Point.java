@@ -1,5 +1,8 @@
 package atlassharedclasses;
 
+import java.util.List;
+import java.util.Optional;
+
 public class Point {
 	private double x;
 	private double y;
@@ -64,5 +67,18 @@ public class Point {
 	
 	public double distanceTo(double otherx, double othery) {
 		return Math.sqrt(distanceSqrTo(otherx, othery));
+	}
+	
+	public Optional<Point> findClosestOf(List<Point> others) {
+		Optional<Point> closest = Optional.empty();
+		double distClosest = Double.MAX_VALUE;
+		for (Point p : others) {
+			double distP = distanceTo(p);
+			if (distanceTo(p) < distClosest) {
+				closest = Optional.of(p);
+				distClosest = distP;
+			}
+		}
+		return closest;
 	}
 }

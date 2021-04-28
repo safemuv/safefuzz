@@ -47,19 +47,18 @@ public class ComputerCIshoreside_standard {
 	private static final Region DEFAULT_REGION = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
 	private static Region fullRegion = DEFAULT_REGION;
 	
-	private static final double END_TIME = 1800.0;
-	private static final double END_TIME_OFFSET = 10.0;
+	private static double END_TIME;
+	private static double END_TIME_OFFSET = 10.0;
 	
 	private static int numberOfVerificationsMalicious;
 	private static int numberOfVerificationsBenign;
 	
-	private static final double SWEEP_RADIUS = 50.0;
+	private static final double SWEEP_RADIUS = 60.0;
 	private static final double VERTICAL_STEP_SIZE_INITIAL_SWEEP = 30;
-	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
+	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 29;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 1;
 
-	private static final double TIME_SPENT_VERIFYING = 500.0;
-	private static final double CAMERA_DIVE_DEPTH = 20.0;
+	private static final double TIME_SPENT_VERIFYING = 600.0;
 
 	private static boolean freshDetection(int label) {
 		Integer c = detectionCounts.get(label);
@@ -247,6 +246,8 @@ public class ComputerCIshoreside_standard {
 			Map<String, Region> regionAssignments = staticRegionSplitBySpeeds(fullRegion, sweepRobots);
 			CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
 
+			END_TIME = mission.getEndTime();
+			
 			// Start all the robots first
 			for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
 				String robot = e.getKey();

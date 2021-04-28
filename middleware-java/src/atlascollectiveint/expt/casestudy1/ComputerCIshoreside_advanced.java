@@ -2,15 +2,7 @@ package atlascollectiveint.expt.casestudy1;
 
 import atlascollectiveint.api.*;
 import atlascollectiveint.logging.CollectiveIntLog;
-import atlasdsl.DiscoverObjects;
-import atlasdsl.Goal;
-import atlasdsl.GoalAction;
-import atlasdsl.GoalRegion;
-import atlasdsl.MissingProperty;
-import atlasdsl.Mission;
-import atlasdsl.Robot;
-import atlasdsl.Sensor;
-import atlasdsl.SensorCover;
+import atlasdsl.*;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
@@ -40,28 +32,26 @@ public class ComputerCIshoreside_advanced {
 	private static HashMap<String,Double> robotSensorWidths = new LinkedHashMap<String, Double>();
 	private static HashMap<String, Point> robotLocations = new LinkedHashMap<String, Point>();
 	private static HashMap<Integer, Integer> detectionCounts = new LinkedHashMap<Integer, Integer>();
-	private static HashMap<String, Boolean> robotIsConfirming = new LinkedHashMap<String, Boolean>();
+	private static HashMap<String, Point> robotIsConfirming = new LinkedHashMap<String, Point>();
 	private static HashMap<String, Region> robotSweepRegions = new LinkedHashMap<String, Region>();
 	private static HashMap<String, Double> robotSpeeds = new LinkedHashMap<String, Double>();
-	
+	private static HashMap<String, List<Point>> robotCoords = new LinkedHashMap<String, List<Point>>();
 	private static HashMap<String, Double> robotCompleteTimes = new LinkedHashMap<String,Double>();
-	
 	
 	private static final Region DEFAULT_REGION = new Region(new Point(-50.0, -230.0), new Point(200.0, -30.0));
 	private static Region fullRegion = DEFAULT_REGION;
 	
-	private static final double END_TIME = 1800.0;
-	private static final double END_TIME_OFFSET = 10.0;
+	private static double END_TIME;
+	private static double END_TIME_OFFSET = 10.0;
 	
 	private static int numberOfVerificationsMalicious;
 	private static int numberOfVerificationsBenign;
 	
-	private static final double SWEEP_RADIUS = 50.0;
+	private static final double SWEEP_RADIUS = 30.0;
+	private static final double SENSOR_WIDTH_FACTOR = 1.5;
 	private static final double VERTICAL_STEP_SIZE_INITIAL_SWEEP = 30;
 	private static final double VERTICAL_STEP_SIZE_CONFIRM_SWEEP = 10;
 	private static final int VERTICAL_ROWS_STATIC_SPLIT = 1;
-
-	private static final double TIME_SPENT_VERIFYING = 500.0;
 	private static final double CAMERA_DIVE_DEPTH = 20.0;
 
 	private static boolean freshDetection(int label) {
@@ -102,14 +92,20 @@ public class ComputerCIshoreside_advanced {
 				// Check it isn't the exclude robot
 				.filter(e -> e.getKey().compareTo(excludeRobot) != 0 && allowedRobots.contains(e.getKey()))
 				// Check robot is not already confirming!
-				.filter(e -> !robotIsConfirming.get(e.getKey()))
+				.filter(e -> !robotIsConfirming.containsKey(e.getKey()))
 				// Have to transform to new Map - here the distance is mapped to the travel time
 				.collect(Collectors.toMap(Map.Entry::getKey, e -> travelTimeForRobot(e.getKey(), e.getValue())))
 				.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst();
 		if (res.isPresent()) {
 			// If a robot found, set it as confirming a detection
 			String chosen = res.get().getKey();
-			robotIsConfirming.put(chosen, true);
+			Point currentPos = robotLocations.get(chosen);
+			// If for some reason we don't have a current location here, use the detected object point
+			if (currentPos == null) {
+				currentPos = loc;
+			}
+			
+			robotIsConfirming.put(chosen, currentPos);
 			return Optional.of(res.get().getKey());
 		} else {
 			// If no robots are known, it will be empty
@@ -139,12 +135,7 @@ public class ComputerCIshoreside_advanced {
 
 		// Setup robot state
 		for (String r : sweepRobots) {
-			robotIsConfirming.put(r, false);
-			allRobots.add(r);
-		}
-
-		for (String r : cameraRobots) {
-			robotIsConfirming.put(r, false);
+			//robotIsConfirming.put(r, false);
 			allRobots.add(r);
 		}
 		
@@ -258,6 +249,44 @@ public class ComputerCIshoreside_advanced {
 		}
 		return rSensorWidths;
 	}
+	
+	public static Optional<Point> findClosestYDim(List<Point> others, Point target) {
+		Optional<Point> closest = Optional.empty();
+		double distClosest = Double.MAX_VALUE;
+		for (Point p : others) {
+			double distY = Math.abs(p.getY() - target.getY()); 
+			if (distY < distClosest) {
+				closest = Optional.of(p);
+				distClosest = distY;
+			}
+		}
+		return closest;
+	}
+	
+	
+	// Returns a list of partial waypoints starting from those closest to the breakpoint
+	// The first x coordinate is replaced by the breakPoint x coord
+	public static List<Point> partialWaypoints(List<Point> originalCoords, Point breakPoint) {
+		Optional<Point> nearest_o = findClosestYDim(originalCoords, breakPoint);
+		if (nearest_o.isPresent()) {
+			Point nearest = nearest_o.get();
+			boolean found = false;
+			List<Point> pFiltered =  new ArrayList<Point>();
+			for (Point p : originalCoords) {
+				if (found == true) {
+					pFiltered.add(p);
+				}
+				if (p == nearest) {
+					found = true;
+					Point newP = new Point(breakPoint.getX(), p.getY()); 
+					pFiltered.add(newP);
+				}
+			}
+			return pFiltered;
+		} else { 
+			return originalCoords;	
+		}
+	}
 
 	public static void init() {
 		try {
@@ -269,6 +298,8 @@ public class ComputerCIshoreside_advanced {
 
 			Map<String, Region> regionAssignments = staticRegionSplitBySpeeds(fullRegion, sweepRobots);
 			CollectiveIntLog.logCI("ComputerCIshoreside.init - regionAssignments length = " + regionAssignments.size());
+			
+			END_TIME = mission.getEndTime();
 
 			// Start all the robots first
 			for (Map.Entry<String, Region> e : regionAssignments.entrySet()) {
@@ -285,10 +316,14 @@ public class ComputerCIshoreside_advanced {
 				Double sensorWidth = robotSensorWidths.get(robot);
 				if (sensorWidth == null) {
 					sensorWidth = VERTICAL_STEP_SIZE_INITIAL_SWEEP;
+				} else {
+					sensorWidth = sensorWidth * SENSOR_WIDTH_FACTOR;
 				}
 				
-				API.setPatrolAroundRegion(robot, region, sensorWidth,
+				List<Point> initialCoords = API.setPatrolAroundRegion(robot, region, sensorWidth,
 						("UUV_COORDINATE_UPDATE_INIITAL_" + robot.toUpperCase()));
+				robotCoords.put(robot, initialCoords);
+				
 
 				CollectiveIntLog.logCI("Setting robot " + robot + " to scan region " + region.toString());
 				robotSweepRegions.put(robot, region);
@@ -332,6 +367,22 @@ public class ComputerCIshoreside_advanced {
 			e.printStackTrace();
 		}		
 	}
+	
+	public static void returnRobotAfterVerifyCompleted(String rName) {
+		CollectiveIntLog.logCI("Verification process completed for robot " + rName);
+		Region origRegion = robotSweepRegions.get(rName);
+		if (origRegion != null) {
+			List<Point> origCoords = robotCoords.get(rName);
+			Point breakPoint = robotIsConfirming.get(rName);
+			List<Point> filteredCoords = partialWaypoints(origCoords, breakPoint);
+			CollectiveIntLog.logCI("Setting robot " + rName + " to return to filtered region " + origRegion.toString());
+			String msgName = "UUV_COORDINATE_UPDATE_INIITIAL_" + rName.toUpperCase();
+			API.setPatrolCoords(rName, filteredCoords, msgName);
+			
+			// Set the robot as available for future detections
+			robotIsConfirming.remove(rName);
+		}
+	}
 
 	public static void verifyOneRobot(SensorDetection detection, List<String> candidateRobots,
 			String detectingRobotName) {
@@ -342,23 +393,7 @@ public class ComputerCIshoreside_advanced {
 			API.setSweepAroundPoint(rName, loc, SWEEP_RADIUS, VERTICAL_STEP_SIZE_CONFIRM_SWEEP,
 					("UUV_COORDINATE_UPDATE_VERIFY_" + rName.toUpperCase()));
 			CollectiveIntLog.logCI("Setting robot " + rName + " to verify detection");
-
-			// Need to send this robot back to its original action after some time...
-			// Register a one-off timer to return the robot to its original activity
-			OneOffTimer treturn = OneOffTimer.afterDelay(TIME_SPENT_VERIFYING, (t -> {
-				CollectiveIntLog.logCI("Verification timer expired for robot " + rName);
-				Region origRegion = robotSweepRegions.get(rName);
-				if (origRegion != null) {
-					// Set the robot as available for future detections
-					robotIsConfirming.put(rName, false);
-					CollectiveIntLog.logCI("Setting robot " + rName + " to return to region " + origRegion.toString());
-					API.setPatrolAroundRegion(rName, origRegion, VERTICAL_STEP_SIZE_INITIAL_SWEEP,
-							("UUV_COORDINATE_UPDATE_INIITIAL_" + rName.toUpperCase()));
-				}
-			}));
-
-			API.registerTimer(rName, treturn);
-
+			// The advanced CI now uses the waypoint completion to return the verifiying robot
 		} else {
 			CollectiveIntLog.logCI("ERROR: No robots avaiable to confirm the detection");
 		}
@@ -399,15 +434,19 @@ public class ComputerCIshoreside_advanced {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
 	
+
+	
 	public static void BehaviourVariableHook(String key, String value, String robotName_uc, Double timeNow) {
 		String robotName = robotName_uc.toLowerCase();
 		System.out.println("BehaviourVariableHook: robotName = " + robotName + ",key = " + key + ",value=" + value);
 		
-		if (!robotIsConfirming.get(robotName)) {
+		if (!robotIsConfirming.containsKey(robotName)) {
 			if (!robotCompleteTimes.containsKey(robotName)) {
 				robotCompleteTimes.put(robotName, timeNow);
-				//API.returnHome(robotName.toLowerCase());
 			}
+		} else {
+			// Robot is verifying and has finished...
+			returnRobotAfterVerifyCompleted(robotName);
 		}
 	}
 }

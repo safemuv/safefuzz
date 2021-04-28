@@ -153,7 +153,6 @@ public class RepeatedRunner {
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		// TODO: be sure to run the genmission run configuration for the particular mission
 		// otherwise the runtime will not be correct
-		//expt_caseStudy1();
-		expt_caseStudy2();
+		expt_caseStudy1();
 	}
 }

@@ -81,8 +81,8 @@ public class ResultsAnalyser {
 	
 	public static void printConfigsForExpt1(String filepath) {
 		try {
-			SpecMatcher smOptimal = new SpecMatcherIntValue(2, 0);
-			SpecMatcher sm3Missed = new SpecMatcherIntValue(2, 3);
+			SpecMatcher smOptimal = new SpecMatcherIntValue(3, 0);
+			SpecMatcher sm3Missed = new SpecMatcherIntValue(3, 3);
 			
 			runAnalysisLoop(filepath, "optimal-standard-ci.res", "ComputerCIshoreside_standard", smOptimal);
 			runAnalysisLoop(filepath, "3missed-standard-ci.res", "ComputerCIshoreside_standard", sm3Missed);
@@ -94,7 +94,7 @@ public class ResultsAnalyser {
 	}
 	
 	public static void main(String [] args) {
-		String filepath = "/home/atlas/atlas/atlas-middleware/middleware-java/res/ciexpt/2021_04_25/ciexpt-casestudy1.res";
+		String filepath = "/home/atlas/atlas/atlas-middleware/middleware-java/res/ciexpt/2021_04_27/ciexpt-casestudy1.res";
 		printAllConfigs(filepath);
 		printConfigsForExpt1(filepath);
 	}

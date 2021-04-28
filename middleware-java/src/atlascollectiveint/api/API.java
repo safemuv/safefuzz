@@ -60,7 +60,7 @@ public class API {
 	
 	///////////////////////////////// API COMMANDS HERE //////////////////////////////////////////////////////////
 		
-	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName, int repeatCount) {
+	public static List<Point> setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName, int repeatCount) {
 		List<Point> coords = translateRegionToCoordsList(r, stepSize);
 		System.out.println("region =\n" + r);
 		if (DEBUG_POLYGON_COORDS) {
@@ -68,10 +68,24 @@ public class API {
 		}
 		BehaviourCommand cmd = new SetCoordinates(coords, repeatCount, MessageName);
 		sendOrIgnore(cmd, robotName);
+		return coords;
 	}
 	
-	public static void setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
-		setPatrolAroundRegion(robotName, r, stepSize, MessageName, DEFAULT_PATROL_REPEAT_COUNT);
+	public static List<Point> setPatrolCoords(String robotName, List<Point> coords, String MessageName, int repeatCount) {
+		if (DEBUG_POLYGON_COORDS) {
+			System.out.println("coords=" + coords.toString());
+		}
+		BehaviourCommand cmd = new SetCoordinates(coords, repeatCount, MessageName);
+		sendOrIgnore(cmd, robotName);
+		return coords;
+	}
+	
+	public static List<Point> setPatrolAroundRegion(String robotName, Region r, double stepSize, String MessageName) {
+		return setPatrolAroundRegion(robotName, r, stepSize, MessageName, DEFAULT_PATROL_REPEAT_COUNT);
+	}
+	
+	public static List<Point> setPatrolCoords(String robotName, List<Point> coords, String MessageName) {
+		return setPatrolCoords(robotName, coords, MessageName, DEFAULT_PATROL_REPEAT_COUNT);
 	}
 	
 	public static void startVehicle(String robotName) {
