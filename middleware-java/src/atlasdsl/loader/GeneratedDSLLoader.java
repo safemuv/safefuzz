@@ -23,11 +23,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		rgilda.setDoubleComponentProperty("maxDepth", 0.0);
 		
  
-		// SENSORNAME=gilda-narrow
+		// SENSORNAME=gilda-wide
 		Sensor srgilda_1 = new Sensor(SensorType.SONAR);
 		srgilda_1.setParent(rgilda);
-		srgilda_1.setDoubleComponentProperty("swathWidth", 10.0);
-		srgilda_1.setDoubleComponentProperty("detectionProb", 0.99);
+		srgilda_1.setDoubleComponentProperty("swathWidth", 20.0);
+		srgilda_1.setDoubleComponentProperty("detectionProb", 0.95);
 		rgilda.addSubcomponent(srgilda_1);
 			
 			
@@ -35,6 +35,25 @@ public class GeneratedDSLLoader implements DSLLoader {
 			
 			
 		mission.addRobot(rgilda);
+		Robot rfrank = new Robot("frank");
+		rfrank.setPointComponentProperty("startLocation", new Point(-20.0,0.0,0.0));
+		rfrank.setDoubleComponentProperty("maxSpeed", 5.0);
+		rfrank.setDoubleComponentProperty("startSpeed", 1.5);
+		rfrank.setDoubleComponentProperty("maxDepth", 0.0);
+		
+ 
+		// SENSORNAME=frank-narrow
+		Sensor srfrank_1 = new Sensor(SensorType.SONAR);
+		srfrank_1.setParent(rfrank);
+		srfrank_1.setDoubleComponentProperty("swathWidth", 10.0);
+		srfrank_1.setDoubleComponentProperty("detectionProb", 0.99);
+		rfrank.addSubcomponent(srfrank_1);
+			
+			
+			
+			
+			
+		mission.addRobot(rfrank);
 		Robot rhenry = new Robot("henry");
 		rhenry.setPointComponentProperty("startLocation", new Point(0.0,0.0,0.0));
 		rhenry.setDoubleComponentProperty("maxSpeed", 5.0);
@@ -88,8 +107,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
  
+ 
 		
-		Robot [] grp1 = {rella,rgilda,rhenry}; 
+		Robot [] grp1 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpmutualAvoidance = new StaticParticipants(grp1, mission);
 		
 		
@@ -115,8 +135,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
  
+ 
 		
-		Robot [] grp2 = {rella,rgilda,rhenry}; 
+		Robot [] grp2 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpprimarySensorSweep = new StaticParticipants(grp2, mission);
 		
 		
@@ -168,8 +189,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
  
+ 
 		
-		Robot [] grp4 = {rella,rgilda,rhenry}; 
+		Robot [] grp4 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpfindTestObjects = new StaticParticipants(grp4, mission);
 		
 		
@@ -200,8 +222,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
  
+ 
 		
-		Robot [] grp5 = {rella,rgilda,rhenry}; 
+		Robot [] grp5 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gpstayInRegion = new StaticParticipants(grp5, mission);
 		
 		
@@ -227,8 +250,9 @@ public class GeneratedDSLLoader implements DSLLoader {
  
  
  
+ 
 		
-		Robot [] grp6 = {rella,rgilda,rhenry}; 
+		Robot [] grp6 = {rella,rfrank,rgilda,rhenry}; 
 		GoalParticipants gptrackDistances = new StaticParticipants(grp6, mission);
 		
 		

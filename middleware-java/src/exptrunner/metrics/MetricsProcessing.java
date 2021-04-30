@@ -14,11 +14,15 @@ import java.util.stream.Collectors;
 import exptrunner.jmetal.InvalidMetrics;
 
 public class MetricsProcessing {
+	private static final boolean DEBUG_CHECK_REALISTIC_COMPLETION_TIME = true;
 	private List<Metrics> metrics;
 	private FileWriter tempLog;
 
 	public enum MetricStateKeys {
-		MISSION_END_TIME, BENIGN_OBJECTS_IN_MISSION, MALICIOUS_OBJECTS_IN_MISSION, VERIFICATIONS_PER_BENIGN_OBJECT,
+		MISSION_END_TIME, 
+		BENIGN_OBJECTS_IN_MISSION, 
+		MALICIOUS_OBJECTS_IN_MISSION, 
+		VERIFICATIONS_PER_BENIGN_OBJECT,
 		VERIFICATIONS_PER_MALICIOUS_OBJECT,
 	}
 
@@ -212,15 +216,30 @@ public class MetricsProcessing {
 					String[] fields = line.split(",");
 					String name = fields[0];
 					double time = Double.parseDouble(fields[1]);
+					
+					if (DEBUG_CHECK_REALISTIC_COMPLETION_TIME && (time < 100.0)) {
+						System.out.println("Stopping run due to unrealistic individual robot completion time - robot " + name + " has " + time);
+						System.exit(1);
+					}
+					
 					System.out.println("Robot " + name + " finished at time " + time);
 					if (time > worstCase) {
 						worstCase = time;
 					}
+					
+					
+					
 				}
 
 				if (metrics.contains(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI)) {
 					metricResults.put(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI, worstCase);
 				}
+				
+				if (DEBUG_CHECK_REALISTIC_COMPLETION_TIME && worstCase < 100.0) {
+					System.out.println("Stopping due to unrealistic worst case completion time");
+					System.exit(2);
+				}
+				
 				swReader.close();
 			}
 			

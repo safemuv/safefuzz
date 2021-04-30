@@ -13,7 +13,7 @@ public class SetCoordinates extends BehaviourCommand {
 	public SetCoordinates(List<Point> coordinates, int repeatCount, String messageName) {
 		super(messageName);
 		this.coordinates = coordinates;
-
+		this.repeatCount = repeatCount;
 	}
 		
 	public List<Point> getCoordinates() {

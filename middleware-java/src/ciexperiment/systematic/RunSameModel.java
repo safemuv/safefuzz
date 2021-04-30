@@ -22,14 +22,16 @@ public class RunSameModel extends ExptParams {
 	private String resFileName = "repeatedLog.res";
 
 	
-	public RunSameModel(MetricsProcessing mp, double runtime, String modelFilePath, String resFile, int countLimit) {
+	public RunSameModel(MetricsProcessing mp, double runtime, String modelFilePath, String resFileName, int countLimit) throws IOException {
 		super(runtime);
 		this.countLimit = countLimit;
 		this.modelFilePath = modelFilePath;
+		this.metricsProcessing = mp;
+		this.resFile = new FileWriter(resFileName);
 	}
 	
 	public boolean completed() {
-		return (countCompleted > countLimit);
+		return (countCompleted >= countLimit);
 	}
 
 	public void printState() {
@@ -65,6 +67,10 @@ public class RunSameModel extends ExptParams {
 
 	public Optional<String> getNextFileName() {
 		return null;
+	}
+
+	public String getModelFile() {
+		return modelFilePath;
 	}
 
 }

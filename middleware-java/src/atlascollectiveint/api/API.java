@@ -12,7 +12,7 @@ public class API {
 	// TODO: to add to the API - speed change requests from the CI?
 	
 	private static boolean DEBUG_POLYGON_COORDS = true;
-	private static int DEFAULT_PATROL_REPEAT_COUNT = 10;
+	private static int DEFAULT_PATROL_REPEAT_COUNT = 0;
 	
 	private static HashMap<String,CollectiveIntActiveMQProducer> producers = new HashMap<String,CollectiveIntActiveMQProducer>();
 	private static CollectiveInt ci;

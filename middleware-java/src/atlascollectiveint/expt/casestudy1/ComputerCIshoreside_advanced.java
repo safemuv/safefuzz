@@ -135,7 +135,6 @@ public class ComputerCIshoreside_advanced {
 
 		// Setup robot state
 		for (String r : sweepRobots) {
-			//robotIsConfirming.put(r, false);
 			allRobots.add(r);
 		}
 		
@@ -433,8 +432,6 @@ public class ComputerCIshoreside_advanced {
 	public static void EnergyUpdateHook(EnergyUpdate energyUpdate, String robotName) {
 		//System.out.println("EnergyUpdateHook - energy value is " + energyUpdate.getEnergyValue());
 	}
-	
-
 	
 	public static void BehaviourVariableHook(String key, String value, String robotName_uc, Double timeNow) {
 		String robotName = robotName_uc.toLowerCase();

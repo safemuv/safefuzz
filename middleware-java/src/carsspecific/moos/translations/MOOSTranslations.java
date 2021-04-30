@@ -65,10 +65,10 @@ public class MOOSTranslations extends CARSTranslations {
 	}
 	
 	public synchronized void setCoordinates(String robotName, List<Point> coords, int repeatCount) {
-		sendCARSUpdate(robotName, "UP_WAYPOINT", "repeat=" + repeatCount);
 		String polyUpdate = "polygon=" + pointListToMOOSPolyString(coords) + ":label," + robotName + "_LOITER";
 		System.out.println("CIEventQueue - SetCoordinates received: vehicle " + robotName + " : " + polyUpdate);
 		sendCARSUpdate(robotName, "UP_WAYPOINT", polyUpdate);
+		sendCARSUpdate(robotName, "UP_WAYPOINT", "repeat=" + repeatCount);
 	}
 
 	public void returnHome(String robotName) {

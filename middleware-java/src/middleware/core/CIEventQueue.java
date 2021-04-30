@@ -93,6 +93,7 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 			// put the faults that impact the coordinate processing here
 			List<Point> coordinates = setCmd.getCoordinates();
 			int repeatCount = setCmd.getRepeatCount();
+			// If the repeat count is zero, this is invalid
 
 			// Check for faults impacting the coordinates here
 			List<FaultInstance> fs = core.activeFaultsOfClass(MutateMessage.class);
