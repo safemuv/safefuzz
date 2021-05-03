@@ -112,7 +112,7 @@ public class RepeatedRunner {
 		}
 	}
 	
-	public static void expt_caseStudy1() {
+	public static void expt_caseStudy1() throws EolModelLoadingException, EglRuntimeException, URISyntaxException, IOException, InterruptedException {
 		List<Metrics> l = new ArrayList<Metrics>();
 		l.add(Metrics.PURE_MISSED_DETECTIONS);
 		l.add(Metrics.WORST_CASE_WAYPOINT_COMPLETION_FROM_CI);
@@ -123,10 +123,14 @@ public class RepeatedRunner {
 		ArrayList<String> ciOptions = new ArrayList<String>();
 		ciOptions.add(standardCI);
 		ciOptions.add(advancedCI);
+		
+		// Need to recompile the basis models - this is just to ensure e.g. the mission completion times are set properly
+		modelExecutor.executeEGL(sourceModelFile, EMF_OUTPUT_PATH);
+		Thread.sleep(1000);
 		runCIExperiment(sourceModelFile, l, "casestudy1", ciOptions);
 	}
 	
-	public static void expt_caseStudy2() {
+	public static void expt_caseStudy2() throws EolModelLoadingException, EglRuntimeException, URISyntaxException, IOException, InterruptedException {
 		List<Metrics> l = new ArrayList<Metrics>();
 		l.add(Metrics.OBSTACLE_AVOIDANCE_METRIC);
 		l.add(Metrics.AVOIDANCE_METRIC);
@@ -136,22 +140,21 @@ public class RepeatedRunner {
 		l.add(Metrics.MEAN_FINAL_DISTANCE_AT_END);
 		l.add(Metrics.TOTAL_WAYPOINT_SWITCH_COUNT);
 
+		String basisModel = "experiment-models/casestudy2/mission-basis.model";
 		String standardCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_standard";
 		String energyTrackingCI = "atlascollectiveint.expt.casestudy2.ComputerCIshoreside_energytracking";
 		
 		ArrayList<String> ciOptions = new ArrayList<String>();
 		ciOptions.add(standardCI);
 		ciOptions.add(energyTrackingCI);
+		
+		modelExecutor.executeEGL(basisModel, EMF_OUTPUT_PATH);
+		Thread.sleep(1000);
+		
 		// Standard is threshold of 750 mAh for return
-		runCIExperiment("experiment-models/casestudy2/mission-basis.model", l, "casestudy2-threshold750", ciOptions);
+		runCIExperiment(basisModel, l, "casestudy2-threshold750", ciOptions);
 		runCIExperiment("experiment-models/casestudy2/mission-basis-threshold500.model", l, "casestudy2-threshold500", ciOptions);
 		runCIExperiment("experiment-models/casestudy2/mission-basis-threshold250.model", l, "casestudy2-threshold250", ciOptions);
 		
-	}
-	
-	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
-		// TODO: be sure to run the genmission run configuration for the particular mission
-		// otherwise the runtime will not be correct
-		expt_caseStudy1();
 	}
 }

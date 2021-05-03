@@ -3,6 +3,10 @@
   <mutProgram xmi:id="_xHiP8JxZEeuXP_f35b_qpg">
     <mutationGroups xmi:id="_Sx_i8JxbEeuni_WJaXBVWw" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_IRoLsJ5BEeuYrK8Jbh7IWg _eGUBwJxZEeuXP_f35b_qpg"/>
     <mutationGroups xmi:id="_PXfbIJ5BEeuYrK8Jbh7IWg" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_MGfmMJxZEeuXP_f35b_qpg _Bu3pUJ5BEeuYrK8Jbh7IWg"/>
+    <mutationGroups xmi:id="_7gHokKuoEeu0gu_ykv4QBA" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_ozLBQKuoEeu0gu_ykv4QBA _Bu3pWZ5BEeuYrK8Jbh7IWg"/>
+    <mutationGroups xmi:id="_bCoNEKupEeu0gu_ykv4QBA" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_kf-twKuoEeu0gu_ykv4QBA _lpEqEJ2BEeuIzfTA-1Y_Kw"/>
+    <mutationGroups xmi:id="_dpPqAKupEeu0gu_ykv4QBA" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_0dZzwKuoEeu0gu_ykv4QBA _IRoLuZ5BEeuYrK8Jbh7IWg"/>
+    <mutationGroups xmi:id="_g_yvEKupEeu0gu_ykv4QBA" minRequiredFromGroup="1" maxRequiredFromGroup="1" members="_sdxqwKuoEeu0gu_ykv4QBA _sHgGEJ2BEeuIzfTA-1Y_Kw"/>
   </mutProgram>
   <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="gilda" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
@@ -15,8 +19,9 @@
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_8n30sJxbEeuni_WJaXBVWw" name="swathWidth" value="20.0"/>
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_-J95kJxbEeuni_WJaXBVWw" name="detectionProb" value="0.95"/>
     </subcomponents>
-    <subcomponents xsi:type="atlas:Battery" xmi:id="_lpEqEJ2BEeuIzfTA-1Y_Kw" name="standard" totalEnergy="2800"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_lpEqEJ2BEeuIzfTA-1Y_Kw" name="standard-gildaslow" mutable="true" totalEnergy="2800"/>
     <subcomponents xsi:type="atlas:MotionSource" xmi:id="_mSgBkJ2BEeuIzfTA-1Y_Kw" name="motor" energyPerDistance="3.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_kf-twKuoEeu0gu_ykv4QBA" name="large-gildaslow" mutable="true" totalEnergy="5000"/>
   </robots>
   <robots xmi:id="_eGUBwJxZEeuXP_f35b_qpg" name="henry" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_eGUBwZxZEeuXP_f35b_qpg" name="startLocation">
@@ -29,8 +34,9 @@
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_eGUBxpxZEeuXP_f35b_qpg" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_eGUBx5xZEeuXP_f35b_qpg" name="detectionProb" value="0.99"/>
     </subcomponents>
-    <subcomponents xsi:type="atlas:Battery" xmi:id="_sHgGEJ2BEeuIzfTA-1Y_Kw" name="standard" totalEnergy="2800"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_sHgGEJ2BEeuIzfTA-1Y_Kw" name="standard-henryslow" mutable="true" totalEnergy="2800"/>
     <subcomponents xsi:type="atlas:MotionSource" xmi:id="_vE3PEJ2BEeuIzfTA-1Y_Kw" name="motor" energyPerDistance="3.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_sdxqwKuoEeu0gu_ykv4QBA" name="large-henryslow" mutable="true" totalEnergy="5000"/>
   </robots>
   <robots xmi:id="_Bu3pUJ5BEeuYrK8Jbh7IWg" name="gilda" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_Bu3pUZ5BEeuYrK8Jbh7IWg" name="startLocation">
@@ -43,8 +49,9 @@
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_Bu3pV55BEeuYrK8Jbh7IWg" name="swathWidth" value="20.0"/>
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_Bu3pWJ5BEeuYrK8Jbh7IWg" name="detectionProb" value="0.95"/>
     </subcomponents>
-    <subcomponents xsi:type="atlas:Battery" xmi:id="_Bu3pWZ5BEeuYrK8Jbh7IWg" name="standard" totalEnergy="2800"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_Bu3pWZ5BEeuYrK8Jbh7IWg" name="standard-gildafast" mutable="true" totalEnergy="2800"/>
     <subcomponents xsi:type="atlas:MotionSource" xmi:id="_Bu3pWp5BEeuYrK8Jbh7IWg" name="motor" energyPerDistance="3.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_ozLBQKuoEeu0gu_ykv4QBA" name="large-gildafast" mutable="true" totalEnergy="5000"/>
   </robots>
   <robots xmi:id="_IRoLsJ5BEeuYrK8Jbh7IWg" name="henry" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_IRoLsZ5BEeuYrK8Jbh7IWg" name="startLocation">
@@ -57,8 +64,9 @@
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_IRoLt55BEeuYrK8Jbh7IWg" name="swathWidth" value="10.0"/>
       <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_IRoLuJ5BEeuYrK8Jbh7IWg" name="detectionProb" value="0.99"/>
     </subcomponents>
-    <subcomponents xsi:type="atlas:Battery" xmi:id="_IRoLuZ5BEeuYrK8Jbh7IWg" name="standard" totalEnergy="2800"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_IRoLuZ5BEeuYrK8Jbh7IWg" name="standard-henryfast" mutable="true" totalEnergy="2800"/>
     <subcomponents xsi:type="atlas:MotionSource" xmi:id="_IRoLup5BEeuYrK8Jbh7IWg" name="motor" energyPerDistance="3.0"/>
+    <subcomponents xsi:type="atlas:Battery" xmi:id="_0dZzwKuoEeu0gu_ykv4QBA" name="large-henryfast" mutable="true" totalEnergy="5000"/>
   </robots>
   <computers xmi:id="_vmC9UJyAEeuni_WJaXBVWw" name="shoreside"/>
   <goals xmi:id="_kwYOQHP5Eeqc6cv9mBHIKw" name="mutualAvoidance" priority="100">

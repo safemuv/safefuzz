@@ -368,6 +368,10 @@ public class MetricsProcessing {
 	public Metrics getMetricByID(int i) {
 		return metrics.get(i);
 	}
+	
+	public List<Metrics> getAllMetrics() {
+		return metrics;
+	}
 
 	public void setMetricState(MetricStateKeys key, Object o) {
 		metricState.put(key, o);

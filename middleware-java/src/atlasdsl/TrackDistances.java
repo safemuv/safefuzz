@@ -102,6 +102,7 @@ public class TrackDistances extends GoalAction {
 	@SuppressWarnings("deprecation")
 	private void checkPointIntersection(String robotName, Point p) throws ParseException {
 		// TODO: check the bounding box first to reduce computation?
+		//System.out.println("checkPointIntersection - point = " + p);
 		Coordinate c = new Coordinate(p.getX(),p.getY());
 		Geometry jtsP = jtsGeoFactory.createPoint(c);
 		
@@ -109,10 +110,10 @@ public class TrackDistances extends GoalAction {
 			
 			Geometry g = eo_e.getValue();
 			String geometryName = eo_e.getKey();
-			if (!g.contains(jtsP)) {
-			} else {
+			if (g.contains(jtsP)) {
 				Double time = core.getTime();
 				registerCollision(geometryName, robotName, time);
+				System.out.println("checkPointIntersection - found collision with " + geometryName + " at point " + p);
 			}
 		}
 	}

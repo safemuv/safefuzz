@@ -12,11 +12,9 @@ import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 import faultgen.InvalidFaultFormat;
 
-public class RunOnSetOfModels extends ExptParams {
+public class RunOnSetOfModels extends ExptResultsLogged {
 	private List<String> modelFilePaths;
-	private MetricsProcessing metricsProcessing;
 	
-	private FileWriter resFile;
 	private String resFileName = "repeatedLog.res";
 	
 	private void setupResFile() {
@@ -45,27 +43,6 @@ public class RunOnSetOfModels extends ExptParams {
 
 	public void advance() {
 		modelFilePaths.remove(0);
-	}
-
-	public void logResults(String logDir, String modelFile, String ciClass) {
-		System.out.println("Writing results to result file: " + resFileName);
-		try {
-			Map<Metrics,Object> metricRes = metricsProcessing.readMetricsFromLogFiles(logDir);
-			resFile.write(modelFile + "," + ciClass + ",");
-			for (Map.Entry<Metrics,Object> entry : metricRes.entrySet()) {
-				Metrics m = entry.getKey();
-				Object val = entry.getValue();
-				System.out.println(m + "=" + val);
-				resFile.write(entry.getValue().toString() + ",");
-			}
-			
-			resFile.write("\n");
-			resFile.flush();
-		} catch (InvalidMetrics e1) {
-			e1.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Optional<String> getNextFileName() {
