@@ -1,0 +1,4 @@
+function plot_res_expt1_all
+	 plot_res_expt1_repeated
+	 plot_res_expt1_scatter_repeated
+endfunction
