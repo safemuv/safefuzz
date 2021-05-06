@@ -25,6 +25,7 @@ function plot_res_expt1
 	hold on;
 	plot(standard_missed, standard_timing, "ro", "MarkerSize", markersize);
 	plot(advanced_missed, advanced_timing, "bx", "MarkerSize", markersize);
+	axis([0 7 0 2500]);
 	legend("Standard CI", "Advanced CI", 4);
 	title("Missed detections versus sweep completion timing for case study 1");
 	print("-dpdf", "casestudy1_optimal_repeated_missed_vs_timing.pdf");
