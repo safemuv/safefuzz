@@ -66,7 +66,7 @@ public abstract class ATLASCore {
 		return carsOutput;
 	}
 	
-	protected void createGUI() {
+	public void createGUI() {
 		gui = new GUITest(this,mission, faultGen);
 	}
 	
