@@ -15,6 +15,10 @@ public class ROSATLASCore extends ATLASCore {
 		outputToCI = new ActiveMQProducer(PortMappings.portForCI("shoreside"), ActiveMQProducer.QueueOrTopic.TOPIC);
 		outputToCI.run();
 		carsIncoming = new ROSEventQueue(this, mission, MOOS_QUEUE_CAPACITY);
+		
+		// TODO: this is temporary, just while testing the new ROS queue
+		carsIncoming.setup();
+		
 		queues.add(carsIncoming);
 	}
 

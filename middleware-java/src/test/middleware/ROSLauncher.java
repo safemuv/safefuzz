@@ -15,6 +15,7 @@ public class ROSLauncher {
 		try {
 			mission = dslloader.loadMission();
 			ROSATLASCore core = new ROSATLASCore(mission);
+			System.out.println("ROSATLASCore created");
 			// Create the GUI first, since we set its window title from the
 			// fault definition file
 			if (args.length > 1 && args[1] != null && (args[1].equals("nogui") == false)) {
