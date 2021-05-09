@@ -3,6 +3,7 @@ package atlassharedclasses;
 public class GPSPositionReading extends SensorInfo {
 	private double x;
 	private double y;
+	private double z;
 	private double speed;
 	private String robotName;
 	
@@ -15,6 +16,22 @@ public class GPSPositionReading extends SensorInfo {
 	public GPSPositionReading(double x, double y, double speed, String robotName) {
 		this.x = x;
 		this.y = y;
+		this.speed = speed;
+		this.robotName = robotName;
+	}
+	
+//	public GPSPositionReading(Point pos, Point vel, String robotName) {
+//		this.x = x;
+//		this.y = y;
+//		this.z = z;
+//		this.speed = speed;
+//		this.robotName = robotName;
+//	}
+	
+	public GPSPositionReading(Point pos, double speed, String robotName) {
+		this.x = pos.getX();
+		this.y = pos.getY();
+		this.z = pos.getZ();
 		this.speed = speed;
 		this.robotName = robotName;
 	}

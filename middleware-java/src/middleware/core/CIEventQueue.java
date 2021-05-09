@@ -5,6 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.jms.JMSException;
+
+import org.locationtech.jts.io.ParseException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import activemq.portmapping.PortMappings;
 import atlasdsl.*;
 import atlasdsl.faults.*;
@@ -22,6 +28,12 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		super(core, capacity, '@');
 		this.mission = mission;
 		this.core = core;
+	}
+	
+	public void setupForwardingToCIOnPositionUpdates() {
+		core.setupPositionWatcher((gps) -> {
+			core.sendMessageToCI(gps);
+		});
 	}
 	
 	public void setup() {
@@ -46,6 +58,9 @@ public class CIEventQueue extends ATLASEventQueue<CIEvent> {
 		
 		// Set these producers so they are ready for the CARS translations to use
 		core.getCARSTranslator().setOutputProducers(producers);
+		
+		// Set up the CI to send the messages whenever a position update is notified to the core
+		setupForwardingToCIOnPositionUpdates();
 	}
 	
 	// This is used by active faults to inject their immediate effects

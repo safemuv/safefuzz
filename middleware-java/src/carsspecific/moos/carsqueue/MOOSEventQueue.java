@@ -129,24 +129,24 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 					double speed = Double.parseDouble(m.group(4));
 
 					// TODO: for now, assume the position sensor updates are provided directly
-					// by base position
+					// by ground-truth position
 					GPSPositionReading gps = new GPSPositionReading(x, y, speed, entityName);
 					core.notifyPositionUpdate(gps);
 
-					try {
-						String msg = atlasOMapper.serialise(gps);
-
-						if (DEBUG_PRINT_DESERIALISED_MSGS) {
-							System.out.println("DEBUG: serialised message " + msg);
-						}
-						outputToCI.sendMessage(msg);
-					} catch (JsonProcessingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (JMSException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+//					try {
+//						String msg = atlasOMapper.serialise(gps);
+//
+//						if (DEBUG_PRINT_DESERIALISED_MSGS) {
+//							System.out.println("DEBUG: serialised message " + msg);
+//						}
+//						outputToCI.sendMessage(msg);
+//					} catch (JsonProcessingException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (JMSException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
 
 					// Find the corresponding robot object and update its location parameters
 					Robot r = mission.getRobot(entityName);

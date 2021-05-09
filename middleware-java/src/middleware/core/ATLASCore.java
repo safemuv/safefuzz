@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.jms.JMSException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
@@ -19,9 +23,8 @@ import middleware.missionmonitor.*;
 import fuzzingengine.*;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
-// This code will be combined with the simulator-specific code
-// during code generation
 public abstract class ATLASCore {
+	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS_SENT_TO_CI = false;
 	protected boolean stopOnNoEnergy = false;
 	
 	protected ATLASEventQueue<?> carsIncoming;
@@ -49,6 +52,8 @@ public abstract class ATLASCore {
 	
 	private FaultGenerator faultGen;	
 	private double time = 0.0;
+	
+	private ATLASObjectMapper atlasOMapper = new ATLASObjectMapper();
 	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
@@ -94,6 +99,20 @@ public abstract class ATLASCore {
     
     public ActiveMQProducer getCIProducer() {
     	return outputToCI;
+    }
+    
+    public void sendMessageToCI(Object o) {
+    	try {
+			String msg = atlasOMapper.serialise(o);
+			if (DEBUG_PRINT_DESERIALISED_MSGS_SENT_TO_CI) {
+				System.out.println("sendMessageToCI: serialised message " + msg);
+			}
+			outputToCI.sendMessage(msg);
+		} catch (JsonProcessingException e1) {
+			e1.printStackTrace();
+		} catch (JMSException e1) {
+			e1.printStackTrace();
+		};
     }
 	
     public void runMiddleware()  {

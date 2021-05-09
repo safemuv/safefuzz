@@ -11,7 +11,7 @@ import middleware.carstranslations.CARSTranslations;
 public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final boolean CHECK_FOR_QUEUE_EVENTS_BEFORE_ANY = true;
-	protected ATLASObjectMapper atlasOMapper;
+	//protected ATLASObjectMapper atlasOMapper;
 	protected ATLASCore core;
 	protected FuzzingEngine<E> fuzzingEngine;
 	protected CARSTranslations cTrans;
