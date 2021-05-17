@@ -19,7 +19,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	Optional<String> vehicleSelection;
 	List<String> participants = new ArrayList<String>();
 	HashMap<String,Boolean> participantsLookup = new HashMap<String,Boolean>();
-	int groupNum;
+	Object groupNum;
 
 	private void setupPattern() {
 		if (regex.isPresent()) {
@@ -91,7 +91,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		return pattern;
 	}
 	
-	public Optional<Map.Entry<Pattern,Integer>> getPatternAndGroupNum() {
+	public Optional<Map.Entry<Pattern,Object>> getPatternAndGroupStructure() {
 		if (pattern.isPresent()) {
 			Pattern p = pattern.get();
 			return Optional.of(Map.entry(p, groupNum));

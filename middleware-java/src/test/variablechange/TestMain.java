@@ -1,7 +1,7 @@
 package test.variablechange;
 
-import middleware.core.CARSVariableUpdate;
-import middleware.core.CARSVariableUpdate.VariableInvalid;
+import middleware.core.KeyValueUpdate;
+import middleware.core.KeyValueUpdate.VariableInvalid;
 
 public class TestMain {
 	public static void testReplace(String invalue) {
@@ -14,9 +14,9 @@ public class TestMain {
 		testReplace("A");
 		//FuzzingEngine vf = new NumericVariableChangeFuzzingEngine(0.0);
 		
-		CARSVariableUpdate mup;
+		KeyValueUpdate mup;
 		try {
-			mup = new CARSVariableUpdate("ella", "TEST=q=23.5", 12.5);
+			mup = new KeyValueUpdate("ella", "TEST=q=23.5", 12.5);
 			//CARSVariableUpdate mupChanged = vf.fuzzMessage(mup);
 			//System.out.println("changed value = " + mupChanged.getValue());
 		} catch (VariableInvalid e) {

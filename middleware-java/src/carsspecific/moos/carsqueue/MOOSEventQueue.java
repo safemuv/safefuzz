@@ -88,8 +88,8 @@ public class MOOSEventQueue extends CARSLinkEventQueue<MOOSEvent> {
 	// once the test code below is working
 	public void handleEventSpecifically(MOOSEvent e) {
 		
-		if (e instanceof CARSVariableUpdate) {
-			CARSVariableUpdate mup = (CARSVariableUpdate) e;
+		if (e instanceof KeyValueUpdate) {
+			KeyValueUpdate mup = (KeyValueUpdate) e;
 			if (mup.keyMatches("DB_UPTIME")) {
 				Double time = Double.valueOf(mup.getValue());
 				try {

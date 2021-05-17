@@ -20,6 +20,8 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = false;
 	private Mission mission;
 	private Ros ros;
+	private Point _randomOffset  = new Point(0.0,0.0,0.0);
+	private int velEvents = 0;
 	
 	// Debug test to reflect velocity values directly
 	private ROSTranslations __rtrans = new ROSTranslations();
@@ -69,8 +71,12 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				System.out.println("Vel:" + vel.toString());
 				
 				if (DEBUG_HACK_TEST_FUZZ_VELOCITY) {
-					Point randomOffset = new Point(__rng.nextDouble()*2 - 1, __rng.nextDouble()*2 - 1, 0.0);
-					__rtrans.setVelocity(rtu.getVehicleName(), vel.add(randomOffset));
+					if (velEvents % 1000 == 0) {
+						_randomOffset = new Point(__rng.nextDouble()*2 - 1, __rng.nextDouble()*2 - 1, 0.0);
+					}
+					
+					velEvents++;
+					__rtrans.setVelocity(rtu.getVehicleName(), vel.add(_randomOffset));
 				}
 			}
 		}

@@ -44,7 +44,7 @@ public class ActiveMQConsumer implements Runnable, ExceptionListener {
                 	
                 }
                 String text = textMessage.getText();
-                MOOSEvent e = (MOOSEvent)new CARSVariableUpdate(vehicleName, text, carsProcess, msgTime);
+                MOOSEvent e = (MOOSEvent)new KeyValueUpdate(vehicleName, text, carsProcess, msgTime);
                 carsQueue.add(e);
                 
                 if (carsProcess.isPresent()) {

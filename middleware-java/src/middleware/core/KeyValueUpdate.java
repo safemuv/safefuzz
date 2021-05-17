@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import carsspecific.moos.carsqueue.MOOSEvent;
 
-public class CARSVariableUpdate extends MOOSEvent {
+public class KeyValueUpdate extends MOOSEvent {
 	private String vehicleName;
 	private String value;
 	private String sourceComponent;
@@ -27,21 +27,21 @@ public class CARSVariableUpdate extends MOOSEvent {
 		}
 	}
 	
-	public CARSVariableUpdate(String vehicleName, String updateText, Optional<String> carsProcess, double time) throws VariableInvalid {
+	public KeyValueUpdate(String vehicleName, String updateText, Optional<String> carsProcess, double time) throws VariableInvalid {
 		this.vehicleName = vehicleName;
 		this.time = time;
 		this.carsProcess = carsProcess;
 		setExtractedKeyAndValue(updateText);
 	}
 	
-	public CARSVariableUpdate(String vehicleName, String updateText, double time) throws VariableInvalid {
+	public KeyValueUpdate(String vehicleName, String updateText, double time) throws VariableInvalid {
 		this.vehicleName = vehicleName;
 		this.time = time;
 		this.carsProcess = Optional.empty();
 		setExtractedKeyAndValue(updateText);
 	}
 	
-	public CARSVariableUpdate(CARSVariableUpdate other) {
+	public KeyValueUpdate(KeyValueUpdate other) {
 		this.vehicleName = other.vehicleName;
 		this.time = other.time;
 		this.key = other.key;

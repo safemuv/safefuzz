@@ -18,7 +18,7 @@ public abstract class CARSTranslations {
 	public abstract void setCoordinates(String robotName, List<Point> coords, int repeatCount);
 	public abstract void setOutputProducers(HashMap<String,ActiveMQProducer> producers);
 	
-	public void sendBackEvent(CARSVariableUpdate event, String reflectBackName) {
+	public void sendBackEvent(KeyValueUpdate event, String reflectBackName) {
 		String vehicleName = event.getVehicleName();
 		String key = reflectBackName;
 		String value = event.getValue();

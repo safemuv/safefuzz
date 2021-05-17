@@ -44,10 +44,10 @@ public class FuzzingConfig {
 		} else return Optional.empty();
 	}
 	
-	public Optional<Map.Entry<Pattern,Integer>> getPatternAndGroupNum(String key) {
+	public Optional<Map.Entry<Pattern,Object>> getPatternAndGroupStructure(String key) {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		if (fr != null) {
-			return fr.getPatternAndGroupNum();
+			return fr.getPatternAndGroupStructure();
 		} else return Optional.empty();
 	}
 	
@@ -137,7 +137,7 @@ public class FuzzingConfig {
 		} 
 		return Optional.empty();
 	}
-		
+
 	public List<FuzzingKeySelectionRecord> getAllKeysByComponent(String component) {
 		return keyRecords.stream().filter(kr -> kr.getComponent().equals(component)).collect(Collectors.toList());
 	}

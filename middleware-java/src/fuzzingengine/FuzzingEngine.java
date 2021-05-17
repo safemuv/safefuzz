@@ -1,6 +1,7 @@
 package fuzzingengine;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
@@ -15,6 +16,12 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+
 import java.lang.reflect.*;
 
 import atlasdsl.Component;
@@ -22,6 +29,7 @@ import atlasdsl.Computer;
 import atlasdsl.Message;
 import atlasdsl.Mission;
 import atlasdsl.Robot;
+import carsspecific.ros.carsqueue.ROSTopicUpdate;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.operations.EventFuzzingOperation;
@@ -34,6 +42,7 @@ public class FuzzingEngine<E> {
 	Mission m;
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping simmapping = new FuzzingSimMapping();
+	
 
 	PriorityQueue<FutureEvent<E>> delayedEvents = new PriorityQueue<FutureEvent<E>>();
 
@@ -95,6 +104,7 @@ public class FuzzingEngine<E> {
 					}
 				}
 
+
 				FuzzingKeySelectionRecord kr = new FuzzingKeySelectionRecord(primedKeyName,
 						Optional.of(messageFieldName), vr.getComponent(), vr.getRegexp(), groupNum, op, participants,
 						startTime, endTime);
@@ -141,56 +151,58 @@ public class FuzzingEngine<E> {
 		return Optional.empty();
 	}
 
-	public <E> List<FuzzingOperation> shouldFuzzCARSEvent(E event, double time) {
+	public Optional<String> getKeyOrTopic(E event) {
+		if (event instanceof KeyValueUpdate) {
+			KeyValueUpdate kv = (KeyValueUpdate) event;
+			return Optional.of(kv.getKey());
+		}
+
+		if (event instanceof ROSTopicUpdate) {
+			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
+			return Optional.of(rtu.getTopicName());
+		}
+		return Optional.empty();
+	}
+
+	public List<FuzzingOperation> shouldFuzzCARSEvent(E event, double time) {
 		List<FuzzingOperation> res = new ArrayList<FuzzingOperation>();
-		if (event instanceof CARSVariableUpdate) {
-			CARSVariableUpdate cv = (CARSVariableUpdate) event;
+		if (event instanceof KeyValueUpdate) {
+			KeyValueUpdate cv = (KeyValueUpdate) event;
 			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
 			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
 			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
 			if (op_o.isPresent()) {
 				res.add(op_o.get());
-				return res;
-			} else {
-				Optional<String> componentName_o = cv.getSourceComponent();
-				if (componentName_o.isPresent()) {
-					String componentName = componentName_o.get();
-					// Outbound operations are looked up based on their event's component
-					// name, obtained from MOOS or other sim
-					Optional<FuzzingOperation> op_2 = confs.getOperationByOutboundComponentAndVehicle(componentName,
-							vehicle);
-					if (op_2.isPresent()) {
-						res.add(op_2.get());
-						return res;
-					} else {
-						// Inbound operations have to be looked up based on the key name
-						// Check the simmapping to see if we have an active component for the key
-						Optional<FuzzingOperation> op_o2 = getOperationByInboundComponentAndVehicle(key, vehicle);
-						if (op_o2.isPresent())
-							res.add(op_o2.get());
-						return res;
-					}
-				} else {
-					// TOOD: fix this for message based? - can this be merged with key based?
-					Optional<FuzzingOperation> op_o3 = confs.hasMessageKey(key);
-					if (op_o3.isPresent())
-						res.add(op_o3.get());
-					return res;
-				}
 			}
-		} else {
-			return res;
 		}
+
+		if (event instanceof ROSTopicUpdate) {
+			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
+			String vehicle = rtu.getVehicleName();
+			String key = rtu.getTopicName();
+			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
+			if (op_o.isPresent()) {
+				res.add(op_o.get());
+			}
+		}
+
+		return res;
 	}
 
 	public Optional<String> shouldReflectBackToCARS(E event) {
-		if (event instanceof CARSVariableUpdate) {
-			CARSVariableUpdate cv = (CARSVariableUpdate) event;
+		if (event instanceof KeyValueUpdate) {
+			KeyValueUpdate cv = (KeyValueUpdate) event;
 			String k = cv.getKey();
-			// return confs.getReflectionKey(k);
 			return simmapping.getReflectionKey(k);
 		}
+
+		if (event instanceof ROSTopicUpdate) {
+			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
+			String k = rtu.getTopicName();
+			return simmapping.getReflectionKey(k);
+		}
+
 		return Optional.empty();
 	}
 
@@ -205,6 +217,44 @@ public class FuzzingEngine<E> {
 			return new StringBuilder(source).replace(m.start(groupToReplace), m.end(groupToReplace), newV).toString();
 		}
 	}
+	
+	private JsonObject insertValue(JsonObject source, String key, String value) {
+	    JsonObjectBuilder builder = Json.createObjectBuilder();
+	    builder.add(key, value);
+	    source.entrySet().
+	            forEach(e -> builder.add(e.getKey(), e.getValue()));
+	    return builder.build();
+	}
+	
+	public static JsonObject replaceJSON(JsonObject js, String jsonSpec, ValueFuzzingOperation op) throws FuzzingEngineMatchFailure {
+		// Split the jsonSpec on periods
+		JsonObjectBuilder builder = Json.createObjectBuilder();
+	    for (Map.Entry<String,JsonValue> entry : js.entrySet()){
+	        if (entry.getKey().equals("")){
+	    		String fuzzed = op.fuzzTransformString(js.toString());
+	    		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
+	    		JsonObject jModified = jsonReader.readObject();
+	            builder.add(entry.getKey(), entry.getValue());
+	        } else {
+	            builder.add(entry.getKey(), entry.getValue());
+	        }
+	    }    
+		
+		
+//		String [] jsonSpecFields = jsonSpec.split(".");
+//		JsonObject jo = js;
+//		JsonObject joParent = jo;
+//		for (int i = 0; i < jsonSpecFields.length; i++) {
+//			String specField = jsonSpecFields[0];
+//			joParent = jo;
+//			jo = jo.getJsonObject(specField);
+//		}
+//		
+//		String fuzzed = op.fuzzTransformString(jo.toString());
+//		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
+//		JsonObject jModified = jsonReader.readObject();
+		return js;
+	}
 
 	public Optional<E> fuzzTransformEvent(Optional<E> event_o, FuzzingOperation op) {
 		if (op.isEventBased()) {
@@ -213,20 +263,21 @@ public class FuzzingEngine<E> {
 		} else {
 			if (event_o.isPresent()) {
 				E event = event_o.get();
-				if (event instanceof CARSVariableUpdate) {
-					CARSVariableUpdate cv = (CARSVariableUpdate) event;
-					CARSVariableUpdate newUpdate = new CARSVariableUpdate(cv);
+				if (event instanceof KeyValueUpdate) {
+					KeyValueUpdate cv = (KeyValueUpdate) event;
+					KeyValueUpdate newUpdate = new KeyValueUpdate(cv);
 					ValueFuzzingOperation vop = (ValueFuzzingOperation) op;
 					String key = cv.getKey();
 					String v = cv.getValue();
 					String newValue = v;
 
-					Optional<Map.Entry<Pattern, Integer>> regexp_sel = confs.getPatternAndGroupNum(key);
+					Optional<Map.Entry<Pattern, Object>> regexp_sel = confs.getPatternAndGroupStructure(key);
 					if (!regexp_sel.isPresent()) {
 						newValue = vop.fuzzTransformString(v);
-					} else {		
+					} else {
 						Pattern p = regexp_sel.get().getKey();
-						Integer groupNum = regexp_sel.get().getValue();
+						// TODO: check this is an integer
+						Integer groupNum = (Integer)regexp_sel.get().getValue();
 						try {
 							newValue = replaceGroup(p, v, groupNum, vop);
 						} catch (FuzzingEngineMatchFailure e) {
@@ -236,10 +287,37 @@ public class FuzzingEngine<E> {
 
 					newUpdate.setValue(newValue);
 					return Optional.of((E)newUpdate);
+				} else if (event instanceof ROSTopicUpdate) {
+					ROSTopicUpdate rtu = (ROSTopicUpdate)event;
+					ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
+					String key = rtu.getTopicName();
+					JsonObject js = rtu.getJSON();
+					JsonObject newValue = js;
+					
+					Optional<Map.Entry<Pattern, Object>> regexp_sel = confs.getPatternAndGroupStructure(key);
+					if (!regexp_sel.isPresent()) {
+						// This fuzzes the JSON object as a string representation, re-parses it
+						String fuzzed = vop.fuzzTransformString(js.toString());
+						JsonReader jsonReader = Json.createReader(new StringReader("{}"));
+						JsonObject obj = jsonReader.readObject();
+						jsonReader.close();
+						
+					} else {
+						Pattern p = regexp_sel.get().getKey();
+						String jsonSpec = (String)regexp_sel.get().getValue();
+						try {
+							newValue = replaceJSON(js, jsonSpec, vop);
+						} catch (FuzzingEngineMatchFailure e) {
+							ATLASLog.logFuzzing("FuzzingEngineMatchFailure - " + event + e);
+						}
+					}
+					return event_o;
+					
 				} else {
 					return event_o;
 				}
-			} else return event_o;
+			} else
+				return event_o;
 		}
 	}
 
@@ -375,9 +453,11 @@ public class FuzzingEngine<E> {
 							FuzzingOperation op = op_o.get();
 							// Where to get the regexp for the message fields? - in the model
 							try {
-								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime, op);
+								addFuzzingMessageOperation(messageName, messageFieldName, groupNum, startTime, endTime,
+										op);
 							} catch (InvalidMessage e) {
-								System.out.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
+								System.out
+										.println("Invalid message name: " + e.getMessageName() + " - " + e.getReason());
 								e.printStackTrace();
 								// TODO: raise exception to indicate the conversion failed
 							}
@@ -388,14 +468,14 @@ public class FuzzingEngine<E> {
 
 				}
 			});
-			
+
 		} catch (NoSuchFileException ex) {
 			System.out.println("Fuzzing file " + fileName + " not found - performing a null fuzzing experiment");
 		}
-		
+
 		catch (IOException ex) {
 			ex.printStackTrace();
-		} 
+		}
 	}
 
 	// This gets the explicitly selected keys upon this component
@@ -433,7 +513,8 @@ public class FuzzingEngine<E> {
 
 		if (fe != null) {
 			if (fe.getPendingTime() < byTime) {
-		//		System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ", byTime=" + byTime);
+				// System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ",
+				// byTime=" + byTime);
 				FutureEvent<E> feRemoved = delayedEvents.remove();
 				res.add(feRemoved);
 			}

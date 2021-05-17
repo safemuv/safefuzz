@@ -44,12 +44,13 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 	//@ Potentially reflect it back to the CARS
 	public void reflectEventBack(E event, String reflectBackName) {
 		
-		if (event instanceof CARSVariableUpdate) {
-			CARSVariableUpdate varUpdate = (CARSVariableUpdate)event;  
+		if (event instanceof KeyValueUpdate) {
+			KeyValueUpdate varUpdate = (KeyValueUpdate)event;  
 			cTrans.sendBackEvent(varUpdate, reflectBackName);
 		}
 	}
 	
+	// TODO: this logic should be in the fuzzing engine itself
 	public void handleEvent(E event) {
 		if (CHECK_FOR_QUEUE_EVENTS_BEFORE_ANY) {
 			checkForQueuedEvents();

@@ -40,4 +40,12 @@ public class ROSTopicUpdate extends ROSEvent {
 	public String getVehicleName() {
 		return vehicleName;
 	}
+	
+	public String getTopicName() {
+		return topicName;
+	}
+	
+	public double getTime() {
+		return time;
+	}
 }
