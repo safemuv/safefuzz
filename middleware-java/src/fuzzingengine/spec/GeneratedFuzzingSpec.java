@@ -10,30 +10,15 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.BINARY, Optional.empty(), Optional.of("PATH"));
 		
-	simMapping.setComponentFuzzingInfo("uSimMarine", FuzzingSimMapping.FuzzingNature.BINARY, Optional.empty(), Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"));
-		
-	simMapping.addRecord("uSimMarine", "DESIRED_THRUST", "DEZIRED_THRUST", 
+	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
 	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
 		Optional.empty()
 	);
-	simMapping.addRecord("uSimMarine", "DESIRED_RUDDER", "DEZIRED_RUDDER", 
-	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
-		Optional.empty()
-	);
-	
-	
-			 
-	
-	simMapping.addRecord("NULL-DETECTION_GILDA", "UHZ_CONFIG_REQUEST'", "UHZ_CONFIG_REQUEST", 
-	FuzzingSimMapping.VariableDirection.INBOUND, Optional.empty(),
-		Optional.of("width=([0-9]+)")
-	);
-
-	
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("/home/atlas/atlas/atlas-middleware/middleware-java/moos-sim/fuzz-configs/generated-fuzz.csv", m);
+	fe.setupFromFuzzingFile("/home/jharbin/academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	return fe;
 	}
 }

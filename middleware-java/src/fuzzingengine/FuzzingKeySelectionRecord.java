@@ -36,7 +36,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 	
 	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex,
-			int groupNum, FuzzingOperation op, List<String> participants, double startTime, double endTime) {
+			Object groupNum, FuzzingOperation op, List<String> participants, double startTime, double endTime) {
 		super(op);
 		this.key = key;
 		this.reflectionKey = reflectionKey;

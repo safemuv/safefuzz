@@ -29,7 +29,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	private Random __rng = new Random();
 
 	private static final long serialVersionUID = 1L;
-	private static final boolean DEBUG_HACK_TEST_FUZZ_VELOCITY = true;
+	private static final boolean DEBUG_HACK_TEST_FUZZ_VELOCITY = false;
 
 	public ROSEventQueue(ATLASCore core, Mission mission, int queueCapacity) {
 		super(core, queueCapacity, '.');
@@ -89,8 +89,8 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 			public void handleMessage(Message message) {
 				if (DEBUG_PRINT_RAW_MESSAGE) {
 					System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
-				}
-				;
+				};
+				
 				ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime());
 				rosQueue.add(rev);
 			}
@@ -98,10 +98,12 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	}
 
 	private void subscribeForVehicleTopics(String vehicleName) {
-		String velTopicName = "/" + vehicleName + "/ual/velocity";
-		String posTopicName = "/" + vehicleName + "/ual/pose";
-		Topic vel = new Topic(ros, velTopicName, "geometry_msgs/TwistStamped");
-		Topic pos = new Topic(ros, posTopicName, "geometry_msgs/PoseStamped");
+		String velTopicName = "/ual/velocity";
+		String posTopicName = "/ual/pose";
+		String velTopicNameFull = "/" + vehicleName + velTopicName;
+		String posTopicNameFull = "/" + vehicleName + posTopicName;
+		Topic vel = new Topic(ros, velTopicNameFull, "geometry_msgs/TwistStamped");
+		Topic pos = new Topic(ros, posTopicNameFull, "geometry_msgs/PoseStamped");
 		standardSubscribe(vehicleName, ATLASTag.VELOCITY, velTopicName, vel);
 		standardSubscribe(vehicleName, ATLASTag.POSE, posTopicName, pos);
 	}

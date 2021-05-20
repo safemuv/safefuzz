@@ -63,7 +63,7 @@ public class FuzzingEngine<E> {
 		}
 	}
 
-	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, int groupNum, double startTime,
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, Object groupNum, double startTime,
 			double endTime, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = simmapping.getRecordForKey(fuzzingKey);
 		List<String> vehicles = getVehicles(vehicleNameList);
@@ -181,6 +181,7 @@ public class FuzzingEngine<E> {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
 			String vehicle = rtu.getVehicleName();
 			String key = rtu.getTopicName();
+			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
 			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
 			if (op_o.isPresent()) {
 				res.add(op_o.get());
@@ -224,36 +225,6 @@ public class FuzzingEngine<E> {
 	    source.entrySet().
 	            forEach(e -> builder.add(e.getKey(), e.getValue()));
 	    return builder.build();
-	}
-	
-	public static JsonObject replaceJSON(JsonObject js, String jsonSpec, ValueFuzzingOperation op) throws FuzzingEngineMatchFailure {
-		// Split the jsonSpec on periods
-		JsonObjectBuilder builder = Json.createObjectBuilder();
-	    for (Map.Entry<String,JsonValue> entry : js.entrySet()){
-	        if (entry.getKey().equals("")){
-	    		String fuzzed = op.fuzzTransformString(js.toString());
-	    		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
-	    		JsonObject jModified = jsonReader.readObject();
-	            builder.add(entry.getKey(), entry.getValue());
-	        } else {
-	            builder.add(entry.getKey(), entry.getValue());
-	        }
-	    }    
-		
-		
-//		String [] jsonSpecFields = jsonSpec.split(".");
-//		JsonObject jo = js;
-//		JsonObject joParent = jo;
-//		for (int i = 0; i < jsonSpecFields.length; i++) {
-//			String specField = jsonSpecFields[0];
-//			joParent = jo;
-//			jo = jo.getJsonObject(specField);
-//		}
-//		
-//		String fuzzed = op.fuzzTransformString(jo.toString());
-//		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
-//		JsonObject jModified = jsonReader.readObject();
-		return js;
 	}
 
 	public Optional<E> fuzzTransformEvent(Optional<E> event_o, FuzzingOperation op) {
@@ -305,11 +276,8 @@ public class FuzzingEngine<E> {
 					} else {
 						Pattern p = regexp_sel.get().getKey();
 						String jsonSpec = (String)regexp_sel.get().getValue();
-						try {
-							newValue = replaceJSON(js, jsonSpec, vop);
-						} catch (FuzzingEngineMatchFailure e) {
-							ATLASLog.logFuzzing("FuzzingEngineMatchFailure - " + event + e);
-						}
+						String [] fields = jsonSpec.split(".");
+						newValue = JSONExtras.fuzzReplacement(js, fields, vop);
 					}
 					return event_o;
 					
@@ -400,7 +368,7 @@ public class FuzzingEngine<E> {
 						double startTime = Double.parseDouble(fields[2]);
 						double endTime = Double.parseDouble(fields[3]);
 						String vehicleNames = fields[4];
-						Integer groupNum = Integer.valueOf(fields[5]);
+						String fieldSpec = fields[5];
 						String opClass = fields[6];
 						String params = fields[7];
 
@@ -408,7 +376,7 @@ public class FuzzingEngine<E> {
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
 							try {
-								addFuzzingKeyOperation(varName, vehicleNames, groupNum, startTime, endTime, op);
+								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, startTime, endTime, op);
 							} catch (MissingRobot e) {
 								System.out.println("Missing robot: name = " + e.getName());
 								e.printStackTrace();

@@ -5,7 +5,11 @@ import edu.wpi.rail.jrosbridge.messages.Message;
 
 public class ROSTopicUpdate extends ROSEvent {
 	private String vehicleName;
+	
+	// This is the lOCAL topic name in the vehicle hierarchy, e.g. without
+	// uav_n prefix
 	private String topicName;
+	
 	private JsonObject json;
 	private Message message;
 	private double time;
