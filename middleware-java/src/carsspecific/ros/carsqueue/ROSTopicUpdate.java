@@ -14,19 +14,21 @@ public class ROSTopicUpdate extends ROSEvent {
 	private Message message;
 	private double time;
 	private ATLASTag atlasTag;
+	private String rosType;
 	
 	public enum ATLASTag {
 		VELOCITY,
 		POSE
 	}
 	
-	public ROSTopicUpdate(String vehicleName, ATLASTag atlasTag, String topicName, Message message, double time) {
+	public ROSTopicUpdate(String vehicleName, ATLASTag atlasTag, String topicName, Message message, double time, String rosType) {
 		this.vehicleName = vehicleName;
 		this.topicName = topicName;
 		this.message = message;
 		this.time = time;
 		this.atlasTag = atlasTag;
 		this.json = message.toJsonObject();
+		this.rosType = rosType;
 	}
 	
 	public boolean tagEquals(ATLASTag t) {
@@ -51,5 +53,9 @@ public class ROSTopicUpdate extends ROSEvent {
 	
 	public double getTime() {
 		return time;
+	}
+	
+	public String getRosType() {
+		return rosType;
 	}
 }

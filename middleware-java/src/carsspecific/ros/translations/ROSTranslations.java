@@ -68,4 +68,11 @@ public class ROSTranslations extends CARSTranslations {
 	public void stopVehicle(String robotName) {
 		
 	}
+	
+	public void sendBackJSON(String robotName, String localTopicName, JsonObject jo, String rosTypeName) {
+		String topicName = "/" + robotName + localTopicName;
+		Topic echo = new Topic(ros, topicName, rosTypeName);
+		Message msg = new Message(jo);
+		echo.publish(msg);
+	}
 }

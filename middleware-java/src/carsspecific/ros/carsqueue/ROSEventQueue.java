@@ -82,7 +82,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		}
 	}
 
-	private void standardSubscribe(String vehicleName, ATLASTag tag, String topicName, Topic t) {
+	private void standardSubscribe(String vehicleName, ATLASTag tag, String topicName, Topic t, String rosType) {
 		ROSEventQueue rosQueue = this;
 		t.subscribe(new TopicCallback() {
 			@Override
@@ -91,7 +91,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 					System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
 				};
 				
-				ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime());
+				ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime(), rosType);
 				rosQueue.add(rev);
 			}
 		});
@@ -102,62 +102,13 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		String posTopicName = "/ual/pose";
 		String velTopicNameFull = "/" + vehicleName + velTopicName;
 		String posTopicNameFull = "/" + vehicleName + posTopicName;
-		Topic vel = new Topic(ros, velTopicNameFull, "geometry_msgs/TwistStamped");
-		Topic pos = new Topic(ros, posTopicNameFull, "geometry_msgs/PoseStamped");
-		standardSubscribe(vehicleName, ATLASTag.VELOCITY, velTopicName, vel);
-		standardSubscribe(vehicleName, ATLASTag.POSE, posTopicName, pos);
+		String velType = "geometry_msgs/TwistStamped";
+		String posType = "geometry_msgs/PoseStamped";
+		Topic vel = new Topic(ros, velTopicNameFull, velType);
+		Topic pos = new Topic(ros, posTopicNameFull, posType);
+		standardSubscribe(vehicleName, ATLASTag.VELOCITY, velTopicName, vel, velType);
+		standardSubscribe(vehicleName, ATLASTag.POSE, posTopicName, pos, posType);
 	}
-
-//	public void __debugTestSend(String robotName) {
-//		Point velLinear = new Point(10.0, -10.0, 0.0);
-//		String topicName = "/" + robotName + "/ual/set_velocity";
-//		Topic echo = new Topic(ros, topicName, "geometry_msgs/TwistStamped");
-////		Topic echo = new Topic(ros, "/echo_from_atlas", "std_msgs/String");
-////		Message toSend = new Message("{\"data\": \"hello from ATLAS middleware!\"}");
-//
-////			Message toSend = new Message("{\"header\": { \"seq\":0, \"stamp\" : { \"secs\": \"0\", \"nsecs\": \"0\"}, \"frame_id\": \"odom\"}, \"twist\": { \"linear\": { \"x\": 1.0, \"y\": 1.0, \"z\": 0.0 }, \"angular\": { \"x\": 0.0, \"y\": 0.0, \"z\": 0.0}}}");	
-////			echo.publish(toSend);
-//
-//		JsonObject velUpdate = Json.createObjectBuilder().add("header", Json.createObjectBuilder().add("seq", 0)
-//				.add("stamp", Json.createObjectBuilder().add("secs", 0).add("nsecs", 0)).add("frame_id", ""))
-//				.add("twist",
-//						Json.createObjectBuilder()
-//								.add("linear", Json.createObjectBuilder().add("x", 1.0).add("y", -1.0).add("z", 2.0))
-//								.add("angular", Json.createObjectBuilder().add("x", 0).add("y", 0).add("z", 0)))
-//				.build();
-//		Message velUpdate_m = new Message(velUpdate);
-//		echo.publish(velUpdate_m);
-//	}
-//
-//	public void __debugTestSendBack(String robotName, Point newVel) {
-//		Point velLinear = new Point(10.0, -10.0, 0.0);
-//		String topicName = "/" + robotName + "/ual/set_velocity";
-//		Topic echo = new Topic(ros, topicName, "geometry_msgs/TwistStamped");
-////		Topic echo = new Topic(ros, "/echo_from_atlas", "std_msgs/String");
-////		Message toSend = new Message("{\"data\": \"hello from ATLAS middleware!\"}");
-//
-////			Message toSend = new Message("{\"header\": { \"seq\":0, \"stamp\" : { \"secs\": \"0\", \"nsecs\": \"0\"}, \"frame_id\": \"odom\"}, \"twist\": { \"linear\": { \"x\": 1.0, \"y\": 1.0, \"z\": 0.0 }, \"angular\": { \"x\": 0.0, \"y\": 0.0, \"z\": 0.0}}}");	
-////			echo.publish(toSend);
-//
-//		JsonObject velUpdate = Json.createObjectBuilder().add("header", Json.createObjectBuilder().add("seq", 0)
-//				.add("stamp", Json.createObjectBuilder().add("secs", 0).add("nsecs", 0)).add("frame_id", "odom"))
-//				.add("twist",
-//						Json.createObjectBuilder()
-//								.add("linear", Json.createObjectBuilder().add("x", newVel.getX()).add("y", newVel.getY()).add("z", newVel.getZ()))
-//								.add("angular", Json.createObjectBuilder().add("x", 0).add("y", 0).add("z", 0)))
-//				.build();
-//		Message velUpdate_m = new Message(velUpdate);
-//		echo.publish(velUpdate_m);
-//	}
-	
-//	public void __debugSendBack(String robotName, Message source) {
-//		String topicName = "/" + robotName + "/ual/set_velocity";
-//		Message dest = source.clone();
-//		JsonObject j = source.toJsonObject();
-//		JsonObject twist = j.getJsonObject("twist");
-//		JsonObject linear = twist.getJsonObject("linear");
-//		JsonObject linear = new JsonObject();
-//	}
 
 	public void setup() {
 		ros = ROSConnection.getConnection().getROS();

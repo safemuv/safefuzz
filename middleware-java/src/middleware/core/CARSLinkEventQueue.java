@@ -3,6 +3,10 @@ package middleware.core;
 import java.util.List;
 import java.util.Optional;
 
+import javax.json.JsonObject;
+
+import carsspecific.ros.carsqueue.ROSTopicUpdate;
+import carsspecific.ros.translations.ROSTranslations;
 import fuzzingengine.*;
 import fuzzingengine.operations.*;
 import middleware.carstranslations.CARSTranslations;
@@ -46,6 +50,19 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		if (event instanceof KeyValueUpdate) {
 			KeyValueUpdate varUpdate = (KeyValueUpdate)event;  
 			cTrans.sendBackEvent(varUpdate, reflectBackName);
+		}
+		
+		if (event instanceof ROSTopicUpdate) {
+			ROSTopicUpdate rtu = (ROSTopicUpdate)event;
+			if (cTrans instanceof ROSTranslations) {
+				ROSTranslations rosTrans = (ROSTranslations)cTrans;
+				String vehicleName = rtu.getVehicleName();
+				JsonObject ju = rtu.getJSON();
+				String rosType = rtu.getRosType();
+				rosTrans.sendBackJSON(vehicleName, reflectBackName, ju, rosType);
+			} else {
+				System.out.println("cTrans not ROSTranslations in ROSTopicUpdate");
+			}
 		}
 	}
 	
