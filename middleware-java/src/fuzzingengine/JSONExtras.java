@@ -14,8 +14,21 @@ import javax.json.JsonValue.ValueType;
 import fuzzingengine.operations.ValueFuzzingOperation;
 
 public class JSONExtras {
-	// TODO: use a JSonFuzzingOperation class
+	private static final boolean DEBUG_JSON_OBJECT_RESTRUCTURING = false; 
+	
+	public static void printSpecFields(String [] specFields) {
+		System.out.println("specfields length = " + specFields.length);
+		for (int i = 0; i < specFields.length; i++) {
+			System.out.println(i + "=" + specFields[i]);
+		}
+	}
+	
 	public static JsonObject fuzzReplacement(JsonObject js, String [] specFields, ValueFuzzingOperation op) {
+		//System.out.println("specFields = " + specFields);
+		if (DEBUG_JSON_OBJECT_RESTRUCTURING) {
+			printSpecFields(specFields);
+		}
+		
 		JsonObjectBuilder builder = Json.createObjectBuilder();
 		for (Map.Entry<String,JsonValue> entry : js.entrySet()){
 			JsonValue jv = entry.getValue();
@@ -29,9 +42,11 @@ public class JSONExtras {
 					String lastSpec = specFields[0];
 					if (lastSpec.equals(entry.getKey())) {
 						// Found the element to fuzz
-						String fuzzed = op.fuzzTransformString(js.toString());
+						JsonValue toFuzz = entry.getValue();
+						String fuzzed = op.fuzzTransformString(toFuzz.toString());
 			    		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
 			    		JsonObject jModified = jsonReader.readObject();
+			    		builder.add(entry.getKey(), jModified);
 					} else {
 						builder.add(entry.getKey(), entry.getValue());
 					}

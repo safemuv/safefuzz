@@ -258,6 +258,9 @@ public class FuzzingEngine<E> {
 
 					newUpdate.setValue(newValue);
 					return Optional.of((E)newUpdate);
+					
+					
+					
 				} else if (event instanceof ROSTopicUpdate) {
 					ROSTopicUpdate rtu = (ROSTopicUpdate)event;
 					ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
@@ -265,18 +268,24 @@ public class FuzzingEngine<E> {
 					JsonObject js = rtu.getJSON();
 					JsonObject newValue = js;
 					
-					Optional<Map.Entry<Pattern, Object>> regexp_sel = confs.getPatternAndGroupStructure(key);
-					if (!regexp_sel.isPresent()) {
+					
+					Optional<Object> jsonStructure = confs.getJSONStructure(key);
+					
+					// This selects if there is structure defined to the JSON key in the CSV file... 
+
+					if (!jsonStructure.isPresent()) {
+						// If there is 
+						// no structure defined in the CSV file, pass the entire structure to fuzz
 						// This fuzzes the JSON object as a string representation, re-parses it
 						String fuzzed = vop.fuzzTransformString(js.toString());
-						JsonReader jsonReader = Json.createReader(new StringReader("{}"));
+						JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
 						JsonObject obj = jsonReader.readObject();
 						jsonReader.close();
-						
 					} else {
-						Pattern p = regexp_sel.get().getKey();
-						String jsonSpec = (String)regexp_sel.get().getValue();
-						String [] fields = jsonSpec.split(".");
+						// There is structure... extract it
+						String jsonSpec = (String)jsonStructure.get();
+						System.out.println("jsonSpec = " + jsonSpec);
+						String [] fields = jsonSpec.split("\\.");
 						newValue = JSONExtras.fuzzReplacement(js, fields, vop);
 					}
 					return event_o;

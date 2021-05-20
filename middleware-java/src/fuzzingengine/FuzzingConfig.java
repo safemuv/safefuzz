@@ -44,6 +44,16 @@ public class FuzzingConfig {
 		} else return Optional.empty();
 	}
 	
+	public Optional<Object> getJSONStructure(String key) {
+		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		if (fr != null) {
+			Object o = fr.getGroupNum();
+			return Optional.of(o);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
 	public Optional<Map.Entry<Pattern,Object>> getPatternAndGroupStructure(String key) {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		if (fr != null) {

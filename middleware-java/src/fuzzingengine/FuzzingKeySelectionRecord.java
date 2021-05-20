@@ -129,4 +129,10 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public Object getGroupNum() {
+		return groupNum;
+	}
+	
+	
 }

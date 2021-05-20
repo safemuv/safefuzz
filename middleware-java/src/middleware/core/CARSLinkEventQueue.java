@@ -3,7 +3,6 @@ package middleware.core;
 import java.util.List;
 import java.util.Optional;
 
-import atlassharedclasses.ATLASObjectMapper;
 import fuzzingengine.*;
 import fuzzingengine.operations.*;
 import middleware.carstranslations.CARSTranslations;
