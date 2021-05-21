@@ -1,7 +1,7 @@
 @namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping", prefix="simmapping")
 package Simmapping;
 
-import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas";
 
 enum VariableDirection {
 	INBOUND = 1;
@@ -21,6 +21,10 @@ abstract class VariableType {
 // Info for the grammar
 class SimpleVariableType extends VariableType {
 	attr BasicVariableType vt;
+}
+
+class ROSVariableType extends VariableType {
+	attr String ROStypeName;
 }
 
 class ConstantType {

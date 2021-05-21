@@ -11,7 +11,7 @@ public class ROSTopicUpdate extends ROSEvent {
 	private String topicName;
 	
 	private JsonObject json;
-	private Message message;
+	//private Message message;
 	private double time;
 	private ATLASTag atlasTag;
 	private String rosType;
@@ -24,20 +24,40 @@ public class ROSTopicUpdate extends ROSEvent {
 	public ROSTopicUpdate(String vehicleName, ATLASTag atlasTag, String topicName, Message message, double time, String rosType) {
 		this.vehicleName = vehicleName;
 		this.topicName = topicName;
-		this.message = message;
+		//this.message = message;
 		this.time = time;
 		this.atlasTag = atlasTag;
 		this.json = message.toJsonObject();
 		this.rosType = rosType;
 	}
 	
+	public ROSTopicUpdate(ROSTopicUpdate rtu) {
+		this.vehicleName = rtu.vehicleName;
+		this.topicName = rtu.topicName;
+		//this.message = rtu.message;
+		this.time = rtu.time;
+		this.atlasTag = rtu.atlasTag;
+		this.json = rtu.json;
+		this.rosType = rtu.rosType;
+	}
+	
+	public ROSTopicUpdate(ROSTopicUpdate rtu, JsonObject newJSON) {
+		this.vehicleName = rtu.vehicleName;
+		this.topicName = rtu.topicName;
+		//this.message = rtu.message;
+		this.time = rtu.time;
+		this.atlasTag = rtu.atlasTag;
+		this.json = newJSON;
+		this.rosType = rtu.rosType;
+	}
+
 	public boolean tagEquals(ATLASTag t) {
 		return atlasTag.equals(t);
 	}
 	
-	public Message getMessage() {
-		return message;
-	}
+	//public Message getMessage() {
+//		return message;
+//	}
 	
 	public JsonObject getJSON() {
 		return json;

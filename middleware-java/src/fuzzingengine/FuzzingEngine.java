@@ -181,10 +181,13 @@ public class FuzzingEngine<E> {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
 			String vehicle = rtu.getVehicleName();
 			String key = rtu.getTopicName();
-			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
 			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
 			if (op_o.isPresent()) {
-				res.add(op_o.get());
+				FuzzingOperation op = op_o.get();
+				ATLASLog.logFuzzing("shouldFuzzCARSEvent yes on vehicle " + vehicle + " - key " + key + " - found fuzzing operation " + op);
+				res.add(op);
+			} else {
+				ATLASLog.logFuzzing("shouldFuzzCARSEvent no on vehicle " + vehicle + " - key " + key);
 			}
 		}
 
@@ -198,6 +201,8 @@ public class FuzzingEngine<E> {
 			return simmapping.getReflectionKey(k);
 		}
 
+		// TODO: some values may only need to be reflected back if they were fuzzed.
+		// This needs to be configured in the model
 		if (event instanceof ROSTopicUpdate) {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
 			String k = rtu.getTopicName();
@@ -263,6 +268,7 @@ public class FuzzingEngine<E> {
 					
 				} else if (event instanceof ROSTopicUpdate) {
 					ROSTopicUpdate rtu = (ROSTopicUpdate)event;
+					//ROSTopicUpdate newRTU = new ROSTopicUpdate(rtu);
 					ValueFuzzingOperation vop = (ValueFuzzingOperation)op;
 					String key = rtu.getTopicName();
 					JsonObject js = rtu.getJSON();
@@ -279,8 +285,9 @@ public class FuzzingEngine<E> {
 						// This fuzzes the JSON object as a string representation, re-parses it
 						String fuzzed = vop.fuzzTransformString(js.toString());
 						JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
-						JsonObject obj = jsonReader.readObject();
+						newValue = jsonReader.readObject();
 						jsonReader.close();
+						
 					} else {
 						// There is structure... extract it
 						String jsonSpec = (String)jsonStructure.get();
@@ -288,7 +295,9 @@ public class FuzzingEngine<E> {
 						String [] fields = jsonSpec.split("\\.");
 						newValue = JSONExtras.fuzzReplacement(js, fields, vop);
 					}
-					return event_o;
+					// Create the new fuzzed topic update by replacing the JSON
+					ROSTopicUpdate modifiedRTU = new ROSTopicUpdate(rtu, newValue);
+					return Optional.of((E)modifiedRTU);
 					
 				} else {
 					return event_o;

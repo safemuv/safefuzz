@@ -13,7 +13,7 @@ public class GeneratedFuzzingSpec {
 	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.BINARY, Optional.empty(), Optional.of("PATH"));
 		
 	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
-	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/home/atlas/atlas/atlas-middleware/custom-moos//bin/uSimMarine"),
+	FuzzingSimMapping.VariableDirection.INBOUND, Optional.of("/ual"),
 		Optional.empty()
 	);
 	

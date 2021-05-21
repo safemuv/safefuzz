@@ -73,6 +73,7 @@ public class ROSTranslations extends CARSTranslations {
 		String topicName = "/" + robotName + localTopicName;
 		Topic echo = new Topic(ros, topicName, rosTypeName);
 		Message msg = new Message(jo);
+		System.out.println("ROSTranslations.sendBackJSON: sending back: robotName=" + robotName + ",localTopicName=" + localTopicName + ",json=" + jo.toString());
 		echo.publish(msg);
 	}
 }

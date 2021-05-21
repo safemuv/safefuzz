@@ -1,1 +1,1 @@
-Key,/ual/velocity,0,120000.0,uav_1,twist.linear,JSONPointChange,RANDOMOFFSET|2.0|2.0|0.0
+Key,/ual/velocity,0,120000.0,uav_1|uav_2,twist.linear,JSONPointChange,RANDOMOFFSET|0.2|0.2|0.0
