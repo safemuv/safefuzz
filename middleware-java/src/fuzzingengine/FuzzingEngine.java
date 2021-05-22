@@ -20,7 +20,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
 
 import java.lang.reflect.*;
 
@@ -499,12 +498,14 @@ public class FuzzingEngine<E> {
 
 		if (fe != null) {
 			if (fe.getPendingTime() < byTime) {
-				// System.out.println("Event ready: pendingTime = " + fe.getPendingTime() + ",
-				// byTime=" + byTime);
 				FutureEvent<E> feRemoved = delayedEvents.remove();
 				res.add(feRemoved);
 			}
 		}
 		return res;
+	}
+	
+	public Set<String> getAllKeys() {
+		return confs.getAllKeys();
 	}
 }

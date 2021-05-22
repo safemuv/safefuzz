@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<simmapping:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simmapping="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping" xmi:id="_nmugYDmmEeuE4-y9AhgrNA">
+  <sims xmi:id="_5xXt4D5yEeunyIiPnuY6hQ" name="ROS" baseDirectory="/home/atlas/atlas/atlas-middleware/custom-moos">
+    <components xmi:id="_YQLbUEL1Eeut4tLYmKP6Ig" name="ual" componentRelativePath="/ual">
+      <vars xmi:id="_aWr00EL1Eeut4tLYmKP6Ig" component="_YQLbUEL1Eeut4tLYmKP6Ig" variable="/ual/velocity" reflectionName="/ual/set_velocity" dir="OUTBOUND" opParams="_eFDvoLnIEeu2MYfIVEBwaw"/>
+    </components>
+  </sims>
+  <operations xmi:id="_cry2oLnIEeu2MYfIVEBwaw" operationClassName="JSONPointChange">
+    <paramSets xmi:id="_eFDvoLnIEeu2MYfIVEBwaw" name="RandomLimit2XandY">
+      <params xsi:type="simmapping:StringConstantOperationParameter" xmi:id="_jk4OULnIEeu2MYfIVEBwaw" name="Nature" value="RANDOMOFFSET"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_mMcGcLnIEeu2MYfIVEBwaw" name="XLimit" value="2.0"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_ptaS0LnIEeu2MYfIVEBwaw" name="YLimit" value="2.0"/>
+      <params xsi:type="simmapping:DoubleConstantOperationParameter" xmi:id="_rTpQ0LnIEeu2MYfIVEBwaw" name="ZLimit"/>
+    </paramSets>
+  </operations>
+</simmapping:FuzzingSpecification>

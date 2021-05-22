@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
+  <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
+    <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="ual" componentRelativePath="/ual">
+      <vars xmi:id="_32ubwLsZEeute_EAlr7M3A" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/velocity" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_E_C84LsaEeute_EAlr7M3A" ROSTypename="geometry_msgs/TwistStamped"/>
+      </vars>
+    </components>
+  </sims>
+</fuzzspec:FuzzingSpecification>

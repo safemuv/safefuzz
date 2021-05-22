@@ -29,14 +29,16 @@ public class FuzzingSimMapping {
 		private VariableDirection dir;
 		private Optional<String> binaryPath;
 		private Optional<String> regexp;
+		private boolean vehicleSpecific;
 		
-		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp) {
+		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific) {
 			this.component = component;
 			this.variable = variable;
 			this.reflectionName = reflectionName;
 			this.dir = dir;
 			this.binaryPath = binaryPath;
 			this.regexp = regexp;
+			this.vehicleSpecific = vehicleSpecific;
 		}
 		
 		public Optional<String> getComponent() {
@@ -80,12 +82,12 @@ public class FuzzingSimMapping {
 	private HashMap<String,VariableSpecification> recordsVariables = new HashMap<String,VariableSpecification>();
 	private HashMap<String,FuzzingComponentNatureInfo> componentFuzzingInfo = new HashMap<String,FuzzingComponentNatureInfo>();
 	
-	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex) {
+	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex, boolean vehicleSpecific) {
 		if (!records.containsKey(component)) {
 			records.put(component, new ArrayList<VariableSpecification>());
 		}
 		
-		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex);
+		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex, vehicleSpecific);
 		records.get(component).add(vs);
 		recordsVariables.put(variable, vs);
 	}
@@ -95,11 +97,6 @@ public class FuzzingSimMapping {
 	}
 	
 	public Set<VariableSpecification> getRecordsUponComponent(String component) {
-		//return recordsVariables.entrySet().stream()
-			//.filter(vr -> vr.getValue().getComponent().equals(component))
-			//.map(e -> vr.getValue())
-			//.collect(Collectors.toSet());
-		
 		Set<VariableSpecification> recs = new HashSet<VariableSpecification>();
 		for (Map.Entry<String, VariableSpecification> e : recordsVariables.entrySet()) {
 			Optional<String> s_o = e.getValue().getComponent();

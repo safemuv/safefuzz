@@ -14,7 +14,7 @@ public class ROSATLASCore extends ATLASCore {
 		carsOutput = (CARSTranslations) new ROSTranslations();
 		outputToCI = new ActiveMQProducer(PortMappings.portForCI("shoreside"), ActiveMQProducer.QueueOrTopic.TOPIC);
 		outputToCI.run();
-		carsIncoming = new ROSEventQueue(this, mission, MOOS_QUEUE_CAPACITY);
+		carsIncoming = new ROSEventQueue(this, mission, MOOS_QUEUE_CAPACITY, fuzzEngine);
 		
 		// TODO: this is temporary, just while testing the new ROS queue
 		carsIncoming.setup();

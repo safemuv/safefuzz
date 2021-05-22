@@ -1,18 +1,19 @@
 package carsspecific.ros.carsqueue;
 
-import java.util.Random;
+import java.util.Set;
 
 import javax.json.*;
-
 import atlasdsl.*;
 import atlassharedclasses.GPSPositionReading;
 import atlassharedclasses.Point;
 import carsspecific.ros.carsqueue.ROSTopicUpdate.ATLASTag;
 import carsspecific.ros.connection.ROSConnection;
-import carsspecific.ros.translations.ROSTranslations;
+
 import edu.wpi.rail.jrosbridge.*;
 import edu.wpi.rail.jrosbridge.callback.TopicCallback;
 import edu.wpi.rail.jrosbridge.messages.Message;
+import fuzzingengine.FuzzingConfig;
+import fuzzingengine.FuzzingEngine;
 import middleware.core.*;
 
 public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
@@ -20,20 +21,13 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = false;
 	private Mission mission;
 	private Ros ros;
-	private Point _randomOffset  = new Point(0.0,0.0,0.0);
-	private int velEvents = 0;
-	
-	// Debug test to reflect velocity values directly
-	private ROSTranslations __rtrans = new ROSTranslations();
-	
-	private Random __rng = new Random();
-
 	private static final long serialVersionUID = 1L;
-	private static final boolean DEBUG_HACK_TEST_FUZZ_VELOCITY = false;
+	private FuzzingEngine fuzzEngine;
 
-	public ROSEventQueue(ATLASCore core, Mission mission, int queueCapacity) {
+	public ROSEventQueue(ATLASCore core, Mission mission, int queueCapacity, FuzzingEngine fuzzEngine) {
 		super(core, queueCapacity, '.');
 		this.mission = mission;
+		this.fuzzEngine = fuzzEngine;
 	}
 
 	public void run() {
@@ -69,21 +63,32 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				JsonNumber jz = linear.getJsonNumber("z");
 				Point vel = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 				System.out.println("Vel:" + vel.toString());
-				
-				if (DEBUG_HACK_TEST_FUZZ_VELOCITY) {
-					if (velEvents % 1000 == 0) {
-						_randomOffset = new Point(__rng.nextDouble()*2 - 1, __rng.nextDouble()*2 - 1, 0.0);
-					}
-					
-					velEvents++;
-					__rtrans.setVelocity(rtu.getVehicleName(), vel.add(_randomOffset));
-				}
 			}
 		}
 	}
-
-	private void standardSubscribe(String vehicleName, ATLASTag tag, String topicName, Topic t, String rosType) {
+	
+	private void standardSubscribe(String fullTopicName, String rosType) {
 		ROSEventQueue rosQueue = this;
+		Topic t = new Topic(ros, fullTopicName, rosType);
+		ATLASTag tag = ATLASTag.SIMULATOR_GENERAL;
+		t.subscribe(new TopicCallback() {
+			@Override
+			public void handleMessage(Message message) {
+				if (DEBUG_PRINT_RAW_MESSAGE) {
+					System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
+				};
+				
+				ROSEvent rev = new ROSTopicUpdate(tag, fullTopicName, message, core.getTime(), rosType);
+				rosQueue.add(rev);
+			}
+		});
+		
+	}
+
+	private void standardSubscribeVehicle(String vehicleName, ATLASTag tag, String topicName, String rosType) {
+		ROSEventQueue rosQueue = this;
+		String topicNameFull = "/" + vehicleName + topicName;
+		Topic t = new Topic(ros, topicNameFull, rosType);
 		t.subscribe(new TopicCallback() {
 			@Override
 			public void handleMessage(Message message) {
@@ -97,25 +102,50 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		});
 	}
 
-	private void subscribeForVehicleTopics(String vehicleName) {
+	private void subscribeForStandardVehicleTopics(String vehicleName) {
+		// We always require the position and velocity of vehicles for the middleware state
 		String velTopicName = "/ual/velocity";
 		String posTopicName = "/ual/pose";
-		String velTopicNameFull = "/" + vehicleName + velTopicName;
-		String posTopicNameFull = "/" + vehicleName + posTopicName;
 		String velType = "geometry_msgs/TwistStamped";
 		String posType = "geometry_msgs/PoseStamped";
-		Topic vel = new Topic(ros, velTopicNameFull, velType);
-		Topic pos = new Topic(ros, posTopicNameFull, posType);
-		standardSubscribe(vehicleName, ATLASTag.VELOCITY, velTopicName, vel, velType);
-		standardSubscribe(vehicleName, ATLASTag.POSE, posTopicName, pos, posType);
+		standardSubscribeVehicle(vehicleName, ATLASTag.VELOCITY, velTopicName, velType);
+		standardSubscribeVehicle(vehicleName, ATLASTag.POSE, posTopicName, posType);
+	}
+	
+	private void setupTopicForSubscription() {
+		// TODO: create a topic and do the subscription here
+	}
+	
+	private void subscribeForFuzzingTopics() {
+		// TODO: need a connection from the fuzzing engine to this queue
+		
+		// Need the types as well for the keys
+		// Also need to know if the topics are per-robot or not...
+		Set<String> keys = fuzzEngine.getAllKeys();
+		FuzzingConfig confs = fuzzEngine.getConfig();
+		
+		for (String k : keys) {
+			
+		}
+	}
+	
+	private void subscribeForGoalTopics() {
+		// TODO: add the messages from the mission
+	}
+	
+	private void subscribeForSimulatorTopics() {
+		// Need the simulator time...
+		// standardSubscribe("/clock", "CLOCK_TYPE");
 	}
 
 	public void setup() {
 		ros = ROSConnection.getConnection().getROS();
+		subscribeForSimulatorTopics();
+		
 		// Iterate over all the robots in the DSL, set up subscriptions for position and
 		// velocity
 		for (Robot r : mission.getAllRobots()) {
-			subscribeForVehicleTopics(r.getName());
+			subscribeForStandardVehicleTopics(r.getName());
 		}
 	}
 

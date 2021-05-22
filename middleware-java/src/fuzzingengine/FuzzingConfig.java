@@ -173,4 +173,10 @@ public class FuzzingConfig {
 							 getComponentsByKeyRecordsForRobot(rname).stream())
 				.collect(Collectors.toSet());
 	}
+	
+	public Set<String> getAllKeys() {
+		return keyLookup.entrySet().stream()
+				.map(c -> c.getKey())
+				.collect(Collectors.toSet());
+	}
 }

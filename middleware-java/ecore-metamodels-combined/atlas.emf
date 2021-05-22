@@ -354,6 +354,12 @@ class DynamicGoalRegion extends GoalRegion {
 	attr double relativeRange;
 }
 
+class GoalVariables {
+	attr String name;
+	attr String variableType;
+	attr boolean vehicleSpecific;
+}
+
 class Goal {
 	attr String name;
 	attr int priority;
@@ -362,6 +368,7 @@ class Goal {
 	val GoalAction action;
 	val GoalRegion[0..1] region;
 	ref Behaviour[*] behaviours;
+	val GoalVariables[*] variables;
 }
 
 class BehaviourVariable {

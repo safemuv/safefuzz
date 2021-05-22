@@ -1,5 +1,5 @@
-@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping", prefix="simmapping")
-package Simmapping;
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec", prefix="fuzzspec")
+package Fuzzing;
 
 import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas";
 
@@ -24,7 +24,7 @@ class SimpleVariableType extends VariableType {
 }
 
 class ROSVariableType extends VariableType {
-	attr String ROStypeName;
+	attr String ROSTypename;
 }
 
 class ConstantType {
@@ -68,6 +68,7 @@ class VariableSpecification {
 	val VariableType vtype;
 	attr VariableDirection dir; 	
 	ref OperationParameterSet[1..*] opParams;
+	attr boolean vehicleSpecific;
 }
 
 class FuzzingMessage {

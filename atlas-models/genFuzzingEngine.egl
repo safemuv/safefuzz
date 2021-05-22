@@ -14,7 +14,7 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
-[% for (s in SimMapping!Simulator.allInstances()) { %]
+[% for (s in FuzzSpec!Simulator.allInstances()) { %]
 	[% if (s.name == simName) { %]
 	[% var baseDir = s.baseDirectory; %]
 		[% for (comp in s.components) { %]
@@ -30,23 +30,28 @@ public class GeneratedFuzzingSpec {
 	simMapping.setComponentFuzzingInfo("[%= comp.name %]", [%= cnature %], [%= classstring %], [%= crelpathstr %]);
 		
 			[% for (vspec in comp.vars) { %]
-				[% var c = comp; %]
-				[% var vt = vspec.vtype; %]
+				[% 
+				var c = comp;
+				var vt = vspec.vtype; var typename = "Optional.empty()";
+				if (vt.isKindOf(RegexpVariableType)) {
+					typename = "Optional.of()";
+				}
+				
+				if (vt.isKindOf(ROSVariableType)) {
+					typename = "Optional.of(\"" + vt.ROSTypename + "\")";
+				}
+			%]
+				
 	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
-	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"),
-	[% if (vt.isKindOf(RegexpVariableType)) { %]
-		Optional.of("[%= vt.regexp %]")
-	[% } else { %]
-		Optional.empty()
-	[% } %]
-	);
+	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
+	[%= vspec.vehicleSpecific %]);
 		[% } %]
 		[% } %]
 	[% } %]
 	[% } %]
 	
 	[* Add simulator message variables *]
-	[% for (msg in SimMapping!FuzzingMessage.allInstances()) { %]
+	[% for (msg in FuzzSpec!FuzzingMessage.allInstances()) { %]
 		[% var mref = msg.messageRef;
 		   var mname = mref.name; %]	
 		[% for (vspec in msg.vars) { %]
