@@ -60,6 +60,10 @@ public class FuzzingSimMapping {
 		public String getReflectionName() {
 			return reflectionName;
 		}
+		
+		public boolean isVehicleSpecific() {
+			return true;
+		}
 	}
 	
 	private class FuzzingComponentNatureInfo {
@@ -156,5 +160,9 @@ public class FuzzingSimMapping {
 		if (vr != null) {
 			return Optional.of(vr.getReflectionName());
 		} else return Optional.empty();
+	}
+	
+	public Map<String,VariableSpecification> getRecords() {
+		return recordsVariables;
 	}
 }

@@ -1,5 +1,7 @@
 package carsspecific.ros.carsqueue;
 
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.json.*;
@@ -14,6 +16,8 @@ import edu.wpi.rail.jrosbridge.callback.TopicCallback;
 import edu.wpi.rail.jrosbridge.messages.Message;
 import fuzzingengine.FuzzingConfig;
 import fuzzingengine.FuzzingEngine;
+import fuzzingengine.FuzzingSimMapping;
+import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import middleware.core.*;
 
 public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
@@ -121,12 +125,26 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		
 		// Need the types as well for the keys
 		// Also need to know if the topics are per-robot or not...
-		Set<String> keys = fuzzEngine.getAllKeys();
-		FuzzingConfig confs = fuzzEngine.getConfig();
 		
-		for (String k : keys) {
-			
+		FuzzingSimMapping spec = fuzzEngine.getSpec();
+		Map<String,VariableSpecification> vspec = spec.getRecords();
+		for (Map.Entry<String,VariableSpecification> entry : vspec.entrySet()) {
+			String topicName = entry.getKey();
+			VariableSpecification v = entry.getValue();
+			if (v.isVehicleSpecific()) {
+				// TODO: Uses the regexp as a type - rename this to type
+				Optional<String> rosType_o = v.getRegexp();
+				if (rosType_o.isPresent()) {
+					String rosType = rosType_o.get();
+					for (Robot r : mission.getAllRobots()) {
+						standardSubscribeVehicle(r.getName(), ATLASTag.FUZZING_VAR, topicName, rosType);
+					}
+				} else {
+					System.out.println("Could not set up ROS subscription for fuzzing variable " + topicName + " as no type defined");
+				}
+			}
 		}
+		
 	}
 	
 	private void subscribeForGoalTopics() {
@@ -141,9 +159,12 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	public void setup() {
 		ros = ROSConnection.getConnection().getROS();
 		subscribeForSimulatorTopics();
+		subscribeForFuzzingTopics();
 		
 		// Iterate over all the robots in the DSL, set up subscriptions for position and
 		// velocity
+		
+		// TODO: check for duplication if we also subscribe to velocity/pos in the fuzzing file
 		for (Robot r : mission.getAllRobots()) {
 			subscribeForStandardVehicleTopics(r.getName());
 		}
