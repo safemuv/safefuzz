@@ -1,8 +1,8 @@
 package carsspecific.ros.carsqueue;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.json.*;
 import atlasdsl.*;
@@ -14,13 +14,16 @@ import carsspecific.ros.connection.ROSConnection;
 import edu.wpi.rail.jrosbridge.*;
 import edu.wpi.rail.jrosbridge.callback.TopicCallback;
 import edu.wpi.rail.jrosbridge.messages.Message;
-import fuzzingengine.FuzzingConfig;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import middleware.core.*;
 
 public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
+	// This is used in the subscriptions to ensure we do not duplicate them - e.g.
+	// by
+	// subscribing twice to the same topic
+	private Map<String, Boolean> topicSubscriptions = new HashMap<String, Boolean>();
 
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = false;
 	private Mission mission;
@@ -70,44 +73,53 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 			}
 		}
 	}
-	
-	private void standardSubscribe(String fullTopicName, String rosType) {
-		ROSEventQueue rosQueue = this;
-		Topic t = new Topic(ros, fullTopicName, rosType);
-		ATLASTag tag = ATLASTag.SIMULATOR_GENERAL;
-		t.subscribe(new TopicCallback() {
-			@Override
-			public void handleMessage(Message message) {
-				if (DEBUG_PRINT_RAW_MESSAGE) {
-					System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
-				};
-				
-				ROSEvent rev = new ROSTopicUpdate(tag, fullTopicName, message, core.getTime(), rosType);
-				rosQueue.add(rev);
-			}
-		});
-		
+
+	private void standardSubscribe(String fullTopicName, String rosType, ATLASTag tag) {
+		if (topicSubscriptions.containsKey(fullTopicName)) {
+			System.out.println("Ignoring second subscription attempt to " + fullTopicName);
+		} else {
+			ROSEventQueue rosQueue = this;
+			Topic t = new Topic(ros, fullTopicName, rosType);
+			topicSubscriptions.put(fullTopicName, true);
+			t.subscribe(new TopicCallback() {
+				@Override
+				public void handleMessage(Message message) {
+					if (DEBUG_PRINT_RAW_MESSAGE) {
+						System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
+					}
+
+					ROSEvent rev = new ROSTopicUpdate(tag, fullTopicName, message, core.getTime(), rosType);
+					rosQueue.add(rev);
+				}
+			});
+		}
 	}
 
 	private void standardSubscribeVehicle(String vehicleName, ATLASTag tag, String topicName, String rosType) {
-		ROSEventQueue rosQueue = this;
 		String topicNameFull = "/" + vehicleName + topicName;
-		Topic t = new Topic(ros, topicNameFull, rosType);
-		t.subscribe(new TopicCallback() {
-			@Override
-			public void handleMessage(Message message) {
-				if (DEBUG_PRINT_RAW_MESSAGE) {
-					System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
-				};
-				
-				ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime(), rosType);
-				rosQueue.add(rev);
-			}
-		});
+		if (topicSubscriptions.containsKey(topicNameFull)) {
+			System.out.println("Ignoring second subscription attempt to " + topicNameFull);
+		} else {
+			ROSEventQueue rosQueue = this;
+			Topic t = new Topic(ros, topicNameFull, rosType);
+			topicSubscriptions.put(topicNameFull, true);
+			t.subscribe(new TopicCallback() {
+				@Override
+				public void handleMessage(Message message) {
+					if (DEBUG_PRINT_RAW_MESSAGE) {
+						System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
+					}
+
+					ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime(), rosType);
+					rosQueue.add(rev);
+				}
+			});
+		}
 	}
 
 	private void subscribeForStandardVehicleTopics(String vehicleName) {
-		// We always require the position and velocity of vehicles for the middleware state
+		// We always require the position and velocity of vehicles for the middleware
+		// state
 		String velTopicName = "/ual/velocity";
 		String posTopicName = "/ual/pose";
 		String velType = "geometry_msgs/TwistStamped";
@@ -115,20 +127,16 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		standardSubscribeVehicle(vehicleName, ATLASTag.VELOCITY, velTopicName, velType);
 		standardSubscribeVehicle(vehicleName, ATLASTag.POSE, posTopicName, posType);
 	}
-	
-	private void setupTopicForSubscription() {
-		// TODO: create a topic and do the subscription here
-	}
-	
+
 	private void subscribeForFuzzingTopics() {
 		// TODO: need a connection from the fuzzing engine to this queue
-		
+
 		// Need the types as well for the keys
 		// Also need to know if the topics are per-robot or not...
-		
+
 		FuzzingSimMapping spec = fuzzEngine.getSpec();
-		Map<String,VariableSpecification> vspec = spec.getRecords();
-		for (Map.Entry<String,VariableSpecification> entry : vspec.entrySet()) {
+		Map<String, VariableSpecification> vspec = spec.getRecords();
+		for (Map.Entry<String, VariableSpecification> entry : vspec.entrySet()) {
 			String topicName = entry.getKey();
 			VariableSpecification v = entry.getValue();
 			if (v.isVehicleSpecific()) {
@@ -140,34 +148,44 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 						standardSubscribeVehicle(r.getName(), ATLASTag.FUZZING_VAR, topicName, rosType);
 					}
 				} else {
-					System.out.println("Could not set up ROS subscription for fuzzing variable " + topicName + " as no type defined");
+					System.out.println("Could not set up ROS subscription for fuzzing variable " + topicName
+							+ " as no type defined");
 				}
 			}
 		}
-		
 	}
-	
+
 	private void subscribeForGoalTopics() {
-		// TODO: add the messages from the mission
+		for (Goal g : mission.getGoals()) {
+			for (GoalVariable gv : g.getGoalVariables()) {
+				if (gv.isVehicleSpecific())  {
+					// TODO: should we only subscribe for participants?
+					for (Robot r : mission.getAllRobots()) {
+						standardSubscribeVehicle(r.getName(), ATLASTag.GOALSTATE_VAR, gv.getName(), gv.getVariableType());
+					}
+				} else {
+					standardSubscribe(gv.getName(), gv.getVariableType(), ATLASTag.GOALSTATE_VAR);
+				}
+			}
+		}
 	}
-	
+
 	private void subscribeForSimulatorTopics() {
 		// Need the simulator time...
-		// standardSubscribe("/clock", "CLOCK_TYPE");
+		standardSubscribe("/clock", "CLOCK_TYPE", ATLASTag.SIMULATOR_GENERAL);
 	}
 
 	public void setup() {
 		ros = ROSConnection.getConnection().getROS();
-		subscribeForSimulatorTopics();
-		subscribeForFuzzingTopics();
 		
 		// Iterate over all the robots in the DSL, set up subscriptions for position and
 		// velocity
-		
-		// TODO: check for duplication if we also subscribe to velocity/pos in the fuzzing file
 		for (Robot r : mission.getAllRobots()) {
 			subscribeForStandardVehicleTopics(r.getName());
 		}
+		subscribeForSimulatorTopics();
+		subscribeForFuzzingTopics();
+		subscribeForGoalTopics();
 	}
 
 	public void close() {

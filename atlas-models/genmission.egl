@@ -19,7 +19,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		var computerNum = 0; 
 	%]
 	final double MISSION_END_TIME = [%= m.endTime %];
-	Mission mission = new Mission(MISSION_END_TIME);
+	final boolean STOP_ON_NO_ENERGY = [%= m.stopVehicleOnNoEnergy %];
+	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
 	[% for (c in m.computers) { %]
 	[% var computerName = "c" + computerNum++;	%]
@@ -167,20 +168,24 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		[% } %]
 		
-		[% var goalRegion = g.region; %]
+		[% var goalRegion = g.region;
+           var goalRegionEntry = "Optional.empty()";  %]
 		[% if (goalRegion.isKindOf(StaticGoalRegion)) { %]
 		[% var sr = goalRegion.staticRegion; %]
+		   
 		GoalRegion gr[%= goalName %] = new StaticGoalRegion(
 			new Region(new Point([%= sr.corner1.x %], [%= sr.corner1.y %], [%= sr.corner1.z %]),
 			           new Point([%= sr.corner2.x %], [%= sr.corner2.y %], [%= sr.corner2.z %])));
+		[% goalRegionEntry = "Optional.of(gr" + goalName + ")"; %]
 		[% } %]
 		
 		[% if (goalRegion.isKindOf(DynamicGoalRegion)) { %]
 		[% var parentGoal = goalRegion.relativeToGoal; %]
 		GoalRegion gr[%= goalName %] = new DynamicGoalRegion([%= parentGoal.name %], "[%= goalRegion.relativeToGoalField %]", [%= goalRegion.relativeRange %]);
+		[% goalRegionEntry = "Optional.of(gr" + goalName + ")"; %]
 		[% } %]
 		
-		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], Optional.of(gr[%= goalName %]), ga[%= goalnum %]);
+		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], [%= goalRegionEntry %], ga[%= goalnum %]);
 		
 		[* Register goal dependencies - need an exception handler around this if any dependencies
 		   are inserted *]
@@ -192,6 +197,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 		} catch (SelfDependencyError e) {
 			throw new DSLLoadFailed("Goal [%= goalName %] depends on itself");
 		}
+		[% } %]
+		
+		[% var goalVariableCount = 0; %]
+		[% for (gv in g.variables) { %]
+			[% goalVariableCount++; %]
+			GoalVariable gvar[%= goalVariableCount %] = new GoalVariable("[%= gv.name %]", "[%= gv.variableType %]", [%= gv.vehicleSpecific %]);
+			[%= goalName %].addVariable(gvar[%= goalVariableCount %]);
 		[% } %]
 		
 		mission.addGoal("[%= g.name %]", [%= g.name %]);

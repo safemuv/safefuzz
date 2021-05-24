@@ -12,7 +12,15 @@
   </robots>
   <computers xmi:id="_vmC9UJyAEeuni_WJaXBVWw" name="shoreside"/>
   <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistances" priority="100">
+    <requirements xmi:id="_aQhYULyMEeu_l8YcOLqCyw" latestFinishTime="2400.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_NQmb4LylEeu_l8YcOLqCyw" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:TrackDistances" xmi:id="_EXPZMLseEeute_EAlr7M3A"/>
-    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/ual/position" variableType="geometry_msgs/PoseStamped" vehicleSpecific="true"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_U1XIcLySEeu_l8YcOLqCyw">
+      <staticRegion xmi:id="_VZUxILySEeu_l8YcOLqCyw">
+        <corner1 xmi:id="_V2Ry4LySEeu_l8YcOLqCyw" x="100.0" y="100.0"/>
+        <corner2 xmi:id="_WbW14LySEeu_l8YcOLqCyw"/>
+      </staticRegion>
+    </region>
+    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/ual/position_goalvar_test" variableType="geometry_msgs/PoseStamped" vehicleSpecific="true"/>
   </goals>
 </atlas:Mission>
