@@ -18,6 +18,11 @@ abstract class VariableType {
 
 }
 
+abstract class TimingSpec {
+	attr double startTime;
+	attr double endTime;
+}
+
 // Info for the grammar
 class SimpleVariableType extends VariableType {
 	attr BasicVariableType vt;
@@ -69,6 +74,7 @@ class VariableSpecification {
 	attr VariableDirection dir; 	
 	ref OperationParameterSet[1..*] opParams;
 	attr boolean vehicleSpecific;
+	val TimingSpec[1] timeLimit;
 }
 
 class FuzzingMessage {
