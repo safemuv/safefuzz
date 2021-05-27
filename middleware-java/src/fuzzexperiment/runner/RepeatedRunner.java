@@ -24,86 +24,61 @@ import ciexperiment.runner.RunExperiment;
 import faultgen.InvalidFaultFormat;
 
 public class RepeatedRunner {
-	private static final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
+	private final String EMF_OUTPUT_PATH = "/home/atlas/atlas/atlas-middleware/middleware-java/src/atlasdsl/loader/GeneratedDSLLoader.java";
 	
-	public static void runFuzzingExptLoop() throws InterruptedException, IOException {
+	private boolean actuallyRun;
+	private double timeLimit;
+	
+	public void runFuzzingExptLoop(ExptParams eparams) throws InterruptedException, IOException {
 		// The core logic for the loop
 		
 		// Read fuzzing specification?
 		// Read the experiment specification as a model - or use the generated CSV creator...
 		// In the loop...
-		// Generate a CSV file consisting of a fuzzing experiment
-		// Invoke the middleware (with the correct mission model and fuzzing spec!)
-		// Invoke the CARS / call ROS launch scripts
-		// ... need to launch Docker and copy in shared containers from the outside 
-		// Terminate the simulation after specific time
-		// Assess the metrics (which the user computed from filled-in templates)
 		
 		while (eparams.completed()) {
+			// Generate a CSV file consisting of a fuzzing experiment
+			// Invoke the middleware (with the correct mission model and fuzzing spec!)
+			// Invoke the CARS / call ROS launch scripts
+			// ... need to launch Docker and copy in shared containers from the outside 
+			// Terminate the simulation after specific time
+			// Assess the metrics (which the user computed from filled-in templates)
+			
 			eparams.printState();
 			// Modify the mission from the parameters - and load the modified mission file here
-			try {
-				Optional<String> nextFile_o = eparams.getNextFileName();
-				if (nextFile_o.isPresent()) {
-					String file = nextFile_o.get();
+			Optional<String> nextFile_o = eparams.getNextFileName();
+			if (nextFile_o.isPresent()) {
+				String file = nextFile_o.get();
+				String exptTag = "exptcsv-" + file;
+				System.out.println("Running fuzzing experiments for CSV file name " + file);
+				RunFuzzingExperiment.doExperimentFromFile(exptTag, actuallyRun, timeLimit);
+				eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs", file);
+			}
 					
-					for (String ciOption : ciOptions) {
-						System.out.println("Running experiments for model file " + file + " and CI class " + ciOption);
-						// Mission loader - recompile it
-						generateCSV.info();
-						System.out.println("Recompiling loader");
-						RunExperiment.compileLoader();
-						
-						// The newly recompiled loader is not used by this process, only by subprocesses
-						// So they see all the changes to the mission
-						Thread.sleep(3000);
-						System.out.println("Loader recompilation done");
-						RunExperiment.doExperimentFromFile(exptTag, actuallyRun, timeLimit, ciOption);
-						eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs", file, ciOption);
-					}
-					
-					eparams.advance();
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (EolModelLoadingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (EglRuntimeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			Thread.sleep(1000);
+			eparams.advance();
 		}
 	}
 	
-	private static Mission getCurrentMission() throws DSLLoadFailed {
+	private Mission getCurrentMission() throws DSLLoadFailed {
 		DSLLoader dl = new GeneratedDSLLoader();
 		return dl.loadMission();
 	}
 
-	public static void runFuzzExperiment(String sourceModelFile, List<Metrics> metricList, String fileTag, List<String> ciOptions) {
+	public void runFuzzExperiment(String sourceModelFile, List<Metrics> metricList, String fileTag, List<String> ciOptions) {
 		DSLLoader loader = new GeneratedDSLLoader();
 
 		try {
 			Mission baseMission = loader.loadMission();
-			double runTime = baseMission.getEndTime();
-			String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			FileWriter tempLog = new FileWriter("tempLog-" + fileName + ".res");
+			double timeLimit = baseMission.getEndTime();
+			// TODO: metrics handling - custom metrics
+			FileWriter tempLog = new FileWriter("fuzzexpt-templog.log");
 			MetricsProcessing mp = new MetricsProcessing(metricList, tempLog);
 			mp.setMetricState(MetricStateKeys.MISSION_END_TIME, baseMission.getEndTime());
-			String resFileName = "ciexpt-"+fileTag+".res";
-			System.out.println("Model generation beginning for " + sourceModelFile);
-			List<String> missionFiles = modelTransformer.retriveAllModels(sourceModelFile);
-			System.out.println("Model generation completed successfully!");
-			Thread.sleep(10000);
+			
+			String resFileName = "fuzzexpt-"+fileTag+".res";
 			System.out.println("Starting experiment set");
-			ExptParams ep = new RunOnSetOfModels(mp, runTime, missionFiles, resFileName);
-			runCIExptLoop(ep, resFileName, true, runTime, ciOptions);
+			ExptParams ep = new RunOnSetOfSolutions(mp, resFileName);
+			runFuzzingExptLoop(ep);
 			
 			System.out.println("Done");
 		} catch (DSLLoadFailed e) {
@@ -111,8 +86,6 @@ public class RepeatedRunner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (InvalidFaultFormat e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -12,6 +12,10 @@
     <eLiterals name="DOUBLE" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TimingSpec" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
   </eClassifiers>
@@ -54,6 +58,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="opParams" lowerBound="1"
         upperBound="-1" eType="#//OperationParameterSet"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vehicleSpecific" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="timeLimit" lowerBound="1"
+        eType="#//TimingSpec" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingMessage">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

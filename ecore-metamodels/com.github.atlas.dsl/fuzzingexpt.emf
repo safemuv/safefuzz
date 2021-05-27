@@ -7,19 +7,17 @@ abstract class ParticipantChoice {
 }
 
 class SpecificParticipantChoice extends ParticipantChoice {
-	ref Atlas.NamedComponent[0..*] participants;
+	ref Atlas.Component[0..*] participants;
 }
 
 class AllParticipantChoice extends ParticipantChoice {
 	
 }
 
-
-
 abstract class FuzzingSelection {
 	val ParticipantChoice[1] participantChoice;
-	ref Fuzzing.OperationParameterSet[*] opParams;
-	val Atlas.TimingSpec[1] timspec;
+	ref OperationParameterSet[*] opParams;
+	val Fuzzing.TimingSpec[1] timspec;
 }
 
 class ComponentFuzzingSelection extends FuzzingSelection {

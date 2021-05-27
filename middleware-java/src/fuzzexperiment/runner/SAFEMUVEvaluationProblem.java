@@ -91,13 +91,14 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
 		String exptTag = "exptGA-" + (runCount++);
-		try {
+//		try {
 			// TODO: should we generate the CSV file first or pass in the solution to do it?
-			RunExperiment.doExperiment(mission, exptTag, solution, actuallyRun, exptRunTime);
+			// TODO: merge code with RepeatedRunner.java
+			//RunExperiment.doExperiment(mission, exptTag, solution, actuallyRun, exptRunTime);
 			//metricsProcessing.readLogFiles(logFileDir, solution);
-		} catch (InterruptedException | IOException e) {
-			e.printStackTrace();
-		}
+//		} catch (InterruptedException | IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void evaluate(FuzzingSelectionsSolution solution) {
