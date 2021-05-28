@@ -172,7 +172,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 	private void subscribeForSimulatorTopics() {
 		// Need the simulator time...
-		standardSubscribe("/clock", "CLOCK_TYPE", ATLASTag.SIMULATOR_GENERAL);
+		standardSubscribe("/clock", "rosgraph_msg/Clock", ATLASTag.SIMULATOR_GENERAL);
 	}
 
 	public void setup() {

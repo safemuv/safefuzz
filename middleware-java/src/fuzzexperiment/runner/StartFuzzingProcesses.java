@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import utils.ExptHelper;
 
-public class RunFuzzingExperiment {
+public class StartFuzzingProcesses {
 
 	// TODO: no more fixed paths
 	private final static String ABS_SCRIPT_PATH = "/home/jharbin/academic/atlas/atlas-middleware/bash-scripts/";
@@ -59,6 +59,12 @@ public class RunFuzzingExperiment {
 			}
 		}
 	}
+	
+	public static void waitWallClockTime(double waitTimeSeconds) throws InterruptedException {
+		long timeMillis = (long)(waitTimeSeconds * 1000.0);
+		System.out.println("Waiting for " + timeMillis + " ms");
+		Thread.sleep(timeMillis);
+	}
 
 	public static double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit)
 			throws InterruptedException, IOException {
@@ -86,8 +92,6 @@ public class RunFuzzingExperiment {
 
 			String[] middlewareOpts = { "nofault", "nogui" };
 
-			// TODO: different run configuration
-			
 			ExptHelper.startScript(ABS_WORKING_PATH, "start_middleware.sh");
 			// middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR,
 			// middlewareOpts, ABS_WORKING_PATH);
@@ -99,18 +103,17 @@ public class RunFuzzingExperiment {
 //			exptLog("Starting CI");
 //			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh " + ciClass);
 
-			TimeUnit.MILLISECONDS.sleep(3000);
 			// Wait until the end condition for the middleware
-			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
+			//waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
+			waitWallClockTime(timeLimit);
 			exptLog("Middleware end time reached");
 
 			// TODO: ensure simulation/SAFEMUV state is properly cleared
 			if (CLEAR_ROS_LOGS_EACH_TIME) {
-				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate_clear_logs.sh");
+				ExptHelper.startCmd(ABS_WORKING_PATH, "terminate_clear_logs.sh");
 			} else {
-				ExptHelper.startCmd(ABS_SCRIPT_PATH, "terminate.sh");
+				ExptHelper.startCmd(ABS_WORKING_PATH, "terminate.sh");
 			}
-
 			exptLog("Kill MOOS / Java processes command sent");
 			exptLog("Destroy commands completed");
 		}

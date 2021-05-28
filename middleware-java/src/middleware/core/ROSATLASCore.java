@@ -25,4 +25,8 @@ public class ROSATLASCore extends ATLASCore {
 	public void runMiddleware() {
 		super.runMiddleware();
 	}
+
+	public void setFuzzingDefinitionFile(String filename) {
+		fuzzEngine.setupFromFuzzingFile(filename, mission);
+	}
 }

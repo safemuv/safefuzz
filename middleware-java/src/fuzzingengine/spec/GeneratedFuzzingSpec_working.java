@@ -4,29 +4,25 @@ import java.util.Optional;
 import atlasdsl.Mission;
 
 import fuzzingengine.*;
-import fuzzingengine.operationparamsinfo.*;
+public class GeneratedFuzzingSpec_working {
 
-public class GeneratedFuzzingSpec {
 	public static FuzzingEngine createFuzzingEngine(Mission m) {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+		
 	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty());
 		
+				
 	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
 	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
 	true);
-	
-	// Need to add the parameters to the operations parameter set
-	OperationParameterSet randomGen1 = new OperationParameterSet("randomPoint", "JSONPointChange");
-	randomGen1.addParameter(new StringConstantOperationParameter("Nature", "RANDOMOFFSET"));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("X", 0.0, 10.0));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("Y", 0.0, 10.0));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("Z", 0.0, 10.0));
-	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1);
 	
 	fe.setSimMapping(simMapping);
 	fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	return fe;
 	}
+	
+
+		
 }

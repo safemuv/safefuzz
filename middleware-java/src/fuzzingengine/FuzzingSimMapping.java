@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import fuzzingengine.operationparamsinfo.*;
+
 // Stores all the information for a simulator mapping
 public class FuzzingSimMapping {
 
@@ -30,6 +32,7 @@ public class FuzzingSimMapping {
 		private Optional<String> binaryPath;
 		private Optional<String> regexp;
 		private boolean vehicleSpecific;
+		private List<OperationParameterSet> opInfo;
 		
 		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific) {
 			this.component = component;
@@ -43,6 +46,10 @@ public class FuzzingSimMapping {
 		
 		public Optional<String> getComponent() {
 			return Optional.of(component);
+		}
+		
+		public void addOperationParameterSet(OperationParameterSet op) {
+			opInfo.add(op);
 		}
 		
 		public String getVariable() {
@@ -63,6 +70,10 @@ public class FuzzingSimMapping {
 		
 		public boolean isVehicleSpecific() {
 			return true;
+		}
+		
+		public List<OperationParameterSet> getOperationParamSets() {
+			return opInfo;
 		}
 	}
 	
@@ -164,5 +175,10 @@ public class FuzzingSimMapping {
 	
 	public Map<String,VariableSpecification> getRecords() {
 		return recordsVariables;
+	}
+
+	public void addOperationParameterSetForVariable(String var, OperationParameterSet opset) {
+		VariableSpecification v = recordsVariables.get(var);
+		v.addOperationParameterSet(opset);
 	}
 }

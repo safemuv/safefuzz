@@ -86,7 +86,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public String getName() {
-		return "ATLASEvaluationProblem";
+		return "SAFEMUVEvaluationProblem";
 	}
 
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {

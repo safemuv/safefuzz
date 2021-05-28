@@ -11,11 +11,10 @@ public abstract class ExptParams {
 	public abstract boolean completed();
 	public abstract void printState();
 	public abstract void advance();
-	public abstract void logResults(String string, String modelFile);
 	
 	public HashMap<FuzzingSelectionsSolution,Double> returnResultsInfo() {
 		return solutionLog;
 	}
 	
-	public abstract Optional<String> getNextFileName();
+	protected abstract Optional<String> getNextFuzzingCSVFileName();
 }

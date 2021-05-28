@@ -1,46 +1,40 @@
 package fuzzexperiment.runner;
 
+import java.util.List;
 import java.util.Optional;
 
-import exptrunner.metrics.MetricsProcessing;
-
 public class RunOnSetOfSolutions extends ExptParams {
-
-	private MetricsProcessing mp;
 	private String resFileName;
+	List<String> fuzzingFilenames;
+	int activeElt = 0;
 	
-	public RunOnSetOfSolutions(MetricsProcessing mp, String resFileName) {
-		this.mp = mp;
+	public RunOnSetOfSolutions(String resFileName, List<String> fuzzingFilenames) {
 		this.resFileName = resFileName;
+		this.fuzzingFilenames = fuzzingFilenames;
 	}
 
-	@Override
 	public boolean completed() {
-		// TODO Auto-generated method stub
-		return false;
+		return (activeElt >= fuzzingFilenames.size());
 	}
 
-	@Override
 	public void printState() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Evaluating entry " + activeElt + ":" + fuzzingFilenames.get(activeElt));
 	}
 
-	@Override
 	public void advance() {
-		// TODO Auto-generated method stub
-
+		activeElt++;
 	}
 
-	@Override
 	public void logResults(String string, String modelFile) {
 
 	}
 
-	@Override
-	public Optional<String> getNextFileName() {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<String> getNextFuzzingCSVFileName() {
+		String filename = fuzzingFilenames.get(activeElt);
+		if (filename != null) {
+			return Optional.of(filename);
+		} else {
+			return Optional.empty();
+		}
 	}
-
 }

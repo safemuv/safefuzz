@@ -115,7 +115,6 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
         str.add("KEY");
         str.add(key);
         str.add(String.valueOf(startTime));
-        
         str.add(String.valueOf(endTime));
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));

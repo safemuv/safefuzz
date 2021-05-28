@@ -1,12 +1,15 @@
 package atlasdsl.loader;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 2400.0;
+	final double MISSION_END_TIME = 150.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
@@ -20,7 +23,16 @@ public class GeneratedDSLLoader implements DSLLoader {
 		mission.addRobot(ruav_1);
 		Robot ruav_2 = new Robot("uav_2");
 		ruav_2.setPointComponentProperty("startLocation", new Point(8.0,8.0,0.0));
+		
+			
 		mission.addRobot(ruav_2);
+	
+	
+	
+	
+ 
+ 
+		
 		Robot [] grp1 = {ruav_1,ruav_2}; 
 		GoalParticipants gptrackDistances = new StaticParticipants(grp1, mission);
 		

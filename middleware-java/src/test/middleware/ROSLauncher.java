@@ -26,7 +26,7 @@ public class ROSLauncher {
 			
 			if (args.length > 0 && args[0] != null && (args[0].equals("nofault") == false)) {
 				System.out.println("args[0] = " + args[0]);
-				core.setFaultDefinitionFile(args[0]);
+				core.setFuzzingDefinitionFile(args[0]);
 				ATLASLog.logMiddlewareOptions("FAULT_FILE", args[0]);
 			}
 			
