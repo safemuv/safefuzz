@@ -32,7 +32,7 @@ public class FuzzingSimMapping {
 		private Optional<String> binaryPath;
 		private Optional<String> regexp;
 		private boolean vehicleSpecific;
-		private List<OperationParameterSet> opInfo;
+		private List<OperationParameterSet> opInfo = new ArrayList<OperationParameterSet>();
 		
 		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific) {
 			this.component = component;

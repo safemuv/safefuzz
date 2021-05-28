@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import fuzzingengine.operations.FuzzingOperation;
 
@@ -20,6 +21,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	List<String> participants = new ArrayList<String>();
 	HashMap<String,Boolean> participantsLookup = new HashMap<String,Boolean>();
 	Object groupNum;
+	List<Object> params;
 
 	private void setupPattern() {
 		if (regex.isPresent()) {
@@ -91,6 +93,17 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		return pattern;
 	}
 	
+	public void setParams(List<Object> params) {
+		this.params = params;
+	}
+	
+	private String paramsAsString() {
+		List<String> strList = params.stream().map(e -> e.toString()).collect(Collectors.toList());
+		// Merge the specificOpParams with pipes
+		String paramStr = String.join("|", strList);
+		return paramStr;
+	}
+	
 	public Optional<Map.Entry<Pattern,Object>> getPatternAndGroupStructure() {
 		if (pattern.isPresent()) {
 			Pattern p = pattern.get();
@@ -109,6 +122,10 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private String operationName() {
+		return op.getClass().getSimpleName();
+	}
 
 	public String generateCSVLine() {
         List<String> str = new ArrayList<String>();
@@ -118,14 +135,13 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
         str.add(String.valueOf(endTime));
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));
-        str.add(String.valueOf(op));
-        str.add(generateOpParams());
+        str.add(operationName());
+        str.add(paramsAsString());
         return String.join(",", str);
 	}
 
-	@Override
 	public void checkConstraints() {
-		// TODO Auto-generated method stub
+
 		
 	}
 	

@@ -6,7 +6,7 @@ import atlasdsl.Mission;
 import fuzzingengine.*;
 import fuzzingengine.operationparamsinfo.*;
 
-public class GeneratedFuzzingSpec {
+public class GeneratedFuzzingSpec_opparam_lines {
 	public static FuzzingEngine createFuzzingEngine(Mission m, boolean loadCSV) {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
