@@ -66,7 +66,7 @@ public class StartFuzzingProcesses {
 		Thread.sleep(timeMillis);
 	}
 
-	public static double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit)
+	public static double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
 			throws InterruptedException, IOException {
 		Process middleware;
 
@@ -85,14 +85,18 @@ public class StartFuzzingProcesses {
 //			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
 //			// Add a wait until it it ready
 //			Thread.sleep(3000);
+			
+			
+			
 			exptLog("Starting ROS/SAFEMUV launch scripts");
 			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			// Sleep until MOOS is ready
-			TimeUnit.MILLISECONDS.sleep(1000);
+			TimeUnit.MILLISECONDS.sleep(20000);
+			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
 
 			String[] middlewareOpts = { "nofault", "nogui" };
 
-			ExptHelper.startScript(ABS_WORKING_PATH, "start_middleware.sh");
+			
 			// middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR,
 			// middlewareOpts, ABS_WORKING_PATH);
 

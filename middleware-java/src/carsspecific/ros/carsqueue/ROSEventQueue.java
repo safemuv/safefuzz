@@ -48,6 +48,21 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	public void handleEventSpecifically(ROSEvent e) {
 		if (e instanceof ROSTopicUpdate) {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) e;
+			if (rtu.tagEquals(ATLASTag.SIMULATOR_GENERAL)) {
+				if (rtu.getTopicName().equals("/clock")) {
+					System.out.println("Clock msg = " + rtu.getJSON());
+					JsonObject j = rtu.getJSON().getJsonObject("clock");
+					JsonNumber secs = j.getJsonNumber("secs");
+					JsonNumber nsecs = j.getJsonNumber("nsecs");
+					double time = secs.doubleValue() + nsecs.doubleValue() / 1e9;
+					try {
+						core.updateTime(time);
+					} catch (CausalityException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
 			if (rtu.tagEquals(ATLASTag.POSE)) {
 				JsonObject j = rtu.getJSON();
 				JsonObject pose = j.getJsonObject("pose");
@@ -172,7 +187,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 	private void subscribeForSimulatorTopics() {
 		// Need the simulator time...
-		standardSubscribe("/clock", "rosgraph_msg/Clock", ATLASTag.SIMULATOR_GENERAL);
+		standardSubscribe("/clock", "rosgraph_msgs/Clock", ATLASTag.SIMULATOR_GENERAL);
 	}
 
 	public void setup() {

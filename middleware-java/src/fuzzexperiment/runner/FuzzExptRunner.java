@@ -58,7 +58,7 @@ public class FuzzExptRunner {
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
 				// TODO: Terminate the simulation after specific time - need time tracking from the simulations
-				StartFuzzingProcesses.doExperimentFromFile(exptTag, actuallyRun, timeLimit);
+				StartFuzzingProcesses.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file);
 				
 				// Assess the metrics (which the user computed from filled-in templates)
 				// This should be done by the metrics handler now

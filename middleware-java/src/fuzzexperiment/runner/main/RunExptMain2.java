@@ -19,7 +19,8 @@ public class RunExptMain2 {
 		try {
 			Mission m = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(metrics); 
-			ExptParams ep = new RunRandomlyGeneratedExperiments(resFileName, m, resFileName, missionCount);
+			String csvBaseName = "/tmp/fuzzexpt";
+			ExptParams ep = new RunRandomlyGeneratedExperiments(resFileName, m, csvBaseName, missionCount);
 			FuzzExptRunner r = new FuzzExptRunner(ep, mh);
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {

@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.buildobjects.process.ProcBuilder;
+import org.buildobjects.process.ProcResult;
 
 public class ExptHelper {
 	public static Process startNewJavaProcess(final String optionsAsString, final String mainClass,
@@ -63,6 +67,17 @@ public class ExptHelper {
 		pb.directory(new File(path));
 		Process proc = pb.start();
 		return proc;
+	}
+	
+	public static void runScriptNew(String dir, String command, String arg) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		File dirFile = new File(dir);
+		ProcBuilder pb = new ProcBuilder(command).withArg(arg).withOutputStream(output).withWorkingDirectory(dirFile);
+		try {
+		ProcResult res = pb.run();
+		} catch (org.buildobjects.process.TimeoutException e) {
+			System.out.println("Ignoring timeout exception when launching");
+		}
 	}
 	
 
