@@ -11,7 +11,7 @@ import fuzzexperiment.runner.metrics.*;
 public class RunExptMain {
 	
 	public static void main(String [] args) {
-		List<Metric> metrics = new ArrayList<Metric>();
+		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		String resFileName = "fuzzexpt-set-of-solutions.res";
 		
 		MetricHandler mh = new MetricHandler(metrics);

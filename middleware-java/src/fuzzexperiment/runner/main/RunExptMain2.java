@@ -12,7 +12,7 @@ import fuzzexperiment.runner.metrics.*;
 
 public class RunExptMain2 {
 	public static void main(String[] args) {
-		List<Metric> metrics = new ArrayList<Metric>();
+		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		String resFileName = "fuzzexpt-generated-solutions.res";
 		int missionCount = 30;
 

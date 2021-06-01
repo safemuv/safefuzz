@@ -2,13 +2,15 @@ package fuzzexperiment.runner;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
-import fuzzexperiment.runner.metrics.MetricHandler;
+import fuzzexperiment.runner.metrics.*;
+
 
 public class FuzzExptRunner {
 	private boolean actuallyRun = true;
@@ -38,6 +40,10 @@ public class FuzzExptRunner {
 		actuallyRun = false;
 	}
 	
+	public void writeToFile(Map<Metric,Object> results, String metricResFile) {
+		// 
+	}
+	
 	public void run() throws InterruptedException, IOException {
 		// The core logic for the loop
 		
@@ -60,9 +66,17 @@ public class FuzzExptRunner {
 				// TODO: Terminate the simulation after specific time - need time tracking from the simulations
 				StartFuzzingProcesses.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file);
 				
-				// Assess the metrics (which the user computed from filled-in templates)
+				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now
-				//eparams.logResults("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs", resFileName);
+				try {
+					Map<Metric, Object> metricResults = mh.computeAllOffline("/home/jharbin/academic/atlas/atlas-middleware/expt-working/logs");
+					mh.printMetrics(metricResults);
+				} catch (MetricComputeFailure e) {
+					// If we get metric computation failure, ignore the whole line
+					// TODO: log the failure
+					e.printStackTrace();
+				}
+				
 			}
 					
 			eparams.advance();
