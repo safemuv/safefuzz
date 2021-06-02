@@ -2,6 +2,7 @@
 package Atlas;
 
 abstract class Region {
+
 }
 
 class Point {

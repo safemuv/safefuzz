@@ -17,7 +17,6 @@ public class FuzzExptRunner {
 	private double timeLimit;
 	private MetricHandler mh;
 	private ExptParams eparams;
-	private String resFileName;
 	
 	private void setup() throws DSLLoadFailed, IOException {
 		DSLLoader loader = new GeneratedDSLLoader();
@@ -27,7 +26,6 @@ public class FuzzExptRunner {
 		// TODO: metrics handling - custom metrics
 		FileWriter tempLog = new FileWriter("fuzzexpt-templog.log");
 		//p.setMetricState(MetricStateKeys.MISSION_END_TIME, baseMission.getEndTime());
-		resFileName = "fuzzexpt.res";
 	}
 	
 	public FuzzExptRunner(ExptParams ep, MetricHandler mh) throws DSLLoadFailed, IOException {
@@ -75,10 +73,8 @@ public class FuzzExptRunner {
 					// If we get metric computation failure, ignore the whole line
 					// TODO: log the failure
 					e.printStackTrace();
-				}
-				
-			}
-					
+				}	
+			}	
 			eparams.advance();
 		}
 		System.out.println("Run completed");

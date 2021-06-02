@@ -12,6 +12,11 @@ import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 
+import fuzzexperiment.runner.metrics.*;
+
+[% var goalVariableCount = 0; %]
+[% var goalMetricCount = 0; %]
+
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
 	[% for (m in M!Mission.allInstances()) { %]
@@ -138,7 +143,23 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		[% var goalTemp = g.requirements; %]
 		
-		GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
+		[% if (goalTemp == null) { %]
+			GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		[% } else { %]
+			GoalTemporalConstraints gt[%= goalnum %] = new GoalTemporalConstraints([%= goalTemp.earliestStartTime %], [%= goalTemp.latestFinishTime %]);
+			
+			[* Register goal dependencies - need an exception handler around this if any dependencies are inserted *]
+			[% if (g.requirements.dependencies.size > 0) { %]
+			try {
+				[% for (dep in g.requirements.dependencies) { %]
+				[%= goalName %].setDependencyOn([%= dep.name %]);
+				[% } %]
+			} catch (SelfDependencyError e) {
+				throw new DSLLoadFailed("Goal [%= goalName %] depends on itself");
+			}
+			[% } %]
+			
+		[% } %]
 		
 		[* Goal actions *]
 		[% var goalAction = g.action; %]
@@ -187,23 +208,26 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], [%= goalRegionEntry %], ga[%= goalnum %]);
 		
-		[* Register goal dependencies - need an exception handler around this if any dependencies
-		   are inserted *]
-		[% if (g.requirements.dependencies.size > 0) { %]
-		try {
-			[% for (dep in g.requirements.dependencies) { %]
-			[%= goalName %].setDependencyOn([%= dep.name %]);
-			[% } %]
-		} catch (SelfDependencyError e) {
-			throw new DSLLoadFailed("Goal [%= goalName %] depends on itself");
-		}
-		[% } %]
-		
-		[% var goalVariableCount = 0; %]
 		[% for (gv in g.variables) { %]
 			[% goalVariableCount++; %]
 			GoalVariable gvar[%= goalVariableCount %] = new GoalVariable("[%= gv.name %]", "[%= gv.variableType %]", [%= gv.vehicleSpecific %]);
 			[%= goalName %].addVariable(gvar[%= goalVariableCount %]);
+		[% } %]
+		
+		[% for (m in g.metrics) { %]
+		
+		[%
+		var t : Template = TemplateFactory.load("genMetricTemplate.egl");
+		var templateFile = "/com.github.safemuv.platform/src/fuzzexperiment/runner/metrics/" + m.name + ".java";
+		t.populate("metricClassName", m.name);	
+		t.generate(templateFile);
+		%]
+		
+		
+		[% goalMetricCount++; %]
+		[* Use the metric name to specify the class created *]
+		Metric met[%= goalMetricCount %] = new [%= m.name %]();
+		[%= goalName %].addMetric(met[%= goalMetricCount %]);
 		[% } %]
 		
 		mission.addGoal("[%= g.name %]", [%= g.name %]);

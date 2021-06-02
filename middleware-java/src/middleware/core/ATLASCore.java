@@ -55,6 +55,14 @@ public abstract class ATLASCore {
 	
 	private ATLASObjectMapper atlasOMapper = new ATLASObjectMapper();
 	
+	public void setupPositionPropertyUpdaters() {
+		setupPositionWatcher((pos) -> {
+			String rname = pos.getRobotName();
+			Robot r = mission.getRobot(rname);
+			r.setPointComponentProperty("location", new Point(pos.getX(), pos.getY(), pos.getZ()));
+		});
+	}
+	
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
 		stopOnNoEnergy = mission.stopOnNoEnergy();
@@ -65,6 +73,7 @@ public abstract class ATLASCore {
 		faultGen = new FaultGenerator(this,mission);
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, true);
 		setupEnergyOnRobots();
+		setupPositionPropertyUpdaters();
 	}
 	
 	public CARSTranslations getCARSTranslator() {

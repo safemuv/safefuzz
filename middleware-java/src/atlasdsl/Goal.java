@@ -1,9 +1,12 @@
 package atlasdsl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import fuzzexperiment.runner.metrics.Metric;
 import middleware.core.ATLASCore;
 
 public class Goal {
@@ -12,10 +15,10 @@ public class Goal {
 	private GoalTemporalConstraints timingReqs;
 	private GoalParticipants participants;
 	private Optional<GoalRegion> region;
-	//private List<Goal> subgoals = new ArrayList<Goal>();
 	private GoalAction action;
 	private List<GoalResult> results = new ArrayList<GoalResult>();
 	private List<GoalVariable> variables = new ArrayList<GoalVariable>();
+	private Set<Metric> metrics = new HashSet<Metric>();
 	
 	public Goal(String name, Mission mission, GoalTemporalConstraints timingReqs, GoalParticipants participants, Optional<GoalRegion> region, GoalAction action) {
 		this.name = name;
@@ -99,5 +102,13 @@ public class Goal {
 	
 	public List<GoalVariable> getGoalVariables() {
 		return variables;
+	}
+	
+	public Set<Metric> getAllMetrics() {
+		return metrics;
+	}
+
+	public void addMetric(Metric met) {
+		metrics.add(met);
 	}
 }

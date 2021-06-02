@@ -1,0 +1,7 @@
+[% out.setContentType("Java"); %]
+
+public class [%= classname %] extends OfflineMetric {
+	public Object computeFromLogs(String logDir) throws MetricComputeFailure {
+	
+	}
+}

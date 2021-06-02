@@ -1,6 +1,7 @@
 package atlasdsl;
 
 import atlassharedclasses.Region;
+import fuzzexperiment.runner.metrics.Metric;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import atlasdsl.faults.Fault;
@@ -223,5 +225,11 @@ public class Mission {
 	
 	public boolean stopOnNoEnergy() {
 		return stopOnNoEnergy;
+	}
+	
+	public Set<Metric> getAllMetrics() {
+		return goals.entrySet().stream()
+				.flatMap(e -> e.getValue().getAllMetrics().stream())
+				.collect(Collectors.toSet());
 	}
 }

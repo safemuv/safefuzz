@@ -198,6 +198,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		for (Robot r : mission.getAllRobots()) {
 			subscribeForStandardVehicleTopics(r.getName());
 		}
+		
 		subscribeForSimulatorTopics();
 		subscribeForFuzzingTopics();
 		subscribeForGoalTopics();

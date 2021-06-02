@@ -12,13 +12,12 @@ import fuzzexperiment.runner.metrics.*;
 
 public class RunExptMain2 {
 	public static void main(String[] args) {
-		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		String resFileName = "fuzzexpt-generated-solutions.res";
 		int missionCount = 30;
 
 		try {
 			Mission m = new GeneratedDSLLoader().loadMission();
-			MetricHandler mh = new MetricHandler(metrics); 
+			MetricHandler mh = new MetricHandler(m, resFileName); 
 			String csvBaseName = "/tmp/fuzzexpt";
 			ExptParams ep = new RunRandomlyGeneratedExperiments(resFileName, m, csvBaseName, missionCount);
 			FuzzExptRunner r = new FuzzExptRunner(ep, mh);

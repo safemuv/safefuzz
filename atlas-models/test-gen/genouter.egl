@@ -1,0 +1,10 @@
+[% 
+for (i in Sequence{1..3}) {
+	%] [%= i %] [%
+	var t : Template = TemplateFactory.load("geninner.egl");
+	var file = "/tmp/class" + i + ".txt";
+	var classname = "class" + i;
+	t.populate("classname", classname);	
+	t.generate(file);
+}
+%]

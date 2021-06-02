@@ -20,13 +20,13 @@ public class GPSPositionReading extends SensorInfo {
 		this.robotName = robotName;
 	}
 	
-//	public GPSPositionReading(Point pos, Point vel, String robotName) {
-//		this.x = x;
-//		this.y = y;
-//		this.z = z;
-//		this.speed = speed;
-//		this.robotName = robotName;
-//	}
+	public GPSPositionReading(double x, double y, double z, double speed, String robotName) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.speed = speed;
+		this.robotName = robotName;
+	}
 	
 	public GPSPositionReading(Point pos, double speed, String robotName) {
 		this.x = pos.getX();
@@ -42,6 +42,10 @@ public class GPSPositionReading extends SensorInfo {
 	
 	public double getY() {
 		return y;
+	}
+	
+	public double getZ() {
+		return z;
 	}
 	
 	public String getRobotName() {

@@ -3,12 +3,10 @@ package fuzzexperiment.runner;
 import java.util.Optional;
 
 public class RunRepeated extends ExptParams {
-	private String resFileName;
 	private int count = 0;
 	private int limitCount;
 	
-	public RunRepeated(String resFileName, int limitCount) {
-		this.resFileName = resFileName;
+	public RunRepeated(int limitCount) {
 		this.count = 0;
 		this.limitCount = limitCount;
 	}

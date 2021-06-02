@@ -1,23 +1,23 @@
 package fuzzexperiment.runner.main;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
+import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.*;
 import fuzzexperiment.runner.metrics.*;
 
 public class RunExptMain {
 	
 	public static void main(String [] args) {
-		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		String resFileName = "fuzzexpt-set-of-solutions.res";
-		
-		MetricHandler mh = new MetricHandler(metrics);
-		ExptParams ep = new RunRepeated(resFileName, 30);
-		FuzzExptRunner r;
+
 		try {
+			Mission mission = new GeneratedDSLLoader().loadMission();
+			MetricHandler mh = new MetricHandler(mission, resFileName);
+			ExptParams ep = new RunRepeated(30);
+			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh);
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {

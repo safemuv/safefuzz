@@ -23,4 +23,15 @@
     </region>
     <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/ual/position_goalvar_test" variableType="geometry_msgs/PoseStamped" vehicleSpecific="true"/>
   </goals>
+  <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInRegion" priority="1">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_8ygUcMLIEeuCkPhz2hOLkg" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:StayInRegion" xmi:id="_E4lLEMLGEeuCkPhz2hOLkg"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_G5TssMLGEeuCkPhz2hOLkg">
+      <staticRegion xmi:id="_HbhB4MLGEeuCkPhz2hOLkg">
+        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-10.0" y="-10.0"/>
+        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="20.0" y="20.0" z="10.0"/>
+      </staticRegion>
+    </region>
+    <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>
+  </goals>
 </atlas:Mission>

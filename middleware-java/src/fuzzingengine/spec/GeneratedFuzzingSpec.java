@@ -20,9 +20,9 @@ public class GeneratedFuzzingSpec {
 	// Need to add the parameters to the operations parameter set
 	OperationParameterSet randomGen1 = new OperationParameterSet("randomPoint", "JSONPointChange");
 	randomGen1.addParameter(new StringConstantOperationParameter("Nature", "RANDOMOFFSET"));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("X", 0.0, 10.0));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("Y", 0.0, 10.0));
-	randomGen1.addParameter(new DoubleRangeOperationParameter("Z", 0.0, 10.0));
+	randomGen1.addParameter(new DoubleRangeOperationParameter("X", 0.0, 2.0));
+	randomGen1.addParameter(new DoubleRangeOperationParameter("Y", 0.0, 2.0));
+	randomGen1.addParameter(new DoubleRangeOperationParameter("Z", 0.0, 0.1));
 	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1);
 	
 	fe.setSimMapping(simMapping);
