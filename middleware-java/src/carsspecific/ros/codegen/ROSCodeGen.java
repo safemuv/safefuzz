@@ -19,15 +19,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.JsonValue.ValueType;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 
@@ -36,10 +32,11 @@ import carsspecific.ros.rosmapping.ROSSimulation;
 
 public class ROSCodeGen extends CARSCodeGen {
 	private static final boolean DEBUG_YAML_OBJECT_RESTRUCTURING = true;
+	private static ObjectMapper obj = new ObjectMapper();
 
-	// TODO: how to specify the sensor behaviour
 	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o) {
 		super(m, fe_o);
+		
 	}
 	
 	public CARSSimulation convertDSL() throws ConversionFailed {
@@ -48,43 +45,33 @@ public class ROSCodeGen extends CARSCodeGen {
 		return rossim;	
 	}
 	
-	public static JsonObject fuzzTransformYAML(JsonObject js, String [] specFields, ValueFuzzingOperation op) {
-		//System.out.println("specFields = " + specFields);
-		//if (DEBUG_YAML_OBJECT_RESTRUCTURING) {
-//			printSpecFields(specFields);
-		//}
-		
-		JsonObjectBuilder builder = Json.createObjectBuilder();
-		for (Map.Entry<String,JsonValue> entry : js.entrySet()){
-			JsonValue jv = entry.getValue();
-			
-			if (jv.getValueType() == ValueType.OBJECT) {
-				JsonObject jo = (JsonObject)jv;
-				if (specFields.length > 1) {
-					String[] newFields = Arrays.copyOfRange(specFields, 1, specFields.length);
-					builder.add(entry.getKey(), fuzzTransformYAML(jo, newFields, op));
-				} else {
-					String lastSpec = specFields[0];
-					if (lastSpec.equals(entry.getKey())) {
-						// Found the element to fuzz
-						JsonValue toFuzz = entry.getValue();
-						String fuzzed = op.fuzzTransformString(toFuzz.toString());
-			    		JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
-			    		JsonObject jModified = jsonReader.readObject();
-			    		builder.add(entry.getKey(), jModified);
-					} else {
-						builder.add(entry.getKey(), entry.getValue());
-					}
+	// TODO: factor out to YAMLHelper or YAMLExtras
+	public static void fuzzTransformYAML(JsonNode js, String [] specFields, ValueFuzzingOperation op) {
+		if (specFields.length > 1) {
+				String[] newFields = Arrays.copyOfRange(specFields, 1, specFields.length);
+				String nextEntry = specFields[0];
+				fuzzTransformYAML(js.get(nextEntry), newFields, op);
+		} else {
+			String lastEntry = specFields[0];
+			ObjectNode jsObj = (ObjectNode)js;
+			JsonNode toFuzz = jsObj.get(lastEntry);	
+			String fuzzed = op.fuzzTransformString(toFuzz.toString());
+			System.out.println("fuzzed="+fuzzed);
+			try {
+				if (toFuzz.isObject()) {
+					jsObj.set(lastEntry, (ObjectNode)obj.readTree(fuzzed));
+				} 
+				
+				if (toFuzz.isArray()) {
+					jsObj.set(lastEntry, (ArrayNode)obj.readTree(fuzzed));
 				}
-			} else {
-				// Primitive object - just copy it in
-				builder.add(entry.getKey(), entry.getValue());
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
 			}
 		}
-		return builder.build();
 	}
 	
-	public static void transformFiles(Set<FuzzingKeySelectionRecord> recs) {
+	public static void transformFiles(FuzzingEngine fe, Set<FuzzingKeySelectionRecord> recs) {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory().disable(Feature.WRITE_DOC_START_MARKER));
 		mapper.findAndRegisterModules();
 		try {
@@ -92,20 +79,21 @@ public class ROSCodeGen extends CARSCodeGen {
 			for (FuzzingKeySelectionRecord r : recs) {
 				// TODO: only those with keys on environmental components should be considered
 				FuzzingOperation op = r.getOperation();
-				String filename = r.getKey();
+				String filename = fe.getFilenameForKey(r.getKey());
+				
 				Object internalSpec = r.getGroupNum();
 				File f = new File(filename);
-				Object res = mapper.readTree(new File(filename));
+				JsonNode res = (JsonNode)mapper.readTree(new File(filename));
 				String [] specFields = ((String)internalSpec).split("\\.");
-				System.out.println("Res class=" + res.getClass());
+				//System.out.println("Res class=" + res.getClass());
 				
 				// Only ValueFuzzingOperations can be applied here... it only makes sense for them
-				// to be used, since others cannot be sensibly applied 
+				// to be used, since others such as delay cannot be sensibly applied 
 				if (op instanceof ValueFuzzingOperation) {
-					//fuzzTransformYAML(res, specFields);
+					ValueFuzzingOperation opV = (ValueFuzzingOperation)op;
+					fuzzTransformYAML(res, specFields, opV);
 				}
-				
-				// TODO: transform according to the given fuzzing operations
+				// Write back the modified file
 				mapper.writeValue(f, res);
 			}
 			
@@ -124,7 +112,8 @@ public class ROSCodeGen extends CARSCodeGen {
 		if (fe_o.isPresent()) {
 			FuzzingEngine fe = fe_o.get();
 			Set<FuzzingKeySelectionRecord> records = fe.getAllEnvironmentalKeys();
-			transformFiles(records);
+			System.out.println("transformAllFiles = " + records);
+			transformFiles(fe, records);
 		}
 		
 	}

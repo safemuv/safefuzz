@@ -148,6 +148,4 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public Object getGroupNum() {
 		return groupNum;
 	}
-	
-	
 }

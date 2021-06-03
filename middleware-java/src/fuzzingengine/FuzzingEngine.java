@@ -533,4 +533,18 @@ public class FuzzingEngine<E> {
 			return false;
 		}
 	}
+	
+	public String getFilenameForKey(String key) {
+		// TODO: Base simulator path + config path + key name
+		VariableSpecification vs = fuzzingspec.getRecordForKey(key);
+		
+		Optional<String> path_o = vs.getPath();
+		if (path_o.isPresent()) {
+			String path = path_o.get();
+			return path + "/" + key;
+		} else {
+			// If there is no component path, treat the key as absolute
+			return key;
+		}
+	}
 }

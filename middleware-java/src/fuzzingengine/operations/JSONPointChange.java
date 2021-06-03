@@ -1,9 +1,13 @@
 package fuzzingengine.operations;
 
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonStructure;
+import javax.json.JsonValue.ValueType;
 
 import java.util.Random;
 
@@ -57,9 +61,8 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		throw new CreationFailed("Invalid parameter string " + s);
 	}
 
-	public JsonObject fuzzTransformMessage(JsonObject j) {
+	public JsonObject fuzzObject(JsonObject j) {
 		JsonObjectBuilder builder = Json.createObjectBuilder();
-		
 		Point modified;
 		if (useOffset) {
 			JsonNumber jx = j.getJsonNumber("x");
@@ -77,7 +80,40 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		builder.add("y", modified.getY());
 		builder.add("z", modified.getZ());
 		return builder.build();
+	}
+	
+	public JsonArray fuzzArray(JsonArray j) {
+		JsonArrayBuilder builder = Json.createArrayBuilder();
+		Point modified;
+		if (useOffset) {
+			JsonNumber jx = j.getJsonNumber(0);
+			JsonNumber jy = j.getJsonNumber(1);
+			JsonNumber jz = j.getJsonNumber(2);
+			modified = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
+			Point offset = getRandomPoint();
+			modified = modified.add(offset);
+			
+		} else { 
+			modified = getRandomPoint();
+		}
 		
+		builder.add(modified.getX());
+		builder.add(modified.getY());
+		builder.add(modified.getZ());
+		return builder.build();
+	}
+	
+	public JsonStructure fuzzTransformMessage(JsonStructure jStr) {
+		if (jStr.getValueType() == ValueType.OBJECT) {
+			return fuzzObject((JsonObject)jStr);
+		} 
+		
+		if (jStr.getValueType() == ValueType.ARRAY) {
+			return fuzzArray((JsonArray)jStr);
+		} 
+		
+		// If nothing else, return it unchanged
+		return jStr;
 	}
 
 	private Point getRandomPoint() {

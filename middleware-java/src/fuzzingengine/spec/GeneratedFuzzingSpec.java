@@ -24,7 +24,7 @@ public class GeneratedFuzzingSpec {
 		
 				
 	simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
-	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/"), Optional.empty(),
+	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
 	false);
 	
 	

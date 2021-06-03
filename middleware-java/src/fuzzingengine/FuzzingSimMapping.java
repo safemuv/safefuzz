@@ -56,6 +56,10 @@ public class FuzzingSimMapping {
 			return variable;
 		}
 		
+		public Optional<String> getPath() {
+			return binaryPath;
+		}
+		
 		public Optional<String> getReflectionName_opt() {
 			return Optional.of(reflectionName);
 		}
@@ -89,7 +93,7 @@ public class FuzzingSimMapping {
 			this.nature = nature;
 			this.classNameString = classNameString;
 			this.fullPath = fullPath;
-			this.isEnvironmental = true;
+			this.isEnvironmental = isEnvironmental;
 		}
 	}
 	
