@@ -66,6 +66,14 @@ class FuzzingComponent {
     //ref Atlas.NamedComponent[0..*] vehicles;
 }
 
+class FileSpecification extends VariableSpecification {
+	attr String filePath; // Relative to the base directory
+}
+
+class Environment extends FuzzingComponent {
+	
+}
+
 class VariableSpecification {
 	ref FuzzingComponent[0..1] component;
 	attr String variable;

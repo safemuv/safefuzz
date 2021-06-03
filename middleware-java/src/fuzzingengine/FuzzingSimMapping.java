@@ -82,12 +82,14 @@ public class FuzzingSimMapping {
 		private FuzzingNature nature;
 		private Optional<String> classNameString;
 		private Optional<String> fullPath;
+		private boolean isEnvironmental;
 		
-		public FuzzingComponentNatureInfo(String name, FuzzingNature nature, Optional<String> classNameString, Optional<String> fullPath) {
+		public FuzzingComponentNatureInfo(String name, FuzzingNature nature, Optional<String> classNameString, Optional<String> fullPath, boolean isEnvironmental) {
 			this.name = name;
 			this.nature = nature;
 			this.classNameString = classNameString;
 			this.fullPath = fullPath;
+			this.isEnvironmental = true;
 		}
 	}
 	
@@ -148,6 +150,16 @@ public class FuzzingSimMapping {
 			return (fcni.nature == FuzzingNature.BINARY);
 		}
 	}
+	
+	public boolean isEnviromental(String component) {
+		// Get a record if it exists, indicate that the component nature is set to binary
+		FuzzingComponentNatureInfo fcni = componentFuzzingInfo.get(component);
+		if (fcni == null) {
+			return false;
+		} else {
+			return fcni.isEnvironmental;
+		}
+	}
 
 	public String getFullPath(String component) throws MissingComponentPath {
 		FuzzingComponentNatureInfo fcni = componentFuzzingInfo.get(component);
@@ -161,8 +173,8 @@ public class FuzzingSimMapping {
 		}
 	}
 
-	public void setComponentFuzzingInfo(String component, FuzzingNature nature, Optional<String> classNameForConfig, Optional<String> fullPath) {
-		FuzzingComponentNatureInfo fcni = new FuzzingComponentNatureInfo(component, nature, classNameForConfig, fullPath);
+	public void setComponentFuzzingInfo(String component, FuzzingNature nature, Optional<String> classNameForConfig, Optional<String> fullPath, boolean isEnvironmental) {
+		FuzzingComponentNatureInfo fcni = new FuzzingComponentNatureInfo(component, nature, classNameForConfig, fullPath, isEnvironmental);
 		componentFuzzingInfo.put(component,fcni);
 	}
 	

@@ -10,9 +10,7 @@ public class GeneratedFuzzingSpec_working {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
-		
-	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty());
-		
+	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), false);	
 				
 	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
 	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
@@ -22,7 +20,4 @@ public class GeneratedFuzzingSpec_working {
 	fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	return fe;
 	}
-	
-
-		
 }

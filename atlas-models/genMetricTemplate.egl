@@ -1,7 +1,9 @@
 [% out.setContentType("Java"); %]
+package fuzzexperiment.runner.metrics;
 
 public class [%= metricClassName %] extends OfflineMetric {
 	public Object computeFromLogs(String logDir) throws MetricComputeFailure {
-	
+		// Implement the metric here
+		return null;
 	}
 }

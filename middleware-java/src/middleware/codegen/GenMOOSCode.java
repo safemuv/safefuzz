@@ -12,6 +12,7 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 import middleware.atlascarsgenerator.ConversionFailed;
 import middleware.atlascarsgenerator.carsmapping.CARSSimulation;
 
+// TODO: move this to MOOS specific package
 public class GenMOOSCode {
 	private final static boolean GENERATE_NEW_CI_CODE = false;
 	

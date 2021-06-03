@@ -179,4 +179,8 @@ public class FuzzingConfig {
 				.map(c -> c.getKey())
 				.collect(Collectors.toSet());
 	}
+	
+	public Map<String, FuzzingKeySelectionRecord> getKeyLookup() {
+		return keyLookup;
+	}	
 }

@@ -217,8 +217,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% for (m in g.metrics) { %]
 		
 		[%
+		TemplateFactory.setOutputRoot("../middleware-java/");
 		var t : Template = TemplateFactory.load("genMetricTemplate.egl");
-		var templateFile = "/com.github.safemuv.platform/src/fuzzexperiment/runner/metrics/" + m.name + ".java";
+		var templateFile = "src/fuzzexperiment/runner/metrics/" + m.name + ".java";
 		t.populate("metricClassName", m.name);	
 		t.generate(templateFile);
 		%]

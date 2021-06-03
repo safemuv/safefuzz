@@ -10,7 +10,7 @@ import atlasdsl.Mission;
 import fuzzingengine.*;
 public class GeneratedFuzzingSpec {
 
-	public static FuzzingEngine createFuzzingEngine(Mission m) {
+	public static FuzzingEngine createFuzzingEngine(Mission m, boolean loadCSV) {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
@@ -20,14 +20,22 @@ public class GeneratedFuzzingSpec {
 		[% for (comp in s.components) { %]
 		[% var cnature = "FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS";
 		   var classstring = "Optional.empty()";
-	   	   var crelpathstr = "Optional.empty()"; %]
+	   	   var crelpathstr = "Optional.empty()";
+	   	   var isEnv = false; 
+	   	   
+	   	   %]
 		[% 	if (comp.nature.isKindOf(BinaryFuzzing)) {
 				cnature = "FuzzingSimMapping.FuzzingNature.BINARY";
 				classstring = "Optional.empty()";
 				crelpathstr = "Optional.of(\"" + baseDir + "/" + comp.componentRelativePath + "\")";
-			} %]
+			} 
+		%]
 		
-	simMapping.setComponentFuzzingInfo("[%= comp.name %]", [%= cnature %], [%= classstring %], [%= crelpathstr %]);
+		[% if (comp.isKindOf(Environment)) {
+			isEnv = true;
+		} %]
+		
+	simMapping.setComponentFuzzingInfo("[%= comp.name %]", [%= cnature %], [%= classstring %], [%= crelpathstr %], [%= isEnv %]);
 		
 			[% for (vspec in comp.vars) { %]
 				[% 

@@ -15,6 +15,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -512,6 +513,24 @@ public class FuzzingEngine<E> {
 	public Set<String> getAllKeys() {
 		return confs.getAllKeys();
 	}
-	
-	
+
+	public Set<FuzzingKeySelectionRecord> getAllEnvironmentalKeys() {
+		Set<FuzzingKeySelectionRecord> frToUse = 
+				confs.getKeyLookup().entrySet().stream()
+					.filter(e -> keyIsEnvironmental(e.getKey()))
+					.map(e -> e.getValue())
+					.collect(Collectors.toSet());
+		return frToUse;
+	}
+
+	private boolean keyIsEnvironmental(String key) {
+		VariableSpecification vs = fuzzingspec.getRecordForKey(key);
+		Optional<String> c_o = vs.getComponent();
+		if (c_o.isPresent()) {
+			String cname = c_o.get();
+			return fuzzingspec.isEnviromental(cname);
+		} else {
+			return false;
+		}
+	}
 }
