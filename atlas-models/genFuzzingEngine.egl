@@ -8,11 +8,54 @@ import java.util.Optional;
 import atlasdsl.Mission;
 
 import fuzzingengine.*;
+import fuzzingengine.operationparamsinfo.*;
+
 public class GeneratedFuzzingSpec {
 
 	public static FuzzingEngine createFuzzingEngine(Mission m, boolean loadCSV) {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
+	
+	[% 	var opsNum = 0;
+		var opParamNum = 0;
+		var oppLookup = new Map();
+	 %]
+	
+	[* Operations and parameter sets *]
+	[% for (ops in OperationParameterSet.allInstances()) { %]
+	[% opsNum++;
+	   var opsJavaName = "ops" + opsNum; 
+	   var opClassName = ops.parent.operationClassName;
+	   oppLookup.put(ops, opsJavaName);
+	%]
+	   OperationParameterSet [%= opsJavaName %] = new OperationParameterSet("[%= ops.name %]", "[%= opClassName %]");
+	   [* Add operation params for this param set *] 
+	   [% for (opparam in ops.params) { %]
+	   		[%  opParamNum++; 
+	   			var opParamName = "opp" + opParamNum; %]
+	   		[* TODO: add list parameter types here *]
+	   		[% if (opparam.isKindOf(StringConstantOperationParameter)) { %] 
+	   			OperationParameter [%= opParamName %] = new StringConstantOperationParameter("[%= opparam.name %]", "[%= opparam.value %]");
+	   		[% } %]
+	   			
+	   		[% if (opparam.isKindOf(DoubleRangeOperationParameter)) { %] 
+	   			OperationParameter [%= opParamName %] = new DoubleRangeOperationParameter("[%= opparam.name %]", [%= opparam.lower %], [%= opparam.upper %]);
+	   		[% } %]
+	   		
+	   		[% if (opparam.isKindOf(DoubleConstantOperationParameter)) { %] 
+	   			OperationParameter [%= opParamName %] = new DoubleConstantOperationParameter("[%= opparam.name %]", [%= opparam.value %]);
+	   		[% } %]
+	   		
+	   		[% if (opparam.isKindOf(IntConstantOperationParameter)) { %] 
+	   			OperationParameter [%= opParamName %] = new IntConstantOperationParameter("[%= opparam.name %]", [%= opparam.value %]);
+	   		[% } %]
+	   		
+	   		[% if (opparam.isKindOf(IntRangeOperationParameter)) { %] 
+	   			OperationParameter [%= opParamName %] = new IntRangeOperationParameter("[%= opparam.name %]", [%= opparam.lower %], [%= opparam.upper %]);
+	   		[% } %]
+	   		[%= opsJavaName %].addParameter([%= opParamName %]);
+	   [% } %]
+	[% } %]
 	
 [% for (s in FuzzSpec!Simulator.allInstances()) { %]
 	[% if (s.name == simName) { %]
@@ -53,6 +96,12 @@ public class GeneratedFuzzingSpec {
 	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
 	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
 	[%= vspec.vehicleSpecific %]);
+	
+	[% for (oppref in vspec.opParams) { %]
+		[% var opJavaName = oppLookup.get(oppref); %]
+		simMapping.addOperationParameterSetForVariable("[%= vspec.variable %]", [%= opJavaName %]);
+	[% } %]
+	
 		[% } %]
 		[% } %]
 	[% } %]
@@ -94,12 +143,15 @@ public class GeneratedFuzzingSpec {
 	[% } %]
 	);
 
-	
 		[% } %]
 	[% } %]
+
+	// TODO: Add variables here
 	
 	fe.setSimMapping(simMapping);
-	fe.setupFromFuzzingFile("[%= fuzzFileName %]", m);
+	if (loadCSV) {
+		fe.setupFromFuzzingFile("[%= fuzzFileName %]", m);
+	}
 	return fe;
 	}
 }
