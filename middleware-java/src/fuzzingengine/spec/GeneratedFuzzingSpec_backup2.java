@@ -6,14 +6,14 @@ import atlasdsl.Mission;
 import fuzzingengine.*;
 import fuzzingengine.operationparamsinfo.*;
 
-public class GeneratedFuzzingSpec {
+public class GeneratedFuzzingSpec_backup2 {
 
 	public static FuzzingEngine createFuzzingEngine(Mission m, boolean loadCSV) {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 	
-	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-10-each-axis", "JSONPointChange");
+	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset", "JSONPointChange");
  
  
 	   			OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET");
@@ -53,7 +53,6 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
 	true);
 	
-		simMapping.addOperationParameterSetForVariable("/ual/velocity", ops1, "twist.linear");
 	
 		
 		
@@ -64,12 +63,7 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
 	false);
 	
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_0");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_1");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_2");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_3");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_4");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_5");
+		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "twist.linear");
 	
 	
 

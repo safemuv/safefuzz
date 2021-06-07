@@ -166,6 +166,15 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 					System.out.println("Could not set up ROS subscription for fuzzing variable " + topicName
 							+ " as no type defined");
 				}
+			} else {
+				// Not vehicle specific fuzzing key
+				
+				// TODO: Uses the regexp as a type - rename this to type
+				Optional<String> rosType_o = v.getRegexp();
+				if (rosType_o.isPresent()) {
+					String rosType = rosType_o.get();
+					standardSubscribe(topicName, rosType, ATLASTag.FUZZING_VAR);
+				}
 			}
 		}
 	}

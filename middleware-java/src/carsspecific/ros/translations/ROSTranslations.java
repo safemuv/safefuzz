@@ -76,4 +76,12 @@ public class ROSTranslations extends CARSTranslations {
 		System.out.println("ROSTranslations.sendBackJSON: sending back: robotName=" + robotName + ",localTopicName=" + localTopicName + ",json=" + jo.toString());
 		echo.publish(msg);
 	}
+	
+	public void sendBackJSON(String topicName, JsonObject jo, String rosTypeName) {
+		// TODO: should this Topic object be preserved - resource problem
+		Topic echo = new Topic(ros, topicName, rosTypeName);
+		Message msg = new Message(jo);
+		System.out.println("ROSTranslations.sendBackJSON: sending back: topicName=" + topicName + ",json=" + jo.toString());
+		echo.publish(msg);
+	}
 }

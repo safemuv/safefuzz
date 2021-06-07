@@ -17,6 +17,7 @@ import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
+import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
@@ -80,7 +81,7 @@ public class FuzzingExperimentGenerator {
 		return records;
 	}
 
-	private OperationParameterSet selectRandomElementFrom(List<OperationParameterSet> ops) {
+	private <E> E selectRandomElementFrom(List<E> ops) {
 		int length = ops.size();
 		int i = rng.nextInt(length);
 		return ops.get(i);
@@ -141,14 +142,14 @@ public class FuzzingExperimentGenerator {
 	
 	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var) throws OperationLoadFailed {
 		// Select an operation parameter set to use
-		List<OperationParameterSet> opsets = var.getOperationParamSets();
-		OperationParameterSet opset = selectRandomElementFrom(opsets);
+		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
+		OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);
+		OperationParameterSet opset = opsetType.getOpset();
+		String subSpec = opsetType.getSubSpec();
+		
 		List<Object> specificOpParams = opset.generateSpecific();
 
 		// Set up the timing from the mission constraints - for now, the full time range
-
-		// TODO: something to replace the hardcoded subSpec
-		String subSpec = "twist.linear";
 
 		// TODO: get the start time parameters from the model, and generate a random spec within this range
 		// Currently it uses a random specification throughout the defined mission

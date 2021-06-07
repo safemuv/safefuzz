@@ -12,7 +12,7 @@ public class ROSConnectivityExample {
 	public static void main(String[] args) throws InterruptedException {
 		
 		// Quick hack for now to fix connectivity: Line 99 in /usr/lib/python2.7/dist-packages/autobahn/websocket/protocol.py
-		// Comment out the if not host: lines 98-100
+		// Comment out the "if not host": lines 98-100
 		// in __is_same_origin: (now line 115) add "return True" at start to skip checks
 		
 		Ros ros = new Ros("localhost");

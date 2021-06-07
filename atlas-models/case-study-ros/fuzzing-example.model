@@ -2,16 +2,25 @@
 <fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
   <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
     <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="ual" componentRelativePath="/ual">
-      <vars xmi:id="_32ubwLsZEeute_EAlr7M3A" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/velocity" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
-        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_E_C84LsaEeute_EAlr7M3A" ROSTypename="geometry_msgs/TwistStamped"/>
+      <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/velocity" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
+        <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
       </vars>
     </components>
     <components xsi:type="fuzzspec:Environment" xmi:id="_a9kGgMPJEeuxquRJ8lTruw" name="CalibrationDefinitions" componentRelativePath="safemuv_situational_awareness/config">
-      <vars xmi:id="_gEFUYMPJEeuxquRJ8lTruw" component="_a9kGgMPJEeuxquRJ8lTruw" variable="calibration_points.yaml" dir="OUTBOUND" opParams="_h-bxUL8gEeuxyMr3nK2BCQ"/>
+      <vars xmi:id="_gEFUYMPJEeuxquRJ8lTruw" component="_a9kGgMPJEeuxquRJ8lTruw" variable="calibration_points.yaml" dir="OUTBOUND">
+        <opParamsType xmi:id="_qfQOgMcFEeuUivYxWEGxgQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_0"/>
+        <opParamsType xmi:id="_UWN30McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_1"/>
+        <opParamsType xmi:id="_Uq5uYMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_2"/>
+        <opParamsType xmi:id="_U-8rwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_3"/>
+        <opParamsType xmi:id="_VRkFwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_4"/>
+        <opParamsType xmi:id="_VkMG0McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_5"/>
+      </vars>
     </components>
+    <launchers xsi:type="fuzzspec:XMLLaunchScript" xmi:id="_ZYnBMMcGEeuUivYxWEGxgQ"/>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
-    <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset">
+    <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset-10-each-axis">
       <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_n__EEL8gEeuxyMr3nK2BCQ" name="Nature" value="RANDOMOFFSET"/>
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_vJI4EL8gEeuxyMr3nK2BCQ" name="X" upper="10.0"/>
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_rHC7oL8gEeuxyMr3nK2BCQ" name="Y" upper="10.0"/>

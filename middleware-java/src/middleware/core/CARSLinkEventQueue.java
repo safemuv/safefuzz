@@ -57,9 +57,17 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 			if (cTrans instanceof ROSTranslations) {
 				ROSTranslations rosTrans = (ROSTranslations)cTrans;
 				String vehicleName = rtu.getVehicleName();
+				
 				JsonObject ju = rtu.getJSON();
+				
 				String rosType = rtu.getRosType();
-				rosTrans.sendBackJSON(vehicleName, reflectBackName, ju, rosType);
+				
+				if (!vehicleName.equals("")) {
+					rosTrans.sendBackJSON(vehicleName, reflectBackName, ju, rosType);
+				} else {
+					rosTrans.sendBackJSON(reflectBackName, ju, rosType);
+				}
+				
 			} else {
 				System.out.println("cTrans not ROSTranslations in ROSTopicUpdate");
 			}

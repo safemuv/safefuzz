@@ -52,6 +52,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Environment" eSuperTypes="#//FuzzingComponent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationParameterSetTypes">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opParam" lowerBound="1"
+        eType="#//OperationParameterSet"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subSpec" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -59,8 +64,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="opParams" lowerBound="1"
-        upperBound="-1" eType="#//OperationParameterSet"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opParamsType" lowerBound="1"
+        upperBound="-1" eType="#//OperationParameterSetTypes" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vehicleSpecific" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeLimit" lowerBound="1"
         eType="#//TimingSpec" containment="true"/>
@@ -77,6 +82,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseDirectory" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
         eType="#//FuzzingComponent" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="launchers" upperBound="-1"
+        eType="#//LaunchScript" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryPoint" upperBound="-1"
+        eType="#//BashLaunchScript"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationParameter" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -128,6 +137,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="paramSets" upperBound="-1"
         eType="#//OperationParameterSet" containment="true" eOpposite="#//OperationParameterSet/parent"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LaunchScript"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XMLLaunchScript" eSuperTypes="#//LaunchScript"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BashLaunchScript" eSuperTypes="#//LaunchScript"/>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>

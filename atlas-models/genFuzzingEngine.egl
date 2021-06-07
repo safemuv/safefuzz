@@ -97,9 +97,10 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
 	[%= vspec.vehicleSpecific %]);
 	
-	[% for (oppref in vspec.opParams) { %]
-		[% var opJavaName = oppLookup.get(oppref); %]
-		simMapping.addOperationParameterSetForVariable("[%= vspec.variable %]", [%= opJavaName %]);
+	[% for (oppreft in vspec.opParamsType) { %]
+		[% var oppref = oppreft.opParam; 
+		   var opJavaName = oppLookup.get(oppref); %]
+		simMapping.addOperationParameterSetForVariable("[%= vspec.variable %]", [%= opJavaName %], "[%= oppreft.subSpec %]");
 	[% } %]
 	
 		[% } %]

@@ -34,4 +34,5 @@
     </region>
     <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>
   </goals>
+  <goals xmi:id="_pZxXQMUPEeu2qPc-0v-WXQ" name="performance"/>
 </atlas:Mission>

@@ -4,6 +4,7 @@ import javax.json.JsonObject;
 import edu.wpi.rail.jrosbridge.messages.Message;
 
 public class ROSTopicUpdate extends ROSEvent {
+	// TODO: vehicle name is not always present, e.g. top level topics without a uav_... name
 	private String vehicleName;
 	
 	// This is the lOCAL topic name in the vehicle hierarchy, e.g. without

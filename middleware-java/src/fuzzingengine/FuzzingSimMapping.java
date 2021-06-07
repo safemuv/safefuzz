@@ -24,6 +24,25 @@ public class FuzzingSimMapping {
 		NO_MODIFICATIONS
 	}
 	
+	public class OpParamSetType {
+		private OperationParameterSet opset;
+		private String subSpec;
+		
+		// This gives for a variable: the operation parameter set, and the subspec part of the variable for this operation 
+		OpParamSetType(OperationParameterSet opset, String subSpec) {
+			this.opset = opset;
+			this.subSpec = subSpec;
+		}
+		
+		public OperationParameterSet getOpset() {
+			return opset;
+		}
+		
+		public String getSubSpec() {
+			return subSpec;
+		}
+	}
+	
 	public class VariableSpecification {
 		private String component;
 		private String variable;
@@ -32,7 +51,8 @@ public class FuzzingSimMapping {
 		private Optional<String> binaryPath;
 		private Optional<String> regexp;
 		private boolean vehicleSpecific;
-		private List<OperationParameterSet> opInfo = new ArrayList<OperationParameterSet>();
+		
+		private List<OpParamSetType> opInfo = new ArrayList<OpParamSetType>();
 		
 		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific) {
 			this.component = component;
@@ -48,8 +68,8 @@ public class FuzzingSimMapping {
 			return Optional.of(component);
 		}
 		
-		public void addOperationParameterSet(OperationParameterSet op) {
-			opInfo.add(op);
+		public void addOperationParameterSet(OperationParameterSet op, String subSpec) {
+			opInfo.add(new OpParamSetType(op, subSpec));
 		}
 		
 		public String getVariable() {
@@ -73,10 +93,10 @@ public class FuzzingSimMapping {
 		}
 		
 		public boolean isVehicleSpecific() {
-			return true;
+			return vehicleSpecific;
 		}
 		
-		public List<OperationParameterSet> getOperationParamSets() {
+		public List<OpParamSetType> getOperationParamSets() {
 			return opInfo;
 		}
 	}
@@ -193,8 +213,8 @@ public class FuzzingSimMapping {
 		return recordsVariables;
 	}
 
-	public void addOperationParameterSetForVariable(String var, OperationParameterSet opset) {
+	public void addOperationParameterSetForVariable(String var, OperationParameterSet opset, String subSpec) {
 		VariableSpecification v = recordsVariables.get(var);
-		v.addOperationParameterSet(opset);
+		v.addOperationParameterSet(opset, subSpec);
 	}
 }

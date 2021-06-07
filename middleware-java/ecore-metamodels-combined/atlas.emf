@@ -3,7 +3,7 @@ package Atlas;
 
 abstract class Region {
 
-}
+} 
 
 class Point {
 	attr double x;

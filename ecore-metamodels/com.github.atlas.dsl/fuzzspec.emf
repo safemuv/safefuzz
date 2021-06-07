@@ -74,13 +74,18 @@ class Environment extends FuzzingComponent {
 	
 }
 
+class OperationParameterSetTypes {
+	ref OperationParameterSet[1] opParam;
+	attr String subSpec;
+}
+
 class VariableSpecification {
 	ref FuzzingComponent[0..1] component;
 	attr String variable;
 	attr String reflectionName; //May be optional
 	val VariableType vtype;
 	attr VariableDirection dir; 	
-	ref OperationParameterSet[1..*] opParams;
+	val OperationParameterSetTypes[1..*] opParamsType;
 	attr boolean vehicleSpecific;
 	val TimingSpec[1] timeLimit;
 }
@@ -95,6 +100,8 @@ class Simulator {
 	attr String name;
 	attr String baseDirectory;
 	val FuzzingComponent[*] components;
+	val LaunchScript[*] launchers;
+	ref BashLaunchScript[*] entryPoint;
 }
 
 abstract class OperationParameter {
@@ -155,8 +162,21 @@ class FuzzingOperation {
 	val OperationParameterSet[*]#parent paramSets;
 }
 
+class LaunchScript {
+	
+}
+
+class XMLLaunchScript extends LaunchScript {
+	
+}
+
+class BashLaunchScript extends LaunchScript {
+	
+}
+
 class FuzzingSpecification {
 	val Simulator[*] sims;
+
 	val FuzzingMessage[*] messageRefs;
 	val FuzzingOperation[*] operations;
 }

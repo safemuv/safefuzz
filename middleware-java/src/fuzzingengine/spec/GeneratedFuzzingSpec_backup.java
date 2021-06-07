@@ -23,7 +23,7 @@ public class GeneratedFuzzingSpec_backup {
 	randomGen1.addParameter(new DoubleRangeOperationParameter("X", 0.0, 2.0));
 	randomGen1.addParameter(new DoubleRangeOperationParameter("Y", 0.0, 2.0));
 	randomGen1.addParameter(new DoubleRangeOperationParameter("Z", 0.0, 0.1));
-	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1);
+	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1, "twist.linear");
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV)

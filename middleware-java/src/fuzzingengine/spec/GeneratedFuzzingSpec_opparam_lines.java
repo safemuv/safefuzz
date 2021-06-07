@@ -23,7 +23,7 @@ public class GeneratedFuzzingSpec_opparam_lines {
 	randomGen1.addParameter(new DoubleRangeOperationParameter("X", 0.0, 10.0));
 	randomGen1.addParameter(new DoubleRangeOperationParameter("Y", 0.0, 10.0));
 	randomGen1.addParameter(new DoubleRangeOperationParameter("Z", 0.0, 10.0));
-	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1);
+	simMapping.addOperationParameterSetForVariable("/ual/velocity", randomGen1, "twist.linear");
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV)
