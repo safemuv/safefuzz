@@ -1,0 +1,72 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzing", prefix="fuzzing")
+package Fuzzing;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+
+abstract class FuzzingEntitySelection {
+}
+
+class FuzzingOperationParameter {
+	attr String param;
+}
+
+class FuzzingOperation {
+	attr String className;
+	val FuzzingOperationParameter[0..1] opParams;
+}
+
+class VariableFuzzing extends FuzzingEntitySelection {
+	//ref Simmapping.VariableSpecification varToFuzz;
+	attr String varNameToFuzz;
+}
+
+class ComponentFuzzing extends FuzzingEntitySelection {
+	attr String component;
+}
+
+class MessageFuzzing extends FuzzingEntitySelection {
+	ref Atlas.Message[0..1] msg;
+}
+
+//class RelativeDoubleChange extends FuzzingOperation {
+//	attr double maxLimit;
+//	attr double minLimit;
+//	attr double maxChange;
+//}
+
+//class ConstantDoubleChange extends FuzzingOperation {
+//	attr double newValue;
+//}
+
+abstract class TimingSpec {
+}
+
+class EntireTime extends TimingSpec {
+
+}
+
+class SpecificTime extends TimingSpec {
+	attr double start;
+	attr double end;
+}
+
+abstract class SubSpecSelection {
+}
+
+class NumericSubSpecSelection extends SubSpecSelection {
+	attr int selection;
+}
+
+class FuzzingInfoRecord {
+	val FuzzingEntitySelection[*] ftype;
+	val FuzzingOperation[1] operation;
+	ref Atlas.Robot[0..*] relevantVehicles;
+	val TimingSpec TimingSpec;
+	val SubSpecSelection[0..1] subspec;
+}
+
+class FuzzingSpec {
+	val FuzzingInfoRecord[*] records;
+}

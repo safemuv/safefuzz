@@ -1,0 +1,43 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/region", prefix="atlas")
+package Atlas;
+
+abstract class Region {
+}
+
+class Point {
+	attr double x;
+	attr double y;
+	attr double z;
+}
+
+class Rectangle extends Region {
+	val Point[1] corner1;
+	val Point[1] corner2;
+}
+
+class Circle extends Region {
+	val Point[1] centre;
+	attr double radius;
+}
+
+class Line extends Region {
+	val Point[2..*] points;
+}
+
+class Polygon extends Region {
+	val Point[3..*] points;
+}
+
+class EnvironmentalObject extends Point {
+	attr boolean isHazard;
+	attr int label;
+}
+
+class EnvironmentalObstacleRegion {
+	val Rectangle region;
+}
+
+class EnvironmentalObstacle {
+	val Polygon poly;
+	attr String label;
+}

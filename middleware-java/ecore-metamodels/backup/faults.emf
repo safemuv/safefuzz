@@ -1,0 +1,94 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults", prefix="atlas")
+package Atlas;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/components";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/region";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/faults";
+
+class FaultTimeProperties {
+	attr double earliestFaultStart;
+	attr double latestFaultEnd;
+	attr double maxFaultLength;
+	attr int maxFaultRepeatCount;
+	attr double faultProb;
+}
+
+abstract class FaultImpact {
+	
+}
+
+abstract class MessageImpact extends FaultImpact {
+	ref Atlas.Message[1]#affectingFaults affectedMessage;
+}
+
+class DelayMessage extends MessageImpact {
+	attr double delayLength;
+}
+
+class DeleteMessage extends MessageImpact {
+	
+}
+
+class SubFieldSpec {
+	attr boolean randomSelection;
+	// TODO: change this to allow min or max field numbers here
+	attr int fieldStartNum;
+	attr int fieldRangeLength;
+}
+
+class MutateMessage extends MessageImpact {
+	ref Atlas.MessageField[1] affectedField;
+	val MessageChange[1] newValue;
+	val SubFieldSpec[0..1] subfieldSpec;
+}
+
+abstract class MessageChange {
+	
+}
+
+class IntMessageChange extends MessageChange {
+	attr int absoluteValue;
+	attr int incrementValue;
+}
+
+class StringMessageChange extends MessageChange {
+	attr String absoluteValue;
+}
+
+class FloatMessageChange extends MessageChange {
+	attr double absoluteValue;
+	attr double incrementValue;
+	attr double multFactor;
+}
+
+class PointMessageChange extends MessageChange {
+	val Atlas.Point[0..1] absoluteValue;
+	val Atlas.Point[0..1] maxOffsetValue;
+}
+
+abstract class ComponentImpact extends FaultImpact {
+	ref Atlas.Component[1] affectedComponent;
+}
+
+class DisabledComponent extends ComponentImpact {
+	
+}
+
+class MotionFault extends ComponentImpact {
+	attr String affectedProperty;
+	attr String newValue;
+}
+
+class EnergyLoss extends ComponentImpact {
+	attr int fixedEnergyLoss;
+	//attr int powerDraw;
+	// For now, energy loss is fixed. The Component must be a Battery
+}
+
+class Fault {
+	attr String name;
+	val Atlas.Region[0..1] affectedRegion;
+	val FaultTimeProperties[1] affectedTime;
+	val FaultImpact[1] impact;
+}

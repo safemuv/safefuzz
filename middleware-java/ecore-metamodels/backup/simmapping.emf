@@ -1,0 +1,144 @@
+@namespace(uri="http://www.github.com/jrharbin-york/atlas-middleware/dsl/simmapping", prefix="simmapping")
+package Simmapping;
+
+import "http://www.github.com/jrharbin-york/atlas-middleware/dsl/message";
+
+enum VariableDirection {
+	INBOUND = 1;
+	OUTBOUND = 2;
+}
+
+enum BasicVariableType {
+	CUSTOM = 1;
+	STRING = 2;
+	DOUBLE = 3;
+}
+
+abstract class VariableType {
+
+}
+
+// Info for the grammar
+class SimpleVariableType extends VariableType {
+	attr BasicVariableType vt;
+}
+
+class ConstantType {
+	attr String constant;
+}
+
+class RegexpVariableType extends VariableType {
+	attr String regexp;
+	attr int groupNumToReplace;
+} 
+
+class GrammarVariableType {
+	val VariableType[*] subtypes;
+}
+
+abstract class FuzzingNature {
+	
+}
+
+class BinaryFuzzing extends FuzzingNature {
+}
+
+class CustomConfigurationFuzzing extends FuzzingNature {
+	// Names a class to modify during code generation
+	attr String CustomFuzzingModifierClass;
+}
+
+class FuzzingComponent {
+    attr String name;
+    attr String componentRelativePath;
+    val VariableSpecification[*] vars;
+    val FuzzingNature nature;
+    // TODO: potential change
+    //ref Atlas.NamedComponent[0..*] vehicles;
+}
+
+class VariableSpecification {
+	ref FuzzingComponent[0..1] component;
+	attr String variable;
+	attr String reflectionName; //May be optional
+	val VariableType vtype;
+	attr VariableDirection dir; 	
+	ref OperationParameterSet[1..*] opParams;
+}
+
+class FuzzingMessage {
+	attr String name;
+	ref Atlas.Message[1] messageRef;
+	val VariableSpecification[*] vars;
+}
+
+class Simulator {
+	attr String name;
+	attr String baseDirectory;
+	val FuzzingComponent[*] components;
+}
+
+abstract class OperationParameter {
+	attr String name;
+}
+
+abstract class DoubleOperationParameter extends OperationParameter {
+}
+
+abstract class IntOperationParameter extends OperationParameter {
+}
+
+abstract class StringOperationParameter extends OperationParameter {
+}
+
+class DoubleConstantOperationParameter extends DoubleOperationParameter {
+	attr double value;
+}
+
+class DoubleListOperationParameter extends DoubleOperationParameter {
+	attr Double[1..*] values;
+}
+
+class DoubleRangeOperationParameter extends DoubleOperationParameter {
+	attr double lower;
+	attr double upper;
+}
+
+class IntConstantOperationParameter extends IntOperationParameter {
+	attr int value;
+}
+
+class IntListOperationParameter extends IntOperationParameter {
+	attr Integer[1..*] values;
+}
+
+class IntRangeOperationParameter extends IntOperationParameter {
+	attr int lower;
+	attr int upper;
+}
+
+class StringListOperationParameter extends StringOperationParameter {
+	attr String[1..*] values;
+}
+
+class StringConstantOperationParameter extends StringOperationParameter {
+	attr String[1] value;
+}
+
+class OperationParameterSet {
+	readonly ref FuzzingOperation[1]#paramSets parent;
+	attr String name;
+	val OperationParameter[*] params;
+}
+
+class FuzzingOperation {
+	attr String operationClassName;
+	val OperationParameterSet[*]#parent paramSets;
+}
+
+class FuzzingSpecification {
+	val Simulator[*] sims;
+	val FuzzingMessage[*] messageRefs;
+	val FuzzingOperation[*] operations;
+}
+
