@@ -24,6 +24,8 @@ public class FuzzingSimMapping {
 		NO_MODIFICATIONS
 	}
 	
+
+	
 	public class OpParamSetType {
 		private OperationParameterSet opset;
 		private String subSpec;
@@ -51,10 +53,11 @@ public class FuzzingSimMapping {
 		private Optional<String> binaryPath;
 		private Optional<String> regexp;
 		private boolean vehicleSpecific;
+		private Optional<TimeSpec> timeSpec;
 		
 		private List<OpParamSetType> opInfo = new ArrayList<OpParamSetType>();
 		
-		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific) {
+		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific, Optional<TimeSpec> timeSpec) {
 			this.component = component;
 			this.variable = variable;
 			this.reflectionName = reflectionName;
@@ -62,10 +65,15 @@ public class FuzzingSimMapping {
 			this.binaryPath = binaryPath;
 			this.regexp = regexp;
 			this.vehicleSpecific = vehicleSpecific;
+			this.timeSpec = timeSpec;
 		}
 		
 		public Optional<String> getComponent() {
 			return Optional.of(component);
+		}
+		
+		public Optional<TimeSpec> getTimeSpec() {
+			return timeSpec;
 		}
 		
 		public void addOperationParameterSet(OperationParameterSet op, String subSpec) {
@@ -123,12 +131,14 @@ public class FuzzingSimMapping {
 	private HashMap<String,VariableSpecification> recordsVariables = new HashMap<String,VariableSpecification>();
 	private HashMap<String,FuzzingComponentNatureInfo> componentFuzzingInfo = new HashMap<String,FuzzingComponentNatureInfo>();
 	
-	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex, boolean vehicleSpecific) {
+	private List<String> launchFilePaths = new ArrayList<String>();
+	
+	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex, boolean vehicleSpecific, Optional<TimeSpec> timeSpec) {
 		if (!records.containsKey(component)) {
 			records.put(component, new ArrayList<VariableSpecification>());
 		}
 		
-		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex, vehicleSpecific);
+		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex, vehicleSpecific, timeSpec);
 		records.get(component).add(vs);
 		recordsVariables.put(variable, vs);
 	}
@@ -216,5 +226,13 @@ public class FuzzingSimMapping {
 	public void addOperationParameterSetForVariable(String var, OperationParameterSet opset, String subSpec) {
 		VariableSpecification v = recordsVariables.get(var);
 		v.addOperationParameterSet(opset, subSpec);
+	}
+
+	public void addLaunchFilePath(String path) {
+		launchFilePaths.add(path);
+	}
+
+	public List<String> getAllLaunchFilesPaths() {
+		return launchFilePaths;
 	}
 }

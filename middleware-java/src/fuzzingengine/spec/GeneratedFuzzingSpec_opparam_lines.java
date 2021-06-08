@@ -15,7 +15,7 @@ public class GeneratedFuzzingSpec_opparam_lines {
 		
 	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
 	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
-	true);
+	true, Optional.empty());
 	
 	// Need to add the parameters to the operations parameter set
 	OperationParameterSet randomGen1 = new OperationParameterSet("randomPoint", "JSONPointChange");

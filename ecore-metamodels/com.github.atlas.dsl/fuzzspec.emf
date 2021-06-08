@@ -18,7 +18,7 @@ abstract class VariableType {
 
 }
 
-abstract class TimingSpec {
+class TimingSpec {
 	attr double startTime;
 	attr double endTime;
 }
@@ -100,8 +100,8 @@ class Simulator {
 	attr String name;
 	attr String baseDirectory;
 	val FuzzingComponent[*] components;
-	val LaunchScript[*] launchers;
-	ref BashLaunchScript[*] entryPoint;
+	val ConfigScript[*] launchers;
+	ref ExecutableStartScript[1] entryPoint;
 }
 
 abstract class OperationParameter {
@@ -162,21 +162,21 @@ class FuzzingOperation {
 	val OperationParameterSet[*]#parent paramSets;
 }
 
-class LaunchScript {
-	
+abstract class SimulationControlScript {
+	// This is relative to the simulation root
+	attr String path;
 }
 
-class XMLLaunchScript extends LaunchScript {
-	
+class ConfigScript extends SimulationControlScript {
+
 }
 
-class BashLaunchScript extends LaunchScript {
+class ExecutableStartScript extends SimulationControlScript {
 	
 }
 
 class FuzzingSpecification {
 	val Simulator[*] sims;
-
 	val FuzzingMessage[*] messageRefs;
 	val FuzzingOperation[*] operations;
 }

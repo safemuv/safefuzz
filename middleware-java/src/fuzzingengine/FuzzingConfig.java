@@ -23,6 +23,8 @@ public class FuzzingConfig {
 	private List<FuzzingKeySelectionRecord> keyRecords = new ArrayList<FuzzingKeySelectionRecord>();
 	private List<FuzzingMessageSelectionRecord> messageRecords = new ArrayList<FuzzingMessageSelectionRecord>();
 	
+
+	
 	public void addKeyRecord(FuzzingKeySelectionRecord fr) {
 		keyRecords.add(fr);
 		keyLookup.put(fr.getKey(), fr);
@@ -182,5 +184,5 @@ public class FuzzingConfig {
 	
 	public Map<String, FuzzingKeySelectionRecord> getKeyLookup() {
 		return keyLookup;
-	}	
+	}
 }

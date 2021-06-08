@@ -13,6 +13,10 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 	
+	
+	try {
+	
+	
 	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-10-each-axis", "JSONPointChange");
  
  
@@ -44,36 +48,47 @@ public class GeneratedFuzzingSpec {
 	   		
 	   		ops1.addParameter(opp4);
 	
+	
+				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv.launch");
+	
+	
+		
+		
 		
 		
 	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), false);
 		
 				
-	simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
-	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
-	true);
+		simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
+		true, Optional.of(new TimeSpec(m,100.0,150.0)));
 	
-		simMapping.addOperationParameterSetForVariable("/ual/velocity", ops1, "twist.linear");
+			simMapping.addOperationParameterSetForVariable("/ual/velocity", ops1, "twist.linear");
 	
+		
+		
 		
 		
 	simMapping.setComponentFuzzingInfo("CalibrationDefinitions", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), true);
 		
 				
-	simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
-	FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
-	false);
+		simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
+		false, Optional.empty());
 	
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_0");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_1");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_2");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_3");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_4");
-		simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_5");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_0");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_1");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_2");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_3");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_4");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_5");
 	
 	
 
-	// TODO: Add variables here
+	} catch (InvalidTimeSpec its) {
+			System.out.println("InvalidTimeSpec - " + its.getNature());
+			its.printStackTrace();
+	}
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV) {

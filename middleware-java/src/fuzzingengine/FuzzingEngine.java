@@ -547,4 +547,8 @@ public class FuzzingEngine<E> {
 			return key;
 		}
 	}
+
+	public List<String> getAllLaunchFilesPaths() {
+		return fuzzingspec.getAllLaunchFilesPaths();
+	}
 }

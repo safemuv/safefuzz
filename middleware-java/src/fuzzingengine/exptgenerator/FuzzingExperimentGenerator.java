@@ -19,6 +19,7 @@ import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.TimeSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
@@ -129,13 +130,27 @@ public class FuzzingExperimentGenerator {
 		return paramStr;
 	}
 	
-	private double getStartTime() {
-		double startLimit = mission.getEndTime();
+	private double getStartTime(Optional<TimeSpec> ts_o) {
+		double startLimit;
+		
+		if (ts_o.isPresent()) {
+			startLimit = ts_o.get().getEndTime();
+		} else {
+			startLimit = mission.getEndTime();
+		}
+			
 		return startLimit * rng.nextDouble();
 	}
 	
-	private double getEndTime(double startTime) {
-		double endLimit = mission.getEndTime();
+	private double getEndTime(Optional<TimeSpec> ts_o, double startTime) {
+		double endLimit;
+		
+		if (ts_o.isPresent()) {
+			endLimit = ts_o.get().getEndTime();
+		} else {
+			endLimit = mission.getEndTime();
+		}
+		
 		double endTime = (endLimit - startTime) * rng.nextDouble() + startTime;
 		return endTime;
 	}
@@ -151,10 +166,8 @@ public class FuzzingExperimentGenerator {
 
 		// Set up the timing from the mission constraints - for now, the full time range
 
-		// TODO: get the start time parameters from the model, and generate a random spec within this range
-		// Currently it uses a random specification throughout the defined mission
-		double startTime = getStartTime();
-		double endTime = getEndTime(startTime); 
+		double startTime = getStartTime(var.getTimeSpec());
+		double endTime = getEndTime(var.getTimeSpec(), startTime); 
 
 		// Get a random list of participants from the mission
 		List<String> participants = getRandomParticipantsFromMission();

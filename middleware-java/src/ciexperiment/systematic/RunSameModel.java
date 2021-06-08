@@ -2,11 +2,7 @@ package ciexperiment.systematic;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Optional;
-
-import exptrunner.jmetal.InvalidMetrics;
-import exptrunner.metrics.Metrics;
 import exptrunner.metrics.MetricsProcessing;
 
 public class RunSameModel extends ExptResultsLogged {

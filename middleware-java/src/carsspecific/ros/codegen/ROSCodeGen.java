@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,7 +59,7 @@ public class ROSCodeGen extends CARSCodeGen {
 		return rossim;	
 	}
 	
-	public static void processLaunchFiles(FuzzingEngine fe) {
+	public void processLaunchFiles(FuzzingEngine fe) {
 		// Get the list of all keys not in the fuzzspec
 		Set<String> specKeys = fe.getSpec().getRecords().keySet();
 		Set<String> confKeys = fe.getAllKeys();
@@ -72,9 +73,11 @@ public class ROSCodeGen extends CARSCodeGen {
 		System.out.println("confKeys =" + confKeys);
 		System.out.println("removalKeys =" + removalKeys);
 		
-		// TODO: get custom launch file path - for now hardcoded path
+		List<String> paths = fe.getAllLaunchFilesPaths();
 		try {
-			removeRemapNodes("/tmp/prepare_sim.launch", removalKeys);
+			for (String launchFilePath : paths) {
+				removeRemapNodes(launchFilePath, removalKeys);
+			}
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -10,10 +10,12 @@ import utils.ExptHelper;
 public class StartFuzzingProcesses {
 
 	// TODO: no more fixed paths
-	private final static String ABS_SCRIPT_PATH = "/home/jharbin/academic/atlas/atlas-middleware/bash-scripts/";
-	private final static String ABS_WORKING_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/";
-	public final static String ABS_MIDDLEWARE_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/";
-	private final static String ABS_MOOS_PATH_BASE = "/home/jharbin//academic/atlas/atlas-middleware/middleware-java/moos-sim/";
+	//private String ABS_SCRIPT_PATH = "/home/jharbin/academic/atlas/atlas-middleware/bash-scripts/";
+	//private String ABS_WORKING_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/";
+	//public String ABS_MIDDLEWARE_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/";
+	private String ABS_SCRIPT_PATH;
+	private String ABS_WORKING_PATH;
+	public String ABS_MIDDLEWARE_PATH;
 
 	private final static boolean CLEAR_ROS_LOGS_EACH_TIME = true;
 
@@ -23,8 +25,14 @@ public class StartFuzzingProcesses {
 	private static void exptLog(String s) {
 		System.out.println(s);
 	}
+	
+	public StartFuzzingProcesses(String bashScriptPath, String workingPath, String middlewarePath) {
+		ABS_SCRIPT_PATH = bashScriptPath;
+		ABS_WORKING_PATH = workingPath;
+		ABS_MIDDLEWARE_PATH = middlewarePath;
+	}
 
-	private static void waitUntilMiddlewareTime(double time, double wallClockTimeOutSeconds)
+	private void waitUntilMiddlewareTime(double time, double wallClockTimeOutSeconds)
 			throws FileNotFoundException {
 		String pathToFile = ABS_MIDDLEWARE_PATH + "/logs/atlasTime.log";
 		String target = Double.toString(time);
@@ -60,37 +68,24 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public static void waitWallClockTime(double waitTimeSeconds) throws InterruptedException {
+	public void waitWallClockTime(double waitTimeSeconds) throws InterruptedException {
 		long timeMillis = (long)(waitTimeSeconds * 1000.0);
 		System.out.println("Waiting for " + timeMillis + " ms");
 		Thread.sleep(timeMillis);
 	}
+	
+	
 
-	public static double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
 			throws InterruptedException, IOException {
 		Process middleware;
 
 		double returnValue = 0;
-		String absATLASJAR;
-		String absMOOSPATH;
-		String ciRunner;
-
-		exptLog("Using custom generated mission");
-		absATLASJAR = "/home/jharbin/academic/atlas/atlas-middleware/expt-jar/atlas-6robot-case.jar";
-		absMOOSPATH = ABS_MOOS_PATH_BASE;
-		ciRunner = "run-ci-6robot.sh";
-
-		if (actuallyRun) {
-//			exptLog("Generating MOOS code");
-//			ExptHelper.startScript(ABS_WORKING_PATH, "build_moos_files.sh");
-//			// Add a wait until it it ready
-//			Thread.sleep(3000);
-			
-			
-			
+		
+		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts");
 			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
-			// Sleep until MOOS is ready
+			// TODO: check custom delays - Sleep until MOOS is ready
 			TimeUnit.MILLISECONDS.sleep(20000);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
 
@@ -108,8 +103,8 @@ public class StartFuzzingProcesses {
 //			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh " + ciClass);
 
 			// Wait until the end condition for the middleware
-			//waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
-			waitWallClockTime(timeLimit);
+			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
+			//waitWallClockTime(timeLimit);
 			exptLog("Middleware end time reached");
 
 			// TODO: ensure simulation/SAFEMUV state is properly cleared
@@ -122,8 +117,7 @@ public class StartFuzzingProcesses {
 			exptLog("Destroy commands completed");
 		}
 
-		// Read and process the result files from the experiment
-		returnValue = extractResults(ABS_WORKING_PATH + "logs");
+		returnValue = 0;
 
 		if (actuallyRun) {
 			exptLog("Waiting to restart experiment");
@@ -134,11 +128,7 @@ public class StartFuzzingProcesses {
 		return returnValue;
 	}
 
-	private static double extractResults(String string) {
-		return 0;
-	}
-
-	public static void compileLoader() throws IOException {
+	public void compileLoader() throws IOException {
 		ExptHelper.startScript(ABS_SCRIPT_PATH, "compile_dsl_loader.sh");
 	}
 }

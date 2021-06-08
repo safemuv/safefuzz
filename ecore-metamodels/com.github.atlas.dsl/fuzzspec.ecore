@@ -12,7 +12,7 @@
     <eLiterals name="DOUBLE" value="3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TimingSpec" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="TimingSpec">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
@@ -83,9 +83,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
         eType="#//FuzzingComponent" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="launchers" upperBound="-1"
-        eType="#//LaunchScript" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entryPoint" upperBound="-1"
-        eType="#//BashLaunchScript"/>
+        eType="#//ConfigScript" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryPoint" lowerBound="1"
+        eType="#//ExecutableStartScript"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationParameter" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -137,9 +137,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="paramSets" upperBound="-1"
         eType="#//OperationParameterSet" containment="true" eOpposite="#//OperationParameterSet/parent"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LaunchScript"/>
-  <eClassifiers xsi:type="ecore:EClass" name="XMLLaunchScript" eSuperTypes="#//LaunchScript"/>
-  <eClassifiers xsi:type="ecore:EClass" name="BashLaunchScript" eSuperTypes="#//LaunchScript"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimulationControlScript" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigScript" eSuperTypes="#//SimulationControlScript"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecutableStartScript" eSuperTypes="#//SimulationControlScript"/>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>

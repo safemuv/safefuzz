@@ -16,6 +16,10 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+	
+	
+	try {
+	
 	[% 	var opsNum = 0;
 		var opParamNum = 0;
 		var oppLookup = new Map();
@@ -60,11 +64,19 @@ public class GeneratedFuzzingSpec {
 [% for (s in FuzzSpec!Simulator.allInstances()) { %]
 	[% if (s.name == simName) { %]
 	[% var baseDir = s.baseDirectory; %]
+	
+		[% for (launchscript in s.launchers) { %]
+			[% var launchPath = baseDir + "/" + launchscript.path; %]
+				simMapping.addLaunchFilePath("[%= launchPath %]");
+		[% } %]
+	
+	
 		[% for (comp in s.components) { %]
 		[% var cnature = "FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS";
 		   var classstring = "Optional.empty()";
 	   	   var crelpathstr = "Optional.empty()";
 	   	   var isEnv = false; 
+
 	   	   
 	   	   %]
 		[% 	if (comp.nature.isKindOf(BinaryFuzzing)) {
@@ -78,33 +90,42 @@ public class GeneratedFuzzingSpec {
 			isEnv = true;
 		} %]
 		
+		
+		
 	simMapping.setComponentFuzzingInfo("[%= comp.name %]", [%= cnature %], [%= classstring %], [%= crelpathstr %], [%= isEnv %]);
 		
-			[% for (vspec in comp.vars) { %]
-				[% 
-				var c = comp;
-				var vt = vspec.vtype; var typename = "Optional.empty()";
-				if (vt.isKindOf(RegexpVariableType)) {
-					typename = "Optional.of()";
-				}
+	[% for (vspec in comp.vars) { %]
+		[% 
+			var c = comp;
+			var vt = vspec.vtype; 
+			var typename = "Optional.empty()";
+			var timespec = "Optional.empty()";
+			
+			if (vt.isKindOf(RegexpVariableType)) {
+				typename = "Optional.of()";
+			}
 				
-				if (vt.isKindOf(ROSVariableType)) {
-					typename = "Optional.of(\"" + vt.ROSTypename + "\")";
-				}
-			%]
+			if (vt.isKindOf(ROSVariableType)) {
+				typename = "Optional.of(\"" + vt.ROSTypename + "\")";
+			}
+			
+			if (vspec.timeLimit != null) {
+				timespec = "Optional.of(new TimeSpec(m," + vspec.timeLimit.startTime + "," + vspec.timeLimit.endTime + "))";
+			}
+		%]
 				
-	simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
-	FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
-	[%= vspec.vehicleSpecific %]);
+		simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
+		FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
+		[%= vspec.vehicleSpecific %], [%= timespec %]);
 	
-	[% for (oppreft in vspec.opParamsType) { %]
-		[% var oppref = oppreft.opParam; 
-		   var opJavaName = oppLookup.get(oppref); %]
-		simMapping.addOperationParameterSetForVariable("[%= vspec.variable %]", [%= opJavaName %], "[%= oppreft.subSpec %]");
+		[% for (oppreft in vspec.opParamsType) { %]
+			[% var oppref = oppreft.opParam; 
+		   	var opJavaName = oppLookup.get(oppref); %]
+			simMapping.addOperationParameterSetForVariable("[%= vspec.variable %]", [%= opJavaName %], "[%= oppreft.subSpec %]");
+		[% } %]
+	
 	[% } %]
-	
-		[% } %]
-		[% } %]
+	[% } %]
 	[% } %]
 	[% } %]
 	
@@ -147,7 +168,10 @@ public class GeneratedFuzzingSpec {
 		[% } %]
 	[% } %]
 
-	// TODO: Add variables here
+	} catch (InvalidTimeSpec its) {
+			System.out.println("InvalidTimeSpec - " + its.getNature());
+			its.printStackTrace();
+	}
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV) {

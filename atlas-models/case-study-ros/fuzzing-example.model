@@ -5,6 +5,7 @@
       <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/velocity" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
+        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" startTime="100.0" endTime="150.0"/>
       </vars>
     </components>
     <components xsi:type="fuzzspec:Environment" xmi:id="_a9kGgMPJEeuxquRJ8lTruw" name="CalibrationDefinitions" componentRelativePath="safemuv_situational_awareness/config">
@@ -17,7 +18,7 @@
         <opParamsType xmi:id="_VkMG0McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_5"/>
       </vars>
     </components>
-    <launchers xsi:type="fuzzspec:XMLLaunchScript" xmi:id="_ZYnBMMcGEeuUivYxWEGxgQ"/>
+    <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv.launch"/>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
     <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset-10-each-axis">
