@@ -28,8 +28,8 @@
     <action xsi:type="atlas:StayInRegion" xmi:id="_E4lLEMLGEeuCkPhz2hOLkg"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_G5TssMLGEeuCkPhz2hOLkg">
       <staticRegion xmi:id="_HbhB4MLGEeuCkPhz2hOLkg">
-        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-10.0" y="-10.0"/>
-        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="20.0" y="20.0" z="10.0"/>
+        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-100.0" y="-100.0"/>
+        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="-90.0" y="-90.0" z="10.0"/>
       </staticRegion>
     </region>
     <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>

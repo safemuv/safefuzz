@@ -100,6 +100,7 @@ public class GeneratedFuzzingSpec {
 			var vt = vspec.vtype; 
 			var typename = "Optional.empty()";
 			var timespec = "Optional.empty()";
+			var fuzzProb = "Optional.empty()";
 			
 			if (vt.isKindOf(RegexpVariableType)) {
 				typename = "Optional.of()";
@@ -112,11 +113,15 @@ public class GeneratedFuzzingSpec {
 			if (vspec.timeLimit != null) {
 				timespec = "Optional.of(new TimeSpec(m," + vspec.timeLimit.startTime + "," + vspec.timeLimit.endTime + "))";
 			}
+			
+			if (vspec.probInfo != null) {
+				fuzzProb = "Optional.of(" + vspec.probInfo.includeVariableProbability + ")"; 
+			}
 		%]
 				
 		simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
 		FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
-		[%= vspec.vehicleSpecific %], [%= timespec %]);
+		[%= vspec.vehicleSpecific %], [%= timespec %], [%= fuzzProb %]);
 	
 		[% for (oppreft in vspec.opParamsType) { %]
 			[% var oppref = oppreft.opParam; 

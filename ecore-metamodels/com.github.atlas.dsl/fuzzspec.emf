@@ -79,6 +79,10 @@ class OperationParameterSetTypes {
 	attr String subSpec;
 }
 
+class FuzzProbabilityInfo {
+	attr double includeVariableProbability;
+}
+
 class VariableSpecification {
 	ref FuzzingComponent[0..1] component;
 	attr String variable;
@@ -88,6 +92,7 @@ class VariableSpecification {
 	val OperationParameterSetTypes[1..*] opParamsType;
 	attr boolean vehicleSpecific;
 	val TimingSpec[1] timeLimit;
+	val FuzzProbabilityInfo[0..1] probInfo;
 }
 
 class FuzzingMessage {

@@ -6,6 +6,7 @@
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
         <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" startTime="100.0" endTime="150.0"/>
+        <probInfo xmi:id="_Nu5UgMilEeuXkJUdIAjG9g" includeVariableProbability="1.0"/>
       </vars>
     </components>
     <components xsi:type="fuzzspec:Environment" xmi:id="_a9kGgMPJEeuxquRJ8lTruw" name="CalibrationDefinitions" componentRelativePath="safemuv_situational_awareness/config">
@@ -16,6 +17,7 @@
         <opParamsType xmi:id="_U-8rwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_3"/>
         <opParamsType xmi:id="_VRkFwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_4"/>
         <opParamsType xmi:id="_VkMG0McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_5"/>
+        <probInfo xmi:id="_KNA3QMinEeuXkJUdIAjG9g"/>
       </vars>
     </components>
     <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv_shared/launcher/shared_launcher.launch"/>

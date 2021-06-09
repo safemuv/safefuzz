@@ -1,9 +1,13 @@
 [% out.setContentType("Java"); %]
+// protected region customHeaders on begin
 package fuzzexperiment.runner.metrics;
+// protected region customHeaders end
 
 public class [%= metricClassName %] extends OfflineMetric {
 	public Object computeFromLogs(String logDir) throws MetricComputeFailure {
 		// Implement the metric here
+		// protected region userCode on begin
 		return null;
+		// protected region userCode end
 	}
 }

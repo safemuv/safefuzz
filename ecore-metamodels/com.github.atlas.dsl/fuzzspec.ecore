@@ -57,6 +57,10 @@
         eType="#//OperationParameterSet"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subSpec" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuzzProbabilityInfo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="includeVariableProbability"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -69,6 +73,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vehicleSpecific" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeLimit" lowerBound="1"
         eType="#//TimingSpec" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="probInfo" eType="#//FuzzProbabilityInfo"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingMessage">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
