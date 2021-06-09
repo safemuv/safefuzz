@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="150.0">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1500.0">
   <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="uav_1" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
       <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="8.0" y="-8.0"/>
@@ -21,17 +21,28 @@
         <corner2 xmi:id="_WbW14LySEeu_l8YcOLqCyw"/>
       </staticRegion>
     </region>
-    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/ual/position_goalvar_test" variableType="geometry_msgs/PoseStamped" vehicleSpecific="true"/>
   </goals>
-  <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInRegion" priority="1">
+  <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInOuterRegion" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_8ygUcMLIEeuCkPhz2hOLkg" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:StayInRegion" xmi:id="_E4lLEMLGEeuCkPhz2hOLkg"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_G5TssMLGEeuCkPhz2hOLkg">
       <staticRegion xmi:id="_HbhB4MLGEeuCkPhz2hOLkg">
-        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-100.0" y="-100.0"/>
-        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="-90.0" y="-90.0" z="10.0"/>
+        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-10.0" y="-10.0"/>
+        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="10.0" y="10.0" z="10.0"/>
       </staticRegion>
     </region>
     <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>
+  </goals>
+  <goals xmi:id="_vpVZEMj6EeuWdKT93dm6Ig" name="AvoidPlaneInner" priority="1">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_vpVZEcj6EeuWdKT93dm6Ig" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:StayInRegion" xmi:id="_vpVZEsj6EeuWdKT93dm6Ig"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vpVZE8j6EeuWdKT93dm6Ig">
+      <staticRegion xmi:id="_vpVZFMj6EeuWdKT93dm6Ig">
+        <corner1 xmi:id="_vpVZFcj6EeuWdKT93dm6Ig" x="-10.0" y="-10.0"/>
+        <corner2 xmi:id="_vpVZFsj6EeuWdKT93dm6Ig" x="10.0" y="10.0" z="10.0"/>
+      </staticRegion>
+    </region>
+    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/lidar/distance_to_plane" variableType="standard_msgs/Float32" vehicleSpecific="true"/>
+    <metrics xmi:id="_vpVZF8j6EeuWdKT93dm6Ig" name="OutsideOfInnerRegionViolations"/>
   </goals>
 </atlas:Mission>

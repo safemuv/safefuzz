@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
+  <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
+    <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="null" componentRelativePath="/ual">
+      <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/topic2" reflectionName="/topic1" dir="OUTBOUND">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="std_msgs/String"/>
+        <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_3oPcQMjtEeuWdKT93dm6Ig" subSpec=""/>
+        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" startTime="100.0" endTime="150.0"/>
+        <probInfo xmi:id="_Nu5UgMilEeuXkJUdIAjG9g" includeVariableProbability="1.0"/>
+      </vars>
+    </components>
+    <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv_shared/launcher/shared_launcher.launch"/>
+    <launchers xmi:id="_KtPWcMhaEeuMiYEMVbUfiw" path="safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch"/>
+  </sims>
+  <operations xmi:id="_0x46MMjtEeuWdKT93dm6Ig" operationClassName="StringVariableChange">
+    <paramSets xmi:id="_3oPcQMjtEeuWdKT93dm6Ig" name="StringChangeRandom">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_61gpgMjtEeuWdKT93dm6Ig" name="Nature" value="NEWRANDOM"/>
+      <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_BrQZUMjuEeuWdKT93dm6Ig" name="maxLen" value="8"/>
+    </paramSets>
+  </operations>
+</fuzzspec:FuzzingSpecification>
