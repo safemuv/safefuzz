@@ -31,7 +31,7 @@ public class FuzzExptRunner {
 	
 	private void readProperties() {
 		Properties prop = new Properties();
-		String fileName = "app.config";
+		String fileName = "fuzzingexpt.config";
 		InputStream is = null;
 		try {
 		    is = new FileInputStream(fileName);
@@ -116,7 +116,7 @@ public class FuzzExptRunner {
 				// This should be done by the metrics handler now
 				try {
 					Map<Metric, Object> metricResults = mh.computeAllOffline(logPath);
-					mh.printMetrics(metricResults);
+					mh.printMetricsToOutputFile(file, metricResults);
 				} catch (MetricComputeFailure e) {
 					// If we get metric computation failure, ignore the whole line
 					// TODO: log the failure

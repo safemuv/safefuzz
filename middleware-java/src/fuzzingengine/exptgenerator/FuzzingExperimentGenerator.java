@@ -26,8 +26,8 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class FuzzingExperimentGenerator {
 	
-	private final double PROB_OF_INCLUDING_VARIABLE = 1.0;
-	private final double PROB_OF_INCLUDING_ROBOT = 1.0;
+	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
+	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
 	
 	Random rng;
 	private Mission mission;
@@ -58,7 +58,9 @@ public class FuzzingExperimentGenerator {
 
 		// Iterate over the variable specs
 		for (Map.Entry<String, VariableSpecification> vs : fsm.getRecords().entrySet()) {
-			if (rng.nextDouble() < PROB_OF_INCLUDING_VARIABLE) {
+			double probOfInclusion = getInclusionProb(vs.getValue());
+			
+			if (rng.nextDouble() < DEFAULT_PROB_OF_INCLUDING_VARIABLE) {
 				FuzzingKeySelectionRecord ksr;
 				try {
 					ksr = generateVariableEntry(vs.getValue());
@@ -82,6 +84,16 @@ public class FuzzingExperimentGenerator {
 		return records;
 	}
 
+	private double getInclusionProb(VariableSpecification vs) {
+		Optional<Double> prob_o = vs.getFuzzProb();
+		if (prob_o.isPresent()) {
+			Double prob = prob_o.get();
+			return prob;
+		} else {
+			return DEFAULT_PROB_OF_INCLUDING_VARIABLE;
+		}
+	}
+
 	private <E> E selectRandomElementFrom(List<E> ops) {
 		int length = ops.size();
 		int i = rng.nextInt(length);
@@ -91,7 +103,7 @@ public class FuzzingExperimentGenerator {
 	private List<String> getRandomParticipantsFromMission() {
 		List<String> participants = new ArrayList<String>();
 		for (Robot r : mission.getAllRobots()) {
-			if (rng.nextDouble() < PROB_OF_INCLUDING_ROBOT) {
+			if (rng.nextDouble() < DEFAULT_PROB_OF_INCLUDING_ROBOT) {
 				participants.add(r.getName());
 			}
 		}

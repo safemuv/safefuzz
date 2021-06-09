@@ -18,7 +18,8 @@
         <opParamsType xmi:id="_VkMG0McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_5"/>
       </vars>
     </components>
-    <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv.launch"/>
+    <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv_shared/launcher/shared_launcher.launch"/>
+    <launchers xmi:id="_KtPWcMhaEeuMiYEMVbUfiw" path="safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch"/>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
     <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset-10-each-axis">

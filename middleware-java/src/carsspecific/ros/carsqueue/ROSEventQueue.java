@@ -26,6 +26,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	private Map<String, Boolean> topicSubscriptions = new HashMap<String, Boolean>();
 
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = false;
+	private final boolean DEBUG_PRINT_CLOCK_MESSAGES = false;
 	private Mission mission;
 	private Ros ros;
 	private static final long serialVersionUID = 1L;
@@ -50,7 +51,9 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) e;
 			if (rtu.tagEquals(ATLASTag.SIMULATOR_GENERAL)) {
 				if (rtu.getTopicName().equals("/clock")) {
-					System.out.println("Clock msg = " + rtu.getJSON());
+					if (DEBUG_PRINT_CLOCK_MESSAGES) {
+						System.out.println("Clock msg = " + rtu.getJSON());
+					}
 					JsonObject j = rtu.getJSON().getJsonObject("clock");
 					JsonNumber secs = j.getJsonNumber("secs");
 					JsonNumber nsecs = j.getJsonNumber("nsecs");

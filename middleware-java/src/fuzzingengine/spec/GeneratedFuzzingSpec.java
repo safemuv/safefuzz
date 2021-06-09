@@ -49,7 +49,8 @@ public class GeneratedFuzzingSpec {
 	   		ops1.addParameter(opp4);
 	
 	
-				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv.launch");
+				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv_shared/launcher/shared_launcher.launch");
+				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch");
 	
 	
 		
@@ -61,7 +62,7 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
-		true, Optional.of(new TimeSpec(m,100.0,150.0)));
+		true, Optional.of(new TimeSpec(m,100.0,150.0)), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("/ual/velocity", ops1, "twist.linear");
 	
@@ -74,7 +75,7 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
-		false, Optional.empty());
+		false, Optional.empty(), Optional.of(0.0));
 	
 			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_0");
 			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_1");

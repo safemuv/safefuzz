@@ -74,8 +74,6 @@ public class StartFuzzingProcesses {
 		Thread.sleep(timeMillis);
 	}
 	
-	
-
 	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
 			throws InterruptedException, IOException {
 		Process middleware;
@@ -90,17 +88,6 @@ public class StartFuzzingProcesses {
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
 
 			String[] middlewareOpts = { "nofault", "nogui" };
-
-			
-			// middleware = ExptHelper.startNewJavaProcess("-jar", absATLASJAR,
-			// middlewareOpts, ABS_WORKING_PATH);
-
-//			// Sleep until the middleware is ready, then start the CI
-//			TimeUnit.MILLISECONDS.sleep(1000);
-
-//			// CI not starting properly as a process, so call it via a script
-//			exptLog("Starting CI");
-//			ExptHelper.startScript(ABS_WORKING_PATH, "start_ci.sh " + ciClass);
 
 			// Wait until the end condition for the middleware
 			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);

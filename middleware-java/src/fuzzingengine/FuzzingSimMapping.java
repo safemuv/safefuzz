@@ -54,10 +54,11 @@ public class FuzzingSimMapping {
 		private Optional<String> regexp;
 		private boolean vehicleSpecific;
 		private Optional<TimeSpec> timeSpec;
+		private Optional<Double> fuzzProb;
 		
 		private List<OpParamSetType> opInfo = new ArrayList<OpParamSetType>();
 		
-		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific, Optional<TimeSpec> timeSpec) {
+		public VariableSpecification(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regexp, boolean vehicleSpecific, Optional<TimeSpec> timeSpec, Optional<Double> fuzzProb) {
 			this.component = component;
 			this.variable = variable;
 			this.reflectionName = reflectionName;
@@ -66,6 +67,7 @@ public class FuzzingSimMapping {
 			this.regexp = regexp;
 			this.vehicleSpecific = vehicleSpecific;
 			this.timeSpec = timeSpec;
+			this.fuzzProb = fuzzProb;
 		}
 		
 		public Optional<String> getComponent() {
@@ -74,6 +76,10 @@ public class FuzzingSimMapping {
 		
 		public Optional<TimeSpec> getTimeSpec() {
 			return timeSpec;
+		}
+		
+		public Optional<Double> getFuzzProb() {
+			return fuzzProb;
 		}
 		
 		public void addOperationParameterSet(OperationParameterSet op, String subSpec) {
@@ -133,12 +139,12 @@ public class FuzzingSimMapping {
 	
 	private List<String> launchFilePaths = new ArrayList<String>();
 	
-	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex, boolean vehicleSpecific, Optional<TimeSpec> timeSpec) {
+	public void addRecord(String component, String variable, String reflectionName, VariableDirection dir, Optional<String> binaryPath, Optional<String> regex, boolean vehicleSpecific, Optional<TimeSpec> timeSpec, Optional<Double> fuzzProb) {
 		if (!records.containsKey(component)) {
 			records.put(component, new ArrayList<VariableSpecification>());
 		}
 		
-		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex, vehicleSpecific, timeSpec);
+		VariableSpecification vs = new VariableSpecification(component, variable, reflectionName, dir, binaryPath, regex, vehicleSpecific, timeSpec, fuzzProb);
 		records.get(component).add(vs);
 		recordsVariables.put(variable, vs);
 	}

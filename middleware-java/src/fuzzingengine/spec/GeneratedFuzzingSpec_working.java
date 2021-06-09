@@ -16,7 +16,7 @@ public class GeneratedFuzzingSpec_working {
 
 		simMapping.addRecord("ual", "/ual/velocity", "/ual/set_velocity", FuzzingSimMapping.VariableDirection.OUTBOUND,
 				Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
-				true, Optional.empty());
+				true, Optional.empty(), Optional.empty());
 
 		fe.setSimMapping(simMapping);
 		fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);

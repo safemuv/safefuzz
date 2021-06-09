@@ -45,12 +45,18 @@ public class MetricHandler {
 		}
 	}
 
-	public void printMetrics(Map<Metric, Object> metricRes) throws IOException {
+	public void printMetricsToOutputFile(String filename, Map<Metric, Object> metricRes) throws IOException {
 		System.out.println("Writing results to result file: " + resFileName);
+		resFile.write(filename + ",");
 		for (OfflineMetric m : metrics) {
 			Object val = metricRes.get(m);
-			System.out.println(m + "=" + val);
-			resFile.write(val.toString() + ",");
+			if (val == null) {
+				System.out.println("Metric " + m.getClass().getSimpleName() + "produced null - is its code implemented?");
+				resFile.write("<null>,");
+			} else {
+				System.out.println(m + "=" + val);
+				resFile.write(val.toString() + ",");
+			}
 		}
 		resFile.write("\n");
 		resFile.flush();

@@ -1,9 +1,14 @@
 package atlasdsl.loader;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
 import fuzzexperiment.runner.metrics.*;
+
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
@@ -77,8 +82,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		   
 		GoalRegion grStayInRegion = new StaticGoalRegion(
-			new Region(new Point(-10.0, -10.0, 0.0),
-			           new Point(20.0, 20.0, 10.0)));
+			new Region(new Point(-100.0, -100.0, 0.0),
+			           new Point(-90.0, -90.0, 10.0)));
 		
 		
 		Goal StayInRegion = new Goal("StayInRegion", mission, gt2, gpStayInRegion, Optional.of(grStayInRegion), ga2);
