@@ -12,7 +12,7 @@ import fuzzexperiment.runner.metrics.*;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 150.0;
+	final double MISSION_END_TIME = 430.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
@@ -53,14 +53,12 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		   
 		GoalRegion grtrackDistances = new StaticGoalRegion(
-			new Region(new Point(100.0, 100.0, 0.0),
-			           new Point(0.0, 0.0, 0.0)));
+			new Region(new Point(-10.0, -10.0, 0.0),
+			           new Point(10.0, 10.0, 10.0)));
 		
 		
 		Goal trackDistances = new Goal("trackDistances", mission, gt1, gptrackDistances, Optional.of(grtrackDistances), ga1);
 		
-			GoalVariable gvar1 = new GoalVariable("/ual/position_goalvar_test", "geometry_msgs/PoseStamped", true);
-			trackDistances.addVariable(gvar1);
 		
 		
 		mission.addGoal("trackDistances", trackDistances);
@@ -68,7 +66,7 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		
 		Robot [] grp2 = {ruav_1,ruav_2}; 
-		GoalParticipants gpStayInRegion = new StaticParticipants(grp2, mission);
+		GoalParticipants gpStayInOuterRegion = new StaticParticipants(grp2, mission);
 		
 		
 		
@@ -81,21 +79,55 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		   
-		GoalRegion grStayInRegion = new StaticGoalRegion(
-			new Region(new Point(-100.0, -100.0, 0.0),
-			           new Point(-90.0, -90.0, 10.0)));
+		GoalRegion grStayInOuterRegion = new StaticGoalRegion(
+			new Region(new Point(-10.0, -10.0, 0.0),
+			           new Point(10.0, 10.0, 10.0)));
 		
 		
-		Goal StayInRegion = new Goal("StayInRegion", mission, gt2, gpStayInRegion, Optional.of(grStayInRegion), ga2);
+		Goal StayInOuterRegion = new Goal("StayInOuterRegion", mission, gt2, gpStayInOuterRegion, Optional.of(grStayInOuterRegion), ga2);
 		
 		
 		
 		
 		
 		Metric met1 = new OutsideOfOuterRegionViolations();
-		StayInRegion.addMetric(met1);
+		StayInOuterRegion.addMetric(met1);
 		
-		mission.addGoal("StayInRegion", StayInRegion);
+		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
+ 
+ 
+		
+		Robot [] grp3 = {ruav_1,ruav_2}; 
+		GoalParticipants gpAvoidPlaneInner = new StaticParticipants(grp3, mission);
+		
+		
+		
+			GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		
+		
+		
+		
+		GoalAction ga3 = new StayInRegion(false);
+		
+		
+		   
+		GoalRegion grAvoidPlaneInner = new StaticGoalRegion(
+			new Region(new Point(-10.0, -10.0, 0.0),
+			           new Point(10.0, 10.0, 10.0)));
+		
+		
+		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.of(grAvoidPlaneInner), ga3);
+		
+			GoalVariable gvar1 = new GoalVariable("/lidar/distance_to_plane", "standard_msgs/Float32", true);
+			AvoidPlaneInner.addVariable(gvar1);
+		
+		
+		
+		
+		Metric met2 = new OutsideOfInnerRegionViolations();
+		AvoidPlaneInner.addMetric(met2);
+		
+		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
 	
 
 	

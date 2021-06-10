@@ -17,31 +17,36 @@ public class GeneratedFuzzingSpec {
 	try {
 	
 	
-	   OperationParameterSet ops1 = new OperationParameterSet("StringChangeRandom", "StringVariableChange");
+	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-10-each-axis", "JSONPointChange");
  
  
-	   			OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMALPHA");
+	   			OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET");
 	   			
 	   		
 	   		
 	   		
 	   		ops1.addParameter(opp1);
 	   			
-	   		
-	   		
  
-	   			OperationParameter opp2 = new IntConstantOperationParameter("maxLen", 8);
+	   			OperationParameter opp2 = new DoubleRangeOperationParameter("X", 0.0, 1.0);
+	   		
+	   		
 	   		
 	   		ops1.addParameter(opp2);
-	   OperationParameterSet ops2 = new OperationParameterSet("Delay-3s", "DelayFuzzingOperation");
- 
 	   			
-	   		
  
-	   			OperationParameter opp3 = new DoubleConstantOperationParameter("delay", 3.0);
+	   			OperationParameter opp3 = new DoubleRangeOperationParameter("Y", 0.0, 1.0);
 	   		
 	   		
-	   		ops2.addParameter(opp3);
+	   		
+	   		ops1.addParameter(opp3);
+	   			
+ 
+	   			OperationParameter opp4 = new DoubleRangeOperationParameter("Z", 0.0, 1.0);
+	   		
+	   		
+	   		
+	   		ops1.addParameter(opp4);
 	
 	
 				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv_shared/launcher/shared_launcher.launch");
@@ -52,14 +57,32 @@ public class GeneratedFuzzingSpec {
 		
 		
 		
-	simMapping.setComponentFuzzingInfo("null", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), false);
+	simMapping.setComponentFuzzingInfo("ual", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), false);
 		
 				
-		simMapping.addRecord("null", "/topic2", "/topic1", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("std_msgs/String"),
-		false, Optional.of(new TimeSpec(m,100.0,150.0)), Optional.of(1.0));
+		simMapping.addRecord("ual", "/ual/set_velocity_prime", "/ual/set_velocity", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//ual"), Optional.of("geometry_msgs/TwistStamped"),
+		true, Optional.of(new TimeSpec(m,0.0,150.0)), Optional.of(1.0));
 	
-			simMapping.addOperationParameterSetForVariable("/topic2", ops1, "");
+			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops1, "twist.linear");
+	
+		
+		
+		
+		
+	simMapping.setComponentFuzzingInfo("CalibrationDefinitions", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), true);
+		
+				
+		simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/safemuv_situational_awareness/config"), Optional.empty(),
+		false, Optional.empty(), Optional.of(0.0));
+	
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_0");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_1");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_2");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_3");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_4");
+			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops1, "frameB_5");
 	
 	
 

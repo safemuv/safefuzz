@@ -60,7 +60,7 @@ public class FuzzingExperimentGenerator {
 		for (Map.Entry<String, VariableSpecification> vs : fsm.getRecords().entrySet()) {
 			double probOfInclusion = getInclusionProb(vs.getValue());
 			
-			if (rng.nextDouble() < DEFAULT_PROB_OF_INCLUDING_VARIABLE) {
+			if (rng.nextDouble() < probOfInclusion) {
 				FuzzingKeySelectionRecord ksr;
 				try {
 					ksr = generateVariableEntry(vs.getValue());
