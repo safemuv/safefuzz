@@ -114,7 +114,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 
 	public boolean hasVehicle(String vehicle) {
-		return participantsLookup.containsKey(vehicle);
+		// Assume that always empty vehicles are just general simulator topics. They return true
+		return (vehicle == "") || participantsLookup.containsKey(vehicle);
 	}
 
 	@Override

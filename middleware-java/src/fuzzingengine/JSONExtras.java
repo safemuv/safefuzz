@@ -23,6 +23,16 @@ public class JSONExtras {
 		}
 	}
 	
+	public static void insertPrimitiveType(JsonObjectBuilder builder, JsonValue source, String key, String fuzzed) {
+		if (source.getValueType() == ValueType.STRING) {
+			builder.add(key, fuzzed);
+		}
+		
+		if (source.getValueType() == ValueType.NUMBER) {
+			builder.add(key, Double.valueOf(fuzzed));
+		}
+	}
+	
 	public static JsonObject fuzzReplacement(JsonObject js, String [] specFields, ValueFuzzingOperation op) {
 		//System.out.println("specFields = " + specFields);
 		if (DEBUG_JSON_OBJECT_RESTRUCTURING) {
@@ -52,8 +62,18 @@ public class JSONExtras {
 					}
 				}
 			} else {
-				// Primitive object - just copy it in
-				builder.add(entry.getKey(), entry.getValue());
+				// Primitive object
+				if (specFields.length == 1) {
+					String lastSpec = specFields[0];
+					if (lastSpec.equals(entry.getKey())) {
+						// Found the element to fuzz
+						JsonValue toFuzz = entry.getValue();
+						String fuzzed = op.fuzzTransformString(toFuzz.toString());
+						insertPrimitiveType(builder, toFuzz, entry.getKey(), fuzzed);		 
+					}
+				} else {
+					builder.add(entry.getKey(), entry.getValue());
+				}
 			}
 		}
 		return builder.build();

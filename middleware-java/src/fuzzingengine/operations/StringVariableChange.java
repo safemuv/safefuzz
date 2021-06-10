@@ -18,14 +18,18 @@ public class StringVariableChange extends ValueFuzzingOperation {
 		this.fixedChange = fixedChange;
 	}
 	
-	public static StringVariableChange NewRandom(int sizeLimit) {
+	public static StringVariableChange NewRandom(int sizeLimit, boolean alphaOnly) {
 		Random r = new Random();
 		
 		StringLambda slam = (input -> {
 			int len = r.nextInt(sizeLimit);
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < len; i++)
-				sb.append(Character.toString((char)(r.nextInt(255))));
+				if (alphaOnly) {
+					sb.append(Character.toString((char)(65 + r.nextInt(26))));
+				} else {
+					sb.append(Character.toString((char)(r.nextInt(255))));
+				}
 			return sb.toString();
 		});
 		StringVariableChange op = new StringVariableChange(slam);
@@ -41,6 +45,7 @@ public class StringVariableChange extends ValueFuzzingOperation {
 		if (generateString.isPresent()) {
 			StringLambda sl = generateString.get();
 			changed = sl.op(input);
+			System.out.println(changed);
 		}
 		return changed;
 	}
@@ -50,7 +55,12 @@ public class StringVariableChange extends ValueFuzzingOperation {
 		System.out.println(fields[0]);
 		if (fields[0].toUpperCase().equals("NEWRANDOM")) {
 			int maxLen = Integer.valueOf(fields[1]);
-			return StringVariableChange.NewRandom(maxLen);
+			return StringVariableChange.NewRandom(maxLen, false);
+		}
+		
+		if (fields[0].toUpperCase().equals("RANDOMALPHA")) {
+			int maxLen = Integer.valueOf(fields[1]);
+			return StringVariableChange.NewRandom(maxLen, true);
 		}
 
 		throw new CreationFailed("Invalid parameter string " + s);

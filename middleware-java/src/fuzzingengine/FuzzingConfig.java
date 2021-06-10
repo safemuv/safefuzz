@@ -129,6 +129,7 @@ public class FuzzingConfig {
 
 	public Optional<FuzzingOperation> getOperationByKeyAndVehicle(String key, String vehicle, double time) {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		System.out.println("keyLookup=" + keyLookup + ",key=" + key + ",fr=" + fr);
 		if (fr != null) {
 			if (fr.isReadyAtTime(time) && fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());

@@ -14,8 +14,13 @@
   </sims>
   <operations xmi:id="_0x46MMjtEeuWdKT93dm6Ig" operationClassName="StringVariableChange">
     <paramSets xmi:id="_3oPcQMjtEeuWdKT93dm6Ig" name="StringChangeRandom">
-      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_61gpgMjtEeuWdKT93dm6Ig" name="Nature" value="NEWRANDOM"/>
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_61gpgMjtEeuWdKT93dm6Ig" name="Nature" value="RANDOMALPHA"/>
       <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_BrQZUMjuEeuWdKT93dm6Ig" name="maxLen" value="8"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_2Xt3AMmGEeuRZ58k3QPhKw" operationClassName="DelayFuzzingOperation">
+    <paramSets xmi:id="_7pNl0MmGEeuRZ58k3QPhKw" name="Delay-3s">
+      <params xsi:type="fuzzspec:DoubleConstantOperationParameter" xmi:id="__BdUAMmGEeuRZ58k3QPhKw" name="delay" value="3.0"/>
     </paramSets>
   </operations>
 </fuzzspec:FuzzingSpecification>

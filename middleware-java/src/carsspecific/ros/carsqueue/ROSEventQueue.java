@@ -3,6 +3,7 @@ package carsspecific.ros.carsqueue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.json.*;
 import atlasdsl.*;
@@ -25,12 +26,14 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	// subscribing twice to the same topic
 	private Map<String, Boolean> topicSubscriptions = new HashMap<String, Boolean>();
 
-	private final boolean DEBUG_PRINT_RAW_MESSAGE = false;
+	private final boolean DEBUG_PRINT_RAW_MESSAGE = true;
 	private final boolean DEBUG_PRINT_CLOCK_MESSAGES = false;
 	private Mission mission;
 	private Ros ros;
 	private static final long serialVersionUID = 1L;
 	private FuzzingEngine fuzzEngine;
+	
+	Random __rng = new Random();
 
 	public ROSEventQueue(ATLASCore core, Mission mission, int queueCapacity, FuzzingEngine fuzzEngine) {
 		super(core, queueCapacity, '.');
@@ -105,6 +108,14 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 					if (DEBUG_PRINT_RAW_MESSAGE) {
 						System.out.println("From ROSbridge tagged: " + tag.toString() + ":" + message.toString());
 					}
+					
+//					if (message.toString().equals("{\"data\":\"Hello\"}")) {
+//
+//						StringBuilder sb = new StringBuilder();
+//						for (int i = 0; i < 8; i++)
+//							sb.append(Character.toString((char)(65 + __rng.nextInt(26))));
+//						message = new Message("{\"data\":\" " + sb.toString() + "\"}", "std_msgs/String");
+//					}
 
 					ROSEvent rev = new ROSTopicUpdate(tag, fullTopicName, message, core.getTime(), rosType);
 					rosQueue.add(rev);

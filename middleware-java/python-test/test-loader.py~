@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+
+
+from pyecore.resources import ResourceSet, URI
+resource = rset.get_resource(URI('/home/jharbin/academic/atlas/atlas-middleware/ecore-metamodels/com.github.atlas.dsl/fuzzspec.ecore'))

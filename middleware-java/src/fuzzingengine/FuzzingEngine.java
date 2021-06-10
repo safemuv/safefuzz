@@ -231,6 +231,24 @@ public class FuzzingEngine<E> {
 	            forEach(e -> builder.add(e.getKey(), e.getValue()));
 	    return builder.build();
 	}
+	
+	public boolean jsonStructureNotSupplied(Optional<Object> jsonStructure) {
+		if (!jsonStructure.isPresent()) {
+			return true;
+		} else {
+			Object o = jsonStructure.get();
+			if (o instanceof String) {
+				String s = (String)o;
+				if (s.isEmpty()) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+	}
 
 	public Optional<E> fuzzTransformEvent(Optional<E> event_o, FuzzingOperation op) {
 		if (op.isEventBased()) {
@@ -279,7 +297,7 @@ public class FuzzingEngine<E> {
 					
 					// This selects if there is structure defined to the JSON key in the CSV file... 
 
-					if (!jsonStructure.isPresent()) {
+					if (jsonStructureNotSupplied(jsonStructure)) {
 						// If there is 
 						// no structure defined in the CSV file, pass the entire structure to fuzz
 						// This fuzzes the JSON object as a string representation, re-parses it
@@ -399,11 +417,12 @@ public class FuzzingEngine<E> {
 							FuzzingOperation op = op_o.get();
 							try {
 								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, startTime, endTime, op);
+								System.out.println("Installing fuzzing operation for " + varName + " - " + op);
 							} catch (MissingRobot e) {
 								System.out.println("Missing robot: name = " + e.getName());
 								e.printStackTrace();
 							}
-							System.out.println("Installing fuzzing operation for " + varName + " - " + op);
+							
 						}
 					}
 
