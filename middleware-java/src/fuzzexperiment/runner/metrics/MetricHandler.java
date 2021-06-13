@@ -11,7 +11,6 @@ import java.util.Set;
 import atlasdsl.Mission;
 
 public class MetricHandler {
-	// TODO: how to supply content to the metrics? - e.g. structure of the solution?
 	private List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 	private FileWriter resFile;
 	private String resFileName;

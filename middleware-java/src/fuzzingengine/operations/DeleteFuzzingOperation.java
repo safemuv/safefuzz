@@ -33,6 +33,8 @@ public class DeleteFuzzingOperation extends EventFuzzingOperation {
 			return new DeleteFuzzingOperation(1.0);
 		}
 		
+		
+		
 		if (fields[0].toUpperCase().equals("RANDOM")) {
 			double prob = Double.valueOf(fields[1]);
 			return new DeleteFuzzingOperation(prob);

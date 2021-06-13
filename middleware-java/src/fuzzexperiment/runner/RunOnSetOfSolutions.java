@@ -1,7 +1,10 @@
 package fuzzexperiment.runner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import fuzzexperiment.runner.metrics.Metric;
 
 public class RunOnSetOfSolutions extends ExptParams {
 	private String resFileName;
@@ -36,5 +39,9 @@ public class RunOnSetOfSolutions extends ExptParams {
 		} else {
 			return Optional.empty();
 		}
+	}
+	
+	public void advance(Map<Metric, Object> res) {
+		activeElt++;	
 	}
 }

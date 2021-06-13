@@ -142,7 +142,7 @@ public class FuzzingExperimentGenerator {
 		return paramStr;
 	}
 	
-	private double getStartTime(Optional<TimeSpec> ts_o) {
+	protected double getStartTime(Optional<TimeSpec> ts_o) {
 		double startLimit;
 		
 		if (ts_o.isPresent()) {

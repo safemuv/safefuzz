@@ -1,6 +1,9 @@
 package fuzzexperiment.runner;
 
+import java.util.Map;
 import java.util.Optional;
+
+import fuzzexperiment.runner.metrics.Metric;
 
 public class RunRepeated extends ExptParams {
 	private int count = 0;
@@ -25,6 +28,11 @@ public class RunRepeated extends ExptParams {
 
 	public Optional<String> getNextFuzzingCSVFileName() {
 		return Optional.of("fuzz-config.csv");
+	}
+
+	public void advance(Map<Metric, Object> res) {
+		count++;
+		
 	}
 
 }

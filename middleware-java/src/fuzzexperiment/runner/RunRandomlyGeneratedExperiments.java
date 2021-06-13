@@ -1,8 +1,11 @@
 package fuzzexperiment.runner;
 
+import java.util.Map;
 import java.util.Optional;
 
 import atlasdsl.Mission;
+import fuzzexperiment.runner.metrics.Metric;
+import fuzzexperiment.runner.metrics.MetricHandler;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 
 public class RunRandomlyGeneratedExperiments extends ExptParams {
@@ -43,11 +46,12 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 		newGeneratedFile();
 	}
 
-//	public void logResults(String string, String modelFile) {
-//
-//	}
-
 	public Optional<String> getNextFuzzingCSVFileName() {
 		return Optional.of(getCurrentFilename());
+	}
+
+	public void advance(Map<Metric, Object> res) {
+		count++;
+		newGeneratedFile();
 	}
 }

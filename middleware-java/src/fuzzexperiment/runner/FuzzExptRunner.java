@@ -19,7 +19,6 @@ import fuzzingengine.FuzzingEngine;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 import middleware.atlascarsgenerator.ConversionFailed;
 
-
 public class FuzzExptRunner {
 	private boolean actuallyRun = true;
 	private double timeLimit;
@@ -95,6 +94,8 @@ public class FuzzExptRunner {
 		// In the loop...
 		
 		while (!eparams.completed()) {
+			Map<Metric, Object> metricResults;
+			
 			eparams.printState();
 			// Get the CSV file consisting of a fuzzing experiment... internally either generate it 
 			// in response to the metrics, or it comes from a constant list
@@ -115,15 +116,17 @@ public class FuzzExptRunner {
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now
 				try {
-					Map<Metric, Object> metricResults = mh.computeAllOffline(logPath);
+					metricResults = mh.computeAllOffline(logPath);
 					mh.printMetricsToOutputFile(file, metricResults);
+					eparams.advance(metricResults);
+					
 				} catch (MetricComputeFailure e) {
 					// If we get metric computation failure, ignore the whole line
 					// TODO: log the failure
 					e.printStackTrace();
+					eparams.advance();
 				}	
 			}	
-			eparams.advance();
 		}
 		System.out.println("Run completed");
 	}

@@ -1,1 +1,1 @@
-Key,/ual/set_velocity_prime,100.0,110.0,uav_1|uav_2,twist.linear,JSONPointChange,RANDOMOFFSET|0.01|0.01|0.01
+Key,/ual/set_velocity_prime,0.0,150.0,uav_1|uav_2,twist.linear,DeleteFuzzingOperation,RANDOM|0.9
