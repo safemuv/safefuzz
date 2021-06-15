@@ -4,7 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import atlasdsl.Mission;
+import carsspecific.ros.codegen.ROSCodeGen;
+import fuzzingengine.FuzzingEngine;
+import fuzzingengine.spec.GeneratedFuzzingSpec;
+import middleware.atlascarsgenerator.ConversionFailed;
 import utils.ExptHelper;
 
 public class StartFuzzingProcesses {
@@ -72,6 +79,19 @@ public class StartFuzzingProcesses {
 		long timeMillis = (long)(waitTimeSeconds * 1000.0);
 		System.out.println("Waiting for " + timeMillis + " ms");
 		Thread.sleep(timeMillis);
+	}
+	
+	public void codeGenerationROSFuzzing(Mission mission, String filename) {
+		FuzzingEngine fe = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
+		try {
+			ROSCodeGen rgen = new ROSCodeGen(mission, Optional.of(fe));
+			// Load the CSV file to produce fuzzing key selection records
+			fe.setupFromFuzzingFile(filename, mission);
+			rgen.convertDSL();
+			System.out.println("Code generation completed");
+		} catch (ConversionFailed cf) {
+			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
+		}
 	}
 	
 	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)

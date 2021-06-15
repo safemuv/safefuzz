@@ -2,12 +2,20 @@ package fuzzexperiment.runner;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
+import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 
 public class RunExperimentsMetricFeedback extends ExptParams {
+	
+	private class BestPreviousResult {
+		Set<FuzzingKeySelectionRecord> spec;
+		Map<Metric,Object> metric;
+	}
+	
 	private String resFileName;
 	int count = 0;
 	int countLimit;

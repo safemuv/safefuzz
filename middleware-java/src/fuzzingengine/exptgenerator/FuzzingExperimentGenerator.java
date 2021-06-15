@@ -94,7 +94,7 @@ public class FuzzingExperimentGenerator {
 		}
 	}
 
-	private <E> E selectRandomElementFrom(List<E> ops) {
+	protected <E> E selectRandomElementFrom(List<E> ops) {
 		int length = ops.size();
 		int i = rng.nextInt(length);
 		return ops.get(i);

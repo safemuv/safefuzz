@@ -1,4 +1,4 @@
-package exptrunner.jmetal;
+package fuzzexperiment.runner.jmetal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,62 +23,73 @@ import org.uma.jmetal.solution.Solution;
 
 import atlasdsl.Mission;
 import atlasdsl.faults.Fault;
+import atlasdsl.loader.DSLLoadFailed;
+import atlasdsl.loader.DSLLoader;
+import atlasdsl.loader.GeneratedDSLLoader;
 import atlassharedclasses.FaultInstance;
+import carsspecific.ros.codegen.ROSCodeGen;
 import exptrunner.metrics.*;
 import exptrunner.runner.RunExperiment;
+import fuzzexperiment.runner.StartFuzzingProcesses;
+import fuzzexperiment.runner.metrics.MetricHandler;
+import fuzzexperiment.runner.metrics.OfflineMetric;
+import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingSelectionRecord;
+import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
+import fuzzingengine.spec.GeneratedFuzzingSpec;
+import middleware.atlascarsgenerator.ConversionFailed;
 import exptrunner.*;
 import utils.Pair;
 
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
 	private static final long serialVersionUID = 1L;
-	private String fakeLogFileName = "/home/atlas/atlas/atlas-middleware/middleware-java/tempres/customLog.res";
-
 	private int runCount = 0;
 	private Random rng;
-	private Mission mission;
+	private Mission baseMission;
 	private boolean actuallyRun;
 	private double exptRunTime;
-	private String logFileDir;
+	private double timeLimit;
 
-	// This gives the weights for these different goals
-	//private Map<GoalsToCount, Integer> goalsToCount = new HashMap<GoalsToCount, Integer>();
-	private Algorithm<List<FaultInstance>> algorithm;
-	private MetricsProcessing metricsProcessing;
+	private MetricHandler metricHandler;
+	private StartFuzzingProcesses runner;
 
 	private FileWriter tempLog;
 	private int variableFixedSize;
 	private int constraintCount = 0;
 	
-	private int popSize;
+	private FuzzingExperimentGenerator initialGenerator;
+	
+	private void setup() throws DSLLoadFailed, IOException {
+		DSLLoader loader = new GeneratedDSLLoader();
+		baseMission = loader.loadMission();
+		timeLimit = baseMission.getEndTime();
+		FileWriter tempLog = new FileWriter("fuzzexpt-templog.log");
+		//readProperties();
+	}
 	
 	public SAFEMUVEvaluationProblem(int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
-			String logFileDir,
-			//Map<GoalsToCount, Integer> goalsToCount,
-			List<Metrics> metrics) throws IOException {
+			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
 		this.rng = rng;
-		this.popSize = popSize;
-		this.mission = mission;
+		//this.popSize = popSize;
+		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
-		this.logFileDir = logFileDir;
 		this.actuallyRun = actuallyRun;
-		//this.goalsToCount = goalsToCount;
+
 		this.variableFixedSize = mission.getFaultsAsList().size();
-		String fileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-		this.tempLog = new FileWriter("tempLog-" + fileName + ".res");
-		metricsProcessing = new MetricsProcessing(metrics, tempLog);
+		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		this.tempLog = new FileWriter("tempLog-" + resFileName + ".res");
+		metricHandler = new MetricHandler(metrics, resFileName);
 		System.out.println(metrics.toString());
-		
+		setup();		
 	}
 
 	public int getNumberOfVariables() {
-		// TODO: this is fixed
 		return variableFixedSize;
 	}
 
 	public int getNumberOfObjectives() {
-		return metricsProcessing.getMetrics().size();
+		return metricHandler.getMetrics().size();
 	}
 
 	public int getNumberOfConstraints() {
@@ -88,12 +99,21 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	public String getName() {
 		return "SAFEMUVEvaluationProblem";
 	}
-
+	
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
 		String exptTag = "exptGA-" + (runCount++);
 		try {
-			// TODO: should we generate the CSV file first or pass in the solution to do it?
-			RunExperiment.doExperiment(mission, exptTag, solution, actuallyRun, exptRunTime);
+			
+			String csvFileName = solution.getCSVFileName();
+			// TODO: ensure a clear simulation run
+						
+			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
+			// config files etc for this CSV definition experimental run
+			runner.codeGenerationROSFuzzing(baseMission, csvFileName);
+			
+			// Invoke the middleware (with the correct mission model and fuzzing spec!)
+			// Invoke the CARS / call ROS launch scripts
+			runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName);
 			//metricsProcessing.readLogFiles(logFileDir, solution);
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
@@ -106,28 +126,25 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		} catch (InvalidMetrics e) {
 			e.printStackTrace();
 		}
-		//return solution;
 	}
 
 	private void setupInitialPopulation(FuzzingSelectionsSolution fiss) {
 		System.out.println("Setting up initial population...");
-		List<FuzzingSelectionRecord> allFaults = new ArrayList<FuzzingSelectionRecord>();
-		Collections.shuffle(allFaults, rng);
-		// TODO: setup the initial population; 
-		// This should be set up to confirm to the model
+		List<FuzzingSelectionRecord> recs = initialGenerator.generateExperiment(null);
+		for (int i = 0; i < recs.size(); i++) {
+			fiss.setVariable(i, recs.get(i));
+		}
+		
 		System.out.println("Initial chromosome = " + fiss.toString());
 	}
 
 
 	public FuzzingSelectionsSolution createSolution() {
-		int objectivesCount = metricsProcessing.getMetrics().size();
+		int objectivesCount = metricHandler.getMetrics().size();
 		// TODO: fix constructors for the fuzzing selection solutions
-		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(mission, "TAGTEST", actuallyRun, exptRunTime);
+		// TODO: use the existing experiment generator code for here!
+		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime);
 		setupInitialPopulation(sol);
 		return sol;
-	}
-
-	public void setAlgorithm(Algorithm<List<FaultInstance>> algorithm) {
-		this.algorithm = algorithm;
 	}
 }

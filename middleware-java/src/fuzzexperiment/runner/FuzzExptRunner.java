@@ -73,19 +73,6 @@ public class FuzzExptRunner {
 		// 
 	}
 	
-	public void codeGenerationROSFuzzing(String filename) {
-		FuzzingEngine fe = GeneratedFuzzingSpec.createFuzzingEngine(baseMission, false);
-		try {
-			ROSCodeGen rgen = new ROSCodeGen(baseMission, Optional.of(fe));
-			// Load the CSV file to produce fuzzing key selection records
-			fe.setupFromFuzzingFile(filename, baseMission);
-			rgen.convertDSL();
-			System.out.println("Code generation completed");
-		} catch (ConversionFailed cf) {
-			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
-		}
-	}
-	
 	public void run() throws InterruptedException, IOException {
 		// The core logic for the loop
 		
@@ -107,7 +94,7 @@ public class FuzzExptRunner {
 				
 				// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 				// config files etc for this CSV definition experimental run
-				codeGenerationROSFuzzing(file);
+				runner.codeGenerationROSFuzzing(baseMission, file);
 				
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts

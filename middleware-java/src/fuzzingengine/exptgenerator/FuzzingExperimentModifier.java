@@ -41,9 +41,9 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		if (best_o.isPresent()) {
 			String best = best_o.get();
 			// TODO: set up loadCSV
-			List<FuzzingKeySelectionRecord> csvExpt = loadCSV(best);
+			List<FuzzingSelectionRecord> csvExpt = loadCSV(best);
 			// Modify the timings or parameters of one of the values
-			FuzzingKeySelectionRecord m = getRandomElement(csvExpt);
+			FuzzingSelectionRecord m = selectRandomElementFrom(csvExpt);
 			// TODO: replace with random selection
 			ChangeOp operation = ChangeOp.SHIFT_TIME;
 			
@@ -61,7 +61,7 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 
 
 
-	private FuzzingKeySelectionRecord adjustTime(FuzzingKeySelectionRecord m) {
+	private FuzzingSelectionRecord adjustTime(FuzzingSelectionRecord m) {
 		double startTime = getStartTime(Optional.empty());
 		double endTime = getStartTime(Optional.empty());
 		m.setStartTime(startTime);

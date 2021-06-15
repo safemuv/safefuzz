@@ -73,4 +73,8 @@ public class MetricHandler {
 		}
 		return results;
 	}
+	
+	public List<OfflineMetric> getMetrics() {
+		return metrics;
+	}
 }

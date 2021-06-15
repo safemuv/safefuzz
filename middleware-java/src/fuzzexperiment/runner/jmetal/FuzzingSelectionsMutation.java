@@ -1,4 +1,4 @@
-package exptrunner.jmetal;
+package fuzzexperiment.runner.jmetal;
 
 import java.io.FileWriter;
 import java.io.IOException;
