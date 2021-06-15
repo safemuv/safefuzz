@@ -21,8 +21,6 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	private String exptTag;
 	private double exptRunTime;
 	
-
-	
 	private Map<Object,Object> attributes = new HashMap<Object,Object>();
 	private Map<Integer,Double> objectives = new HashMap<Integer,Double>();
 	private Map<Integer,Double> constraints = new HashMap<Integer,Double>();
@@ -33,6 +31,19 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		this.exptTag = exptTag;
 		this.actuallyRun = actuallyRun;
 		this.exptRunTime = exptRunTime;
+	}
+	
+	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime, List<FuzzingSelectionRecord> recs) {
+		this.mission = mission;
+		this.exptTag = exptTag;
+		this.actuallyRun = actuallyRun;
+		this.exptRunTime = exptRunTime;
+		this.contents = new ArrayList<FuzzingSelectionRecord>(recs.size());
+		
+		for (FuzzingSelectionRecord fi : recs) {
+			this.contents.add(fi.dup());
+		}
+		System.out.println("contents = " + contents);
 	}
 	
 	FuzzingSelectionsSolution(FuzzingSelectionsSolution other) {
@@ -70,7 +81,12 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public FuzzingSelectionRecord getVariable(int index) {
-		return contents.get(index);
+		System.out.println("index = " + index +  ",contents.size()=" + contents.size());
+		if (index < contents.size() && index > 0) {
+			return contents.get(index);
+		} else {
+			return null;
+		}
 	}
 
 	public List<FuzzingSelectionRecord> getVariables() {

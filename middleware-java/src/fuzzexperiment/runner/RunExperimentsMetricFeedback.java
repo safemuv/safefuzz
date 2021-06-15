@@ -1,5 +1,7 @@
 package fuzzexperiment.runner;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -7,24 +9,23 @@ import java.util.Set;
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzingengine.FuzzingKeySelectionRecord;
+import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 
 public class RunExperimentsMetricFeedback extends ExptParams {
 	
-	private class BestPreviousResult {
-		Set<FuzzingKeySelectionRecord> spec;
-		Map<Metric,Object> metric;
-	}
-	
+	private String fuzzCSVBaseName;
 	private String resFileName;
 	int count = 0;
 	int countLimit;
 	private Mission mission;
-	private String fuzzCSVBaseName;
-	private String bestFilename;
-	private Map<Metric, Object> bestMetrics;
 	
+	int populationLimit = 10;
+
 	private	FuzzingExperimentModifier g;
+	
+	public FuzzingPopulation pop = new FuzzingPopulation(populationLimit);
+	private List<FuzzingSelectionRecord> currentFuzzingSels;
 
 	private String getCurrentFilename() {
 		return fuzzCSVBaseName + "-" + count + ".csv";
@@ -59,35 +60,16 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	public Optional<String> getNextFuzzingCSVFileName() {
 		return Optional.of(getCurrentFilename());
 	}
-	
-	private boolean metricsMoreViolations(Map<Metric, Object> res, Map<Metric, Object> bestMetrics) {
-		
-		boolean better = true;
-		for (Map.Entry<Metric,Object> entry : res.entrySet()) {
-			Metric m = entry.getKey();
-			Object o = entry.getValue();
-			Object obest = bestMetrics.get(m);
-			
-			Double o_d = (Double)o;
-			Double obest_d = (Double)obest;
 
-			
-			if (o_d < obest_d) {
-				better = false; 
-			}
-		}
-		return better;
-	}
-
-	public void advance(Map<Metric, Object> res) {
+	public void advance(Map<Metric, Double> res) {
+		pop.pushToPopulation(new FuzzingExptResult(currentFuzzingSels, getCurrentFilename(), res));
 		count++;
-		
-		// If the metrics are better than the best, store this one
-		if (metricsMoreViolations(res, bestMetrics)) {
-			bestFilename = getCurrentFilename();
-			bestMetrics = res;
+		Optional<FuzzingExptResult> startingPoint_o = pop.pickPopulationElementToExplore();
+		if (startingPoint_o.isPresent()) {
+			String startingFilename = startingPoint_o.get().getFilename();
+			currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), Optional.of(startingFilename), res);
+		} else {
+			currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 		}
-		
-		g.generateExperimentBasedUpon(getCurrentFilename(), Optional.of(bestFilename), res);
 	}
 }

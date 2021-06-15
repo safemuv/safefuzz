@@ -50,7 +50,7 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 		return Optional.of(getCurrentFilename());
 	}
 
-	public void advance(Map<Metric, Object> res) {
+	public void advance(Map<Metric, Double> res) {
 		count++;
 		newGeneratedFile();
 	}

@@ -46,15 +46,14 @@ import fuzzexperiment.runner.metrics.OfflineMetric;
 
 public class RunJMetal extends AbstractAlgorithmRunner {
 
-	static private int populationSize = 5;
-	static private int offspringPopulationSize = 5;
+	static private int populationSize = 6;
+	static private int offspringPopulationSize = 6;
 	
 	static private int matingPoolSize = populationSize;
-	static private boolean actuallyRun = true;
+	static private boolean actuallyRun = false;
 	static private double exptRunTime = 1200.0;
 
-	static private int maxIterations = 2000000;
-	static private int maxGenerations = 16;
+	static private int maxIterations = 24;
 
 	static double crossoverProb = 0.2;
 	static double mutationProb = 0.6;
@@ -122,21 +121,21 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();
 			
 
-			algorithm = new NSGAIIMeasures(problem, maxIterations, maxGenerations, populationSize, matingPoolSize,
+			algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, matingPoolSize, offspringPopulationSize,
 					crossover, mutation, selection, dominanceComparator, evaluator);
 
 			// For some reason, can't create algorithm executor. Just run it
-			
 			//AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 			algorithm.run();
 			List<FuzzingSelectionsSolution> population = algorithm.getResult();
+			
 			//long computingTime = algorithmRunner.getComputingTime();
 			//JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
 			printFinalSolutionSet(population);
-			//if (!referenceParetoFront.equals("")) {
+			if (!referenceParetoFront.equals("")) {
 				printQualityIndicators(population, referenceParetoFront);
-			//}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -148,6 +147,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();
+			exptRunTime = mission.getEndTime();
 			RunJMetal runjmetal = new RunJMetal();
 			runjmetal.jMetalRun("expt1", mission);
 		} catch (DSLLoadFailed e) {

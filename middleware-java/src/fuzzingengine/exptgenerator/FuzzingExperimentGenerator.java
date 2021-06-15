@@ -67,6 +67,9 @@ public class FuzzingExperimentGenerator {
 					records.add(ksr);
 				} catch (OperationLoadFailed e) {
 					e.printStackTrace();
+				} catch (ListHasNoElement e) {
+					System.out.println("Skipping key selection record - " + vs + " - probably no operation types defined in model for this variable?");
+					e.printStackTrace();
 				}
 			}
 		}
@@ -94,7 +97,7 @@ public class FuzzingExperimentGenerator {
 		}
 	}
 
-	protected <E> E selectRandomElementFrom(List<E> ops) {
+	protected <E> E selectRandomElementFrom(List<E> ops) throws ListHasNoElement {
 		int length = ops.size();
 		int i = rng.nextInt(length);
 		return ops.get(i);
@@ -167,7 +170,7 @@ public class FuzzingExperimentGenerator {
 		return endTime;
 	}
 	
-	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var) throws OperationLoadFailed {
+	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var) throws OperationLoadFailed, ListHasNoElement {
 		// Select an operation parameter set to use
 		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
 		OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);

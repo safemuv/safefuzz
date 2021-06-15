@@ -118,12 +118,14 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		return (vehicle == "") || participantsLookup.containsKey(vehicle);
 	}
 
-	@Override
 	public FuzzingSelectionRecord dup() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: ensure these are copied when duplicating!
+		FuzzingKeySelectionRecord k = new FuzzingKeySelectionRecord(key, reflectionKey,  component, regex,
+				groupNum, op, participants, startTime, endTime);
+		k.setParams(params);
+		return k;
 	}
-	
+
 	private String operationName() {
 		return op.getClass().getSimpleName();
 	}

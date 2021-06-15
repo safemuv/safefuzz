@@ -13,7 +13,7 @@ public abstract class ExptParams {
 	public abstract boolean completed();
 	public abstract void printState();
 	public abstract void advance();
-	public abstract void advance(Map<Metric, Object> res);
+	public abstract void advance(Map<Metric, Double> res);
 	
 	public HashMap<FuzzingSelectionsSolution,Double> returnResultsInfo() {
 		return solutionLog;

@@ -1,5 +1,7 @@
 package fuzzingengine.exptgenerator;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,13 +39,17 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		super(mission);
 	}
 	
-	public void generateExperimentBasedUpon(String newFile, Optional<String> best_o, Map<Metric, Object> res) {
+	public List<FuzzingSelectionRecord> generateExperimentBasedUpon(String newFile, Optional<String> best_o, Map<Metric, Double> res) {
 		if (best_o.isPresent()) {
 			String best = best_o.get();
 			// TODO: set up loadCSV
-			List<FuzzingSelectionRecord> csvExpt = loadCSV(best);
+			//List<FuzzingSelectionRecord> csvExpt = loadCSV(best);
+			List<FuzzingSelectionRecord> csvExpt = new ArrayList<FuzzingSelectionRecord>();
 			// Modify the timings or parameters of one of the values
-			FuzzingSelectionRecord m = selectRandomElementFrom(csvExpt);
+			FuzzingSelectionRecord m;
+			try {
+				m = selectRandomElementFrom(csvExpt);
+			
 			// TODO: replace with random selection
 			ChangeOp operation = ChangeOp.SHIFT_TIME;
 			
@@ -55,7 +61,17 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 				
 			}
 			
-			outputAsCSV(best, csvExpt);
+			outputAsCSV(newFile, csvExpt);
+			
+			} catch (ListHasNoElement e) {
+				System.out.println("generateExperimentBasedUpon - empty original experiment");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return csvExpt;
+		} else {
+			return super.generateExperiment(Optional.of(newFile));
 		}
 	}
 

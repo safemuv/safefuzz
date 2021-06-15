@@ -6,7 +6,7 @@ import java.util.Scanner;
 // protected region customHeaders end
 
 public class OutsideOfOuterRegionViolations extends OfflineMetric {
-	public Object computeFromLogs(String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		int outsideRegionViolations = 0;
@@ -36,7 +36,7 @@ public class OutsideOfOuterRegionViolations extends OfflineMetric {
 			e.printStackTrace();
 		}
 		
-		return outsideRegionViolations;	
+		return Double.valueOf(outsideRegionViolations);	
 		// protected region userCode end
 	}
 }

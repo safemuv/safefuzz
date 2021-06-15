@@ -41,7 +41,7 @@ public class RunOnSetOfSolutions extends ExptParams {
 		}
 	}
 	
-	public void advance(Map<Metric, Object> res) {
+	public void advance(Map<Metric, Double> res) {
 		activeElt++;	
 	}
 }

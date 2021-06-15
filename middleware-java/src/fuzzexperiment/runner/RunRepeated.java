@@ -30,7 +30,7 @@ public class RunRepeated extends ExptParams {
 		return Optional.of("fuzz-config.csv");
 	}
 
-	public void advance(Map<Metric, Object> res) {
+	public void advance(Map<Metric, Double> res) {
 		count++;
 		
 	}

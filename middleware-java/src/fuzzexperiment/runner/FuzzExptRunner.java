@@ -81,7 +81,7 @@ public class FuzzExptRunner {
 		// In the loop...
 		
 		while (!eparams.completed()) {
-			Map<Metric, Object> metricResults;
+			Map<Metric, Double> metricResults;
 			
 			eparams.printState();
 			// Get the CSV file consisting of a fuzzing experiment... internally either generate it 

@@ -6,14 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import atlasdsl.Mission;
 
 public class MetricHandler {
-	private List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
-	private FileWriter resFile;
-	private String resFileName;
+	protected List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
+	protected FileWriter resFile;
+	protected String resFileName;
 
 	public void setupFileIfNotDone() throws IOException {
 		if (resFile == null) {
@@ -44,7 +45,7 @@ public class MetricHandler {
 		}
 	}
 
-	public void printMetricsToOutputFile(String filename, Map<Metric, Object> metricRes) throws IOException {
+	public void printMetricsToOutputFile(String filename, Map<Metric, Double> metricRes) throws IOException {
 		System.out.println("Writing results to result file: " + resFileName);
 		resFile.write(filename + ",");
 		for (OfflineMetric m : metrics) {
@@ -65,10 +66,10 @@ public class MetricHandler {
 		resFile.close();
 	}
 
-	public Map<Metric, Object> computeAllOffline(String logDir) throws MetricComputeFailure {
-		Map<Metric, Object> results = new HashMap<Metric, Object>();
+	public Map<Metric, Double> computeAllOffline(String logDir) throws MetricComputeFailure {
+		Map<Metric, Double> results = new HashMap<Metric, Double>();
 		for (OfflineMetric m : metrics) {
-			Object res = m.computeFromLogs(logDir);
+			Double res = m.computeFromLogs(logDir);
 			results.put(m, res);
 		}
 		return results;
@@ -76,5 +77,15 @@ public class MetricHandler {
 	
 	public List<OfflineMetric> getMetrics() {
 		return metrics;
+	}
+	
+	public Optional<Integer> getMetricNumberInList(Metric m) {
+		Optional<Integer> res = Optional.empty();
+		for (int i = 0; i < metrics.size(); i++) {
+			if (metrics.get(i) == m) {
+				res = Optional.of(i);
+			}
+		}
+		return res;
 	}
 }
