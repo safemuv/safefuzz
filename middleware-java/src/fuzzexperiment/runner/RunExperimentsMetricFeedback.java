@@ -1,5 +1,6 @@
 package fuzzexperiment.runner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -13,28 +14,30 @@ import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 
 public class RunExperimentsMetricFeedback extends ExptParams {
-	
+
 	private String fuzzCSVBaseName;
 	private String resFileName;
 	int count = 0;
 	int countLimit;
 	private Mission mission;
+	List<Metric> metrics;
 	
 	int populationLimit = 10;
 
-	private	FuzzingExperimentModifier g;
-	
+	private FuzzingExperimentModifier g;
+
 	public FuzzingPopulation pop = new FuzzingPopulation(populationLimit);
 	private List<FuzzingSelectionRecord> currentFuzzingSels;
 
 	private String getCurrentFilename() {
 		return fuzzCSVBaseName + "-" + count + ".csv";
 	}
-	
+
 	private void newGeneratedFile() {
+		count++;
 		g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
-	
+
 	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit) {
 		this.resFileName = resFileName;
 		this.mission = mission;
@@ -42,6 +45,9 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
 		g = new FuzzingExperimentModifier(mission);
 		newGeneratedFile();
+		
+		metrics = new ArrayList<Metric>(mission.getAllMetrics());
+		
 	}
 
 	public boolean completed() {
@@ -64,12 +70,20 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	public void advance(Map<Metric, Double> res) {
 		pop.pushToPopulation(new FuzzingExptResult(currentFuzzingSels, getCurrentFilename(), res));
 		count++;
-		Optional<FuzzingExptResult> startingPoint_o = pop.pickPopulationElementToExplore();
-		if (startingPoint_o.isPresent()) {
-			String startingFilename = startingPoint_o.get().getFilename();
-			currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), Optional.of(startingFilename), res);
-		} else {
-			currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
+
+		if (pop.currentSize() > populationLimit) {
+			Optional<FuzzingExptResult> startingPoint_o = pop.pickPopulationElementToExplore();
+			if (startingPoint_o.isPresent()) {
+				count++;
+				FuzzingExptResult startingPoint = startingPoint_o.get();
+				List<FuzzingSelectionRecord> sels = startingPoint.getFuzzingSpec();
+				System.out.println("startingPoint = " + startingPoint);
+				String startingFilename = startingPoint.getFilename();
+				System.out.println("startingFilename = " + startingFilename + "\nSelected fuzzing:\n" + sels);
+				currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), sels, res);
+			} else {
+				currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
+			}
 		}
 	}
 }

@@ -6,7 +6,7 @@ public class OutsideOfInnerRegionViolations extends OfflineMetric {
 	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
-		return null;
+		return 0.0;
 		// protected region userCode end
 	}
 }

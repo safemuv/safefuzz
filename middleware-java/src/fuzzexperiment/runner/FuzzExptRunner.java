@@ -65,7 +65,7 @@ public class FuzzExptRunner {
 		setup();
 	}
 	
-	public void usefakeRun() {
+	public void useFakeRun() {
 		actuallyRun = false;
 	}
 	

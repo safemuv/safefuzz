@@ -25,11 +25,11 @@ import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class FuzzingExperimentGenerator {
-	
+
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
-	
-	Random rng;
+
+	Random rng = new Random();
 	private Mission mission;
 	private FuzzingEngine fuzzEngine;
 
@@ -51,7 +51,6 @@ public class FuzzingExperimentGenerator {
 	public List<FuzzingSelectionRecord> generateExperiment(Optional<String> csvFileName_o) {
 		// Load the fuzzing specification from the engine
 		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
-		rng = new Random();
 
 		// These records will become part of the CSV file
 		List<FuzzingSelectionRecord> records = new ArrayList<FuzzingSelectionRecord>();
@@ -59,7 +58,7 @@ public class FuzzingExperimentGenerator {
 		// Iterate over the variable specs
 		for (Map.Entry<String, VariableSpecification> vs : fsm.getRecords().entrySet()) {
 			double probOfInclusion = getInclusionProb(vs.getValue());
-			
+
 			if (rng.nextDouble() < probOfInclusion) {
 				FuzzingKeySelectionRecord ksr;
 				try {
@@ -68,7 +67,8 @@ public class FuzzingExperimentGenerator {
 				} catch (OperationLoadFailed e) {
 					e.printStackTrace();
 				} catch (ListHasNoElement e) {
-					System.out.println("Skipping key selection record - " + vs + " - probably no operation types defined in model for this variable?");
+					System.out.println("Skipping key selection record - " + vs
+							+ " - probably no operation types defined in model for this variable?");
 					e.printStackTrace();
 				}
 			}
@@ -97,12 +97,16 @@ public class FuzzingExperimentGenerator {
 		}
 	}
 
-	protected <E> E selectRandomElementFrom(List<E> ops) throws ListHasNoElement {
-		int length = ops.size();
-		int i = rng.nextInt(length);
-		return ops.get(i);
+	protected <E> E selectRandomElementFrom(List<E> l) throws ListHasNoElement {
+		int length = l.size();
+		if (length == 0) {
+			throw new ListHasNoElement(); 
+		} else {
+			int i = rng.nextInt(length);
+			return l.get(i);
+		}
 	}
-	
+
 	private List<String> getRandomParticipantsFromMission() {
 		List<String> participants = new ArrayList<String>();
 		for (Robot r : mission.getAllRobots()) {
@@ -112,8 +116,9 @@ public class FuzzingExperimentGenerator {
 		}
 		return participants;
 	}
-	
-	public FuzzingOperation loadOperationFromParams(String operationClassName, String params) throws OperationLoadFailed {
+
+	public FuzzingOperation loadOperationFromParams(String operationClassName, String params)
+			throws OperationLoadFailed {
 		try {
 			Class<?> c = Class.forName("fuzzingengine.operations." + operationClassName);
 			System.out.println("className for operation " + operationClassName);
@@ -137,63 +142,69 @@ public class FuzzingExperimentGenerator {
 		}
 		throw new OperationLoadFailed();
 	}
-	
+
 	private String paramsAsString(List<Object> object) {
 		List<String> strList = object.stream().map(e -> e.toString()).collect(Collectors.toList());
 		// TODO: merge the specificOpParams with pipes
 		String paramStr = String.join("|", strList);
 		return paramStr;
 	}
-	
+
 	protected double getStartTime(Optional<TimeSpec> ts_o) {
 		double startLimit;
-		
+
 		if (ts_o.isPresent()) {
 			startLimit = ts_o.get().getEndTime();
 		} else {
 			startLimit = mission.getEndTime();
 		}
-			
+
 		return startLimit * rng.nextDouble();
 	}
-	
+
 	private double getEndTime(Optional<TimeSpec> ts_o, double startTime) {
 		double endLimit;
-		
+
 		if (ts_o.isPresent()) {
 			endLimit = ts_o.get().getEndTime();
 		} else {
 			endLimit = mission.getEndTime();
 		}
-		
+
 		double endTime = (endLimit - startTime) * rng.nextDouble() + startTime;
 		return endTime;
 	}
-	
-	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var) throws OperationLoadFailed, ListHasNoElement {
+
+	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
+			throws OperationLoadFailed, ListHasNoElement {
 		// Select an operation parameter set to use
 		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
-		OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);
-		OperationParameterSet opset = opsetType.getOpset();
-		String subSpec = opsetType.getSubSpec();
-		
-		List<Object> specificOpParams = opset.generateSpecific();
+		if (opsetTypes.size() == 0) {
+			throw new ListHasNoElement();
+		} else {
+			OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);
+			OperationParameterSet opset = opsetType.getOpset();
+			String subSpec = opsetType.getSubSpec();
 
-		// Set up the timing from the mission constraints - for now, the full time range
+			List<Object> specificOpParams = opset.generateSpecific();
 
-		double startTime = getStartTime(var.getTimeSpec());
-		double endTime = getEndTime(var.getTimeSpec(), startTime); 
+			// Set up the timing from the mission constraints - for now, the full time range
 
-		// Get a random list of participants from the mission
-		List<String> participants = getRandomParticipantsFromMission();
-		
-		// TODO: merge the specificOpParams with pipes
-		String paramStr = paramsAsString(specificOpParams);
-		FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
+			double startTime = getStartTime(var.getTimeSpec());
+			double endTime = getEndTime(var.getTimeSpec(), startTime);
 
-		FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(), var.getReflectionName_opt(),
-				var.getComponent(), var.getRegexp(), subSpec, op, participants, startTime, endTime);
-		ksr.setParams(specificOpParams);
-		return ksr;
+			// Get a random list of participants from the mission
+			List<String> participants = getRandomParticipantsFromMission();
+
+			// TODO: merge the specificOpParams with pipes
+			String paramStr = paramsAsString(specificOpParams);
+			FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
+
+			FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(),
+					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants,
+					startTime, endTime);
+			ksr.setParams(specificOpParams);
+			return ksr;
+		}
 	}
 }

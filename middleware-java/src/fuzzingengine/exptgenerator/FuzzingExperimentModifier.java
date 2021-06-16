@@ -22,60 +22,50 @@ import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
-	
+
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
-	
+
 	Random rng;
 	private Mission mission;
 	private FuzzingEngine fuzzEngine;
-	
+
 	public enum ChangeOp {
-		SHIFT_TIME,
-		CHANGE_PARAM,
+		SHIFT_TIME, CHANGE_PARAM,
 	}
 
 	public FuzzingExperimentModifier(Mission mission) {
 		super(mission);
 	}
-	
-	public List<FuzzingSelectionRecord> generateExperimentBasedUpon(String newFile, Optional<String> best_o, Map<Metric, Double> res) {
-		if (best_o.isPresent()) {
-			String best = best_o.get();
-			// TODO: set up loadCSV
-			//List<FuzzingSelectionRecord> csvExpt = loadCSV(best);
-			List<FuzzingSelectionRecord> csvExpt = new ArrayList<FuzzingSelectionRecord>();
-			// Modify the timings or parameters of one of the values
-			FuzzingSelectionRecord m;
-			try {
-				m = selectRandomElementFrom(csvExpt);
-			
+
+	public List<FuzzingSelectionRecord> generateExperimentBasedUpon(String newFile, List<FuzzingSelectionRecord> basis,
+			Map<Metric, Double> res) {
+		// Modify the timings or parameters of one of the values
+		FuzzingSelectionRecord m;
+		try {
+			m = selectRandomElementFrom(basis);
+
 			// TODO: replace with random selection
 			ChangeOp operation = ChangeOp.SHIFT_TIME;
-			
+
 			if (operation == ChangeOp.SHIFT_TIME) {
 				m = adjustTime(m);
 			}
-			
+
 			if (operation == ChangeOp.CHANGE_PARAM) {
-				
+
 			}
-			
-			outputAsCSV(newFile, csvExpt);
-			
-			} catch (ListHasNoElement e) {
-				System.out.println("generateExperimentBasedUpon - empty original experiment");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return csvExpt;
-		} else {
-			return super.generateExperiment(Optional.of(newFile));
+
+			outputAsCSV(newFile, basis);
+
+		} catch (ListHasNoElement e) {
+			System.out.println("generateExperimentBasedUpon - empty original experiment");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return basis;
 	}
-
-
 
 	private FuzzingSelectionRecord adjustTime(FuzzingSelectionRecord m) {
 		double startTime = getStartTime(Optional.empty());

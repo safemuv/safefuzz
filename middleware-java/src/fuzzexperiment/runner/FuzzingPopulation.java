@@ -41,4 +41,8 @@ public class FuzzingPopulation {
 			}
 		}
 	}
+
+	public int currentSize() {
+		return pop.size();
+	}
 }

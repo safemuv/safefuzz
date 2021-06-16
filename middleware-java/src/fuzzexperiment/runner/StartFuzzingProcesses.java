@@ -101,7 +101,7 @@ public class StartFuzzingProcesses {
 		double returnValue = 0;
 		
 		if (actuallyRun) {	
-			exptLog("Starting ROS/SAFEMUV launch scripts");
+			exptLog("Starting ROS/SAFEMUV launch scripts"); 
 			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			// TODO: check custom delays - Sleep until MOOS is ready
 			TimeUnit.MILLISECONDS.sleep(20000);
