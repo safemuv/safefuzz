@@ -31,7 +31,7 @@ public class FuzzingExperimentGenerator {
 
 	Random rng = new Random();
 	private Mission mission;
-	private FuzzingEngine fuzzEngine;
+	protected FuzzingEngine fuzzEngine;
 
 	public FuzzingExperimentGenerator(Mission mission) {
 		this.rng = new Random();
@@ -107,7 +107,7 @@ public class FuzzingExperimentGenerator {
 		}
 	}
 
-	private List<String> getRandomParticipantsFromMission() {
+	protected List<String> getRandomParticipantsFromMission() {
 		List<String> participants = new ArrayList<String>();
 		for (Robot r : mission.getAllRobots()) {
 			if (rng.nextDouble() < DEFAULT_PROB_OF_INCLUDING_ROBOT) {
@@ -143,7 +143,7 @@ public class FuzzingExperimentGenerator {
 		throw new OperationLoadFailed();
 	}
 
-	private String paramsAsString(List<Object> object) {
+	protected String paramsAsString(List<Object> object) {
 		List<String> strList = object.stream().map(e -> e.toString()).collect(Collectors.toList());
 		// TODO: merge the specificOpParams with pipes
 		String paramStr = String.join("|", strList);

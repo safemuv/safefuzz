@@ -151,4 +151,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public Object getGroupNum() {
 		return groupNum;
 	}
+
+	public void setParticipants(List<String> newParticipants) {
+		this.participants = newParticipants;
+	}
 }

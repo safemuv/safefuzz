@@ -88,7 +88,6 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		int bestIsTwo = 0;
 		int result;
 		for (Map.Entry<Metric, Double> e : solution1.entrySet()) {
-			System.out.println(e);
 			double value1 = e.getValue();
 			Metric k = e.getKey();
 			if (!solution2.containsKey(k)) {

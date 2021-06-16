@@ -36,7 +36,7 @@ public class FuzzingPopulation {
 			List<FuzzingExptResult> sortedPop = pop.stream().sorted().collect(Collectors.toList());
 			FuzzingExptResult worst = sortedPop.get(0);
 			// TODO: ensure this sort order is correct
-			if (sortedPop != null) {
+			if (worst != null) {
 				pop.remove(worst);
 			}
 		}

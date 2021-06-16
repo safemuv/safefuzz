@@ -33,9 +33,9 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		return fuzzCSVBaseName + "-" + count + ".csv";
 	}
 
-	private void newGeneratedFile() {
+	private void newRandomFile() {
 		count++;
-		g.generateExperiment(Optional.of(getCurrentFilename()));
+		currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 
 	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit) {
@@ -44,7 +44,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
 		g = new FuzzingExperimentModifier(mission);
-		newGeneratedFile();
+		newRandomFile();
 		
 		metrics = new ArrayList<Metric>(mission.getAllMetrics());
 		
@@ -55,12 +55,12 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	}
 
 	public void printState() {
-		System.out.println("Evaluating entry " + getCurrentFilename());
+		System.out.println("RunExperimentsMetricFeedback: Evaluating entry " + getCurrentFilename());
 	}
 
 	public void advance() {
 		count++;
-		newGeneratedFile();
+		newRandomFile();
 	}
 
 	public Optional<String> getNextFuzzingCSVFileName() {
@@ -70,19 +70,21 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	public void advance(Map<Metric, Double> res) {
 		pop.pushToPopulation(new FuzzingExptResult(currentFuzzingSels, getCurrentFilename(), res));
 		count++;
+		System.out.print("Population size = " + pop.currentSize() + "(limit " + populationLimit + ")");
 
-		if (pop.currentSize() > populationLimit) {
+		if (pop.currentSize() < populationLimit) {
+			System.out.println("- Generating new fuzzing experiment");
+			newRandomFile();			
+		} else {
 			Optional<FuzzingExptResult> startingPoint_o = pop.pickPopulationElementToExplore();
 			if (startingPoint_o.isPresent()) {
-				count++;
 				FuzzingExptResult startingPoint = startingPoint_o.get();
+				System.out.println("- Generating mutated experiment based upon " + startingPoint);
 				List<FuzzingSelectionRecord> sels = startingPoint.getFuzzingSpec();
 				System.out.println("startingPoint = " + startingPoint);
 				String startingFilename = startingPoint.getFilename();
 				System.out.println("startingFilename = " + startingFilename + "\nSelected fuzzing:\n" + sels);
 				currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), sels, res);
-			} else {
-				currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 			}
 		}
 	}
