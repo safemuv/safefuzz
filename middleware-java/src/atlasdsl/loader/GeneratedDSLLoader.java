@@ -128,6 +128,38 @@ public class GeneratedDSLLoader implements DSLLoader {
 		AvoidPlaneInner.addMetric(met2);
 		
 		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
+ 
+ 
+		
+		Robot [] grp4 = {ruav_1,ruav_2}; 
+		GoalParticipants gpAvoidOthers = new StaticParticipants(grp4, mission);
+		
+		
+		
+			GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		
+		
+		GoalAction ga4 = new AvoidOthers(5.0);
+		
+		
+		
+		
+		   
+		GoalRegion grAvoidOthers = new StaticGoalRegion(
+			new Region(new Point(-10.0, -10.0, 0.0),
+			           new Point(10.0, 10.0, 10.0)));
+		
+		
+		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
+		
+		
+		
+		
+		
+		Metric met3 = new AvoidanceViolations();
+		AvoidOthers.addMetric(met3);
+		
+		mission.addGoal("AvoidOthers", AvoidOthers);
 	
 
 	

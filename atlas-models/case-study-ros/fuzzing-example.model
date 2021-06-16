@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
   <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
-    <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="ual" componentRelativePath="/ual">
+    <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="trajectory_tracking_controller_fuzzy" componentRelativePath="/trajectory_tracking_controller_fuzzy">
       <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/set_velocity_prime" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
@@ -20,6 +20,16 @@
         <probInfo xmi:id="_KNA3QMinEeuXkJUdIAjG9g"/>
       </vars>
     </components>
+    <components xmi:id="_Ix39YM7mEeu_Qtc8Axo4IQ" name="trajectory_planning">
+      <vars xmi:id="_JEwnsM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_trajectory_path_prime" reflectionName="/desired_trajectory_path" dir="OUTBOUND">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_sB2csM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
+        <probInfo xmi:id="_xKcHIM7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.25"/>
+      </vars>
+      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/trajectory_relative_prime" reflectionName="/trajectory_relative" dir="OUTBOUND">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
+        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.25"/>
+      </vars>
+    </components>
     <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv_shared/launcher/shared_launcher.launch"/>
     <launchers xmi:id="_KtPWcMhaEeuMiYEMVbUfiw" path="safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch"/>
   </sims>
@@ -29,6 +39,15 @@
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_vJI4EL8gEeuxyMr3nK2BCQ" name="X" upper="1.0"/>
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_rHC7oL8gEeuxyMr3nK2BCQ" name="Y" upper="1.0"/>
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_s8eMML8gEeuxyMr3nK2BCQ" name="Z" upper="1.0"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_PJam4M7pEeu_Qtc8Axo4IQ" operationClassName="PathPointChange">
+    <paramSets xmi:id="_SRcHwM7pEeu_Qtc8Axo4IQ" name="PathPointChange-multiple-elements">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_SRcHwc7pEeu_Qtc8Axo4IQ" name="Nature" value="RANDOMOFFSET_MULTIPLE"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHws7pEeu_Qtc8Axo4IQ" name="X" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHw87pEeu_Qtc8Axo4IQ" name="Y" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHxM7pEeu_Qtc8Axo4IQ" name="Z" upper="1.0"/>
+      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_SRcHxc7pEeu_Qtc8Axo4IQ" name="ELEMENTS_TO_MUTATE" lower="1" upper="5"/>
     </paramSets>
   </operations>
 </fuzzspec:FuzzingSpecification>
