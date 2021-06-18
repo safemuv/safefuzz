@@ -315,6 +315,7 @@ public class FuzzingEngine<E> {
 					}
 					// Create the new fuzzed topic update by replacing the JSON
 					ROSTopicUpdate modifiedRTU = new ROSTopicUpdate(rtu, newValue);
+					ATLASLog.logFuzzing("modified ROSTopicUpdate original=" + js + "\nnewValue = " + newValue);
 					return Optional.of((E)modifiedRTU);
 					
 				} else {

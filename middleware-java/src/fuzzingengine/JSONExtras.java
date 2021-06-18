@@ -31,6 +31,11 @@ public class JSONExtras {
 		if (source.getValueType() == ValueType.NUMBER) {
 			builder.add(key, Double.valueOf(fuzzed));
 		}
+		
+		if (source.getValueType() == ValueType.ARRAY) {
+			JsonReader jsonReader = Json.createReader(new StringReader(fuzzed));
+			builder.add(key, jsonReader.readArray());
+		}
 	}
 	
 	public static JsonObject fuzzReplacement(JsonObject js, String [] specFields, ValueFuzzingOperation op) {
