@@ -281,7 +281,7 @@ class Cover extends GoalAction {
 }
 
 class Avoid extends GoalAction {
-	
+	attr double clearance;
 }
 
 class TrackDistances extends GoalAction {

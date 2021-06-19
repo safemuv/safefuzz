@@ -16,16 +16,16 @@ public class GeneratedDSLLoader implements DSLLoader {
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
-	Computer c1 = new Computer("shoreside");
-	mission.addComputer(c1);
 	
 		Robot ruav_1 = new Robot("uav_1");
 		ruav_1.setPointComponentProperty("startLocation", new Point(8.0,-8.0,0.0));
+		ruav_1.setDoubleComponentProperty("maxSpeed", 1.0);
 		
 			
 		mission.addRobot(ruav_1);
 		Robot ruav_2 = new Robot("uav_2");
 		ruav_2.setPointComponentProperty("startLocation", new Point(8.0,8.0,0.0));
+		ruav_2.setDoubleComponentProperty("maxSpeed", 1.0);
 		
 			
 		mission.addRobot(ruav_2);
@@ -37,7 +37,7 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		
 		Robot [] grp1 = {ruav_1,ruav_2}; 
-		GoalParticipants gptrackDistances = new StaticParticipants(grp1, mission);
+		GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
 		
 		
 		
@@ -47,21 +47,27 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalAction ga1 = new TrackDistances();
 		
 		
 		
 		   
-		GoalRegion grtrackDistances = new StaticGoalRegion(
+		GoalRegion grtrackDistancesAndVelocities = new StaticGoalRegion(
 			new Region(new Point(-10.0, -10.0, 0.0),
 			           new Point(10.0, 10.0, 10.0)));
 		
 		
-		Goal trackDistances = new Goal("trackDistances", mission, gt1, gptrackDistances, Optional.of(grtrackDistances), ga1);
+		Goal trackDistancesAndVelocities = new Goal("trackDistancesAndVelocities", mission, gt1, gptrackDistancesAndVelocities, Optional.of(grtrackDistancesAndVelocities), ga1);
 		
 		
 		
-		mission.addGoal("trackDistances", trackDistances);
+		
+		
+		Metric met1 = new SpeedViolationsCount();
+		trackDistancesAndVelocities.addMetric(met1);
+		
+		mission.addGoal("trackDistancesAndVelocities", trackDistancesAndVelocities);
  
  
 		
@@ -71,6 +77,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 			GoalTemporalConstraints gt2 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		
 		
 		
 		
@@ -90,8 +97,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met1 = new OutsideOfOuterRegionViolations();
-		StayInOuterRegion.addMetric(met1);
+		Metric met2 = new OutsideOfOuterRegionViolations();
+		StayInOuterRegion.addMetric(met2);
 		
 		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
  
@@ -106,26 +113,23 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		
-		GoalAction ga3 = new StayInRegion(false);
-		
-		
-		   
-		GoalRegion grAvoidPlaneInner = new StaticGoalRegion(
-			new Region(new Point(-10.0, -10.0, 0.0),
-			           new Point(10.0, 10.0, 10.0)));
+		GoalAction ga3 = new Avoid(1.5);
 		
 		
-		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.of(grAvoidPlaneInner), ga3);
 		
-			GoalVariable gvar1 = new GoalVariable("/lidar/distance_to_plane", "standard_msgs/Float32", true);
+		
+		
+		
+		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
+		
+			GoalVariable gvar1 = new GoalVariable("/pymesh_distance_to_plane", "standard_msgs/Float32", true);
 			AvoidPlaneInner.addVariable(gvar1);
 		
 		
 		
 		
-		Metric met2 = new OutsideOfInnerRegionViolations();
-		AvoidPlaneInner.addMetric(met2);
+		Metric met3 = new OutsideOfInnerRegionViolations();
+		AvoidPlaneInner.addMetric(met3);
 		
 		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
  
@@ -139,7 +143,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 			GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		
 		
-		GoalAction ga4 = new AvoidOthers(5.0);
+		GoalAction ga4 = new AvoidOthers(2.0);
+		
 		
 		
 		
@@ -156,8 +161,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met3 = new AvoidanceViolations();
-		AvoidOthers.addMetric(met3);
+		Metric met4 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met4);
 		
 		mission.addGoal("AvoidOthers", AvoidOthers);
 	

@@ -93,8 +93,9 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 	}
 
 	private void adjustTime(FuzzingSelectionRecord m) {
+		// TODO: implement adjustTime to use the constraints of the fuzzing spec model
 		double startTime = getStartTime(Optional.empty());
-		double endTime = getStartTime(Optional.empty());
+		double endTime = getEndTime(startTime, Optional.empty());
 		m.setStartTime(startTime);
 		m.setEndTime(endTime);
 	}

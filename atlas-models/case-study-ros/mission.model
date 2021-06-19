@@ -4,14 +4,15 @@
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
       <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="8.0" y="-8.0"/>
     </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_YB1L0NAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.0"/>
   </robots>
   <robots xmi:id="_I_DTsJzTEeun4sDYCEayRA" name="uav_2" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_I_DTsZzTEeun4sDYCEayRA" name="startLocation">
       <value xmi:id="_I_DTspzTEeun4sDYCEayRA" x="8.0" y="8.0"/>
     </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_dSiQcNAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.0"/>
   </robots>
-  <computers xmi:id="_vmC9UJyAEeuni_WJaXBVWw" name="shoreside"/>
-  <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistances" priority="100">
+  <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistancesAndVelocities" priority="100">
     <requirements xmi:id="_aQhYULyMEeu_l8YcOLqCyw" latestFinishTime="2400.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_NQmb4LylEeu_l8YcOLqCyw" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:TrackDistances" xmi:id="_EXPZMLseEeute_EAlr7M3A"/>
@@ -21,6 +22,7 @@
         <corner2 xmi:id="_WbW14LySEeu_l8YcOLqCyw" x="10.0" y="10.0" z="10.0"/>
       </staticRegion>
     </region>
+    <metrics xmi:id="_zzgUkNErEeuiUfgSqZ17Hw" name="SpeedViolationsCount"/>
   </goals>
   <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInOuterRegion" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_8ygUcMLIEeuCkPhz2hOLkg" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
@@ -35,25 +37,19 @@
   </goals>
   <goals xmi:id="_vpVZEMj6EeuWdKT93dm6Ig" name="AvoidPlaneInner" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_vpVZEcj6EeuWdKT93dm6Ig" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
-    <action xsi:type="atlas:StayInRegion" xmi:id="_vpVZEsj6EeuWdKT93dm6Ig"/>
-    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_vpVZE8j6EeuWdKT93dm6Ig">
-      <staticRegion xmi:id="_vpVZFMj6EeuWdKT93dm6Ig">
-        <corner1 xmi:id="_vpVZFcj6EeuWdKT93dm6Ig" x="-10.0" y="-10.0"/>
-        <corner2 xmi:id="_vpVZFsj6EeuWdKT93dm6Ig" x="10.0" y="10.0" z="10.0"/>
-      </staticRegion>
-    </region>
-    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/lidar/distance_to_plane" variableType="standard_msgs/Float32" vehicleSpecific="true"/>
+    <action xsi:type="atlas:Avoid" xmi:id="_o6Zy0NAUEeuTY9Uq5rlyZA" clearance="1.5"/>
+    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/pymesh_distance_to_plane" variableType="standard_msgs/Float32" vehicleSpecific="true"/>
     <metrics xmi:id="_vpVZF8j6EeuWdKT93dm6Ig" name="OutsideOfInnerRegionViolations"/>
   </goals>
   <goals xmi:id="_7J7d0M7hEeu_Qtc8Axo4IQ" name="AvoidOthers" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_7J7d0c7hEeu_Qtc8Axo4IQ" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
-    <action xsi:type="atlas:AvoidOthers" xmi:id="_9HxDgM7hEeu_Qtc8Axo4IQ" clearance="5.0"/>
+    <action xsi:type="atlas:AvoidOthers" xmi:id="_9HxDgM7hEeu_Qtc8Axo4IQ" clearance="2.0"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_7J7d087hEeu_Qtc8Axo4IQ">
       <staticRegion xmi:id="_7J7d1M7hEeu_Qtc8Axo4IQ">
         <corner1 xmi:id="_7J7d1c7hEeu_Qtc8Axo4IQ" x="-10.0" y="-10.0"/>
         <corner2 xmi:id="_7J7d1s7hEeu_Qtc8Axo4IQ" x="10.0" y="10.0" z="10.0"/>
       </staticRegion>
     </region>
-    <metrics xmi:id="_7J7d2M7hEeu_Qtc8Axo4IQ" name="AvoidanceViolations"/>
+    <metrics xmi:id="_7J7d2M7hEeu_Qtc8Axo4IQ" name="AvoidanceViolationsCount"/>
   </goals>
 </atlas:Mission>

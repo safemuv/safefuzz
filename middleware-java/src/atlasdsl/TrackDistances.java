@@ -2,6 +2,7 @@ package atlasdsl;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,36 @@ public class TrackDistances extends GoalAction {
 	private double completionTime;
 	private GeometryFactory jtsGeoFactory = new GeometryFactory();
 
+	public class SpeedViolationRecord {
+		private String robotName;
+		private double speed;
+		private double speedLimit;
+		private double time;
+		
+		public SpeedViolationRecord(String robotName, double speed, double speedLimit, double time) {
+			this.robotName = robotName;
+			this.speed = speed;
+			this.speedLimit = speedLimit;
+			this.time = time;
+		}
+		
+		public String getRobotName() {
+			return robotName;
+		}
+		
+		public double getTime() {
+			return time;
+		}
+		
+		public double getSpeed() {
+			return speed;
+		}
+		
+		public double getSpeedLimit() {
+			return speedLimit;
+		}
+	}
+	
 	public class CollisionRecord {
 		private long lastCollisionTime;
 		private long timeStepMillis = 100;
@@ -50,6 +81,8 @@ public class TrackDistances extends GoalAction {
 	
 	protected Map<String,Double> robotEnergy = new HashMap<String,Double>();
 	protected Map<Robot,Double> finalDists = new HashMap<Robot,Double>();
+	
+	protected List<SpeedViolationRecord> speedViolations = new ArrayList<SpeedViolationRecord>();
 	
 	protected Map<String, Geometry> obstacleGeometry = new HashMap<String, Geometry>();
 	protected Map<String, HashMap<String,CollisionRecord>> collisions  = new HashMap<String,HashMap<String,CollisionRecord>>();
@@ -180,6 +213,16 @@ public class TrackDistances extends GoalAction {
 		}
 		
 		try {
+			FileWriter output = new FileWriter("logs/speedViolations.log");
+			for (SpeedViolationRecord svr : speedViolations) {
+				output.write(svr.getRobotName() + "," + svr.getSpeed() + "," + svr.getSpeedLimit() + "," + svr.getTime() + "\n");
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			FileWriter output = new FileWriter("logs/obstacleCollisions.log");
 			for (Map.Entry<String, HashMap<String,CollisionRecord>> eo_d : collisions.entrySet()) {
 				String robotName = eo_d.getKey();
@@ -258,6 +301,22 @@ public class TrackDistances extends GoalAction {
 			}
 		}
 	}
+	
+	protected void checkSpeed(String robotName, double currentSpeed) {
+		Robot r = mission.getRobot(robotName);
+		try {
+			double maxSpeed = r.getDoubleComponentProperty("maxSpeed");
+			double time = core.getTime();
+			if (currentSpeed > maxSpeed) {
+				SpeedViolationRecord svr = new SpeedViolationRecord(robotName, currentSpeed, maxSpeed, time);
+				speedViolations.add(svr);
+			}
+			
+		} catch (MissingProperty e) {
+			System.out.println("Property maxSpeed missign for robot " + robotName + " in TrackDistances.java");
+		}
+
+	}
 
 	protected void setup(ATLASCore core, Mission mission, Goal g) throws GoalActionSetupFailure {
 		this.core = core;
@@ -285,6 +344,8 @@ public class TrackDistances extends GoalAction {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
+			checkSpeed(rname, speed);
 		});
 	}
 }
