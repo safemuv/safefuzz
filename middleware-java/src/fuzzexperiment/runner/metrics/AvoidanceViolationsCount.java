@@ -1,10 +1,9 @@
 // protected region customHeaders on begin
 package fuzzexperiment.runner.metrics;
-// protected region customHeaders end
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+// protected region customHeaders end
 
 public class AvoidanceViolationsCount extends OfflineMetric {
 	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
@@ -21,7 +20,7 @@ public class AvoidanceViolationsCount extends OfflineMetric {
 				String[] fields = line.split(",");
 				String goalClass = fields[0];
 
-				System.out.println("goalClass = " + goalClass);
+				//System.out.println("goalClass = " + goalClass);
 				if (goalClass.equals("atlasdsl.AvoidOthers")) {
 					avoidanceViolations++;
 				}

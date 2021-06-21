@@ -20,7 +20,7 @@ public class OutsideOfOuterRegionViolations extends OfflineMetric {
 				String[] fields = line.split(",");
 				String goalClass = fields[0];
 
-				System.out.println("goalClass = " + goalClass);
+				//System.out.println("goalClass = " + goalClass);
 				if (goalClass.equals("atlasdsl.StayInRegion")) {
 					int count = Integer.parseInt(fields[1]);
 					outsideRegionViolations = Math.max(count, outsideRegionViolations);

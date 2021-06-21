@@ -162,7 +162,7 @@ public class FuzzingExperimentGenerator {
 		return startLimit * rng.nextDouble();
 	}
 
-	private double getEndTime(Optional<TimeSpec> ts_o, double startTime) {
+	protected double getEndTime(Optional<TimeSpec> ts_o, double startTime) {
 		double endLimit;
 
 		if (ts_o.isPresent()) {

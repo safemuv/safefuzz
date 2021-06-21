@@ -1,10 +1,9 @@
 // protected region customHeaders on begin
 package fuzzexperiment.runner.metrics;
-// protected region customHeaders end
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+// protected region customHeaders end
 
 public class SpeedViolationsCount extends OfflineMetric {
 	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
@@ -22,11 +21,8 @@ public class SpeedViolationsCount extends OfflineMetric {
 
 			reader.close();
 			System.out.println("speedViolationsCount = " + speedViolationsCount);
-						
-			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("SpeedViolationsCount: filename " + filename + " not found: this is normal if there are no speed violations");
 		}
 		
 		return Double.valueOf(speedViolationsCount);	

@@ -4,13 +4,13 @@
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
       <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="8.0" y="-8.0"/>
     </componentProperties>
-    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_YB1L0NAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.0"/>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_YB1L0NAXEeuTY9Uq5rlyZA" name="maxSpeed" value="0.01"/>
   </robots>
   <robots xmi:id="_I_DTsJzTEeun4sDYCEayRA" name="uav_2" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_I_DTsZzTEeun4sDYCEayRA" name="startLocation">
       <value xmi:id="_I_DTspzTEeun4sDYCEayRA" x="8.0" y="8.0"/>
     </componentProperties>
-    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_dSiQcNAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.0"/>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_dSiQcNAXEeuTY9Uq5rlyZA" name="maxSpeed" value="0.01"/>
   </robots>
   <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistancesAndVelocities" priority="100">
     <requirements xmi:id="_aQhYULyMEeu_l8YcOLqCyw" latestFinishTime="2400.0"/>

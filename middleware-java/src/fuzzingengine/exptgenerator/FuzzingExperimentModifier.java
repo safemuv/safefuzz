@@ -2,6 +2,7 @@ package fuzzingengine.exptgenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.TimeSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
 
@@ -93,11 +95,23 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 	}
 
 	private void adjustTime(FuzzingSelectionRecord m) {
-		// TODO: implement adjustTime to use the constraints of the fuzzing spec model
-		double startTime = getStartTime(Optional.empty());
-		double endTime = getEndTime(startTime, Optional.empty());
-		m.setStartTime(startTime);
-		m.setEndTime(endTime);
+		double startTime;
+		double endTime;
+		
+		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
+		if (m instanceof FuzzingKeySelectionRecord) {
+			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord)m;
+			VariableSpecification vs = fsm.getRecords().get(km.getKey());
+			Optional<TimeSpec> ts = vs.getTimeSpec();
+		
+			startTime = getStartTime(ts);
+			endTime = getEndTime(ts, startTime);
+			m.setStartTime(startTime);
+			m.setEndTime(endTime);
+		} else {
+			startTime = getStartTime(Optional.empty());
+			endTime = getEndTime(Optional.empty(), startTime);
+		}
 	}
 	
 	private void newParameters(FuzzingSelectionRecord m) throws ListHasNoElement, OperationLoadFailed {

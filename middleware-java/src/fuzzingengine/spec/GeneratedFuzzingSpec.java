@@ -86,8 +86,6 @@ public class GeneratedFuzzingSpec {
 	   		ops2.addParameter(opp9);
 	
 	
-				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv_shared/launcher/shared_launcher.launch");
-				simMapping.addLaunchFilePath("/home/jharbin/catkin_ws/src/safemuv/safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch");
 	
 	
 		
