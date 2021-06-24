@@ -2,11 +2,14 @@
 package fuzzexperiment.runner.metrics;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 // protected region customHeaders end
 
+import fuzzingengine.FuzzingKeySelectionRecord;
+
 public class AvoidanceViolationsCount extends OfflineMetric {
-	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		int avoidanceViolations = 0;

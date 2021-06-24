@@ -2,7 +2,6 @@ package fuzzingengine.spec;
 
 import java.util.Optional;
 import atlasdsl.Mission;
-
 import fuzzingengine.*;
 import fuzzingengine.operationparamsinfo.*;
 
@@ -12,20 +11,10 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
-	
-	
 	try {
-	
-	
-	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-1-each-axis", "JSONPointChange");
- 
- 
-	   			OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET");
-	   			
-	   		
-	   		
-	   		
-	   		ops1.addParameter(opp1);
+		OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-1-each-axis", "JSONPointChange");
+ 		OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET");
+   		ops1.addParameter(opp1);
 	   			
  
 	   			OperationParameter opp2 = new DoubleRangeOperationParameter("X", 0.0, 1.0);
@@ -128,13 +117,13 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("trajectory_planning", "/desired_trajectory_path_prime", "/desired_trajectory_path", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/"), Optional.of("nav_msgs/Path"),
-		true, Optional.empty(), Optional.of(0.25));
+		true, Optional.empty(), Optional.of(0.0));
 	
 	
 				
 		simMapping.addRecord("trajectory_planning", "/trajectory_relative_prime", "/trajectory_relative", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/"), Optional.of("nav_msgs/Path"),
-		true, Optional.empty(), Optional.of(0.25));
+		true, Optional.empty(), Optional.of(0.0));
 	
 	
 	

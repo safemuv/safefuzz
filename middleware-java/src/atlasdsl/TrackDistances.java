@@ -375,7 +375,7 @@ public class TrackDistances extends GoalAction {
 
 	private void recordPositionTrace(String rname, Point p) throws IOException {
 		double time = core.getTime();
-		positionTrace.write(rname + "," + time + "," + p.getX() + "," + p.getY() + p.getZ() + "\n");
+		positionTrace.write(rname + "," + time + "," + p.getX() + "," + p.getY() + "," + p.getZ() + "\n");
 
 	}
 }

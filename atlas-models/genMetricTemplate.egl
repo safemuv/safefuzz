@@ -1,10 +1,11 @@
 [% out.setContentType("Java"); %]
 // protected region customHeaders on begin
 package fuzzexperiment.runner.metrics;
+import fuzzingengine.FuzzingKeySelectionRecord;
 // protected region customHeaders end
 
 public class [%= metricClassName %] extends OfflineMetric {
-	public Double computeFromLogs(String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		return null;

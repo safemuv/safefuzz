@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import atlasdsl.Mission;
+import fuzzingengine.FuzzingKeySelectionRecord;
 
 public class MetricHandler {
 	protected List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
@@ -66,10 +67,10 @@ public class MetricHandler {
 		resFile.close();
 	}
 
-	public Map<Metric, Double> computeAllOffline(String logDir) throws MetricComputeFailure {
+	public Map<Metric, Double> computeAllOffline(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		Map<Metric, Double> results = new HashMap<Metric, Double>();
 		for (OfflineMetric m : metrics) {
-			Double res = m.computeFromLogs(logDir);
+			Double res = m.computeFromLogs(recs, logDir);
 			results.put(m, res);
 		}
 		return results;

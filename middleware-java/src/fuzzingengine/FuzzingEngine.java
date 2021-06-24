@@ -66,10 +66,15 @@ public class FuzzingEngine<E> {
 	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, Object groupNum, double startTime,
 			double endTime, FuzzingOperation op) throws MissingRobot {
 		VariableSpecification vr = fuzzingspec.getRecordForKey(fuzzingKey);
-		List<String> vehicles = getVehicles(vehicleNameList);
-		FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
-				vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, startTime, endTime);
-		confs.addKeyRecord(fr);
+		if (vr == null) {
+			System.out.println("!!!!!! addFuzzingKeyOperation - key " + fuzzingKey + " not found in fuzzing spec - ignoring !!!!!");
+		} else {
+			List<String> vehicles = getVehicles(vehicleNameList);
+		
+			FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
+					vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, startTime, endTime);
+			confs.addKeyRecord(fr);
+		} 
 	}
 
 	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList)

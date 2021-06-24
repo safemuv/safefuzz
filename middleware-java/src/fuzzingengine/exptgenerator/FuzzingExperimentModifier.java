@@ -2,7 +2,6 @@ package fuzzingengine.exptgenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +34,7 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 
 	public FuzzingExperimentModifier(Mission mission) {
 		super(mission);
+		rng = new Random();
 	}
 	
 	public ChangeOp selectRandomOperation() {
@@ -82,7 +82,7 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 				newParticipants(krec);
 			}
 
-			outputAsCSV(newFile, basis);
+			outputAsCSV(newFile, output);
 
 		} catch (ListHasNoElement e) {
 			System.out.println("generateExperimentBasedUpon - empty original experiment");
@@ -91,7 +91,7 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		} catch (OperationLoadFailed e) {
 			e.printStackTrace();
 		}
-		return basis;
+		return output;
 	}
 
 	private void adjustTime(FuzzingSelectionRecord m) {

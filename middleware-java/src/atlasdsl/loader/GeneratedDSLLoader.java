@@ -1,18 +1,15 @@
 package atlasdsl.loader;
 
 import atlasdsl.*;
-import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
-import java.util.List;
-import java.util.ArrayList;
 
 import fuzzexperiment.runner.metrics.*;
 
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 430.0;
+	final double MISSION_END_TIME = 200.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class FuzzingPopulation {
 	public Set<FuzzingExptResult> pop = new HashSet<FuzzingExptResult>();
 
-	private int topNumToSelect = 3;
+	private int topNumToSelect = 5;
 	private int sizeLimit;
 	Random rng = new Random();
 	
@@ -19,11 +19,23 @@ public class FuzzingPopulation {
 		this.sizeLimit = sizeLimit;
 	}
 	
+	private void printPop(List<FuzzingExptResult> res) {
+		for (FuzzingExptResult r : res) {
+			System.out.println(r.toString());
+		}
+	}
+	
 	public Optional<FuzzingExptResult> pickPopulationElementToExplore() {
 		// Select one in the top x% of the population...
 		List<FuzzingExptResult> sortedPop = pop.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+		// Print the population
 		int elementSelection = rng.nextInt(Math.min(sortedPop.size(), topNumToSelect));
 		FuzzingExptResult picked = sortedPop.get(elementSelection);
+		System.out.println("pickPopulationElementToExplore - looking for highest");
+		System.out.print("sortedPop=");
+		printPop(sortedPop);
+		System.out.println("elementSelection (from highest)=" + elementSelection);
+		System.out.println("picked=" + picked);
 		return Optional.of(picked);
 	}
 
@@ -39,6 +51,10 @@ public class FuzzingPopulation {
 			if (worst != null) {
 				pop.remove(worst);
 			}
+			
+			System.out.println("pushToPopulation - looking for lowest");
+			System.out.println("sortedPop=" + sortedPop);
+			System.out.println("worst=" + worst);
 		}
 	}
 

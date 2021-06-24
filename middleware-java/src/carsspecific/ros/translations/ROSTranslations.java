@@ -13,6 +13,7 @@ import edu.wpi.rail.jrosbridge.Topic;
 import edu.wpi.rail.jrosbridge.messages.Message;
 import middleware.carstranslations.CARSTranslations;
 import middleware.core.ActiveMQProducer;
+import middleware.logging.ATLASLog;
 
 public class ROSTranslations extends CARSTranslations {
 	HashMap<String,ActiveMQProducer> producers;
@@ -73,7 +74,9 @@ public class ROSTranslations extends CARSTranslations {
 		String topicName = "/" + robotName + localTopicName;
 		Topic echo = new Topic(ros, topicName, rosTypeName);
 		Message msg = new Message(jo);
-		System.out.println("ROSTranslations.sendBackJSON: sending back: robotName=" + robotName + ",localTopicName=" + localTopicName + ",json=" + jo.toString());
+		String debugMsg = "ROSTranslations.sendBackJSON: sending back: robotName=" + robotName + ",localTopicName=" + localTopicName + ",json=" + jo.toString();
+		System.out.println(debugMsg);
+		ATLASLog.logFuzzing(debugMsg);
 		echo.publish(msg);
 	}
 	
@@ -81,7 +84,9 @@ public class ROSTranslations extends CARSTranslations {
 		// TODO: should this Topic object be preserved - resource problem
 		Topic echo = new Topic(ros, topicName, rosTypeName);
 		Message msg = new Message(jo);
-		System.out.println("ROSTranslations.sendBackJSON: sending back: topicName=" + topicName + ",json=" + jo.toString());
+		String debugMsg = "ROSTranslations.sendBackJSON: sending back: topicName=" + topicName + ",json=" + jo.toString();
+		System.out.println(debugMsg);
+		ATLASLog.logFuzzing(debugMsg);
 		echo.publish(msg);
 	}
 }

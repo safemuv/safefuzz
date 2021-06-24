@@ -7,14 +7,7 @@ package fuzzexperiment.runner.jmetal;
 //Produces two new ones X_left, Y_right
 //and Y_left, X_right
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
-import org.uma.jmetal.solution.integersolution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
-import org.uma.jmetal.util.pseudorandom.RandomGenerator;
-
-import atlassharedclasses.FaultInstance;
-import fuzzingengine.FuzzingKeySelectionRecord;
-import fuzzingengine.FuzzingSelectionRecord;
 
 import java.util.ArrayList;
 import java.util.List;

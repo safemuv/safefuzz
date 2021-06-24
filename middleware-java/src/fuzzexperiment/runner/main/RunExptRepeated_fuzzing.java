@@ -8,7 +8,7 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.*;
 import fuzzexperiment.runner.metrics.*;
 
-public class RunExptMain {
+public class RunExptRepeated_fuzzing {
 	
 	public static void main(String [] args) {
 		String resFileName = "fuzzexpt-set-of-solutions.res";
@@ -16,7 +16,7 @@ public class RunExptMain {
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated("null-fuzzexpt.csv", 30);
+			ExptParams ep = new RunRepeated("/home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/ros-fuzztest-pointchange.csv", 8);
 			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh);
 			r.run();

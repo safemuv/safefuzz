@@ -8,7 +8,7 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.*;
 import fuzzexperiment.runner.metrics.*;
 
-public class RunExptMain2 {
+public class RunExptMain_random {
 	public static void main(String[] args) {
 		String resFileName = "fuzzexpt-generated-solutions.res";
 		int missionCount = 30;

@@ -1,51 +1,33 @@
 package fuzzexperiment.runner.jmetal;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 
 import atlasdsl.Mission;
-import atlasdsl.faults.Fault;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
-import atlassharedclasses.FaultInstance;
-import carsspecific.ros.codegen.ROSCodeGen;
-import exptrunner.metrics.*;
-import exptrunner.runner.RunExperiment;
 import fuzzexperiment.runner.StartFuzzingProcesses;
 import fuzzexperiment.runner.metrics.FakeMetricHandler;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
 import fuzzexperiment.runner.metrics.MetricHandler;
 import fuzzexperiment.runner.metrics.OfflineMetric;
-import fuzzingengine.FuzzingEngine;
+import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
-import fuzzingengine.spec.GeneratedFuzzingSpec;
-import middleware.atlascarsgenerator.ConversionFailed;
-import exptrunner.*;
-import utils.Pair;
+import fuzzingengine.support.FuzzingEngineSupport;
 
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
@@ -151,14 +133,14 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			// config files etc for this CSV definition experimental run
 			if (actuallyRun) {
 				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
-
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
 				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName);
 			}
 
 			// Compute the metrics
-			Map<Metric, Double> res = metricHandler.computeAllOffline(csvFileName);
+			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
+			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, csvFileName);
 			System.out.println("res = " + res);
 
 			for (Map.Entry<Metric,Double> e : res.entrySet()) {

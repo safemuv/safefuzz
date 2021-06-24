@@ -17,7 +17,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 
 	private String fuzzCSVBaseName;
 	private String resFileName;
-	int count = 0;
+	int count = 1;
 	int countLimit;
 	private Mission mission;
 	List<Metric> metrics;
@@ -30,11 +30,10 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	private List<FuzzingSelectionRecord> currentFuzzingSels;
 
 	private String getCurrentFilename() {
-		return fuzzCSVBaseName + "-" + count + ".csv";
+		return fuzzCSVBaseName + "-" + String.format("%03d", count) + ".csv";
 	}
 
 	private void newRandomFile() {
-		count++;
 		currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 
@@ -47,7 +46,6 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		newRandomFile();
 		
 		metrics = new ArrayList<Metric>(mission.getAllMetrics());
-		
 	}
 
 	public boolean completed() {
@@ -82,8 +80,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 				System.out.println("- Generating mutated experiment based upon " + startingPoint);
 				List<FuzzingSelectionRecord> sels = startingPoint.getFuzzingSpec();
 				System.out.println("startingPoint = " + startingPoint);
-				String startingFilename = startingPoint.getFilename();
-				System.out.println("startingFilename = " + startingFilename + "\nSelected fuzzing:\n" + sels);
+				System.out.println("\nSelected fuzzing:\n" + sels);
 				currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), sels, res);
 			}
 		}

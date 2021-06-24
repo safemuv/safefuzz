@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
@@ -13,11 +14,9 @@ import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
-import carsspecific.ros.codegen.ROSCodeGen;
 import fuzzexperiment.runner.metrics.*;
-import fuzzingengine.FuzzingEngine;
-import fuzzingengine.spec.GeneratedFuzzingSpec;
-import middleware.atlascarsgenerator.ConversionFailed;
+import fuzzingengine.FuzzingKeySelectionRecord;
+import fuzzingengine.support.FuzzingEngineSupport;
 
 public class FuzzExptRunner {
 	private boolean actuallyRun = true;
@@ -90,6 +89,7 @@ public class FuzzExptRunner {
 			if (nextFile_o.isPresent()) {
 				String file = nextFile_o.get();
 				String exptTag = "exptcsv-" + file;
+				System.out.println("====================================================================================================");
 				System.out.println("Running fuzzing experiments for CSV file name " + file);
 				
 				// Generate the ROS configuration files, e.g. modified launch scripts, YAML
@@ -103,16 +103,23 @@ public class FuzzExptRunner {
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now
 				try {
-					metricResults = mh.computeAllOffline(logPath);
+					// Need to get the fuzzing selection records
+					List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, file);
+					System.out.println("Fuzzing records = " + fuzzrecs);
+					metricResults = mh.computeAllOffline(fuzzrecs, logPath);
 					mh.printMetricsToOutputFile(file, metricResults);
 					eparams.advance(metricResults);
+					
 					
 				} catch (MetricComputeFailure e) {
 					// If we get metric computation failure, ignore the whole line
 					// TODO: log the failure
 					e.printStackTrace();
 					eparams.advance();
-				}	
+				}
+				
+				System.out.println("----------------------------------------------------------------------------------------------------");
+				
 			}	
 		}
 		System.out.println("Run completed");

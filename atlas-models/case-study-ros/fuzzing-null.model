@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
+  <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv"/>
+</fuzzspec:FuzzingSpecification>

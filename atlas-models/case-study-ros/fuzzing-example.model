@@ -23,11 +23,11 @@
     <components xmi:id="_Ix39YM7mEeu_Qtc8Axo4IQ" name="trajectory_planning">
       <vars xmi:id="_JEwnsM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_trajectory_path_prime" reflectionName="/desired_trajectory_path" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_sB2csM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
-        <probInfo xmi:id="_xKcHIM7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.25"/>
+        <probInfo xmi:id="_xKcHIM7nEeu_Qtc8Axo4IQ"/>
       </vars>
       <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/trajectory_relative_prime" reflectionName="/trajectory_relative" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
-        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.25"/>
+        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ"/>
       </vars>
     </components>
   </sims>

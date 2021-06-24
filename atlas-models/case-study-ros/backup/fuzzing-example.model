@@ -30,8 +30,6 @@
         <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.25"/>
       </vars>
     </components>
-    <launchers xmi:id="_RnqV4MfhEeun3fY-2p21Cw" path="safemuv_shared/launcher/shared_launcher.launch"/>
-    <launchers xmi:id="_KtPWcMhaEeuMiYEMVbUfiw" path="safemuv_launchers/launch/safemuv_launch_obstacle_publisher.launch"/>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
     <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset-1-each-axis">

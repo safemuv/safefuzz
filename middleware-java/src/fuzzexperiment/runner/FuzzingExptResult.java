@@ -9,7 +9,6 @@ import fuzzingengine.FuzzingSelectionRecord;
 
 public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 	List<FuzzingSelectionRecord> spec;
-	private String filename;
 	Map<Metric, Double> metrics;
 	List<Metric> metricOrdering;
 
@@ -22,12 +21,7 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 	public FuzzingExptResult(List<FuzzingSelectionRecord> currentFuzzingSels, String filename,
 			Map<Metric, Double> metrics) {
 		this.spec = currentFuzzingSels;
-		this.filename = filename;
 		this.metrics = metrics;
-	}
-
-	public String getFilename() {
-		return filename;
 	}
 
 	public List<FuzzingSelectionRecord> getFuzzingSpec() {
@@ -52,27 +46,6 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		}
 		return better;
 	}
-
-//	// Using the domaince test from JMetal
-//	private int dominanceTest(List<Double> solution1, List<Double> solution2) {
-//	    int bestIsOne = 0;
-//	    int bestIsTwo = 0;
-//	    int result;
-//	    for (int i = 0; i < solution1.size(); i++) {
-//	      double value1 = solution1.get(i);
-//	      double value2 = solution2.get(i);
-//	      if (value1 != value2) {
-//	        if (value1 < value2) {
-//	          bestIsOne = 1;
-//	        }
-//	        if (value2 < value1) {
-//	          bestIsTwo = 1;
-//	        }
-//	      }
-//	    }
-//	    result = Integer.compare(bestIsTwo, bestIsOne);
-//	    return result;
-//	}
 
 	public List<Double> mapToList(Map<Metric, Double> map) {
 		List<Double> resList = new ArrayList<Double>();
@@ -114,5 +87,9 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		} catch (MetricMissing e) {
 			return 0;
 		}
+	}
+	
+	public String toString() {
+		return "<FuzzingExptResult: " + spec.toString() + "\n" + metrics.toString() + ">";
 	}
 }
