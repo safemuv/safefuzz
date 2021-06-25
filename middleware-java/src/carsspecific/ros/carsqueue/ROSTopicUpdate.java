@@ -19,6 +19,7 @@ public class ROSTopicUpdate extends ROSEvent {
 	
 	public enum ATLASTag {
 		VELOCITY,
+		ODOMETRY,
 		POSE,
 		FUZZING_VAR,
 		GOALSTATE_VAR,

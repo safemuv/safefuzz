@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
-// protected region customHeaders end
-
 import fuzzingengine.FuzzingKeySelectionRecord;
+// protected region customHeaders end
 
 public class SpeedViolationsCount extends OfflineMetric {
 	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
@@ -19,6 +18,7 @@ public class SpeedViolationsCount extends OfflineMetric {
 		try {
 			reader = new Scanner(new File(filename));
 			while (reader.hasNextLine()) {
+				String line = reader.nextLine();
 				speedViolationsCount = speedViolationsCount + 1;
 			}
 

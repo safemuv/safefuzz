@@ -1,8 +1,11 @@
 package atlasdsl.loader;
 
 import atlasdsl.*;
+import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 import fuzzexperiment.runner.metrics.*;
 
@@ -15,14 +18,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 		Robot ruav_1 = new Robot("uav_1");
-		ruav_1.setPointComponentProperty("startLocation", new Point(8.0,-8.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 0.01);
+		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
+		ruav_1.setDoubleComponentProperty("maxSpeed", 0.5);
 		
 			
 		mission.addRobot(ruav_1);
 		Robot ruav_2 = new Robot("uav_2");
-		ruav_2.setPointComponentProperty("startLocation", new Point(8.0,8.0,0.0));
-		ruav_2.setDoubleComponentProperty("maxSpeed", 0.01);
+		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
+		ruav_2.setDoubleComponentProperty("maxSpeed", 0.5);
 		
 			
 		mission.addRobot(ruav_2);
@@ -84,8 +87,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		   
 		GoalRegion grStayInOuterRegion = new StaticGoalRegion(
-			new Region(new Point(-10.0, -10.0, 0.0),
-			           new Point(10.0, 10.0, 10.0)));
+			new Region(new Point(-100.0, -50.0, 0.0),
+			           new Point(12.0, 50.0, 23.0)));
 		
 		
 		Goal StayInOuterRegion = new Goal("StayInOuterRegion", mission, gt2, gpStayInOuterRegion, Optional.of(grStayInOuterRegion), ga2);

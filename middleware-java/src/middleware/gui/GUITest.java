@@ -113,7 +113,7 @@ public class GUITest {
     private String robotLabelText(Robot r) {
     	try {
     		Point loc = r.getPointComponentProperty("location");
-    		return r.getName() +  " @ " + loc.toString();
+    		return r.getName() +  " @ " + loc.toString2DP();
     	} catch (MissingProperty e) {
     		return r.getName() + "<missing location>";
     	}

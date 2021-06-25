@@ -52,7 +52,7 @@ public class StayInRegion extends GoalAction {
 		try {
 			for (Robot r : robots) {
 				Point loc = r.getPointComponentProperty("location");
-				//System.out.println("StayInRegion: " + r.getName() + " is at " + loc);
+				System.out.println("StayInRegion: " + r.getName() + " is at " + loc);
 				if (!region.contains(loc)) {
 					double time = core.getTime();
 					if (violationReadyToLog(r.getName(), time)) {
@@ -73,8 +73,6 @@ public class StayInRegion extends GoalAction {
 						gr.addField(pf);
 						return Optional.of(gr);
 					}
-				} else {
-					return Optional.empty();
 				}
 			}
 		} catch (MissingProperty mp) {

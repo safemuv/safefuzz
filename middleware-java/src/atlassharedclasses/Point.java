@@ -41,6 +41,10 @@ public class Point {
 		return "x=" + x + ",y=" + y + ",z=" + z;
 	}
 	
+	public String toString2DP() {
+		return "x=" + String.format("%2f", x) + ",y=" + String.format("%2f",y) + ",z=" + String.format("%2f", z);
+	}
+	
 	public String toStringBareCSV() {
 		return x + "," + y;
 	}
