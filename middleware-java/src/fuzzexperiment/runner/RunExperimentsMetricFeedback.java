@@ -22,7 +22,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	private Mission mission;
 	List<Metric> metrics;
 	
-	int populationLimit = 10;
+	private int populationLimit;
 
 	private FuzzingExperimentModifier g;
 
@@ -37,8 +37,9 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 
-	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit) {
+	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) {
 		this.resFileName = resFileName;
+		this.populationLimit = populationLimit;
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;

@@ -8,18 +8,18 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.*;
 import fuzzexperiment.runner.metrics.*;
 
-public class RunExptMain_feedback1 {
+public class RunExptMain_feedback {
 	public static void main(String[] args) {
-		String resFileName = "fuzzexpt-generated-solutions.res";
-		int missionCount = 30;
+		String resFileName = "feedback-expt.res";
+		int runCount = 100;
+		int populationLimit = 10;
 
 		try {
 			Mission m = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(m, resFileName); 
 			String csvBaseName = "/tmp/fuzzexpt-feedback";
-			ExptParams ep = new RunExperimentsMetricFeedback(resFileName, m, csvBaseName, missionCount);
+			ExptParams ep = new RunExperimentsMetricFeedback(resFileName, m, csvBaseName, runCount, populationLimit);
 			FuzzExptRunner r = new FuzzExptRunner(ep, mh);
-			r.useFakeRun();
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

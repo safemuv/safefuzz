@@ -2,6 +2,7 @@ package fuzzingengine.spec;
 
 import java.util.Optional;
 import atlasdsl.Mission;
+
 import fuzzingengine.*;
 import fuzzingengine.operationparamsinfo.*;
 
@@ -11,27 +12,37 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+	
+	
 	try {
-		OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-RandomOffset-1-each-axis", "JSONPointChange");
- 		OperationParameter opp1 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET");
-   		ops1.addParameter(opp1);
+	
+	
+	   OperationParameterSet ops1 = new OperationParameterSet("JSONPointChange-Fixed-1", "JSONPointChange");
+ 
+ 
+	   			OperationParameter opp1 = new StringConstantOperationParameter("Nature", "FIXED");
+	   			
+	   		
+	   		
+	   		
+	   		ops1.addParameter(opp1);
 	   			
  
-	   			OperationParameter opp2 = new DoubleRangeOperationParameter("X", 0.0, 1.0);
+	   			OperationParameter opp2 = new DoubleRangeOperationParameter("X", -1.0, 1.0);
 	   		
 	   		
 	   		
 	   		ops1.addParameter(opp2);
 	   			
  
-	   			OperationParameter opp3 = new DoubleRangeOperationParameter("Y", 0.0, 1.0);
+	   			OperationParameter opp3 = new DoubleRangeOperationParameter("Y", -1.0, 1.0);
 	   		
 	   		
 	   		
 	   		ops1.addParameter(opp3);
 	   			
  
-	   			OperationParameter opp4 = new DoubleRangeOperationParameter("Z", 0.0, 1.0);
+	   			OperationParameter opp4 = new DoubleRangeOperationParameter("Z", -1.0, 1.0);
 	   		
 	   		
 	   		
@@ -86,7 +97,7 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("trajectory_tracking_controller_fuzzy", "/ual/set_velocity_prime", "/ual/set_velocity", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
-		true, Optional.of(new TimeSpec(m,0.0,150.0)), Optional.of(1.0));
+		true, Optional.of(new TimeSpec(m,25.0,200.0)), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops1, "twist.linear");
 	

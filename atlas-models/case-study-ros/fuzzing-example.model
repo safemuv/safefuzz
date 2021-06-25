@@ -5,7 +5,7 @@
       <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/set_velocity_prime" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
-        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" endTime="150.0"/>
+        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" startTime="25.0" endTime="200.0"/>
         <probInfo xmi:id="_Nu5UgMilEeuXkJUdIAjG9g" includeVariableProbability="1.0"/>
       </vars>
     </components>
@@ -32,11 +32,11 @@
     </components>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
-    <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-RandomOffset-1-each-axis">
-      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_n__EEL8gEeuxyMr3nK2BCQ" name="Nature" value="RANDOMOFFSET"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_vJI4EL8gEeuxyMr3nK2BCQ" name="X" upper="1.0"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_rHC7oL8gEeuxyMr3nK2BCQ" name="Y" upper="1.0"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_s8eMML8gEeuxyMr3nK2BCQ" name="Z" upper="1.0"/>
+    <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-Fixed-1">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_n__EEL8gEeuxyMr3nK2BCQ" name="Nature" value="FIXED"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_vJI4EL8gEeuxyMr3nK2BCQ" name="X" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_rHC7oL8gEeuxyMr3nK2BCQ" name="Y" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_s8eMML8gEeuxyMr3nK2BCQ" name="Z" lower="-1.0" upper="1.0"/>
     </paramSets>
   </operations>
   <operations xmi:id="_PJam4M7pEeu_Qtc8Axo4IQ" operationClassName="PathPointChange">

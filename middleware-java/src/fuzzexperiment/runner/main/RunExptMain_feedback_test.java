@@ -15,6 +15,7 @@ public class RunExptMain_feedback_test {
 	public static void main(String[] args) {
 		String resFileName = "feedback-test-results.res";
 		int runCount = 3000;
+		int populationLimit = 10;
 
 		try {
 			Mission m = new GeneratedDSLLoader().loadMission();
@@ -23,7 +24,7 @@ public class RunExptMain_feedback_test {
 			fakeMetrics.add(new FindSpecificTime(100.0, 120.0));
 			MetricHandler mh = new FakeMetricHandler(fakeMetrics, resFileName);
 			String csvBaseName = "/tmp/fuzzexpt-feedbacktest";
-			ExptParams ep = new RunExperimentsMetricFeedback(resFileName, m, csvBaseName, runCount);
+			ExptParams ep = new RunExperimentsMetricFeedback(resFileName, m, csvBaseName, runCount, populationLimit);
 			FuzzExptRunner r = new FuzzExptRunner(ep, mh);
 			r.useFakeRun();
 			r.run();

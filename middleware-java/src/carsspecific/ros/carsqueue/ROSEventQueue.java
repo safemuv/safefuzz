@@ -22,8 +22,7 @@ import middleware.core.*;
 
 public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	// This is used in the subscriptions to ensure we do not duplicate them - e.g.
-	// by
-	// subscribing twice to the same topic
+	// by subscribing twice to the same topic
 	private Map<String, Boolean> topicSubscriptions = new HashMap<String, Boolean>();
 
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = true;
@@ -33,12 +32,19 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	private static final long serialVersionUID = 1L;
 	private FuzzingEngine fuzzEngine;
 	
-	Random __rng = new Random();
+	private HashMap<String,Double> robotSpeeds = new HashMap<String,Double>();
+	
+	public void setupSpeeds() {
+		for (Robot r : mission.getAllRobots()) {
+			robotSpeeds.put(r.getName(), 0.0);
+		}
+	}
 
 	public ROSEventQueue(ATLASCore core, Mission mission, int queueCapacity, FuzzingEngine fuzzEngine) {
 		super(core, queueCapacity, '.');
 		this.mission = mission;
 		this.fuzzEngine = fuzzEngine;
+		setupSpeeds();
 	}
 
 	public void run() {
@@ -78,7 +84,9 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				JsonNumber jz = pos.getJsonNumber("z");
 				Point p = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 				System.out.println("ATLAS Point:" + p.toString());
-				GPSPositionReading gps = new GPSPositionReading(p, 0.0, rtu.getVehicleName());
+				System.out.println();
+				double speedStored = robotSpeeds.get(rtu.getVehicleName());
+				GPSPositionReading gps = new GPSPositionReading(p, speedStored, rtu.getVehicleName());
 				core.notifyPositionUpdate(gps);
 			}
 
@@ -90,6 +98,10 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				JsonNumber jy = linear.getJsonNumber("y");
 				JsonNumber jz = linear.getJsonNumber("z");
 				Point vel = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
+				
+				double s = vel.absLength();
+				robotSpeeds.put(rtu.getVehicleName(), s);
+				
 				System.out.println("Vel:" + vel.toString());
 			}
 		}
