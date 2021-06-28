@@ -1,0 +1,1553 @@
+Run count = 0
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@4a22f9e2
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@1aa7ecca
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@5876a9af]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14107
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14107.0
+----------------------------------------------------------------------------------------------------
+Run count = 1
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@35cabb2a
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@1189dd52
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@36bc55de]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14183
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14183.0
+----------------------------------------------------------------------------------------------------
+Run count = 2
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@564fabc8
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@49ec71f8
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@1d2adfbe]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14560
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14560.0
+----------------------------------------------------------------------------------------------------
+Run count = 3
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@36902638
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+200.084-200.0
+200.088-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@8f4ea7c
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@436813f3]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14186
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14186.0
+----------------------------------------------------------------------------------------------------
+Run count = 4
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@74fe5c40
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@10e31a9a
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@131774fe]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14142
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14142.0
+----------------------------------------------------------------------------------------------------
+Run count = 5
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@158d2680
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@7f3b84b8
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@57a3af25]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 13392
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=13392.0
+----------------------------------------------------------------------------------------------------
+Run count = 6
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@2b662a77
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@5c33f1a9
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@1623b78d]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14185
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14185.0
+----------------------------------------------------------------------------------------------------
+Run count = 7
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@c8c12ac
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+200.084-200.0
+200.088-200.0
+200.092-200.0
+200.096-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@35e2d654
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@1bd4fdd]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14173
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14173.0
+----------------------------------------------------------------------------------------------------
+Run count = 8
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@55183b20
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+200.084-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@6cf0e0ba
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@7d8995e]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14053
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14053.0
+----------------------------------------------------------------------------------------------------
+Run count = 9
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@130d63be
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@293a5bf6
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@6aeb35e6]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14573
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14573.0
+----------------------------------------------------------------------------------------------------
+Run count = 10
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@1283bb96
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@f6efaab
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@3c19aaa5]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 12
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14263
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=12.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14263.0
+----------------------------------------------------------------------------------------------------
+Run count = 11
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@3349e9bb
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@38d8f54a
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@49e53c76]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14165
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14165.0
+----------------------------------------------------------------------------------------------------
+Run count = 12
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@351d00c0
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@55b699ef
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@35d019a3]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 0
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 0
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14165
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=0.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=0.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14165.0
+----------------------------------------------------------------------------------------------------
+Run count = 13
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@689604d9
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@799f10e1
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@4c371370]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14125
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14125.0
+----------------------------------------------------------------------------------------------------
+Run count = 14
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@145f66e3
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+200.084-200.0
+200.088-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@313ac989
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@4562e04d]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14618
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14618.0
+----------------------------------------------------------------------------------------------------
+Run count = 15
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@2a65fe7c
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@6302bbb1
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@31304f14]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 12
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14216
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=12.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14216.0
+----------------------------------------------------------------------------------------------------
+Run count = 16
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@34a3d150
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@5c6648b0
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@6f1de4c7]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 14
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14156
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=14.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14156.0
+----------------------------------------------------------------------------------------------------
+Run count = 17
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@459e9125
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@7cc0cdad
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@7c7b252e]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 0
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 25
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 5361
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=0.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=25.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=5361.0
+----------------------------------------------------------------------------------------------------
+Run count = 18
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@4d5d943d
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+200.068-200.0
+200.072-200.0
+200.076-200.0
+200.08-200.0
+200.084-200.0
+200.088-200.0
+200.092-200.0
+200.096-200.0
+200.1-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@4c583ecf
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@692f203f]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14138
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14138.0
+----------------------------------------------------------------------------------------------------
+Run count = 19
+====================================================================================================
+Running fuzzing experiments for CSV file name /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@48f2bd5b
+transformAllFiles = []
+specKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime, /ual/set_velocity_prime]
+confKeys =[/ual/set_velocity_prime]
+removalKeys =[/trajectory_relative_prime, calibration_points.yaml, /desired_trajectory_path_prime]
+processLaunchFiles done
+Code generation completed
+Starting ROS/SAFEMUV launch scripts
+Starting script auto_launch_safemuv.sh
+Ignoring timeout exception when launching
+0.0-200.0
+200.004-200.0
+200.008-200.0
+200.012-200.0
+200.016-200.0
+200.02-200.0
+200.024-200.0
+200.028-200.0
+200.032-200.0
+200.036-200.0
+200.04-200.0
+200.044-200.0
+200.048-200.0
+200.052-200.0
+200.056-200.0
+200.06-200.0
+200.064-200.0
+Middleware end time reached
+Starting command terminate_clear_logs.sh
+Kill MOOS / Java processes command sent
+Destroy commands completed
+Waiting to restart experiment
+setupFromFuzzingFile - /home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-099.csv
+0 - KEY
+Token:0 KEY
+Token:1 /ual/set_velocity_prime
+Token:2 9.833932212324804
+Token:3 108.15858439198502
+Token:4 uav_1
+Token:5 twist.linear
+Token:6 JSONPointChange
+Token:7 FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+KEY based fuzzing
+className for operation JSONPointChange
+createFromParamString - FIXED|-0.4455632745101623|0.8962813022364027|-0.014260021415120505
+FIXED
+fields[0] = FIXED
+adding key record: key /ual/set_velocity_prime
+Installing fuzzing operation for /ual/set_velocity_prime - fuzzingengine.operations.JSONPointChange@a1153bc
+Fuzzing records = [fuzzingengine.FuzzingKeySelectionRecord@1aafa419]
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+avoidanceViolations = 1
+OutsideOfOuterRegionViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//goalLog.log
+outsideRegionViolations = 13
+TrackSpeedViolations filename = /home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/logs//speedViolations.log
+speedViolationsCount = 14541
+Writing results to result file: fuzzexpt-099.res
+fuzzexperiment.runner.metrics.AvoidanceViolationsCount@25618e91=1.0
+fuzzexperiment.runner.metrics.OutsideOfOuterRegionViolations@73035e27=13.0
+fuzzexperiment.runner.metrics.OutsideOfInnerRegionViolations@21a06946=0.0
+fuzzexperiment.runner.metrics.SpeedViolationsCount@282ba1e=14541.0
+----------------------------------------------------------------------------------------------------
+Run completed
+
