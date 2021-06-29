@@ -63,6 +63,8 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		for (Map.Entry<Metric, Double> e : solution1.entrySet()) {
 			double value1 = e.getValue();
 			Metric k = e.getKey();
+			System.out.println(k);
+			
 			if (!solution2.containsKey(k)) {
 				throw new MetricMissing(k);
 			}
@@ -89,7 +91,11 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		}
 	}
 	
+	public String metricsMapToString(Map<Metric,Double> m) {
+		return m.values().toString(); 
+	}
+	
 	public String toString() {
-		return "<FuzzingExptResult: " + spec.toString() + "\n" + metrics.toString() + ">";
+		return "<FuzzingExptResult: " + spec.toString() + "-" + metricsMapToString(metrics) + ">";
 	}
 }

@@ -53,6 +53,10 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		setupParticipants();
 	}
 	
+	public double getTimeLength() {
+		return endTime - startTime;
+	}
+	
 	// for messages
 	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> regex, int groupNum, FuzzingOperation op) {
 		super(op);

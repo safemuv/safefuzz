@@ -26,7 +26,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 
 	private FuzzingExperimentModifier g;
 
-	public FuzzingPopulation pop = new FuzzingPopulation(populationLimit);
+	public FuzzingPopulation pop;
 	private List<FuzzingSelectionRecord> currentFuzzingSels;
 
 	private String getCurrentFilename() {
@@ -43,6 +43,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
+		this.pop = new FuzzingPopulation(populationLimit);
 		g = new FuzzingExperimentModifier(mission);
 		newRandomFile();
 		

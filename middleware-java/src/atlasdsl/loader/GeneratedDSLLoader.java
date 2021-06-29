@@ -19,13 +19,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 		Robot ruav_1 = new Robot("uav_1");
 		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 0.5);
+		ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
 		mission.addRobot(ruav_1);
 		Robot ruav_2 = new Robot("uav_2");
 		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
-		ruav_2.setDoubleComponentProperty("maxSpeed", 0.5);
+		ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
 		mission.addRobot(ruav_2);
@@ -67,6 +67,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Metric met1 = new SpeedViolationsCount();
 		trackDistancesAndVelocities.addMetric(met1);
 		
+		
+		
+		Metric met2 = new FuzzingTimeLength();
+		trackDistancesAndVelocities.addMetric(met2);
+		
 		mission.addGoal("trackDistancesAndVelocities", trackDistancesAndVelocities);
  
  
@@ -97,8 +102,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met2 = new OutsideOfOuterRegionViolations();
-		StayInOuterRegion.addMetric(met2);
+		Metric met3 = new OutsideOfOuterRegionViolations();
+		StayInOuterRegion.addMetric(met3);
 		
 		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
  
@@ -128,8 +133,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met3 = new OutsideOfInnerRegionViolations();
-		AvoidPlaneInner.addMetric(met3);
+		Metric met4 = new OutsideOfInnerRegionViolations();
+		AvoidPlaneInner.addMetric(met4);
 		
 		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
  
@@ -161,8 +166,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met4 = new AvoidanceViolationsCount();
-		AvoidOthers.addMetric(met4);
+		Metric met5 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met5);
 		
 		mission.addGoal("AvoidOthers", AvoidOthers);
 	

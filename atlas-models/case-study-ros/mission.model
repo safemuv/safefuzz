@@ -23,6 +23,7 @@
       </staticRegion>
     </region>
     <metrics xmi:id="_zzgUkNErEeuiUfgSqZ17Hw" name="SpeedViolationsCount"/>
+    <metrics xmi:id="_o9unANhAEeuUnZbJL-TeBg" name="FuzzingTimeLength"/>
   </goals>
   <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInOuterRegion" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_8ygUcMLIEeuCkPhz2hOLkg" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
