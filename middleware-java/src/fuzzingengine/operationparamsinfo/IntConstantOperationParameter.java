@@ -8,7 +8,7 @@ public class IntConstantOperationParameter extends IntOperationParameter {
 		this.value = value;
 	}
 
-	Object getSpecificValue() {
+	public Object getSpecificValue() {
 		return value;
 	}
 }

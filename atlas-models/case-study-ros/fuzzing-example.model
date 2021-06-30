@@ -25,9 +25,17 @@
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_sB2csM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
         <probInfo xmi:id="_xKcHIM7nEeu_Qtc8Axo4IQ"/>
       </vars>
-      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/trajectory_relative_prime" reflectionName="/trajectory_relative" dir="OUTBOUND" vehicleSpecific="true">
+      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_path_prime" reflectionName="/desired_path" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
-        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ"/>
+        <opParamsType xmi:id="_d4eyMNlDEeuPm8zY7fhTLg" opParam="_SRcHwM7pEeu_Qtc8Axo4IQ" subSpec="poses"/>
+        <timeLimit xmi:id="_zl7WENlDEeuPm8zY7fhTLg" endTime="100.0"/>
+        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="1.0"/>
+      </vars>
+    </components>
+    <components xsi:type="fuzzspec:Environment" xmi:id="_Y1wkMNkMEeuAQ_x5ldjrIg" name="traj_plan_external" componentRelativePath="traj_plan_external">
+      <vars xmi:id="_eUnZkNkMEeuAQ_x5ldjrIg" component="_Y1wkMNkMEeuAQ_x5ldjrIg" variable="trajectory_planner_external.yaml" dir="OUTBOUND">
+        <opParamsType xmi:id="_IQSfYNkPEeuAQ_x5ldjrIg" opParam="_09vikNkMEeuAQ_x5ldjrIg" subSpec="trajectory_planner_geometric_primitives.discrete_graph.num_nodes"/>
+        <probInfo xmi:id="_CCpRYNkPEeuAQ_x5ldjrIg" includeVariableProbability="1.0"/>
       </vars>
     </components>
   </sims>
@@ -39,13 +47,20 @@
       <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_s8eMML8gEeuxyMr3nK2BCQ" name="Z" lower="-1.0" upper="1.0"/>
     </paramSets>
   </operations>
-  <operations xmi:id="_PJam4M7pEeu_Qtc8Axo4IQ" operationClassName="PathPointChange">
+  <operations xmi:id="_PJam4M7pEeu_Qtc8Axo4IQ" operationClassName="PathPointChanges">
     <paramSets xmi:id="_SRcHwM7pEeu_Qtc8Axo4IQ" name="PathPointChange-multiple-elements">
       <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_SRcHwc7pEeu_Qtc8Axo4IQ" name="Nature" value="RANDOMOFFSET_MULTIPLE"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHws7pEeu_Qtc8Axo4IQ" name="X" upper="1.0"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHw87pEeu_Qtc8Axo4IQ" name="Y" upper="1.0"/>
-      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHxM7pEeu_Qtc8Axo4IQ" name="Z" upper="1.0"/>
-      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_SRcHxc7pEeu_Qtc8Axo4IQ" name="ELEMENTS_TO_MUTATE" lower="1" upper="5"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHws7pEeu_Qtc8Axo4IQ" name="X" upper="3.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHw87pEeu_Qtc8Axo4IQ" name="Y" upper="3.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHxM7pEeu_Qtc8Axo4IQ" name="Z" upper="3.0"/>
+      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_SRcHxc7pEeu_Qtc8Axo4IQ" name="ELEMENTS_TO_MUTATE" lower="1" upper="10"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_prfLMNkMEeuAQ_x5ldjrIg" operationClassName="IntegerVariableChange">
+    <paramSets xmi:id="_09vikNkMEeuAQ_x5ldjrIg" name="IntChange-300-3000">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_AXozANkNEeuAQ_x5ldjrIg" name="NATURE" value="RANDOM"/>
+      <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_L8L0QNkNEeuAQ_x5ldjrIg" name="Lower" value="300"/>
+      <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_Nwo0cNkNEeuAQ_x5ldjrIg" name="Upper" value="3000"/>
     </paramSets>
   </operations>
 </fuzzspec:FuzzingSpecification>

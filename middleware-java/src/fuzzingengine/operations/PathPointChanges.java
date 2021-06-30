@@ -135,6 +135,7 @@ public class PathPointChanges extends JSONFuzzingOperation {
 		JsonObjectBuilder builder = Json.createObjectBuilder();
 		JsonObject modifiedPos = modifiedPosition(jp.getJsonObject("position"));
 		builder.add("position", modifiedPos);
+		builder.add("orientation", jp.getJsonObject("orientation"));
 		return builder.build();
 	}
 

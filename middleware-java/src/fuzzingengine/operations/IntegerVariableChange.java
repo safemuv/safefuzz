@@ -54,6 +54,10 @@ public class IntegerVariableChange extends ValueFuzzingOperation {
 			return IntegerVariableChange.Random(l,r);
 		}
 		
+//		if (fields[0].toUpperCase().equals("FIXED")) {
+//			
+//		}
+		
 		throw new CreationFailed("Invalid parameter string " + s);
 	}
 }

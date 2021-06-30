@@ -10,7 +10,8 @@ public class IntListOperationParameter extends IntOperationParameter {
 		super(name);
 	}
 
-	Object getSpecificValue() {
-		return null;
+	public Object getSpecificValue() {
+		// TODO: random
+		return values.get(0);
 	}
 }

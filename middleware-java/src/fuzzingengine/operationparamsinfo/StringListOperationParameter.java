@@ -15,9 +15,8 @@ public class StringListOperationParameter extends StringOperationParameter {
 		this.values = values;
 	}
 
-	Object getSpecificValue() {
+	public Object getSpecificValue() {
 		// TODO: random
 		return values.get(0);
 	}
-
 }

@@ -47,7 +47,7 @@ public class GeneratedFuzzingSpec {
 	   		
 	   		
 	   		ops1.addParameter(opp4);
-	   OperationParameterSet ops2 = new OperationParameterSet("PathPointChange-multiple-elements", "PathPointChange");
+	   OperationParameterSet ops2 = new OperationParameterSet("PathPointChange-multiple-elements", "PathPointChanges");
  
  
 	   			OperationParameter opp5 = new StringConstantOperationParameter("Nature", "RANDOMOFFSET_MULTIPLE");
@@ -58,21 +58,21 @@ public class GeneratedFuzzingSpec {
 	   		ops2.addParameter(opp5);
 	   			
  
-	   			OperationParameter opp6 = new DoubleRangeOperationParameter("X", 0.0, 1.0);
+	   			OperationParameter opp6 = new DoubleRangeOperationParameter("X", 0.0, 3.0);
 	   		
 	   		
 	   		
 	   		ops2.addParameter(opp6);
 	   			
  
-	   			OperationParameter opp7 = new DoubleRangeOperationParameter("Y", 0.0, 1.0);
+	   			OperationParameter opp7 = new DoubleRangeOperationParameter("Y", 0.0, 3.0);
 	   		
 	   		
 	   		
 	   		ops2.addParameter(opp7);
 	   			
  
-	   			OperationParameter opp8 = new DoubleRangeOperationParameter("Z", 0.0, 1.0);
+	   			OperationParameter opp8 = new DoubleRangeOperationParameter("Z", 0.0, 3.0);
 	   		
 	   		
 	   		
@@ -82,8 +82,31 @@ public class GeneratedFuzzingSpec {
 	   		
 	   		
  
-	   			OperationParameter opp9 = new IntRangeOperationParameter("ELEMENTS_TO_MUTATE", 1, 5);
+	   			OperationParameter opp9 = new IntRangeOperationParameter("ELEMENTS_TO_MUTATE", 1, 10);
 	   		ops2.addParameter(opp9);
+	   OperationParameterSet ops3 = new OperationParameterSet("IntChange-300-3000", "IntegerVariableChange");
+ 
+ 
+	   			OperationParameter opp10 = new StringConstantOperationParameter("NATURE", "RANDOM");
+	   			
+	   		
+	   		
+	   		
+	   		ops3.addParameter(opp10);
+	   			
+	   		
+	   		
+ 
+	   			OperationParameter opp11 = new IntConstantOperationParameter("Lower", 300);
+	   		
+	   		ops3.addParameter(opp11);
+	   			
+	   		
+	   		
+ 
+	   			OperationParameter opp12 = new IntConstantOperationParameter("Upper", 3000);
+	   		
+	   		ops3.addParameter(opp12);
 	
 	
 	
@@ -132,10 +155,24 @@ public class GeneratedFuzzingSpec {
 	
 	
 				
-		simMapping.addRecord("trajectory_planning", "/trajectory_relative_prime", "/trajectory_relative", 
+		simMapping.addRecord("trajectory_planning", "/desired_path_prime", "/desired_path", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/"), Optional.of("nav_msgs/Path"),
-		true, Optional.empty(), Optional.of(0.0));
+		true, Optional.of(new TimeSpec(m,0.0,100.0)), Optional.of(1.0));
 	
+			simMapping.addOperationParameterSetForVariable("/desired_path_prime", ops2, "poses");
+	
+		
+		
+		
+		
+	simMapping.setComponentFuzzingInfo("traj_plan_external", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), true);
+		
+				
+		simMapping.addRecord("traj_plan_external", "trajectory_planner_external.yaml", "", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/traj_plan_external"), Optional.empty(),
+		false, Optional.empty(), Optional.of(1.0));
+	
+			simMapping.addOperationParameterSetForVariable("trajectory_planner_external.yaml", ops3, "trajectory_planner_geometric_primitives.discrete_graph.num_nodes");
 	
 	
 

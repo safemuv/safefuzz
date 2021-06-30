@@ -18,8 +18,8 @@ public class TestFuzzingPop {
 		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		metrics.add(new AvoidanceViolationsCount());
 		metrics.add(new OutsideOfInnerRegionViolations());
-		metrics.add(new OutsideOfOuterRegionViolations());
-		metrics.add(new SpeedViolationsCount());
+		//metrics.add(new OutsideOfOuterRegionViolations());
+		//metrics.add(new SpeedViolationsCount());
 		
 				
 		for (int i = 0; i < limit; i++) {

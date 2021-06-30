@@ -11,8 +11,8 @@ import fuzzexperiment.runner.metrics.*;
 public class RunExptMain_feedback {
 	public static void main(String[] args) {
 		String resFileName = "feedback-expt.res";
-		int runCount = 100;
-		int populationLimit = 10;
+		int runCount = 120;
+		int populationLimit = 20;
 
 		try {
 			Mission m = new GeneratedDSLLoader().loadMission();

@@ -8,7 +8,7 @@ public class StringConstantOperationParameter extends StringOperationParameter {
 		this.value = value;
 	}
 	
-	Object getSpecificValue() {
+	public Object getSpecificValue() {
 		return value;
 	}
 }
