@@ -123,9 +123,14 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 
 	public FuzzingSelectionRecord dup() {
-		// TODO: ensure these are copied when duplicating!
+		List<String> newParticipants = new ArrayList<String>();
+		for (String p : this.participants) {
+			newParticipants.add(new String(p));
+		}
+		
 		FuzzingKeySelectionRecord k = new FuzzingKeySelectionRecord(key, reflectionKey,  component, regex,
-				groupNum, op, participants, startTime, endTime);
+				groupNum, op, newParticipants, startTime, endTime);
+		// As long as setParams is called later on uniquely generated parameters, should be OK!
 		k.setParams(params);
 		return k;
 	}

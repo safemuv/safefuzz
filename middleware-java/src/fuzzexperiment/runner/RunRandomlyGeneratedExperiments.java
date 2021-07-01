@@ -1,5 +1,6 @@
 package fuzzexperiment.runner;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,5 +54,11 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 	public void advance(Map<Metric, Double> res) {
 		count++;
 		newGeneratedFile();
+	}
+
+	@Override
+	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

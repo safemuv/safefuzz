@@ -97,10 +97,10 @@ public class FuzzingExperimentGenerator {
 		}
 	}
 
-	protected <E> E selectRandomElementFrom(List<E> l) throws ListHasNoElement {
+	protected <E> E selectRandomElementFrom(List<E> l, String what) throws ListHasNoElement {
 		int length = l.size();
 		if (length == 0) {
-			throw new ListHasNoElement(); 
+			throw new ListHasNoElement(what); 
 		} else {
 			int i = rng.nextInt(length);
 			return l.get(i);
@@ -180,9 +180,9 @@ public class FuzzingExperimentGenerator {
 		// Select an operation parameter set to use
 		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
 		if (opsetTypes.size() == 0) {
-			throw new ListHasNoElement();
+			throw new ListHasNoElement("opsetType in generateVariableEntry");
 		} else {
-			OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);
+			OpParamSetType opsetType = selectRandomElementFrom(opsetTypes, "opsetType in generateVariableEntry");
 			OperationParameterSet opset = opsetType.getOpset();
 			String subSpec = opsetType.getSubSpec();
 

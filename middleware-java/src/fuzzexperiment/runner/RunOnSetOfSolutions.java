@@ -1,5 +1,6 @@
 package fuzzexperiment.runner;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,5 +44,11 @@ public class RunOnSetOfSolutions extends ExptParams {
 	
 	public void advance(Map<Metric, Double> res) {
 		activeElt++;	
+	}
+
+	@Override
+	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

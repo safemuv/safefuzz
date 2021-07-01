@@ -119,7 +119,7 @@ public class FuzzExptRunner {
 				}
 				
 				System.out.println("----------------------------------------------------------------------------------------------------");
-				
+				eparams.printStateAfter();
 			}	
 		}
 		System.out.println("Run completed");

@@ -43,6 +43,7 @@ import atlassharedclasses.FaultInstance;
 import fuzzexperiment.runner.StartFuzzingProcesses;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
+import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
 
 public class RunJMetal extends AbstractAlgorithmRunner {
 
@@ -53,7 +54,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 	static private boolean actuallyRun = false;
 	static private double exptRunTime = 1200.0;
 
-	static private int maxIterations = 24;
+	static private int maxIterations = 1000;
 
 	static double crossoverProb = 0.2;
 	static double mutationProb = 0.6;
@@ -89,11 +90,13 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		Set<Metric> metrics_s = mission.getAllMetrics();
 		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 		
-		for (Metric m : metrics_s) {
-			if (m instanceof OfflineMetric) {
-				metrics.add((OfflineMetric)m);
-			}
-		}
+//		for (Metric m : metrics_s) {
+//			if (m instanceof OfflineMetric) {
+//				metrics.add((OfflineMetric)m);
+//			}
+//		}
+		
+		metrics.add(new FindSpecificTime(100.0, 10.0));
 
 		Random problemRNG = new Random();
 		Random crossoverRNG = new Random();

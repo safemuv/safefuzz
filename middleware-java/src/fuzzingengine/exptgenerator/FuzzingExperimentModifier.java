@@ -66,8 +66,10 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		List<FuzzingSelectionRecord> output = duplicateExperimentRecords(basis);
 		
 		try {
-			krec = selectRandomElementFrom(output);
+			krec = selectRandomElementFrom(output, "output in generateExperimentBasedUpon");
+			
 			ChangeOp operation = selectRandomOperation();
+			
 			System.out.println("Mutation operation selected = " + operation);
 			
 			if (operation == ChangeOp.SHIFT_TIME) {
@@ -117,20 +119,20 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 	private void newParameters(FuzzingSelectionRecord m) throws ListHasNoElement, OperationLoadFailed {
 		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
 		for (Map.Entry<String, VariableSpecification> vs : fsm.getRecords().entrySet()) {
-		// Select an operation parameter set to use
 			VariableSpecification var = vs.getValue();
-			List<OpParamSetType> opsetTypes = var.getOperationParamSets();
-			if (opsetTypes.size() == 0) {
-				throw new ListHasNoElement();
-			} else {
-				OpParamSetType opsetType = selectRandomElementFrom(opsetTypes);
-				OperationParameterSet opset = opsetType.getOpset();
-				String subSpec = opsetType.getSubSpec();
-				List<Object> specificOpParams = opset.generateSpecific();
-				String paramStr = paramsAsString(specificOpParams);
-				FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
-				((FuzzingKeySelectionRecord)m).setParams(specificOpParams);
-			}
+			
+			if (m instanceof FuzzingKeySelectionRecord) {
+				FuzzingKeySelectionRecord kr = (FuzzingKeySelectionRecord)m;
+				// Need to check the variable spec matches the chosen key!
+				if (var.getVariable().equals(kr.getKey())) {
+					// Select an operation parameter set to use
+					List<OpParamSetType> opsetTypes = var.getOperationParamSets();
+					OpParamSetType opsetType = selectRandomElementFrom(opsetTypes, "opsetType in newParameters");
+					OperationParameterSet opset = opsetType.getOpset();
+					List<Object> specificOpParams = opset.generateSpecific();
+					kr.setParams(specificOpParams);
+				}
+			}	
 		}
 	}
 	
@@ -138,6 +140,4 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		List<String> newParticipants = getRandomParticipantsFromMission();
 		((FuzzingKeySelectionRecord)m).setParticipants(newParticipants);
 	}
-	
-	
 }

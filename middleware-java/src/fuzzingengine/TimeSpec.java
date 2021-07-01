@@ -7,6 +7,8 @@ public class TimeSpec {
 	private double endTime;
 	private Mission mission;
 	
+	private final boolean ERROR_IF_MISSION_TIME_EXCEEDED = false;
+	
 	private void checkTiming() throws InvalidTimeSpec {
 		if (endTime < startTime) {
 			throw new InvalidTimeSpec("endTime < startTime");
@@ -17,7 +19,12 @@ public class TimeSpec {
 		}
 		
 		if (endTime > mission.getEndTime()) {
-			throw new InvalidTimeSpec("endTime > mission end time");
+			if (ERROR_IF_MISSION_TIME_EXCEEDED) {
+				throw new InvalidTimeSpec("endTime > mission end time");
+			} else {
+				System.out.println("Fuzzing timespec endTime = " + endTime + " is beyond mission end time - correcting to mission end time");
+				endTime = mission.getEndTime();
+			}
 		}
 	}
 	

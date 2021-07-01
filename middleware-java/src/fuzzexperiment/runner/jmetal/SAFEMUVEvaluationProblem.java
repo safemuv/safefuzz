@@ -139,6 +139,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			}
 
 			// Compute the metrics
+			System.out.println("csvFileName = " + csvFileName);
 			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
 			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, csvFileName);
 			System.out.println("res = " + res);

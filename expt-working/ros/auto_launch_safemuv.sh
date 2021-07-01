@@ -1,5 +1,10 @@
 #!/bin/sh
 
+TRAJ_HOST_LOCATION=/home/jharbin/catkin_ws/src/safemuv/traj_plan_external/trajectory_planner_external.yaml
+TRAJ_DEST_LOCATION=/catkin_ws/src/planning_stack/packages/path_planning/path_planner_geometric_primitives/trajectory_planner_geometric_primitives_ros/config/path_planner_geometric_primitives_3d_airplane_cargolux_airplane_frame.yaml
+
+rm -rf /home/jharbin/.ros/log
+
 # TODO: reduce the time delays
 echo "Starting SAFEMUV Docker containers"
 # To setup the images for the first run
@@ -8,6 +13,9 @@ echo "Starting SAFEMUV Docker containers"
 docker start SAFEMUV1
 docker start SAFEMUV2
 sleep 10
+#docker cp $TRAJ_HOST_LOCATION SAFEMUV1:$TRAJ_DEST_LOCATION
+#docker cp $TRAJ_HOST_LOCATION SAFEMUV2:$TRAJ_DEST_LOCATION
+sleep 1
 echo "Starting roslaunch launchers"
 xterm -e /bin/bash -l -c "roslaunch safemuv_gazebo_simulation prepare_sim.launch" &
 sleep 5

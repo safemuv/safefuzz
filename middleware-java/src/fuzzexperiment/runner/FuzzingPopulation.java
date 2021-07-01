@@ -1,5 +1,7 @@
 package fuzzexperiment.runner;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -16,7 +18,6 @@ import fuzzingengine.exptgenerator.ListHasNoElement;
 public class FuzzingPopulation {
 	public List<FuzzingExptResult> pop = new ArrayList<FuzzingExptResult>();
 
-	private int topNumToSelect = 5;
 	private int sizeLimit;
 	Random rng = new Random();
 
@@ -51,10 +52,10 @@ public class FuzzingPopulation {
 //		return Optional.of(picked);
 //	}
 
-	protected <E> E selectRandomElementFrom(List<E> l) throws ListHasNoElement {
+	protected <E> E selectRandomElementFrom(List<E> l, String what) throws ListHasNoElement {
 		int length = l.size();
 		if (length == 0) {
-			throw new ListHasNoElement();
+			throw new ListHasNoElement(what);
 		} else {
 			int i = rng.nextInt(length);
 			return l.get(i);
@@ -70,7 +71,7 @@ public class FuzzingPopulation {
 			// Find one of the non-dominated solutions to explore
 			List<FuzzingExptResult> nondominatedSolutions = rankings.get(0);
 			try {
-				FuzzingExptResult e = selectRandomElementFrom(nondominatedSolutions);
+				FuzzingExptResult e = selectRandomElementFrom(nondominatedSolutions, "nondominatedSolutions in pickPopulationElementToExplore");
 				return Optional.of(e);
 			} catch (ListHasNoElement e) {
 				return Optional.empty();
@@ -99,6 +100,13 @@ public class FuzzingPopulation {
 
 	public int currentSize() {
 		return pop.size();
+	}
+	
+	public void logPopulation(FileWriter file) throws IOException {
+		for (FuzzingExptResult r : pop) {
+				file.write(r.toStringWithSpec() + "\n");
+		}
+		file.write("==============================================================================================================\n");
 	}
 
 	// https://github.com/jMetal/jMetal/blob/9a68b6878a1d7429fb1a0be87f84ec6faa05fa8c/jmetal-core/src/main/java/org/uma/jmetal/util/ranking/impl/FastNonDominatedSortRanking.java

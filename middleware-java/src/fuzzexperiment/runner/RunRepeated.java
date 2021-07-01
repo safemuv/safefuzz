@@ -1,5 +1,6 @@
 package fuzzexperiment.runner;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import fuzzexperiment.runner.metrics.Metric;
@@ -33,6 +34,12 @@ public class RunRepeated extends ExptParams {
 
 	public void advance(Map<Metric, Double> res) {
 		count++;
+		
+	}
+
+	@Override
+	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
 		
 	}
 

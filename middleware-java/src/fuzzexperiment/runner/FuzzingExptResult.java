@@ -96,6 +96,19 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 	}
 	
 	public String toString() {
-		return "<FuzzingExptResult: " + spec.toString() + "-" + metricsMapToString(metrics) + ">";
+		return "--------------------------------------------------------------------------------\n" + spec.toString() + "-" + metricsMapToString(metrics) + "";
+	}
+	
+	public String specAsCSV() {
+		String output = "[";
+		for (FuzzingSelectionRecord r : spec) {
+			output += r.generateCSVLine() + "\n";
+		}
+		output = output + "\n";
+		return output;
+	}
+	
+	public String toStringWithSpec() {
+		return "--------------------------------------------------------------------------------\n" + specAsCSV() + "-" + metricsMapToString(metrics) + "";
 	}
 }

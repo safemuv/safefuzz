@@ -20,11 +20,14 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	private boolean actuallyRun;
 	private String exptTag;
 	private double exptRunTime;
+	String baseDir = "/tmp";
 	
 	private Map<Object,Object> attributes = new HashMap<Object,Object>();
 	private Map<Integer,Double> objectives = new HashMap<Integer,Double>();
 	private Map<Integer,Double> constraints = new HashMap<Integer,Double>();
 	private List<FuzzingSelectionRecord> contents = new ArrayList<FuzzingSelectionRecord>();
+
+	private String csvFileName;
 	
 	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime) {
 		this.mission = mission;
@@ -214,7 +217,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		FileWriter fw = new FileWriter(filePath);
 		for (FuzzingSelectionRecord fs : contents) {
 			String line = fs.generateCSVLine();
-			fw.write(line);
+			fw.write(line + "\n");
 		}
 		fw.close();		
 	}
@@ -235,9 +238,17 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		return getAttributes();
 	}
 
-	public String getCSVFileName() throws IOException {
-		String csvFileName = UUID.randomUUID().toString();
+	public String createCSVFileName() throws IOException {
+		this.csvFileName = baseDir + "/" + UUID.randomUUID().toString() + ".csv";
 		generateCSVFile(csvFileName);
 		return csvFileName;
+	}
+	
+	public String getCSVFileName() throws IOException {
+		if (csvFileName == null) {
+			return createCSVFileName();
+		} else {
+			return csvFileName;
+		}
 	}
 }

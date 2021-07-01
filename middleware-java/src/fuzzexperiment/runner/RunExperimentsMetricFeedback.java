@@ -1,5 +1,7 @@
 package fuzzexperiment.runner;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +25,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	List<Metric> metrics;
 	
 	private int populationLimit;
+	private FileWriter populationLog;
 
 	private FuzzingExperimentModifier g;
 
@@ -37,12 +40,13 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 
-	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) {
+	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) throws IOException {
 		this.resFileName = resFileName;
 		this.populationLimit = populationLimit;
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
+		this.populationLog = new FileWriter("population.log");
 		this.pop = new FuzzingPopulation(populationLimit);
 		g = new FuzzingExperimentModifier(mission);
 		newRandomFile();
@@ -53,9 +57,19 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	public boolean completed() {
 		return (count >= countLimit);
 	}
-
-	public void printState() {
+	
+	public void logPopulation() throws IOException {
+		pop.logPopulation(populationLog);
+	}
+	
+	public void printState() throws IOException {
 		System.out.println("RunExperimentsMetricFeedback: Evaluating entry " + getCurrentFilename());
+		populationLog.write("STARTING ITERATION " + count + ": population state\n");
+	}
+
+	public void printStateAfter() throws IOException {
+		logPopulation();
+		populationLog.flush();
 	}
 
 	public void advance() {
@@ -74,7 +88,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 
 		if (pop.currentSize() < populationLimit) {
 			System.out.println("- Generating new fuzzing experiment");
-			newRandomFile();		
+			newRandomFile();
 		} else {
 			Optional<FuzzingExptResult> startingPoint_o = pop.pickPopulationElementToExplore();
 			if (startingPoint_o.isPresent()) {
