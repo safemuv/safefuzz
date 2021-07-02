@@ -138,4 +138,10 @@ public class StartFuzzingProcesses {
 	public void compileLoader() throws IOException {
 		ExptHelper.startScript(ABS_SCRIPT_PATH, "compile_dsl_loader.sh");
 	}
+
+	public void cleanRun(Mission baseMission, String file) throws IOException {
+		// Originally call Argentina's launch script here... for now, just call
+		// the full script
+		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
+	}
 }

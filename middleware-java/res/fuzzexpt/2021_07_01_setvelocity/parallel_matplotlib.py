@@ -32,6 +32,7 @@ def parallel_coordinates(data_sets, style=None):
                 for dimension,value in enumerate(ds)]
         norm_data_sets.append(nds)
     data_sets = norm_data_sets
+    norm_data_sets = data_sets
 
     # Plot the datasets on all the subplots
     for i, ax in enumerate(axes):
@@ -73,12 +74,9 @@ if __name__ == '__main__':
     base  = [0,   0,  5,   5,  0]
     scale = [1.5, 2., 1.0, 2., 2.]
 
-    #data = [[base[x] + random.uniform(0., 1.)*scale[x]
-    #        for x in range(5)] for y in range(30)]
-    #  print(data)
-
     data_pd = pd.read_csv("final-pop-without-empty.res")
     data = data_pd.values
+    print(data)
     
     colors = list(mcolors.BASE_COLORS.keys()) + list(mcolors.TABLEAU_COLORS.keys())
 

@@ -8,11 +8,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import fuzzexperiment.runner.metrics.Metric;
+import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzingengine.exptgenerator.ListHasNoElement;
 
 public class FuzzingPopulation {
@@ -194,7 +197,27 @@ public class FuzzingPopulation {
 				rankedSubPopulations.get(j).add(population.get(it1.next()));
 			}
 		}
-
 		return rankedSubPopulations;
+	}
+
+	public void logFinalPopulation(FileWriter outLog, List<OfflineMetric> ms) throws IOException {
+		String firstCol = "ID";
+		int id = 1;
+		
+		outLog.write(firstCol + ",");
+		for (Metric m : ms) {
+			outLog.write(m.getClass().getSimpleName() + ",");
+		}
+		
+		outLog.write("\n");
+		
+		for (FuzzingExptResult r : pop) {
+			outLog.write(String.valueOf(id) + ",");
+			id++;
+			Map<Metric,Double> metrics = r.getMetrics();
+			for (Metric m : ms) {
+				outLog.write(metrics.get(m) + ",");
+			}
+		}
 	}
 }

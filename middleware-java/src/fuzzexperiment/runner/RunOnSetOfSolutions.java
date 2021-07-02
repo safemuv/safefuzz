@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import fuzzexperiment.runner.metrics.Metric;
+import fuzzexperiment.runner.metrics.OfflineMetric;
 
 public class RunOnSetOfSolutions extends ExptParams {
 	private String resFileName;
@@ -48,6 +49,12 @@ public class RunOnSetOfSolutions extends ExptParams {
 
 	@Override
 	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
 	}

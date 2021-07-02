@@ -1,9 +1,11 @@
 package fuzzexperiment.runner;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import fuzzexperiment.runner.metrics.Metric;
+import fuzzexperiment.runner.metrics.OfflineMetric;
 
 public class RunRepeated extends ExptParams {
 	private int count = 0;
@@ -39,6 +41,12 @@ public class RunRepeated extends ExptParams {
 
 	@Override
 	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
 	}

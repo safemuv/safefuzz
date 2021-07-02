@@ -1,12 +1,14 @@
 package fuzzexperiment.runner;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricHandler;
+import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 
 public class RunRandomlyGeneratedExperiments extends ExptParams {
@@ -58,6 +60,12 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 
 	@Override
 	public void printStateAfter() throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
+import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
@@ -26,6 +27,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	
 	private int populationLimit;
 	private FileWriter populationLog;
+	private FileWriter finalPopulationLog;
 
 	private FuzzingExperimentModifier g;
 
@@ -47,6 +49,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
 		this.populationLog = new FileWriter("population.log");
+		this.finalPopulationLog = new FileWriter("finalPopulation.res");
 		this.pop = new FuzzingPopulation(populationLimit);
 		g = new FuzzingExperimentModifier(mission);
 		newRandomFile();
@@ -100,5 +103,10 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 				currentFuzzingSels = g.generateExperimentBasedUpon(getCurrentFilename(), sels, res);
 			}
 		}
+	}
+
+	protected void printFinal(List<OfflineMetric> ms) throws IOException {
+		pop.logFinalPopulation(finalPopulationLog, ms);
+		finalPopulationLog.close();
 	}
 }

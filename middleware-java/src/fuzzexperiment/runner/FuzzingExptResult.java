@@ -10,7 +10,7 @@ import fuzzingengine.FuzzingSelectionRecord;
 public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 	List<FuzzingSelectionRecord> spec;
 	Map<Metric, Double> metrics;
-	List<Metric> metricOrdering;
+	//List<Metric> metricOrdering;
 
 	private enum Ordering {
 		ASCENDING, DESCENDING
@@ -47,14 +47,14 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 		return better;
 	}
 
-	public List<Double> mapToList(Map<Metric, Double> map) {
-		List<Double> resList = new ArrayList<Double>();
-		for (Metric m : metricOrdering) {
-			Double res = map.get(m);
-			resList.add(res);
-		}
-		return resList;
-	}
+//	public List<Double> mapToList(Map<Metric, Double> map) {
+//		List<Double> resList = new ArrayList<Double>();
+//		for (Metric m : metricOrdering) {
+//			Double res = map.get(m);
+//			resList.add(res);
+//		}
+//		return resList;
+//	}
 
 	public int compareMetrics(Map<Metric, Double> solution1, Map<Metric, Double> solution2) throws MetricMissing {
 		int bestIsOne = 0;
@@ -110,5 +110,13 @@ public class FuzzingExptResult implements Comparable<FuzzingExptResult> {
 	
 	public String toStringWithSpec() {
 		return "--------------------------------------------------------------------------------\n" + specAsCSV() + "-" + metricsMapToString(metrics) + "";
+	}
+	
+	public String allMetrics(String start, List<Metric> ms) {
+		String output = start;
+		for (Metric m : ms) {
+			output += m.getClass().getSimpleName() + ",";
+		}
+		return output;
 	}
 }

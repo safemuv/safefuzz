@@ -92,6 +92,9 @@ public class FuzzExptRunner {
 				System.out.println("====================================================================================================");
 				System.out.println("Running fuzzing experiments for CSV file name " + file);
 				
+				runner.cleanRun(baseMission, file);
+				System.out.println("Refresh launch/config files for clean run");
+				
 				// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 				// config files etc for this CSV definition experimental run
 				runner.codeGenerationROSFuzzing(baseMission, file);
@@ -123,5 +126,6 @@ public class FuzzExptRunner {
 			}	
 		}
 		System.out.println("Run completed");
+		eparams.printFinal(mh.getMetrics());
 	}
 }
