@@ -81,23 +81,35 @@ public class FuzzingPopulation {
 			}
 		}
 	}
+	
+	public void findElementToRemove() {
+		// Find the non-dominated solutions
+		List<ArrayList<FuzzingExptResult>> ranks = computeRankings();
+		int rankCount = ranks.size();
+		boolean found = false;
+		
+		for (int i = 0; i < rankCount; i++) {
+			if (!found) {
+				try {
+					List<FuzzingExptResult> ranked = ranks.get(i);
+					FuzzingExptResult forRemoval = selectRandomElementFrom(ranked, "ranked " + i);;
+					System.out.println("Looking for element to remove in rank " + i);
+					System.out.println("Found element to remove in the population = " + forRemoval);
+					pop.remove(forRemoval);
+					found = true;
+				} catch (ListHasNoElement e) {
+					System.out.println("No element found in rank " + i);
+				}
+			}
+		}
+	}
 
 	public void pushToPopulation(FuzzingExptResult newResult) {
 		// Add the new element to the population
 		pop.add(newResult);
 		// If the population size is greater than the size limit...
 		if (pop.size() > sizeLimit) {
-			// Sort and find one to evict ... the worst one
-			List<FuzzingExptResult> sortedPop = pop.stream().sorted().collect(Collectors.toList());
-			FuzzingExptResult worst = sortedPop.get(0);
-			// TODO: ensure this sort order is correct
-			if (worst != null) {
-				pop.remove(worst);
-			}
-
-			System.out.println("pushToPopulation - looking for lowest");
-			System.out.println("sortedPop=" + sortedPop);
-			System.out.println("worst=" + worst);
+			findElementToRemove();
 		}
 	}
 
@@ -218,6 +230,7 @@ public class FuzzingPopulation {
 			for (Metric m : ms) {
 				outLog.write(metrics.get(m) + ",");
 			}
+			outLog.write("\n");
 		}
 	}
 }
