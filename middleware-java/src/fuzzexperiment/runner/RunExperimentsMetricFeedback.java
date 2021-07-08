@@ -3,16 +3,13 @@ package fuzzexperiment.runner;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
-import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 
@@ -39,7 +36,18 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	}
 
 	private void newRandomFile() {
-		currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
+		boolean found = false;
+		int tries = 0;
+		// Keep trying until we ensure we have an experiment with at least 1 entry
+		// or, if we don't get any entries after 100 tries, ensure we stop to avoid infinite loop
+		while (!found && (tries < 100)) {
+			currentFuzzingSels = g.generateExperiment(Optional.of(getCurrentFilename()));
+			tries++;
+			// Stop if our experiment has at least one entry!
+			if (currentFuzzingSels.size() > 0) {
+				found = true;
+			}
+		}
 	}
 
 	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) throws IOException {

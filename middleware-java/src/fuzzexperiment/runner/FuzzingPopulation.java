@@ -88,7 +88,8 @@ public class FuzzingPopulation {
 		int rankCount = ranks.size();
 		boolean found = false;
 		
-		for (int i = 0; i < rankCount; i++) {
+		// Start from the lowest ranked element to remove from the population
+		for (int i = rankCount - 1; i >= 0; i--) {
 			if (!found) {
 				try {
 					List<FuzzingExptResult> ranked = ranks.get(i);
@@ -164,7 +165,7 @@ public class FuzzingPopulation {
 				// population.get(q));
 				// flagDominate = population.get(p).compareTo(population.get(q));
 				flagDominate = population.get(q).compareTo(population.get(p));
-				System.out.println(flagDominate);
+				//System.out.println(flagDominate);
 				// }
 				if (flagDominate == -1) {
 					iDominate.get(p).add(q);
