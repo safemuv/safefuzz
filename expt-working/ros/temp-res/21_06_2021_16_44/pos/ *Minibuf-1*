@@ -1,0 +1,10 @@
+33   Swiper: 
+     m = dlmread(filename,",");
+     if (length(m) > 0)
+       plot3(m(:,xcol), m(:,ycol), m(:,zcol), 'rx-');
+       xlabel("X");
+       ylabel("Y");
+       zlabel("Z");
+     end
+   end
+ end
