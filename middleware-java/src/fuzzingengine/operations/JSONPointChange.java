@@ -19,7 +19,8 @@ public class JSONPointChange extends JSONFuzzingOperation {
 	
 	private enum ChangeMode {
 		FIXED,
-		OFFSET,
+		FIXEDOFFSET,
+		RANDOMOFFSET,
 		RANDOM
 	}
 	
@@ -38,11 +39,15 @@ public class JSONPointChange extends JSONFuzzingOperation {
 	}
 	
 	public static JSONPointChange RandomOffset(double xmax, double ymax, double zmax) {
-		return new JSONPointChange(ChangeMode.OFFSET, new Point(xmax, ymax, zmax));
+		return new JSONPointChange(ChangeMode.RANDOMOFFSET, new Point(xmax, ymax, zmax));
 	}
 	
 	private static JSONPointChange Fixed(double x, double y, double z) {
 		return new JSONPointChange(ChangeMode.FIXED, new Point(x,y,z));
+	}
+	
+	private static JSONPointChange FixedOffset(double x, double y, double z) {
+		return new JSONPointChange(ChangeMode.FIXEDOFFSET, new Point(x,y,z));
 	}
 
 	public String getReplacement(String inValue) {
@@ -57,13 +62,18 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		// Modified is by default the incoming point from the fuzzing engine
 		Point modified = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 		
-		if (mode == ChangeMode.OFFSET) {
+		if (mode == ChangeMode.RANDOMOFFSET) {
 			Point offset = getRandomPoint();
 			modified = modified.add(offset);
 		}
 		
 		if (mode == ChangeMode.FIXED) {
 			modified = new Point(p.getX(), p.getY(), p.getZ());
+		}
+		
+		if (mode == ChangeMode.FIXEDOFFSET) {
+			Point offset = new Point(p.getX(), p.getY(), p.getZ());
+			modified = modified.add(offset);
 		}
 		
 		if (mode == ChangeMode.RANDOM) {
@@ -83,13 +93,18 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		JsonNumber jz = j.getJsonNumber(2);
 		Point modified = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 		
-		if (mode == ChangeMode.OFFSET) {
+		if (mode == ChangeMode.RANDOMOFFSET) {
 			Point offset = getRandomPoint();
 			modified = modified.add(offset);
 		}
 		
 		if (mode == ChangeMode.FIXED) {
 			modified = new Point(p.getX(), p.getY(), p.getZ());
+		}
+		
+		if (mode == ChangeMode.FIXEDOFFSET) {
+			Point offset = new Point(p.getX(), p.getY(), p.getZ());
+			modified = modified.add(offset);
 		}
 			
 		if (mode == ChangeMode.RANDOM) {
@@ -149,6 +164,13 @@ public class JSONPointChange extends JSONFuzzingOperation {
 			double y = Double.valueOf(fields[2]);
 			double z = Double.valueOf(fields[3]);
 			return JSONPointChange.Fixed(x, y, z);
+		}
+		
+		if (fields[0].toUpperCase().equals("FIXEDOFFSET")) {
+			double x = Double.valueOf(fields[1]);
+			double y = Double.valueOf(fields[2]);
+			double z = Double.valueOf(fields[3]);
+			return JSONPointChange.FixedOffset(x, y, z);
 		}
 		
 		throw new CreationFailed("Invalid parameter string " + s);

@@ -6,10 +6,9 @@ df = pd.read_csv("final-pop-without-empty.res")
 pio.renderers.default="png"
 
 fig = px.parallel_coordinates(df, color="ID",
-                              labels={"OutsideOfOuterRegionViolation" : "OuterRegionV",
-                                      "OutsideOfInnerRegionViolation" : "InnerRegionV",
-                                      "AvoidanceViolation"            : "AvoidanceV",
-                                      "FuzzingTimeLength"             : "TimeLen",
+                              labels={"OutsideOfOuterRegionViolation" : "ORV",
+                                      "AvoidanceViolation"            : "AvoidV",
+                                      "FuzzingTimeLength"             : "TLen",
                                       "SpeedViolationsCount"          : "SpeedV" },
                               color_continuous_scale=px.colors.diverging.Tealrose,
                               color_continuous_midpoint=None)

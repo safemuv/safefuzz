@@ -16,7 +16,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType">
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ROSVariableType" eSuperTypes="#//VariableType">
@@ -25,11 +25,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType">
+  <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupNumToReplace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
+        eType="#//VariableType" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingNature" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature"/>
   <eClassifiers xsi:type="ecore:EClass" name="CustomConfigurationFuzzing" eSuperTypes="#//FuzzingNature">
@@ -42,8 +45,10 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nature" eType="#//FuzzingNature"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FileSpecification">
+  <eClassifiers xsi:type="ecore:EClass" name="FileSpecification" eSuperTypes="#//VariableSpecification">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Environment" eSuperTypes="#//FuzzingComponent"/>
@@ -75,6 +80,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageRef" lowerBound="1"
         eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas#//Message"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//VariableSpecification"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Simulator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -144,6 +151,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingSpecification">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sims" upperBound="-1" eType="#//Simulator"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageRefs" upperBound="-1"
+        eType="#//FuzzingMessage" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
         eType="#//FuzzingOperation" containment="true"/>
   </eClassifiers>
