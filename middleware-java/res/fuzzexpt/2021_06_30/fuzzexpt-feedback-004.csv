@@ -1,0 +1,3 @@
+KEY,/desired_path_prime,45.23041750707413,74.77409293683887,uav_2,poses,PathPointChanges,RANDOMOFFSET_MULTIPLE|1.1354501499716823|1.3445712075644567|1.2152061442546185|3
+KEY,trajectory_planner_external.yaml,18.020764677141756,183.12427340099075,uav_2,trajectory_planner_geometric_primitives.discrete_graph.num_nodes,IntegerVariableChange,RANDOM|300|3000
+KEY,/ual/set_velocity_prime,72.57699501058983,118.55493155171072,uav_1|uav_2,twist.linear,JSONPointChange,FIXED|0.6585969128197204|0.6007830201461233|0.46736707392139154

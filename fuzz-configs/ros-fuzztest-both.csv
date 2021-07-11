@@ -1,0 +1,2 @@
+Key,/ual/set_velocity_prime,100.0,110.0,uav_1|uav_2,twist.linear,JSONPointChange,RANDOMOFFSET|0.01|0.01|0.01
+Key,/desired_trajectory_path_prime,0.0,10000.0,uav_1|uav_2,poses,PathPointChanges,RANDOMOFFSET_MULTIPLE|100.0|100.0|100.0|10
