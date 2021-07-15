@@ -3,7 +3,7 @@
 rm -rf /home/jharbin/.ros/log
 
 echo "Starting SAFEMUV Docker container"
-docker run -it --network host -v /home/$USER/catkin_ws/src/safemuv_ros/safemuv_shared/:/catkin_ws/src/safemuv_shared afi_core bash
+docker run --network host -v /home/$USER/catkin_ws/src/safemuv_ros/safemuv_shared/:/catkin_ws/src/safemuv_shared afi_core bash
 sleep 10
 echo "Starting roslaunch launchers"
 xterm -e /bin/bash -l -c "roslaunch safemuv_gazebo_simulation prepare_sim.launch" &
