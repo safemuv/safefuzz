@@ -76,6 +76,21 @@ public abstract class ATLASCore {
 		setupPositionPropertyUpdaters();
 	}
 	
+	public ATLASCore(Mission mission, boolean includeCIQueue) {
+		this.mission = mission;
+		stopOnNoEnergy = mission.stopOnNoEnergy();
+		this.timeLimit = mission.getEndTime();
+		this.monitor = new MissionMonitor(this, mission);
+		if (includeCIQueue) {
+			fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
+			queues.add(fromCI);
+		}
+		faultGen = new FaultGenerator(this,mission);
+		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, true);
+		setupEnergyOnRobots();
+		setupPositionPropertyUpdaters();
+	}
+	
 	public CARSTranslations getCARSTranslator() {
 		return carsOutput;
 	}

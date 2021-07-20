@@ -56,6 +56,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	}
 
 	public void handleEventSpecifically(ROSEvent e) {
+		System.out.println("EventClass=" + e.getClass().getSimpleName());
 		if (e instanceof ROSTopicUpdate) {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) e;
 			if (rtu.tagEquals(ATLASTag.SIMULATOR_GENERAL)) {

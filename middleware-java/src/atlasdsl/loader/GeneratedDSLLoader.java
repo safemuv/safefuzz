@@ -127,8 +127,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
 		
-			GoalVariable gvar1 = new GoalVariable("/pymesh_distance_to_plane", "standard_msgs/Float32", true);
-			AvoidPlaneInner.addVariable(gvar1);
 		
 		
 		

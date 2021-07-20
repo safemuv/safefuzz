@@ -120,7 +120,7 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("trajectory_tracking_controller_fuzzy", "/ual/set_velocity_prime", "/ual/set_velocity", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv//trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
-		true, Optional.of(new TimeSpec(m,0.0,200.0)), Optional.of(1.0));
+		true, Optional.of(new TimeSpec(m,0.0,1000.0)), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops1, "twist.linear");
 	
