@@ -23,6 +23,7 @@ import it.units.malelab.jgea.core.Problem;
 import it.units.malelab.jgea.core.evolver.*;
 import it.units.malelab.jgea.core.evolver.stopcondition.Iterations;
 import it.units.malelab.jgea.core.evolver.stopcondition.TargetFitness;
+import it.units.malelab.jgea.core.fitness.BooleanFunctionFitness;
 import it.units.malelab.jgea.core.listener.*;
 import it.units.malelab.jgea.core.listener.telegram.TelegramUpdater;
 import it.units.malelab.jgea.core.order.ParetoDominance;
@@ -32,7 +33,10 @@ import it.units.malelab.jgea.core.selector.Worst;
 import it.units.malelab.jgea.core.util.ImagePlotters;
 import it.units.malelab.jgea.core.util.Misc;
 import it.units.malelab.jgea.core.util.Sized;
+import it.units.malelab.jgea.problem.booleanfunction.BooleanUtils;
 import it.units.malelab.jgea.problem.booleanfunction.EvenParity;
+import it.units.malelab.jgea.problem.booleanfunction.FormulaMapper;
+import it.units.malelab.jgea.problem.booleanfunction.EvenParity.TargetFunction;
 import it.units.malelab.jgea.problem.booleanfunction.element.Element;
 import it.units.malelab.jgea.problem.symbolicregression.*;
 import it.units.malelab.jgea.problem.synthetic.LinearPoints;
@@ -57,7 +61,9 @@ import it.units.malelab.jgea.representation.tree.Tree;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -122,8 +128,9 @@ public class Example_grammar extends Worker {
     Listener.Factory<Event<?, ?, ? extends Double>> listenerFactory = new TabularPrinter<>(Misc.concat(List.of(BASIC_FUNCTIONS, DOUBLE_FUNCTIONS)));
     Random r = new Random(1);
     GrammarBasedProblem<String, List<Tree<Element>>, Double> p;
+    
     try {
-      p = new EvenParity(8);
+      p = new SAFEMUV_Grammar_problem(8);
     } catch (IOException e) {
       System.err.printf("Cannot load problem due to %s%n", e);
       return;
