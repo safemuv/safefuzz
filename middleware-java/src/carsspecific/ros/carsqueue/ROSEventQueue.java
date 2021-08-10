@@ -117,7 +117,6 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 				double s = vel.absLength();
 				robotSpeeds.put(rtu.getVehicleName(), s);
-
 				System.out.println("Vel:" + vel.toString());
 			}
 		}

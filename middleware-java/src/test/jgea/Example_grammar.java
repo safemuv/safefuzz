@@ -150,6 +150,7 @@ public class Example_grammar extends Worker {
         true,
         false
     );
+       
     try {
       Collection<List<Tree<Element>>> solutions = evolver.solve(
           Misc.cached(p.getFitnessFunction(), 10000),

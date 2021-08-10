@@ -192,6 +192,7 @@ public class Example extends Worker {
             DOUBLE_FUNCTIONS
         )))
     ));
+    
     List<Evolver<BitString, BitString, Double>> evolvers = List.of(
         new RandomSearch<>(
             Function.identity(),

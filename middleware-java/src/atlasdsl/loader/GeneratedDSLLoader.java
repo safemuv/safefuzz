@@ -49,8 +49,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalAction ga1 = new TrackDistances();
-		
-		
+				
 		
 		   
 		GoalRegion grtrackDistancesAndVelocities = new StaticGoalRegion(
@@ -110,45 +109,14 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		
 		Robot [] grp3 = {ruav_1,ruav_2}; 
-		GoalParticipants gpAvoidPlaneInner = new StaticParticipants(grp3, mission);
+		GoalParticipants gpAvoidOthers = new StaticParticipants(grp3, mission);
 		
 		
 		
 			GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		
 		
-		
-		GoalAction ga3 = new Avoid(1.5);
-		
-		
-		
-		
-		
-		
-		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
-		
-			GoalVariable gvar1 = new GoalVariable("/pymesh_distance_to_plane", "standard_msgs/Float32", true);
-			AvoidPlaneInner.addVariable(gvar1);
-		
-		
-		
-		
-		Metric met4 = new OutsideOfInnerRegionViolations();
-		AvoidPlaneInner.addMetric(met4);
-		
-		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
- 
- 
-		
-		Robot [] grp4 = {ruav_1,ruav_2}; 
-		GoalParticipants gpAvoidOthers = new StaticParticipants(grp4, mission);
-		
-		
-		
-			GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
-		
-		
-		GoalAction ga4 = new AvoidOthers(2.0);
+		GoalAction ga3 = new AvoidOthers(2.0);
 		
 		
 		
@@ -160,14 +128,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 			           new Point(10.0, 10.0, 10.0)));
 		
 		
-		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
+		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt3, gpAvoidOthers, Optional.of(grAvoidOthers), ga3);
 		
 		
 		
 		
 		
-		Metric met5 = new AvoidanceViolationsCount();
-		AvoidOthers.addMetric(met5);
+		Metric met4 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met4);
 		
 		mission.addGoal("AvoidOthers", AvoidOthers);
 	

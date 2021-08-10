@@ -45,18 +45,15 @@ public class SAFEMUV_Grammar_problem implements GrammarBasedProblem<String, List
 	}
 	
 	public SAFEMUV_Grammar_problem(final int size) throws IOException {
-		//grammar = Grammar.fromFile(new File("/home/jharbin/source/jgea/grammars/boolean-parity-var.bnf"));
 		grammar = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
 		System.out.println("Grammar rules = " + grammar.getRules());
 		System.out.println("Starting symbol = " + grammar.getStartingSymbol());
 		
 		solutionMapper = new FormulaMapper();
-		TargetFunction targetFunction = new TargetFunction(size);
-		//fitnessFunction = new BooleanFunctionFitness(targetFunction,
-//				BooleanUtils.buildCompleteObservations(targetFunction.varNames));
-		
+		//TargetFunction targetFunction = new TargetFunction(size);
+	
 		// So far this is a dummy fitness function that just returns false for everything
-		fitnessFunction = new SAFEMUV_Fitness_function(BooleanUtils.buildCompleteObservations(targetFunction.varNames));
+		fitnessFunction = new SAFEMUV_Fitness_function();
 	}
 
 	private final Grammar<String> grammar;

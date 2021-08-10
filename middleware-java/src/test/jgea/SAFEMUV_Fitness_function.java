@@ -1,71 +1,34 @@
 package test.jgea;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import it.units.malelab.jgea.core.fitness.BooleanFunctionFitness;
-import it.units.malelab.jgea.core.fitness.CaseBasedFitness;
-import it.units.malelab.jgea.core.fitness.BooleanFunctionFitness.TargetFunction;
-import it.units.malelab.jgea.problem.booleanfunction.BooleanUtils;
 import it.units.malelab.jgea.problem.booleanfunction.element.Element;
 import it.units.malelab.jgea.representation.tree.Tree;
 
-public class SAFEMUV_Fitness_function extends CaseBasedFitness<List<Tree<Element>>, boolean[], Boolean, Double> {
-
-	public interface TargetFunction extends Function<boolean[], boolean[]> {
-		String[] varNames();
-
-		static TargetFunction from(final Function<boolean[], boolean[]> function, final String... varNames) {
-			return new TargetFunction() {
-				@Override
-				public String[] varNames() {
-					return varNames;
-				}
-
-				@Override
-				public boolean[] apply(boolean[] values) {
-					return function.apply(values);
-				}
-			};
-		}
-	}
-
-	private static class ErrorRate implements Function<List<Boolean>, Double> {
-
-		@Override
-		public Double apply(List<Boolean> vs) {
-			double errors = 0;
-			for (Boolean v : vs) {
-				errors = errors + (v ? 0d : 1d);
-			}
-			return errors / (double) vs.size();
-		}
-
-	}
-
-	private static class Error implements BiFunction<List<Tree<Element>>, boolean[], Boolean> {
-
-		
-		public Error() {
+public class SAFEMUV_Fitness_function implements Function<List<Tree<Element>>, Double> {
+	public Double apply(List<Tree<Element>> t) {
+		Double score = 0.0;
+		if (t.size() > 0) {
+			Tree<Element> e = t.get(0);
+			System.out.println("Tree elements = " + e);
+			Tree<Element> e1 = e.child(0);
+			Element eleft = e1.child(0).content();
+			Element eright = e1.child(1).content();
 			
-		}
-
-		public Boolean apply(List<Tree<Element>> solution, boolean[] observation) {
-		// Fitness computation seems to be here
-//			Map<String, Boolean> varValues = new LinkedHashMap<>();
-//			for (int i = 0; i < targetFunction.varNames().length; i++) {
-//				varValues.put(targetFunction.varNames()[i], observation[i]);
+			System.out.println("e1 = " + e1 + ",eleft = " + eleft + ",eright = " + eright);
+			
+//			if (eleft.equals("testvar2")) {
+//				score += 1.0;
 //			}
-			return false;
+//			
+//			//if (eright.equals()) {
+////				score += 1.0;
+//			//}
+			
+			return score;
+			
+		} else {
+			return 0.0;
 		}
 	}
-
-	public SAFEMUV_Fitness_function(List<boolean[]> observations) {
-			super(observations, new Error(), new ErrorRate());
-		}
-
 }
