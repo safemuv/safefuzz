@@ -11,7 +11,8 @@ public class FuzzingTimeLength extends OfflineMetric {
 		// protected region userCode on begin
 		double totalLength = 0.0;
         for (FuzzingKeySelectionRecord r : recs) {
-            totalLength += r.getTimeLength();
+            //totalLength += r.getTimeLength();
+            // TODO: how to handle this with everything 
         }
 
         // Since it is a metric designed to be minimsed, set it as negative

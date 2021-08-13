@@ -2,7 +2,9 @@ package fuzzexperiment.runner.metrics.fake;
 
 import java.util.List;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
+import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
+import fuzzingengine.FuzzingTimeSpecification;
 
 public class FindSpecificTime extends FakeMetric {
 	private double centreValue;
@@ -31,11 +33,18 @@ public class FindSpecificTime extends FakeMetric {
 		// Get the first record
 		if (recs.size() > 0) {
 			FuzzingKeySelectionRecord r = recs.get(0);
-			double start = r.getStartTime();
-			double end = r.getEndTime();
-			double val = getMetricValue(start, end);
-			System.out.println("FindSpecificTime - key selection record = " + recs + ",[start=" + start + ",end=" + end + "]-val = " + val) ;
-			return val;
+			FuzzingTimeSpecification ts = r.getTimeSpec();
+			if (ts instanceof FuzzingFixedTimeSpecification) {
+				FuzzingFixedTimeSpecification fts = (FuzzingFixedTimeSpecification)ts;
+				double start = fts.getStartTime();
+				double end = fts.getEndTime();
+				double val = getMetricValue(start, end);
+				System.out.println("FindSpecificTime - key selection record = " + recs + ",[start=" + start + ",end=" + end + "]-val = " + val) ;
+				return val;
+			} else {
+				return 0.0;
+			}
+				
 		} else {
 			//throw new MetricComputeFailure("FindSpecificTime given zero-size recs");
 			return 0.0;

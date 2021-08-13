@@ -30,6 +30,7 @@
   <goals xmi:id="9d93926f-3f4a-465f-8327-7b80a7a06ba9" name="AvoidPlaneInner">
     <requirements xmi:id="7f4c8a53-c31e-440f-bc76-1d6e4af95a33" latestFinishTime="430.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="ba54e63c-0f28-41d6-8ad0-29a614548186" participants="0b3b1a53-2389-4266-b358-1bf7e5c03d32 1decb9df-eb6b-4fab-867c-ad5176679ce3"/>
+    <variables xmi:id="_gv2_IPDVEeubPNJqlnpxLg" name="/airframe_clearance"/>
   </goals>
   <goals xmi:id="2473c0a8-9f06-424c-82b0-056c27969980" name="AvoidOthers">
     <requirements xmi:id="cebc58c0-642c-49eb-a0ea-d69c603a08d4" latestFinishTime="430.0"/>

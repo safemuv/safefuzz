@@ -9,14 +9,15 @@ import java.util.Random;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
+import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.TimeSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
-import fuzzingengine.operations.FuzzingOperation;
 
 public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 
@@ -95,7 +96,7 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		}
 		return output;
 	}
-
+	
 	private void adjustTime(FuzzingSelectionRecord m) {
 		double startTime;
 		double endTime;
@@ -105,11 +106,18 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord)m;
 			VariableSpecification vs = fsm.getRecords().get(km.getKey());
 			Optional<TimeSpec> ts = vs.getTimeSpec();
-		
-			startTime = getStartTime(ts);
-			endTime = getEndTime(ts, startTime);
-			m.setStartTime(startTime);
-			m.setEndTime(endTime);
+			
+			FuzzingTimeSpecification zts = km.getTimeSpec();
+			if (zts instanceof FuzzingFixedTimeSpecification) {
+				FuzzingFixedTimeSpecification fts = (FuzzingFixedTimeSpecification)zts;
+				startTime = getStartTime(ts);
+				endTime = getEndTime(ts, startTime);
+				fts.setStartTime(startTime);
+				fts.setEndTime(endTime);
+			}
+			
+			// TODO: Set the mutations here for the other types
+
 		} else {
 			startTime = getStartTime(Optional.empty());
 			endTime = getEndTime(Optional.empty(), startTime);

@@ -1,5 +1,6 @@
 package fuzzexperiment.runner.jmetal;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -19,6 +20,7 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.StartFuzzingProcesses;
+import fuzzexperiment.runner.jmetal.grammar.FuzzingExperimentGeneratorConstraints;
 import fuzzexperiment.runner.metrics.FakeMetricHandler;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
@@ -28,6 +30,7 @@ import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.support.FuzzingEngineSupport;
+import fuzzexperiment.runner.jmetal.grammar.Grammar;
 
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
@@ -50,6 +53,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String bashPath;
 	private String workingPath;
 	private String middlewarePath;
+	
+	Grammar<String> grammar;
 
 	private void readProperties() {
 		Properties prop = new Properties();
@@ -80,14 +85,19 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		timeLimit = baseMission.getEndTime();
 		FileWriter tempLog = new FileWriter("fuzzexpt-templog.log");
 		readProperties();
-		initialGenerator = new FuzzingExperimentGenerator(baseMission);
+		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
+		grammar = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
+		initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
+		
+		System.out.println("SAFEMUVEvaluationProblem: Grammar rules = " + grammar.getRules());
+		System.out.println("SAFEMUVEvaluationProblem: Starting symbol = " + grammar.getStartingSymbol());
+		
 	}
 
 	public SAFEMUVEvaluationProblem(int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
 			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
 		this.rng = rng;
-		// this.popSize = popSize;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
 		this.actuallyRun = actuallyRun;

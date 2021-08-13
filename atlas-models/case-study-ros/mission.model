@@ -36,12 +36,6 @@
     </region>
     <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>
   </goals>
-  <goals xmi:id="_vpVZEMj6EeuWdKT93dm6Ig" name="AvoidPlaneInner" priority="1">
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_vpVZEcj6EeuWdKT93dm6Ig" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
-    <action xsi:type="atlas:Avoid" xmi:id="_o6Zy0NAUEeuTY9Uq5rlyZA" clearance="1.5"/>
-    <variables xmi:id="_kaNb4LsdEeute_EAlr7M3A" name="/pymesh_distance_to_plane" variableType="standard_msgs/Float32" vehicleSpecific="true"/>
-    <metrics xmi:id="_vpVZF8j6EeuWdKT93dm6Ig" name="OutsideOfInnerRegionViolations"/>
-  </goals>
   <goals xmi:id="_7J7d0M7hEeu_Qtc8Axo4IQ" name="AvoidOthers" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_7J7d0c7hEeu_Qtc8Axo4IQ" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:AvoidOthers" xmi:id="_9HxDgM7hEeu_Qtc8Axo4IQ" clearance="2.0"/>

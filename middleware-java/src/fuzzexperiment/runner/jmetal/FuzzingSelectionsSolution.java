@@ -115,22 +115,23 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		return intensity;
 	}
 	
-	private double totalActiveFaultTimeLengthScaledByIntensity() {
-		double total = 0.0;
-		for (FuzzingSelectionRecord fs : contents) {
-			if (fs.isActive()) {
-				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
-			}
-		}
-		return total;
-	}
+//	private double totalActiveFaultTimeLengthScaledByIntensity() {
+//		double total = 0.0;
+//		for (FuzzingSelectionRecord fs : contents) {
+//			if (fs.isActive()) {
+//				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
+//			}
+//		}
+//		return total;
+//	}
 	
-	public double faultCostProportion() {
-		return ((totalActiveFaultTimeLengthScaledByIntensity() / (contents.size() * exptRunTime)));
-	}
+//	public double faultCostProportion() {
+//		return ((totalActiveFaultTimeLengthScaledByIntensity() / (contents.size() * exptRunTime)));
+//	}
 
 	public double getConstraint(int index) {
-		return faultCostProportion();
+		//return faultCostProportion();
+		return 0.0;
 	}
 
 	public void setConstraint(int index, double value) {
@@ -209,8 +210,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public double faultTimeTotal() {
-		
-		return totalActiveFaultTimeLengthScaledByIntensity();
+		return 0.0;
 	}
 	
 	public void generateCSVFile(String filePath) throws IOException {

@@ -38,6 +38,11 @@
         <probInfo xmi:id="_CCpRYNkPEeuAQ_x5ldjrIg"/>
       </vars>
     </components>
+    <components xmi:id="_RdhvMPZUEeuWO8KGwDEJww" name="ual" componentRelativePath="ual">
+      <vars xmi:id="_Tcf9UPZUEeuWO8KGwDEJww" component="_RdhvMPZUEeuWO8KGwDEJww" variable="/ual/pose" reflectionName="/ual/pose_prime" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_LR424PZVEeuWO8KGwDEJww" ROSTypename="geometry_msgs/PoseStamped"/>
+      </vars>
+    </components>
   </sims>
   <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
     <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-Fixed-1">

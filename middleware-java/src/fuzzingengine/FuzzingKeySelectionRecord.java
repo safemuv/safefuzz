@@ -46,16 +46,30 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.regex = regex;
 		this.groupNum = groupNum;
 		this.participants = participants;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.timeSpec = new FuzzingFixedTimeSpecification(startTime, endTime);
 		this.op = op;
 		setupPattern();
 		setupParticipants();
 	}
 	
-	public double getTimeLength() {
-		return endTime - startTime;
+	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex,
+			Object groupNum, FuzzingOperation op, List<String> participants, FuzzingTimeSpecification timeSpec) {
+		super(op);
+		this.key = key;
+		this.reflectionKey = reflectionKey;
+		this.component = component;
+		this.regex = regex;
+		this.groupNum = groupNum;
+		this.participants = participants;
+		this.timeSpec = timeSpec.dup();
+		this.op = op;
+		setupPattern();
+		setupParticipants();
 	}
+	
+//	public double getTimeLength() {
+//		return endTime - startTime;
+//	}
 	
 	// for messages
 	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> regex, int groupNum, FuzzingOperation op) {
@@ -68,6 +82,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		setupPattern();
 	}
 	
+
 	public void addParticipant(String r) {
 		participants.add(r);
 		participantsLookup.put(r,true);
@@ -129,7 +144,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		}
 		
 		FuzzingKeySelectionRecord k = new FuzzingKeySelectionRecord(key, reflectionKey,  component, regex,
-				groupNum, op, newParticipants, startTime, endTime);
+				groupNum, op, newParticipants, timeSpec);
 		// As long as setParams is called later on uniquely generated parameters, should be OK!
 		k.setParams(params);
 		return k;
@@ -140,11 +155,12 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 
 	public String generateCSVLine() {
-        List<String> str = new ArrayList<String>();
+		List<String> str = new ArrayList<String>();
         str.add("KEY");
         str.add(key);
-        str.add(String.valueOf(startTime));
-        str.add(String.valueOf(endTime));
+//      str.add(String.valueOf(startTime));
+//      str.add(String.valueOf(endTime));
+        str.add(timeSpec.getCSVContents());
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));
         str.add(operationName());

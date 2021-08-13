@@ -17,14 +17,6 @@ public class SAFEMUV_Fitness_function implements Function<List<Tree<Element>>, D
 			
 			System.out.println("e1 = " + e1 + ",eleft = " + eleft + ",eright = " + eright);
 			
-//			if (eleft.equals("testvar2")) {
-//				score += 1.0;
-//			}
-//			
-//			//if (eright.equals()) {
-////				score += 1.0;
-//			//}
-			
 			return score;
 			
 		} else {

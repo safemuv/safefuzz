@@ -1,5 +1,4 @@
 <cond> ::= <var> <bincomp> <expr>
-
 <var> ::= .testvar1 | .testvar2 | .testvar3
 <bincomp> ::= .LESS_THAN | .GREATER_THAN | .EQUALS | .NOT_EQUALS
 <expr> ::= <var> | <const>

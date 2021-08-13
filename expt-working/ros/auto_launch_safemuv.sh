@@ -30,4 +30,3 @@ xterm -e /bin/bash -l -c "rosrun safemuv_mission state_machine_2.py"
 
 # in the new version, only launch 1 container
 # Pedro's new version
-
