@@ -31,7 +31,7 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 	public FuzzingExperimentGeneratorConstraints(Mission mission, Grammar<FuzzingConditionElement> grammar) {
 		super(mission);
 		this.grammar = grammar;
-		this.grammarGenerator = new GrammarRampedHalfAndHalf(MIN_TREE_HEIGHT, MAX_TREE_HEIGHT, grammar);
+		//this.grammarGenerator = new GrammarRampedHalfAndHalf(MIN_TREE_HEIGHT, MAX_TREE_HEIGHT, grammar);
 		rngGenerator = new Random();
 	}
 
