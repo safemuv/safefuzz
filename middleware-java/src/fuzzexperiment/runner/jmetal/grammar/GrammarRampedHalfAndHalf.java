@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import it.units.malelab.jgea.core.Factory;
-import it.units.malelab.jgea.representation.grammar.Grammar;
-import it.units.malelab.jgea.representation.grammar.cfggp.FullGrammarGrammarTreeFactory;
-import it.units.malelab.jgea.representation.grammar.cfggp.GrowGrammarTreeFactory;
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class GrammarRampedHalfAndHalf<T> implements Factory<Tree<T>> {
@@ -20,8 +17,8 @@ public class GrammarRampedHalfAndHalf<T> implements Factory<Tree<T>> {
 	  public GrammarRampedHalfAndHalf(int minHeight, int maxHeight, Grammar<T> grammar) {
 	    this.minHeight = minHeight;
 	    this.maxHeight = maxHeight;
-	    fullGrammarTreeFactory = new FullGrammarGrammarTreeFactory<>(maxHeight, grammar);
-	    growGrammarTreeFactory = new GrowGrammarTreeFactory<>(maxHeight, grammar);
+	    fullGrammarTreeFactory = new FullGrammarGrammarTreeFactory(maxHeight, grammar);
+	    growGrammarTreeFactory = new GrowGrammarTreeFactory<T>(maxHeight, grammar);
 	  }
 
 	@Override
@@ -52,5 +49,4 @@ public class GrammarRampedHalfAndHalf<T> implements Factory<Tree<T>> {
 	    }
 	    return trees;
 	  }
-
 	}

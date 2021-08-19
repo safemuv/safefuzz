@@ -90,6 +90,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		grammar = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
 		initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
 		
+		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
+		
 		System.out.println("SAFEMUVEvaluationProblem: Grammar rules = " + grammar.getRules());
 		System.out.println("SAFEMUVEvaluationProblem: Starting symbol = " + grammar.getStartingSymbol());
 		

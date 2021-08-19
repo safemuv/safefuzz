@@ -19,7 +19,7 @@ import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.TimeSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 
-public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
+public class FuzzingExperimentModifier extends FuzzingExperimentFresh {
 
 	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
 	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;

@@ -7,9 +7,8 @@ import java.util.Optional;
 
 import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
-import fuzzexperiment.runner.metrics.MetricHandler;
 import fuzzexperiment.runner.metrics.OfflineMetric;
-import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
+import fuzzingengine.exptgenerator.*;
 
 public class RunRandomlyGeneratedExperiments extends ExptParams {
 	private String resFileName;
@@ -32,7 +31,7 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
-		g = new FuzzingExperimentGenerator(mission);
+		g = new FuzzingExperimentFresh(mission);
 		newGeneratedFile();
 	}
 

@@ -10,7 +10,7 @@ public class ExperimentGeneratorTest {
 		Mission m;
 		try {
 			m = new GeneratedDSLLoader().loadMission();
-			FuzzingExperimentGenerator g = new FuzzingExperimentGenerator(m);
+			FuzzingExperimentGenerator g = new FuzzingExperimentFresh(m);
 			g.generateExperiment(Optional.of("/tmp/csvfile.fuzz"));
 			System.out.println("Done");
 			

@@ -76,6 +76,19 @@ public class FuzzingEngine<E> {
 			confs.addKeyRecord(fr);
 		} 
 	}
+	
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, Object groupNum, FuzzingTimeSpecification spec, FuzzingOperation op) throws MissingRobot {
+		VariableSpecification vr = fuzzingspec.getRecordForKey(fuzzingKey);
+		if (vr == null) {
+			System.out.println("!!!!!! addFuzzingKeyOperation - key " + fuzzingKey + " not found in fuzzing spec - ignoring !!!!!");
+		} else {
+			List<String> vehicles = getVehicles(vehicleNameList);
+		
+			FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
+					vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, spec);
+			confs.addKeyRecord(fr);
+		} 
+	}
 
 	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList)
 			throws MissingRobot {
@@ -390,6 +403,25 @@ public class FuzzingEngine<E> {
 		}
 		return Optional.empty();
 	}
+	
+	private FuzzingTimeSpecification createTimeSpec(String key, String startSpec, String endSpec) {
+		if (key.equals("KEYCONDSTART")) {
+			// This is a start cond, end time spec
+			double end = Double.parseDouble(endSpec);
+			FuzzingCondition startCond = FuzzingCondition.parseString(startSpec);
+			return new FuzzingConditionStartSpec(startCond, end);
+		}
+		
+//		if (key.equals("KEYCONDBOTH")) {
+//			// This is a start-end time spec
+//			
+//		}
+		
+		// Otherwise, assume a start-end time spec
+		double start = Double.parseDouble(startSpec);
+		double end = Double.parseDouble(endSpec);
+		return new FuzzingFixedTimeSpecification(start, end);
+	}
 
 	public void setupFromFuzzingFile(String fileName, Mission m) {
 		System.out.println("setupFromFuzzingFile - " + fileName);
@@ -408,11 +440,13 @@ public class FuzzingEngine<E> {
 					}
 
 					// Scan for key record in file
-					if (fields[0].toUpperCase().equals("KEY")) {
+					if (fields[0].toUpperCase().contains("KEY")) {
 						System.out.println("KEY based fuzzing");
 						String varName = fields[1];
-						double startTime = Double.parseDouble(fields[2]);
-						double endTime = Double.parseDouble(fields[3]);
+						
+						FuzzingTimeSpecification spec = createTimeSpec(fields[0], fields[2], fields[3]);
+						//double startTime = Double.parseDouble(fields[2]);
+						//double endTime = Double.parseDouble(fields[3]);
 						String vehicleNames = fields[4];
 						String fieldSpec = fields[5];
 						String opClass = fields[6];
@@ -422,7 +456,7 @@ public class FuzzingEngine<E> {
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
 							try {
-								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, startTime, endTime, op);
+								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, spec, op);
 								System.out.println("Installing fuzzing operation for " + varName + " - " + op);
 							} catch (MissingRobot e) {
 								System.out.println("Missing robot: name = " + e.getName());

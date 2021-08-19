@@ -1,39 +1,20 @@
-package fuzzexperiment.runner.jmetal.grammar;
+package fuzzingengine.exptgenerator;
 
 import java.util.List;
-import java.util.Random;
 
 import atlasdsl.Mission;
-import fuzzingengine.FuzzingCondition;
-import fuzzingengine.FuzzingConditionStartSpec;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
-import fuzzingengine.conditionelements.FuzzingConditionElement;
-import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
-import fuzzingengine.exptgenerator.ListHasNoElement;
-import fuzzingengine.exptgenerator.OperationLoadFailed;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
-import it.units.malelab.jgea.core.Factory;
-import it.units.malelab.jgea.representation.tree.Tree;
 
-public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentGenerator {
-	
-	int MIN_TREE_HEIGHT = 1;
-	int MAX_TREE_HEIGHT = 3;
-	
-	Grammar<FuzzingConditionElement> grammar;
-	Factory<Tree<FuzzingConditionElement>> grammarGenerator;
-	Random rngGenerator;
+public class FuzzingExperimentFresh extends FuzzingExperimentGenerator {
 
-	public FuzzingExperimentGeneratorConstraints(Mission mission, Grammar<FuzzingConditionElement> grammar) {
+	public FuzzingExperimentFresh(Mission mission) {
 		super(mission);
-		this.grammar = grammar;
-		this.grammarGenerator = new GrowGrammarTreeFactory<FuzzingConditionElement>(MAX_TREE_HEIGHT, grammar);
-		rngGenerator = new Random();
 	}
-
+	
 	protected FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
 			throws OperationLoadFailed, ListHasNoElement {
 		// Select an operation parameter set to use
@@ -47,17 +28,10 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 
 			List<Object> specificOpParams = opset.generateSpecific();
 
-			// n is one, only want a single tree
-			int n = 1;
-			List<Tree<FuzzingConditionElement>> res = grammarGenerator.build(1, rngGenerator);
-			Tree<FuzzingConditionElement> specTree = res.get(0);
-			
-			System.out.println("specTree = " + specTree);
+			// Set up the timing from the mission constraints - for now, the full time range
 
 			double startTime = getStartTime(var.getTimeSpec());
 			double endTime = getEndTime(var.getTimeSpec(), startTime);
-			FuzzingCondition startCond = new FuzzingCondition(specTree);
-			FuzzingConditionStartSpec fts = new FuzzingConditionStartSpec(startCond, endTime);
 
 			// Get a random list of participants from the mission
 			List<String> participants = getRandomParticipantsFromMission();
@@ -67,10 +41,10 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 			FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
 
 			FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(),
-					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants, fts);
+					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants,
+					startTime, endTime);
 			ksr.setParams(specificOpParams);
 			return ksr;
 		}
-	}
-	
+	}	
 }

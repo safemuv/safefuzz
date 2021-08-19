@@ -183,7 +183,7 @@ public class GeneratedFuzzingSpec {
 				
 		simMapping.addRecord("ual", "/ual/pose", "/ual/pose_prime", 
 		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv/ual"), Optional.of("geometry_msgs/PoseStamped"),
-		true, Optional.empty(), Optional.empty());
+		true, Optional.empty(), Optional.of(0.0));
 	
 	
 	

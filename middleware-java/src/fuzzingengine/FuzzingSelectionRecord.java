@@ -15,22 +15,6 @@ abstract public class FuzzingSelectionRecord {
 		return op;
 	}
 	
-//	public double getStartTime() {
-//		return startTime;
-//	}
-//	
-//	public void setStartTime(double startTime) {
-//		this.startTime = startTime;
-//	}
-//	
-//	public void setEndTime(double endTime) {
-//		this.endTime = endTime;
-//	}
-//	
-//	public double getEndTime() {
-//		return endTime;
-//	}
-	
 	public boolean isReadyAtTime(double time) {
 		return timeSpec.isActiveAtTime(time);
 	}

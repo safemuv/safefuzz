@@ -24,7 +24,7 @@ import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
-public class FuzzingExperimentGenerator {
+public abstract class FuzzingExperimentGenerator {
 
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
@@ -62,7 +62,7 @@ public class FuzzingExperimentGenerator {
 			if (rng.nextDouble() < probOfInclusion) {
 				FuzzingKeySelectionRecord ksr;
 				try {
-					ksr = generateVariableEntry(vs.getValue());
+					ksr = this.generateVariableEntry(vs.getValue());
 					records.add(ksr);
 				} catch (OperationLoadFailed e) {
 					e.printStackTrace();
@@ -175,36 +175,6 @@ public class FuzzingExperimentGenerator {
 		return endTime;
 	}
 
-	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
-			throws OperationLoadFailed, ListHasNoElement {
-		// Select an operation parameter set to use
-		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
-		if (opsetTypes.size() == 0) {
-			throw new ListHasNoElement("opsetType in generateVariableEntry");
-		} else {
-			OpParamSetType opsetType = selectRandomElementFrom(opsetTypes, "opsetType in generateVariableEntry");
-			OperationParameterSet opset = opsetType.getOpset();
-			String subSpec = opsetType.getSubSpec();
-
-			List<Object> specificOpParams = opset.generateSpecific();
-
-			// Set up the timing from the mission constraints - for now, the full time range
-
-			double startTime = getStartTime(var.getTimeSpec());
-			double endTime = getEndTime(var.getTimeSpec(), startTime);
-
-			// Get a random list of participants from the mission
-			List<String> participants = getRandomParticipantsFromMission();
-
-			// TODO: merge the specificOpParams with pipes
-			String paramStr = paramsAsString(specificOpParams);
-			FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
-
-			FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(),
-					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants,
-					startTime, endTime);
-			ksr.setParams(specificOpParams);
-			return ksr;
-		}
-	}
+	protected abstract FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
+			throws OperationLoadFailed, ListHasNoElement;
 }
