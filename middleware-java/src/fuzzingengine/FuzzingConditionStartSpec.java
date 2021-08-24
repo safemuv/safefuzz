@@ -22,11 +22,14 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	}
 
 	public String getCSVContents() {
-		// TODO Auto-generated method stub
-		return null;
+		return startCond.csvPrint() + "," + endTime;
 	}
 
 	protected FuzzingTimeSpecification dup() {
 		return new FuzzingConditionStartSpec(startCond, endTime);
+	}
+
+	public String getCSVRecordTag() {
+		return "KEYCONDSTART";
 	}
 }

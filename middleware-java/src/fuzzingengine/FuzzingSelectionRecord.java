@@ -40,5 +40,4 @@ abstract public class FuzzingSelectionRecord {
 	public FuzzingTimeSpecification getTimeSpec() {
 		return timeSpec;
 	}
-
 }

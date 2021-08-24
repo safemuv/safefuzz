@@ -32,6 +32,8 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
+import fuzzingengine.FuzzingEngine;
+import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class RunJMetal extends AbstractAlgorithmRunner {
 
@@ -91,6 +93,8 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		Random mutationRNG = new Random();
 
 		Problem<FuzzingSelectionsSolution> problem;
+		
+		FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 			
 		try {
 			problem = new SAFEMUVEvaluationProblem(populationSize, problemRNG, mission, actuallyRun, exptRunTime,
@@ -106,7 +110,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
 			
-			mutation = new FuzzingSelectionsMutation(mutationRNG, "mutation.log", mutationProb);
+			mutation = new FuzzingSelectionsMutation(mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
 			selection = new TournamentSelection<FuzzingSelectionsSolution>(5);
 			dominanceComparator = new DominanceComparator<>();
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();
@@ -127,7 +131,6 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 			if (!referenceParetoFront.equals("")) {
 				printQualityIndicators(population, referenceParetoFront);
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -29,4 +29,8 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 	protected FuzzingTimeSpecification dup() {
 		return new FuzzingConditionStartEnd(startCond.dup(), endCond.dup());
 	}
+	
+	public String getCSVRecordTag() {
+		return "KEYCONDBOTH";
+	}
 }

@@ -156,7 +156,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 
 	public String generateCSVLine() {
 		List<String> str = new ArrayList<String>();
-        str.add("KEY");
+        str.add(timeSpec.getCSVRecordTag());
         str.add(key);
 //      str.add(String.valueOf(startTime));
 //      str.add(String.valueOf(endTime));

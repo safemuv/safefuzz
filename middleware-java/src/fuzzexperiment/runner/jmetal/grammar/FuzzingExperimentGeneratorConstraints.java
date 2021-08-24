@@ -49,10 +49,11 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 
 			// n is one, only want a single tree
 			int n = 1;
-			List<Tree<FuzzingConditionElement>> res = grammarGenerator.build(1, rngGenerator);
+			List<Tree<FuzzingConditionElement>> res = grammarGenerator.build(n, rngGenerator);
 			Tree<FuzzingConditionElement> specTree = res.get(0);
 			
-			System.out.println("specTree = " + specTree);
+			System.out.print("specTree = ");
+			specTree.prettyPrintLine(System.out);
 
 			double startTime = getStartTime(var.getTimeSpec());
 			double endTime = getEndTime(var.getTimeSpec(), startTime);
@@ -72,5 +73,4 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 			return ksr;
 		}
 	}
-	
 }

@@ -408,7 +408,7 @@ public class FuzzingEngine<E> {
 		if (key.equals("KEYCONDSTART")) {
 			// This is a start cond, end time spec
 			double end = Double.parseDouble(endSpec);
-			FuzzingCondition startCond = FuzzingCondition.parseString(startSpec);
+			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
 			return new FuzzingConditionStartSpec(startCond, end);
 		}
 		

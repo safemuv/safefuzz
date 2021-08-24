@@ -36,4 +36,8 @@ public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 	protected FuzzingTimeSpecification dup() {
 		return new FuzzingFixedTimeSpecification(startTime, endTime);
 	}
+	
+	public String getCSVRecordTag() {
+		return "KEY";
+	}
 }
