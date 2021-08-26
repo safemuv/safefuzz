@@ -49,7 +49,12 @@ public class StartFuzzingProcesses {
 		BufferedReader reader = new BufferedReader(new FileReader(pathToFile));
 		try {
 			while (!finished) {
-				TimeUnit.MILLISECONDS.sleep(100);
+				try {
+					System.out.print(".");
+					TimeUnit.MILLISECONDS.sleep(1000);
+				} catch (InterruptedException e) {
+					// Ignore the interrupted exception - will retry soon
+				}
 				if (((System.currentTimeMillis() - timeStart) / 1000) > wallClockTimeOutSeconds) {
 					finished = true;
 				}
@@ -63,8 +68,6 @@ public class StartFuzzingProcesses {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -94,6 +97,14 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
+	public void sleepHandlingInterruption(long timeMillisecs) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(timeMillisecs);
+		} catch (InterruptedException e) {
+			System.out.println("Cancelling sleep after interruption");
+		}
+	}
+	
 	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
 			throws InterruptedException, IOException {
 		Process middleware;
@@ -103,12 +114,17 @@ public class StartFuzzingProcesses {
 		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts"); 
 			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
-			// TODO: check custom delays - Sleep until MOOS is ready
-			TimeUnit.MILLISECONDS.sleep(20000);
+			
+			sleepHandlingInterruption(40000);
+			exptLog("Starting middleware");
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
 
 			String[] middlewareOpts = { "nofault", "nogui" };
 
+			// This assumes that the mission time is at least 10 seconds, and that
+			// the vehicle will start up before that
+			sleepHandlingInterruption(10000);
+			
 			// Wait until the end condition for the middleware
 			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
 			//waitWallClockTime(timeLimit);
@@ -121,6 +137,7 @@ public class StartFuzzingProcesses {
 				ExptHelper.startCmd(ABS_WORKING_PATH, "terminate.sh");
 			}
 			exptLog("Kill MOOS / Java processes command sent");
+			sleepHandlingInterruption(40000);
 			exptLog("Destroy commands completed");
 		}
 

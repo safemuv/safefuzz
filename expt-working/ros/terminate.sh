@@ -7,6 +7,7 @@ killall -9 python3
 killall -9 gzclient
 killall -9 gzserver
 killall -9 rviz
+killall -9 px4
 killall -9 rosout
 killall -9 rosmaster
 killall -9 rosbridge_server
