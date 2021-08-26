@@ -202,6 +202,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		System.out.println("source=" + source);
 		for (int i = 0; i < source.getNumberOfVariables(); i++) {
 			FuzzingSelectionRecord fuzzingSelection = source.getVariable(i);
+			System.out.println("fuzzingSelection=" + fuzzingSelection);
 			mutatePossiblyMultipleTimes(fuzzingSelection, MAX_INDIVIDUAL_MUTATIONS);
 			System.out.println("contents length = " + source.getNumberOfVariables());
 		}
