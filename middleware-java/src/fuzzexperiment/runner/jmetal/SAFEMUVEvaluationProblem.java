@@ -87,8 +87,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		readProperties();
 		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
-		grammar = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
-		initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
+				initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
 		
@@ -97,12 +96,13 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		
 	}
 
-	public SAFEMUVEvaluationProblem(int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
+	public SAFEMUVEvaluationProblem(Grammar g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
 			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
 		this.actuallyRun = actuallyRun;
+		this.grammar = g;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());

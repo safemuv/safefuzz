@@ -12,6 +12,14 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 		this.endTime = endTime;
 	}
 	
+	public FuzzingCondition getCondition() {
+		return startCond;
+	}
+	
+	public double getEndTime() {
+		return endTime;
+	}
+	
 	public boolean isActiveAtTime(double time) {
 		if (!started) {
 			started = startCond.isActive();

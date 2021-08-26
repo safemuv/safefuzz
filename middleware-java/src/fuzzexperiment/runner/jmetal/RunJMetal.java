@@ -1,5 +1,6 @@
 package fuzzexperiment.runner.jmetal;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
+import fuzzexperiment.runner.jmetal.grammar.Grammar;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
@@ -39,7 +41,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 	static private int populationSize = 6;
 	static private int offspringPopulationSize = 6;
-	
+
 	static private int matingPoolSize = populationSize;
 	static private boolean actuallyRun = false;
 	static private double exptRunTime = 1200.0;
@@ -50,7 +52,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 	static double mutationProb = 0.6;
 
 	static private String referenceParetoFront = "";
-	
+
 	private String logPath;
 
 	private void readProperties() {
@@ -58,34 +60,28 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		String fileName = "fuzzingexpt.config";
 		InputStream is = null;
 		try {
-		    is = new FileInputStream(fileName);
+			is = new FileInputStream(fileName);
 		} catch (FileNotFoundException ex) {
 			ex.printStackTrace();
 		}
 		try {
-		    prop.load(is);
-		    logPath = prop.getProperty("paths.ros.log");
-		    is.close();
+			prop.load(is);
+			logPath = prop.getProperty("paths.ros.log");
+			is.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	private RunJMetal() {
 		readProperties();
 	}
-	
+
 	public void jMetalRun(String tag, Mission mission) throws ExptError, DSLLoadFailed {
-		
+
 		Set<Metric> metrics_s = mission.getAllMetrics();
 		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
-		
-//		for (Metric m : metrics_s) {
-//			if (m instanceof OfflineMetric) {
-//				metrics.add((OfflineMetric)m);
-//			}
-//		}
-		
+
 		metrics.add(new FindSpecificTime(100.0, 10.0));
 
 		Random problemRNG = new Random();
@@ -93,13 +89,12 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		Random mutationRNG = new Random();
 
 		Problem<FuzzingSelectionsSolution> problem;
-		
-		FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
-			
 		try {
-			problem = new SAFEMUVEvaluationProblem(populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-						logPath, metrics);
-				
+			Grammar<String> g = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
+			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
+
+			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
+					logPath, metrics);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			CrossoverOperator<FuzzingSelectionsSolution> crossover;
@@ -109,23 +104,23 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 			Comparator<FuzzingSelectionsSolution> dominanceComparator;
 
 			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
-			
-			mutation = new FuzzingSelectionsMutation(mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
+
+			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
 			selection = new TournamentSelection<FuzzingSelectionsSolution>(5);
 			dominanceComparator = new DominanceComparator<>();
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();
-			
 
-			algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, matingPoolSize, offspringPopulationSize,
-					crossover, mutation, selection, dominanceComparator, evaluator);
+			algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, matingPoolSize,
+					offspringPopulationSize, crossover, mutation, selection, dominanceComparator, evaluator);
 
 			// For some reason, can't create algorithm executor. Just run it
-			//AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
+			// AlgorithmRunner algorithmRunner = new
+			// AlgorithmRunner.Executor(algorithm).execute();
 			algorithm.run();
 			List<FuzzingSelectionsSolution> population = algorithm.getResult();
-			
-			//long computingTime = algorithmRunner.getComputingTime();
-			//JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+
+			// long computingTime = algorithmRunner.getComputingTime();
+			// JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
 			printFinalSolutionSet(population);
 			if (!referenceParetoFront.equals("")) {
@@ -135,7 +130,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) throws JMetalException, FileNotFoundException {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;

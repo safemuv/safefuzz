@@ -17,6 +17,10 @@ public class FuzzingCondition {
 		this.specTree = specTree; 
 	}
 
+	public Tree<FuzzingConditionElement> getTree() {
+		return specTree;
+	}
+	
 	public boolean isActive() {
 		// TODO: implement tree parsing and condition checking
 		return false;
@@ -31,7 +35,7 @@ public class FuzzingCondition {
 	public FuzzingCondition dup() {
 		return new FuzzingCondition(copyTree(specTree));
 	}
-	
+
 	public String csvPrint() {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    final String utf8 = StandardCharsets.UTF_8.name();

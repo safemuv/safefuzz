@@ -3,7 +3,6 @@ package fuzzexperiment.runner.jmetal;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -12,18 +11,23 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 
 import atlasdsl.Mission;
 import atlasdsl.Robot;
+import fuzzexperiment.runner.jmetal.grammar.Grammar;
+import fuzzexperiment.runner.jmetal.grammar.GrammarBasedSubtreeMutation;
+import fuzzingengine.FuzzingCondition;
+import fuzzingengine.FuzzingConditionStartSpec;
 import fuzzingengine.FuzzingEngine;
+import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.FuzzingTimeSpecification;
+import fuzzingengine.conditionelements.FuzzingConditionElement;
 import fuzzingengine.exptgenerator.ListHasNoElement;
 import fuzzingengine.exptgenerator.OperationLoadFailed;
-import fuzzingengine.exptgenerator.FuzzingExperimentModifier.ChangeOp;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
-import exptrunner.operations.*;
-import fuzzexperiment.runner.metrics.Metric;
+import it.units.malelab.jgea.representation.tree.Tree;
 
 // TODO: check mutation logic against the changes that I made with Simos on github last year
 // Things to check: ensuring all strings/options etc are fresh
@@ -44,11 +48,15 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 
 	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
 	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
-	private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0 / 2.0;
+	//private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0 / 2.0;
+	private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0;
+	
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
 	
 	private final int MAX_INDIVIDUAL_MUTATIONS = 2;
 	private final double TIME_SHIFT = 500.0;
+	
+	protected final int MUTATION_DEPTH = 1;
 
 	private static final long serialVersionUID = 1L;
 	private Random rng;
@@ -56,13 +64,16 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	private double mutationProb;
 	protected FuzzingEngine fuzzEngine;
 	protected Mission mission;
+	protected GrammarBasedSubtreeMutation mutator;
 	
-	FuzzingSelectionsMutation(Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double mutationProb) throws IOException {
+	
+	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double mutationProb) throws IOException {
 		this.rng = rng;
 		this.mutationProb = mutationProb;
 		this.mutationLog = new FileWriter(mutationLogFileName);
 		this.fuzzEngine = fuzzEngine;
 		this.mission = mission;
+		this.mutator = new GrammarBasedSubtreeMutation(MUTATION_DEPTH, g);
 	}
 	
 	public ChangeOp selectRandomOperation() {
@@ -78,7 +89,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		}
 	}
 	
-	public TimeSpecChangeOp setTimeRecord() {
+	public TimeSpecChangeOp getTimeSpecChangeOperation() {
 		double v = rng.nextDouble();
 		if (v < PROB_OF_TIMESPEC_CHANGE_LENGTH) {
 			return TimeSpecChangeOp.CHANGE_LENGTH;
@@ -87,15 +98,24 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		}
 	}
 
-//	HashMap<MutationOperation, Double> mutationOps = new HashMap<MutationOperation, Double>();
-//
-//	void setupMutationOperations() {
-//		mutationOps.put(new MoveTimeStart(mutationLog, TIME_SHIFT), 0.25);
-//	}
-
-	
 	private void changeTimeSpec(FuzzingSelectionRecord krec) {
+		FuzzingTimeSpecification ts = krec.getTimeSpec();
+		if (ts instanceof FuzzingFixedTimeSpecification) {
+			
+		}
 		
+		if (ts instanceof FuzzingConditionStartSpec) {
+			TimeSpecChangeOp changeOp = getTimeSpecChangeOperation();
+			if (changeOp == TimeSpecChangeOp.CHANGE_CONDITION) {
+				FuzzingConditionStartSpec tsc = (FuzzingConditionStartSpec)ts;
+				FuzzingCondition c = tsc.getCondition();
+				Tree<FuzzingConditionElement> t = c.getTree();
+				
+				// Mutate the condition tree here
+				FuzzingConditionStartSpec newC = new FuzzingConditionStartSpec(c, tsc.getEndTime());
+				krec.setTimeSpec(newC);
+			}
+		}
 	}
 	
 	protected <E> E selectRandomElementFrom(List<E> l, String what) throws ListHasNoElement {
