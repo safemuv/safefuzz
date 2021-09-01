@@ -49,7 +49,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
 	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
 	//private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0 / 2.0;
-	private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0;
+	private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 0.0;
 	
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
 	
@@ -64,7 +64,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	private double mutationProb;
 	protected FuzzingEngine fuzzEngine;
 	protected Mission mission;
-	protected GrammarBasedSubtreeMutation mutator;
+	protected GrammarBasedSubtreeMutation<FuzzingConditionElement> mutator;
 	
 	
 	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double mutationProb) throws IOException {
@@ -73,7 +73,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		this.mutationLog = new FileWriter(mutationLogFileName);
 		this.fuzzEngine = fuzzEngine;
 		this.mission = mission;
-		this.mutator = new GrammarBasedSubtreeMutation(MUTATION_DEPTH, g);
+		this.mutator = new GrammarBasedSubtreeMutation<FuzzingConditionElement>(MUTATION_DEPTH, g);
 	}
 	
 	public ChangeOp selectRandomOperation() {
@@ -100,9 +100,9 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 
 	private void changeTimeSpec(FuzzingSelectionRecord krec) {
 		FuzzingTimeSpecification ts = krec.getTimeSpec();
-		if (ts instanceof FuzzingFixedTimeSpecification) {
-			
-		}
+//		if (ts instanceof FuzzingFixedTimeSpecification) {
+//			// TODO: for fixed time specifications, implement thi
+//		}
 		
 		if (ts instanceof FuzzingConditionStartSpec) {
 			TimeSpecChangeOp changeOp = getTimeSpecChangeOperation();
@@ -110,9 +110,16 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 				FuzzingConditionStartSpec tsc = (FuzzingConditionStartSpec)ts;
 				FuzzingCondition c = tsc.getCondition();
 				Tree<FuzzingConditionElement> t = c.getTree();
+				Tree<FuzzingConditionElement> tNew = mutator.mutate(t, rng);
 				
-				// Mutate the condition tree here
-				FuzzingConditionStartSpec newC = new FuzzingConditionStartSpec(c, tsc.getEndTime());
+				System.out.print("MUTATION: Original tree = ");
+				t.prettyPrintLine(System.out);
+				System.out.print(": Mutated tree = ");
+				tNew.prettyPrintLine(System.out);
+				System.out.print("\n");
+				
+				FuzzingCondition cNew = new FuzzingCondition(tNew);
+				FuzzingConditionStartSpec newC = new FuzzingConditionStartSpec(cNew, tsc.getEndTime());
 				krec.setTimeSpec(newC);
 			}
 		}

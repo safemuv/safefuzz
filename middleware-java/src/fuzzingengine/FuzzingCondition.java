@@ -27,9 +27,7 @@ public class FuzzingCondition {
 	}
 	
 	public <T> Tree<T> copyTree(Tree<T> inT) {
-		// TODO: implement actual copy here
-		System.out.println("TODO - NEED TO PROPERLY COPY THE TREE HERE");
-		return inT;
+		return Tree.copyOf(inT);
 	}
 
 	public FuzzingCondition dup() {
