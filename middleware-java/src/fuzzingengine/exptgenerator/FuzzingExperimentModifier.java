@@ -20,6 +20,7 @@ import fuzzingengine.operations.FuzzingOperation;
 
 public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 
+	private static final double PROB_MUTATION_PER_RECORD = 0.5;
 	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
 	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
 
@@ -27,21 +28,19 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 	private Mission mission;
 
 	public enum ChangeOp {
-		SHIFT_TIME, 
-		CHANGE_PARAM,
-		CHANGE_PARTICIPANTS
+		SHIFT_TIME, CHANGE_PARAM, CHANGE_PARTICIPANTS
 	}
 
 	public FuzzingExperimentModifier(Mission mission) {
 		super(mission);
 		rng = new Random();
 	}
-	
+
 	public ChangeOp selectRandomOperation() {
 		double v = rng.nextDouble();
 		if (v < PROB_OF_TEMPORAL_MUTATION) {
 			return ChangeOp.SHIFT_TIME;
-		} else { 
+		} else {
 			if (v < PROB_OF_TEMPORAL_MUTATION + PROB_OF_PARAM_CHANGE) {
 				return ChangeOp.CHANGE_PARAM;
 			} else {
@@ -49,49 +48,52 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 			}
 		}
 	}
-	
+
 	public List<FuzzingSelectionRecord> duplicateExperimentRecords(List<FuzzingSelectionRecord> input) {
 		List<FuzzingSelectionRecord> output = new ArrayList<FuzzingSelectionRecord>();
 		for (FuzzingSelectionRecord r : input) {
 			output.add(r.dup());
 		}
-		
+
 		return output;
+	}
+
+	private boolean shouldMutateRecord(FuzzingSelectionRecord krec) {
+		// A constant mutation probability for every record
+		double shouldMutate = rng.nextDouble();
+		return (shouldMutate < PROB_MUTATION_PER_RECORD);
 	}
 
 	public List<FuzzingSelectionRecord> generateExperimentBasedUpon(String newFile, List<FuzzingSelectionRecord> basis,
 			Map<Metric, Double> res) {
-		// Modify the timings or parameters of one of the values
-		FuzzingSelectionRecord krec;
 		List<FuzzingSelectionRecord> output = duplicateExperimentRecords(basis);
 		
-		try {
-			krec = selectRandomElementFrom(output, "output in generateExperimentBasedUpon");
+		for (FuzzingSelectionRecord krec : output) {
+			if (shouldMutateRecord(krec)) {
+				try {
+					ChangeOp operation = selectRandomOperation();
+					System.out.println("Mutation operation selected = " + operation);
 			
-			ChangeOp operation = selectRandomOperation();
-			
-			System.out.println("Mutation operation selected = " + operation);
-			
-			if (operation == ChangeOp.SHIFT_TIME) {
-				adjustTime(krec);
-			}
+					if (operation == ChangeOp.SHIFT_TIME) {
+						adjustTime(krec);
+					}
 
-			if (operation == ChangeOp.CHANGE_PARAM) {
-				newParameters(krec);
-			}
+					if (operation == ChangeOp.CHANGE_PARAM) {
+						newParameters(krec);
+					}
 			
-			if (operation == ChangeOp.CHANGE_PARTICIPANTS) {
-				newParticipants(krec);
+					if (operation == ChangeOp.CHANGE_PARTICIPANTS) {
+						newParticipants(krec);
+					}	
+					outputAsCSV(newFile, output);
+				} catch (ListHasNoElement e) {
+					System.out.println("generateExperimentBasedUpon - empty original experiment");
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (OperationLoadFailed e) {
+					e.printStackTrace();
+				}
 			}
-
-			outputAsCSV(newFile, output);
-
-		} catch (ListHasNoElement e) {
-			System.out.println("generateExperimentBasedUpon - empty original experiment");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (OperationLoadFailed e) {
-			e.printStackTrace();
 		}
 		return output;
 	}
@@ -99,13 +101,13 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 	private void adjustTime(FuzzingSelectionRecord m) {
 		double startTime;
 		double endTime;
-		
+
 		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
 		if (m instanceof FuzzingKeySelectionRecord) {
-			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord)m;
+			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord) m;
 			VariableSpecification vs = fsm.getRecords().get(km.getKey());
 			Optional<TimeSpec> ts = vs.getTimeSpec();
-		
+
 			startTime = getStartTime(ts);
 			endTime = getEndTime(ts, startTime);
 			m.setStartTime(startTime);
@@ -115,14 +117,14 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 			endTime = getEndTime(Optional.empty(), startTime);
 		}
 	}
-	
+
 	private void newParameters(FuzzingSelectionRecord m) throws ListHasNoElement, OperationLoadFailed {
 		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
 		for (Map.Entry<String, VariableSpecification> vs : fsm.getRecords().entrySet()) {
 			VariableSpecification var = vs.getValue();
-			
+
 			if (m instanceof FuzzingKeySelectionRecord) {
-				FuzzingKeySelectionRecord kr = (FuzzingKeySelectionRecord)m;
+				FuzzingKeySelectionRecord kr = (FuzzingKeySelectionRecord) m;
 				// Need to check the variable spec matches the chosen key!
 				if (var.getVariable().equals(kr.getKey())) {
 					// Select an operation parameter set to use
@@ -132,12 +134,12 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 					List<Object> specificOpParams = opset.generateSpecific();
 					kr.setParams(specificOpParams);
 				}
-			}	
+			}
 		}
 	}
-	
+
 	private void newParticipants(FuzzingSelectionRecord m) throws ListHasNoElement, OperationLoadFailed {
 		List<String> newParticipants = getRandomParticipantsFromMission();
-		((FuzzingKeySelectionRecord)m).setParticipants(newParticipants);
+		((FuzzingKeySelectionRecord) m).setParticipants(newParticipants);
 	}
 }
