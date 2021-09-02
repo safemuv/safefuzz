@@ -1,6 +1,7 @@
 package fuzzingengine;
 
 import fuzzingengine.operations.FuzzingOperation;
+import middleware.core.ATLASCore;
 
 abstract public class FuzzingSelectionRecord {
 	protected FuzzingTimeSpecification timeSpec;
@@ -15,8 +16,8 @@ abstract public class FuzzingSelectionRecord {
 		return op;
 	}
 	
-	public boolean isReadyAtTime(double time) {
-		return timeSpec.isActiveAtTime(time);
+	public boolean isActiveNow(ATLASCore core) {
+		return timeSpec.isActiveNow(core);
 	}
 	
 	public abstract FuzzingSelectionRecord dup();

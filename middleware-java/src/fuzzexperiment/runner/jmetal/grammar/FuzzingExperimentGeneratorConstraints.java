@@ -54,6 +54,7 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 			
 			System.out.print("specTree = ");
 			specTree.prettyPrintLine(System.out);
+		
 
 			double startTime = getStartTime(var.getTimeSpec());
 			double endTime = getEndTime(var.getTimeSpec(), startTime);

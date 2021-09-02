@@ -234,4 +234,8 @@ public abstract class ATLASCore {
 			r.setupRobotEnergy();
 		}
 	}
+
+	public Object getSimVariable(String name) {
+		return false;
+	}
 }

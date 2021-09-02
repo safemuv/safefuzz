@@ -187,6 +187,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		List<FuzzingSelectionRecord> recs = initialGenerator.generateExperiment(Optional.empty());
 		System.out.println("createSolution - recs=" + recs);
 		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recs);
+		
 		System.out.println("Initial chromosome = " + sol.toString());
 		return sol;
 	}

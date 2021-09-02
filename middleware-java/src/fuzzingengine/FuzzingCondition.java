@@ -2,13 +2,13 @@ package fuzzingengine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Stream;
 
 import fuzzingengine.conditionelements.FuzzingConditionElement;
 import it.units.malelab.jgea.representation.tree.Tree;
+import middleware.core.ATLASCore;
 
 public class FuzzingCondition {
 	private Tree<FuzzingConditionElement> specTree;
@@ -21,9 +21,18 @@ public class FuzzingCondition {
 		return specTree;
 	}
 	
-	public boolean isActive() {
-		// TODO: implement tree parsing and condition checking
-		return false;
+	public boolean evaluate(ATLASCore core) {
+		FuzzingConditionElement e = specTree.content();
+		System.out.println("evaluateTree - " + e + " - " + e.getClass().getCanonicalName());
+		
+		Object res = e.evaluate(core);
+		if (res instanceof Boolean) {
+			Boolean resB = (Boolean)res;
+			return resB;
+		} else {
+			// TODO: maybe setup exception here
+			return false;
+		}
 	}
 	
 	public <T> Tree<T> copyTree(Tree<T> inT) {
@@ -57,3 +66,4 @@ public class FuzzingCondition {
 		return new FuzzingCondition(t);
 	}
 }
+

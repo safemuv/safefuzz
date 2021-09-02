@@ -1,5 +1,7 @@
 package fuzzingengine;
 
+import middleware.core.ATLASCore;
+
 public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	FuzzingCondition startCond;
 	
@@ -20,10 +22,11 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 		return endTime;
 	}
 	
-	public boolean isActiveAtTime(double time) {
+	public boolean isActiveNow(ATLASCore core) {
 		if (!started) {
-			started = startCond.isActive();
+			started = startCond.evaluate(core);
 		} else {
+			double time = core.getTime();
 			started = (time < endTime);
 		}
 		return started;
