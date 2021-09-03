@@ -12,6 +12,7 @@ import middleware.core.ATLASCore;
 
 public class FuzzingCondition {
 	private Tree<FuzzingConditionElement> specTree;
+	private ATLASCore core;
 	
 	public FuzzingCondition(Tree<FuzzingConditionElement> specTree) {
 		this.specTree = specTree; 
@@ -21,7 +22,7 @@ public class FuzzingCondition {
 		return specTree;
 	}
 	
-	public boolean evaluate(ATLASCore core) {
+	public boolean evaluate() {
 		FuzzingConditionElement e = specTree.content();
 		System.out.println("evaluateTree - " + e + " - " + e.getClass().getCanonicalName());
 		

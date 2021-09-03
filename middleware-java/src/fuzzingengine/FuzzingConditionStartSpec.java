@@ -24,7 +24,7 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	
 	public boolean isActiveNow(ATLASCore core) {
 		if (!started) {
-			started = startCond.evaluate(core);
+			started = startCond.evaluate();
 		} else {
 			double time = core.getTime();
 			started = (time < endTime);

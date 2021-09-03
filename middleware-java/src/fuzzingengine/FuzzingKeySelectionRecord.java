@@ -180,4 +180,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public void setParticipants(List<String> newParticipants) {
 		this.participants = newParticipants;
 	}
+
+	public boolean isReadyAtTime(double time) {
+		return false;
+	}
 }
