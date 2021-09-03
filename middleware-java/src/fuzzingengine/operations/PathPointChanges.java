@@ -24,19 +24,19 @@ public class PathPointChanges extends JSONFuzzingOperation {
 	private Random rng;
 	private int countToFuzz;
 
-	private PathPointChanges(boolean useOffset, Point p, int pointCount) {
+	private PathPointChanges(boolean useOffset, Point p, int pointCount, long seed) {
 		this.useOffset = useOffset;
 		this.p = p;
-		this.rng = new Random();
+		this.rng = new Random(seed);
 		this.countToFuzz = pointCount;
 	}
 
-	public static PathPointChanges Random(double xmax, double ymax, double zmax, int pointCount) {
-		return new PathPointChanges(false, new Point(xmax, ymax, zmax), pointCount);
+	public static PathPointChanges Random(double xmax, double ymax, double zmax, int pointCount, long seed) {
+		return new PathPointChanges(false, new Point(xmax, ymax, zmax), pointCount, seed);
 	}
 
-	public static PathPointChanges RandomOffset(double xmax, double ymax, double zmax, int pointCount) {
-		return new PathPointChanges(true, new Point(xmax, ymax, zmax), pointCount);
+	public static PathPointChanges RandomOffset(double xmax, double ymax, double zmax, int pointCount, long seed) {
+		return new PathPointChanges(true, new Point(xmax, ymax, zmax), pointCount, seed);
 	}
 
 	public String getReplacement(String inValue) {
@@ -52,14 +52,16 @@ public class PathPointChanges extends JSONFuzzingOperation {
 			double xmax = Double.valueOf(fields[1]);
 			double ymax = Double.valueOf(fields[2]);
 			double zmax = Double.valueOf(fields[3]);
-			return PathPointChanges.Random(xmax, ymax, zmax, 1);
+			long seed = Long.valueOf(fields[4]);
+			return PathPointChanges.Random(xmax, ymax, zmax, 1, seed);
 		}
 
 		if (fields[0].toUpperCase().equals("RANDOMOFFSET")) {
 			double xmax = Double.valueOf(fields[1]);
 			double ymax = Double.valueOf(fields[2]);
 			double zmax = Double.valueOf(fields[3]);
-			return PathPointChanges.RandomOffset(xmax, ymax, zmax, 1);
+			long seed = Long.valueOf(fields[4]);
+			return PathPointChanges.RandomOffset(xmax, ymax, zmax, 1, seed);
 		}
 
 		if (fields[0].toUpperCase().equals("RANDOMOFFSET_MULTIPLE")) {
@@ -67,7 +69,8 @@ public class PathPointChanges extends JSONFuzzingOperation {
 			double ymax = Double.valueOf(fields[2]);
 			double zmax = Double.valueOf(fields[3]);
 			int pointCount = Integer.valueOf(fields[4]);
-			return PathPointChanges.RandomOffset(xmax, ymax, zmax, pointCount);
+			long seed = Long.valueOf(fields[5]);
+			return PathPointChanges.RandomOffset(xmax, ymax, zmax, pointCount, seed);
 		}
 
 		throw new CreationFailed("Invalid parameter string " + s);

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
+  <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
+    <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="trajectory_tracking_controller_fuzzy" componentRelativePath="/trajectory_tracking_controller_fuzzy">
+      <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/set_velocity_prime" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
+        <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
+        <opParamsType xmi:id="_F3NcQAxhEeyHaY3ebI30PA" opParam="_kqTLcAxgEeyHaY3ebI30PA" subSpec="twist.linear"/>
+        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" endTime="200.0"/>
+        <probInfo xmi:id="_Nu5UgMilEeuXkJUdIAjG9g" includeVariableProbability="1.0"/>
+      </vars>
+    </components>
+    <components xsi:type="fuzzspec:Environment" xmi:id="_a9kGgMPJEeuxquRJ8lTruw" name="CalibrationDefinitions" componentRelativePath="safemuv_situational_awareness/config">
+      <vars xmi:id="_gEFUYMPJEeuxquRJ8lTruw" component="_a9kGgMPJEeuxquRJ8lTruw" variable="calibration_points.yaml" dir="OUTBOUND">
+        <opParamsType xmi:id="_qfQOgMcFEeuUivYxWEGxgQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_0"/>
+        <opParamsType xmi:id="_UWN30McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_1"/>
+        <opParamsType xmi:id="_Uq5uYMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_2"/>
+        <opParamsType xmi:id="_U-8rwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_3"/>
+        <opParamsType xmi:id="_VRkFwMcmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_4"/>
+        <opParamsType xmi:id="_VkMG0McmEeu7po30IwHYqg" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="frameB_5"/>
+        <probInfo xmi:id="_KNA3QMinEeuXkJUdIAjG9g"/>
+      </vars>
+    </components>
+    <components xmi:id="_Ix39YM7mEeu_Qtc8Axo4IQ" name="trajectory_planning">
+      <vars xmi:id="_JEwnsM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_trajectory_path_prime" reflectionName="/desired_trajectory_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_sB2csM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
+        <probInfo xmi:id="_xKcHIM7nEeu_Qtc8Axo4IQ"/>
+      </vars>
+      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_path_prime" reflectionName="/desired_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
+        <opParamsType xmi:id="_d4eyMNlDEeuPm8zY7fhTLg" opParam="_SRcHwM7pEeu_Qtc8Axo4IQ" subSpec="poses"/>
+        <timeLimit xmi:id="_zl7WENlDEeuPm8zY7fhTLg" endTime="200.0"/>
+        <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ"/>
+      </vars>
+    </components>
+    <components xsi:type="fuzzspec:Environment" xmi:id="_Y1wkMNkMEeuAQ_x5ldjrIg" name="traj_plan_external" componentRelativePath="traj_plan_external">
+      <vars xmi:id="_eUnZkNkMEeuAQ_x5ldjrIg" component="_Y1wkMNkMEeuAQ_x5ldjrIg" variable="trajectory_planner_external.yaml" dir="OUTBOUND">
+        <opParamsType xmi:id="_IQSfYNkPEeuAQ_x5ldjrIg" opParam="_09vikNkMEeuAQ_x5ldjrIg" subSpec="trajectory_planner_geometric_primitives.discrete_graph.num_nodes"/>
+        <probInfo xmi:id="_CCpRYNkPEeuAQ_x5ldjrIg"/>
+      </vars>
+    </components>
+  </sims>
+  <operations xmi:id="_yHIc4L2kEeum1aKAonhHhQ" operationClassName="JSONPointChange">
+    <paramSets xmi:id="_h-bxUL8gEeuxyMr3nK2BCQ" name="JSONPointChange-Fixed-1">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_n__EEL8gEeuxyMr3nK2BCQ" name="Nature" value="FIXED"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_vJI4EL8gEeuxyMr3nK2BCQ" name="X" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_rHC7oL8gEeuxyMr3nK2BCQ" name="Y" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_s8eMML8gEeuxyMr3nK2BCQ" name="Z" lower="-1.0" upper="1.0"/>
+    </paramSets>
+    <paramSets xmi:id="_kqTLcAxgEeyHaY3ebI30PA" name="JSONPointChange-RandomOffset-1">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_kqTLcQxgEeyHaY3ebI30PA" name="Nature" value="RANDOMOFFSET"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_kqTLcgxgEeyHaY3ebI30PA" name="X" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_kqTLcwxgEeyHaY3ebI30PA" name="Y" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_kqTLdAxgEeyHaY3ebI30PA" name="Z" lower="-1.0" upper="1.0"/>
+      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_wHN6sAxgEeyHaY3ebI30PA" name="SEED" upper="1073741824"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_PJam4M7pEeu_Qtc8Axo4IQ" operationClassName="PathPointChanges">
+    <paramSets xmi:id="_SRcHwM7pEeu_Qtc8Axo4IQ" name="PathPointChange-multiple-elements">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_SRcHwc7pEeu_Qtc8Axo4IQ" name="Nature" value="RANDOMOFFSET_MULTIPLE"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHws7pEeu_Qtc8Axo4IQ" name="X" upper="3.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHw87pEeu_Qtc8Axo4IQ" name="Y" upper="3.0"/>
+      <params xsi:type="fuzzspec:DoubleRangeOperationParameter" xmi:id="_SRcHxM7pEeu_Qtc8Axo4IQ" name="Z" upper="3.0"/>
+      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_SRcHxc7pEeu_Qtc8Axo4IQ" name="ELEMENTS_TO_MUTATE" lower="1" upper="10"/>
+      <params xsi:type="fuzzspec:IntRangeOperationParameter" xmi:id="_OiOroAxhEeyHaY3ebI30PA" name="SEED" upper="1073741824"/>
+    </paramSets>
+  </operations>
+  <operations xmi:id="_prfLMNkMEeuAQ_x5ldjrIg" operationClassName="IntegerVariableChange">
+    <paramSets xmi:id="_09vikNkMEeuAQ_x5ldjrIg" name="IntChange-300-3000">
+      <params xsi:type="fuzzspec:StringConstantOperationParameter" xmi:id="_AXozANkNEeuAQ_x5ldjrIg" name="NATURE" value="RANDOM"/>
+      <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_L8L0QNkNEeuAQ_x5ldjrIg" name="Lower" value="300"/>
+      <params xsi:type="fuzzspec:IntConstantOperationParameter" xmi:id="_Nwo0cNkNEeuAQ_x5ldjrIg" name="Upper" value="3000"/>
+    </paramSets>
+  </operations>
+</fuzzspec:FuzzingSpecification>

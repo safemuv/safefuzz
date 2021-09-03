@@ -27,19 +27,25 @@ public class JSONPointChange extends JSONFuzzingOperation {
 	private ChangeMode mode;
 	private Point p; 
 	private Random rng;
-	
+
 	private JSONPointChange(ChangeMode mode, Point p) {
 		this.mode = mode;
 		this.p = p;
 		this.rng = new Random();
 	}
 	
-	public static JSONPointChange Random(double xmax, double ymax, double zmax) {
-		return new JSONPointChange(ChangeMode.RANDOM, new Point(xmax, ymax, zmax));
+	private JSONPointChange(ChangeMode mode, Point p, long seed) {
+		this.mode = mode;
+		this.p = p;
+		this.rng = new Random(seed);
 	}
 	
-	public static JSONPointChange RandomOffset(double xmax, double ymax, double zmax) {
-		return new JSONPointChange(ChangeMode.RANDOMOFFSET, new Point(xmax, ymax, zmax));
+	public static JSONPointChange Random(double xmax, double ymax, double zmax, long seed) {
+		return new JSONPointChange(ChangeMode.RANDOM, new Point(xmax, ymax, zmax), seed);
+	}
+	
+	public static JSONPointChange RandomOffset(double xmax, double ymax, double zmax, long seed) {
+		return new JSONPointChange(ChangeMode.RANDOMOFFSET, new Point(xmax, ymax, zmax), seed);
 	}
 	
 	private static JSONPointChange Fixed(double x, double y, double z) {
@@ -149,14 +155,16 @@ public class JSONPointChange extends JSONFuzzingOperation {
 			double xmax = Double.valueOf(fields[1]);
 			double ymax = Double.valueOf(fields[2]);
 			double zmax = Double.valueOf(fields[3]);
-			return JSONPointChange.Random(xmax, ymax, zmax);
+			long seed = Long.valueOf(fields[4]);
+			return JSONPointChange.Random(xmax, ymax, zmax, seed);
 		}
 		
 		if (fields[0].toUpperCase().equals("RANDOMOFFSET")) {
 			double xmax = Double.valueOf(fields[1]);
 			double ymax = Double.valueOf(fields[2]);
 			double zmax = Double.valueOf(fields[3]);
-			return JSONPointChange.RandomOffset(xmax, ymax, zmax);
+			long seed = Long.valueOf(fields[4]);
+			return JSONPointChange.RandomOffset(xmax, ymax, zmax, seed);
 		}
 		
 		if (fields[0].toUpperCase().equals("FIXED")) {
