@@ -16,8 +16,8 @@ abstract public class FuzzingSelectionRecord {
 		return op;
 	}
 	
-	public boolean isActiveNow(ATLASCore core) {
-		return timeSpec.isActiveNow(core);
+	public boolean isActiveAtTime(double time) {
+		return timeSpec.isActiveAtTime(time);
 	}
 	
 	public abstract FuzzingSelectionRecord dup();

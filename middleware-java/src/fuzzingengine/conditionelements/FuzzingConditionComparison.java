@@ -2,7 +2,7 @@ package fuzzingengine.conditionelements;
 
 import middleware.core.ATLASCore;
 
-public abstract class FuzzingConditionComparison {
+public class FuzzingConditionComparison extends FuzzingConditionElement {
 	public enum ComparisonOperation {
 		LESS_THAN,
 		GREATER_THAN,
@@ -14,7 +14,7 @@ public abstract class FuzzingConditionComparison {
 	private FuzzingConditionElement rhs;
 	private ComparisonOperation op;
 	
-	FuzzingConditionComparison(FuzzingConditionElement lhs, FuzzingConditionElement rhs, ComparisonOperation op) {
+	public FuzzingConditionComparison(FuzzingConditionElement lhs, FuzzingConditionElement rhs, ComparisonOperation op) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		this.op = op;

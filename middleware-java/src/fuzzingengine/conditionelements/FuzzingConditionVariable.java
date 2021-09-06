@@ -5,7 +5,7 @@ import middleware.core.ATLASCore;
 public class FuzzingConditionVariable extends FuzzingConditionElement {
 	String name;
 	
-	FuzzingConditionVariable(String name) {
+	public FuzzingConditionVariable(String name) {
 		this.name = name;
 	}
 

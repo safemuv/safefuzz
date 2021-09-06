@@ -23,14 +23,14 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 	int MIN_TREE_HEIGHT = 1;
 	int MAX_TREE_HEIGHT = 3;
 	
-	Grammar<FuzzingConditionElement> grammar;
-	Factory<Tree<FuzzingConditionElement>> grammarGenerator;
+	Grammar<String> grammar;
+	Factory<Tree<String>> grammarGenerator;
 	Random rngGenerator;
 
-	public FuzzingExperimentGeneratorConstraints(Mission mission, Grammar<FuzzingConditionElement> grammar) {
+	public FuzzingExperimentGeneratorConstraints(Mission mission, Grammar<String> grammar) {
 		super(mission);
 		this.grammar = grammar;
-		this.grammarGenerator = new GrowGrammarTreeFactory<FuzzingConditionElement>(MAX_TREE_HEIGHT, grammar);
+		this.grammarGenerator = new GrowGrammarTreeFactory<String>(MAX_TREE_HEIGHT, grammar);
 		rngGenerator = new Random();
 	}
 
@@ -49,12 +49,12 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 
 			// n is one, only want a single tree
 			int n = 1;
-			List<Tree<FuzzingConditionElement>> res = grammarGenerator.build(n, rngGenerator);
-			Tree<FuzzingConditionElement> specTree = res.get(0);
+			List<Tree<String>> res = grammarGenerator.build(n, rngGenerator);
+			Tree<String> specTree = res.get(0);
 			
 			System.out.print("specTree = ");
 			specTree.prettyPrintLine(System.out);
-		
+			System.out.println();
 
 			double startTime = getStartTime(var.getTimeSpec());
 			double endTime = getEndTime(var.getTimeSpec(), startTime);

@@ -5,7 +5,7 @@ import middleware.core.ATLASCore;
 public class FuzzingConditionConstant extends FuzzingConditionElement {
 	Object constant;
 	
-	FuzzingConditionConstant(Object constant) {
+	public FuzzingConditionConstant(Object constant) {
 		this.constant = constant;
 	}
 

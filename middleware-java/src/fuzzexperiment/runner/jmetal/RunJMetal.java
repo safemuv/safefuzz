@@ -31,6 +31,7 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
+import fuzzexperiment.runner.jmetal.grammar.UnknownSymbol;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
@@ -90,7 +91,10 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 		Problem<FuzzingSelectionsSolution> problem;
 		try {
+			//CustomGrammarFactory gf = new CustomGrammarFactory();
 			Grammar<String> g = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
+			//Grammar<FuzzingConditionSymbol> g = gf.generate();
+			
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,

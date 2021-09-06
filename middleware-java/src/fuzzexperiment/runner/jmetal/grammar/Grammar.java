@@ -23,12 +23,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Optional;
+
+import fuzzingengine.conditionelements.FuzzingConditionComparison;
+import fuzzingengine.conditionelements.FuzzingConditionElement;
+
 /**
  * @author eric
  */
 public class Grammar<T> implements Serializable {
 
-  public static final String RULE_ASSIGNMENT_STRING = "::=";
+	private static final long serialVersionUID = 1L;
+public static final String RULE_ASSIGNMENT_STRING = "::=";
   public static final String RULE_OPTION_SEPARATOR_STRING = "|";
 
   private T startingSymbol;
@@ -103,5 +109,6 @@ public class Grammar<T> implements Serializable {
     br.close();
     return grammar;
   }
+  
 
 }

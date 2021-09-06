@@ -64,7 +64,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	private double mutationProb;
 	protected FuzzingEngine fuzzEngine;
 	protected Mission mission;
-	protected GrammarBasedSubtreeMutation<FuzzingConditionElement> mutator;
+	protected GrammarBasedSubtreeMutation<String> mutator;
 	
 	
 	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double mutationProb) throws IOException {
@@ -73,7 +73,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		this.mutationLog = new FileWriter(mutationLogFileName);
 		this.fuzzEngine = fuzzEngine;
 		this.mission = mission;
-		this.mutator = new GrammarBasedSubtreeMutation<FuzzingConditionElement>(MUTATION_DEPTH, g);
+		this.mutator = new GrammarBasedSubtreeMutation<String>(MUTATION_DEPTH, g);
 	}
 	
 	public ChangeOp selectRandomOperation() {
@@ -109,9 +109,9 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 			if (changeOp == TimeSpecChangeOp.CHANGE_CONDITION) {
 				FuzzingConditionStartSpec tsc = (FuzzingConditionStartSpec)ts;
 				FuzzingCondition c = tsc.getCondition();
-				Tree<FuzzingConditionElement> t = c.getTree();
-				Tree<FuzzingConditionElement> tNew = mutator.mutate(t, rng);
-				
+				Tree<String> t = c.getTree();
+				Tree<String> tNew = mutator.mutate(t, rng);
+								
 				System.out.print("MUTATION: Original tree = ");
 				t.prettyPrintLine(System.out);
 				System.out.print(": Mutated tree = ");

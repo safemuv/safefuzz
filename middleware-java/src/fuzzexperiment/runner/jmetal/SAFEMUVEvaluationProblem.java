@@ -20,7 +20,7 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.StartFuzzingProcesses;
-import fuzzexperiment.runner.jmetal.grammar.FuzzingExperimentGeneratorConstraints;
+import fuzzexperiment.runner.jmetal.grammar.*;
 import fuzzexperiment.runner.metrics.FakeMetricHandler;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
@@ -96,7 +96,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		
 	}
 
-	public SAFEMUVEvaluationProblem(Grammar g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
+	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
 			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
