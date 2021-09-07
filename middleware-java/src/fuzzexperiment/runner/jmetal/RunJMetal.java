@@ -31,7 +31,6 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
-import fuzzexperiment.runner.jmetal.grammar.UnknownSymbol;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzexperiment.runner.metrics.fake.FindSpecificTime;

@@ -10,7 +10,6 @@ public class FuzzingConditionConstant extends FuzzingConditionElement {
 	}
 
 	public Object evaluate(ATLASCore core) {
-		// TODO: Need to get the named simulator variable from a cache and inject it here 
 		return constant;
 	}
 }

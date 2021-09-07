@@ -407,6 +407,9 @@ public class FuzzingEngine<E> {
 	private FuzzingTimeSpecification createTimeSpec(String key, String startSpec, String endSpec) {
 		if (key.equals("KEYCONDSTART")) {
 			// This is a start cond, end time spec
+			System.out.println("startSpec=" + startSpec);
+			System.out.println("endSpec=" + endSpec);
+			
 			double end = Double.parseDouble(endSpec);
 			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
 			return new FuzzingConditionStartSpec(startCond, end);
