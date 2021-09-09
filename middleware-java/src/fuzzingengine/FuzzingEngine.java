@@ -412,6 +412,12 @@ public class FuzzingEngine<E> {
 			
 			double end = Double.parseDouble(endSpec);
 			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
+			try {
+				startCond.doConversion();
+			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return new FuzzingConditionStartSpec(startCond, end);
 		}
 		

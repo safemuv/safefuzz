@@ -32,7 +32,7 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	}
 
 	public String getCSVContents() {
-		return startCond.csvPrint() + "," + endTime;
+		return startCond.jsonPrint() + "," + endTime;
 	}
 
 	protected FuzzingTimeSpecification dup() {

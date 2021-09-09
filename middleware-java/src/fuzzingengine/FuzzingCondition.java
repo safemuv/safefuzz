@@ -15,32 +15,37 @@ public class FuzzingCondition {
 	private FuzzingConditionElement elementTree;
 	private Tree<String> stringTree;
 	private GrammarConvertor conv = new GrammarConvertor();
-	
+
 	private ATLASCore core;
 
 	public FuzzingCondition(Tree<String> stringTree) {
 		this.stringTree = stringTree;
 	}
-	
+
 	public void doConversion() throws UnrecognisedComparison, UnrecognisedTreeNode {
-		this.elementTree = conv.convert(stringTree); 
+		this.elementTree = conv.convert(stringTree);
 	}
 
 	public Tree<String> getTree() {
 		return stringTree;
 	}
-	
+
 	public boolean evaluate() {
-		Object res = elementTree.evaluate(core);
-		if (res instanceof Boolean) {
-			Boolean resB = (Boolean)res;
-			return resB;
-		} else {
-			System.out.println("Returning FALSE - non-boolean contents");
+		if (this.elementTree == null) {
+			System.out.println("ELEMENTTREE is null");
 			return false;
+		} else {
+			Object res = this.elementTree.evaluate(core);
+			if (res instanceof Boolean) {
+				Boolean resB = (Boolean) res;
+				return resB;
+			} else {
+				System.out.println("Returning FALSE - non-boolean returned in evaluating condition " + this);
+				return false;
+			}
 		}
 	}
-	
+
 	public <T> Tree<T> copyTree(Tree<T> inT) {
 		return Tree.copyOf(inT);
 	}
@@ -66,26 +71,32 @@ public class FuzzingCondition {
 //			return "";
 //		}
 //	}
-	
+
 	public String csvInternal(Tree<String> t) {
 		String s = "[";
 		s = s + t.content() + "|";
 		for (int i = 0; i < t.nChildren(); i++) {
 			s = s + csvInternal(t.child(i));
-		};
+		}
+		;
 		s = s + "]";
 		return s;
 	}
-	
+
 	public String csvPrint() {
 		return csvInternal(stringTree);
 	}
 
+	public String jsonPrint() {
+		return FuzzingConditionJSONUtils.conditionToJSONString(stringTree);
+	}
+
 	public static Tree<String> parseElement(String s, Tree<String> parent) {
+		System.out.println("parseElement:" + s);
 		if (s.length() > 0) {
 			// Take off the initial and final square brackets
 			String inner = s.substring(1, s.length() - 1);
-			String [] contents = inner.split("|");
+			String[] contents = inner.split("\\|");
 			String name = contents[0];
 			Tree<String> t = new Tree<String>(name, parent);
 			for (int i = 1; i < contents.length; i++) {
@@ -93,12 +104,13 @@ public class FuzzingCondition {
 			}
 			return t;
 		} else {
-			return new Tree<String>("",null);
+			return new Tree<String>("", null);
 		}
 	}
-	
+
 	public static FuzzingCondition parseCSVString(String startSpec) {
-		return new FuzzingCondition(parseElement(startSpec, null));
+		// return new FuzzingCondition(parseElement(startSpec, null));
+		Tree<String> t = FuzzingConditionJSONUtils.conditionFromJSONString(startSpec);
+		return new FuzzingCondition(t);
 	}
 }
-

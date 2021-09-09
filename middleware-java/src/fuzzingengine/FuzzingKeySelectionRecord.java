@@ -158,19 +158,12 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		List<String> str = new ArrayList<String>();
         str.add(timeSpec.getCSVRecordTag());
         str.add(key);
-//      str.add(String.valueOf(startTime));
-//      str.add(String.valueOf(endTime));
         str.add(timeSpec.getCSVContents());
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));
         str.add(operationName());
         str.add(paramsAsString());
         return String.join(",", str);
-	}
-
-	public void checkConstraints() {
-
-		
 	}
 	
 	public Object getGroupNum() {
@@ -182,6 +175,10 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 
 	public boolean isReadyAtTime(double time) {
-		return false;
+		return timeSpec.isActiveAtTime(time);
+	}
+
+	public void checkConstraints() {
+				
 	}
 }

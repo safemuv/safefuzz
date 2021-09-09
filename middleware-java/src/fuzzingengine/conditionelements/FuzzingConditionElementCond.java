@@ -13,6 +13,7 @@ public class FuzzingConditionElementCond extends FuzzingConditionElement {
 	}
 	
 	public Object evaluate(ATLASCore core) {
+		// For now, only support a single condition
 		if (conds.size() > 0) {
 			return conds.get(0).evaluate(core);
 		} else {
