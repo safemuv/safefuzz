@@ -43,13 +43,12 @@ public class FuzzingEngine<E> {
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping fuzzingspec = new FuzzingSimMapping();
 	
-
 	PriorityQueue<FutureEvent<E>> delayedEvents = new PriorityQueue<FutureEvent<E>>();
 
 	public FuzzingEngine(Mission m) {
 		this.m = m;
 	}
-
+	
 	private List<String> getVehicles(String vehicleList) throws MissingRobot {
 		if (vehicleList.toUpperCase().equals("ALL")) {
 			return m.getAllRobotAndComputerNames();

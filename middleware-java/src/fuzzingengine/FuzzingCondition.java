@@ -16,8 +16,6 @@ public class FuzzingCondition {
 	private Tree<String> stringTree;
 	private GrammarConvertor conv = new GrammarConvertor();
 
-	private ATLASCore core;
-
 	public FuzzingCondition(Tree<String> stringTree) {
 		this.stringTree = stringTree;
 	}
@@ -31,18 +29,29 @@ public class FuzzingCondition {
 	}
 
 	public boolean evaluate() {
+		// Not sure why this isn't being called during fuzzing engine setup
 		if (this.elementTree == null) {
-			System.out.println("ELEMENTTREE is null");
-			return false;
-		} else {
-			Object res = this.elementTree.evaluate(core);
-			if (res instanceof Boolean) {
-				Boolean resB = (Boolean) res;
-				return resB;
-			} else {
-				System.out.println("Returning FALSE - non-boolean returned in evaluating condition " + this);
+			try {
+				doConversion();
+			} catch (UnrecognisedComparison e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				return false;
 			}
+		}
+		
+		ATLASCore core = ATLASCore.getCore();
+		Object res = this.elementTree.evaluate(core);
+		if (res instanceof Boolean) {
+			Boolean resB = (Boolean) res;
+			return resB;
+		} else {
+			System.out.println("Returning FALSE - non-boolean returned in evaluating condition " + this);
+			return false;
 		}
 	}
 
