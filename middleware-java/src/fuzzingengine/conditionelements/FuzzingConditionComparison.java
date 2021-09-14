@@ -20,9 +20,9 @@ public class FuzzingConditionComparison extends FuzzingConditionElement {
 		this.op = op;
 	}
 		
-	public Object evaluate(ATLASCore core) {
-		Object lres = lhs.evaluate(core);
-		Object rres = rhs.evaluate(core);
+	public Object evaluate(ATLASCore core, String vehicle) {
+		Object lres = lhs.evaluate(core, vehicle);
+		Object rres = rhs.evaluate(core, vehicle);
 		
 		if ((lres instanceof Double) && (rres instanceof Double)) {
 			double lres_n = (double)lres;

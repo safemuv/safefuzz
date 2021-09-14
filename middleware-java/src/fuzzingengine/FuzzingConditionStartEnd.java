@@ -15,11 +15,11 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 		this.endCond = end;
 	}
 
-	public boolean isActiveAtTime(double time) {
+	public boolean isActiveAtTime(double time, String vehicle) {
 		if (!active) {
-			active = startCond.evaluate();
+			active = startCond.evaluate(vehicle);
 		} else {
-			active = !endCond.evaluate();
+			active = !endCond.evaluate(vehicle);
 		}
 		return active;
 	}
@@ -34,5 +34,14 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 	
 	public String getCSVRecordTag() {
 		return "KEYCONDBOTH";
+	}
+
+	public void validateSpecification() throws InvalidSpecification {
+		try {
+			startCond.validateCondition();
+			endCond.validateCondition();
+		} catch (InvalidCondition e) {
+			e.printStackTrace();
+		}
 	}
 }

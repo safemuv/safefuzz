@@ -1,7 +1,5 @@
 package fuzzingengine;
 
-import middleware.core.ATLASCore;
-
 public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	FuzzingCondition startCond;
 	
@@ -22,9 +20,9 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 		return endTime;
 	}
 	
-	public boolean isActiveAtTime(double time) {
+	public boolean isActiveAtTime(double time, String vehicle) {
 		if (!started) {
-			started = startCond.evaluate();
+			started = startCond.evaluate(vehicle);
 		} else {
 			started = (time < endTime);
 		}
@@ -41,5 +39,13 @@ public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 
 	public String getCSVRecordTag() {
 		return "KEYCONDSTART";
+	}
+
+	public void validateSpecification() throws InvalidSpecification {
+		try {
+			startCond.validateCondition();
+		} catch (InvalidCondition e) {
+			throw new InvalidSpecification(e);
+		}
 	}
 }

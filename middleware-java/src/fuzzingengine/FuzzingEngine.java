@@ -420,10 +420,22 @@ public class FuzzingEngine<E> {
 			return new FuzzingConditionStartSpec(startCond, end);
 		}
 		
-//		if (key.equals("KEYCONDBOTH")) {
-//			// This is a start-end time spec
-//			
-//		}
+		if (key.equals("KEYCONDBOTH")) {
+			// This is a start-end time spec
+			System.out.println("startSpec=" + startSpec);
+			System.out.println("endSpec=" + endSpec);
+			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
+			FuzzingCondition endCond = FuzzingCondition.parseCSVString(endSpec);
+			try {
+				startCond.doConversion();
+				endCond.doConversion();
+			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new FuzzingConditionStartEnd(startCond, endCond);
+			
+		}
 		
 		// Otherwise, assume a start-end time spec
 		double start = Double.parseDouble(startSpec);

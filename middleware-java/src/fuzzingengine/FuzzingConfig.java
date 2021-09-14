@@ -131,7 +131,7 @@ public class FuzzingConfig {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
 		System.out.println("keyLookup=" + keyLookup + ",key=" + key + ",fr=" + fr);
 		if (fr != null) {
-			if (fr.isReadyAtTime(time) && fr.hasVehicle(vehicle)) {
+			if (fr.isReadyAtTime(time,vehicle) && fr.hasVehicle(vehicle)) {
 				return Optional.of(fr.getOperation());
 			} else {
 				//System.out.println("hasVehicle " + vehicle + " is false or timing not met");

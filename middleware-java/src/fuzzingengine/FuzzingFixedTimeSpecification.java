@@ -9,7 +9,7 @@ public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 		this.endTime = endTime;
 	}
 	
-	public boolean isActiveAtTime(double time) {
+	public boolean isActiveAtTime(double time, String vehicle) {
 		return (time >= startTime) && (time < endTime);
 	}
 
@@ -39,5 +39,11 @@ public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 	
 	public String getCSVRecordTag() {
 		return "KEY";
+	}
+
+	public void validateSpecification() throws InvalidSpecification {
+		if (endTime < startTime) {
+			throw new InvalidSpecification("End time is not greater than start time in " + this.toString());
+		}
 	}
 }

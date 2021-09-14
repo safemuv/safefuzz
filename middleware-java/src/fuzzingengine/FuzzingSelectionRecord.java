@@ -16,8 +16,8 @@ abstract public class FuzzingSelectionRecord {
 		return op;
 	}
 	
-	public boolean isActiveAtTime(double time) {
-		return timeSpec.isActiveAtTime(time);
+	public boolean isActiveAtTime(double time, String vehicle) {
+		return timeSpec.isActiveAtTime(time, vehicle);
 	}
 	
 	public abstract FuzzingSelectionRecord dup();

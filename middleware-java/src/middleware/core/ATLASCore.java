@@ -41,7 +41,11 @@ public abstract class ATLASCore {
 	protected FuzzingEngine fuzzEngine;
 
 	protected Map<String, Boolean> vehicleBatteryFlat = new HashMap<String, Boolean>();
+	
+	// Sim variables are delivered from the middleware
 	protected Map<String, Object> simVariables = new HashMap<String, Object>();
+	// Function variables are computed directly by the middleware
+	protected Map<String, ObjectLambda> middlewareFunctionVariables = new HashMap<String, ObjectLambda>();
 
 	private GUITest gui;
 
@@ -138,7 +142,45 @@ public abstract class ATLASCore {
 		;
 	}
 
+	public void setupMiddlewareFunctionVariables() {
+		
+		ObjectLambda spdLambda = (name) -> {
+			Robot r = mission.getRobot(name);
+			try {
+				Point p = r.getPointComponentProperty("location");
+				Point orig = r.getPointComponentProperty("startLocation");
+				double distance = orig.distanceTo(p);
+				System.out.println("starting_point_distance = " + distance);
+				return distance;
+			} catch (MissingProperty p) {
+				return Double.MAX_VALUE;
+			}
+		};
+		
+//		ObjectLambda spdLambda = (name) -> {
+//			Robot r = mission.getRobot(name);
+//			try {
+//				Point p = r.getPointComponentProperty("location");
+//				Point orig = r.getPointComponentProperty("startLocation");
+//				double distance = orig.distanceTo(p);
+//				System.out.println("starting_point_distance = " + distance);
+//				return distance;
+//			} catch (MissingProperty p) {
+//				return Double.MAX_VALUE;
+//			}
+//		};
+		
+		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
+		
+		// TODO: hardcoded testing here for these
+//		if (name.equals("starting_point_distance")) {
+//			
+//		}
+	}
+	
 	public void runMiddleware() {
+		setupMiddlewareFunctionVariables();
+		
 		for (ATLASEventQueue<?> q : queues) {
 			// Since the GUI displays global status, it
 			// needs to be updated following every event on any queue
@@ -247,25 +289,21 @@ public abstract class ATLASCore {
 			r.setupRobotEnergy();
 		}
 	}
-
-	public Object getSimVariable(String name) {
-		if (simVariables.containsKey(name)) {
-			return simVariables.get(name);
+	
+	public Object getVariable(String varName, String robotName) {
+		String combinedName = robotName + "_-_" + varName; 
+		// Use the middleware function variables first
+		if (middlewareFunctionVariables.containsKey(combinedName)) {
+			ObjectLambda l = middlewareFunctionVariables.get(combinedName);
+			Object res = l.op(robotName);
+			return res;
 		} else {
-			// TODO: hardcoded testing here for these
-			if (name.equals("starting_point_distance")) {
-				Robot r = mission.getRobot("uav_2");
-				try {
-					Point p = r.getPointComponentProperty("location");
-					Point orig = r.getPointComponentProperty("startLocation");
-					double distance = orig.distanceTo(p);
-					System.out.println("starting_point_distance = " + distance);
-					return distance;
-				} catch (MissingProperty p) {
-					return Double.MAX_VALUE;
-				}
+			if (simVariables.containsKey(combinedName)) {
+				Object res = simVariables.get(combinedName);
+				return res;
+			} else {
+				return false;
 			}
-			return false;
 		}
 	}
 }

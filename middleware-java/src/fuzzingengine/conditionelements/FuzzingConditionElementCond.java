@@ -12,13 +12,18 @@ public class FuzzingConditionElementCond extends FuzzingConditionElement {
 		
 	}
 	
-	public Object evaluate(ATLASCore core) {
-		// For now, only support a single condition
-		if (conds.size() > 0) {
-			return conds.get(0).evaluate(core);
-		} else {
-			return false;
+	public Object evaluate(ATLASCore core, String vehicle) {
+		boolean output = true;
+		
+		for (FuzzingConditionElement cond : conds) {
+			Object res = cond.evaluate(core, vehicle);
+			if (res instanceof Boolean) {
+				output = output & (boolean)res;
+			} else {
+				output = false;
+			}
 		}
+		return output;
 	}
 
 	public void addSubcondition(FuzzingConditionElement cond) {

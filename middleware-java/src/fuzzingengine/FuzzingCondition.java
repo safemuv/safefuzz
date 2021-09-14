@@ -28,7 +28,7 @@ public class FuzzingCondition {
 		return stringTree;
 	}
 
-	public boolean evaluate() {
+	public boolean evaluate(String vehicleName) {
 		// Not sure why this isn't being called during fuzzing engine setup
 		if (this.elementTree == null) {
 			try {
@@ -45,7 +45,7 @@ public class FuzzingCondition {
 		}
 		
 		ATLASCore core = ATLASCore.getCore();
-		Object res = this.elementTree.evaluate(core);
+		Object res = this.elementTree.evaluate(core, vehicleName);
 		if (res instanceof Boolean) {
 			Boolean resB = (Boolean) res;
 			return resB;
@@ -62,24 +62,6 @@ public class FuzzingCondition {
 	public FuzzingCondition dup() {
 		return new FuzzingCondition(copyTree(stringTree));
 	}
-
-//	public String csvPrint() {
-//		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//	    final String utf8 = StandardCharsets.UTF_8.name();
-//	    try (PrintStream ps = new PrintStream(baos, true, utf8)) {
-//	        stringTree.prettyPrintLine(ps);
-//	    } catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//	    String data;
-//		try {
-//			data = baos.toString(utf8);
-//			return data;
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//			return "";
-//		}
-//	}
 
 	public String csvInternal(Tree<String> t) {
 		String s = "[";
@@ -118,8 +100,12 @@ public class FuzzingCondition {
 	}
 
 	public static FuzzingCondition parseCSVString(String startSpec) {
-		// return new FuzzingCondition(parseElement(startSpec, null));
 		Tree<String> t = FuzzingConditionJSONUtils.conditionFromJSONString(startSpec);
 		return new FuzzingCondition(t);
+	}
+
+	public void validateCondition() throws InvalidCondition {
+		// TODO: Check there is no variable on the same side of a comparison e.g. X<X
+		// TODO: Check a same variable is not always trivially true e.g. X<2 and X>2
 	}
 }

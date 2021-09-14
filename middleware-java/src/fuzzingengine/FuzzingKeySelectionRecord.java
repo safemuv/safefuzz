@@ -174,8 +174,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.participants = newParticipants;
 	}
 
-	public boolean isReadyAtTime(double time) {
-		return timeSpec.isActiveAtTime(time);
+	public boolean isReadyAtTime(double time, String vehicle) {
+		return timeSpec.isActiveAtTime(time, vehicle);
 	}
 
 	public void checkConstraints() {

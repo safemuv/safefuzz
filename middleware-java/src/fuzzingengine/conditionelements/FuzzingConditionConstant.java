@@ -13,7 +13,7 @@ public class FuzzingConditionConstant extends FuzzingConditionElement {
 		}
 	}
 
-	public Object evaluate(ATLASCore core) {
+	public Object evaluate(ATLASCore core, String vehicle) {
 		return constant;
 	}
 }
