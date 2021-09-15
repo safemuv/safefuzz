@@ -52,6 +52,10 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 			List<Tree<String>> res = grammarGenerator.build(n, rngGenerator);
 			Tree<String> specTree = res.get(0);
 			
+			if (specTree == null) {
+				throw new TreeGenerationFailed();
+			}
+			
 			System.out.print("specTree = ");
 			specTree.prettyPrintLine(System.out);
 			System.out.println();

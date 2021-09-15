@@ -1,12 +1,5 @@
 package fuzzingengine;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-
 import fuzzingengine.conditionelements.*;
 import it.units.malelab.jgea.representation.tree.Tree;
 import middleware.core.ATLASCore;
@@ -20,7 +13,7 @@ public class FuzzingCondition {
 		this.stringTree = stringTree;
 	}
 
-	public void doConversion() throws UnrecognisedComparison, UnrecognisedTreeNode {
+	public void doConversion() throws UnrecognisedComparison, UnrecognisedTreeNode, UnrecognisedUnOp, UnrecognisedBinOp {
 		this.elementTree = conv.convert(stringTree);
 	}
 
@@ -41,6 +34,12 @@ public class FuzzingCondition {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
+			} catch (UnrecognisedUnOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedBinOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		

@@ -416,6 +416,12 @@ public class FuzzingEngine<E> {
 			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (UnrecognisedUnOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedBinOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			return new FuzzingConditionStartSpec(startCond, end);
 		}
@@ -430,6 +436,12 @@ public class FuzzingEngine<E> {
 				startCond.doConversion();
 				endCond.doConversion();
 			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedUnOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedBinOp e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

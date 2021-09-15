@@ -2,6 +2,8 @@ package fuzzingengine;
 
 import fuzzingengine.conditionelements.*;
 import fuzzingengine.conditionelements.FuzzingConditionComparison.ComparisonOperation;
+import fuzzingengine.conditionelements.FuzzingConditionElementCondBinOp.FuzzingConditionBinLogicOp;
+import fuzzingengine.conditionelements.FuzzingConditionElementCondUnOp.FuzzingConditionUnLogicOp;
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class GrammarConvertor {
@@ -9,14 +11,70 @@ public class GrammarConvertor {
 		
 	}
 	
-	public FuzzingConditionElement convert(Tree<String> stringTree) throws UnrecognisedComparison, UnrecognisedTreeNode {
+	public FuzzingConditionElement convert(Tree<String> stringTree) throws UnrecognisedComparison, UnrecognisedTreeNode, UnrecognisedUnOp, UnrecognisedBinOp {
 		System.out.print("convert - Tree...\n");
 		stringTree.prettyPrint(System.out);
 		System.out.println();
 		
 		String s = stringTree.content();
-		if (s.equals("<cond>")) {
-			System.out.println("COND");
+		// Binary combined condition
+		if (s.equals("<compcond>") && stringTree.nChildren() == 3) {
+			System.out.println("COMPCOND - BINARY");
+			System.out.println("Child 0 = " + stringTree.child(0));
+			System.out.println("Child 1 = " + stringTree.child(1));
+			System.out.println("Child 2 = " + stringTree.child(2));
+			Tree<String> lhs = stringTree.child(0);
+			String bincomp = stringTree.child(1).child(0).content();
+			Tree<String> rhs = stringTree.child(2);
+			
+			FuzzingConditionElement condlhs = convert(lhs);
+			FuzzingConditionBinLogicOp op = convertBinLogicOp(bincomp);
+			FuzzingConditionElement condrhs = convert(rhs);
+			
+			FuzzingConditionElementCond cond = new FuzzingConditionElementCondBinOp(condlhs, condrhs, op);
+			return cond;
+		}
+		
+		// Unary combined condition
+		if (s.equals("<compcond>") && stringTree.nChildren() == 2) {
+			System.out.println("COMPCOND - UNARY");
+			System.out.println("Child 0 = " + stringTree.child(0));
+			System.out.println("Child 1 = " + stringTree.child(1));
+			String unop = stringTree.child(0).child(0).content();
+			Tree<String> c = stringTree.child(1);
+			
+			FuzzingConditionElement inner = convert(c);
+			FuzzingConditionUnLogicOp op = convertUnLogicOp(unop);
+			
+			FuzzingConditionElementCond cond = new FuzzingConditionElementCondUnOp(inner,op);
+			return cond;
+		}
+		
+		// Unary combined condition
+		if (s.equals("<compcond>") && stringTree.nChildren() == 1) {
+			System.out.println("COMPCOND - BASIC");
+			Tree<String> c = stringTree.child(0);
+			return convert(c);
+		}
+		
+		// Unary combined condition
+		if (s.equals("<compcond>") && stringTree.nChildren() == 2) {
+			System.out.println("COMPCOND - UNARY");
+			System.out.println("Child 0 = " + stringTree.child(0));
+			System.out.println("Child 1 = " + stringTree.child(1));
+			System.out.println("Child 2 = " + stringTree.child(2));
+			String unop = stringTree.child(0).child(0).content();
+			Tree<String> c = stringTree.child(1);
+			
+			FuzzingConditionElement inner = convert(c);
+			FuzzingConditionUnLogicOp op = convertUnLogicOp(unop);
+			
+			FuzzingConditionElementCond cond = new FuzzingConditionElementCondUnOp(inner,op);
+			return cond;
+		}
+		
+		if (s.equals("<basic_cond>")) {
+			System.out.println("BASIC_COND");
 			System.out.println("Child 0 = " + stringTree.child(0));
 			System.out.println("Child 1 = " + stringTree.child(1));
 			System.out.println("Child 2 = " + stringTree.child(2));
@@ -50,6 +108,26 @@ public class GrammarConvertor {
 		
 	}
 	
+	private FuzzingConditionUnLogicOp convertUnLogicOp(String compStr) throws UnrecognisedUnOp {
+		if (compStr.equals(".NOT")) {
+			return FuzzingConditionUnLogicOp.NOT;
+		}
+		
+		throw new UnrecognisedUnOp(compStr);
+	}
+
+	private FuzzingConditionBinLogicOp convertBinLogicOp(String compStr) throws UnrecognisedBinOp {
+		if (compStr.equals(".AND")) {
+			return FuzzingConditionBinLogicOp.AND;
+		}
+		
+		if (compStr.equals(".OR")) {
+			return FuzzingConditionBinLogicOp.OR;
+		}
+		
+		throw new UnrecognisedBinOp(compStr);
+	}
+
 	private ComparisonOperation convertCompare(String compStr) throws UnrecognisedComparison {
 		if (compStr.equals(".EQUALS")) {
 			return ComparisonOperation.EQUALS;
