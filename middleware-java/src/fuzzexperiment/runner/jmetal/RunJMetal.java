@@ -43,8 +43,8 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 	static private int offspringPopulationSize = 6;
 
 	static private int matingPoolSize = populationSize;
-	static private boolean actuallyRun = false;
-	static private double exptRunTime = 1200.0;
+	static private boolean actuallyRun = true;
+	static private double exptRunTime = 600.0;
 
 	static private int maxIterations = 1000;
 

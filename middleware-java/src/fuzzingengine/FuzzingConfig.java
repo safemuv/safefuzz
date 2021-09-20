@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.operations.FuzzingOperation;
+import middleware.gui.GUITest;
 
 public class FuzzingConfig {
 	private HashMap<String, FuzzingKeySelectionRecord> keyLookup = new LinkedHashMap<String, FuzzingKeySelectionRecord>();
@@ -129,13 +130,25 @@ public class FuzzingConfig {
 
 	public Optional<FuzzingOperation> getOperationByKeyAndVehicle(String key, String vehicle, double time) {
 		FuzzingKeySelectionRecord fr = keyLookup.get(key);
+		GUITest g = GUITest.getGUI();
+		
 		System.out.println("keyLookup=" + keyLookup + ",key=" + key + ",fr=" + fr);
 		if (fr != null) {
 			if (fr.isReadyAtTime(time,vehicle) && fr.hasVehicle(vehicle)) {
-				return Optional.of(fr.getOperation());
+				Optional<FuzzingOperation> opRes = Optional.of(fr.getOperation());
+				// Update the GUI here - to indicate active for this key
+				if (g != null) {
+					g.setFuzzingKeyState(key, vehicle, opRes.toString());
+				}
+				return opRes;
+				
 			} else {
 				//System.out.println("hasVehicle " + vehicle + " is false or timing not met");
 			}
+		}
+		
+		if (g != null) {
+			g.setFuzzingKeyState(key, vehicle, "---");
 		}
 		return Optional.empty();
 	}

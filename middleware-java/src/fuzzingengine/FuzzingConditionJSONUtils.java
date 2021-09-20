@@ -36,9 +36,11 @@ public class FuzzingConditionJSONUtils {
 		String name = n.getString();
 		Tree<String> t = new Tree<String>(name, parent);
 		JsonArray c = (JsonArray)obj.get("C");
-		for (int i = 0; i < c.size(); i++) {
-			JsonObject v = (JsonObject)c.get(i);
-			t.addChild(conditionFromJSONNode(v, t));
+		if (c != null) {
+			for (int i = 0; i < c.size(); i++) {
+				JsonObject v = (JsonObject)c.get(i);
+				t.addChild(conditionFromJSONNode(v, t));
+			}
 		}
 		return t;
 	}

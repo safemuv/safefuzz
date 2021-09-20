@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import atlasdsl.Mission;
 import atlasdsl.Robot;
+import fuzzexperiment.runner.jmetal.grammar.TreeGenerationFailed;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
@@ -69,6 +70,9 @@ public abstract class FuzzingExperimentGenerator {
 				} catch (ListHasNoElement e) {
 					System.out.println("Skipping key selection record - " + vs
 							+ " - probably no operation types defined in model for this variable?");
+					e.printStackTrace();
+				} catch (TreeGenerationFailed e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -176,5 +180,5 @@ public abstract class FuzzingExperimentGenerator {
 	}
 
 	protected abstract FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
-			throws OperationLoadFailed, ListHasNoElement;
+			throws OperationLoadFailed, ListHasNoElement, TreeGenerationFailed;
 }

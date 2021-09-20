@@ -163,7 +163,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 					solution.setObjective(i, mval);
 				}
 			}
-		} catch (InterruptedException | IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MetricComputeFailure e) {
 			e.printStackTrace();

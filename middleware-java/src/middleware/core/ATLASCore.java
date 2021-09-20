@@ -141,6 +141,23 @@ public abstract class ATLASCore {
 		}
 		;
 	}
+	
+	public ObjectLambda setupLambdaFromFixedPoint(String varName, Point fixedPoint) {
+		ObjectLambda resLambda = (name) -> {
+			Robot r = mission.getRobot(name);
+			try {
+				Point p = r.getPointComponentProperty("location");
+				double distance = fixedPoint.distanceTo(p);
+				System.out.println("starting_point_distance = " + distance);
+				return distance;
+			} catch (MissingProperty p) {
+				return Double.MAX_VALUE;
+			}
+		};
+		
+		middlewareFunctionVariables.put(varName, resLambda);
+		return resLambda;
+	}
 
 	public void setupMiddlewareFunctionVariables() {
 		
@@ -157,25 +174,9 @@ public abstract class ATLASCore {
 			}
 		};
 		
-//		ObjectLambda spdLambda = (name) -> {
-//			Robot r = mission.getRobot(name);
-//			try {
-//				Point p = r.getPointComponentProperty("location");
-//				Point orig = r.getPointComponentProperty("startLocation");
-//				double distance = orig.distanceTo(p);
-//				System.out.println("starting_point_distance = " + distance);
-//				return distance;
-//			} catch (MissingProperty p) {
-//				return Double.MAX_VALUE;
-//			}
-//		};
-		
 		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
-		
-		// TODO: hardcoded testing here for these
-//		if (name.equals("starting_point_distance")) {
-//			
-//		}
+		setupLambdaFromFixedPoint("distance_to_left_wing_tip", new Point(-61.3,-41.2,8.5));
+		setupLambdaFromFixedPoint("distance_to_right_wing_tip", new Point(61.3,41.2,8.5));
 	}
 	
 	public void runMiddleware() {
@@ -291,8 +292,8 @@ public abstract class ATLASCore {
 	}
 	
 	public Object getVariable(String varName, String robotName) {
-		String combinedName = robotName + "_-_" + varName; 
 		// Use the middleware function variables first
+		String combinedName = varName;
 		if (middlewareFunctionVariables.containsKey(combinedName)) {
 			ObjectLambda l = middlewareFunctionVariables.get(combinedName);
 			Object res = l.op(robotName);

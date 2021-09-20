@@ -95,20 +95,21 @@ public class StartFuzzingProcesses {
 	}
 	
 	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
-			throws InterruptedException, IOException {
-		Process middleware;
-
+			throws IOException {
 		double returnValue = 0;
 		
 		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts"); 
 			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			// TODO: check custom delays - Sleep until MOOS is ready
-			TimeUnit.MILLISECONDS.sleep(20000);
-			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
-
-			String[] middlewareOpts = { "nofault", "nogui" };
-
+			try {
+				TimeUnit.MILLISECONDS.sleep(20000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Running middleware with " + fuzzFilePath);
+			ExptHelper.runCommandQuitTimeout(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath, 10000);
 			// Wait until the end condition for the middleware
 			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
 			//waitWallClockTime(timeLimit);
@@ -129,7 +130,12 @@ public class StartFuzzingProcesses {
 		if (actuallyRun) {
 			exptLog("Waiting to restart experiment");
 			// Wait 10 seconds before ending
-			TimeUnit.MILLISECONDS.sleep(10000);
+			try {
+				TimeUnit.MILLISECONDS.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return returnValue;

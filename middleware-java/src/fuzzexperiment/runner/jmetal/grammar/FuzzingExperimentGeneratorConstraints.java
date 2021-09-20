@@ -9,7 +9,6 @@ import fuzzingengine.FuzzingConditionStartSpec;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
-import fuzzingengine.conditionelements.FuzzingConditionElement;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.exptgenerator.ListHasNoElement;
 import fuzzingengine.exptgenerator.OperationLoadFailed;
@@ -20,8 +19,8 @@ import it.units.malelab.jgea.representation.tree.Tree;
 
 public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentGenerator {
 	
-	int MIN_TREE_HEIGHT = 1;
-	int MAX_TREE_HEIGHT = 3;
+	int MIN_TREE_HEIGHT = 2;
+	int MAX_TREE_HEIGHT = 6;
 	
 	Grammar<String> grammar;
 	Factory<Tree<String>> grammarGenerator;
@@ -35,7 +34,7 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 	}
 
 	protected FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
-			throws OperationLoadFailed, ListHasNoElement {
+			throws OperationLoadFailed, ListHasNoElement, TreeGenerationFailed {
 		// Select an operation parameter set to use
 		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
 		if (opsetTypes.size() == 0) {

@@ -30,11 +30,16 @@ public class GUITest {
 	JPanel robotsPanel = new JPanel();
 	JPanel goalsPanel = new JPanel();
 	JPanel faultPanel = new JPanel();
+	JPanel fuzzingPanel = new JPanel();
 	
 	JTextField faultLen;
 	
     HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
     HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
+    HashMap<String,JLabel> fuzzingKeyLabels = new LinkedHashMap<String, JLabel>();
+    
+    // This shows the active fuzzing key operations at any time during execution
+    HashMap<String,String> fuzzingKeyOperations= new LinkedHashMap<String,String>();
     
     private Mission mission;
     private FaultButtonListener buttonListener = new FaultButtonListener();
@@ -42,11 +47,24 @@ public class GUITest {
     
     private ATLASCore core;
     
+    private static GUITest guiRef;
+    
     private FaultGenerator faultGen;
     private String chosenFault = "";
     
     private PositionTrackingOutput ptPanel;
 	private String faultDefFile;
+	
+	
+	public static GUITest getGUI() {
+		return guiRef;
+	}
+	
+	public static void setGUI(GUITest gui) {
+		if (guiRef == null) {
+			guiRef = gui;
+		}
+	}
 	
 	private class FaultChoiceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -61,9 +79,7 @@ public class GUITest {
 	
 	private class FaultButtonListener implements ActionListener {
 		
-
 		public void actionPerformed(ActionEvent e) {
-			// TODO: get the time length from the GUI
 			double faultTimeLength = DEFAULT_FAULT_TIME_LENGTH;
 			
 			try {
@@ -77,7 +93,6 @@ public class GUITest {
 			if (f_o.isPresent()) {
 				Fault f = f_o.get();
 				faultGen.injectDynamicFault(f, faultTimeLength, Optional.empty());
-				// TODO: log the dynamic fault GUI action
 				System.out.println("Injecting new fault from GUI");
 			} else {
 				System.out.println("Could not find fault " + chosenFault + " in model");
@@ -93,8 +108,6 @@ public class GUITest {
     		//chosenRobotName = r.getName();
 	    	JLabel l = new JLabel(robotLabelText(r));
 	    	l.setVisible(true);
-
-	    	
 	    	robotLabels.put(r, l);
 	    	robotsPanel.add(l);
     	}
@@ -107,6 +120,14 @@ public class GUITest {
 			l.setVisible(true);
 			goalLabels.put(g, l);
 			goalsPanel.add(l);
+		}
+		
+		for (Map.Entry<String,String> es : fuzzingKeyOperations.entrySet()) {
+			JLabel l = new JLabel();
+			l.setVisible(true);
+			String k = es.getKey();
+			fuzzingKeyLabels.put(k,l);
+			
 		}
     }
     
@@ -143,7 +164,21 @@ public class GUITest {
     	}
     }
     
-    public void paintComponent(Graphics g) {
+    private void updateFuzzingInfo() {
+    	for (Map.Entry<String,JLabel> entry : fuzzingKeyLabels.entrySet()) {
+    		JLabel l = entry.getValue();
+    		String key = entry.getKey();
+    		String text = fuzzingLabelText(key);
+    		l.setText(text);
+    		l.repaint();
+    	}
+    }
+    
+    private String fuzzingLabelText(String key) {
+    	return key + "-" + fuzzingKeyOperations.get(key);
+	}
+
+	public void paintComponent(Graphics g) {
     	
     }
     
@@ -152,6 +187,7 @@ public class GUITest {
     	this.core = core;
     	this.mission = mission;
     	this.faultGen = faultGen;
+    	setGUI(this);
     	
     	f=new JFrame();
     	f.setTitle("ATLAS Middleware - no faults defined");
@@ -167,6 +203,7 @@ public class GUITest {
     	f.add(robotsPanel);
     	f.add(goalsPanel);
     	f.add(faultPanel);
+    	f.add(fuzzingPanel);
               
     	JButton injectButton=new JButton("Inject Fault");
     	
@@ -186,8 +223,11 @@ public class GUITest {
         faultPanel.add(faultChoice);
     	faultPanel.add(injectButton);
     	faultPanel.add(faultLen);
+    	
+    	fuzzingPanel.setVisible(true);
+    	
     	//f.getContentPane().add(ptPanel, BorderLayout.CENTER);
-    	f.getContentPane().add(ptPanel);
+    	//f.getContentPane().add(ptPanel);
     	
     	f.setSize(500,500);
     	f.setVisible(true);
@@ -196,17 +236,30 @@ public class GUITest {
     	ptPanel.repaint();
     }
     
+    
+    
     public synchronized void updateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
     			updateLabels();
     			updateGoalLabels();
+    			updateFuzzingInfo();
     			ptPanel.updateGoalInfo();
     			
     			f.repaint();
     			ptPanel.repaint();
 			}
 		});
+    }
+    
+    public synchronized void setFuzzingKeyState(String key, String vehicle, String opText) {
+    	String k = key + "-" + vehicle;
+    	fuzzingKeyOperations.put(k, opText);
+    	if (!fuzzingKeyLabels.containsKey(k)) {
+    		JLabel l = new JLabel();
+    		fuzzingKeyLabels.put(k, l);
+    		fuzzingPanel.add(l);
+    	}
     }
 
 	public void setFaultDefinitionFile(String filePath) {
