@@ -52,6 +52,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String bashPath;
 	private String workingPath;
 	private String middlewarePath;
+	private String logPath;
 	
 	Grammar<String> grammar;
 
@@ -69,6 +70,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			// logPath = prop.getProperty("paths.ros.log");
 			bashPath = prop.getProperty("paths.bash_script");
 			workingPath = prop.getProperty("paths.working");
+			logPath = workingPath + "/logs/";
 			middlewarePath = prop.getProperty("paths.middleware");
 			runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
 
@@ -86,7 +88,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		readProperties();
 		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
-				initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
+		initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
 		
@@ -152,17 +154,19 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			// Compute the metrics
 			System.out.println("csvFileName = " + csvFileName);
 			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
-			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, csvFileName);
+			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, logPath);
 			System.out.println("res = " + res);
 
 			for (Map.Entry<Metric,Double> e : res.entrySet()) {
 				Optional<Integer> jmetalNum_o = metricHandler.getMetricNumberInList(e.getKey());
+				Metric m = e.getKey();
 				Double mval = e.getValue();
+				System.out.println("Metric: " + m.getClass().getSimpleName() + "=" + mval);
 				if (jmetalNum_o.isPresent()) {
 					int i = jmetalNum_o.get();
 					solution.setObjective(i, mval);
 				}
-			}
+			}			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MetricComputeFailure e) {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
@@ -25,6 +26,8 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+
+import com.google.common.base.Optional;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -79,21 +82,21 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 	public void jMetalRun(String tag, Mission mission) throws ExptError, DSLLoadFailed {
 
-		Set<Metric> metrics_s = mission.getAllMetrics();
-		List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
-
-		metrics.add(new FindSpecificTime(100.0, 10.0));
+		List<Metric> allMetrics = new ArrayList<Metric>(mission.getAllMetrics());
+		
+		// Only the offline metrics that can be 
+		List<OfflineMetric> metrics = allMetrics.stream().
+				filter(e -> e instanceof OfflineMetric).
+				map(e -> (OfflineMetric)e).collect(Collectors.toList());
 
 		Random problemRNG = new Random();
 		Random crossoverRNG = new Random();
 		Random mutationRNG = new Random();
 
 		Problem<FuzzingSelectionsSolution> problem;
+		
 		try {
-			//CustomGrammarFactory gf = new CustomGrammarFactory();
 			Grammar<String> g = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
-			//Grammar<FuzzingConditionSymbol> g = gf.generate();
-			
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
