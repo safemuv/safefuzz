@@ -1,4 +1,4 @@
-package fuzzingengine.conditionelements;
+package fuzzingengine.grammar.conditionelements;
 
 import middleware.core.ATLASCore;
 

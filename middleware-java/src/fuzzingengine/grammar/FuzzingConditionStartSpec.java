@@ -1,4 +1,8 @@
-package fuzzingengine;
+package fuzzingengine.grammar;
+
+import fuzzingengine.FuzzingTimeSpecification;
+import fuzzingengine.InvalidCondition;
+import fuzzingengine.InvalidSpecification;
 
 public class FuzzingConditionStartSpec extends FuzzingTimeSpecification {
 	FuzzingCondition startCond;

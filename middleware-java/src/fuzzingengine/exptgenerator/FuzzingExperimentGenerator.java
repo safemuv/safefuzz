@@ -30,8 +30,8 @@ public abstract class FuzzingExperimentGenerator {
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
 
-	Random rng = new Random();
-	private Mission mission;
+	protected Random rng = new Random();
+	protected Mission mission;
 	protected FuzzingEngine fuzzEngine;
 
 	public FuzzingExperimentGenerator(Mission mission) {

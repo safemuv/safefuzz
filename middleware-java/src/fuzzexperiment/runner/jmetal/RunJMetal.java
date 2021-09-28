@@ -42,17 +42,17 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class RunJMetal extends AbstractAlgorithmRunner {
 
-	static private int populationSize = 6;
-	static private int offspringPopulationSize = 6;
+	static private int populationSize = 10;
+	static private int offspringPopulationSize = 10;
 
 	static private int matingPoolSize = populationSize;
 	static private boolean actuallyRun = true;
 	static private double exptRunTime = 600.0;
 
-	static private int maxIterations = 1000;
+	static private int maxIterations = 50;
 
-	static double crossoverProb = 0.2;
-	static double mutationProb = 0.6;
+	static double crossoverProb = 0.5;
+	static double mutationProb = 0.8;
 
 	static private String referenceParetoFront = "";
 

@@ -25,8 +25,8 @@ import java.util.regex.Pattern;
 
 import com.google.common.base.Optional;
 
-import fuzzingengine.conditionelements.FuzzingConditionComparison;
-import fuzzingengine.conditionelements.FuzzingConditionElement;
+import fuzzingengine.grammar.conditionelements.FuzzingConditionComparison;
+import fuzzingengine.grammar.conditionelements.FuzzingConditionElement;
 
 /**
  * @author eric

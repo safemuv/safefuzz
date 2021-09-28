@@ -1,6 +1,11 @@
-package fuzzingengine;
+package fuzzingengine.grammar;
 
-import fuzzingengine.conditionelements.*;
+import fuzzingengine.InvalidCondition;
+import fuzzingengine.UnrecognisedBinOp;
+import fuzzingengine.UnrecognisedComparison;
+import fuzzingengine.UnrecognisedTreeNode;
+import fuzzingengine.UnrecognisedUnOp;
+import fuzzingengine.grammar.conditionelements.*;
 import it.units.malelab.jgea.representation.tree.Tree;
 import middleware.core.ATLASCore;
 
@@ -105,6 +110,10 @@ public class FuzzingCondition {
 
 	public void validateCondition() throws InvalidCondition {
 		// TODO: Check there is no variable on the same side of a comparison e.g. X<X
-		// TODO: Check a same variable is not always trivially true e.g. X<2 and X>2
+		// TODO: Check a same variable is not always trivially true e.g. X<2 AND X>2
+		
+		// Need to find a condition below with fuzzing condition e.g. fuzzing structure is 
+		
+		
 	}
 }

@@ -1,4 +1,4 @@
-package fuzzingengine;
+package fuzzingengine.grammar;
 
 import java.io.StringReader;
 import javax.json.*;

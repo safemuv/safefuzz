@@ -34,7 +34,8 @@ import fuzzexperiment.runner.jmetal.grammar.Grammar;
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
 	private static final long serialVersionUID = 1L;
-	private int runCount = 0;
+	private static final boolean USE_END_CONDITION = true;
+	
 	private Random rng;
 	private Mission baseMission;
 	private boolean actuallyRun;
@@ -47,6 +48,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private FileWriter tempLog;
 	private int variableFixedSize;
 	private int constraintCount = 0;
+	private int runCount = 0;
 
 	private FuzzingExperimentGenerator initialGenerator;
 	private String bashPath;
@@ -88,7 +90,12 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		readProperties();
 		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
-		initialGenerator = new FuzzingExperimentGeneratorConstraints(baseMission, grammar);
+		
+		if (USE_END_CONDITION) {
+			initialGenerator = new FuzzingExperimentGeneratorStartCondEndCond(baseMission, grammar);
+		} else {
+			initialGenerator = new FuzzingExperimentGeneratorStartCond(baseMission, grammar);
+		}
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
 		
@@ -113,8 +120,10 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			metricHandler = new MetricHandler(metrics, resFileName);
 		} else {
 			metricHandler = new FakeMetricHandler(metrics, resFileName);
-
 		}
+		
+		
+		
 		System.out.println(metrics.toString());
 		setup();
 	}
@@ -156,17 +165,24 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
 			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, logPath);
 			System.out.println("res = " + res);
+			
+			tempLog.write(csvFileName + ",");
 
 			for (Map.Entry<Metric,Double> e : res.entrySet()) {
 				Optional<Integer> jmetalNum_o = metricHandler.getMetricNumberInList(e.getKey());
 				Metric m = e.getKey();
 				Double mval = e.getValue();
 				System.out.println("Metric: " + m.getClass().getSimpleName() + "=" + mval);
+				tempLog.write(m.getClass().getSimpleName() + "=" + mval + ",");
 				if (jmetalNum_o.isPresent()) {
 					int i = jmetalNum_o.get();
 					solution.setObjective(i, mval);
 				}
-			}			
+			}
+			tempLog.write("\n");
+			tempLog.flush();
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MetricComputeFailure e) {

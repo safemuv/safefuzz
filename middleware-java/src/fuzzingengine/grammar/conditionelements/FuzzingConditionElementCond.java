@@ -1,4 +1,4 @@
-package fuzzingengine.conditionelements;
+package fuzzingengine.grammar.conditionelements;
 
 import java.util.ArrayList;
 import java.util.List;

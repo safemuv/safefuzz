@@ -1,14 +1,22 @@
-package fuzzingengine;
+package fuzzingengine.grammar;
 
-import fuzzingengine.conditionelements.*;
-import fuzzingengine.conditionelements.FuzzingConditionComparison.ComparisonOperation;
-import fuzzingengine.conditionelements.FuzzingConditionElementCondBinOp.FuzzingConditionBinLogicOp;
-import fuzzingengine.conditionelements.FuzzingConditionElementCondUnOp.FuzzingConditionUnLogicOp;
+import fuzzingengine.UnrecognisedBinOp;
+import fuzzingengine.UnrecognisedComparison;
+import fuzzingengine.UnrecognisedTreeNode;
+import fuzzingengine.UnrecognisedUnOp;
+import fuzzingengine.grammar.conditionelements.*;
+import fuzzingengine.grammar.conditionelements.FuzzingConditionComparison.ComparisonOperation;
+import fuzzingengine.grammar.conditionelements.FuzzingConditionElementCondBinOp.FuzzingConditionBinLogicOp;
+import fuzzingengine.grammar.conditionelements.FuzzingConditionElementCondUnOp.FuzzingConditionUnLogicOp;
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class GrammarConvertor {
 	public GrammarConvertor() {
 		
+	}
+	
+	protected FuzzingConditionElement createVariableEntry(String varName) {
+		return new FuzzingConditionVariable(varName);
 	}
 	
 	public FuzzingConditionElement convert(Tree<String> stringTree) throws UnrecognisedComparison, UnrecognisedTreeNode, UnrecognisedUnOp, UnrecognisedBinOp {
@@ -91,7 +99,7 @@ public class GrammarConvertor {
 		if (s.equals("<var>")) {
 			System.out.println("VAR");
 			String varname = stringTree.child(0).content();
-			return new FuzzingConditionVariable(varname);
+			return createVariableEntry(varname);
 		}
 		
 		if (s.equals("<expr>")) {

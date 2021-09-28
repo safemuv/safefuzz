@@ -54,7 +54,8 @@ public abstract class ATLASCore {
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
 	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
 	protected List<PositionUpdateLambda> positionWatchers = new ArrayList<PositionUpdateLambda>();
-
+	protected List<SpeedUpdateLambda> speedWatchers = new ArrayList<SpeedUpdateLambda>();
+	
 	private FaultGenerator faultGen;
 	private static ATLASCore coreRef;
 	private double time = 0.0;
@@ -258,10 +259,20 @@ public abstract class ATLASCore {
 	public void setupPositionWatcher(PositionUpdateLambda l) {
 		positionWatchers.add(l);
 	}
+	
+	public void setupSpeedWatcher(SpeedUpdateLambda l) {
+		speedWatchers.add(l);
+	}
 
 	public void notifyPositionUpdate(GPSPositionReading gps) {
 		for (PositionUpdateLambda watcher : positionWatchers) {
 			watcher.op(gps);
+		}
+	}
+	
+	public void notifySpeedUpdate(SpeedReading s) {
+		for (SpeedUpdateLambda watcher : speedWatchers) {
+			watcher.op(s);
 		}
 	}
 

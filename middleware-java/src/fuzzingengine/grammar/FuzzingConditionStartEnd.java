@@ -1,5 +1,8 @@
-package fuzzingengine;
+package fuzzingengine.grammar;
 
+import fuzzingengine.FuzzingTimeSpecification;
+import fuzzingengine.InvalidCondition;
+import fuzzingengine.InvalidSpecification;
 import middleware.core.ATLASCore;
 
 public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
@@ -25,7 +28,7 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 	}
 
 	public String getCSVContents() {
-		return startCond.toString() + "," + endCond.toString();
+		return startCond.jsonPrint() + "," + endCond.jsonPrint();
 	}
 
 	protected FuzzingTimeSpecification dup() {
@@ -43,5 +46,13 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 		} catch (InvalidCondition e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public FuzzingCondition getStartCondition() {
+		return startCond;
+	}
+	
+	public FuzzingCondition getEndCondition() {
+		return endCond;
 	}
 }

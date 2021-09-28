@@ -4,20 +4,21 @@ import java.util.List;
 import java.util.Random;
 
 import atlasdsl.Mission;
-import fuzzingengine.FuzzingCondition;
-import fuzzingengine.FuzzingConditionStartSpec;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.exptgenerator.ListHasNoElement;
 import fuzzingengine.exptgenerator.OperationLoadFailed;
+import fuzzingengine.grammar.FuzzingCondition;
+import fuzzingengine.grammar.FuzzingConditionStartSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
 import it.units.malelab.jgea.core.Factory;
 import it.units.malelab.jgea.representation.tree.Tree;
 
-public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentGenerator {
+public abstract class FuzzingExperimentGeneratorConstraints extends FuzzingExperimentGenerator {
 	
 	int MIN_TREE_HEIGHT = 2;
 	int MAX_TREE_HEIGHT = 6;
@@ -32,6 +33,8 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 		this.grammarGenerator = new GrowGrammarTreeFactory<String>(MAX_TREE_HEIGHT, grammar);
 		rngGenerator = new Random();
 	}
+	
+	protected abstract FuzzingTimeSpecification generateFuzzingTimeSpec(VariableSpecification var) throws TreeGenerationFailed;
 
 	protected FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
 			throws OperationLoadFailed, ListHasNoElement, TreeGenerationFailed {
@@ -46,23 +49,9 @@ public class FuzzingExperimentGeneratorConstraints<T> extends FuzzingExperimentG
 
 			List<Object> specificOpParams = opset.generateSpecific();
 
-			// n is one, only want a single tree
-			int n = 1;
-			List<Tree<String>> res = grammarGenerator.build(n, rngGenerator);
-			Tree<String> specTree = res.get(0);
-			
-			if (specTree == null) {
-				throw new TreeGenerationFailed();
-			}
-			
-			System.out.print("specTree = ");
-			specTree.prettyPrintLine(System.out);
-			System.out.println();
+			FuzzingTimeSpecification fts = generateFuzzingTimeSpec(var);
 
-			double startTime = getStartTime(var.getTimeSpec());
-			double endTime = getEndTime(var.getTimeSpec(), startTime);
-			FuzzingCondition startCond = new FuzzingCondition(specTree);
-			FuzzingConditionStartSpec fts = new FuzzingConditionStartSpec(startCond, endTime);
+
 
 			// Get a random list of participants from the mission
 			List<String> participants = getRandomParticipantsFromMission();
