@@ -16,4 +16,8 @@ public class FuzzingConditionConstant extends FuzzingConditionElement {
 	public Object evaluate(ATLASCore core, String vehicle) {
 		return constant;
 	}
+
+	public void validate() throws InvalidFuzzingConditionElement {
+		
+	}
 }

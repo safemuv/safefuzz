@@ -15,39 +15,25 @@ public class GeneratedDSLLoader implements DSLLoader {
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
-	
-		Robot ruav_1 = new Robot("uav_1");
-		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
+	Robot ruav_1 = new Robot("uav_1");
+	ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
+	ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
-		mission.addRobot(ruav_1);
-		Robot ruav_2 = new Robot("uav_2");
-		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
-		ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
+	mission.addRobot(ruav_1);
+	Robot ruav_2 = new Robot("uav_2");
+	ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
+	ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
-		mission.addRobot(ruav_2);
+	mission.addRobot(ruav_2);
 	
-	
-	
-	
- 
- 
+	Robot [] grp1 = {ruav_1,ruav_2}; 
+	GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
 		
-		Robot [] grp1 = {ruav_1,ruav_2}; 
-		GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
-		
-		
-		
-			GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 2400.0);
+	GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, 2400.0);
 			
-			
-		
-		
-		
-		
-		GoalAction ga1 = new TrackDistances();
+	GoalAction ga1 = new TrackDistances();
 				
 		
 		   

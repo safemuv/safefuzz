@@ -29,4 +29,10 @@ public class FuzzingConditionElementCond extends FuzzingConditionElement {
 	public void addSubcondition(FuzzingConditionElement cond) {
 		conds.add(cond);
 	}
+
+	public void validate() throws InvalidFuzzingConditionElement {
+		for (FuzzingConditionElement e : conds) {
+			e.validate();
+		}
+	}
 }

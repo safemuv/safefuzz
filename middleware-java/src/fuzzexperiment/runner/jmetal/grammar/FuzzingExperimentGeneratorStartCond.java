@@ -18,24 +18,10 @@ public class FuzzingExperimentGeneratorStartCond extends FuzzingExperimentGenera
 	}
 	
 	protected FuzzingTimeSpecification generateFuzzingTimeSpec(VariableSpecification var) throws TreeGenerationFailed {
-		// n is one, only want a single tree
-		int n = 1;
-		List<Tree<String>> res = grammarGenerator.build(n, rngGenerator);
-		Tree<String> startTree = res.get(0);
-		
-		if (startTree == null) {
-			throw new TreeGenerationFailed("startTree");
-		}
-		
-		System.out.print("specTree = ");
-		startTree.prettyPrintLine(System.out);
-		System.out.println();
-		
 		double startTime = getStartTime(var.getTimeSpec());
 		double endTime = getEndTime(var.getTimeSpec(), startTime);
-		FuzzingCondition startCond = new FuzzingCondition(startTree);
+		FuzzingCondition startCond = generateValidatedCondition();
 		FuzzingConditionStartSpec fts = new FuzzingConditionStartSpec(startCond, endTime);
 		return fts;
 	}
-
 }

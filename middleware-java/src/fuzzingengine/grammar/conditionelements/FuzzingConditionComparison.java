@@ -45,4 +45,15 @@ public class FuzzingConditionComparison extends FuzzingConditionElement {
 			return false;
 		}
 	}
+
+	public void validate() throws InvalidFuzzingConditionElement {
+		// TODO Auto-generated method stub
+		if (lhs instanceof FuzzingConditionVariable && rhs instanceof FuzzingConditionVariable) {
+			FuzzingConditionVariable lhsV = (FuzzingConditionVariable)lhs;
+			FuzzingConditionVariable rhsV = (FuzzingConditionVariable)rhs;
+			if (lhsV.getVariableName().equals(rhsV.getVariableName())) {
+				throw new InvalidFuzzingConditionElement("lhs " + lhsV + " in comparison with " + rhsV);
+			}
+		}
+	}
 }

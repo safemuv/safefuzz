@@ -42,15 +42,21 @@ public class GrowGrammarTreeFactory<T> implements Factory<Tree<T>> {
     this.grammar = grammar;
     nonTerminalDepths = GrammarUtils.computeSymbolsMinMaxDepths(grammar);
   }
-
-  @Override
+  
   public List<Tree<T>> build(int n, Random random) {
+    return build(n, random, maxHeight);
+  }
+
+  public List<Tree<T>> build(int n, Random random, int maxHeightThisCall) {
+	int maxHeightCurrent = Math.min(maxHeight, maxHeightThisCall);
+	  
     List<Tree<T>> trees = new ArrayList<>();
     while (trees.size() < n) {
-      trees.add(build(random, maxHeight));
+      trees.add(build(random, maxHeightCurrent));
     }
     return trees;
   }
+
 
   public Tree<T> build(Random random, int targetDepth) {
     Tree<T> tree = null;

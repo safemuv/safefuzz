@@ -1,7 +1,6 @@
 package fuzzingengine;
 
 import fuzzingengine.operations.FuzzingOperation;
-import middleware.core.ATLASCore;
 
 abstract public class FuzzingSelectionRecord {
 	protected FuzzingTimeSpecification timeSpec;

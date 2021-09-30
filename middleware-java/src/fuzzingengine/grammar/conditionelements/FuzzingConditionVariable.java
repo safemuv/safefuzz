@@ -14,4 +14,12 @@ public class FuzzingConditionVariable extends FuzzingConditionElement {
 		Object val = core.getVariable(name, vehicle);
 		return val;
 	}
+	
+	public String getVariableName() {
+		return name;
+	}
+
+	public void validate() throws InvalidFuzzingConditionElement {
+		
+	}
 }

@@ -17,6 +17,11 @@ public class FuzzingCondition {
 	public FuzzingCondition(Tree<String> stringTree) {
 		this.stringTree = stringTree;
 	}
+	
+	public FuzzingCondition(Tree<String> stringTree, GrammarConvertor conv) {
+		this.stringTree = stringTree;
+		this.conv = conv;
+	}
 
 	public void doConversion() throws UnrecognisedComparison, UnrecognisedTreeNode, UnrecognisedUnOp, UnrecognisedBinOp {
 		this.elementTree = conv.convert(stringTree);
@@ -109,11 +114,15 @@ public class FuzzingCondition {
 	}
 
 	public void validateCondition() throws InvalidCondition {
-		// TODO: Check there is no variable on the same side of a comparison e.g. X<X
-		// TODO: Check a same variable is not always trivially true e.g. X<2 AND X>2
+		// Check there is no variable on the same side of a comparison e.g. X<X
+		if (elementTree != null) {
+			try {
+				elementTree.validate();
+			} catch (InvalidFuzzingConditionElement e) {
+				throw new InvalidCondition(e);
+			}
+		}
 		
-		// Need to find a condition below with fuzzing condition e.g. fuzzing structure is 
-		
-		
+		// TODO: Check a composite condition is not always trivially true e.g. X<2 AND X>2
 	}
 }

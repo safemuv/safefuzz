@@ -42,6 +42,7 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class RunJMetal extends AbstractAlgorithmRunner {
 
+	private static final boolean MUTATE_ONLY_CONDITIONS = true;
 	static private int populationSize = 10;
 	static private int offspringPopulationSize = 10;
 
@@ -111,7 +112,13 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
 
-			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
+			if (MUTATE_ONLY_CONDITIONS) {
+				mutation = new FuzzingSelectionsMutationConditionsOnly(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
+			} else {
+				mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
+			}
+			
+			
 			selection = new TournamentSelection<FuzzingSelectionsSolution>(5);
 			dominanceComparator = new DominanceComparator<>();
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();

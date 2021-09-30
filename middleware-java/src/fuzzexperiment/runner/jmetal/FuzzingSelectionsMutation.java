@@ -50,8 +50,8 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		CHANGE_END_CONDITION
 	}
 
-	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
-	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
+	protected final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
+	protected final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
 	//private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0 / 2.0;
 	private final double PROB_OF_TIMESPEC_CHANGE_END = 0.5;
 	
@@ -65,7 +65,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	protected final int MUTATION_DEPTH = 1;
 
 	private static final long serialVersionUID = 1L;
-	private Random rng;
+	protected Random rng;
 	private FileWriter mutationLog;
 	private double mutationProb;
 	protected FuzzingEngine fuzzEngine;

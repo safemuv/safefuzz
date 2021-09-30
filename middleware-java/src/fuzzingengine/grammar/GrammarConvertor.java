@@ -11,6 +11,8 @@ import fuzzingengine.grammar.conditionelements.FuzzingConditionElementCondUnOp.F
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class GrammarConvertor {
+	protected final boolean DEBUG_GRAMMER_CONVERT = false; 
+	
 	public GrammarConvertor() {
 		
 	}
@@ -20,17 +22,22 @@ public class GrammarConvertor {
 	}
 	
 	public FuzzingConditionElement convert(Tree<String> stringTree) throws UnrecognisedComparison, UnrecognisedTreeNode, UnrecognisedUnOp, UnrecognisedBinOp {
-		System.out.print("convert - Tree...\n");
-		stringTree.prettyPrint(System.out);
-		System.out.println();
+		
+		if (DEBUG_GRAMMER_CONVERT) {
+			System.out.print("convert - Tree...\n");
+			stringTree.prettyPrint(System.out);
+			System.out.println();
+		}
 		
 		String s = stringTree.content();
 		// Binary combined condition
 		if (s.equals("<compcond>") && stringTree.nChildren() == 3) {
-			System.out.println("COMPCOND - BINARY");
-			System.out.println("Child 0 = " + stringTree.child(0));
-			System.out.println("Child 1 = " + stringTree.child(1));
-			System.out.println("Child 2 = " + stringTree.child(2));
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("COMPCOND - BINARY");
+				System.out.println("Child 0 = " + stringTree.child(0));
+				System.out.println("Child 1 = " + stringTree.child(1));
+				System.out.println("Child 2 = " + stringTree.child(2));
+			}
 			Tree<String> lhs = stringTree.child(0);
 			String bincomp = stringTree.child(1).child(0).content();
 			Tree<String> rhs = stringTree.child(2);
@@ -45,9 +52,11 @@ public class GrammarConvertor {
 		
 		// Unary combined condition
 		if (s.equals("<compcond>") && stringTree.nChildren() == 2) {
-			System.out.println("COMPCOND - UNARY");
-			System.out.println("Child 0 = " + stringTree.child(0));
-			System.out.println("Child 1 = " + stringTree.child(1));
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("COMPCOND - UNARY");
+				System.out.println("Child 0 = " + stringTree.child(0));
+				System.out.println("Child 1 = " + stringTree.child(1));
+			}
 			String unop = stringTree.child(0).child(0).content();
 			Tree<String> c = stringTree.child(1);
 			
@@ -60,17 +69,21 @@ public class GrammarConvertor {
 		
 		// Unary combined condition
 		if (s.equals("<compcond>") && stringTree.nChildren() == 1) {
-			System.out.println("COMPCOND - BASIC");
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("COMPCOND - BASIC");
+			}
 			Tree<String> c = stringTree.child(0);
 			return convert(c);
 		}
 		
 		// Unary combined condition
 		if (s.equals("<compcond>") && stringTree.nChildren() == 2) {
-			System.out.println("COMPCOND - UNARY");
-			System.out.println("Child 0 = " + stringTree.child(0));
-			System.out.println("Child 1 = " + stringTree.child(1));
-			System.out.println("Child 2 = " + stringTree.child(2));
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("COMPCOND - UNARY");
+				System.out.println("Child 0 = " + stringTree.child(0));
+				System.out.println("Child 1 = " + stringTree.child(1));
+				System.out.println("Child 2 = " + stringTree.child(2));
+			}
 			String unop = stringTree.child(0).child(0).content();
 			Tree<String> c = stringTree.child(1);
 			
@@ -82,10 +95,12 @@ public class GrammarConvertor {
 		}
 		
 		if (s.equals("<basic_cond>")) {
-			System.out.println("BASIC_COND");
-			System.out.println("Child 0 = " + stringTree.child(0));
-			System.out.println("Child 1 = " + stringTree.child(1));
-			System.out.println("Child 2 = " + stringTree.child(2));
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("BASIC_COND");
+				System.out.println("Child 0 = " + stringTree.child(0));
+				System.out.println("Child 1 = " + stringTree.child(1));
+				System.out.println("Child 2 = " + stringTree.child(2));
+			}
 			Tree<String> lhs = stringTree.child(0);
 			String bincomp = stringTree.child(1).child(0).content();
 			Tree<String> rhs = stringTree.child(2);
@@ -97,7 +112,9 @@ public class GrammarConvertor {
 		}
 		
 		if (s.equals("<var>")) {
-			System.out.println("VAR");
+			if (DEBUG_GRAMMER_CONVERT) {
+				System.out.println("VAR");
+			}
 			String varname = stringTree.child(0).content();
 			return createVariableEntry(varname);
 		}

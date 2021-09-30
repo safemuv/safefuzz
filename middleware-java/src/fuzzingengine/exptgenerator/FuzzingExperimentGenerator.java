@@ -18,10 +18,8 @@ import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
-import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.TimeSpec;
-import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
