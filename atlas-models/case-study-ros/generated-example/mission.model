@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="330b0b05-a0f4-4f63-8a7d-d462bfa271e8" endTime="430.0">
+  <robots xmi:id="dd4403b8-1290-4145-a279-d3018f269f75" name="uav_1">
+    <componentProperties xsi:type="atlas:PointProperty" xmi:id="a8800910-8dcd-494c-b92b-3142a3f2dd67" name="startLocation">
+      <value xmi:id="c1b1e0ec-369a-4a88-aea2-17a136f36e3b" x="7.0" y="2.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="f2207232-1264-47fe-b0ca-3071035e572d" name="maxSpeed" value="1.0"/>
+  </robots>
+  <robots xmi:id="810921f7-a114-4195-9746-56808158d6b3" name="uav_2">
+    <componentProperties xsi:type="atlas:PointProperty" xmi:id="0b63e20f-ec98-470e-aad5-d743ea55117e" name="startLocation">
+      <value xmi:id="3ee0a710-9c69-4697-9962-da5b7844d2bf" x="7.0" y="-2.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="8026a6d5-e445-4b36-898f-bde251c7612c" name="maxSpeed" value="1.0"/>
+  </robots>
+  <goals xmi:id="ceb1530d-138e-4390-9bc3-b26225fb5393" name="AvoidPlaneInner">
+    <requirements xmi:id="5f4bb48c-734e-440d-ab73-b355dee2f493" latestFinishTime="430.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="6f5ec84a-cf25-48b0-92f4-c91316c2cfcf" participants="dd4403b8-1290-4145-a279-d3018f269f75 810921f7-a114-4195-9746-56808158d6b3"/>
+    <action xsi:type="atlas:Avoid" xmi:id="232a103f-1764-4d1d-878c-7f965a0ea201" clearance="3.0"/>
+  </goals>
+  <goals xmi:id="3a0b1c7c-2c38-4526-9fb4-a188bf9c7fe9" name="StayInOuterRegion">
+    <requirements xmi:id="6b07b991-3713-4f2a-a980-2a41c6d81659" latestFinishTime="430.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="7fcb2f1f-8ffa-4a8e-85af-bf0c502d46d2" participants="dd4403b8-1290-4145-a279-d3018f269f75 810921f7-a114-4195-9746-56808158d6b3"/>
+    <action xsi:type="atlas:StayInRegion" xmi:id="a4fb6882-f1be-41e8-b08a-1b45744cedab"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="08b995bb-8f20-4802-822e-0436878cd922">
+      <staticRegion xmi:id="ab7abca7-913e-45b9-9884-a15975c06919">
+        <corner1 xmi:id="6dbd50be-7bd0-474a-9581-fc81ddc50e10" x="-100.0" y="-50.0"/>
+        <corner2 xmi:id="34cb81a9-e159-43a8-8edb-d5e5135c9c37" x="12.0" y="50.0" z="23.0"/>
+      </staticRegion>
+    </region>
+  </goals>
+  <goals xmi:id="4530626a-20a3-4cd0-8a51-0aad6cfd74f1" name="AvoidOthers">
+    <requirements xmi:id="be2fd66e-52f9-4101-8202-741517286b2e" latestFinishTime="430.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="a1e6bd9b-a838-4fb2-8962-7531c2d5327f" participants="dd4403b8-1290-4145-a279-d3018f269f75 810921f7-a114-4195-9746-56808158d6b3"/>
+    <action xsi:type="atlas:AvoidOthers" xmi:id="8bf92060-dbf1-42cf-a51d-0caf025a455c" clearance="1.0"/>
+  </goals>
+  <goals xmi:id="71374a58-2fa5-4718-bc88-1f0362c33669" name="TrackDistancesAndVelocities">
+    <requirements xmi:id="4e93d7f6-4027-46d1-8658-442ef62714b4" latestFinishTime="430.0"/>
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="ccf9c444-6606-46c5-8ab8-1839f43bbac3" participants="dd4403b8-1290-4145-a279-d3018f269f75 810921f7-a114-4195-9746-56808158d6b3"/>
+    <action xsi:type="atlas:TrackDistances" xmi:id="_M-_OoA9_Eeyh2eUjvUGF3w"/>
+    <metrics xmi:id="0e4c7dbe-7429-4b9d-9f1c-6ff01c702f4a" name="SpeedViolationsCount"/>
+  </goals>
+</atlas:Mission>

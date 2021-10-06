@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="c5c8ede1-2909-4f7b-a8b4-8a9711a523f6">
+  <sims xmi:id="d4526d87-9629-4ef5-8666-21da83d3615c" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
+    <components xmi:id="08ed73b2-477c-4dd2-b51b-cfb6fb8d602c" name="uav_1/ual" componentRelativePath="uav_1/ual">
+      <vars xmi:id="26fd6dd3-b580-4641-80f4-16610bbac94f" component="08ed73b2-477c-4dd2-b51b-cfb6fb8d602c" variable="uav_1/ual/set_velocity_prime" reflectionName="uav_1/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="70833fa8-7a69-4109-9f86-25d42f0374b8" ROSTypename="geometry_msgs/TwistStamped"/>
+        <timeLimit xmi:id="d0ce9c83-3767-4a59-9243-2f9c00a771a1" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="9d0873f0-0a74-47bc-9c68-59404758ef36" component="08ed73b2-477c-4dd2-b51b-cfb6fb8d602c" variable="uav_1/ual/pose_prime" reflectionName="uav_1/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="66ca667c-3acc-4077-9f85-099dd48f3be0" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="56e6d561-4b50-48a0-8d78-eda93ceb4093" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="add6dd5d-aa78-49ce-b2b9-60307186c81b" name="uav_2/ual" componentRelativePath="uav_2/ual">
+      <vars xmi:id="c513bfe2-1e9c-449b-9ec2-6306452657a6" component="add6dd5d-aa78-49ce-b2b9-60307186c81b" variable="uav_2/ual/set_velocity_prime" reflectionName="uav_2/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="6f6acefd-8a0a-4155-a98f-431b2c3da326" ROSTypename="geometry_msgs/TwistStamped"/>
+        <timeLimit xmi:id="67733848-7936-4771-8c7e-b65cbfaceaef" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="96932504-015f-411d-8296-986ad99b4258" component="add6dd5d-aa78-49ce-b2b9-60307186c81b" variable="uav_2/ual/pose_prime" reflectionName="uav_2/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="a89216d9-0da4-40ba-ab11-b2a93d720d5b" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="a804a29e-32c6-497c-8777-d87386faa29b" endTime="100.0"/>
+      </vars>
+    </components>
+  </sims>
+</fuzzspec:FuzzingSpecification>
