@@ -11,6 +11,7 @@ import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzingengine.FuzzingSelectionRecord;
+import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 
 public class RunExperimentsMetricFeedback extends ExptParams {
@@ -50,7 +51,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		}
 	}
 
-	public RunExperimentsMetricFeedback(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) throws IOException {
+	public RunExperimentsMetricFeedback(FuzzingExperimentModifier exptGen, String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) throws IOException {
 		this.resFileName = resFileName;
 		this.populationLimit = populationLimit;
 		this.mission = mission;
@@ -59,7 +60,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.populationLog = new FileWriter("population.log");
 		this.finalPopulationLog = new FileWriter("finalPopulation.res");
 		this.pop = new FuzzingPopulation(populationLimit);
-		g = new FuzzingExperimentModifier(mission);
+		this.g = exptGen;
 		newRandomFile();
 		
 		metrics = new ArrayList<Metric>(mission.getAllMetrics());
