@@ -131,12 +131,12 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 			// config files etc for this CSV definition experimental run
-			if (actuallyRun) {
-				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
-				// Invoke the middleware (with the correct mission model and fuzzing spec!)
-				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName);
-			}
+//			if (actuallyRun) {
+//				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
+//				// Invoke the middleware (with the correct mission model and fuzzing spec!)
+//				// Invoke the CARS / call ROS launch scripts
+//				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName);
+//			}
 
 			// Compute the metrics
 			System.out.println("csvFileName = " + csvFileName);
@@ -152,7 +152,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 					solution.setObjective(i, mval);
 				}
 			}
-		} catch (InterruptedException | IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MetricComputeFailure e) {
 			e.printStackTrace();

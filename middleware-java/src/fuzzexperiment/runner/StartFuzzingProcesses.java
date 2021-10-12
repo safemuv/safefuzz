@@ -105,7 +105,7 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, String scenarioDirString)
 			throws InterruptedException, IOException {
 		Process middleware;
 
@@ -113,7 +113,7 @@ public class StartFuzzingProcesses {
 		
 		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts"); 
-			ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
+			ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_auto_launch_safemuv.sh " + scenarioDirString);
 			
 			sleepHandlingInterruption(40000);
 			exptLog("Starting middleware");
@@ -160,5 +160,9 @@ public class StartFuzzingProcesses {
 		// Originally call Argentina's launch script here... for now, just call
 		// the full script
 		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
+	}
+
+	public void generateLaunchScripts(String scenarioName, String fuzzTopicList) {
+		ExptHelper.runScriptNew(ABS_WORKING_PATH, "./generate_launch_files.sh", scenarioName);
 	}
 }

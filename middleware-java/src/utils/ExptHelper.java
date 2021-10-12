@@ -79,6 +79,4 @@ public class ExptHelper {
 			System.out.println("Ignoring timeout exception when launching");
 		}
 	}
-	
-
 }

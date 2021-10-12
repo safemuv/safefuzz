@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -26,6 +27,8 @@ public class FuzzExptRunner {
 	private Mission baseMission;
 	private String logPath;
 	private StartFuzzingProcesses runner;
+	
+	private int scenarioGenerationNumber = 0;
 	
 	private void readProperties() {
 		Properties prop = new Properties();
@@ -95,13 +98,19 @@ public class FuzzExptRunner {
 				runner.cleanRun(baseMission, file);
 				System.out.println("Refresh launch/config files for clean run");
 				
-				// Generate the ROS configuration files, e.g. modified launch scripts, YAML
-				// config files etc for this CSV definition experimental run
-				runner.codeGenerationROSFuzzing(baseMission, file);
+				System.out.println("Ensure neo4j is running successfully...");
+				
+				// Generate the new launch/config scripts for this run
+				int scenNum = scenarioGenerationNumber++;
+				String fuzzTopicList = "set_velocity";
+				String scenarioDirName = "scen" + scenarioGenerationNumber; 
+				runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
+				System.out.println("Generated launch and config files for " + scenarioDirName);
+				TimeUnit.MILLISECONDS.sleep(5000);
 				
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file);
+				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, scenarioDirName);
 				
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now
