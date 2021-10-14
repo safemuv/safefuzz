@@ -18,12 +18,15 @@ import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
+import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.FuzzingTimeSpecification;
+import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import fuzzingengine.TimeSpec;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
-public abstract class FuzzingExperimentGenerator {
+public class FuzzingExperimentGenerator {
 
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
@@ -31,10 +34,12 @@ public abstract class FuzzingExperimentGenerator {
 	protected Random rng = new Random();
 	protected Mission mission;
 	protected FuzzingEngine fuzzEngine;
+	protected FuzzingTimeSpecificationGenerator timeSpecGenerator;
 
-	public FuzzingExperimentGenerator(Mission mission) {
+	public FuzzingExperimentGenerator(FuzzingTimeSpecificationGenerator timeSpecGenerator, Mission mission) {
 		this.rng = new Random();
 		this.mission = mission;
+		this.timeSpecGenerator = timeSpecGenerator;
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 	}
 
@@ -176,7 +181,34 @@ public abstract class FuzzingExperimentGenerator {
 		double endTime = (endLimit - startTime) * rng.nextDouble() + startTime;
 		return endTime;
 	}
+	
+	protected FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
+			throws OperationLoadFailed, ListHasNoElement {
+		// Select an operation parameter set to use
+		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
+		if (opsetTypes.size() == 0) {
+			throw new ListHasNoElement("opsetType in generateVariableEntry");
+		} else {
+			OpParamSetType opsetType = selectRandomElementFrom(opsetTypes, "opsetType in generateVariableEntry");
+			OperationParameterSet opset = opsetType.getOpset();
+			String subSpec = opsetType.getSubSpec();
 
-	protected abstract FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
-			throws OperationLoadFailed, ListHasNoElement, TreeGenerationFailed;
+			List<Object> specificOpParams = opset.generateSpecific();
+
+			// Set up the timing using the injected generator
+			FuzzingTimeSpecification fts = timeSpecGenerator.gen(var);
+
+			// Get a random list of participants from the mission
+			List<String> participants = getRandomParticipantsFromMission();
+
+			// TODO: merge the specificOpParams with pipes
+			String paramStr = paramsAsString(specificOpParams);
+			FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
+
+			FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(),
+					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants, fts);
+			ksr.setParams(specificOpParams);
+			return ksr;
+		}
+	}
 }

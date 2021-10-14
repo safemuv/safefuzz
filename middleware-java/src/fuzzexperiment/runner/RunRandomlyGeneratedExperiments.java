@@ -26,12 +26,12 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 		g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 	
-	public RunRandomlyGeneratedExperiments(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit) {
+	public RunRandomlyGeneratedExperiments(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, FuzzingTimeSpecificationGenerator tgen) {
 		this.resFileName = resFileName;
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
-		g = new FuzzingExperimentFresh(mission);
+		g = new FuzzingExperimentGenerator(tgen, mission);
 		newGeneratedFile();
 	}
 

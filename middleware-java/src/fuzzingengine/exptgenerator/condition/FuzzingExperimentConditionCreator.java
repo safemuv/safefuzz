@@ -31,7 +31,7 @@ public class FuzzingExperimentConditionCreator  {
 	protected static final boolean VALIDATE_CONDITIONS = true;
 	private static final boolean ANALYSE_CONDITION = true;
 	
-	protected static FuzzingCondition generateValidatedCondition() throws TreeGenerationFailed {
+	public static FuzzingCondition generateValidatedCondition() throws TreeGenerationFailed {
 		int numTrees = 1;
 		while (true) {
 			

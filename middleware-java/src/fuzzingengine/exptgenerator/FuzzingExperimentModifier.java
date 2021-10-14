@@ -18,8 +18,9 @@ import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.TimeSpec;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
+import fuzzingengine.operations.FuzzingOperation;
 
-public class FuzzingExperimentModifier extends FuzzingExperimentFresh {
+public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 
 	private final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
 	private final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
@@ -148,4 +149,6 @@ public class FuzzingExperimentModifier extends FuzzingExperimentFresh {
 		List<String> newParticipants = getRandomParticipantsFromMission();
 		((FuzzingKeySelectionRecord)m).setParticipants(newParticipants);
 	}
+	
+
 }
