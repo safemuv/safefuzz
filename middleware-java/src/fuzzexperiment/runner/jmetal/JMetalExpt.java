@@ -100,9 +100,10 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 		List<Metric> allMetrics = new ArrayList<Metric>(mission.getAllMetrics());
 		
-		// Only the offline metrics that can be 
 		List<OfflineMetric> metrics = allMetrics.stream().
-				filter(e -> e instanceof OfflineMetric).
+				// Only include the mission metrics if we're actually running it!
+				// otherwise there are no log files to process
+				filter(e -> (e instanceof OfflineMetric) && actuallyRun).
 				map(e -> (OfflineMetric)e).collect(Collectors.toList());
 
 		Random problemRNG = new Random();
@@ -152,5 +153,9 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setActuallyRun(boolean actuallyRun) {
+		this.actuallyRun = actuallyRun;
 	}
 }
