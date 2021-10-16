@@ -97,7 +97,8 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		double total = 0.0;
 		for (FuzzingSelectionRecord fs : contents) {
 			if (fs.isActive()) {
-				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
+				// TODO: set up the timing intensity if needed
+				//total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
 			}
 		}
 		return total;

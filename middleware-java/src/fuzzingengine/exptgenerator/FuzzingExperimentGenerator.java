@@ -13,14 +13,16 @@ import java.util.stream.Collectors;
 
 import atlasdsl.Mission;
 import atlasdsl.Robot;
+import fuzzexperiment.runner.jmetal.grammar.TreeGenerationFailed;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
-import fuzzingengine.TimeSpec;
+import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
+import fuzzingengine.TimeSpec;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
@@ -29,13 +31,15 @@ public class FuzzingExperimentGenerator {
 	private final double DEFAULT_PROB_OF_INCLUDING_VARIABLE = 0.5;
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
 
-	Random rng = new Random();
-	private Mission mission;
+	protected Random rng = new Random();
+	protected Mission mission;
 	protected FuzzingEngine fuzzEngine;
+	protected FuzzingTimeSpecificationGenerator timeSpecGenerator;
 
-	public FuzzingExperimentGenerator(Mission mission) {
+	public FuzzingExperimentGenerator(FuzzingTimeSpecificationGenerator timeSpecGenerator, Mission mission) {
 		this.rng = new Random();
 		this.mission = mission;
+		this.timeSpecGenerator = timeSpecGenerator;
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 	}
 
@@ -62,13 +66,16 @@ public class FuzzingExperimentGenerator {
 			if (rng.nextDouble() < probOfInclusion) {
 				FuzzingKeySelectionRecord ksr;
 				try {
-					ksr = generateVariableEntry(vs.getValue());
+					ksr = this.generateVariableEntry(vs.getValue());
 					records.add(ksr);
 				} catch (OperationLoadFailed e) {
 					e.printStackTrace();
 				} catch (ListHasNoElement e) {
 					System.out.println("Skipping key selection record - " + vs
 							+ " - probably no operation types defined in model for this variable?");
+					e.printStackTrace();
+				} catch (TreeGenerationFailed e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -174,8 +181,8 @@ public class FuzzingExperimentGenerator {
 		double endTime = (endLimit - startTime) * rng.nextDouble() + startTime;
 		return endTime;
 	}
-
-	private FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
+	
+	protected FuzzingKeySelectionRecord generateVariableEntry(VariableSpecification var)
 			throws OperationLoadFailed, ListHasNoElement {
 		// Select an operation parameter set to use
 		List<OpParamSetType> opsetTypes = var.getOperationParamSets();
@@ -188,10 +195,8 @@ public class FuzzingExperimentGenerator {
 
 			List<Object> specificOpParams = opset.generateSpecific();
 
-			// Set up the timing from the mission constraints - for now, the full time range
-
-			double startTime = getStartTime(var.getTimeSpec());
-			double endTime = getEndTime(var.getTimeSpec(), startTime);
+			// Set up the timing using the injected generator
+			FuzzingTimeSpecification fts = timeSpecGenerator.gen(var);
 
 			// Get a random list of participants from the mission
 			List<String> participants = getRandomParticipantsFromMission();
@@ -201,8 +206,7 @@ public class FuzzingExperimentGenerator {
 			FuzzingOperation op = loadOperationFromParams(opset.getOperationClassName(), paramStr);
 
 			FuzzingKeySelectionRecord ksr = new FuzzingKeySelectionRecord(var.getVariable(),
-					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants,
-					startTime, endTime);
+					var.getReflectionName_opt(), var.getComponent(), var.getRegexp(), subSpec, op, participants, fts);
 			ksr.setParams(specificOpParams);
 			return ksr;
 		}

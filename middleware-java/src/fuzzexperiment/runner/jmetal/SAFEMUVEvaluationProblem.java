@@ -19,6 +19,7 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.StartFuzzingProcesses;
+import fuzzexperiment.runner.jmetal.grammar.*;
 import fuzzexperiment.runner.metrics.FakeMetricHandler;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
@@ -27,12 +28,17 @@ import fuzzexperiment.runner.metrics.OfflineMetric;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
+import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
+import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGenerator;
+import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGeneratorStartEnd;
 import fuzzingengine.support.FuzzingEngineSupport;
+import fuzzexperiment.runner.jmetal.grammar.Grammar;
 
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
 	private static final long serialVersionUID = 1L;
-	private int runCount = 0;
+	private static final boolean USE_END_CONDITION = true;
+	
 	private Random rng;
 	private Mission baseMission;
 	private boolean actuallyRun;
@@ -45,11 +51,15 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private FileWriter tempLog;
 	private int variableFixedSize;
 	private int constraintCount = 0;
+	private int runCount = 0;
 
 	private FuzzingExperimentGenerator initialGenerator;
 	private String bashPath;
 	private String workingPath;
 	private String middlewarePath;
+	private String logPath;
+	
+	Grammar<String> grammar;
 
 	private void readProperties() {
 		Properties prop = new Properties();
@@ -65,6 +75,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			// logPath = prop.getProperty("paths.ros.log");
 			bashPath = prop.getProperty("paths.bash_script");
 			workingPath = prop.getProperty("paths.working");
+			logPath = workingPath + "/logs/";
 			middlewarePath = prop.getProperty("paths.middleware");
 			runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
 
@@ -80,17 +91,27 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		timeLimit = baseMission.getEndTime();
 		FileWriter tempLog = new FileWriter("fuzzexpt-templog.log");
 		readProperties();
-		initialGenerator = new FuzzingExperimentGenerator(baseMission);
+		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
+		
+		// TODO: need to set up the timing specification generator here
+		FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
+		initialGenerator = new FuzzingExperimentModifier(tgen, baseMission);
+		
+		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
+		
+		System.out.println("SAFEMUVEvaluationProblem: Grammar rules = " + grammar.getRules());
+		System.out.println("SAFEMUVEvaluationProblem: Starting symbol = " + grammar.getStartingSymbol());
+		
 	}
 
-	public SAFEMUVEvaluationProblem(int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
+	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
 			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
 		this.rng = rng;
-		// this.popSize = popSize;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
 		this.actuallyRun = actuallyRun;
+		this.grammar = g;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
@@ -100,8 +121,10 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			metricHandler = new MetricHandler(metrics, resFileName);
 		} else {
 			metricHandler = new FakeMetricHandler(metrics, resFileName);
-
 		}
+		
+		
+		
 		System.out.println(metrics.toString());
 		setup();
 	}
@@ -141,17 +164,24 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			// Compute the metrics
 			System.out.println("csvFileName = " + csvFileName);
 			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
-			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, csvFileName);
+			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, logPath);
 			System.out.println("res = " + res);
+			
+			tempLog.write(csvFileName + ",");
 
 			for (Map.Entry<Metric,Double> e : res.entrySet()) {
 				Optional<Integer> jmetalNum_o = metricHandler.getMetricNumberInList(e.getKey());
+				Metric m = e.getKey();
 				Double mval = e.getValue();
+				System.out.println("Metric: " + m.getClass().getSimpleName() + "=" + mval);
+				tempLog.write(m.getClass().getSimpleName() + "=" + mval + ",");
 				if (jmetalNum_o.isPresent()) {
 					int i = jmetalNum_o.get();
 					solution.setObjective(i, mval);
 				}
 			}
+			tempLog.write("\n");
+			tempLog.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MetricComputeFailure e) {
@@ -175,6 +205,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		List<FuzzingSelectionRecord> recs = initialGenerator.generateExperiment(Optional.empty());
 		System.out.println("createSolution - recs=" + recs);
 		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recs);
+		
 		System.out.println("Initial chromosome = " + sol.toString());
 		return sol;
 	}

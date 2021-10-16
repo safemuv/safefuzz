@@ -104,6 +104,13 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		// TODO: setup the initial population; 
 		// This should be set up to confirm to the model
 		System.out.println("Initial chromosome = " + fiss.toString());
+		try {
+			System.out.println("Waiting for setup...");
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

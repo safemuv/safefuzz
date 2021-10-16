@@ -68,8 +68,7 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
         List<String> str = new ArrayList<String>();
         str.add("MESSAGE");
         str.add(m.getName());
-        str.add(String.valueOf(startTime));
-        str.add(String.valueOf(endTime));
+        str.add(timeSpec.getCSVContents());
         str.add(keyName);
         str.add(String.valueOf(regexNum));
         str.add(String.valueOf(op));

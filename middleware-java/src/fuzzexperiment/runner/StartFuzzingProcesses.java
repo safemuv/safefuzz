@@ -108,23 +108,25 @@ public class StartFuzzingProcesses {
 	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, String scenarioDirString)
 			throws InterruptedException, IOException {
 		Process middleware;
-
 		double returnValue = 0;
 		
 		if (actuallyRun) {	
-			exptLog("Starting ROS/SAFEMUV launch scripts"); 
+			exptLog("Starting ROS/SAFEMUV launch scripts");
+
 			ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_auto_launch_safemuv.sh " + scenarioDirString);
+			//	TODO: use original on flag	ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			
 			sleepHandlingInterruption(40000);
-			exptLog("Starting middleware");
+			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
+			// Version from JGEA: ExptHelper.runCommandQuitTimeout(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath, 10000);
 
 			String[] middlewareOpts = { "nofault", "nogui" };
 
-			// This assumes that the mission time is at least 10 seconds, and that
-			// the vehicle will start up before that
-			sleepHandlingInterruption(10000);
-			
+			// This assumes that the mission time is at least 20 seconds, and gives time for
+			// the middleware to start
+			sleepHandlingInterruption(20000);		
+
 			// Wait until the end condition for the middleware
 			waitUntilMiddlewareTime(timeLimit, failsafeTimeLimit);
 			//waitWallClockTime(timeLimit);
@@ -146,7 +148,12 @@ public class StartFuzzingProcesses {
 		if (actuallyRun) {
 			exptLog("Waiting to restart experiment");
 			// Wait 10 seconds before ending
-			TimeUnit.MILLISECONDS.sleep(10000);
+			try {
+				TimeUnit.MILLISECONDS.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return returnValue;

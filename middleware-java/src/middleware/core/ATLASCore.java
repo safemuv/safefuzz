@@ -26,22 +26,27 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 public abstract class ATLASCore {
 	private static final boolean DEBUG_PRINT_DESERIALISED_MSGS_SENT_TO_CI = false;
 	protected boolean stopOnNoEnergy = false;
-	
+
 	protected ATLASEventQueue<?> carsIncoming;
 	protected ATLASEventQueue<?> fromCI;
-	
+
 	private double timeLimit;
-	
+
 	protected ActiveMQProducer outputToCI;
 	private final int CI_QUEUE_CAPACITY = 100;
 	protected Mission mission;
 	protected MissionMonitor monitor;
 	protected CARSTranslations carsOutput;
-	
+
 	protected FuzzingEngine fuzzEngine;
+
+	protected Map<String, Boolean> vehicleBatteryFlat = new HashMap<String, Boolean>();
 	
-	protected Map<String,Boolean> vehicleBatteryFlat = new HashMap<String,Boolean>(); 
-	
+	// Sim variables are delivered from the middleware
+	protected Map<String, Object> simVariables = new HashMap<String, Object>();
+	// Function variables are computed directly by the middleware
+	protected Map<String, ObjectLambda> middlewareFunctionVariables = new HashMap<String, ObjectLambda>();
+
 	private GUITest gui;
 
 	@SuppressWarnings("rawtypes")
@@ -49,12 +54,14 @@ public abstract class ATLASCore {
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
 	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
 	protected List<PositionUpdateLambda> positionWatchers = new ArrayList<PositionUpdateLambda>();
+	protected List<SpeedUpdateLambda> speedWatchers = new ArrayList<SpeedUpdateLambda>();
 	
-	private FaultGenerator faultGen;	
+	private FaultGenerator faultGen;
+	private static ATLASCore coreRef;
 	private double time = 0.0;
-	
+
 	private ATLASObjectMapper atlasOMapper = new ATLASObjectMapper();
-	
+
 	public void setupPositionPropertyUpdaters() {
 		setupPositionWatcher((pos) -> {
 			String rname = pos.getRobotName();
@@ -62,7 +69,17 @@ public abstract class ATLASCore {
 			r.setPointComponentProperty("location", new Point(pos.getX(), pos.getY(), pos.getZ()));
 		});
 	}
-	
+
+	public static ATLASCore getCore() {
+		return coreRef;
+	}
+
+	public static void setCore(ATLASCore core) {
+		if (coreRef == null) {
+			coreRef = core;
+		}
+	}
+
 	public ATLASCore(Mission mission) {
 		this.mission = mission;
 		stopOnNoEnergy = mission.stopOnNoEnergy();
@@ -70,12 +87,13 @@ public abstract class ATLASCore {
 		this.monitor = new MissionMonitor(this, mission);
 		fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 		queues.add(fromCI);
-		faultGen = new FaultGenerator(this,mission);
+		faultGen = new FaultGenerator(this, mission);
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, true);
+		setCore(this);
 		setupEnergyOnRobots();
 		setupPositionPropertyUpdaters();
 	}
-	
+
 	public ATLASCore(Mission mission, boolean includeCIQueue) {
 		this.mission = mission;
 		stopOnNoEnergy = mission.stopOnNoEnergy();
@@ -90,15 +108,15 @@ public abstract class ATLASCore {
 		setupEnergyOnRobots();
 		setupPositionPropertyUpdaters();
 	}
-	
+
 	public CARSTranslations getCARSTranslator() {
 		return carsOutput;
 	}
-	
+
 	public void createGUI() {
-		gui = new GUITest(this,mission, faultGen);
+		gui = new GUITest(this, mission, faultGen);
 	}
-	
+
 	public synchronized void registerFault(FaultInstance fi) {
 		activeFaults.add(fi);
 		System.out.println("Fault instance added");
@@ -106,27 +124,27 @@ public abstract class ATLASCore {
 		Optional<String> additionalData = fi.getExtraDataOpt();
 		f.immediateEffects(this, additionalData);
 	}
-	
+
 	public synchronized void completeFault(FaultInstance fi) {
 		activeFaults.remove(fi);
 		Fault f = fi.getFault();
 		Optional<String> additionalData = fi.getExtraDataOpt();
 		System.out.println("Calling completion effect");
-		
+
 		fi.getFault().completionEffects(this, additionalData);
 		System.out.println("Fault instance " + fi + " completed: " + f.getClass());
 	}
-	
+
 	public void clearFaults() {
 		activeFaults.clear();
 	}
-    
-    public ActiveMQProducer getCIProducer() {
-    	return outputToCI;
-    }
-    
-    public void sendMessageToCI(Object o) {
-    	try {
+
+	public ActiveMQProducer getCIProducer() {
+		return outputToCI;
+	}
+
+	public void sendMessageToCI(Object o) {
+		try {
 			String msg = atlasOMapper.serialise(o);
 			if (DEBUG_PRINT_DESERIALISED_MSGS_SENT_TO_CI) {
 				System.out.println("sendMessageToCI: serialised message " + msg);
@@ -136,10 +154,50 @@ public abstract class ATLASCore {
 			e1.printStackTrace();
 		} catch (JMSException e1) {
 			e1.printStackTrace();
-		};
-    }
+		}
+		;
+	}
 	
-    public void runMiddleware()  {
+	public ObjectLambda setupLambdaFromFixedPoint(String varName, Point fixedPoint) {
+		ObjectLambda resLambda = (name) -> {
+			Robot r = mission.getRobot(name);
+			try {
+				Point p = r.getPointComponentProperty("location");
+				double distance = fixedPoint.distanceTo(p);
+				System.out.println("starting_point_distance = " + distance);
+				return distance;
+			} catch (MissingProperty p) {
+				return Double.MAX_VALUE;
+			}
+		};
+		
+		middlewareFunctionVariables.put(varName, resLambda);
+		return resLambda;
+	}
+
+	public void setupMiddlewareFunctionVariables() {
+		
+		ObjectLambda spdLambda = (name) -> {
+			Robot r = mission.getRobot(name);
+			try {
+				Point p = r.getPointComponentProperty("location");
+				Point orig = r.getPointComponentProperty("startLocation");
+				double distance = orig.distanceTo(p);
+				System.out.println("starting_point_distance = " + distance);
+				return distance;
+			} catch (MissingProperty p) {
+				return Double.MAX_VALUE;
+			}
+		};
+		
+		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
+		setupLambdaFromFixedPoint("distance_to_left_wing_tip", new Point(-61.3,-41.2,8.5));
+		setupLambdaFromFixedPoint("distance_to_right_wing_tip", new Point(61.3,41.2,8.5));
+	}
+	
+	public void runMiddleware() {
+		setupMiddlewareFunctionVariables();
+		
 		for (ATLASEventQueue<?> q : queues) {
 			// Since the GUI displays global status, it
 			// needs to be updated following every event on any queue
@@ -151,18 +209,18 @@ public abstract class ATLASCore {
 			q.registerAfterHook(() -> monitor.runStep());
 			q.setup();
 		}
-		
+
 		for (ATLASEventQueue<?> q : queues) {
 			new Thread(q).start();
 		}
-    }
+	}
 
 	public double getTime() {
-		return time; 
+		return time;
 	}
-	
+
 	public synchronized void updateTime(double time) throws CausalityException {
-		//System.out.println("updateTime called with " + time);
+		// System.out.println("updateTime called with " + time);
 		if ((time > this.time)) {
 			this.time = time;
 			if (this.time > timeLimit) {
@@ -170,11 +228,11 @@ public abstract class ATLASCore {
 			}
 		}
 	}
-	
+
 	// This is used by active faults to inject their immediate effects
 	// upon the low-level CARS simulation
 	public void sendToCARS(Robot r, String key, String value) {
-		CIEventQueue CIq = (CIEventQueue)fromCI;
+		CIEventQueue CIq = (CIEventQueue) fromCI;
 		CIq.sendToCARS(r, key, value);
 	}
 
@@ -182,29 +240,28 @@ public abstract class ATLASCore {
 		for (FaultInstance fi : activeFaults) {
 			System.out.println("fault instance name " + fi.getFault().getImpact().getClass().getName());
 		}
-		
+
 		System.out.println("class1 name: = " + class1.getName());
 		System.out.println("activeFaults count: " + activeFaults.size());
-		return activeFaults.stream()
-				.filter(fi -> fi.getFault().getImpact().getClass() == class1)
+		return activeFaults.stream().filter(fi -> fi.getFault().getImpact().getClass() == class1)
 				.collect(Collectors.toList());
 	}
 
 	// This is called by the simulator-side event queues when a low
 	// level sensor detection occurs
 	public void notifySensorDetection(SensorDetection d) {
-		for (SensorDetectionLambda watcher : sensorWatchers) { 
+		for (SensorDetectionLambda watcher : sensorWatchers) {
 			watcher.op(d);
 		}
 	}
-	
+
 	public void setupSensorWatcher(SensorDetectionLambda l) {
 		sensorWatchers.add(l);
 	}
-	
+
 	public void setFaultDefinitionFile(String filePath) {
 		faultGen.setFaultDefinitionFile(filePath);
-		
+
 		if (gui != null) {
 			gui.setFaultDefinitionFile(filePath);
 		}
@@ -213,17 +270,27 @@ public abstract class ATLASCore {
 	public FuzzingEngine getFuzzingEngine() {
 		return fuzzEngine;
 	}
-	
+
 	public void setupPositionWatcher(PositionUpdateLambda l) {
 		positionWatchers.add(l);
 	}
 	
+	public void setupSpeedWatcher(SpeedUpdateLambda l) {
+		speedWatchers.add(l);
+	}
+
 	public void notifyPositionUpdate(GPSPositionReading gps) {
-		for (PositionUpdateLambda watcher : positionWatchers) { 
+		for (PositionUpdateLambda watcher : positionWatchers) {
 			watcher.op(gps);
 		}
 	}
 	
+	public void notifySpeedUpdate(SpeedReading s) {
+		for (SpeedUpdateLambda watcher : speedWatchers) {
+			watcher.op(s);
+		}
+	}
+
 	public double getTimeLimit() {
 		return timeLimit;
 	}
@@ -243,10 +310,27 @@ public abstract class ATLASCore {
 	public double getRobotEnergyRemaining(Robot r) {
 		return r.getEnergyRemaining();
 	}
-	
+
 	public void setupEnergyOnRobots() {
 		for (Robot r : mission.getAllRobots()) {
 			r.setupRobotEnergy();
+		}
+	}
+	
+	public Object getVariable(String varName, String robotName) {
+		// Use the middleware function variables first
+		String combinedName = varName;
+		if (middlewareFunctionVariables.containsKey(combinedName)) {
+			ObjectLambda l = middlewareFunctionVariables.get(combinedName);
+			Object res = l.op(robotName);
+			return res;
+		} else {
+			if (simVariables.containsKey(combinedName)) {
+				Object res = simVariables.get(combinedName);
+				return res;
+			} else {
+				return false;
+			}
 		}
 	}
 }

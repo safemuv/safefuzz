@@ -85,7 +85,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 
 	public FuzzingSelectionRecord getVariable(int index) {
 		System.out.println("index = " + index +  ",contents.size()=" + contents.size());
-		if (index < contents.size() && index > 0) {
+		if (index < contents.size() && index >= 0) {
 			return contents.get(index);
 		} else {
 			return null;
@@ -115,22 +115,23 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		return intensity;
 	}
 	
-	private double totalActiveFaultTimeLengthScaledByIntensity() {
-		double total = 0.0;
-		for (FuzzingSelectionRecord fs : contents) {
-			if (fs.isActive()) {
-				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
-			}
-		}
-		return total;
-	}
+//	private double totalActiveFaultTimeLengthScaledByIntensity() {
+//		double total = 0.0;
+//		for (FuzzingSelectionRecord fs : contents) {
+//			if (fs.isActive()) {
+//				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
+//			}
+//		}
+//		return total;
+//	}
 	
-	public double faultCostProportion() {
-		return ((totalActiveFaultTimeLengthScaledByIntensity() / (contents.size() * exptRunTime)));
-	}
+//	public double faultCostProportion() {
+//		return ((totalActiveFaultTimeLengthScaledByIntensity() / (contents.size() * exptRunTime)));
+//	}
 
 	public double getConstraint(int index) {
-		return faultCostProportion();
+		//return faultCostProportion();
+		return 0.0;
 	}
 
 	public void setConstraint(int index, double value) {
@@ -185,10 +186,6 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	public Map<Object, Object> getAttributes() {
 		return attributes;
 	}
-	
-	public String toString() {
-		return contents.toString();
-	}
 
 	public List<FuzzingSelectionRecord> testAllFuzzingSelections(FuzzingSelectionLambdaBoolean test) {
 		List<FuzzingSelectionRecord> res = new ArrayList<FuzzingSelectionRecord>();
@@ -209,8 +206,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public double faultTimeTotal() {
-		
-		return totalActiveFaultTimeLengthScaledByIntensity();
+		return 0.0;
 	}
 	
 	public void generateCSVFile(String filePath) throws IOException {
@@ -249,6 +245,18 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 			return createCSVFileName();
 		} else {
 			return csvFileName;
+		}
+	}
+	
+	public String toString() {
+		try {
+			String out = "CSV:" + getCSVFileName() + "\n";
+			for (int i = 0; i < contents.size(); i++) {
+				out += contents.get(i).generateCSVLine() + "\n";
+			}
+			return out;
+		} catch (IOException e) {
+			return "<IOException in getCSVFilename()>";
 		}
 	}
 }

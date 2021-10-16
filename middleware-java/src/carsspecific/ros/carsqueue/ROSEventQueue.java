@@ -9,6 +9,7 @@ import javax.json.*;
 import atlasdsl.*;
 import atlassharedclasses.GPSPositionReading;
 import atlassharedclasses.Point;
+import atlassharedclasses.SpeedReading;
 import carsspecific.ros.carsqueue.ROSTopicUpdate.ATLASTag;
 import carsspecific.ros.connection.ROSConnection;
 
@@ -102,8 +103,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				Point p = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 				System.out.println("ODometry Point:" + p.toString());
 				System.out.println();
-				double speedStored = robotSpeeds.get(rtu.getVehicleName());
-				GPSPositionReading gps = new GPSPositionReading(p, speedStored, rtu.getVehicleName());
+				GPSPositionReading gps = new GPSPositionReading(p, rtu.getVehicleName());
 				core.notifyPositionUpdate(gps);
 			}
 
@@ -117,8 +117,9 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				Point vel = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
 
 				double s = vel.absLength();
-				robotSpeeds.put(rtu.getVehicleName(), s);
-
+				SpeedReading sr = new SpeedReading(s, rtu.getVehicleName());
+				core.notifySpeedUpdate(sr);
+				
 				System.out.println("Vel:" + vel.toString());
 			}
 		}

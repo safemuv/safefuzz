@@ -60,6 +60,14 @@ public class ExptHelper {
 		Process proc = pb.start();
 		return proc;
 	}
+	
+	public static Process startScriptWithArg(String path, String scriptFile, String arg) throws IOException {
+		System.out.println("Starting script " + scriptFile);
+		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", path + "/" + scriptFile + " " + arg);
+		pb.directory(new File(path));
+		Process proc = pb.start();
+		return proc;
+	}
 
 	public static Process startCmd(String path, String cmd) throws IOException {
 		System.out.println("Starting command " + cmd);
@@ -69,14 +77,14 @@ public class ExptHelper {
 		return proc;
 	}
 	
-	public static void runScriptNew(String dir, String command, String arg) {
+	public static void runCommandQuitTimeout(String dir, String command, String arg, long timeoutMillis) {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		File dirFile = new File(dir);
-		ProcBuilder pb = new ProcBuilder(command).withArg(arg).withOutputStream(output).withWorkingDirectory(dirFile);
+		ProcBuilder pb = new ProcBuilder(command).withArg(arg).withOutputStream(output).withWorkingDirectory(dirFile).withTimeoutMillis(timeoutMillis);
 		try {
-		ProcResult res = pb.run();
+			ProcResult res = pb.run();
 		} catch (org.buildobjects.process.TimeoutException e) {
-			System.out.println("Ignoring timeout exception when launching");
+			System.out.println("5 seconds after start reached");
 		}
 	}
 }

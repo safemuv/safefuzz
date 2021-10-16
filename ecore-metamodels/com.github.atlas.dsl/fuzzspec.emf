@@ -81,6 +81,7 @@ class OperationParameterSetTypes {
 
 class FuzzProbabilityInfo {
 	attr double includeVariableProbability;
+	attr int maxCount;
 }
 
 class VariableSpecification {

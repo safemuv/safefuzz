@@ -3,8 +3,7 @@ package fuzzingengine;
 import fuzzingengine.operations.FuzzingOperation;
 
 abstract public class FuzzingSelectionRecord {
-	protected double startTime;
-	protected double endTime;
+	protected FuzzingTimeSpecification timeSpec;
 	protected boolean isActive;
 	protected FuzzingOperation op;
 	
@@ -16,24 +15,8 @@ abstract public class FuzzingSelectionRecord {
 		return op;
 	}
 	
-	public double getStartTime() {
-		return startTime;
-	}
-	
-	public void setStartTime(double startTime) {
-		this.startTime = startTime;
-	}
-	
-	public void setEndTime(double endTime) {
-		this.endTime = endTime;
-	}
-	
-	public double getEndTime() {
-		return endTime;
-	}
-	
-	public boolean isReadyAtTime(double time) {
-		return (time >= startTime) && (time < endTime);
+	public boolean isActiveAtTime(double time, String vehicle) {
+		return timeSpec.isActiveAtTime(time, vehicle);
 	}
 	
 	public abstract FuzzingSelectionRecord dup();
@@ -52,5 +35,13 @@ abstract public class FuzzingSelectionRecord {
 	
 	protected String generateOpParams() {
 		return "";
+	}
+	
+	public FuzzingTimeSpecification getTimeSpec() {
+		return timeSpec;
+	}
+	
+	public void setTimeSpec(FuzzingTimeSpecification ts) {
+		this.timeSpec = ts;
 	}
 }

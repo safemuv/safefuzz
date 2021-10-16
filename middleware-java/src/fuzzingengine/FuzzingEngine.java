@@ -32,6 +32,9 @@ import atlasdsl.Robot;
 import carsspecific.ros.carsqueue.ROSTopicUpdate;
 import fuzzingengine.FuzzingSimMapping.VariableDirection;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
+import fuzzingengine.grammar.FuzzingCondition;
+import fuzzingengine.grammar.FuzzingConditionStartEnd;
+import fuzzingengine.grammar.FuzzingConditionStartSpec;
 import fuzzingengine.operations.EventFuzzingOperation;
 import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.operations.ValueFuzzingOperation;
@@ -43,13 +46,12 @@ public class FuzzingEngine<E> {
 	FuzzingConfig confs = new FuzzingConfig();
 	FuzzingSimMapping fuzzingspec = new FuzzingSimMapping();
 	
-
 	PriorityQueue<FutureEvent<E>> delayedEvents = new PriorityQueue<FutureEvent<E>>();
 
 	public FuzzingEngine(Mission m) {
 		this.m = m;
 	}
-
+	
 	private List<String> getVehicles(String vehicleList) throws MissingRobot {
 		if (vehicleList.toUpperCase().equals("ALL")) {
 			return m.getAllRobotAndComputerNames();
@@ -73,6 +75,19 @@ public class FuzzingEngine<E> {
 		
 			FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
 					vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, startTime, endTime);
+			confs.addKeyRecord(fr);
+		} 
+	}
+	
+	public void addFuzzingKeyOperation(String fuzzingKey, String vehicleNameList, Object groupNum, FuzzingTimeSpecification spec, FuzzingOperation op) throws MissingRobot {
+		VariableSpecification vr = fuzzingspec.getRecordForKey(fuzzingKey);
+		if (vr == null) {
+			System.out.println("!!!!!! addFuzzingKeyOperation - key " + fuzzingKey + " not found in fuzzing spec - ignoring !!!!!");
+		} else {
+			List<String> vehicles = getVehicles(vehicleNameList);
+		
+			FuzzingKeySelectionRecord fr = new FuzzingKeySelectionRecord(fuzzingKey, vr.getReflectionName_opt(),
+					vr.getComponent(), vr.getRegexp(), groupNum, op, vehicles, spec);
 			confs.addKeyRecord(fr);
 		} 
 	}
@@ -390,6 +405,58 @@ public class FuzzingEngine<E> {
 		}
 		return Optional.empty();
 	}
+	
+	private FuzzingTimeSpecification createTimeSpec(String key, String startSpec, String endSpec) {
+		if (key.equals("KEYCONDSTART")) {
+			// This is a start cond, end time spec
+			System.out.println("startSpec=" + startSpec);
+			System.out.println("endSpec=" + endSpec);
+			
+			double end = Double.parseDouble(endSpec);
+			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
+			try {
+				startCond.doConversion();
+			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedUnOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedBinOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new FuzzingConditionStartSpec(startCond, end);
+		}
+		
+		if (key.equals("KEYCONDBOTH")) {
+			// This is a start-end time spec
+			System.out.println("startSpec=" + startSpec);
+			System.out.println("endSpec=" + endSpec);
+			FuzzingCondition startCond = FuzzingCondition.parseCSVString(startSpec);
+			FuzzingCondition endCond = FuzzingCondition.parseCSVString(endSpec);
+			try {
+				startCond.doConversion();
+				endCond.doConversion();
+			} catch (UnrecognisedComparison | UnrecognisedTreeNode e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedUnOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnrecognisedBinOp e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new FuzzingConditionStartEnd(startCond, endCond);
+			
+		}
+		
+		// Otherwise, assume a start-end time spec
+		double start = Double.parseDouble(startSpec);
+		double end = Double.parseDouble(endSpec);
+		return new FuzzingFixedTimeSpecification(start, end);
+	}
 
 	public void setupFromFuzzingFile(String fileName, Mission m) {
 		System.out.println("setupFromFuzzingFile - " + fileName);
@@ -408,11 +475,13 @@ public class FuzzingEngine<E> {
 					}
 
 					// Scan for key record in file
-					if (fields[0].toUpperCase().equals("KEY")) {
+					if (fields[0].toUpperCase().contains("KEY")) {
 						System.out.println("KEY based fuzzing");
 						String varName = fields[1];
-						double startTime = Double.parseDouble(fields[2]);
-						double endTime = Double.parseDouble(fields[3]);
+						
+						FuzzingTimeSpecification spec = createTimeSpec(fields[0], fields[2], fields[3]);
+						//double startTime = Double.parseDouble(fields[2]);
+						//double endTime = Double.parseDouble(fields[3]);
 						String vehicleNames = fields[4];
 						String fieldSpec = fields[5];
 						String opClass = fields[6];
@@ -422,7 +491,7 @@ public class FuzzingEngine<E> {
 						if (op_o.isPresent()) {
 							FuzzingOperation op = op_o.get();
 							try {
-								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, startTime, endTime, op);
+								addFuzzingKeyOperation(varName, vehicleNames, fieldSpec, spec, op);
 								System.out.println("Installing fuzzing operation for " + varName + " - " + op);
 							} catch (MissingRobot e) {
 								System.out.println("Missing robot: name = " + e.getName());

@@ -9,39 +9,29 @@ import java.util.ArrayList;
 
 import fuzzexperiment.runner.metrics.*;
 
-
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
 	final double MISSION_END_TIME = 600.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
-	
-		Robot ruav_1 = new Robot("uav_1");
-		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
+	Robot ruav_1 = new Robot("uav_1");
+	ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
+	ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
-		mission.addRobot(ruav_1);
-		Robot ruav_2 = new Robot("uav_2");
-		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
-		ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
+	mission.addRobot(ruav_1);
+	Robot ruav_2 = new Robot("uav_2");
+	ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
+	ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
 		
 			
-		mission.addRobot(ruav_2);
+	mission.addRobot(ruav_2);
 	
-	
-	
-	
- 
- 
+	Robot [] grp1 = {ruav_1,ruav_2}; 
+	GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
 		
-		Robot [] grp1 = {ruav_1,ruav_2}; 
-		GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
-		
-		
-		
-			GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+	GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		
 		
 		
@@ -108,13 +98,14 @@ public class GeneratedDSLLoader implements DSLLoader {
  
 		
 		Robot [] grp3 = {ruav_1,ruav_2}; 
-		GoalParticipants gpAvoidPlaneInner = new StaticParticipants(grp3, mission);
+		GoalParticipants gpAvoidOthers = new StaticParticipants(grp3, mission);
 		
 		
 		
 			GoalTemporalConstraints gt3 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
 		
 		
+<<<<<<< HEAD
 		
 		GoalAction ga3 = new Avoid(1.5);
 		
@@ -145,6 +136,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalAction ga4 = new AvoidOthers(2.0);
+=======
+		GoalAction ga3 = new AvoidOthers(2.0);
+>>>>>>> jgea
 		
 		
 		
@@ -156,14 +150,14 @@ public class GeneratedDSLLoader implements DSLLoader {
 			           new Point(10.0, 10.0, 10.0)));
 		
 		
-		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
+		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt3, gpAvoidOthers, Optional.of(grAvoidOthers), ga3);
 		
 		
 		
 		
 		
-		Metric met5 = new AvoidanceViolationsCount();
-		AvoidOthers.addMetric(met5);
+		Metric met4 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met4);
 		
 		mission.addGoal("AvoidOthers", AvoidOthers);
 	

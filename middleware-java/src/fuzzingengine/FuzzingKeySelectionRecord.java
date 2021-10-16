@@ -46,15 +46,25 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		this.regex = regex;
 		this.groupNum = groupNum;
 		this.participants = participants;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.timeSpec = new FuzzingFixedTimeSpecification(startTime, endTime);
 		this.op = op;
 		setupPattern();
 		setupParticipants();
 	}
 	
-	public double getTimeLength() {
-		return endTime - startTime;
+	public FuzzingKeySelectionRecord(String key, Optional<String> reflectionKey, Optional<String> component, Optional<String> regex,
+			Object groupNum, FuzzingOperation op, List<String> participants, FuzzingTimeSpecification timeSpec) {
+		super(op);
+		this.key = key;
+		this.reflectionKey = reflectionKey;
+		this.component = component;
+		this.regex = regex;
+		this.groupNum = groupNum;
+		this.participants = participants;
+		this.timeSpec = timeSpec.dup();
+		this.op = op;
+		setupPattern();
+		setupParticipants();
 	}
 	
 	// for messages
@@ -68,6 +78,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		setupPattern();
 	}
 	
+
 	public void addParticipant(String r) {
 		participants.add(r);
 		participantsLookup.put(r,true);
@@ -129,7 +140,7 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 		}
 		
 		FuzzingKeySelectionRecord k = new FuzzingKeySelectionRecord(key, reflectionKey,  component, regex,
-				groupNum, op, newParticipants, startTime, endTime);
+				groupNum, op, newParticipants, timeSpec);
 		// As long as setParams is called later on uniquely generated parameters, should be OK!
 		k.setParams(params);
 		return k;
@@ -138,23 +149,21 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	private String operationName() {
 		return op.getClass().getSimpleName();
 	}
+	
+//	public String toString() {
+//		return generateCSVLine();
+//	}
 
 	public String generateCSVLine() {
-        List<String> str = new ArrayList<String>();
-        str.add("KEY");
+		List<String> str = new ArrayList<String>();
+        str.add(timeSpec.getCSVRecordTag());
         str.add(key);
-        str.add(String.valueOf(startTime));
-        str.add(String.valueOf(endTime));
+        str.add(timeSpec.getCSVContents());
         str.add(String.join("|", participants));
         str.add(String.valueOf(groupNum));
         str.add(operationName());
         str.add(paramsAsString());
         return String.join(",", str);
-	}
-
-	public void checkConstraints() {
-
-		
 	}
 	
 	public Object getGroupNum() {
@@ -163,5 +172,13 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 
 	public void setParticipants(List<String> newParticipants) {
 		this.participants = newParticipants;
+	}
+
+	public boolean isReadyAtTime(double time, String vehicle) {
+		return timeSpec.isActiveAtTime(time, vehicle);
+	}
+
+	public void checkConstraints() {
+				
 	}
 }
