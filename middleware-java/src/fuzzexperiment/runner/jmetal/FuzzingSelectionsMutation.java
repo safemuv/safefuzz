@@ -5,11 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import org.uma.jmetal.operator.mutation.MutationOperator;
-
-import com.opencsv.bean.AbstractCsvConverter;
 
 import atlasdsl.Mission;
 import atlasdsl.Robot;
@@ -23,12 +22,12 @@ import fuzzingengine.FuzzingSimMapping;
 import fuzzingengine.FuzzingSimMapping.OpParamSetType;
 import fuzzingengine.FuzzingSimMapping.VariableSpecification;
 import fuzzingengine.FuzzingTimeSpecification;
+import fuzzingengine.TimeSpec;
 import fuzzingengine.exptgenerator.ListHasNoElement;
 import fuzzingengine.exptgenerator.OperationLoadFailed;
 import fuzzingengine.grammar.FuzzingCondition;
 import fuzzingengine.grammar.FuzzingConditionStartEnd;
 import fuzzingengine.grammar.FuzzingConditionStartSpec;
-import fuzzingengine.grammar.conditionelements.FuzzingConditionElement;
 import fuzzingengine.operationparamsinfo.OperationParameterSet;
 import it.units.malelab.jgea.representation.tree.Tree;
 
@@ -37,12 +36,6 @@ import it.units.malelab.jgea.representation.tree.Tree;
 
 // I think it has to be ensured in the crossover operation - ensuring creating a fresh one
 public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelectionsSolution> {
-
-	public enum ChangeOp {
-		CHANGE_TIME_SPEC,
-		CHANGE_PARAM, 
-		CHANGE_PARTICIPANTS
-	}
 	
 	public enum TimeSpecChangeOp {
 		CHANGE_LENGTH,
@@ -50,49 +43,46 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		CHANGE_END_CONDITION
 	}
 
-	protected final double PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
-	protected final double PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
-	//private final double PROB_OF_TIMESPEC_CHANGE_LENGTH = 1.0 / 2.0;
+	protected final double DEFAULT_PROB_OF_TEMPORAL_MUTATION = 1.0 / 3.0;
+	protected final double DEFAULT_PROB_OF_PARAM_CHANGE = 1.0 / 3.0;
+	protected final double DEFAULT_PROB_OF_PARTICIPANT_CHANGE = 1.0 / 3.0;
+	
+	protected double probTemporalMutation = DEFAULT_PROB_OF_TEMPORAL_MUTATION;
+	protected double probParamMutation = DEFAULT_PROB_OF_PARAM_CHANGE;
+	protected double probParticipantMutation = DEFAULT_PROB_OF_PARTICIPANT_CHANGE;
+	
 	private final double PROB_OF_TIMESPEC_CHANGE_END = 0.5;
 	
-	private final double PROB_OF_TIMESPEC_START_RATHER_THAN_END = 0.5;
-	
 	private final double DEFAULT_PROB_OF_INCLUDING_ROBOT = 0.5;
-	
-	private final int MAX_INDIVIDUAL_MUTATIONS = 2;
-	private final double TIME_SHIFT = 500.0;
-	
+		
 	protected final int MUTATION_DEPTH = 1;
 
 	private static final long serialVersionUID = 1L;
 	protected Random rng;
 	private FileWriter mutationLog;
-	private double mutationProb;
 	protected FuzzingEngine fuzzEngine;
 	protected Mission mission;
 	protected GrammarBasedSubtreeMutation<String> mutator;
 	
 	
-	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double mutationProb) throws IOException {
+	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName) throws IOException {
 		this.rng = rng;
-		this.mutationProb = mutationProb;
 		this.mutationLog = new FileWriter(mutationLogFileName);
 		this.fuzzEngine = fuzzEngine;
 		this.mission = mission;
 		this.mutator = new GrammarBasedSubtreeMutation<String>(MUTATION_DEPTH, g);
 	}
 	
-	public ChangeOp selectRandomOperation() {
-		double v = rng.nextDouble();
-		if (v < PROB_OF_TEMPORAL_MUTATION) {
-			return ChangeOp.CHANGE_TIME_SPEC;
-		} else { 
-			if (v < PROB_OF_TEMPORAL_MUTATION + PROB_OF_PARAM_CHANGE) {
-				return ChangeOp.CHANGE_PARAM;
-			} else {
-				return ChangeOp.CHANGE_PARTICIPANTS;
-			}
-		}
+	FuzzingSelectionsMutation(Grammar g, Random rng, Mission mission, FuzzingEngine fuzzEngine, String mutationLogFileName, double probTemporalMut, double probParamMut, double probParticipantMut) throws IOException {
+		this.rng = rng;
+		this.probTemporalMutation = probTemporalMut;
+		this.probParamMutation = probParamMut;
+		this.probParticipantMutation = probParticipantMut;
+		
+		this.mutationLog = new FileWriter(mutationLogFileName);
+		this.fuzzEngine = fuzzEngine;
+		this.mission = mission;
+		this.mutator = new GrammarBasedSubtreeMutation<String>(MUTATION_DEPTH, g);
 	}
 	
 	// This only applies to the start condition + time length
@@ -108,19 +98,63 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	// This only applies to the start condition + end condition
 	public TimeSpecChangeOp getTimeSpecChangeOperationStartEnd() {
 		double v = rng.nextDouble();
-		if (v < PROB_OF_TIMESPEC_START_RATHER_THAN_END) {
+		if (v < PROB_OF_TIMESPEC_CHANGE_END) {
 			return TimeSpecChangeOp.CHANGE_START_CONDITION;
 		} else {
 			return TimeSpecChangeOp.CHANGE_END_CONDITION;
 		}
 	}
+	
+	protected double getStartTime(Optional<TimeSpec> ts_o) {
+		double startLimit;
+
+		if (ts_o.isPresent()) {
+			startLimit = ts_o.get().getEndTime();
+		} else {
+			startLimit = mission.getEndTime();
+		}
+
+		return startLimit * rng.nextDouble();
+	}
+	
+	protected double getEndTime(Optional<TimeSpec> ts_o, double startTime) {
+		double endLimit;
+
+		if (ts_o.isPresent()) {
+			endLimit = ts_o.get().getEndTime();
+		} else {
+			endLimit = mission.getEndTime();
+		}
+
+		double endTime = (endLimit - startTime) * rng.nextDouble() + startTime;
+		return endTime;
+	}
+	
+	private void changeFixedTimeSpec(FuzzingSelectionRecord krec) {
+		double startTime;
+		double endTime;
+		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
+		
+		FuzzingFixedTimeSpecification newT = new FuzzingFixedTimeSpecification((FuzzingFixedTimeSpecification)krec.getTimeSpec());
+		if (krec instanceof FuzzingKeySelectionRecord) {
+			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord)krec;
+			VariableSpecification vs = fsm.getRecords().get(km.getKey());
+			Optional<TimeSpec> ts = vs.getTimeSpec();
+			startTime = getStartTime(ts);
+			endTime = getEndTime(ts, startTime);
+		} else {
+			startTime = getStartTime(Optional.empty());
+			endTime = getEndTime(Optional.empty(), startTime);
+			newT.setStartTime(startTime);
+			newT.setEndTime(endTime);
+		}
+		krec.setTimeSpec(newT);
+	}
 
 	private void changeTimeSpec(FuzzingSelectionRecord krec) {
 		FuzzingTimeSpecification ts = krec.getTimeSpec();
 		if (ts instanceof FuzzingFixedTimeSpecification) {
-			// TODO: for fixed time specifications, implement this
-//			FuzzingFixedTimeSpecification newT = (FuzzingFixedTimeSe) 
-//			krec.setTimeSpec()
+			changeFixedTimeSpec(krec);
 		}
 		
 		if (ts instanceof FuzzingConditionStartSpec) {
@@ -230,20 +264,18 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	
 	public void modifyGivenRecord(FuzzingSelectionRecord krec) {
 		try {
-			ChangeOp operation = selectRandomOperation();
-			System.out.println("Mutation operation selected = " + operation);
-			
-			if (operation == ChangeOp.CHANGE_TIME_SPEC) {
+			if (rng.nextDouble() < probTemporalMutation) { 
 				changeTimeSpec(krec);
 			}
 
-			if (operation == ChangeOp.CHANGE_PARAM) {
+			if (rng.nextDouble() < probParamMutation) { 
 				newParameters(krec);
 			}
 			
-			if (operation == ChangeOp.CHANGE_PARTICIPANTS) {
+			if (rng.nextDouble() < probParticipantMutation) {
 				newParticipants(krec);
 			}
+			
 		} catch (ListHasNoElement e) {
 			System.out.println("generateExperimentBasedUpon - empty original experiment");
 		} catch (OperationLoadFailed e) {
@@ -251,16 +283,8 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		}
 	}
 
-	private void mutatePossiblyMultipleTimes(FuzzingSelectionRecord input, int maxTimes) {
-		modifyGivenRecord(input);
-		int extraMutations = rng.nextInt(maxTimes);
-		for (int i = 0; i < extraMutations; i++) {
-			modifyGivenRecord(input);
-		}
-	}
-
 	public double getMutationProbability() {
-		return mutationProb;
+		return 1.0;
 	}
 
 	public FuzzingSelectionsSolution execute(FuzzingSelectionsSolution source) {
@@ -268,7 +292,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		for (int i = 0; i < source.getNumberOfVariables(); i++) {
 			FuzzingSelectionRecord fuzzingSelection = source.getVariable(i);
 			System.out.println("fuzzingSelection=" + fuzzingSelection);
-			mutatePossiblyMultipleTimes(fuzzingSelection, MAX_INDIVIDUAL_MUTATIONS);
+			modifyGivenRecord(fuzzingSelection);
 			System.out.println("contents length = " + source.getNumberOfVariables());
 		}
 		return source;

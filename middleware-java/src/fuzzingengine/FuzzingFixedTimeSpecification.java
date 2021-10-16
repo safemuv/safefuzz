@@ -9,12 +9,17 @@ public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 		this.endTime = endTime;
 	}
 	
+	public FuzzingFixedTimeSpecification(FuzzingFixedTimeSpecification other) {
+		this.startTime = other.startTime;
+		this.endTime = other.endTime;
+	}
+	
 	public boolean isActiveAtTime(double time, String vehicle) {
 		return (time >= startTime) && (time < endTime);
 	}
 
 	public String getCSVContents() {
-		return null;
+		return startTime + "," + endTime;
 	}
 
 	public double getStartTime() {

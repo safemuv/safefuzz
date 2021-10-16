@@ -40,14 +40,19 @@ import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
-public class RunJMetal extends AbstractAlgorithmRunner {
+public class JMetalExpt extends AbstractAlgorithmRunner {
 
-	private static final boolean MUTATE_ONLY_CONDITIONS = true;
+	public enum ExperimentType {
+		FIXED_TIME_FUZZING,
+		CONDITION_BASED_FUZZING_START,
+		CONDITION_BASED_FUZZING_BOTH
+	}
+	
 	static private int populationSize = 10;
 	static private int offspringPopulationSize = 10;
 
 	static private int matingPoolSize = populationSize;
-	static private boolean actuallyRun = true;
+	static private boolean actuallyRun = false;
 	static private double exptRunTime = 600.0;
 
 	static private int maxIterations = 50;
@@ -56,6 +61,12 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 	static double mutationProb = 0.8;
 
 	static private String referenceParetoFront = "";
+	
+	private double timingMutProb;
+	private double participantsMutProb;
+	private double paramMutProb;
+	
+	private ExperimentType etype;
 
 	private String logPath;
 
@@ -77,7 +88,11 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 		}
 	}
 
-	private RunJMetal() {
+	public JMetalExpt(double timingMutProb, double participantsMutProb, double paramMutProb, ExperimentType etype) {
+		this.timingMutProb = timingMutProb;
+		this.participantsMutProb = participantsMutProb;
+		this.paramMutProb = paramMutProb;
+		this.etype = etype;
 		readProperties();
 	}
 
@@ -112,12 +127,7 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 
 			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
 
-			if (MUTATE_ONLY_CONDITIONS) {
-				mutation = new FuzzingSelectionsMutationConditionsOnly(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
-			} else {
-				mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", mutationProb);
-			}
-			
+			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", timingMutProb, paramMutProb, participantsMutProb);
 			
 			selection = new TournamentSelection<FuzzingSelectionsSolution>(5);
 			dominanceComparator = new DominanceComparator<>();
@@ -140,22 +150,6 @@ public class RunJMetal extends AbstractAlgorithmRunner {
 				printQualityIndicators(population, referenceParetoFront);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) throws JMetalException, FileNotFoundException {
-		DSLLoader dslloader = new GeneratedDSLLoader();
-		Mission mission;
-		try {
-			mission = dslloader.loadMission();
-			exptRunTime = mission.getEndTime();
-			RunJMetal runjmetal = new RunJMetal();
-			runjmetal.jMetalRun("expt1", mission);
-		} catch (DSLLoadFailed e) {
-			System.out.println("DSL loading failed - configuration problems");
-			e.printStackTrace();
-		} catch (ExptError e) {
 			e.printStackTrace();
 		}
 	}

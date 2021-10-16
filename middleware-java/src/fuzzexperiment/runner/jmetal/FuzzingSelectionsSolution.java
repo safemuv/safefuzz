@@ -186,10 +186,6 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	public Map<Object, Object> getAttributes() {
 		return attributes;
 	}
-	
-	public String toString() {
-		return contents.toString();
-	}
 
 	public List<FuzzingSelectionRecord> testAllFuzzingSelections(FuzzingSelectionLambdaBoolean test) {
 		List<FuzzingSelectionRecord> res = new ArrayList<FuzzingSelectionRecord>();
@@ -249,6 +245,18 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 			return createCSVFileName();
 		} else {
 			return csvFileName;
+		}
+	}
+	
+	public String toString() {
+		try {
+			String out = "CSV:" + getCSVFileName() + "\n";
+			for (int i = 0; i < contents.size(); i++) {
+				out += contents.get(i).generateCSVLine() + "\n";
+			}
+			return out;
+		} catch (IOException e) {
+			return "<IOException in getCSVFilename()>";
 		}
 	}
 }

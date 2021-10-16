@@ -29,6 +29,8 @@ import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
+import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGenerator;
+import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGeneratorStartEnd;
 import fuzzingengine.support.FuzzingEngineSupport;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
 
@@ -93,7 +95,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
 		
 		// TODO: need to set up the timing specification generator here
-		initialGenerator = new FuzzingExperimentModifier(baseMission);
+		FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
+		initialGenerator = new FuzzingExperimentModifier(tgen, baseMission);
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
 		

@@ -34,8 +34,8 @@ public class FuzzingExperimentModifier extends FuzzingExperimentGenerator {
 		CHANGE_PARTICIPANTS
 	}
 
-	public FuzzingExperimentModifier(Mission mission) {
-		super(mission);
+	public FuzzingExperimentModifier(FuzzingTimeSpecificationGenerator timeSpecGenerator, Mission mission) {
+		super(timeSpecGenerator, mission);
 		rng = new Random();
 	}
 	
