@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
+
+import fuzzexperiment.runner.metrics.Metric.MetricDirection;
 import fuzzingengine.FuzzingKeySelectionRecord;
 // protected region customHeaders end
 
@@ -32,4 +34,10 @@ public class SpeedViolationsCount extends OfflineMetric {
 		return Double.valueOf(speedViolationsCount);	
 		// protected region userCode end
 	}
+	
+	public MetricDirection optimiseDirection() {
+		// protected region userCode on begin
+		return Metric.MetricDirection.HIGHEST;
+		// protected region userCode end
+	} 
 }

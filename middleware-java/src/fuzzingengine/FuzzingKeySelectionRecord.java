@@ -149,10 +149,6 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	private String operationName() {
 		return op.getClass().getSimpleName();
 	}
-	
-//	public String toString() {
-//		return generateCSVLine();
-//	}
 
 	public String generateCSVLine() {
 		List<String> str = new ArrayList<String>();
@@ -180,5 +176,9 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 
 	public void checkConstraints() {
 				
+	}
+
+	public String getSimpleName() {
+		return "Key:" + key;
 	}
 }

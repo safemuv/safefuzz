@@ -1,6 +1,8 @@
 package fuzzexperiment.runner.metrics.fake;
 
 import java.util.List;
+
+import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
 import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
@@ -50,4 +52,9 @@ public class FindSpecificTime extends FakeMetric {
 			return 0.0;
 		}
 	}
+	
+	public MetricDirection optimiseDirection() {
+		
+		return Metric.MetricDirection.HIGHEST;
+	} 
 }

@@ -10,7 +10,13 @@ public class [%= metricClassName %] extends OfflineMetric {
 	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
-		return null;
+		return 0.0;
 		// protected region userCode end
 	}
+	
+	public MetricDirection optimiseDirection() {
+	// protected region userCode on begin
+		
+	// protected region userCode end
+	} 
 }

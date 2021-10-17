@@ -1,5 +1,7 @@
 package fuzzingengine;
 
+import java.util.Optional;
+
 public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 	protected double startTime;
 	protected double endTime;
@@ -36,6 +38,10 @@ public class FuzzingFixedTimeSpecification extends FuzzingTimeSpecification {
 	
 	public void setEndTime(double endTime) {
 		this.endTime = endTime;
+	}
+	
+	public Optional<Double> getStaticLength() {
+		return Optional.of(endTime - startTime);
 	}
 
 	protected FuzzingTimeSpecification dup() {

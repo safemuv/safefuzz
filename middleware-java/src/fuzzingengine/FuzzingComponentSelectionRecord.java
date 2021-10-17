@@ -44,4 +44,8 @@ public class FuzzingComponentSelectionRecord extends FuzzingSelectionRecord {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public String getSimpleName() {
+		return "Component:" + this.componentName;
+	}
 }

@@ -30,8 +30,8 @@ public class NullFuzzingCrossover implements CrossoverOperator<FuzzingSelections
 
 	public List<FuzzingSelectionsSolution> doCrossover(FuzzingSelectionsSolution cx, FuzzingSelectionsSolution cy) {
 		List<FuzzingSelectionsSolution> output = new ArrayList<FuzzingSelectionsSolution>();
-		output.add(cx);
-		output.add(cy);
+		output.add(cx.copy());
+		output.add(cy.copy());
 		return output;
 	}
 

@@ -22,6 +22,8 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	private double exptRunTime;
 	String baseDir = "/tmp";
 	
+	private static int csvFileCount = 0;
+	
 	private Map<Object,Object> attributes = new HashMap<Object,Object>();
 	private Map<Integer,Double> objectives = new HashMap<Integer,Double>();
 	private Map<Integer,Double> constraints = new HashMap<Integer,Double>();
@@ -55,7 +57,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		this.exptRunTime = other.exptRunTime;
 		this.contents = new ArrayList<FuzzingSelectionRecord>(other.contents.size());
 		
-		for (FuzzingSelectionRecord fi : contents) {
+		for (FuzzingSelectionRecord fi : other.contents) {
 			this.contents.add(fi.dup());
 		}
 	}
@@ -150,9 +152,13 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		return constraints.size();
 	}
 
-	public Solution<FuzzingSelectionRecord> copy() {
+	public FuzzingSelectionsSolution copy() {
 		FuzzingSelectionsSolution copy = new FuzzingSelectionsSolution(this);
 		return copy;
+	}
+	
+	public FuzzingSelectionsSolution dup() {
+		return this.copy();
 	}
 	
 	public List<FuzzingSelectionRecord> getFuzzingSelections() {
@@ -217,6 +223,13 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		}
 		fw.close();		
 	}
+	
+	public void printCSVContentsToFile(FileWriter fw) throws IOException {
+		for (FuzzingSelectionRecord fs : contents) {
+			String line = fs.generateCSVLine();
+			fw.write(line + "\n");
+		}
+	}
 
 	public List<FuzzingSelectionRecord> variables() {
 		return getVariables();
@@ -235,7 +248,9 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public String createCSVFileName() throws IOException {
-		this.csvFileName = baseDir + "/" + UUID.randomUUID().toString() + ".csv";
+		//csvFileName = baseDir + "/" + UUID.randomUUID().toString() + ".csv";
+		csvFileCount++;
+		csvFileName = String.format("%s/jmetalfuzz-%03d.csv", baseDir, csvFileCount);
 		generateCSVFile(csvFileName);
 		return csvFileName;
 	}

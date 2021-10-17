@@ -33,6 +33,8 @@ abstract public class FuzzingSelectionRecord {
 
 	public abstract void checkConstraints();
 	
+	public abstract String getSimpleName();
+	
 	protected String generateOpParams() {
 		return "";
 	}

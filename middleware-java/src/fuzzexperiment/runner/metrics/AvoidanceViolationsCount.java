@@ -21,8 +21,6 @@ public class AvoidanceViolationsCount extends OfflineMetric {
 				String line = reader.nextLine();
 				String[] fields = line.split(",");
 				String goalClass = fields[0];
-
-				//System.out.println("goalClass = " + goalClass);
 				if (goalClass.equals("atlasdsl.AvoidOthers")) {
 					avoidanceViolations++;
 				}
@@ -33,11 +31,17 @@ public class AvoidanceViolationsCount extends OfflineMetric {
 						
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return Double.valueOf(avoidanceViolations);	
 		// protected region userCode end
 	}
+
+
+	public MetricDirection optimiseDirection() {
+		// protected region userCode on begin
+		return Metric.MetricDirection.HIGHEST;
+		// protected region userCode end
+	} 
 }

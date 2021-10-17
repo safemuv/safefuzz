@@ -13,6 +13,11 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -175,7 +180,14 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 				tempLog.write(m.getClass().getSimpleName() + "=" + mval + ",");
 				if (jmetalNum_o.isPresent()) {
 					int i = jmetalNum_o.get();
-					solution.setObjective(i, mval);
+					
+					if (m.optimiseDirection() == Metric.MetricDirection.HIGHEST) {
+						// JMetal's comparison expects a lower value as better
+						// so when the metric should be increased, invert the sign
+						solution.setObjective(i, -mval);
+					} else {
+						solution.setObjective(i, mval);
+					}
 				}
 			}
 			tempLog.write("\n");

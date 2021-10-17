@@ -80,6 +80,10 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		this.probParticipantMutation = probParticipantMut;
 		
 		this.mutationLog = new FileWriter(mutationLogFileName);
+		mutationLog.write("probTemporalMutation=" + probTemporalMut + "\n");
+		mutationLog.write("probParamMutation=" + probParamMut + "\n");
+		mutationLog.write("probParticipantMutation=" + probParticipantMut + "\n\n");
+				
 		this.fuzzEngine = fuzzEngine;
 		this.mission = mission;
 		this.mutator = new GrammarBasedSubtreeMutation<String>(MUTATION_DEPTH, g);
@@ -262,17 +266,28 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		((FuzzingKeySelectionRecord)m).setParticipants(newParticipants);
 	}
 	
+	public void logWithoutError(String s) {
+		try {
+			mutationLog.write(s + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void modifyGivenRecord(FuzzingSelectionRecord krec) {
 		try {
 			if (rng.nextDouble() < probTemporalMutation) { 
+				logWithoutError("Performing temporal mutation on " + krec.getSimpleName());
 				changeTimeSpec(krec);
 			}
 
 			if (rng.nextDouble() < probParamMutation) { 
+				logWithoutError("Performing parameter mutation on " + krec.getSimpleName());
 				newParameters(krec);
 			}
 			
 			if (rng.nextDouble() < probParticipantMutation) {
+				logWithoutError("Performing participant mutation on " + krec.getSimpleName());
 				newParticipants(krec);
 			}
 			
@@ -287,14 +302,33 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		return 1.0;
 	}
 
-	public FuzzingSelectionsSolution execute(FuzzingSelectionsSolution source) {
-		System.out.println("source=" + source);
-		for (int i = 0; i < source.getNumberOfVariables(); i++) {
-			FuzzingSelectionRecord fuzzingSelection = source.getVariable(i);
+	public FuzzingSelectionsSolution execute(FuzzingSelectionsSolution sol) {
+		// PRE-MUTATION DEBUGGING
+		try {
+			System.out.println("Performing mutation: source=" + sol.getCSVFileName());
+			mutationLog.write("Performing mutation: source=" + sol.getCSVFileName() + "\n");
+			sol.printCSVContentsToFile(mutationLog);
+			mutationLog.write("\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < sol.getNumberOfVariables(); i++) {
+			FuzzingSelectionRecord fuzzingSelection = sol.getVariable(i);
 			System.out.println("fuzzingSelection=" + fuzzingSelection);
 			modifyGivenRecord(fuzzingSelection);
-			System.out.println("contents length = " + source.getNumberOfVariables());
 		}
-		return source;
+		
+		// POST-MUTATION DEBUGGING
+		try {
+			System.out.println("After mutation: source=" + sol.getCSVFileName());
+			mutationLog.write("After mutation: source=" + sol.getCSVFileName() + "\n");
+			sol.printCSVContentsToFile(mutationLog);
+			mutationLog.write("\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return sol;
 	}
 }

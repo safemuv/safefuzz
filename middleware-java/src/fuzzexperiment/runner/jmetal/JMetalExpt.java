@@ -20,12 +20,16 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.TournamentSelection;
 import org.uma.jmetal.problem.Problem;
-
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import com.google.common.base.Optional;
 
@@ -33,6 +37,7 @@ import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
+import fuzzexperiment.runner.jmetal.customalg.NSGAII_JRH;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
@@ -43,11 +48,9 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 public class JMetalExpt extends AbstractAlgorithmRunner {
 
 	public enum ExperimentType {
-		FIXED_TIME_FUZZING,
-		CONDITION_BASED_FUZZING_START,
-		CONDITION_BASED_FUZZING_BOTH
+		FIXED_TIME_FUZZING, CONDITION_BASED_FUZZING_START, CONDITION_BASED_FUZZING_BOTH
 	}
-	
+
 	static private int populationSize = 10;
 	static private int offspringPopulationSize = 10;
 
@@ -55,17 +58,19 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 	static private boolean actuallyRun = false;
 	static private double exptRunTime = 600.0;
 
-	static private int maxIterations = 50;
+	private int maxIterations = 50;
 
 	static double crossoverProb = 0.5;
 	static double mutationProb = 0.8;
 
 	static private String referenceParetoFront = "";
-	
+
 	private double timingMutProb;
 	private double participantsMutProb;
 	private double paramMutProb;
-	
+
+	private List<OfflineMetric> specialMetrics = new ArrayList<OfflineMetric>();
+
 	private ExperimentType etype;
 
 	private String logPath;
@@ -88,32 +93,52 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		}
 	}
 
-	public JMetalExpt(double timingMutProb, double participantsMutProb, double paramMutProb, ExperimentType etype) {
+	public JMetalExpt(int maxIterations, double timingMutProb, double participantsMutProb, double paramMutProb,
+			ExperimentType etype) {
+		this.maxIterations = maxIterations;
 		this.timingMutProb = timingMutProb;
 		this.participantsMutProb = participantsMutProb;
 		this.paramMutProb = paramMutProb;
 		this.etype = etype;
 		readProperties();
 	}
+	
+	public void addSpecialMetric(OfflineMetric om) {
+		specialMetrics.add(om);
+	}
+	
+
 
 	public void jMetalRun(String tag, Mission mission) throws ExptError, DSLLoadFailed {
 
 		List<Metric> allMetrics = new ArrayList<Metric>(mission.getAllMetrics());
-		
-		List<OfflineMetric> metrics = allMetrics.stream().
-				// Only include the mission metrics if we're actually running it!
-				// otherwise there are no log files to process
-				filter(e -> (e instanceof OfflineMetric) && actuallyRun).
-				map(e -> (OfflineMetric)e).collect(Collectors.toList());
+
+		List<OfflineMetric> metrics;
+
+		// Only include the mission metrics if we're actually running it!
+		// otherwise there are no log files to process
+		if (actuallyRun) {
+			metrics = allMetrics.stream()
+					.filter(e -> (e instanceof OfflineMetric))
+					.map(e -> (OfflineMetric) e)
+					.collect(Collectors.toList());
+		} else {
+			metrics = new ArrayList<OfflineMetric>();
+		}
+
+		for (OfflineMetric m : specialMetrics) {
+			metrics.add(m);
+		}
 
 		Random problemRNG = new Random();
 		Random crossoverRNG = new Random();
 		Random mutationRNG = new Random();
 
 		Problem<FuzzingSelectionsSolution> problem;
-		
+
 		try {
-			Grammar<String> g = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
+			Grammar<String> g = Grammar.fromFile(
+					new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
@@ -128,17 +153,17 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
 
-			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", timingMutProb, paramMutProb, participantsMutProb);
-			
+			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", timingMutProb,
+					paramMutProb, participantsMutProb);
+
 			selection = new TournamentSelection<FuzzingSelectionsSolution>(5);
 			dominanceComparator = new DominanceComparator<>();
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();
 
-			algorithm = new NSGAIIMeasures(problem, maxIterations, populationSize, matingPoolSize,
+			algorithm = new NSGAII_JRH(problem, maxIterations, populationSize, matingPoolSize,
 					offspringPopulationSize, crossover, mutation, selection, dominanceComparator, evaluator);
 
 			// For some reason, can't create algorithm executor. Just run it
-			// AlgorithmRunner algorithmRunner = new
 			// AlgorithmRunner.Executor(algorithm).execute();
 			algorithm.run();
 			List<FuzzingSelectionsSolution> population = algorithm.getResult();

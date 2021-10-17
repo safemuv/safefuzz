@@ -35,4 +35,10 @@ public class TrackSpeedViolations extends OfflineMetric {
 		return Double.valueOf(speedViolationsCount);	
 		// protected region userCode end
 	}
+	
+	public MetricDirection optimiseDirection() {
+		// protected region userCode on begin
+		return Metric.MetricDirection.HIGHEST;
+		// protected region userCode end
+	} 
 }

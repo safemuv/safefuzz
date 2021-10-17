@@ -79,4 +79,8 @@ public class FuzzingMessageSelectionRecord extends FuzzingSelectionRecord {
 	public void checkConstraints() {
 		// TODO Auto-generated method stub
 	}
+
+	public String getSimpleName() {
+		return "Message:" + keyName;
+	}
 }
