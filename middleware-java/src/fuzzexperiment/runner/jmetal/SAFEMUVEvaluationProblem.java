@@ -19,7 +19,6 @@ import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.StartFuzzingProcesses;
-import fuzzexperiment.runner.jmetal.grammar.*;
 import fuzzexperiment.runner.metrics.FakeMetricHandler;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
@@ -37,7 +36,6 @@ import fuzzexperiment.runner.jmetal.grammar.Grammar;
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
 	private static final long serialVersionUID = 1L;
-	private static final boolean USE_END_CONDITION = true;
 	
 	private Random rng;
 	private Mission baseMission;
@@ -154,12 +152,12 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 			// config files etc for this CSV definition experimental run
-//			if (actuallyRun) {
-//				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
-//				// Invoke the middleware (with the correct mission model and fuzzing spec!)
-//				// Invoke the CARS / call ROS launch scripts
-//				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName);
-//			}
+			if (actuallyRun) {
+				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
+				// Invoke the middleware (with the correct mission model and fuzzing spec!)
+				// Invoke the CARS / call ROS launch scripts
+				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+			}
 
 			// Compute the metrics
 			System.out.println("csvFileName = " + csvFileName);
@@ -189,6 +187,9 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		} catch (NumberFormatException e) {
 			System.out.println("Probably a metric returned something non-numeric");
 			e.printStackTrace();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

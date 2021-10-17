@@ -87,4 +87,15 @@ public class ExptHelper {
 			System.out.println("5 seconds after start reached");
 		}
 	}
+	
+	public static void runScriptNew(String dir, String command, String arg) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		File dirFile = new File(dir);
+		ProcBuilder pb = new ProcBuilder(command).withArg(arg).withOutputStream(output).withWorkingDirectory(dirFile);
+		try {
+		ProcResult res = pb.run();
+		} catch (org.buildobjects.process.TimeoutException e) {
+			System.out.println("Ignoring timeout exception when launching");
+		}
+	}
 }

@@ -110,7 +110,7 @@ public class FuzzExptRunner {
 				
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, scenarioDirName);
+				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.of(scenarioDirName));
 				
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now

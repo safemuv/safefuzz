@@ -105,16 +105,20 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, String scenarioDirString)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioDirString_o)
 			throws InterruptedException, IOException {
-		Process middleware;
 		double returnValue = 0;
 		
 		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts");
 
-			ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_auto_launch_safemuv.sh " + scenarioDirString);
-			//	TODO: use original on flag	ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
+			//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
+			if (scenarioDirString_o.isPresent()) {
+				String scenarioDirString = scenarioDirString_o.get();
+				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_auto_launch_safemuv.sh " + scenarioDirString);
+			} else {
+				ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
+			}
 			
 			sleepHandlingInterruption(40000);
 			System.out.println("Running middleware with " + fuzzFilePath);
