@@ -18,11 +18,11 @@ public class RunJMetal_timebased extends AbstractAlgorithmRunner {
 		try {
 			mission = dslloader.loadMission();
 			
-			double timingProbMut = 1/3;
-			double participantProbMut = 1/3;
-			double paramProbMut = 1/3;
+			double timingProbMut = 0.666;
+			double participantProbMut = 0.333;
+			double paramProbMut = 0.333;
 			
-			int numIterations = 50;
+			int numIterations = 60;
 			
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
 			

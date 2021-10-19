@@ -139,20 +139,17 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 		double endTime;
 		FuzzingSimMapping fsm = fuzzEngine.getSimMapping();
 		
-		FuzzingFixedTimeSpecification newT = new FuzzingFixedTimeSpecification((FuzzingFixedTimeSpecification)krec.getTimeSpec());
 		if (krec instanceof FuzzingKeySelectionRecord) {
 			FuzzingKeySelectionRecord km = (FuzzingKeySelectionRecord)krec;
 			VariableSpecification vs = fsm.getRecords().get(km.getKey());
 			Optional<TimeSpec> ts = vs.getTimeSpec();
 			startTime = getStartTime(ts);
 			endTime = getEndTime(ts, startTime);
+			FuzzingFixedTimeSpecification newT = new FuzzingFixedTimeSpecification(startTime, endTime);
+			krec.setTimeSpec(newT);
 		} else {
-			startTime = getStartTime(Optional.empty());
-			endTime = getEndTime(Optional.empty(), startTime);
-			newT.setStartTime(startTime);
-			newT.setEndTime(endTime);
+			logWithoutError("changeFixedTimeSpec - called on record that is not key selection record");
 		}
-		krec.setTimeSpec(newT);
 	}
 
 	private void changeTimeSpec(FuzzingSelectionRecord krec) {
@@ -305,6 +302,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	public FuzzingSelectionsSolution execute(FuzzingSelectionsSolution sol) {
 		// PRE-MUTATION DEBUGGING
 		try {
+			mutationLog.write("---------------------------------------------------------------------------------------------------\n");
 			System.out.println("Performing mutation: source=" + sol.getCSVFileName());
 			mutationLog.write("Performing mutation: source=" + sol.getCSVFileName() + "\n");
 			sol.printCSVContentsToFile(mutationLog);
@@ -317,6 +315,12 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 			FuzzingSelectionRecord fuzzingSelection = sol.getVariable(i);
 			System.out.println("fuzzingSelection=" + fuzzingSelection);
 			modifyGivenRecord(fuzzingSelection);
+			try {
+				sol.regenerateCSVFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// POST-MUTATION DEBUGGING
@@ -325,6 +329,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 			mutationLog.write("After mutation: source=" + sol.getCSVFileName() + "\n");
 			sol.printCSVContentsToFile(mutationLog);
 			mutationLog.write("\n");
+			mutationLog.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

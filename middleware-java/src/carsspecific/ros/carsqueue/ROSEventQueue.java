@@ -77,21 +77,6 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 				}
 			}
 
-//			if (rtu.tagEquals(ATLASTag.POSE)) {
-//				JsonObject j = rtu.getJSON();
-//				JsonObject pose = j.getJsonObject("pose");
-//				JsonObject pos = pose.getJsonObject("position");
-//				JsonNumber jx = pos.getJsonNumber("x");
-//				JsonNumber jy = pos.getJsonNumber("y");
-//				JsonNumber jz = pos.getJsonNumber("z");
-//				Point p = new Point(jx.doubleValue(), jy.doubleValue(), jz.doubleValue());
-//				System.out.println("ATLAS Point:" + p.toString());
-//				System.out.println();
-//				double speedStored = robotSpeeds.get(rtu.getVehicleName());
-//				GPSPositionReading gps = new GPSPositionReading(p, speedStored, rtu.getVehicleName());
-//				core.notifyPositionUpdate(gps);
-//			}
-
 			if (rtu.tagEquals(ATLASTag.ODOMETRY)) {
 				JsonObject j = rtu.getJSON();
 				JsonObject pose1 = j.getJsonObject("pose");
@@ -164,6 +149,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 					ROSEvent rev = new ROSTopicUpdate(vehicleName, tag, topicName, message, core.getTime(), rosType);
 					rosQueue.add(rev);
+					core.setGoalVariable(vehicleName, topicName, message);
 				}
 			});
 		}

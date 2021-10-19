@@ -54,6 +54,8 @@ public class GUITest {
     
     private PositionTrackingOutput ptPanel;
 	private String faultDefFile;
+
+	private String fuzzingDefFile;
 	
 	
 	public static GUITest getGUI() {
@@ -226,18 +228,13 @@ public class GUITest {
     	
     	fuzzingPanel.setVisible(true);
     	
-    	//f.getContentPane().add(ptPanel, BorderLayout.CENTER);
-    	//f.getContentPane().add(ptPanel);
-    	
     	f.setSize(500,500);
     	f.setVisible(true);
     	
     	f.repaint();
     	ptPanel.repaint();
     }
-    
-    
-    
+
     public synchronized void updateGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -265,5 +262,10 @@ public class GUITest {
 	public void setFaultDefinitionFile(String filePath) {
 		this.faultDefFile = filePath;
 		f.setTitle("ATLAS Middleware - FAULTS DEFINED in " + faultDefFile);
+	}
+
+	public void setFuzzingDefinitionFile(String filename) {
+		this.fuzzingDefFile = filename;
+		f.setTitle("ATLAS Middleware - FUZZING FILE " + fuzzingDefFile);
 	}
 }

@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class NullFuzzingCrossover implements CrossoverOperator<FuzzingSelectionsSolution> {
+public class FuzzingCrossoverMergeKeys implements CrossoverOperator<FuzzingSelectionsSolution> {
 
 	private double crossoverProbability;
 	private Random randomGenerator;
 	private static final long serialVersionUID = 1L;
 
-	public NullFuzzingCrossover(double crossoverProbability, Random randomGenerator) {
+	public FuzzingCrossoverMergeKeys(double crossoverProbability, Random randomGenerator) {
 		if (crossoverProbability < 0) {
 			throw new JMetalException("Crossover probability is negative: " + crossoverProbability);
 		}
@@ -32,8 +32,6 @@ public class NullFuzzingCrossover implements CrossoverOperator<FuzzingSelections
 		List<FuzzingSelectionsSolution> output = new ArrayList<FuzzingSelectionsSolution>();
 		output.add(cx.copy());
 		output.add(cy.copy());
-		// TODO: add the merged keys from one to the other
-		// how to handle multiple ones?
 		return output;
 	}
 

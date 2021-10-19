@@ -163,15 +163,17 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			algorithm = new NSGAII_JRH(problem, maxIterations, populationSize, matingPoolSize,
 					offspringPopulationSize, crossover, mutation, selection, dominanceComparator, evaluator);
 
-			// For some reason, can't create algorithm executor. Just run it
-			// AlgorithmRunner.Executor(algorithm).execute();
+			long startTime = System.currentTimeMillis();
 			algorithm.run();
 			List<FuzzingSelectionsSolution> population = algorithm.getResult();
-
-			// long computingTime = algorithmRunner.getComputingTime();
-			// JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+			double duration = (System.currentTimeMillis() - startTime);
+			System.out.println("Total execution time: " + duration + "ms, " + (duration / 1000) + " seconds");
 
 			printFinalSolutionSet(population);
+			
+			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
+			
+			
 			if (!referenceParetoFront.equals("")) {
 				printQualityIndicators(population, referenceParetoFront);
 			}

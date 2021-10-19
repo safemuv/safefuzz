@@ -9,16 +9,12 @@ import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingTimeSpecification;
 
 public class FindSpecificTime extends FakeMetric {
-	private double centreValue;
-	private double range;
 	private double rangeStart;
 	private double rangeEnd;
 	
-	public FindSpecificTime(double centreValue, double range) {
-		this.centreValue = centreValue;
-		this.range = range;
-		this.rangeStart = centreValue - range;
-		this.rangeEnd = centreValue + range;
+	public FindSpecificTime(double rangeStart, double rangeEnd) {
+		this.rangeStart = rangeStart;
+		this.rangeEnd = rangeEnd;
 	}
 	
 	private double getMetricValue(double start, double end) {
@@ -33,8 +29,9 @@ public class FindSpecificTime extends FakeMetric {
 	
 	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		// Get the first record
-		if (recs.size() > 0) {
-			FuzzingKeySelectionRecord r = recs.get(0);
+		double outval = 0.0;
+		
+		for (FuzzingKeySelectionRecord r : recs) {
 			FuzzingTimeSpecification ts = r.getTimeSpec();
 			if (ts instanceof FuzzingFixedTimeSpecification) {
 				FuzzingFixedTimeSpecification fts = (FuzzingFixedTimeSpecification)ts;
@@ -42,19 +39,13 @@ public class FindSpecificTime extends FakeMetric {
 				double end = fts.getEndTime();
 				double val = getMetricValue(start, end);
 				System.out.println("FindSpecificTime - key selection record = " + recs + ",[start=" + start + ",end=" + end + "]-val = " + val) ;
-				return val;
-			} else {
-				return 0.0;
+				outval = Math.max(val, outval);
 			}
-				
-		} else {
-			//throw new MetricComputeFailure("FindSpecificTime given zero-size recs");
-			return 0.0;
 		}
+		return outval;
 	}
 	
 	public MetricDirection optimiseDirection() {
-		
 		return Metric.MetricDirection.HIGHEST;
 	} 
 }

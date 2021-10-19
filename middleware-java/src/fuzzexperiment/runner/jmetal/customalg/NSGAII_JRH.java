@@ -7,9 +7,13 @@ import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
+import org.uma.jmetal.util.fileoutput.SolutionListOutput;
+import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
 
@@ -85,7 +89,6 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 	@Override
 	protected List<S> evaluatePopulation(List<S> population) {
 		population = evaluator.evaluate(population, getProblem());
-
 		return population;
 	}
 
@@ -187,6 +190,27 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 		}
 	}
 	
+	public void logFinalPopulationToFile(FileWriter fw, boolean nonDom) throws IOException {
+		List<S> targetPop;
+		int c = 0;
+		if (nonDom) {
+			targetPop = SolutionListUtils.getNonDominatedSolutions(getPopulation());
+		} else {
+			targetPop = getPopulation();
+		}
+		
+		for (S s : targetPop) {
+			c++;
+			if (s instanceof FuzzingSelectionsSolution) {
+				FuzzingSelectionsSolution fss = (FuzzingSelectionsSolution) s;
+				String csvFile = fss.getCSVFileName();
+				fw.write("Population element " + c + " is " + csvFile + ":\n");
+				fss.printCSVContentsToFile(fw);
+				fw.write("\n");
+			}
+		}
+	}
+
 	public void logPopulationIntermediate() throws IOException {
 		String fileName = "populationAtEval-" + evaluations + ".res";
 		FileWriter fw = new FileWriter(fileName);
@@ -213,6 +237,21 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public void logFinalSolutionsCustom(String finalNonDom, String finalPop) {
+		try {
+			
+			FileWriter fwPop = new FileWriter(finalPop);
+			logFinalPopulationToFile(fwPop, false);
+			fwPop.close();
+			
+			FileWriter fwPopND = new FileWriter(finalNonDom);
+			logFinalPopulationToFile(fwPopND, true);
+			fwPopND.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

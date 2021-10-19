@@ -86,7 +86,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public FuzzingSelectionRecord getVariable(int index) {
-		System.out.println("index = " + index +  ",contents.size()=" + contents.size());
+		//System.out.println("index = " + index +  ",contents.size()=" + contents.size());
 		if (index < contents.size() && index >= 0) {
 			return contents.get(index);
 		} else {
@@ -273,5 +273,9 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		} catch (IOException e) {
 			return "<IOException in getCSVFilename()>";
 		}
+	}
+
+	public void regenerateCSVFile() throws IOException {
+		generateCSVFile(csvFileName);
 	}
 }

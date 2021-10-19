@@ -27,5 +27,9 @@ public class ROSATLASCore extends ATLASCore {
 
 	public void setFuzzingDefinitionFile(String filename) {
 		fuzzEngine.setupFromFuzzingFile(filename, mission);
+		
+		if (gui != null) {
+			gui.setFuzzingDefinitionFile(filename);
+		}
 	}
 }
