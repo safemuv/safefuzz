@@ -12,7 +12,7 @@ import fuzzexperiment.runner.metrics.*;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 250.0;
+	final double MISSION_END_TIME = 600.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
@@ -42,6 +42,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 			GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		
 		
 		
 		
@@ -85,6 +86,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
 		GoalAction ga2 = new StayInRegion(false);
 		
 		
@@ -116,7 +118,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalAction ga3 = new Avoid(1.5);
+		
+		GoalAction ga3 = new MaintainDistanceFrom(3.0);
 		
 		
 		
@@ -125,6 +128,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
 		
+		GoalVariable gvar1 = new GoalVariable("/airframe_clearance", "std_msgs/Float64", true);
+		AvoidPlaneInner.addVariable(gvar1);
 		
 		
 		
@@ -145,6 +150,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		GoalAction ga4 = new AvoidOthers(2.0);
+		
 		
 		
 		

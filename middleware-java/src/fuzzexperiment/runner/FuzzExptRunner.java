@@ -104,13 +104,14 @@ public class FuzzExptRunner {
 				int scenNum = scenarioGenerationNumber++;
 				String fuzzTopicList = "set_velocity";
 				String scenarioDirName = "scen" + scenarioGenerationNumber; 
-				runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
+				//runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
 				System.out.println("Generated launch and config files for " + scenarioDirName);
 				TimeUnit.MILLISECONDS.sleep(5000);
 				
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.of(scenarioDirName));
+				//runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.of(scenarioDirName));
+				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.empty());
 				
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now

@@ -9,6 +9,10 @@ package fuzzexperiment.runner.jmetal;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.util.JMetalException;
 
+import fuzzingengine.FuzzingKeySelectionRecord;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,31 +21,88 @@ public class FuzzingCrossoverMergeKeys implements CrossoverOperator<FuzzingSelec
 
 	private double crossoverProbability;
 	private Random randomGenerator;
+	private FileWriter crossoverLog;
+
 	private static final long serialVersionUID = 1L;
 
-	public FuzzingCrossoverMergeKeys(double crossoverProbability, Random randomGenerator) {
+	public FuzzingCrossoverMergeKeys(double crossoverProbability, Random randomGenerator, String crossoverLogFileName)
+			throws IOException {
 		if (crossoverProbability < 0) {
 			throw new JMetalException("Crossover probability is negative: " + crossoverProbability);
 		}
 
 		this.crossoverProbability = crossoverProbability;
 		this.randomGenerator = randomGenerator;
+		this.crossoverLog = new FileWriter(crossoverLogFileName);
+	}
+	
+	private void logWithoutException(String s) {
+		try {
+			crossoverLog.write(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public List<FuzzingSelectionsSolution> doCrossover(FuzzingSelectionsSolution cx, FuzzingSelectionsSolution cy) {
-		List<FuzzingSelectionsSolution> output = new ArrayList<FuzzingSelectionsSolution>();
-		output.add(cx.copy());
-		output.add(cy.copy());
+	public List<FuzzingSelectionsSolution> doOnePointCrossover(List<FuzzingSelectionsSolution> output,
+			FuzzingSelectionsSolution cx, FuzzingSelectionsSolution cy) {
+		// TODO: logging at start
+		FuzzingSelectionsSolution new1 = FuzzingSelectionsSolution.empty(cx);
+		FuzzingSelectionsSolution new2 = FuzzingSelectionsSolution.empty(cy);
+		logWithoutException("mutation doOnePointCrossover: input1 = " + cx.toString());
+		logWithoutException("mutation doOnePointCrossover: input2 = " + cy.toString());
+		
+		int new1_index = 0;
+		int new2_index = 0;
+
+		int xlimit = cx.getNumberOfVariables();
+		int ylimit = cy.getNumberOfVariables();
+
+		if (xlimit > 0 && ylimit > 0) {
+			int xcut = randomGenerator.nextInt(xlimit);
+			int ycut = randomGenerator.nextInt(ylimit);
+
+			// TODO: add constructors to duplicate these objects
+
+			for (int x = 0; x < xlimit; x++) {
+				if (x <= xcut) {
+					// Create a new fault instance object in every case here
+					new1.addContents(new1_index++, cx.getVariable(x).dup());
+				} else {
+					new2.addContents(new2_index++, cx.getVariable(x).dup());
+				}
+			}
+
+			for (int y = 0; y < ylimit; y++) {
+				if (y <= ycut) {
+					new2.addContents(new2_index++, cy.getVariable(y).dup());
+				} else {
+					new1.addContents(new1_index++, cy.getVariable(y).dup());
+				}
+			}
+		}
+
+		logWithoutException("mutation doOnePointCrossover: output1 = " + new1.toString());
+		logWithoutException("mutation doOnePointCrossover: output2 = " + new2.toString());
+		
+		output.add(new1);
+		output.add(new2);
 		return output;
 	}
 
 	public List<FuzzingSelectionsSolution> execute(List<FuzzingSelectionsSolution> solutions) {
+		List<FuzzingSelectionsSolution> output = new ArrayList<FuzzingSelectionsSolution>();
 		if (null == solutions) {
 			throw new JMetalException("Null parameter");
 		} else if (solutions.size() != 2) {
 			throw new JMetalException("There must be two parents instead of " + solutions.size());
 		}
-		return doCrossover(solutions.get(0), solutions.get(1));
+		// Ensure the original null solutions are included.
+		// We mutate these original solutions
+		output.add(solutions.get(0).copy());
+		output.add(solutions.get(1).copy());
+		output = doOnePointCrossover(output, solutions.get(0), solutions.get(1));
+		return output;
 	}
 
 	public double getCrossoverProbability() {

@@ -16,6 +16,7 @@ import atlassharedclasses.FaultInstance;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +26,8 @@ public class SimpleFuzzingMixCrossover implements CrossoverOperator<FuzzingSelec
 	private double crossoverProbability;
 	private Random randomGenerator;
 	private static final long serialVersionUID = 1L;
+	
+	private FileWriter crossoverLog;
 
 	public SimpleFuzzingMixCrossover(double crossoverProbability, Random randomGenerator) {
 		if (crossoverProbability < 0) {
@@ -34,6 +37,8 @@ public class SimpleFuzzingMixCrossover implements CrossoverOperator<FuzzingSelec
 		this.crossoverProbability = crossoverProbability;
 		this.randomGenerator = randomGenerator;
 	}
+	
+	
 
 	public List<FuzzingSelectionsSolution> doCrossover(FuzzingSelectionsSolution cx, FuzzingSelectionsSolution cy) {
 		List<FuzzingSelectionsSolution> output = new ArrayList<FuzzingSelectionsSolution>();

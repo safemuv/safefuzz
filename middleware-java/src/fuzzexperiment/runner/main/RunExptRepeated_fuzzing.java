@@ -11,12 +11,12 @@ import fuzzexperiment.runner.metrics.*;
 public class RunExptRepeated_fuzzing {
 	
 	public static void main(String [] args) {
-		String resFileName = "fuzzexpt-setvelocity057-repeated.res";
+		String resFileName = "fuzzexpt-repeated.res";
 
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated("/home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/setvelocity-057.csv", 30);
+			ExptParams ep = new RunRepeated("/home/jharbin/academic/atlas/atlas-middleware/middleware-java/fuzz-configs/test-avoidplaneinner.csv", 30);
 			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh);
 			r.run();
