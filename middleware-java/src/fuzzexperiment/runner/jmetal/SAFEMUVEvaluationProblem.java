@@ -41,6 +41,8 @@ import fuzzexperiment.runner.jmetal.grammar.Grammar;
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final int MAX_TRIES_GENERATING_EXPERIMENT = 20;
 	
 	private Random rng;
 	private Mission baseMission;
@@ -212,8 +214,23 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public FuzzingSelectionsSolution createSolution() {
-		int objectivesCount = metricHandler.getMetrics().size();
-		List<FuzzingSelectionRecord> recs = initialGenerator.generateExperiment(Optional.empty());
+		int tryCount = 0;
+		
+		boolean cont = true;
+		List<FuzzingSelectionRecord> recs;
+		
+		recs = initialGenerator.generateExperiment(Optional.empty());
+		if (recs.size() > 0) {
+			cont = false;
+		}
+		while (cont) {
+			recs = initialGenerator.generateExperiment(Optional.empty());
+			// This is to prevent infinite loop if the models have no fuzzing probabalities defined
+			// It will eventually give up generating if no records are produced
+			if (tryCount++ > MAX_TRIES_GENERATING_EXPERIMENT) {
+				cont = false;
+			}
+		}
 		System.out.println("createSolution - recs=" + recs);
 		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recs);
 		System.out.println("Initial chromosome = " + sol.toString());

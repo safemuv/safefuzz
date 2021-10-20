@@ -329,11 +329,14 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 			mutationLog.write("After mutation: source=" + sol.getCSVFileName() + "\n");
 			sol.printCSVContentsToFile(mutationLog);
 			mutationLog.write("\n");
-			mutationLog.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return sol;
+	}
+
+	public void closeLog() throws IOException {
+		mutationLog.close();
 	}
 }

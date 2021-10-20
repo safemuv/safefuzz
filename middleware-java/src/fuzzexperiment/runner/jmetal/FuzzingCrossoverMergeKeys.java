@@ -6,42 +6,28 @@ package fuzzexperiment.runner.jmetal;
 
 //Produces two new ones X_left, Y_right
 //and Y_left, X_right
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.util.JMetalException;
-
-import fuzzingengine.FuzzingKeySelectionRecord;
-
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class FuzzingCrossoverMergeKeys implements CrossoverOperator<FuzzingSelectionsSolution> {
+public class FuzzingCrossoverMergeKeys extends FuzzingCrossoverOperation {
 
 	private double crossoverProbability;
 	private Random randomGenerator;
-	private FileWriter crossoverLog;
 
 	private static final long serialVersionUID = 1L;
 
 	public FuzzingCrossoverMergeKeys(double crossoverProbability, Random randomGenerator, String crossoverLogFileName)
 			throws IOException {
+		super(crossoverLogFileName);
 		if (crossoverProbability < 0) {
 			throw new JMetalException("Crossover probability is negative: " + crossoverProbability);
 		}
 
 		this.crossoverProbability = crossoverProbability;
-		this.randomGenerator = randomGenerator;
-		this.crossoverLog = new FileWriter(crossoverLogFileName);
-	}
-	
-	private void logWithoutException(String s) {
-		try {
-			crossoverLog.write(s);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.randomGenerator = randomGenerator;		
 	}
 
 	public List<FuzzingSelectionsSolution> doOnePointCrossover(List<FuzzingSelectionsSolution> output,
@@ -84,6 +70,7 @@ public class FuzzingCrossoverMergeKeys implements CrossoverOperator<FuzzingSelec
 
 		logWithoutException("mutation doOnePointCrossover: output1 = " + new1.toString());
 		logWithoutException("mutation doOnePointCrossover: output2 = " + new2.toString());
+		logWithoutException("------------------------------------------------------------------------------------------\n");
 		
 		output.add(new1);
 		output.add(new2);
@@ -116,5 +103,4 @@ public class FuzzingCrossoverMergeKeys implements CrossoverOperator<FuzzingSelec
 	public int getNumberOfGeneratedChildren() {
 		return 2;
 	}
-
 }

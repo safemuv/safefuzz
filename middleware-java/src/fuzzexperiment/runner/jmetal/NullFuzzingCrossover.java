@@ -9,17 +9,19 @@ package fuzzexperiment.runner.jmetal;
 import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.util.JMetalException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class NullFuzzingCrossover implements CrossoverOperator<FuzzingSelectionsSolution> {
+public class NullFuzzingCrossover extends FuzzingCrossoverOperation {
 
 	private double crossoverProbability;
 	private Random randomGenerator;
 	private static final long serialVersionUID = 1L;
 
-	public NullFuzzingCrossover(double crossoverProbability, Random randomGenerator) {
+	public NullFuzzingCrossover(double crossoverProbability, Random randomGenerator, String logFile) throws IOException {
+		super(logFile);
 		if (crossoverProbability < 0) {
 			throw new JMetalException("Crossover probability is negative: " + crossoverProbability);
 		}

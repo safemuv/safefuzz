@@ -51,8 +51,13 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		FIXED_TIME_FUZZING, CONDITION_BASED_FUZZING_START, CONDITION_BASED_FUZZING_BOTH
 	}
 
+	private static final boolean USE_CROSSOVER = true;
+
 	static private int populationSize = 10;
 	static private int offspringPopulationSize = 10;
+	
+	private String crossoverLogFile = "crossover.log";
+	
 
 	static private int matingPoolSize = populationSize;
 	static private boolean actuallyRun = false;
@@ -106,8 +111,6 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 	public void addSpecialMetric(OfflineMetric om) {
 		specialMetrics.add(om);
 	}
-	
-
 
 	public void jMetalRun(String tag, Mission mission) throws ExptError, DSLLoadFailed {
 
@@ -145,13 +148,20 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 					logPath, metrics);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
-			CrossoverOperator<FuzzingSelectionsSolution> crossover;
+			
+			//CrossoverOperator<FuzzingSelectionsSolution> crossover;
+			FuzzingCrossoverOperation crossover;
+			
 			MutationOperator<FuzzingSelectionsSolution> mutation;
 			SelectionOperator<List<FuzzingSelectionsSolution>, FuzzingSelectionsSolution> selection;
 			SolutionListEvaluator<FuzzingSelectionsSolution> evaluator;
 			Comparator<FuzzingSelectionsSolution> dominanceComparator;
 
-			crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG);
+			if (USE_CROSSOVER) {
+				crossover = new FuzzingCrossoverMergeKeys(crossoverProb, crossoverRNG, crossoverLogFile);
+			} else {
+				crossover = new NullFuzzingCrossover(crossoverProb, crossoverRNG, crossoverLogFile);
+			}
 
 			mutation = new FuzzingSelectionsMutation(g, mutationRNG, mission, fuzzEngine, "mutation.log", timingMutProb,
 					paramMutProb, participantsMutProb);
@@ -170,6 +180,8 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			System.out.println("Total execution time: " + duration + "ms, " + (duration / 1000) + " seconds");
 
 			printFinalSolutionSet(population);
+			((FuzzingSelectionsMutation)mutation).closeLog();
+			((FuzzingCrossoverOperation)crossover).closeLog();
 			
 			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
 			

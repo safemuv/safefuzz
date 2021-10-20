@@ -23,7 +23,7 @@ public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 			double participantProbMut = 0.0;
 			double paramProbMut = 0.0;
 			
-			int numIterations = 10000;
+			int numIterations = 500;
 			
 			// Do fake experiment to find a specific time
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
