@@ -37,6 +37,7 @@ import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
+import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
 import fuzzexperiment.runner.jmetal.customalg.NSGAII_JRH;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
 import fuzzexperiment.runner.metrics.Metric;
@@ -47,9 +48,7 @@ import fuzzingengine.spec.GeneratedFuzzingSpec;
 
 public class JMetalExpt extends AbstractAlgorithmRunner {
 
-	public enum ExperimentType {
-		FIXED_TIME_FUZZING, CONDITION_BASED_FUZZING_START, CONDITION_BASED_FUZZING_BOTH
-	}
+	private String GRAMMAR_FILE = System.getProperty("user.home") + "/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf";
 
 	private static final boolean USE_CROSSOVER = true;
 
@@ -140,16 +139,13 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		Problem<FuzzingSelectionsSolution> problem;
 
 		try {
-			Grammar<String> g = Grammar.fromFile(
-					new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
-
+			Grammar<String> g = Grammar.fromFile(new File(GRAMMAR_FILE));
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-					logPath, metrics);
+					logPath, metrics, etype);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			
-			//CrossoverOperator<FuzzingSelectionsSolution> crossover;
 			FuzzingCrossoverOperation crossover;
 			
 			MutationOperator<FuzzingSelectionsSolution> mutation;

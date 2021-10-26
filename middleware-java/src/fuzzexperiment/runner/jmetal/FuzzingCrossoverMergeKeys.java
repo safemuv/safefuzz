@@ -71,7 +71,6 @@ public class FuzzingCrossoverMergeKeys extends FuzzingCrossoverOperation {
 		logWithoutException("mutation doOnePointCrossover: output1 = " + new1.toString());
 		logWithoutException("mutation doOnePointCrossover: output2 = " + new2.toString());
 		logWithoutException("------------------------------------------------------------------------------------------\n");
-		
 		output.add(new1);
 		output.add(new2);
 		return output;

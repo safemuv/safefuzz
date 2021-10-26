@@ -13,32 +13,31 @@ import fuzzingengine.UnrecognisedBinOp;
 import fuzzingengine.UnrecognisedComparison;
 import fuzzingengine.UnrecognisedTreeNode;
 import fuzzingengine.UnrecognisedUnOp;
-import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.grammar.FuzzingCondition;
 import fuzzingengine.grammar.TestEvaluateConditions;
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class FuzzingExperimentConditionCreator  {
-	public FuzzingExperimentConditionCreator(Mission mission) {
-
-	}
-
 	Grammar<String> grammar;
-	public static GrowGrammarTreeFactory<String> grammarGenerator;
-	public static Random rngGenerator;
+	public Mission mission;
 	public static TestEvaluateConditions testCond = new TestEvaluateConditions();
+	
+//	public FuzzingExperimentConditionCreator(Mission mission, Random rng) {
+//		this.rngGenerator = rng;
+//		this.mission = mission;
+//	}
 	
 	protected static final boolean VALIDATE_CONDITIONS = true;
 	private static final boolean ANALYSE_CONDITION = true;
 	
-	public static FuzzingCondition generateValidatedCondition() throws TreeGenerationFailed {
+	public static FuzzingCondition generateValidatedCondition(Random rng, GrowGrammarTreeFactory<String> gen) throws TreeGenerationFailed {
 		int numTrees = 1;
 		while (true) {
 			
 			// TODO: temporary height of 4
 			int randomHeight = 4;
 			
-			List<Tree<String>> res = grammarGenerator.build(numTrees, rngGenerator, randomHeight);
+			List<Tree<String>> res = gen.build(numTrees, rng, randomHeight);
 			Tree<String> t = res.get(0);
 			if (t == null) {
 				throw new TreeGenerationFailed("t in generateValidatedCondition");

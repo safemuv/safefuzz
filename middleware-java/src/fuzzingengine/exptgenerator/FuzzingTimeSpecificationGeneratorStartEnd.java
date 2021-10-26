@@ -10,7 +10,7 @@ import fuzzingengine.FuzzingTimeSpecification;
 import fuzzingengine.TimeSpec;
 
 public class FuzzingTimeSpecificationGeneratorStartEnd extends FuzzingTimeSpecificationGenerator {
-	private Random rng;
+	protected Random rng;
 	
 	public FuzzingTimeSpecificationGeneratorStartEnd(Mission mission, Random rng) {
 		super(mission);

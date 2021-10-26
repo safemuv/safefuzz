@@ -1,6 +1,6 @@
 <compcond> ::= <compcond> <logicop> <compcond> | <basic_cond>
 <basic_cond> ::= <var> <bincomp> <expr>
-<var> ::= distance_to_left_wing_tip | distance_to_right_wing_tip | starting_point_distance
+<var> ::= distance_to_left_wing_base | distance_to_right_wing_base | starting_point_distance
 <bincomp> ::= .LESS_THAN | .GREATER_THAN
 <logicop> ::= .AND | .OR
 <expr> ::= <var> | <int>

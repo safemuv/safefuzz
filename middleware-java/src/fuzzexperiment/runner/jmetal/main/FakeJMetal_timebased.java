@@ -9,7 +9,7 @@ import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.ExptError;
 import fuzzexperiment.runner.jmetal.JMetalExpt;
-import fuzzexperiment.runner.jmetal.JMetalExpt.ExperimentType;
+import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
 import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
 
 public class FakeJMetal_timebased extends AbstractAlgorithmRunner {

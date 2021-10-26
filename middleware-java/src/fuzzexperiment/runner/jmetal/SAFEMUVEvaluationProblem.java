@@ -1,5 +1,6 @@
 package fuzzexperiment.runner.jmetal;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,11 +14,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
-import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -34,9 +30,11 @@ import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
 import fuzzingengine.exptgenerator.FuzzingExperimentModifier;
 import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGenerator;
+import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGeneratorDualCond;
 import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGeneratorStartEnd;
 import fuzzingengine.support.FuzzingEngineSupport;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
+import fuzzexperiment.runner.jmetal.grammar.GrowGrammarTreeFactory;
 
 public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSolution> {
 
@@ -44,11 +42,18 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 	private static final int MAX_TRIES_GENERATING_EXPERIMENT = 20;
 	
+	public enum ExperimentType {
+		FIXED_TIME_FUZZING, 
+		CONDITION_BASED_FUZZING_START, 
+		CONDITION_BASED_FUZZING_BOTH
+	}
+	
 	private Random rng;
 	private Mission baseMission;
 	private boolean actuallyRun;
 	private double exptRunTime;
 	private double timeLimit;
+	private ExperimentType etype;
 
 	private MetricHandler metricHandler;
 	private StartFuzzingProcesses runner;
@@ -63,6 +68,9 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String workingPath;
 	private String middlewarePath;
 	private String logPath;
+	
+	private int MIN_GRAMMAR_HEIGHT = 3;
+	private int MAX_GRAMMAR_HEIGHT = 7;
 	
 	Grammar<String> grammar;
 
@@ -98,9 +106,17 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		readProperties();
 		
 		runner = new StartFuzzingProcesses(bashPath, workingPath, middlewarePath);
-		
-		// TODO: need to set up the timing specification generator here
+
 		FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
+		if (etype == ExperimentType.FIXED_TIME_FUZZING) {
+			tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
+		} 
+		
+		if (etype == ExperimentType.CONDITION_BASED_FUZZING_BOTH) {
+			GrowGrammarTreeFactory<String> gen = new GrowGrammarTreeFactory(MAX_GRAMMAR_HEIGHT, grammar);
+			tgen = new FuzzingTimeSpecificationGeneratorDualCond(baseMission, new Random(), gen);
+		}
+		
 		initialGenerator = new FuzzingExperimentModifier(tgen, baseMission);
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
@@ -111,12 +127,13 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
-			String logFileDir, List<OfflineMetric> metrics) throws IOException, DSLLoadFailed {
+			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
 		this.actuallyRun = actuallyRun;
 		this.grammar = g;
+		this.etype = etype;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());

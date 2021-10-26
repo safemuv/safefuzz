@@ -11,7 +11,7 @@ import fuzzexperiment.runner.jmetal.ExptError;
 import fuzzexperiment.runner.jmetal.JMetalExpt;
 import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
 
-public class RunJMetal_timebased extends AbstractAlgorithmRunner {
+public class RunJMetal_ConditionBased extends AbstractAlgorithmRunner {
 	public static void main(String[] args) throws JMetalException {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
@@ -24,7 +24,7 @@ public class RunJMetal_timebased extends AbstractAlgorithmRunner {
 			
 			int numIterations = 60;
 			
-			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
+			ExperimentType etype = ExperimentType.CONDITION_BASED_FUZZING_BOTH;
 			
 			JMetalExpt jmetalExpt = new JMetalExpt(numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.setActuallyRun(true);

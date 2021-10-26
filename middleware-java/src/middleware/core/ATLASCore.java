@@ -107,6 +107,7 @@ public abstract class ATLASCore {
 		}
 		faultGen = new FaultGenerator(this,mission);
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, true);
+		setCore(this);
 		setupEnergyOnRobots();
 		setupPositionPropertyUpdaters();
 	}
@@ -193,8 +194,10 @@ public abstract class ATLASCore {
 		};
 		
 		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
-		setupLambdaFromFixedPoint("distance_to_left_wing_tip", new Point(-61.3,-41.2,8.5));
-		setupLambdaFromFixedPoint("distance_to_right_wing_tip", new Point(61.3,41.2,8.5));
+		//setupLambdaFromFixedPoint("distance_to_left_wing_tip", new Point(-61.3,-41.2,8.5));
+		//setupLambdaFromFixedPoint("distance_to_right_wing_tip", new Point(61.3,41.2,8.5));
+		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14,-2.28,5.2));
+		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14,6.26,5.2));
 	}
 	
 	public void runMiddleware() {

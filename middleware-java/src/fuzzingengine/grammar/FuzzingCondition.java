@@ -37,18 +37,14 @@ public class FuzzingCondition {
 			try {
 				doConversion();
 			} catch (UnrecognisedComparison e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (UnrecognisedTreeNode e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			} catch (UnrecognisedUnOp e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (UnrecognisedBinOp e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
