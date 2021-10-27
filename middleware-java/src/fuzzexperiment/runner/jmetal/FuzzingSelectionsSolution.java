@@ -278,4 +278,8 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	public void regenerateCSVFile() throws IOException {
 		generateCSVFile(csvFileName);
 	}
+	
+	public boolean containsTopicKey(String key) {
+		return contents.stream().anyMatch(r -> r.containsTopic(key));
+	}
 }

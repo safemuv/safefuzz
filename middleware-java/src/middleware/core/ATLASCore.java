@@ -193,9 +193,18 @@ public abstract class ATLASCore {
 			}
 		};
 		
+		ObjectLambda afdLambda = (name) -> {
+			Robot r = mission.getRobot(name);
+				Object d = getGoalVariable(name, "airframe_clearance");
+				if (d != null) {
+					return (Double)d;
+				} else {
+					return Double.MAX_VALUE;
+				}
+		};
+		
 		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
-		//setupLambdaFromFixedPoint("distance_to_left_wing_tip", new Point(-61.3,-41.2,8.5));
-		//setupLambdaFromFixedPoint("distance_to_right_wing_tip", new Point(61.3,41.2,8.5));
+		middlewareFunctionVariables.put("airframe_distance", afdLambda);
 		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14,-2.28,5.2));
 		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14,6.26,5.2));
 	}

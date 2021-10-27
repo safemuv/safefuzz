@@ -5,44 +5,33 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.uma.jmetal.algorithm.Algorithm;
-import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIMeasures;
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.operator.selection.SelectionOperator;
 import org.uma.jmetal.operator.selection.impl.TournamentSelection;
 import org.uma.jmetal.problem.Problem;
-import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
-import org.uma.jmetal.util.JMetalException;
-import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
-import org.uma.jmetal.util.fileoutput.SolutionListOutput;
-import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
-import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
-import com.google.common.base.Optional;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
-import atlasdsl.loader.DSLLoader;
-import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
 import fuzzexperiment.runner.jmetal.customalg.NSGAII_JRH;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
-import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
@@ -52,13 +41,11 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 	private static final boolean USE_CROSSOVER = true;
 
-	static private int populationSize = 10;
-	static private int offspringPopulationSize = 10;
+	private int populationSize;
+	private int offspringPopulationSize;
 	
 	private String crossoverLogFile = "crossover.log";
 	
-
-	static private int matingPoolSize = populationSize;
 	static private boolean actuallyRun = false;
 	static private double exptRunTime = 600.0;
 
@@ -97,8 +84,10 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		}
 	}
 
-	public JMetalExpt(int maxIterations, double timingMutProb, double participantsMutProb, double paramMutProb,
+	public JMetalExpt(int popSize, int offspringPopSize, int maxIterations, double timingMutProb, double participantsMutProb, double paramMutProb,
 			ExperimentType etype) {
+		this.populationSize = popSize;
+		this.offspringPopulationSize = offspringPopSize;
 		this.maxIterations = maxIterations;
 		this.timingMutProb = timingMutProb;
 		this.participantsMutProb = participantsMutProb;
@@ -114,6 +103,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 	public void jMetalRun(String tag, Mission mission) throws ExptError, DSLLoadFailed {
 
 		List<Metric> allMetrics = new ArrayList<Metric>(mission.getAllMetrics());
+		String tagDated = tag + (new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 
 		List<OfflineMetric> metrics;
 
@@ -142,7 +132,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 			Grammar<String> g = Grammar.fromFile(new File(GRAMMAR_FILE));
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-					logPath, metrics, etype);
+					logPath, metrics, etype, tagDated);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			
@@ -166,6 +156,8 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			dominanceComparator = new DominanceComparator<>();
 			evaluator = new SequentialSolutionListEvaluator<FuzzingSelectionsSolution>();
 
+			int matingPoolSize = offspringPopulationSize;
+			
 			algorithm = new NSGAII_JRH(problem, maxIterations, populationSize, matingPoolSize,
 					offspringPopulationSize, crossover, mutation, selection, dominanceComparator, evaluator);
 

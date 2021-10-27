@@ -19,16 +19,18 @@ public class RunJMetal_ConditionBased extends AbstractAlgorithmRunner {
 			mission = dslloader.loadMission();
 			
 			double timingProbMut = 0.666;
-			double participantProbMut = 0.333;
-			double paramProbMut = 0.333;
+			double participantProbMut = 0.0;
+			double paramProbMut = 0.0;
 			
-			int numIterations = 60;
+			int numIterations = 18;
+			int populationSize = 6;
+			int offspringSize = 6;
 			
 			ExperimentType etype = ExperimentType.CONDITION_BASED_FUZZING_BOTH;
 			
-			JMetalExpt jmetalExpt = new JMetalExpt(numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
+			JMetalExpt jmetalExpt = new JMetalExpt(populationSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.setActuallyRun(true);
-			jmetalExpt.jMetalRun("timebasedfuzzing", mission);
+			jmetalExpt.jMetalRun("condbasedfuzzing", mission);
 		} catch (DSLLoadFailed e) {
 			System.out.println("DSL loading failed - configuration problems");
 			e.printStackTrace();

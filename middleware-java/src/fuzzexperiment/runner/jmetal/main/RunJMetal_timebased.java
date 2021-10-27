@@ -24,9 +24,12 @@ public class RunJMetal_timebased extends AbstractAlgorithmRunner {
 			
 			int numIterations = 60;
 			
+			int populationSize = 10;
+			int offspringSize = 10;
+			
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
 			
-			JMetalExpt jmetalExpt = new JMetalExpt(numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
+			JMetalExpt jmetalExpt = new JMetalExpt(populationSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.setActuallyRun(true);
 			jmetalExpt.jMetalRun("timebasedfuzzing", mission);
 		} catch (DSLLoadFailed e) {

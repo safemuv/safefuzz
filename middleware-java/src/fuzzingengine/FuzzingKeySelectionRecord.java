@@ -181,4 +181,8 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public String getSimpleName() {
 		return "Key:" + key;
 	}
+	
+	public boolean containsTopic(String targetKey) {
+		return key.contains(targetKey);
+	}
 }

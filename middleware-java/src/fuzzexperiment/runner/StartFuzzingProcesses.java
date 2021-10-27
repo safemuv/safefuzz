@@ -120,6 +120,9 @@ public class StartFuzzingProcesses {
 				ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			}
 			
+			// TODO: need to do code generation on the newly generated directories - to modify the 
+			// environmental scripts here
+			
 			sleepHandlingInterruption(40000);
 			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);

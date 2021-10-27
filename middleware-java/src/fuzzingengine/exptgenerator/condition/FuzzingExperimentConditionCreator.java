@@ -28,7 +28,7 @@ public class FuzzingExperimentConditionCreator  {
 //	}
 	
 	protected static final boolean VALIDATE_CONDITIONS = true;
-	private static final boolean ANALYSE_CONDITION = true;
+	private static final boolean ANALYSE_CONDITION = false;
 	
 	public static FuzzingCondition generateValidatedCondition(Random rng, GrowGrammarTreeFactory<String> gen) throws TreeGenerationFailed {
 		int numTrees = 1;

@@ -10,31 +10,26 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.ExptError;
 import fuzzexperiment.runner.jmetal.JMetalExpt;
 import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
-import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
 
-public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
+public class FakeJMetal_ConditionBased extends AbstractAlgorithmRunner {
 	public static void main(String[] args) throws JMetalException {
 		DSLLoader dslloader = new GeneratedDSLLoader();
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();
-			
 			double timingProbMut = 0.666;
 			double participantProbMut = 0.0;
 			double paramProbMut = 0.0;
-
-			int numIterations = 60;
-			int popSize = 10;
-			int offspringSize = 10;
 			
-			// Do fake experiment to find a specific time
-			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
-			JMetalExpt jmetalExpt = new JMetalExpt(popSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
-			jmetalExpt.addSpecialMetric(new FindSpecificTime(100.0,200.0));
-			jmetalExpt.addSpecialMetric(new FindSpecificTime(200.0, 250.0));
+			int numIterations = 18;
+			int populationSize = 6;
+			int offspringSize = 6;
 			
+			ExperimentType etype = ExperimentType.CONDITION_BASED_FUZZING_BOTH;
+			
+			JMetalExpt jmetalExpt = new JMetalExpt(populationSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.setActuallyRun(false);
-			jmetalExpt.jMetalRun("timebasedfake", mission);
+			jmetalExpt.jMetalRun("condbasedfuzzing", mission);
 		} catch (DSLLoadFailed e) {
 			System.out.println("DSL loading failed - configuration problems");
 			e.printStackTrace();

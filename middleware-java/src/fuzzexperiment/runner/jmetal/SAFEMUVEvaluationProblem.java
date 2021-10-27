@@ -1,6 +1,5 @@
 package fuzzexperiment.runner.jmetal;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -69,7 +68,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String middlewarePath;
 	private String logPath;
 	
-	private int MIN_GRAMMAR_HEIGHT = 3;
+	private String exptTagBase;
+	
 	private int MAX_GRAMMAR_HEIGHT = 7;
 	
 	Grammar<String> grammar;
@@ -127,13 +127,14 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
-			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype) throws IOException, DSLLoadFailed {
+			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype, String exptTagBase) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
 		this.actuallyRun = actuallyRun;
 		this.grammar = g;
 		this.etype = etype;
+		this.exptTagBase = exptTagBase;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
@@ -164,21 +165,29 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	public String getName() {
 		return "SAFEMUVEvaluationProblem";
 	}
+	
+	
 
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
-		String exptTag = "exptGA-" + (runCount++);
 		try {
-
+			String exptTag = exptTagBase + (runCount++); 
 			String csvFileName = solution.getCSVFileName();
 			// TODO: ensure a clear simulation run
 
 			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 			// config files etc for this CSV definition experimental run
 			if (actuallyRun) {
+				
+				// TODO: set these fuzz topic lists from the solution
+				String fuzzTopicList = "set_velocity";
+				
+				String scenarioDirName = exptTag; 
+				runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
+				
 				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
 				// Invoke the middleware (with the correct mission model and fuzzing spec!)
 				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
 			}
 
 			// Compute the metrics

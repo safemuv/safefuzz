@@ -46,4 +46,8 @@ abstract public class FuzzingSelectionRecord {
 	public void setTimeSpec(FuzzingTimeSpecification ts) {
 		this.timeSpec = ts;
 	}
+
+	public boolean containsTopic(String key) {
+		return false;
+	}
 }
