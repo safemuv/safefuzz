@@ -345,7 +345,7 @@ public class FuzzingEngine<E> {
 					JsonObject js = rtu.getJSON();
 					JsonObject newValue = js;
 					
-					Optional<Object> jsonStructure = fi.getJSONStructure(key);
+					Optional<Object> jsonStructure = fi.getJSONStructure();
 					
 					// This selects if there is structure defined to the JSON key in the CSV file... 
 

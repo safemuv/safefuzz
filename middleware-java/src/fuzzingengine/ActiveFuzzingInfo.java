@@ -14,21 +14,25 @@ public class ActiveFuzzingInfo {
 	public FuzzingOperation op;
 	public Optional<Object> subStructure;
 	public Optional<Pattern> pattern;
-	
-	ActiveFuzzingInfo(String key, FuzzingOperation op, Optional<Object> jsonStructure) {
-		this.key = key;
-		this.op = op;
-	}
 
 	public ActiveFuzzingInfo(FuzzingKeySelectionRecord fr) {
 		// TODO: implement this constructor
+		this.key = fr.key;
+		this.op = fr.op;
+		this.pattern = fr.getPattern();
+		
+		if (fr.getGroupNum() == null) {
+			this.subStructure = Optional.empty();
+		} else {
+			this.subStructure = Optional.of(fr.getGroupNum());
+		}
 	}
 
 	public FuzzingOperation getOperation() {
 		return op;
 	}
 
-	public Optional<Object> getJSONStructure(String key2) {
+	public Optional<Object> getJSONStructure() {
 		return subStructure;
 	}
 
