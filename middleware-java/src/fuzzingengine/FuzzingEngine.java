@@ -92,12 +92,12 @@ public class FuzzingEngine<E> {
 		} 
 	}
 
-	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList)
-			throws MissingRobot {
-		List<String> vehicles = getVehicles(vehicleNameList);
-		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op, vehicles);
-		confs.addComponentRecord(cr);
-	}
+//	private void addFuzzingComponentOperation(String componentName, FuzzingOperation op, String vehicleNameList)
+//			throws MissingRobot {
+//		List<String> vehicles = getVehicles(vehicleNameList);
+//		FuzzingComponentSelectionRecord cr = new FuzzingComponentSelectionRecord(componentName, op, vehicles);
+//		confs.addComponentRecord(cr);
+//	}
 
 	public void addFuzzingMessageOperation(String messageName, String messageFieldName, int groupNum, double startTime,
 			double endTime, FuzzingOperation op) throws InvalidMessage {
@@ -157,19 +157,19 @@ public class FuzzingEngine<E> {
 		}
 	}
 
-	// need to test: look up the key in simmodel, is its specific component set as
-	// active
-	private Optional<FuzzingOperation> getOperationByInboundComponentAndVehicle(String key, String vehicle) {
-		VariableSpecification vr = fuzzingspec.getRecordForKey(key);
-		if (vr != null) {
-			Optional<String> comp = vr.getComponent();
-			if (comp.isPresent()) {
-				return confs.getOperationByOutboundComponentAndVehicle(comp.get(), vehicle);
-			}
-		}
-
-		return Optional.empty();
-	}
+//	// need to test: look up the key in simmodel, is its specific component set as
+//	// active
+//	private Optional<FuzzingOperation> getOperationByInboundComponentAndVehicle(String key, String vehicle) {
+//		VariableSpecification vr = fuzzingspec.getRecordForKey(key);
+//		if (vr != null) {
+//			Optional<String> comp = vr.getComponent();
+//			if (comp.isPresent()) {
+//				return confs.getOperationByOutboundComponentAndVehicle(comp.get(), vehicle);
+//			}
+//		}
+//
+//		return Optional.empty();
+//	}
 
 	public Optional<String> getKeyOrTopic(E event) {
 		if (event instanceof KeyValueUpdate) {
@@ -184,16 +184,48 @@ public class FuzzingEngine<E> {
 		return Optional.empty();
 	}
 
-	public List<FuzzingOperation> shouldFuzzCARSEvent(E event, double time) {
-		List<FuzzingOperation> res = new ArrayList<FuzzingOperation>();
+//	public List<FuzzingOperation> shouldFuzzCARSEvent(E event, double time) {
+//		List<FuzzingOperation> res = new ArrayList<FuzzingOperation>();
+//		if (event instanceof KeyValueUpdate) {
+//			KeyValueUpdate cv = (KeyValueUpdate) event;
+//			String vehicle = cv.getVehicleName();
+//			String key = cv.getKey();
+//			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
+//			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
+//			if (op_o.isPresent()) {
+//				res.add(op_o.get());
+//			}
+//		}
+//
+//		if (event instanceof ROSTopicUpdate) {
+//			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
+//			String vehicle = rtu.getVehicleName();
+//			String key = rtu.getTopicName();
+//			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
+//			if (op_o.isPresent()) {
+//				FuzzingOperation op = op_o.get();
+//				ATLASLog.logFuzzing("shouldFuzzCARSEvent yes on vehicle " + vehicle + " - key " + key + " - found fuzzing operation " + op);
+//				res.add(op);
+//			} else {
+//				ATLASLog.logFuzzing("shouldFuzzCARSEvent no on vehicle " + vehicle + " - key " + key);
+//			}
+//		}
+//
+//		return res;
+//	}
+	
+	public List<ActiveFuzzingInfo> getActiveFuzzingForEvent(E event, double time) {
+		List<ActiveFuzzingInfo> res = new ArrayList<ActiveFuzzingInfo>();
+		
 		if (event instanceof KeyValueUpdate) {
 			KeyValueUpdate cv = (KeyValueUpdate) event;
 			String vehicle = cv.getVehicleName();
 			String key = cv.getKey();
 			ATLASLog.logFuzzing("shouldFuzzCARSEvent called on vehicle " + vehicle + " - key " + key);
-			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
-			if (op_o.isPresent()) {
-				res.add(op_o.get());
+			
+			List<FuzzingKeySelectionRecord> recs = confs.getRecordsByKeyAndVehicle(key, vehicle, time);
+			for (FuzzingKeySelectionRecord fr : recs) {
+				res.add(new ActiveFuzzingInfo(fr));
 			}
 		}
 
@@ -201,19 +233,18 @@ public class FuzzingEngine<E> {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) event;
 			String vehicle = rtu.getVehicleName();
 			String key = rtu.getTopicName();
-			Optional<FuzzingOperation> op_o = confs.getOperationByKeyAndVehicle(key, vehicle, time);
-			if (op_o.isPresent()) {
-				FuzzingOperation op = op_o.get();
+
+			List<FuzzingKeySelectionRecord> recs = confs.getRecordsByKeyAndVehicle(key, vehicle, time);
+			for (FuzzingKeySelectionRecord fr : recs) {
+				FuzzingOperation op = fr.getOperation();
 				ATLASLog.logFuzzing("shouldFuzzCARSEvent yes on vehicle " + vehicle + " - key " + key + " - found fuzzing operation " + op);
-				res.add(op);
-			} else {
-				ATLASLog.logFuzzing("shouldFuzzCARSEvent no on vehicle " + vehicle + " - key " + key);
+				res.add(new ActiveFuzzingInfo(fr));
 			}
 		}
 
 		return res;
 	}
-
+	
 	public Optional<String> shouldReflectBackToCARS(E event) {
 		if (event instanceof KeyValueUpdate) {
 			KeyValueUpdate cv = (KeyValueUpdate) event;
@@ -270,9 +301,11 @@ public class FuzzingEngine<E> {
 		}
 	}
 
-	public Optional<E> fuzzTransformEvent(Optional<E> event_o, FuzzingOperation op) {
+	public Optional<E> fuzzTransformEvent(Optional<E> event_o, ActiveFuzzingInfo fi) {
+		FuzzingOperation op = fi.getOperation();
+		
 		if (op.isEventBased()) {
-			EventFuzzingOperation eop = (EventFuzzingOperation) op;
+			EventFuzzingOperation eop = (EventFuzzingOperation)op;
 			return eop.fuzzTransformPotentialEvent(event_o);
 		} else {
 			if (event_o.isPresent()) {
@@ -285,7 +318,7 @@ public class FuzzingEngine<E> {
 					String v = cv.getValue();
 					String newValue = v;
 
-					Optional<Map.Entry<Pattern, Object>> regexp_sel = confs.getPatternAndGroupStructure(key);
+					Optional<Map.Entry<Pattern, Object>> regexp_sel = fi.getPatternAndGroupStructure();
 					if (!regexp_sel.isPresent()) {
 						newValue = vop.fuzzTransformString(v);
 					} else {
@@ -312,8 +345,7 @@ public class FuzzingEngine<E> {
 					JsonObject js = rtu.getJSON();
 					JsonObject newValue = js;
 					
-					
-					Optional<Object> jsonStructure = confs.getJSONStructure(key);
+					Optional<Object> jsonStructure = fi.getJSONStructure();
 					
 					// This selects if there is structure defined to the JSON key in the CSV file... 
 
@@ -501,27 +533,29 @@ public class FuzzingEngine<E> {
 						}
 					}
 
-					// Scan for component record in file
-					if (fields[0].toUpperCase().equals("COMPONENT")) {
-						// TODO: parse the vehicle names from here
-						String componentName = fields[1];
-						String vehicleNames = fields[2];
-						String dirString = fields[3];
-						// TODO: not using the direction string yet
-						String opClass = fields[4];
-						String params = fields[5];
-						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
-						if (op_o.isPresent()) {
-							FuzzingOperation op = op_o.get();
-							try {
-								addFuzzingComponentOperation(componentName, op, vehicleNames);
-							} catch (MissingRobot e) {
-								e.printStackTrace();
-							}
-							System.out.println(
-									"Installing fuzzing operation for component " + componentName + " - " + op);
-						}
-					}
+					// TODO: component records no longer supported
+					
+//					// Scan for component record in file
+//					if (fields[0].toUpperCase().equals("COMPONENT")) {
+//						// TODO: parse the vehicle names from here
+//						String componentName = fields[1];
+//						String vehicleNames = fields[2];
+//						String dirString = fields[3];
+//						// TODO: not using the direction string yet
+//						String opClass = fields[4];
+//						String params = fields[5];
+//						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
+//						if (op_o.isPresent()) {
+//							FuzzingOperation op = op_o.get();
+//							try {
+//								addFuzzingComponentOperation(componentName, op, vehicleNames);
+//							} catch (MissingRobot e) {
+//								e.printStackTrace();
+//							}
+//							System.out.println(
+//									"Installing fuzzing operation for component " + componentName + " - " + op);
+//						}
+//					}
 
 					// Scan for message
 					if (fields[0].toUpperCase().equals("MESSAGE")) {
@@ -608,12 +642,10 @@ public class FuzzingEngine<E> {
 		return confs.getAllKeys();
 	}
 
-	public Set<FuzzingKeySelectionRecord> getAllEnvironmentalKeys() {
-		Set<FuzzingKeySelectionRecord> frToUse = 
-				confs.getKeyLookup().entrySet().stream()
-					.filter(e -> keyIsEnvironmental(e.getKey()))
-					.map(e -> e.getValue())
-					.collect(Collectors.toSet());
+	public Set<FuzzingKeySelectionRecord> getAllEnvironmentalKeys() { 
+		Set<FuzzingKeySelectionRecord> frToUse = confs.getAllKeyRecords().stream()
+						.filter(r -> keyIsEnvironmental(r.getKey()))
+						.collect(Collectors.toSet());
 		return frToUse;
 	}
 

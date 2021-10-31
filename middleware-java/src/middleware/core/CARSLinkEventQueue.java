@@ -74,19 +74,16 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		}
 	}
 	
-	// TODO: this logic should be in the fuzzing engine itself
+	// TODO: this logic should be pushed into the fuzzing engine itself
 	public void handleEvent(E event) {
+		// TODO: Before handling custom events, check for pending events that are now due!
 		if (CHECK_FOR_QUEUE_EVENTS_BEFORE_ANY) {
 			checkForQueuedEvents();
 		}
 		
 		double time = core.getTime();
 		
-		// TODO: Before handling custom events, check for pending events that are now due!
-
-		// Do the fuzzing specific parts of a CARS message
-		// If the message is on the list to fuzz... alter it
-		List<FuzzingOperation> ops = fuzzingEngine.shouldFuzzCARSEvent(event, time);
+		List<ActiveFuzzingInfo> ifs = fuzzingEngine.getActiveFuzzingForEvent(event, time);
 		Optional<E> modifiedEvent_o = Optional.of(event);
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		
@@ -96,9 +93,10 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		double enqueueTime = 0.0;
 		
 		// Make the transformations on the event here
-		for (FuzzingOperation op : ops) {
+		for (ActiveFuzzingInfo info : ifs) {
+			FuzzingOperation op = info.getOperation();
 			if (modifiedEvent_o.isPresent()) {
-				modifiedEvent_o = fuzzingEngine.fuzzTransformEvent(modifiedEvent_o, op);
+				modifiedEvent_o = fuzzingEngine.fuzzTransformEvent(modifiedEvent_o, info);
 				shouldEnqueue = shouldEnqueue || op.shouldEnqueue();
 				enqueueTime += op.enqueueTime();
 			}

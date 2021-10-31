@@ -258,6 +258,17 @@ public class GUITest {
     		fuzzingPanel.add(l);
     	}
     }
+    
+    // TODO: GUI should handle multiple fuzzing key operations here
+    public synchronized void addFuzzingKeyState(String key, String vehicle, String opText) {
+    	String k = key + "-" + vehicle;
+    	fuzzingKeyOperations.put(k, "Possible multiple: opText");
+    	if (!fuzzingKeyLabels.containsKey(k)) {
+    		JLabel l = new JLabel();
+    		fuzzingKeyLabels.put(k, l);
+    		fuzzingPanel.add(l);
+    	}
+    }
 
 	public void setFaultDefinitionFile(String filePath) {
 		this.faultDefFile = filePath;
