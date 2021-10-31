@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -169,7 +170,22 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		return "SAFEMUVEvaluationProblem";
 	}
 	
-	
+	// This is to bridge Argentina's script args
+	// Should be pulled out into a file specifically for this - interfacing API
+	private List<String> getFuzzTopicList(FuzzingSelectionsSolution solution) {
+		List<String> fuzzTopics = new ArrayList<String>();
+		List<FuzzingSelectionRecord> recs = solution.getVariables();
+		
+		for (FuzzingSelectionRecord r : recs) {
+			if (r instanceof FuzzingKeySelectionRecord) {
+				FuzzingKeySelectionRecord kr = (FuzzingKeySelectionRecord)r;
+				if (kr.getKey().contains("velocity")) {
+					fuzzTopics.add("velocity");
+				}
+			}
+		}
+		return fuzzTopics;
+	}
 
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
 		try {
@@ -178,18 +194,21 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 			if (actuallyRun) {
 				if (regenerateScenarios) {
-					// TODO: set these fuzz topic lists from the solution
-					String fuzzTopicList = "set_velocity";
+					List<String> fuzzTopicList = getFuzzTopicList(solution);
+					
 					// TODO: set these as discussed in the meeting on Friday
 					String scenarioDirName = exptTag;
 					// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 					// config files etc for this CSV definition experimental run
-					runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
-					runner.codeGenerationROSFuzzing(baseMission, csvFileName, false);
+					final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
+					
+					List<String> modifiedTempFiles = runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
+					// TODO: need to 
+					runner.generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
 					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
 				} else {
-					// If not regenerating scenarios, just use the 
-					runner.codeGenerationROSFuzzing(baseMission, csvFileName, true);
+					// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
+					runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
 					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
 				}
 			}
@@ -199,6 +218,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFileName);
 			Map<Metric, Double> res = metricHandler.computeAllOffline(fuzzrecs, logPath);
 			System.out.println("res = " + res);
+			
+			// TODO: write out all the temporary results here - if doing that
 			
 			tempLog.write(csvFileName + ",");
 

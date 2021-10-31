@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -48,13 +49,14 @@ import atlasdsl.*;
 import carsspecific.ros.rosmapping.ROSSimulation;
 
 public class ROSCodeGen extends CARSCodeGen {
-	private static final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
-	private static ObjectMapper obj = new ObjectMapper();
-	private boolean generateInPlace;
 
-	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o, boolean generateInPlace) {
+	private static ObjectMapper obj = new ObjectMapper();
+	private Optional<String> generateDir;
+	private List<String> modifiedConfigFiles = new ArrayList<String>();
+
+	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o, Optional<String> generateDir) {
 		super(m, fe_o);
-		this.generateInPlace = generateInPlace;
+		this.generateDir = generateDir;
 	}
 	
 	public CARSSimulation convertDSL() throws ConversionFailed {
@@ -137,9 +139,9 @@ public class ROSCodeGen extends CARSCodeGen {
 		}
 	}
 	
-	private static String getFileInTempDir(String inputFilename) {
+	private static String getFileInTempDir(String genDir, String inputFilename) {
 		String fileInDir = Paths.get(inputFilename).getFileName().toString();
-		String newFile = TEMP_WRITTEN_PATH_DIR + "/" + fileInDir;
+		String newFile = genDir + "/" + fileInDir;
 		return newFile;
 	}
 
@@ -168,14 +170,17 @@ public class ROSCodeGen extends CARSCodeGen {
 				}
 				
 				// Write back the modified file to the new directory
-				if (generateInPlace) {
+				if (generateDir.isEmpty()) {
 					System.out.println("Writing out config file to original path: " + f.getAbsolutePath());
+					modifiedConfigFiles.add(f.getAbsolutePath());
 					mapper.writeValue(f, res);
 				} else {
+					String genDir = generateDir.get();
 					// Transform the filename to a temporary location
-					String outputFilename = getFileInTempDir(inputFilename);
+					String outputFilename = getFileInTempDir(genDir, inputFilename);
 					File fOut = new File(outputFilename);
 					mapper.writeValue(fOut, specFields);
+					modifiedConfigFiles.add(fOut.getAbsolutePath());
 					System.out.println("Writing out config file to new path: " + fOut.getAbsolutePath());
 				}
 			}
@@ -194,13 +199,21 @@ public class ROSCodeGen extends CARSCodeGen {
 			Set<FuzzingKeySelectionRecord> records = fe.getAllEnvironmentalKeys();
 			System.out.println("transformAllFiles = " + records);
 			ensureTempDirClear();
+			modifiedConfigFiles.clear();
 			transformFiles(fe, records);
 			processLaunchFiles(fe);
 		}	
 	}
 
 	private void ensureTempDirClear() {
-		System.out.println("Clearing directory " + TEMP_WRITTEN_PATH_DIR);
-		DirectoryUtils.ensureTempDirClear(TEMP_WRITTEN_PATH_DIR);
+		if (generateDir.isPresent()) {
+			String tempDir = generateDir.get();
+			System.out.println("Clearing directory " + tempDir);
+			DirectoryUtils.ensureTempDirClear(tempDir);
+		}
+	}
+
+	public List<String> getModifiedConfigFiles() {
+		return modifiedConfigFiles;
 	}
 }

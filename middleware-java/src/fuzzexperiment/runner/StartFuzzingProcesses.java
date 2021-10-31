@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -84,16 +86,18 @@ public class StartFuzzingProcesses {
 		Thread.sleep(timeMillis);
 	}
 	
-	public void codeGenerationROSFuzzing(Mission mission, String filename, boolean generateInPlace) {
+	public List<String> codeGenerationROSFuzzing(Mission mission, String filename, Optional<String> generateDir) {
 		FuzzingEngine fe = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 		try {
-			ROSCodeGen rgen = new ROSCodeGen(mission, Optional.of(fe), generateInPlace);
+			ROSCodeGen rgen = new ROSCodeGen(mission, Optional.of(fe), generateDir);
 			// Load the CSV file to produce fuzzing key selection records
 			fe.setupFromFuzzingFile(filename, mission);
 			rgen.convertDSL();
 			System.out.println("Code generation completed");
+			return rgen.getModifiedConfigFiles();
 		} catch (ConversionFailed cf) {
 			System.out.println("ERROR: DSL conversion to MOOS representation failed: reason " + cf.getReason());
+			return new ArrayList<String>();
 		}
 	}
 	
@@ -119,9 +123,6 @@ public class StartFuzzingProcesses {
 			} else {
 				ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			}
-			
-			// TODO: need to do code generation on the newly generated directories - to modify the 
-			// environmental scripts here
 			
 			sleepHandlingInterruption(40000);
 			System.out.println("Running middleware with " + fuzzFilePath);
@@ -176,7 +177,8 @@ public class StartFuzzingProcesses {
 		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
 	}
 
-	public void generateLaunchScripts(String scenarioName, String fuzzTopicList) {
-		ExptHelper.runScriptNew(ABS_WORKING_PATH, "./generate_launch_files.sh", scenarioName);
+	public void generateLaunchScripts(String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
+		String fuzzTopicString = String.join(",", fuzzTopicList);
+		ExptHelper.runScriptNew(ABS_WORKING_PATH, "./generate_launch_files.sh", scenarioName + " " + fuzzTopicString);
 	}
 }
