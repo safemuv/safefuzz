@@ -18,7 +18,7 @@ public class GenROSCodeLauncher {
 		
 		FuzzingEngine fe = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 		try {
-			ROSCodeGen rgen = new ROSCodeGen(mission, Optional.of(fe));
+			ROSCodeGen rgen = new ROSCodeGen(mission, Optional.of(fe), false);
 			// Load the CSV file to produce fuzzing key selection records
 			fe.setupFromFuzzingFile(filename, mission);
 			rgen.convertDSL();

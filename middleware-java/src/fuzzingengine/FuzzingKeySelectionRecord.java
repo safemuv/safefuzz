@@ -185,4 +185,9 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	public boolean containsTopic(String targetKey) {
 		return key.contains(targetKey);
 	}
+	
+	public boolean isEnvironmental() {
+		// TODO: this should be propagated from the model - may have files other than YAML
+		return (key.toLowerCase().contains("yaml"));
+	}
 }

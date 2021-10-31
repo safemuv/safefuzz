@@ -20,8 +20,7 @@ public class FuzzingTimeLength extends OfflineMetric {
         		Optional<Double> slen_o = ts.getStaticLength();
         		if (slen_o.isPresent()) {
         			double slenAdd = slen_o.get();
-        			
-        			if (r.getKey().toLowerCase().contains("yaml")) {
+        			if (r.isEnvironmental()) {
         				System.out.println(this.getClass().getCanonicalName() + ": YAML variable found - ignoring static time length of " + slenAdd);
         				slenAdd = 0;
         			}

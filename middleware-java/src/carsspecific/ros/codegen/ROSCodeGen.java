@@ -7,6 +7,7 @@ import fuzzingengine.operations.FuzzingOperation;
 import fuzzingengine.operations.ValueFuzzingOperation;
 import middleware.atlascarsgenerator.*;
 import middleware.atlascarsgenerator.carsmapping.*;
+import utils.DirectoryUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +24,6 @@ import java.util.stream.Collectors;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.*;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -47,10 +48,13 @@ import atlasdsl.*;
 import carsspecific.ros.rosmapping.ROSSimulation;
 
 public class ROSCodeGen extends CARSCodeGen {
+	private static final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
 	private static ObjectMapper obj = new ObjectMapper();
+	private boolean generateInPlace;
 
-	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o) {
+	public ROSCodeGen(Mission m, Optional<FuzzingEngine> fe_o, boolean generateInPlace) {
 		super(m, fe_o);
+		this.generateInPlace = generateInPlace;
 	}
 	
 	public CARSSimulation convertDSL() throws ConversionFailed {
@@ -132,20 +136,27 @@ public class ROSCodeGen extends CARSCodeGen {
 			e.printStackTrace();
 		}
 	}
+	
+	private static String getFileInTempDir(String inputFilename) {
+		String fileInDir = Paths.get(inputFilename).getFileName().toString();
+		String newFile = TEMP_WRITTEN_PATH_DIR + "/" + fileInDir;
+		return newFile;
+	}
 
-	public static void transformFiles(FuzzingEngine fe, Set<FuzzingKeySelectionRecord> recs) {
+	public void transformFiles(FuzzingEngine fe, Set<FuzzingKeySelectionRecord> recs) {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory().disable(Feature.WRITE_DOC_START_MARKER));
 		mapper.findAndRegisterModules();
 		try {
 			// Iterate over all the fuzzing key selection records
 			for (FuzzingKeySelectionRecord r : recs) {
+				
 				// TODO: only those with keys on environmental components should be considered
 				FuzzingOperation op = r.getOperation();
-				String filename = fe.getFilenameForKey(r.getKey());
-				
+				String inputFilename = fe.getFilenameForKey(r.getKey());
+
 				Object internalSpec = r.getGroupNum();
-				File f = new File(filename);
-				JsonNode res = (JsonNode)mapper.readTree(new File(filename));
+				File f = new File(inputFilename);
+				JsonNode res = (JsonNode)mapper.readTree(new File(inputFilename));
 				String [] specFields = ((String)internalSpec).split("\\.");
 				//System.out.println("Res class=" + res.getClass());
 				
@@ -155,8 +166,18 @@ public class ROSCodeGen extends CARSCodeGen {
 					ValueFuzzingOperation opV = (ValueFuzzingOperation)op;
 					YAMLExtras.fuzzTransformYAML(obj, res, specFields, opV);
 				}
-				// Write back the modified file
-				mapper.writeValue(f, res);
+				
+				// Write back the modified file to the new directory
+				if (generateInPlace) {
+					System.out.println("Writing out config file to original path: " + f.getAbsolutePath());
+					mapper.writeValue(f, res);
+				} else {
+					// Transform the filename to a temporary location
+					String outputFilename = getFileInTempDir(inputFilename);
+					File fOut = new File(outputFilename);
+					mapper.writeValue(fOut, specFields);
+					System.out.println("Writing out config file to new path: " + fOut.getAbsolutePath());
+				}
 			}
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
@@ -172,10 +193,14 @@ public class ROSCodeGen extends CARSCodeGen {
 			FuzzingEngine fe = fe_o.get();
 			Set<FuzzingKeySelectionRecord> records = fe.getAllEnvironmentalKeys();
 			System.out.println("transformAllFiles = " + records);
+			ensureTempDirClear();
 			transformFiles(fe, records);
-			
 			processLaunchFiles(fe);
-		}
-		
+		}	
+	}
+
+	private void ensureTempDirClear() {
+		System.out.println("Clearing directory " + TEMP_WRITTEN_PATH_DIR);
+		DirectoryUtils.ensureTempDirClear(TEMP_WRITTEN_PATH_DIR);
 	}
 }

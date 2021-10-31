@@ -68,6 +68,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String middlewarePath;
 	private String logPath;
 	
+	private boolean regenerateScenarios;
+	
 	private String exptTagBase;
 	
 	private int MAX_GRAMMAR_HEIGHT = 7;
@@ -127,7 +129,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
-			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype, String exptTagBase) throws IOException, DSLLoadFailed {
+			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype, String exptTagBase, boolean regenerateScenarios) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
@@ -135,6 +137,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		this.grammar = g;
 		this.etype = etype;
 		this.exptTagBase = exptTagBase;
+		this.regenerateScenarios = regenerateScenarios;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
@@ -172,22 +175,23 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		try {
 			String exptTag = exptTagBase + (runCount++); 
 			String csvFileName = solution.getCSVFileName();
-			// TODO: ensure a clear simulation run
 
-			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
-			// config files etc for this CSV definition experimental run
 			if (actuallyRun) {
-				
-				// TODO: set these fuzz topic lists from the solution
-				String fuzzTopicList = "set_velocity";
-				
-				String scenarioDirName = exptTag; 
-				runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
-				
-				runner.codeGenerationROSFuzzing(baseMission, csvFileName);
-				// Invoke the middleware (with the correct mission model and fuzzing spec!)
-				// Invoke the CARS / call ROS launch scripts
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
+				if (regenerateScenarios) {
+					// TODO: set these fuzz topic lists from the solution
+					String fuzzTopicList = "set_velocity";
+					// TODO: set these as discussed in the meeting on Friday
+					String scenarioDirName = exptTag;
+					// Generate the ROS configuration files, e.g. modified launch scripts, YAML
+					// config files etc for this CSV definition experimental run
+					runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
+					runner.codeGenerationROSFuzzing(baseMission, csvFileName, false);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
+				} else {
+					// If not regenerating scenarios, just use the 
+					runner.codeGenerationROSFuzzing(baseMission, csvFileName, true);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+				}
 			}
 
 			// Compute the metrics

@@ -6,7 +6,6 @@ package fuzzexperiment.runner.jmetal;
 
 //Produces two new ones X_left, Y_right
 //and Y_left, X_right
-import org.uma.jmetal.operator.crossover.CrossoverOperator;
 import org.uma.jmetal.util.JMetalException;
 
 import java.io.IOException;

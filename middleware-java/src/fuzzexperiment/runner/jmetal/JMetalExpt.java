@@ -131,8 +131,11 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		try {
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 			Grammar<String> g = Grammar.fromFile(new File(GRAMMAR_FILE));
+			
+			boolean REGENERATE_SCENARIOS = false;
+			
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-					logPath, metrics, etype, tagDated);
+					logPath, metrics, etype, tagDated, REGENERATE_SCENARIOS);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			
