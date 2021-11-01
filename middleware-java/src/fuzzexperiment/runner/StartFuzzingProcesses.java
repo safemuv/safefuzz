@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 import atlasdsl.Mission;
 import carsspecific.ros.codegen.ROSCodeGen;
+import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
+import fuzzexperiment.runner.rmkg.RMKGInterface;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 import middleware.atlascarsgenerator.ConversionFailed;
@@ -180,5 +182,28 @@ public class StartFuzzingProcesses {
 	public void generateLaunchScripts(String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
 		String fuzzTopicString = String.join(",", fuzzTopicList);
 		ExptHelper.runScriptNew(ABS_WORKING_PATH, "./generate_launch_files.sh", scenarioName + " " + fuzzTopicString);
+	}
+	
+	public void runExptProcesses(String exptTag, Mission baseMission, String csvFileName, double timeLimit, FuzzingSelectionsSolution solution, boolean regenerateScenarios) throws InterruptedException, IOException {
+		boolean actuallyRun = true;
+		// TODO: do we need to call cleanRun here
+		if (regenerateScenarios) {
+			List<String> fuzzTopicList = RMKGInterface.getFuzzTopicListFromScen(solution);
+			
+			// TODO: set these as discussed in the meeting on Friday
+			String scenarioDirName = exptTag;
+			// Generate the ROS configuration files, e.g. modified launch scripts, YAML
+			// config files etc for this CSV definition experimental run
+			final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
+			
+			List<String> modifiedTempFiles = codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
+			// TODO: need to 
+			generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
+		} else {
+			// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
+			codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+		}
 	}
 }

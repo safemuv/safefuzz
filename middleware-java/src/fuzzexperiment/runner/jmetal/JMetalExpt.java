@@ -32,6 +32,7 @@ import fuzzexperiment.runner.jmetal.customalg.NSGAII_JRH;
 import fuzzexperiment.runner.jmetal.grammar.Grammar;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
+import fuzzexperiment.runner.rmkg.RMKGInterface;
 import fuzzingengine.FuzzingEngine;
 import fuzzingengine.spec.GeneratedFuzzingSpec;
 
@@ -39,7 +40,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 	private String GRAMMAR_FILE = System.getProperty("user.home") + "/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf";
 
-	private static final boolean USE_CROSSOVER = true;
+	private final boolean USE_CROSSOVER = true;
 
 	private int populationSize;
 	private int offspringPopulationSize;
@@ -131,11 +132,9 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		try {
 			FuzzingEngine fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, false);
 			Grammar<String> g = Grammar.fromFile(new File(GRAMMAR_FILE));
-			
-			boolean REGENERATE_SCENARIOS = false;
-			
+						
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-					logPath, metrics, etype, tagDated, REGENERATE_SCENARIOS);
+					logPath, metrics, etype, tagDated, RMKGInterface.REGENERATE_SCENARIOS);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			

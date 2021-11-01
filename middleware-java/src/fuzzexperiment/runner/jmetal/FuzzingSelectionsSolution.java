@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.uma.jmetal.solution.*;
 
 import atlasdsl.*;
+import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 
 public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecord> {
@@ -38,7 +39,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		this.exptRunTime = exptRunTime;
 	}
 	
-	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime, List<FuzzingSelectionRecord> recs) {
+	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime, List<FuzzingKeySelectionRecord> recs) {
 		this.mission = mission;
 		this.exptTag = exptTag;
 		this.actuallyRun = actuallyRun;
@@ -61,7 +62,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 			this.contents.add(fi.dup());
 		}
 	}
-	
+
 	public static FuzzingSelectionsSolution empty(FuzzingSelectionsSolution other) {
 		FuzzingSelectionsSolution fi = new FuzzingSelectionsSolution(other.mission, other.exptTag, other.actuallyRun, other.exptRunTime);
 		fi.contents = new ArrayList<FuzzingSelectionRecord>();

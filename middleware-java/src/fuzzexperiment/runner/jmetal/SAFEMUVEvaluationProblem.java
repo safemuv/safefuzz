@@ -25,6 +25,7 @@ import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
 import fuzzexperiment.runner.metrics.MetricHandler;
 import fuzzexperiment.runner.metrics.OfflineMetric;
+import fuzzexperiment.runner.rmkg.RMKGInterface;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.exptgenerator.FuzzingExperimentGenerator;
@@ -170,23 +171,6 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		return "SAFEMUVEvaluationProblem";
 	}
 	
-	// This is to bridge Argentina's script args
-	// Should be pulled out into a file specifically for this - interfacing API
-	private List<String> getFuzzTopicList(FuzzingSelectionsSolution solution) {
-		List<String> fuzzTopics = new ArrayList<String>();
-		List<FuzzingSelectionRecord> recs = solution.getVariables();
-		
-		for (FuzzingSelectionRecord r : recs) {
-			if (r instanceof FuzzingKeySelectionRecord) {
-				FuzzingKeySelectionRecord kr = (FuzzingKeySelectionRecord)r;
-				if (kr.getKey().contains("velocity")) {
-					fuzzTopics.add("velocity");
-				}
-			}
-		}
-		return fuzzTopics;
-	}
-
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
 		try {
 			String exptTag = exptTagBase + (runCount++); 
@@ -194,7 +178,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 
 			if (actuallyRun) {
 				if (regenerateScenarios) {
-					List<String> fuzzTopicList = getFuzzTopicList(solution);
+					List<String> fuzzTopicList = RMKGInterface.getFuzzTopicListFromScen(solution);
 					
 					// TODO: set these as discussed in the meeting on Friday
 					String scenarioDirName = exptTag;
@@ -267,23 +251,32 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	public FuzzingSelectionsSolution createSolution() {
 		int tryCount = 0;
 		
-		boolean cont = true;
+		List<FuzzingKeySelectionRecord> recsKey = new ArrayList<FuzzingKeySelectionRecord>();
 		List<FuzzingSelectionRecord> recs;
-		
+
+		boolean cont = true;
 		recs = initialGenerator.generateExperiment(Optional.empty());
-		if (recs.size() > 0) {
-			cont = false;
-		}
 		while (cont) {
-			recs = initialGenerator.generateExperiment(Optional.empty());
+			if (recs.size() > 0) {
+				cont = false;
+			} else {
+				recs = initialGenerator.generateExperiment(Optional.empty());
 			// This is to prevent infinite loop if the models have no fuzzing probabalities defined
 			// It will eventually give up generating if no records are produced
-			if (tryCount++ > MAX_TRIES_GENERATING_EXPERIMENT) {
-				cont = false;
+				if (tryCount++ > MAX_TRIES_GENERATING_EXPERIMENT) {
+					cont = false;
+				}
 			}
 		}
+		
+		for (FuzzingSelectionRecord rec : recs) {
+			if (rec instanceof FuzzingKeySelectionRecord) {
+				recsKey.add((FuzzingKeySelectionRecord)rec);
+			}
+		}
+		
 		System.out.println("createSolution - recs=" + recs);
-		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recs);
+		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recsKey);
 		System.out.println("Initial chromosome = " + sol.toString());
 		return sol;
 	}

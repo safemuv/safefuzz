@@ -15,8 +15,11 @@ import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
 import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
+import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
 import fuzzexperiment.runner.metrics.*;
+import fuzzexperiment.runner.rmkg.RMKGInterface;
 import fuzzingengine.FuzzingKeySelectionRecord;
+import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.support.FuzzingEngineSupport;
 
 public class FuzzExptRunner {
@@ -94,30 +97,18 @@ public class FuzzExptRunner {
 				String exptTag = "exptcsv-" + file;
 				System.out.println("====================================================================================================");
 				System.out.println("Running fuzzing experiments for CSV file name " + file);
+				List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, file);
+				System.out.println("Fuzzing records = " + fuzzrecs);
+				FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, exptTag, actuallyRun, timeLimit, fuzzrecs);
 				
-				runner.cleanRun(baseMission, file);
-				System.out.println("Refresh launch/config files for clean run");
-				
-				System.out.println("Ensure neo4j is running successfully...");
-				
-				// Generate the new launch/config scripts for this run
-				int scenNum = scenarioGenerationNumber++;
-				String fuzzTopicList = "set_velocity";
-				String scenarioDirName = "scen" + scenarioGenerationNumber; 
-				//runner.generateLaunchScripts(scenarioDirName, fuzzTopicList);
-				System.out.println("Generated launch and config files for " + scenarioDirName);
-				TimeUnit.MILLISECONDS.sleep(5000);
-				
-				// Invoke the middleware (with the correct mission model and fuzzing spec!)
-				// Invoke the CARS / call ROS launch scripts
-				//runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.of(scenarioDirName));
-				runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, file, Optional.empty());
+				if (actuallyRun) {
+					runner.runExptProcesses(exptTag, baseMission, file, timeLimit, sol, RMKGInterface.REGENERATE_SCENARIOS);
+				}
 				
 				// Assess the metrics (which the user defined using filled-in templates)
 				// This should be done by the metrics handler now
 				try {
 					// Need to get the fuzzing selection records
-					List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, file);
 					System.out.println("Fuzzing records = " + fuzzrecs);
 					metricResults = mh.computeAllOffline(fuzzrecs, logPath);
 					mh.printMetricsToOutputFile(file, metricResults);
