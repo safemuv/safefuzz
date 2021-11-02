@@ -298,7 +298,7 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 	public double getMutationProbability() {
 		return 1.0;
 	}
-
+	
 	public FuzzingSelectionsSolution execute(FuzzingSelectionsSolution sol) {
 		// PRE-MUTATION DEBUGGING
 		try {
@@ -329,10 +329,17 @@ public class FuzzingSelectionsMutation implements MutationOperator<FuzzingSelect
 			mutationLog.write("After mutation: source=" + sol.getCSVFileName() + "\n");
 			sol.printCSVContentsToFile(mutationLog);
 			mutationLog.write("\n");
+		
+			mutationLog.write("---------------------------------------------------------------------------------------------------\n");
+			mutationLog.write("Deleting overlapping records produced: \n");
+			// Now, check the solution for overlapping elements
+			sol.deleteOverlapping();
+			sol.printCSVContentsToFile(mutationLog);
+			mutationLog.write("Deleting overlapping records done\n");
+			mutationLog.write("---------------------------------------------------------------------------------------------------\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return sol;
 	}
 

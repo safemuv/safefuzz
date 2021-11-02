@@ -518,6 +518,7 @@ public class FuzzingEngine<E> {
 						String fieldSpec = fields[5];
 						String opClass = fields[6];
 						String params = fields[7];
+						System.out.println("params = " + params);
 
 						Optional<FuzzingOperation> op_o = loadOperation(opClass, params);
 						if (op_o.isPresent()) {

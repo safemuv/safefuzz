@@ -113,10 +113,15 @@ public class FuzzingKeySelectionRecord extends FuzzingSelectionRecord {
 	}
 	
 	private String paramsAsString() {
-		List<String> strList = params.stream().map(e -> e.toString()).collect(Collectors.toList());
-		// Merge the specificOpParams with pipes
-		String paramStr = String.join("|", strList);
-		return paramStr;
+		if (params != null) {
+			List<String> strList = params.stream().map(e -> e.toString()).collect(Collectors.toList());
+			// Merge the specificOpParams with pipes
+			String paramStr = String.join("|", strList);
+			return paramStr;
+		} else {
+			return ""; 
+		}
+		
 	}
 	
 	public Optional<Map.Entry<Pattern,Object>> getPatternAndGroupStructure() {
