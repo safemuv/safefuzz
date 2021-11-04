@@ -37,6 +37,7 @@ public class GUITest {
     HashMap<Robot,JLabel> robotLabels = new LinkedHashMap<Robot, JLabel>();
     HashMap<Goal,JLabel> goalLabels = new LinkedHashMap<Goal, JLabel>();
     HashMap<String,JLabel> fuzzingKeyLabels = new LinkedHashMap<String, JLabel>();
+    HashMap<String,JLabel> condVarLabels = new LinkedHashMap<String, JLabel>();
     
     // This shows the active fuzzing key operations at any time during execution
     HashMap<String,String> fuzzingKeyOperations= new LinkedHashMap<String,String>();
@@ -107,11 +108,23 @@ public class GUITest {
     	robotsPanel.add(timeLabel);
     	
     	for (Robot r : mission.getAllRobots()) {
-    		//chosenRobotName = r.getName();
-	    	JLabel l = new JLabel(robotLabelText(r));
+    		JLabel l = new JLabel(robotLabelText(r));
 	    	l.setVisible(true);
 	    	robotLabels.put(r, l);
 	    	robotsPanel.add(l);
+	    	
+	    	JLabel l1 = new JLabel();
+	    	JLabel l2 = new JLabel();
+	    	JLabel l3 = new JLabel();
+	    	JLabel l4 = new JLabel();
+	    	condVarLabels.put(r.getName() + ",airframe_clearance", l1);
+	    	condVarLabels.put(r.getName() + ",starting_point_distance", l2);
+	    	condVarLabels.put(r.getName() + ",distance_to_left_wing_base", l3);
+	    	condVarLabels.put(r.getName() + ",distance_to_right_wing_base", l4);
+	    	fuzzingPanel.add(l1);
+	    	fuzzingPanel.add(l2);
+	    	fuzzingPanel.add(l3);
+	    	fuzzingPanel.add(l4);
     	}
     	
     	Map <String,Goal> goals = mission.getGoalsAndNames();
@@ -174,7 +187,21 @@ public class GUITest {
     		l.setText(text);
     		l.repaint();
     	}
+    	
+    	for (Map.Entry<String,JLabel> entry : condVarLabels.entrySet()) {
+    		JLabel l = entry.getValue();
+    		String combinedName = entry.getKey();
+    		String [] fields = combinedName.split(",");
+    		if (fields.length > 0) {
+    			String robotName = fields[0];
+    			String varName = fields[1];
+    			Object val = core.getVariable(varName, robotName);
+    			l.setText("condvar: "+ combinedName + "=" + val.toString());
+    			l.repaint();
+    		}
+    	}
     }
+    
     
     private String fuzzingLabelText(String key) {
     	return key + "-" + fuzzingKeyOperations.get(key);
@@ -250,6 +277,16 @@ public class GUITest {
     }
     
     public synchronized void setFuzzingKeyState(String key, String vehicle, String opText) {
+    	String k = key + "-" + vehicle;
+    	fuzzingKeyOperations.put(k, opText);
+    	if (!fuzzingKeyLabels.containsKey(k)) {
+    		JLabel l = new JLabel();
+    		fuzzingKeyLabels.put(k, l);
+    		fuzzingPanel.add(l);
+    	}
+    }
+    
+    public synchronized void setFuzzingVarState(String key, String vehicle, String opText) {
     	String k = key + "-" + vehicle;
     	fuzzingKeyOperations.put(k, opText);
     	if (!fuzzingKeyLabels.containsKey(k)) {

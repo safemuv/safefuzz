@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.jms.JMSException;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -42,8 +44,7 @@ public abstract class ATLASCore {
 	protected FuzzingEngine fuzzEngine;
 
 	protected Map<String, Boolean> vehicleBatteryFlat = new HashMap<String, Boolean>();
-	
-	// Sim variables are delivered from the middleware
+
 	protected Map<String, Object> simVariables = new HashMap<String, Object>();
 	// Function variables are computed directly by the middleware
 	protected Map<String, ObjectLambda> middlewareFunctionVariables = new HashMap<String, ObjectLambda>();
@@ -52,12 +53,12 @@ public abstract class ATLASCore {
 
 	@SuppressWarnings("rawtypes")
 	protected List<ATLASEventQueue> queues = new ArrayList<ATLASEventQueue>();
-	protected HashMap<String,Object> goalVariables = new LinkedHashMap<String,Object>();
+	protected HashMap<String, Object> goalVariables = new LinkedHashMap<String, Object>();
 	protected List<FaultInstance> activeFaults = new ArrayList<FaultInstance>();
 	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
 	protected List<PositionUpdateLambda> positionWatchers = new ArrayList<PositionUpdateLambda>();
 	protected List<SpeedUpdateLambda> speedWatchers = new ArrayList<SpeedUpdateLambda>();
-	
+
 	private FaultGenerator faultGen;
 	private static ATLASCore coreRef;
 	private double time = 0.0;
@@ -105,7 +106,7 @@ public abstract class ATLASCore {
 			fromCI = new CIEventQueue(this, mission, CI_QUEUE_CAPACITY);
 			queues.add(fromCI);
 		}
-		faultGen = new FaultGenerator(this,mission);
+		faultGen = new FaultGenerator(this, mission);
 		fuzzEngine = GeneratedFuzzingSpec.createFuzzingEngine(mission, true);
 		setCore(this);
 		setupEnergyOnRobots();
@@ -160,58 +161,59 @@ public abstract class ATLASCore {
 		}
 		;
 	}
-	
+
 	public ObjectLambda setupLambdaFromFixedPoint(String varName, Point fixedPoint) {
 		ObjectLambda resLambda = (name) -> {
 			Robot r = mission.getRobot(name);
 			try {
 				Point p = r.getPointComponentProperty("location");
 				double distance = fixedPoint.distanceTo(p);
-				System.out.println("starting_point_distance = " + distance);
 				return distance;
 			} catch (MissingProperty p) {
 				return Double.MAX_VALUE;
 			}
 		};
-		
+
 		middlewareFunctionVariables.put(varName, resLambda);
 		return resLambda;
 	}
 
 	public void setupMiddlewareFunctionVariables() {
-		
 		ObjectLambda spdLambda = (name) -> {
 			Robot r = mission.getRobot(name);
 			try {
 				Point p = r.getPointComponentProperty("location");
 				Point orig = r.getPointComponentProperty("startLocation");
 				double distance = orig.distanceTo(p);
-				System.out.println("starting_point_distance = " + distance);
 				return distance;
 			} catch (MissingProperty p) {
 				return Double.MAX_VALUE;
 			}
 		};
-		
+
 		ObjectLambda afdLambda = (name) -> {
-			Robot r = mission.getRobot(name);
-				Object d = getGoalVariable(name, "airframe_clearance");
-				if (d != null) {
-					return (Double)d;
-				} else {
-					return Double.MAX_VALUE;
-				}
+			Object gv = getGoalVariable(name, "/airframe_clearance");
+			if (gv != null) {
+				edu.wpi.rail.jrosbridge.messages.Message m = (edu.wpi.rail.jrosbridge.messages.Message)gv;
+				String typ = m.getMessageType();
+				JsonObject jobj = m.toJsonObject();
+				JsonNumber n = (JsonNumber)jobj.get("data");
+				double distVal = n.doubleValue();
+				return distVal;
+			} else {
+				return Double.MAX_VALUE;
+			}
 		};
-		
+
 		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
-		middlewareFunctionVariables.put("airframe_distance", afdLambda);
-		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14,-2.28,5.2));
-		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14,6.26,5.2));
+		middlewareFunctionVariables.put("airframe_clearance", afdLambda);
+		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14, -2.28, 5.2));
+		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14, 6.26, 5.2));
 	}
-	
+
 	public void runMiddleware() {
 		setupMiddlewareFunctionVariables();
-		
+
 		for (ATLASEventQueue<?> q : queues) {
 			// Since the GUI displays global status, it
 			// needs to be updated following every event on any queue
@@ -288,7 +290,7 @@ public abstract class ATLASCore {
 	public void setupPositionWatcher(PositionUpdateLambda l) {
 		positionWatchers.add(l);
 	}
-	
+
 	public void setupSpeedWatcher(SpeedUpdateLambda l) {
 		speedWatchers.add(l);
 	}
@@ -298,7 +300,7 @@ public abstract class ATLASCore {
 			watcher.op(gps);
 		}
 	}
-	
+
 	public void notifySpeedUpdate(SpeedReading s) {
 		for (SpeedUpdateLambda watcher : speedWatchers) {
 			watcher.op(s);
@@ -330,9 +332,9 @@ public abstract class ATLASCore {
 			r.setupRobotEnergy();
 		}
 	}
-	
+
 	public Object getVariable(String varName, String robotName) {
-		// Use the middleware function variables first
+		// Use the middleware function variables first, then the sim variables
 		String combinedName = varName;
 		if (middlewareFunctionVariables.containsKey(combinedName)) {
 			ObjectLambda l = middlewareFunctionVariables.get(combinedName);
@@ -347,11 +349,12 @@ public abstract class ATLASCore {
 			}
 		}
 	}
-	
+
 	public void setGoalVariable(String vehicleName, String topicName, Object val) {
+		System.out.println("setGoalVariable: vehicleName=" + vehicleName + ",topicName=" + topicName + ",val=" + val);
 		goalVariables.put(vehicleName + "-_-" + topicName, val);
 	}
-	
+
 	public Object getGoalVariable(String vehicleName, String topicName) {
 		return goalVariables.get(vehicleName + "-_-" + topicName);
 	}

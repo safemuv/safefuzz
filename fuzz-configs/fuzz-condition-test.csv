@@ -1,0 +1,1 @@
+KEYCONDSTART,/ual/set_velocity_prime,{"N":"<compcond>"|"C":[{"N":"<basic_cond>"|"C":[{"N":"<var>"|"C":[{"N":"starting_point_distance"}]}|{"N":"<bincomp>"|"C":[{"N":".GREATER_THAN"}]}|{"N":"<expr>"|"C":[{"N":"<int>"|"C":[{"N":"7"}]}]}]}]},2000.57173767517807,uav_2,twist.linear,JSONPointChange,FIXED|1.2552257874191013|-1.19627322572114858|-0.132147490458106

@@ -1,0 +1,2 @@
+KEY,/ual/set_velocity_prime,100.0,300.0,uav_1,twist.linear,JSONPointChange,FIXED|0|-1.0|0
+KEY,/ual/set_velocity_prime,150.0,200.0,uav_1,twist.linear,JSONPointChange,FIXED|0|1.0|0

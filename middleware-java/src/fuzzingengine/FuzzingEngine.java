@@ -494,7 +494,8 @@ public class FuzzingEngine<E> {
 		System.out.println("setupFromFuzzingFile - " + fileName);
 		try {
 			Files.readAllLines(Paths.get(fileName)).forEach(line -> {
-				if (line.charAt(0) != '#') {
+				System.out.println("line="+line);
+				if (line.length() > 0 && line.charAt(0) != '#') {
 					String fields[] = line.split(",");
 					System.out.println("0 - " + fields[0]);
 					int i = 0;

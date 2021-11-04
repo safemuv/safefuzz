@@ -1,0 +1,3 @@
+KEYCONDBOTH,/ual/set_velocity_prime,{"N":"<compcond>"|"C":[{"N":"<basic_cond>"|"C":[{"N":"<var>"|"C":[{"N":"distance_to_right_wing_base"}]}|{"N":"<bincomp>"|"C":[{"N":".GREATER_THAN"}]}|{"N":"<expr>"|"C":[{"N":"<var>"|"C":[{"N":"distance_to_left_wing_base"}]}]}]}]},{"N":"<compcond>"|"C":[{"N":"<basic_cond>"|"C":[{"N":"<var>"|"C":[{"N":"distance_to_left_wing_base"}]}|{"N":"<bincomp>"|"C":[{"N":".LESS_THAN"}]}|{"N":"<expr>"|"C":[{"N":"<int>"|"C":[{"N":"14"}]}]}]}]},uav_1,twist.linear,DelayFuzzingOperation,FIXED|1.0
+
+

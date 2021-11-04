@@ -13,5 +13,7 @@ echo "The path should be fuzzed with distortions"
 sleep 10
 ./run_repeated_experiment.sh $FUZZ_CONF_DIR/ros-fuzztest-path.csv 1 test-paths.res
 echo "Done"
+echo "Testing overlapping experiments"
+./run_repeated_experiment.sh $FUZZ_CONF_DIR/setvelocity-overlap-test.csv 1 test-overlap.res
 
 
