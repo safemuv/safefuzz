@@ -1,9 +1,11 @@
 // protected region customHeaders on begin
 package fuzzexperiment.runner.metrics;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
-import fuzzexperiment.runner.metrics.Metric.MetricDirection;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingTimeSpecification;
 // protected region customHeaders end
@@ -26,15 +28,30 @@ public class FuzzingTimeLength extends OfflineMetric {
         			}
         			totalLength += slenAdd;
         		} else {
-       				System.out.println(this.getClass().getCanonicalName() + ": variable " + r.getKey() + " no static time length - normal if using condition-based fuzzing");
-        		}
+        			// There are no time lengths defined here, we need to define it simply
+        			Scanner reader;
+					try {
+						String filename = logDir + "/activeFuzzingCount.log";
+						reader = new Scanner(new File(filename));
+	       				while (reader.hasNextLine()) {
+	       					String line = reader.nextLine();
+	       					String[] fields = line.split(",");
+	       					double time = Double.parseDouble(fields[0]);
+	       					int val = Integer.parseInt(fields[1]);
+	       					totalLength += val;
+	       				}
+	       				reader.close();
+	       				return totalLength;
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+
+       			}
         	}
         }
-
-        // Since it is a metric designed to be minimsed, set it as negative
         return totalLength;
-		// protected region userCode end
-	}
+    }  
+// protected region userCode end
 	
 	public MetricDirection optimiseDirection() {
 		// protected region userCode on begin

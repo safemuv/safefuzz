@@ -254,4 +254,49 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 			e.printStackTrace();
 		}
 	}
+
+	public void logPopulationMetrics(String scenarioStr, FileWriter fw) throws IOException {
+		System.out.println("Evaluations = " + evaluations);
+		fw.write("#ScenarioName,FuzzingTestNum,RunNum,");
+		boolean headerPrinted = false;
+		
+		for (S s : getPopulation()) {
+			if (s instanceof FuzzingSelectionsSolution) {
+				FuzzingSelectionsSolution fss = (FuzzingSelectionsSolution)s;
+				
+				// Print the header from the metric names
+				if (!headerPrinted) {
+					for (int i = 0; i < fss.getNumberOfObjectives(); i++) {
+						String delim="";
+						if (i < fss.getNumberOfObjectives() - 1) {
+							delim = ",";
+						}
+						fw.write(fss.getObjectiveMetricName(i) + delim);
+					}
+					fw.write("\n");
+					headerPrinted = true;
+				}
+				
+				String csvFile = fss.getCSVFileName();
+				int fuzzingTestNum = fss.getFuzzingTestNum();
+				int runNum = fss.getRunNum();
+			
+				fw.write(scenarioStr + "," + fuzzingTestNum + "," + runNum + ",");
+				for (int i = 0; i < fss.getNumberOfObjectives(); i++) {
+					String delim="";
+					if (i < fss.getNumberOfObjectives() - 1) {
+						delim = ",";
+					}
+					fw.write(fss.getObjective(i) + delim);
+				}
+				fw.write("\n");
+			}
+		}
+	}
+	
+	public void logFinalMetrics(String scenarioStr, String file) throws IOException {
+		FileWriter f = new FileWriter(file);
+		logPopulationMetrics(scenarioStr, f);
+		f.close();
+	}
 }

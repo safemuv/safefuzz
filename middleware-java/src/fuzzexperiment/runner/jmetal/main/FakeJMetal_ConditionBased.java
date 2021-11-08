@@ -17,7 +17,7 @@ public class FakeJMetal_ConditionBased extends AbstractAlgorithmRunner {
 		Mission mission;
 		try {
 			mission = dslloader.loadMission();
-			double timingProbMut = 0.666;
+			double timingProbMut = 1.0;
 			double participantProbMut = 0.0;
 			double paramProbMut = 0.0;
 			
@@ -25,9 +25,11 @@ public class FakeJMetal_ConditionBased extends AbstractAlgorithmRunner {
 			int populationSize = 6;
 			int offspringSize = 6;
 			
+			String scenarioStr = "S001";
+			
 			ExperimentType etype = ExperimentType.CONDITION_BASED_FUZZING_BOTH;
 			
-			JMetalExpt jmetalExpt = new JMetalExpt(populationSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
+			JMetalExpt jmetalExpt = new JMetalExpt(scenarioStr, populationSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.setActuallyRun(false);
 			jmetalExpt.jMetalRun("condbasedfuzzing", mission);
 		} catch (DSLLoadFailed e) {

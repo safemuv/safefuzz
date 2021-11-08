@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.uma.jmetal.solution.*;
 
 import atlasdsl.*;
+import fuzzexperiment.runner.metrics.Metric;
 import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
@@ -24,11 +24,15 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	private String exptTag;
 	private double exptRunTime;
 	String baseDir = "/tmp";
-
+	
 	private static int csvFileCount = 0;
+	
+	private int runNum;
+	private int fuzzingTestNum;
 
 	private Map<Object, Object> attributes = new HashMap<Object, Object>();
 	private Map<Integer, Double> objectives = new HashMap<Integer, Double>();
+	private Map<Integer, Metric> objectiveNames = new HashMap<Integer, Metric>();
 	private Map<Integer, Double> constraints = new HashMap<Integer, Double>();
 	private List<FuzzingSelectionRecord> contents = new ArrayList<FuzzingSelectionRecord>();
 
@@ -42,12 +46,13 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public FuzzingSelectionsSolution(Mission mission, String exptTag, boolean actuallyRun, double exptRunTime,
-			List<FuzzingKeySelectionRecord> recs) {
+			List<FuzzingKeySelectionRecord> recs, int runNum) {
 		this.mission = mission;
 		this.exptTag = exptTag;
 		this.actuallyRun = actuallyRun;
 		this.exptRunTime = exptRunTime;
 		this.contents = new ArrayList<FuzzingSelectionRecord>(recs.size());
+		this.runNum = runNum;
 
 		for (FuzzingSelectionRecord fi : recs) {
 			this.contents.add(fi.dup());
@@ -123,22 +128,7 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 		return intensity;
 	}
 
-//	private double totalActiveFaultTimeLengthScaledByIntensity() {
-//		double total = 0.0;
-//		for (FuzzingSelectionRecord fs : contents) {
-//			if (fs.isActive()) {
-//				total += FuzzingSelectionIntensity(fs) * (fs.getEndTime() - fs.getStartTime());
-//			}
-//		}
-//		return total;
-//	}
-
-//	public double faultCostProportion() {
-//		return ((totalActiveFaultTimeLengthScaledByIntensity() / (contents.size() * exptRunTime)));
-//	}
-
 	public double getConstraint(int index) {
-		// return faultCostProportion();
 		return 0.0;
 	}
 
@@ -254,11 +244,15 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 	}
 
 	public String createCSVFileName() throws IOException {
-		// csvFileName = baseDir + "/" + UUID.randomUUID().toString() + ".csv";
 		csvFileCount++;
+		fuzzingTestNum = csvFileCount;
 		csvFileName = String.format("%s/jmetalfuzz-%03d.csv", baseDir, csvFileCount);
 		generateCSVFile(csvFileName);
 		return csvFileName;
+	}
+	
+	public int getFuzzingTestNum() {
+		return fuzzingTestNum;
 	}
 
 	public String getCSVFileName() throws IOException {
@@ -349,4 +343,22 @@ public class FuzzingSelectionsSolution implements Solution<FuzzingSelectionRecor
 			return false;
 		}
 	}
+
+	public int getRunNum() {
+		return runNum;
+	}
+
+	public void setObjectiveMetric(int i, Metric m) {
+		objectiveNames.put(i, m);
+	}
+	
+	public Metric getObjectiveMetric(int i) {
+		return objectiveNames.get(i);
+	}
+	
+	public String getObjectiveMetricName(int i) {
+		Metric m = objectiveNames.get(i);
+		return m.getClass().getSimpleName();
+	}
+	
 }

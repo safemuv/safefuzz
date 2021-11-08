@@ -1,7 +1,9 @@
 #!/bin/sh
 
-rm populationAtEval-*.res
-rm FUN.csv
-rm VAR.csv
-rm tempLog-*.res
-rm 2021*
+rm -f populationAtEval-*.res
+rm -f FUN.csv
+rm -f VAR.csv
+rm -f tempLog-*.res
+rm -f 2021*
+rm -f mutation.log
+rm -f crossover.log

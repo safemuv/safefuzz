@@ -27,9 +27,11 @@ public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 			int popSize = 10;
 			int offspringSize = 10;
 			
+			String scenarioStr = "S001";
+			
 			// Do fake experiment to find a specific time
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
-			JMetalExpt jmetalExpt = new JMetalExpt(popSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
+			JMetalExpt jmetalExpt = new JMetalExpt(scenarioStr, popSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
 			jmetalExpt.addSpecialMetric(new FindSpecificTime(100.0,200.0));
 			jmetalExpt.addSpecialMetric(new FindSpecificTime(200.0, 250.0));
 			

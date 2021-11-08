@@ -20,10 +20,6 @@ import utils.ExptHelper;
 
 public class StartFuzzingProcesses {
 
-	// TODO: no more fixed paths
-	//private String ABS_SCRIPT_PATH = "/home/jharbin/academic/atlas/atlas-middleware/bash-scripts/";
-	//private String ABS_WORKING_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/";
-	//public String ABS_MIDDLEWARE_PATH = "/home/jharbin/academic/atlas/atlas-middleware/expt-working/ros/";
 	private String ABS_SCRIPT_PATH;
 	private String ABS_WORKING_PATH;
 	public String ABS_MIDDLEWARE_PATH;
@@ -126,6 +122,7 @@ public class StartFuzzingProcesses {
 				ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
 			}
 			
+			// TODO: can we replace this delay with checking ROS status to launch the middleware
 			sleepHandlingInterruption(40000);
 			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
@@ -174,8 +171,6 @@ public class StartFuzzingProcesses {
 	}
 
 	public void cleanRun(Mission baseMission, String file) throws IOException {
-		// Originally call Argentina's launch script here... for now, just call
-		// the full script
 		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
 	}
 

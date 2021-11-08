@@ -17,7 +17,8 @@ import fuzzingengine.exptgenerator.FuzzingTimeSpecificationGeneratorStartEnd;
 public class RunExptMain_feedback {
 	public static void main(String[] args) {
 		String resFileName = "feedback-expt.res";
-		int runCount = 120;
+		int fuzzingTestCount = 120;
+		int runNumFixed = 0;
 		int populationLimit = 20;
 
 		try {
@@ -27,7 +28,7 @@ public class RunExptMain_feedback {
 			Grammar<String> g = Grammar.fromFile(new File("/home/jharbin/academic/atlas/atlas-middleware/grammar/safemuv-fuzzing-cond.bnf"));
 			FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(m, new Random());
 			FuzzingExperimentModifier exptGen = new FuzzingExperimentModifier(tgen, m);
-			ExptParams ep = new RunExperimentsMetricFeedback(exptGen, resFileName, m, csvBaseName, runCount, populationLimit);
+			ExptParams ep = new RunExperimentsMetricFeedback(exptGen, resFileName, m, csvBaseName, fuzzingTestCount, populationLimit, runNumFixed);
 			
 			FuzzExptRunner r = new FuzzExptRunner(ep, mh);
 			r.run();

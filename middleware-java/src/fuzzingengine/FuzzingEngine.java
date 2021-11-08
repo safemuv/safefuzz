@@ -47,6 +47,13 @@ public class FuzzingEngine<E> {
 	FuzzingSimMapping fuzzingspec = new FuzzingSimMapping();
 	
 	PriorityQueue<FutureEvent<E>> delayedEvents = new PriorityQueue<FutureEvent<E>>();
+	
+	// The count of active fuzzing operations
+	private int activeFuzzingOperationMax = 0;
+	// The last time at which the active fuzzing operations were tracked
+	private double activeFuzzingOperationLastTime = 0.0;
+	private final double FUZZING_OPERATION_TRACKING_TIME_STEP = 1.0;
+	
 
 	public FuzzingEngine(Mission m) {
 		this.m = m;
@@ -678,5 +685,17 @@ public class FuzzingEngine<E> {
 
 	public List<String> getAllLaunchFilesPaths() {
 		return fuzzingspec.getAllLaunchFilesPaths();
+	}
+
+	public void registerActiveOperations(double time, List<ActiveFuzzingInfo> ifs) {
+		// This assumes there is at least one operation per second
+		int activeCount = ifs.size();
+		activeFuzzingOperationMax = Math.max(activeFuzzingOperationMax, activeCount);
+		if (time > (activeFuzzingOperationLastTime + FUZZING_OPERATION_TRACKING_TIME_STEP)) {
+			// Log the active fuzzing operations at this timestep
+			ATLASLog.logActiveFuzzingMetrics(time,activeFuzzingOperationMax);
+			activeFuzzingOperationLastTime = time;
+			activeFuzzingOperationMax = 0;
+		}
 	}
 }
