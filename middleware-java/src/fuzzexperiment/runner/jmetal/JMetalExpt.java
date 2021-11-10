@@ -67,6 +67,8 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 	private String logPath;
 
+	private String scenarioStr;
+
 	private void readProperties() {
 		Properties prop = new Properties();
 		String fileName = "fuzzingexpt.config";
@@ -85,7 +87,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		}
 	}
 
-	public JMetalExpt(int popSize, int offspringPopSize, int maxIterations, double timingMutProb, double participantsMutProb, double paramMutProb,
+	public JMetalExpt(String scenarioStr, int popSize, int offspringPopSize, int maxIterations, double timingMutProb, double participantsMutProb, double paramMutProb,
 			ExperimentType etype) {
 		this.populationSize = popSize;
 		this.offspringPopulationSize = offspringPopSize;
@@ -94,6 +96,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 		this.participantsMutProb = participantsMutProb;
 		this.paramMutProb = paramMutProb;
 		this.etype = etype;
+		this.scenarioStr = scenarioStr;
 		readProperties();
 	}
 	
@@ -169,12 +172,12 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			double duration = (System.currentTimeMillis() - startTime);
 			System.out.println("Total execution time: " + duration + "ms, " + (duration / 1000) + " seconds");
 
-			printFinalSolutionSet(population);
 			((FuzzingSelectionsMutation)mutation).closeLog();
 			((FuzzingCrossoverOperation)crossover).closeLog();
-			
 			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
+			((NSGAII_JRH)algorithm).logFinalMetrics(scenarioStr, "jmetal-final-csv-results.res");
 			
+			//printFinalSolutionSet(population);
 			
 			if (!referenceParetoFront.equals("")) {
 				printQualityIndicators(population, referenceParetoFront);

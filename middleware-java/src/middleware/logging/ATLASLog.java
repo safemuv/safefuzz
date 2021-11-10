@@ -14,6 +14,7 @@ public class ATLASLog {
 	private FileWriter goalLog;
 	private FileWriter timeLog;
 	private FileWriter optionsLog;
+	private FileWriter activeFuzzingCountLog;
 	private FileOutputStream timeStream;
 	
 	ATLASLog() {
@@ -24,6 +25,7 @@ public class ATLASLog {
 			fuzzingLog = new FileWriter("logs/fuzzing.log");
 			goalLog = new FileWriter("logs/goalLog.log");
 			timeStream = new FileOutputStream("logs/atlasTime.log");
+			activeFuzzingCountLog = new FileWriter("logs/activeFuzzingCount.log");
 			optionsLog = new FileWriter("logs/options.log");
 			timeLog = new FileWriter(timeStream.getFD());
 			timeLog.write("0.0\n");
@@ -124,6 +126,16 @@ public class ATLASLog {
 			// will not be updated regularly enough
 			l.timeLog.flush();
 			l.timeStream.getFD().sync();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void logActiveFuzzingMetrics(double time, int activeFuzzingOpCount) {
+		try {
+			FileWriter w = getLog().activeFuzzingCountLog;
+			w.write(time + "," + activeFuzzingOpCount + "\n");
+			w.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

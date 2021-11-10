@@ -26,18 +26,17 @@ public class FuzzingConditionStartEnd extends FuzzingTimeSpecification {
 			if (startCond.evaluate(vehicle)) {
 				active = true;
 				activationCount++;
-				ATLASLog.logFuzzing("Fuzzing condition startCond true: activating fuzzing on " + this);
+				ATLASLog.logFuzzing("Fuzzing condition startCond true: activating fuzzing on vehicle " + vehicle + ":" + this);
 			}
 		}
 		
 		if (active) {
 			// Active is always true here
 			// When endCond evaluates to true, reset active to false 
-			ATLASLog.logFuzzing("Fuzzing condition endCond true: deactivating fuzzing on " + this);
+			ATLASLog.logFuzzing("Fuzzing condition endCond true: deactivating fuzzing on vehicle " + vehicle + ":" + this);
 			active = !endCond.evaluate(vehicle);
 		}
-		
-		// TODO: Need to check active and log the total number of second intervals and conditions are evaluating for true to...
+			
 		return active;
 	}
 

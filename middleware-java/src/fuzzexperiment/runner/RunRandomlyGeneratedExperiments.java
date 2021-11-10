@@ -17,6 +17,7 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 	private Mission mission;
 	private String fuzzCSVBaseName;
 	private	FuzzingExperimentGenerator g;
+	private int runNumFixed;
 	
 	private String getCurrentFilename() {
 		return fuzzCSVBaseName + "-" + count + ".csv";
@@ -26,11 +27,12 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 		g.generateExperiment(Optional.of(getCurrentFilename()));
 	}
 	
-	public RunRandomlyGeneratedExperiments(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, FuzzingTimeSpecificationGenerator tgen) {
+	public RunRandomlyGeneratedExperiments(String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, FuzzingTimeSpecificationGenerator tgen, int runNumFixed) {
 		this.resFileName = resFileName;
 		this.mission = mission;
 		this.countLimit = countLimit;
 		this.fuzzCSVBaseName = fuzzCSVBaseName;
+		this.runNumFixed = runNumFixed;
 		g = new FuzzingExperimentGenerator(tgen, mission);
 		newGeneratedFile();
 	}
@@ -67,5 +69,9 @@ public class RunRandomlyGeneratedExperiments extends ExptParams {
 	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	protected int getRunNum() {
+		return runNumFixed;
 	}
 }

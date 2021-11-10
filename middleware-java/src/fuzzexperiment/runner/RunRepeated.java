@@ -8,26 +8,26 @@ import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.OfflineMetric;
 
 public class RunRepeated extends ExptParams {
-	private int count = 0;
+	private int runNum = 0;
 	private int limitCount;
 	private String fixedFilename;
 	
-	public RunRepeated(String fixedFilename, int limitCount) {
-		this.count = 0;
-		this.limitCount = limitCount;
+	public RunRepeated(String fixedFilename, int limitCount, int runNumStart) {
+		this.runNum = runNumStart;
+		this.limitCount = limitCount + runNumStart;
 		this.fixedFilename = fixedFilename;
 	}
 
 	public boolean completed() {
-		return (count >= limitCount);
+		return (runNum >= limitCount);
 	}
 
 	public void printState() {
-		System.out.println("Run count = " + count);
+		System.out.println("Run num = " + runNum);
 	}
 
 	public void advance() {
-		count++;
+		runNum++;
 	}
 
 	public Optional<String> getNextFuzzingCSVFileName() {
@@ -35,20 +35,22 @@ public class RunRepeated extends ExptParams {
 	}
 
 	public void advance(Map<Metric, Double> res) {
-		count++;
+		runNum++;
 		
 	}
 
-	@Override
 	public void printStateAfter() throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	protected int getRunNum() {
+		return runNum;
 	}
 
 }

@@ -18,7 +18,7 @@ public class RunExptRepeated_fuzzing {
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated(fuzzFileName, count);
+			ExptParams ep = new RunRepeated(fuzzFileName, count, 1);
 			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh);
 			r.run();

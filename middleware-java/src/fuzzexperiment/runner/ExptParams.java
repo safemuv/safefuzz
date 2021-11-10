@@ -25,4 +25,5 @@ public abstract class ExptParams {
 	
 	protected abstract Optional<String> getNextFuzzingCSVFileName();
 	protected abstract void printFinal(List<OfflineMetric> ms) throws IOException;
+	protected abstract int getRunNum();
 }

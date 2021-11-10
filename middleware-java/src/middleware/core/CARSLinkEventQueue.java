@@ -84,6 +84,7 @@ public abstract class CARSLinkEventQueue<E> extends ATLASEventQueue<E> implement
 		double time = core.getTime();
 		
 		List<ActiveFuzzingInfo> ifs = fuzzingEngine.getActiveFuzzingForEvent(event, time);
+		fuzzingEngine.registerActiveOperations(time, ifs);
 		Optional<E> modifiedEvent_o = Optional.of(event);
 		Optional<String> reflectBackAsName = fuzzingEngine.shouldReflectBackToCARS(event);
 		

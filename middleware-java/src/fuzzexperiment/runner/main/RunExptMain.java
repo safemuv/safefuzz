@@ -16,7 +16,7 @@ public class RunExptMain {
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated("null-fuzzexpt.csv", 30);
+			ExptParams ep = new RunRepeated("null-fuzzexpt.csv", 30, 1);
 			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh);
 			r.run();

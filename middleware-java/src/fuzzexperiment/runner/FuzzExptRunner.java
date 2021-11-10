@@ -99,7 +99,7 @@ public class FuzzExptRunner {
 				System.out.println("Running fuzzing experiments for CSV file name " + file);
 				List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, file);
 				System.out.println("Fuzzing records = " + fuzzrecs);
-				FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, exptTag, actuallyRun, timeLimit, fuzzrecs);
+				FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, exptTag, actuallyRun, timeLimit, fuzzrecs, eparams.getRunNum());
 				
 				if (actuallyRun) {
 					runner.runExptProcesses(exptTag, baseMission, file, timeLimit, sol, RMKGInterface.REGENERATE_SCENARIOS);

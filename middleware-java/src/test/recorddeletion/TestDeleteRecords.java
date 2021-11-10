@@ -14,7 +14,7 @@ import fuzzingengine.support.FuzzingEngineSupport;
 public class TestDeleteRecords {
 	public static void testRecordRemoval(Mission baseMission, String csvFile, FileWriter f) throws IOException {
 		List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFile);
-		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "test", false, 600.0, fuzzrecs);
+		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "test", false, 600.0, fuzzrecs, 0);
 		f.write("Testing file: " + csvFile + "...\n");
 		f.write("\nInput: \n");
 		sol.printCSVContentsToFile(f);

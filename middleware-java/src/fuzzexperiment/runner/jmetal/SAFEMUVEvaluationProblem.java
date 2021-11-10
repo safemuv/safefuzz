@@ -173,7 +173,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	
 	public void performSAFEMUVExperiment(FuzzingSelectionsSolution solution) throws InvalidMetrics {
 		try {
-			String exptTag = exptTagBase + (runCount++); 
+			String exptTag = exptTagBase + (runCount++);
 			String csvFileName = solution.getCSVFileName();
 
 			if (actuallyRun) {
@@ -216,6 +216,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 				if (jmetalNum_o.isPresent()) {
 					int i = jmetalNum_o.get();
 					
+					solution.setObjectiveMetric(i, m);
 					if (m.optimiseDirection() == Metric.MetricDirection.HIGHEST) {
 						// JMetal's comparison expects a lower value as better
 						// so when the metric should be increased, invert the sign
@@ -276,7 +277,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		}
 		
 		System.out.println("createSolution - recs=" + recs);
-		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recsKey);
+		int runNum = 0;
+		FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, "TAGTEST", actuallyRun, exptRunTime, recsKey, runNum);
 		System.out.println("Initial chromosome = " + sol.toString());
 		return sol;
 	}

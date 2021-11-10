@@ -31,6 +31,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 
 	public FuzzingPopulation pop;
 	private List<FuzzingSelectionRecord> currentFuzzingSels;
+	private int runNumConstant;
 
 	private String getCurrentFilename() {
 		return fuzzCSVBaseName + "-" + String.format("%03d", count) + ".csv";
@@ -51,7 +52,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		}
 	}
 
-	public RunExperimentsMetricFeedback(FuzzingExperimentModifier exptGen, String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit) throws IOException {
+	public RunExperimentsMetricFeedback(FuzzingExperimentModifier exptGen, String resFileName, Mission mission, String fuzzCSVBaseName, int countLimit, int populationLimit, int runNumConstant) throws IOException {
 		this.resFileName = resFileName;
 		this.populationLimit = populationLimit;
 		this.mission = mission;
@@ -60,6 +61,7 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 		this.populationLog = new FileWriter("population.log");
 		this.finalPopulationLog = new FileWriter("finalPopulation.res");
 		this.pop = new FuzzingPopulation(populationLimit);
+		this.runNumConstant = runNumConstant;
 		this.g = exptGen;
 		newRandomFile();
 		
@@ -117,5 +119,10 @@ public class RunExperimentsMetricFeedback extends ExptParams {
 	protected void printFinal(List<OfflineMetric> ms) throws IOException {
 		pop.logFinalPopulation(finalPopulationLog, ms);
 		finalPopulationLog.close();
+	}
+
+	public int getRunNum() {
+		// Run num is always constant in these experiments
+		return runNumConstant;
 	}
 }

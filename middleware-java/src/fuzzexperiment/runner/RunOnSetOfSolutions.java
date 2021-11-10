@@ -12,10 +12,12 @@ public class RunOnSetOfSolutions extends ExptParams {
 	private String resFileName;
 	List<String> fuzzingFilenames;
 	int activeElt = 0;
+	private int runNumFixed;
 	
-	public RunOnSetOfSolutions(String resFileName, List<String> fuzzingFilenames) {
+	public RunOnSetOfSolutions(String resFileName, List<String> fuzzingFilenames, int runNumFixed) {
 		this.resFileName = resFileName;
 		this.fuzzingFilenames = fuzzingFilenames;
+		this.runNumFixed = runNumFixed;
 	}
 
 	public boolean completed() {
@@ -57,5 +59,9 @@ public class RunOnSetOfSolutions extends ExptParams {
 	protected void printFinal(List<OfflineMetric> ms) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	protected int getRunNum() {
+		return runNumFixed;
 	}
 }
