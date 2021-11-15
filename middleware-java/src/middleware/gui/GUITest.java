@@ -245,7 +245,7 @@ public class GUITest {
 		JComboBox<?> robotChoice = new JComboBox(robotNames.toArray());
 		JComboBox<?> faultChoice = new JComboBox(faultNames.toArray());
     	
-    	robotChoice.setSelectedIndex(1);
+    	//robotChoice.setSelectedIndex(1);
         injectButton.addActionListener(buttonListener);
         faultChoice.addActionListener(faultChoiceListener);
 

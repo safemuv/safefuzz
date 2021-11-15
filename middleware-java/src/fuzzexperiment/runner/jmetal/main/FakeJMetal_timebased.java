@@ -10,7 +10,7 @@ import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.ExptError;
 import fuzzexperiment.runner.jmetal.JMetalExpt;
 import fuzzexperiment.runner.jmetal.SAFEMUVEvaluationProblem.ExperimentType;
-import fuzzexperiment.runner.metrics.fake.FindSpecificTime;
+import fuzzexperiment.runner.metrics.fake.*;
 
 public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 	public static void main(String[] args) throws JMetalException {
@@ -23,7 +23,7 @@ public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 			double participantProbMut = 0.0;
 			double paramProbMut = 0.0;
 
-			int numIterations = 60;
+			int numIterations = 1000;
 			int popSize = 10;
 			int offspringSize = 10;
 			
@@ -32,8 +32,8 @@ public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 			// Do fake experiment to find a specific time
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
 			JMetalExpt jmetalExpt = new JMetalExpt(scenarioStr, popSize, offspringSize, numIterations, timingProbMut, participantProbMut, paramProbMut, etype);
-			jmetalExpt.addSpecialMetric(new FindSpecificTime(100.0,200.0));
-			jmetalExpt.addSpecialMetric(new FindSpecificTime(200.0, 250.0));
+			jmetalExpt.addSpecialMetric(new FindSpecificTime(100.0, 200.0));
+			jmetalExpt.addSpecialMetric(new FindSpecificTime2(150.0, 190.0));
 			
 			jmetalExpt.setActuallyRun(false);
 			jmetalExpt.jMetalRun("timebasedfake", mission);

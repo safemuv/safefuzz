@@ -38,20 +38,22 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 	protected int matingPoolSize;
 	protected int offspringPopulationSize;
 
+	private String scenarioStr;
+ 
 	/**
 	 * Constructor
 	 */
-	public NSGAII_JRH(Problem<S> problem, int maxEvaluations, int populationSize, int matingPoolSize,
+	public NSGAII_JRH(String scenarioStr, Problem<S> problem, int maxEvaluations, int populationSize, int matingPoolSize,
 			int offspringPopulationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
 			SelectionOperator<List<S>, S> selectionOperator, SolutionListEvaluator<S> evaluator) {
-		this(problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize, crossoverOperator,
+		this(scenarioStr, problem, maxEvaluations, populationSize, matingPoolSize, offspringPopulationSize, crossoverOperator,
 				mutationOperator, selectionOperator, new DominanceComparator<S>(), evaluator);
 	}
 
 	/**
 	 * Constructor
 	 */
-	public NSGAII_JRH(Problem<S> problem, int maxEvaluations, int populationSize, int matingPoolSize,
+	public NSGAII_JRH(String scenarioStr, Problem<S> problem, int maxEvaluations, int populationSize, int matingPoolSize,
 			int offspringPopulationSize, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
 			SelectionOperator<List<S>, S> selectionOperator, Comparator<S> dominanceComparator,
 			SolutionListEvaluator<S> evaluator) {
@@ -69,6 +71,7 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 
 		this.matingPoolSize = matingPoolSize;
 		this.offspringPopulationSize = offspringPopulationSize;
+		this.scenarioStr = scenarioStr;
 	}
 
 	@Override
@@ -211,11 +214,17 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 		}
 	}
 
-	public void logPopulationIntermediate() throws IOException {
+	public void logIntermediate() throws IOException {
+		// Log the intermediate populations
 		String fileName = "populationAtEval-" + evaluations + ".res";
 		FileWriter fw = new FileWriter(fileName);
 		logPopulationToFile(fw);
 		fw.close();
+		
+		String logNonDomMetrics = "jmetal-intermediate-nondom-eval" + evaluations + ".csv";
+		String logFullMetrics = "jmetal-intermediate-full-eval" + evaluations + ".csv";
+		logMetricsForOutput(logFullMetrics, logNonDomMetrics);
+		// Log the intermediate metric values
 	}
 
 	@Override
@@ -233,7 +242,7 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 			population = replacement(population, offspringPopulation);
 			updateProgress();
 			try {
-				logPopulationIntermediate();
+				logIntermediate();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -255,12 +264,20 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 		}
 	}
 
-	public void logPopulationMetrics(String scenarioStr, FileWriter fw) throws IOException {
+	public void logPopulationMetrics(String scenarioStr, String filename, boolean nonDom) throws IOException {
 		System.out.println("Evaluations = " + evaluations);
+		FileWriter fw = new FileWriter(filename);
 		fw.write("#ScenarioName,FuzzingTestNum,RunNum,");
 		boolean headerPrinted = false;
 		
-		for (S s : getPopulation()) {
+		List<S> targetPop;
+		if (nonDom) {
+			targetPop = SolutionListUtils.getNonDominatedSolutions(getPopulation());
+		} else {
+			targetPop = getPopulation();
+		}
+		
+		for (S s : targetPop) {
 			if (s instanceof FuzzingSelectionsSolution) {
 				FuzzingSelectionsSolution fss = (FuzzingSelectionsSolution)s;
 				
@@ -292,11 +309,11 @@ public class NSGAII_JRH<S extends Solution<?>> extends AbstractGeneticAlgorithm<
 				fw.write("\n");
 			}
 		}
+		fw.close();
 	}
 	
-	public void logFinalMetrics(String scenarioStr, String file) throws IOException {
-		FileWriter f = new FileWriter(file);
-		logPopulationMetrics(scenarioStr, f);
-		f.close();
+	public void logMetricsForOutput(String fullPopFile, String nonDomFile) throws IOException {
+		logPopulationMetrics(scenarioStr, fullPopFile, false);
+		logPopulationMetrics(scenarioStr, nonDomFile, true);
 	}
 }

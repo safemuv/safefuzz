@@ -8,14 +8,14 @@ import fuzzingengine.FuzzingFixedTimeSpecification;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingTimeSpecification;
 
-public class FindSpecificTime extends FakeMetric {
+public class FindSpecificTime2 extends FakeMetric {
 	private double rangeStart;
 	private double rangeEnd;
 	private final double RAND_FACTOR = 2.0;
 	
 	Random rng = new Random();
 		
-	public FindSpecificTime(double rangeStart, double rangeEnd) {
+	public FindSpecificTime2(double rangeStart, double rangeEnd) {
 		this.rangeStart = rangeStart;
 		this.rangeEnd = rangeEnd;
 	}

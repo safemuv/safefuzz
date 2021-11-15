@@ -163,7 +163,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 			int matingPoolSize = offspringPopulationSize;
 			
-			algorithm = new NSGAII_JRH(problem, maxIterations, populationSize, matingPoolSize,
+			algorithm = new NSGAII_JRH(scenarioStr, problem, maxIterations, populationSize, matingPoolSize,
 					offspringPopulationSize, crossover, mutation, selection, dominanceComparator, evaluator);
 
 			long startTime = System.currentTimeMillis();
@@ -175,7 +175,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			((FuzzingSelectionsMutation)mutation).closeLog();
 			((FuzzingCrossoverOperation)crossover).closeLog();
 			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
-			((NSGAII_JRH)algorithm).logFinalMetrics(scenarioStr, "jmetal-final-csv-results.res");
+			((NSGAII_JRH)algorithm).logMetricsForOutput("jmetal-final-csv-results.res", "jmetal-nondom-csv-results.res");
 			
 			//printFinalSolutionSet(population);
 			
