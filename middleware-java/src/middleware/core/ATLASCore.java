@@ -204,11 +204,33 @@ public abstract class ATLASCore {
 				return Double.MAX_VALUE;
 			}
 		};
+		
+		ObjectLambda irLambda = (name) -> {
+			try {
+				// ignore the name, just use the hardcoded robot distances
+				Point r1pos = mission.getRobot("uav_1").getPointComponentProperty("location");
+				Point r2pos = mission.getRobot("uav_2").getPointComponentProperty("location");
+				double irDist = r1pos.distanceTo(r2pos);
+				return irDist;
+			} catch (MissingProperty e) {
+				e.printStackTrace();
+				return Double.MAX_VALUE;
+			}
+		};
+		
+		ObjectLambda timeLambda = (name) -> {
+			double time = getTime();
+			return time;
+		};
 
 		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
 		middlewareFunctionVariables.put("airframe_clearance", afdLambda);
+		middlewareFunctionVariables.put("time", timeLambda);
+		middlewareFunctionVariables.put("interrobot_distance", irLambda);
+		
 		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14, -2.28, 5.2));
 		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14, 6.26, 5.2));
+		setupLambdaFromFixedPoint("distance_to_nose", new Point(-6.79, 2.136, 5.8772));
 	}
 
 	public void runMiddleware() {

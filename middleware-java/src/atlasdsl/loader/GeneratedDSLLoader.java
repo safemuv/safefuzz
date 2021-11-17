@@ -12,7 +12,7 @@ import fuzzexperiment.runner.metrics.*;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 200.0;
+	final double MISSION_END_TIME = 600.0;
 	final boolean STOP_ON_NO_ENERGY = false;
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
 	
@@ -23,13 +23,20 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 			
 		mission.addRobot(ruav_1);
+		Robot ruav_2 = new Robot("uav_2");
+		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
+		ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
+		
+			
+		mission.addRobot(ruav_2);
 	
 	
 	
 	
  
+ 
 		
-		Robot [] grp1 = {ruav_1}; 
+		Robot [] grp1 = {ruav_1,ruav_2}; 
 		GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
 		
 		
@@ -66,8 +73,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("trackDistancesAndVelocities", trackDistancesAndVelocities);
  
+ 
 		
-		Robot [] grp2 = {ruav_1}; 
+		Robot [] grp2 = {ruav_1,ruav_2}; 
 		GoalParticipants gpStayInOuterRegion = new StaticParticipants(grp2, mission);
 		
 		
@@ -99,9 +107,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
  
+ 
 		
-		Robot [] grp3 = {ruav_1}; 
-		GoalParticipants gpAvoidWingInner = new StaticParticipants(grp3, mission);
+		Robot [] grp3 = {ruav_1,ruav_2}; 
+		GoalParticipants gpAvoidPlaneInner = new StaticParticipants(grp3, mission);
 		
 		
 		
@@ -117,18 +126,52 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Goal AvoidWingInner = new Goal("AvoidWingInner", mission, gt3, gpAvoidWingInner, Optional.empty(), ga3);
+		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
 		
 			GoalVariable gvar1 = new GoalVariable("/airframe_clearance", "std_msgs/Float64", true);
-			AvoidWingInner.addVariable(gvar1);
+			AvoidPlaneInner.addVariable(gvar1);
 		
 		
 		
 		
 		Metric met4 = new OutsideOfInnerRegionViolations();
-		AvoidWingInner.addMetric(met4);
+		AvoidPlaneInner.addMetric(met4);
 		
-		mission.addGoal("AvoidWingInner", AvoidWingInner);
+		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
+ 
+ 
+		
+		Robot [] grp4 = {ruav_1,ruav_2}; 
+		GoalParticipants gpAvoidOthers = new StaticParticipants(grp4, mission);
+		
+		
+		
+			GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+		
+		
+		GoalAction ga4 = new AvoidOthers(2.0);
+		
+		
+		
+		
+		
+		
+		   
+		GoalRegion grAvoidOthers = new StaticGoalRegion(
+			new Region(new Point(-10.0, -10.0, 0.0),
+			           new Point(10.0, 10.0, 10.0)));
+		
+		
+		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
+		
+		
+		
+		
+		
+		Metric met5 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met5);
+		
+		mission.addGoal("AvoidOthers", AvoidOthers);
 	
 
 	

@@ -1,7 +1,7 @@
 <compcond> ::= <compcond> <logicop> <compcond> | <basic_cond>
 <basic_cond> ::= <var> <bincomp> <expr>
-<var> ::= distance_to_left_wing_base | distance_to_right_wing_base | starting_point_distance | airframe_clearance
+<var> ::= distance_to_left_wing_base | distance_to_right_wing_base | starting_point_distance | airframe_clearance | interrobot_distance | distance_to_nose
 <bincomp> ::= .LESS_THAN | .GREATER_THAN
 <logicop> ::= .AND | .OR
 <expr> ::= <var> | <int>
-<int> ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<int> ::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20

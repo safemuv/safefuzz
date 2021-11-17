@@ -79,7 +79,7 @@ public class GrammarConvertor {
 		// Unary combined condition
 		if (s.equals("<compcond>") && stringTree.nChildren() == 2) {
 			if (DEBUG_GRAMMER_CONVERT) {
-				System.out.println("COMPCOND - UNARY");
+				System.out.println("COMPCOND");
 				System.out.println("Child 0 = " + stringTree.child(0));
 				System.out.println("Child 1 = " + stringTree.child(1));
 				System.out.println("Child 2 = " + stringTree.child(2));

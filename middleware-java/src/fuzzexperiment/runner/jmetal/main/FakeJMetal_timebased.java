@@ -23,7 +23,7 @@ public class FakeJMetal_timebased extends AbstractAlgorithmRunner {
 			double participantProbMut = 0.0;
 			double paramProbMut = 0.0;
 
-			int numIterations = 1000;
+			int numIterations = 60;
 			int popSize = 10;
 			int offspringSize = 10;
 			

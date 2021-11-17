@@ -1,9 +1,12 @@
 #!/bin/sh
 
 FUZZ_CONF_DIR=$HOME/academic/atlas/atlas-middleware/expt-working/ros/fuzz-configs
+echo "Testing a null fuzzing experiment"
+./run_repeated_experiment.sh $FUZZ_CONF_DIR/empty-fuzzing-file.csv 1 empty-fuzzing-file.res
+sleep 10
 echo "Testing all the avoidance points"
 echo "Running the set_velocity test - should cause an avoidance violation"
-sleep 1
+sleep 10
 ./run_repeated_experiment.sh $FUZZ_CONF_DIR/test-closeapproach.csv 1 test-closeapproach.res
 echo "Running the calibration_point test - should cause a calibration error and distorted geometry (misaligned in rviz)"
 sleep 10

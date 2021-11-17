@@ -35,8 +35,8 @@ public class FuzzingCrossoverMergeKeys extends FuzzingCrossoverOperation {
 		// TODO: logging at start
 		FuzzingSelectionsSolution new1 = FuzzingSelectionsSolution.empty(cx);
 		FuzzingSelectionsSolution new2 = FuzzingSelectionsSolution.empty(cy);
-		logWithoutException("mutation doOnePointCrossover: input1 = " + cx.toString());
-		logWithoutException("mutation doOnePointCrossover: input2 = " + cy.toString());
+		logWithoutException("crossover doOnePointCrossover: input1 = " + cx.toString());
+		logWithoutException("crossover doOnePointCrossover: input2 = " + cy.toString());
 		
 		int new1_index = 0;
 		int new2_index = 0;
@@ -68,8 +68,8 @@ public class FuzzingCrossoverMergeKeys extends FuzzingCrossoverOperation {
 			}
 		}
 
-		logWithoutException("mutation doOnePointCrossover: output1 = " + new1.toString());
-		logWithoutException("mutation doOnePointCrossover: output2 = " + new2.toString());
+		logWithoutException("crossover doOnePointCrossover: output1 = " + new1.toString());
+		logWithoutException("crossover doOnePointCrossover: output2 = " + new2.toString());
 		logWithoutException("------------------------------------------------------------------------------------------\n");
 		output.add(new1);
 		output.add(new2);
@@ -85,8 +85,8 @@ public class FuzzingCrossoverMergeKeys extends FuzzingCrossoverOperation {
 		}
 		// Ensure the original null solutions are included.
 		// We mutate these original solutions
-		output.add(solutions.get(0).copy());
-		output.add(solutions.get(1).copy());
+		//output.add(solutions.get(0).copy());
+		//output.add(solutions.get(1).copy());
 		output = doOnePointCrossover(output, solutions.get(0), solutions.get(1));
 		return output;
 	}
