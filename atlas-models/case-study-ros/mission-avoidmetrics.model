@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ASCII"?>
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="300.0">
+  <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="uav_1" mutable="true">
+    <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
+      <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="7.0" y="-2.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_YB1L0NAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.5"/>
+  </robots>
+  <robots xmi:id="_I_DTsJzTEeun4sDYCEayRA" name="uav_2" mutable="true">
+    <componentProperties xsi:type="atlas:PointProperty" xmi:id="_I_DTsZzTEeun4sDYCEayRA" name="startLocation">
+      <value xmi:id="_I_DTspzTEeun4sDYCEayRA" x="7.0" y="2.0"/>
+    </componentProperties>
+    <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_dSiQcNAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.5"/>
+  </robots>
+  <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistancesAndVelocities" priority="100">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_NQmb4LylEeu_l8YcOLqCyw" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:TrackDistances" xmi:id="_EXPZMLseEeute_EAlr7M3A"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_U1XIcLySEeu_l8YcOLqCyw">
+      <staticRegion xmi:id="_VZUxILySEeu_l8YcOLqCyw">
+        <corner1 xmi:id="_V2Ry4LySEeu_l8YcOLqCyw" x="-10.0" y="-10.0"/>
+        <corner2 xmi:id="_WbW14LySEeu_l8YcOLqCyw" x="10.0" y="10.0" z="10.0"/>
+      </staticRegion>
+    </region>
+    <metrics xmi:id="_o9unANhAEeuUnZbJL-TeBg" name="FuzzingTimeLength"/>
+  </goals>
+  <goals xmi:id="_EAGD4MLGEeuCkPhz2hOLkg" name="StayInOuterRegion" priority="1">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_8ygUcMLIEeuCkPhz2hOLkg" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:StayInRegion" xmi:id="_E4lLEMLGEeuCkPhz2hOLkg"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_G5TssMLGEeuCkPhz2hOLkg">
+      <staticRegion xmi:id="_HbhB4MLGEeuCkPhz2hOLkg">
+        <corner1 xmi:id="_IoiOoMLGEeuCkPhz2hOLkg" x="-100.0" y="-50.0"/>
+        <corner2 xmi:id="_WmewMMLGEeuCkPhz2hOLkg" x="12.0" y="50.0" z="23.0"/>
+      </staticRegion>
+    </region>
+    <metrics xmi:id="_Pugy0MLGEeuCkPhz2hOLkg" name="OutsideOfOuterRegionViolations"/>
+  </goals>
+  <goals xmi:id="_vpVZEMj6EeuWdKT93dm6Ig" name="AvoidPlaneInner" priority="1">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_vpVZEcj6EeuWdKT93dm6Ig" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:MaintainDistanceFrom" xmi:id="_BXDxADDjEeyw-_Y3puKT2Q" distance="3.0"/>
+    <variables xmi:id="_g78tkDEDEeyw-_Y3puKT2Q" name="/airframe_clearance" variableType="std_msgs/Float64" vehicleSpecific="true"/>
+    <metrics xmi:id="_vpVZF8j6EeuWdKT93dm6Ig" name="OutsideOfInnerRegionViolations"/>
+  </goals>
+  <goals xmi:id="_7J7d0M7hEeu_Qtc8Axo4IQ" name="AvoidOthers" priority="1">
+    <participants xsi:type="atlas:StaticParticipants" xmi:id="_7J7d0c7hEeu_Qtc8Axo4IQ" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
+    <action xsi:type="atlas:AvoidOthers" xmi:id="_9HxDgM7hEeu_Qtc8Axo4IQ" clearance="2.0"/>
+    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_7J7d087hEeu_Qtc8Axo4IQ">
+      <staticRegion xmi:id="_7J7d1M7hEeu_Qtc8Axo4IQ">
+        <corner1 xmi:id="_7J7d1c7hEeu_Qtc8Axo4IQ" x="-10.0" y="-10.0"/>
+        <corner2 xmi:id="_7J7d1s7hEeu_Qtc8Axo4IQ" x="10.0" y="10.0" z="10.0"/>
+      </staticRegion>
+    </region>
+  </goals>
+</atlas:Mission>
