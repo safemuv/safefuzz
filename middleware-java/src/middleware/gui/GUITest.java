@@ -179,7 +179,7 @@ public class GUITest {
     	}
     }
     
-    private void updateFuzzingInfo() {
+    private synchronized void updateFuzzingInfo() {
     	for (Map.Entry<String,JLabel> entry : fuzzingKeyLabels.entrySet()) {
     		JLabel l = entry.getValue();
     		String key = entry.getKey();
