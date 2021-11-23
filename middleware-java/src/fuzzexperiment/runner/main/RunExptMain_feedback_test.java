@@ -22,7 +22,7 @@ public class RunExptMain_feedback_test {
 			//MetricHandler mh = new MetricHandler(m, resFileName);
 			List<OfflineMetric> fakeMetrics = new ArrayList<OfflineMetric>();
 			fakeMetrics.add(new FindSpecificTime(100.0, 120.0));
-			MetricHandler mh = new FakeMetricHandler(fakeMetrics, resFileName);
+			MetricHandler mh = new FakeMetricHandler(m, fakeMetrics, resFileName);
 			String csvBaseName = "/tmp/fuzzexpt-feedbacktest";
 			//ExptParams ep = new RunExperimentsMetricFeedback(resFileName, m, csvBaseName, runCount, populationLimit);
 			//FuzzExptRunner r = new FuzzExptRunner(ep, mh);

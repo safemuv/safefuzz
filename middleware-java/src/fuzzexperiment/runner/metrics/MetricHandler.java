@@ -16,6 +16,7 @@ public class MetricHandler {
 	protected List<OfflineMetric> metrics = new ArrayList<OfflineMetric>();
 	protected FileWriter resFile;
 	protected String resFileName;
+	protected Mission mission;
 
 	public void setupFileIfNotDone() throws IOException {
 		if (resFile == null) {
@@ -23,14 +24,16 @@ public class MetricHandler {
 		}
 	}
 	
-	public MetricHandler(List<OfflineMetric> metrics, String resFileName) throws IOException {
+	public MetricHandler(Mission mission, List<OfflineMetric> metrics, String resFileName) throws IOException {
 		this.metrics = metrics;
+		this.mission = mission;
 		this.resFileName = resFileName;
 		setupFileIfNotDone();
 	}
 
 	public MetricHandler(Mission mission, String resFileName) throws IOException {
 		this.resFileName = resFileName;
+		this.mission = mission;
 		setupFileIfNotDone();
 		Set<Metric> missionMetrics = mission.getAllMetrics();
 		for (Metric m : missionMetrics) {
@@ -70,7 +73,7 @@ public class MetricHandler {
 	public Map<Metric, Double> computeAllOffline(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
 		Map<Metric, Double> results = new HashMap<Metric, Double>();
 		for (OfflineMetric m : metrics) {
-			Double res = m.computeFromLogs(recs, logDir);
+			Double res = m.computeFromLogs(recs, logDir, mission);
 			results.put(m, res);
 		}
 		return results;

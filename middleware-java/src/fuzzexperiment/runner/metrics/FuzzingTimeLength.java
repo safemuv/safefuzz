@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import atlasdsl.Mission;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingTimeSpecification;
 // protected region customHeaders end
 
 public class FuzzingTimeLength extends OfflineMetric {
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		double totalLength = 0.0;
@@ -23,8 +24,8 @@ public class FuzzingTimeLength extends OfflineMetric {
         		if (slen_o.isPresent()) {
         			double slenAdd = slen_o.get();
         			if (r.isEnvironmental()) {
-        				System.out.println(this.getClass().getCanonicalName() + ": YAML variable found - ignoring static time length of " + slenAdd);
-        				slenAdd = 0;
+        				System.out.println(this.getClass().getCanonicalName() + ": YAML variable found - adding full mission time length: ignoring static time length of " + slenAdd);
+        				slenAdd = mission.getEndTime() * mission.getRobotCount();
         			}
         			totalLength += slenAdd;
         		} else {

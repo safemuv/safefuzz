@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
+
+import atlasdsl.Mission;
 import fuzzingengine.FuzzingKeySelectionRecord;
 // protected region customHeaders end
 
 public class AvoidanceViolationsCount extends OfflineMetric {
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		int avoidanceViolations = 0;

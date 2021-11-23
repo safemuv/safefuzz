@@ -146,9 +146,9 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		this.tempLog = new FileWriter("tempLog-" + resFileName + ".res");
 
 		if (actuallyRun) {
-			metricHandler = new MetricHandler(metrics, resFileName);
+			metricHandler = new MetricHandler(mission, metrics, resFileName);
 		} else {
-			metricHandler = new FakeMetricHandler(metrics, resFileName);
+			metricHandler = new FakeMetricHandler(mission, metrics, resFileName);
 		}
 		
 		System.out.println(metrics.toString());

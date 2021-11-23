@@ -238,4 +238,8 @@ public class Mission {
 				.flatMap(e -> e.getValue().getAllMetrics().stream())
 				.collect(Collectors.toSet());
 	}
+	
+	public int getRobotCount() {
+		return robots.size();
+	}
 }

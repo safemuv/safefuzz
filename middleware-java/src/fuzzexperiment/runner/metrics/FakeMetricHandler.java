@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import atlasdsl.Mission;
 
 // TODO: factor these out and make MetricHandler an interface
 public class FakeMetricHandler extends MetricHandler {
 	
 	private Random rngforMetrics = new Random();
 	
-	public FakeMetricHandler(List<OfflineMetric> metrics, String resFileName) throws IOException {
-		super(metrics,resFileName);
+	public FakeMetricHandler(Mission mission, List<OfflineMetric> metrics, String resFileName) throws IOException {
+		super(mission, metrics,resFileName);
 	}
 	
 	public Map<Metric, Double> computeAllOffline(String logDir) throws MetricComputeFailure {

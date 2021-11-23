@@ -2,6 +2,8 @@ package fuzzexperiment.runner.metrics.fake;
 
 import java.util.List;
 import java.util.Random;
+
+import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric;
 import fuzzexperiment.runner.metrics.MetricComputeFailure;
 import fuzzingengine.FuzzingFixedTimeSpecification;
@@ -30,7 +32,7 @@ public class FindSpecificTime2 extends FakeMetric {
 		}
 	}
 	
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Get the first record
 		double outval = 0.0;
 		

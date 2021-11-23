@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+import atlasdsl.Mission;
 import fuzzexperiment.runner.metrics.Metric.MetricDirection;
 import fuzzingengine.FuzzingKeySelectionRecord;
 // protected region customHeaders end
 
 public class OutsideOfInnerRegionViolations extends OfflineMetric {
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir) throws MetricComputeFailure {
+	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		int outsideRegionViolations = 0;
