@@ -175,6 +175,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		try {
 			String exptTag = exptTagBase + (runCount++);
 			String csvFileName = solution.getCSVFileName();
+			String launchScript = baseMission.getLaunchBashScript();
 
 			if (actuallyRun) {
 				if (regenerateScenarios) {
@@ -189,11 +190,11 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 					List<String> modifiedTempFiles = runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
 					// TODO: need to 
 					runner.generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName), launchScript);
 				} else {
 					// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 					runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), launchScript);
 				}
 			}
 

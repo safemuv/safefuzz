@@ -29,7 +29,7 @@ public class StubDSLLoader implements DSLLoader {
 	}
 	
 	public Mission loadMission() throws DSLLoadFailed {
-		Mission mission = new Mission(1200.0, false);
+		Mission mission = new Mission(1200.0, false, "auto_launch_safemuv.sh");
 		Computer shoreside = new Computer("shoreside");
 		mission.addComputer(shoreside);
 		

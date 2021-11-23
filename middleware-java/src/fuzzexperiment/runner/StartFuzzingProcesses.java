@@ -107,7 +107,7 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioDirString_o)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioDirString_o, String launchBashScript)
 			throws InterruptedException, IOException {
 		double returnValue = 0;
 		
@@ -117,9 +117,9 @@ public class StartFuzzingProcesses {
 			//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
 			if (scenarioDirString_o.isPresent()) {
 				String scenarioDirString = scenarioDirString_o.get();
-				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_auto_launch_safemuv.sh " + scenarioDirString);
+				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_" + launchBashScript + " " + scenarioDirString);
 			} else {
-				ExptHelper.startScript(ABS_WORKING_PATH, "auto_launch_safemuv.sh");
+				ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
 			}
 			
 			// TODO: can we replace this delay with checking ROS status to launch the middleware
@@ -181,6 +181,7 @@ public class StartFuzzingProcesses {
 	
 	public void runExptProcesses(String exptTag, Mission baseMission, String csvFileName, double timeLimit, FuzzingSelectionsSolution solution, boolean regenerateScenarios) throws InterruptedException, IOException {
 		boolean actuallyRun = true;
+		String launchScript = baseMission.getLaunchBashScript();
 		// TODO: do we need to call cleanRun here
 		if (regenerateScenarios) {
 			List<String> fuzzTopicList = RMKGInterface.getFuzzTopicListFromScen(solution);
@@ -194,11 +195,11 @@ public class StartFuzzingProcesses {
 			List<String> modifiedTempFiles = codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
 			// TODO: need to 
 			generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
-			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName));
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName), launchScript);
 		} else {
 			// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 			codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty());
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), launchScript);
 		}
 	}
 }

@@ -65,6 +65,14 @@ public class Point {
 		return new Point(this.x - dp.x, this.y - dp.y, this.z - dp.z);
 	}
 	
+	public Point multiplyConstant(double factor) {
+		return new Point(this.x * factor, this.y * factor, this.z * factor);
+	}
+	
+	public Point multiplyAxes(Point factorPoint) {
+		return new Point(this.x * factorPoint.x, this.y * factorPoint.y, this.z * factorPoint.z);
+	}
+	
 	public double distanceSqrTo(double otherx, double othery) {
 		return Math.pow((otherx - this.x),2.0) + Math.pow((othery - this.y),2.0); 
 	}

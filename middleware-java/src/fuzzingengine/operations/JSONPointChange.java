@@ -21,7 +21,9 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		FIXED,
 		FIXEDOFFSET,
 		RANDOMOFFSET,
-		RANDOM
+		RANDOM,
+		MULT_FIXED,
+		MULT_RANDOM,
 	}
 	
 	private ChangeMode mode;
@@ -55,6 +57,14 @@ public class JSONPointChange extends JSONFuzzingOperation {
 	private static JSONPointChange FixedOffset(double x, double y, double z) {
 		return new JSONPointChange(ChangeMode.FIXEDOFFSET, new Point(x,y,z));
 	}
+	
+	private static FuzzingOperation MultFixed(double x, double y, double z) {
+		return new JSONPointChange(ChangeMode.MULT_FIXED, new Point(x,y,z));
+	}
+	
+	private static FuzzingOperation MultRandom(double x, double y, double z) {
+		return new JSONPointChange(ChangeMode.MULT_RANDOM, new Point(x,y,z));
+	}
 
 	public String getReplacement(String inValue) {
 		return fixedChange;
@@ -84,6 +94,15 @@ public class JSONPointChange extends JSONFuzzingOperation {
 		
 		if (mode == ChangeMode.RANDOM) {
 			modified = getRandomPoint();
+		}
+		
+		if (mode == ChangeMode.MULT_FIXED) {
+			modified = modified.multiplyAxes(p);
+		}
+		
+		if (mode == ChangeMode.MULT_RANDOM) {
+			Point offset = getRandomPoint();
+			modified = modified.multiplyAxes(offset);
 		}
 		
 		builder.add("x", modified.getX());
@@ -179,6 +198,20 @@ public class JSONPointChange extends JSONFuzzingOperation {
 			double y = Double.valueOf(fields[2]);
 			double z = Double.valueOf(fields[3]);
 			return JSONPointChange.FixedOffset(x, y, z);
+		}
+		
+		if (fields[0].toUpperCase().equals("MULT_FIXED")) {
+			double x = Double.valueOf(fields[1]);
+			double y = Double.valueOf(fields[2]);
+			double z = Double.valueOf(fields[3]);
+			return JSONPointChange.MultFixed(x, y, z);
+		}
+		
+		if (fields[0].toUpperCase().equals("MULT_RANDOM")) {
+			double x = Double.valueOf(fields[1]);
+			double y = Double.valueOf(fields[2]);
+			double z = Double.valueOf(fields[3]);
+			return JSONPointChange.MultRandom(x, y, z);
 		}
 		
 		throw new CreationFailed("Invalid parameter string " + s);

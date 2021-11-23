@@ -25,7 +25,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 	%]
 	final double MISSION_END_TIME = [%= m.endTime %];
 	final boolean STOP_ON_NO_ENERGY = [%= m.stopVehicleOnNoEnergy %];
-	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY);
+	final String launchFile = "[%= m.launchScript %]";
+	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY, launchFile);
 	
 	[% for (c in m.computers) { %]
 	[% var computerName = "c" + computerNum++;	%]

@@ -25,19 +25,25 @@ public class Mission {
 	private Map<String,Goal> goals = new LinkedHashMap<String,Goal>();
 	private Map<String,Message> messages = new LinkedHashMap<String,Message>();
 	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
+	private String launchBashScript;
 	
 	private List<String> behaviourVariables = new ArrayList<String>();
 	
 	private boolean stopOnNoEnergy;
 	private double endTime;
 	
-	public Mission(double endTime, boolean stopOnNoEnergy) {
+	public Mission(double endTime, boolean stopOnNoEnergy, String launchBashScript) {
 		this.endTime = endTime;
 		this.stopOnNoEnergy = stopOnNoEnergy;
+		this.launchBashScript = launchBashScript;
 	}
 	
 	public List<Robot> getAllRobots() {
 		return new ArrayList<Robot>(robots.values());
+	}
+	
+	public String getLaunchBashScript() {
+		return launchBashScript;
 	}
 	
 	public Map<Robot,Double> getAllRobotSpeeds() throws MissingProperty {

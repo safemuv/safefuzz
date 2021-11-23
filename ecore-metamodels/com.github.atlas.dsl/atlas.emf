@@ -405,4 +405,5 @@ class Mission {
 	val Fault[*] faults;
 	attr double endTime;
 	attr boolean stopVehicleOnNoEnergy;
+	attr String launchScript;
 }
