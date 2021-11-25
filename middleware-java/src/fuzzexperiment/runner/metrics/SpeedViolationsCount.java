@@ -12,6 +12,9 @@ import fuzzingengine.FuzzingKeySelectionRecord;
 // protected region customHeaders end
 
 public class SpeedViolationsCount extends OfflineMetric {
+// protected region customFunction on begin
+// protected region customFunction end
+
 	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin

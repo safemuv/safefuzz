@@ -22,6 +22,11 @@ public class FuzzingExperimentConditionCreator  {
 	public Mission mission;
 	public static TestEvaluateConditions testCond = new TestEvaluateConditions();
 	
+	// A maximum height of only 4 provides just a single condition 
+	private static int treeMinHeight = 4;
+	// A maximum height of only 4 provides just a single condition 
+	private static int treeMaxHeight = 8;
+
 //	public FuzzingExperimentConditionCreator(Mission mission, Random rng) {
 //		this.rngGenerator = rng;
 //		this.mission = mission;
@@ -34,10 +39,9 @@ public class FuzzingExperimentConditionCreator  {
 		int numTrees = 1;
 		while (true) {
 			
-			// TODO: temporary height of 4
-			int randomHeight = 4;
-			
-			List<Tree<String>> res = gen.build(numTrees, rng, randomHeight);
+			int currentTreeHeight = treeMinHeight + (int)(rng.nextDouble() * (treeMaxHeight - treeMinHeight) + 1);
+			System.out.println("currentTreeHeight = " + currentTreeHeight);
+			List<Tree<String>> res = gen.build(numTrees, rng, currentTreeHeight);
 			Tree<String> t = res.get(0);
 			if (t == null) {
 				throw new TreeGenerationFailed("t in generateValidatedCondition");

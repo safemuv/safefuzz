@@ -11,7 +11,7 @@ import fuzzingengine.grammar.conditionelements.FuzzingConditionElementCondUnOp.F
 import it.units.malelab.jgea.representation.tree.Tree;
 
 public class GrammarConvertor {
-	protected final boolean DEBUG_GRAMMER_CONVERT = false; 
+	protected final boolean DEBUG_GRAMMER_CONVERT = true; 
 	
 	public GrammarConvertor() {
 		
