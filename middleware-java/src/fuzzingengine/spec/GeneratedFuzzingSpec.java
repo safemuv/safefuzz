@@ -223,7 +223,7 @@ public class GeneratedFuzzingSpec {
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV) {
-		fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
+		fe.setupFromFuzzingFile("/home/ubuntu/academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	}
 	return fe;
 	}

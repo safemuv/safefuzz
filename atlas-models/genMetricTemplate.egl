@@ -10,16 +10,16 @@ public class [%= metricClassName %] extends OfflineMetric {
 // protected region customFunction on begin
 // protected region customFunction end
 
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
+   public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		return 0.0;
 		// protected region userCode end
-	}
+   }
 	
-	public MetricDirection optimiseDirection() {
+   public MetricDirection optimiseDirection() {
 	// protected region userCode on begin
 		
 	// protected region userCode end
-	} 
+   } 
 }
