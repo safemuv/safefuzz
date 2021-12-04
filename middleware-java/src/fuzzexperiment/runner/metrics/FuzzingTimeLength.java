@@ -13,7 +13,6 @@ import fuzzingengine.FuzzingTimeSpecification;
 
 public class FuzzingTimeLength extends OfflineMetric {
 // protected region customFunction on begin
-	private boolean countTimeLength = true;
 	
 	public double countActiveFuzzingLength(String logDir) {
 		Scanner reader;
@@ -44,6 +43,7 @@ public class FuzzingTimeLength extends OfflineMetric {
 		// Implement the metric here
 		// protected region userCode on begin
 		double totalLength = 0.0;
+		boolean countActiveLength = true;
 		
 		for (FuzzingKeySelectionRecord r : recs) {
 			if (r.isEnvironmental()) {
@@ -61,9 +61,14 @@ public class FuzzingTimeLength extends OfflineMetric {
 	        			// If we have a static length, use it
 	        			totalLength += slen_o.get();
 	        		} else {
-	        			// If not, use the logged active length
-	        			// A flag ensures this is only counted once!
-	        			totalLength += countActiveFuzzingLength(logDir); 
+                                       // If not, use the logged active length
+                                       // countActiveLength - A flag ensures this is only counted once
+					if (countActiveLength) {
+		        			// If not, use the logged active length
+		        			// countActiveLength - A flag ensures this is only counted once
+	        				totalLength += countActiveFuzzingLength(logDir);
+						countActiveLength = false;
+					}
 	        		}
 				}
 			}
