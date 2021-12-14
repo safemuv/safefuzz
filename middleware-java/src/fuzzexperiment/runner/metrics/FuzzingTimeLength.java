@@ -13,15 +13,11 @@ import fuzzingengine.FuzzingTimeSpecification;
 
 public class FuzzingTimeLength extends OfflineMetric {
 // protected region customFunction on begin
-	private boolean countTimeLength = true;
-	
 	public double countActiveFuzzingLength(String logDir) {
 		Scanner reader;
 		double totalLength = 0.0; 
 		try {
-			if (countTimeLength) {
-				countTimeLength = false;
-				String filename = logDir + "/activeFuzzingCount.log";
+			String filename = logDir + "/activeFuzzingCount.log";
 				reader = new Scanner(new File(filename));
 					while (reader.hasNextLine()) {
 						String line = reader.nextLine();
@@ -31,7 +27,6 @@ public class FuzzingTimeLength extends OfflineMetric {
 						totalLength += val;
 					}
 					reader.close();
-			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -40,10 +35,11 @@ public class FuzzingTimeLength extends OfflineMetric {
 		
 	// protected region customFunction end
 
-	public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
+   public Double computeFromLogs(List<FuzzingKeySelectionRecord> recs, String logDir, Mission mission) throws MetricComputeFailure {
 		// Implement the metric here
 		// protected region userCode on begin
 		double totalLength = 0.0;
+		boolean countActiveLength = true;
 		
 		for (FuzzingKeySelectionRecord r : recs) {
 			if (r.isEnvironmental()) {
@@ -61,9 +57,14 @@ public class FuzzingTimeLength extends OfflineMetric {
 	        			// If we have a static length, use it
 	        			totalLength += slen_o.get();
 	        		} else {
-	        			// If not, use the logged active length
-	        			// A flag ensures this is only counted once!
-	        			totalLength += countActiveFuzzingLength(logDir); 
+                                       // If not, use the logged active length
+                                       // countActiveLength - A flag ensures this is only counted once
+					if (countActiveLength) {
+		        			// If not, use the logged active length
+		        			// countActiveLength - A flag ensures this is only counted once
+	        				totalLength += countActiveFuzzingLength(logDir);
+						countActiveLength = false;
+					}
 	        		}
 				}
 			}
@@ -76,5 +77,5 @@ public class FuzzingTimeLength extends OfflineMetric {
 		// protected region userCode on begin
 		return Metric.MetricDirection.LOWEST;
 		// protected region userCode end
-	} 
+   } 
 }

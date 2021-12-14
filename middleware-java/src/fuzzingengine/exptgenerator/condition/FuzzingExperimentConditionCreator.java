@@ -21,11 +21,6 @@ public class FuzzingExperimentConditionCreator  {
 	Grammar<String> grammar;
 	public Mission mission;
 	public static TestEvaluateConditions testCond = new TestEvaluateConditions();
-	
-	// A maximum height of only 4 provides just a single condition 
-	private static int treeMinHeight = 4;
-	// A maximum height of only 4 provides just a single condition 
-	private static int treeMaxHeight = 8;
 
 //	public FuzzingExperimentConditionCreator(Mission mission, Random rng) {
 //		this.rngGenerator = rng;
@@ -38,9 +33,12 @@ public class FuzzingExperimentConditionCreator  {
 	public static FuzzingCondition generateValidatedCondition(Random rng, GrowGrammarTreeFactory<String> gen) throws TreeGenerationFailed {
 		int numTrees = 1;
 		while (true) {
-			
-			int currentTreeHeight = treeMinHeight + (int)(rng.nextDouble() * (treeMaxHeight - treeMinHeight) + 1);
-			System.out.println("currentTreeHeight = " + currentTreeHeight);
+			// A maximum height of only 4 provides just a single condition 
+	        int treeMinHeight = 4;
+	        int treeMaxHeight = 4;
+	        
+            int currentTreeHeight = treeMinHeight + (int)(rng.nextDouble() * (treeMaxHeight - treeMinHeight) + 1);
+            System.out.println("currentTreeHeight = " + currentTreeHeight);
 			List<Tree<String>> res = gen.build(numTrees, rng, currentTreeHeight);
 			Tree<String> t = res.get(0);
 			if (t == null) {

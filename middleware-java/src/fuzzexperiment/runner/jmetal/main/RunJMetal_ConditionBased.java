@@ -22,7 +22,7 @@ public class RunJMetal_ConditionBased extends AbstractAlgorithmRunner {
 			double participantProbMut = 0.333;
 			double paramProbMut = 0.333;
 			
-			int numIterations = 200;
+			int numIterations = 160;
 			int populationSize = 20;
 			int offspringSize = 20;
 			
