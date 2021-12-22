@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xmi:id="f0fbcb58-f2b1-4138-ad87-43f1c892b34d">
+  <sims xmi:id="94c06edc-b518-4e2a-b04d-4945d4987757" name="ROS" baseDirectory="/home/jharbin/catkin_ws/src/safemuv">
+    <components xmi:id="96ceaf53-e297-45fd-814b-95263fbbbec9" name="uav_1/trajectory_publisher" componentRelativePath="uav_1/trajectory_publisher">
+      <vars xmi:id="40ae6569-1cb8-44b3-9d61-65779a993033" component="96ceaf53-e297-45fd-814b-95263fbbbec9" variable="uav_1/trajectory_relative_prime" reflectionName="uav_1/trajectory_relative" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="97dc92a0-0e7f-4e49-8c3f-a22e14be3e40" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="c2d89d24-dbd5-480a-9e82-76f4c259a41a" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="e5b60e3a-6f59-48dd-913b-73827166dc36" name="uav_1/trajectory_planner" componentRelativePath="uav_1/trajectory_planner">
+      <vars xmi:id="6a27e5ea-9c3a-41c9-89c2-afabcffb1042" component="e5b60e3a-6f59-48dd-913b-73827166dc36" variable="uav_1/obstacles_static_prime" reflectionName="uav_1/obstacles_static" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="1d275491-d191-4faa-8023-1c362be1dd8b" ROSTypename="visualization_msgs/MarkerArray"/>
+        <timeLimit xmi:id="cfa8c944-2e7c-4b8b-9662-538b51e585e5" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="acdd4333-e9a0-4ee3-853a-32516ec62c0d" name="uav_1/path_generator" componentRelativePath="uav_1/path_generator">
+      <vars xmi:id="6564d5f0-269b-4854-82f8-44bbd80c6c2a" component="acdd4333-e9a0-4ee3-853a-32516ec62c0d" variable="uav_1/trajectory_relative_prime" reflectionName="uav_1/trajectory_relative" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="f28f5c30-5bc2-464c-8420-bbf0aa30707e" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="d345afad-0ad4-4cfe-a66f-7837c80cfe3f" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="cffad807-90a7-49ad-ade8-921f4fb9d415" component="acdd4333-e9a0-4ee3-853a-32516ec62c0d" variable="uav_1/desired_path_prime" reflectionName="uav_1/desired_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="3afccdd6-14fa-4eae-9926-70d63a4f539b" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="50261e61-5b9c-442f-b8fa-21672a1358c1" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="894f83c0-051c-4477-bc70-57e0dc0004cc" name="uav_1/trajectory_planning_manager" componentRelativePath="uav_1/trajectory_planning_manager">
+      <vars xmi:id="3726b248-58dd-4da4-95b6-163510a03b89" component="894f83c0-051c-4477-bc70-57e0dc0004cc" variable="uav_1/desired_path_prime" reflectionName="uav_1/desired_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="6f99c51b-cfa2-49bd-ae19-f304bfc5f75a" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="29901ee5-1336-4f78-9a6c-7d8e843caf04" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="e7bac9fd-4dea-4fbc-8398-6d9efb4a7316" name="uav_1/trajectory_planner_from_path" componentRelativePath="uav_1/trajectory_planner_from_path">
+      <vars xmi:id="0a4b5f27-90e7-4af6-9db2-ffb5105624dd" component="e7bac9fd-4dea-4fbc-8398-6d9efb4a7316" variable="uav_1/desired_path_prime" reflectionName="uav_1/desired_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="38d4df3d-e734-4334-9217-0d25cd7b13d4" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="42b75fd8-1994-451c-81d9-1f8f317c175f" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="d71f0bfc-f468-43cb-bcb4-a6f43fe7f1c3" component="e7bac9fd-4dea-4fbc-8398-6d9efb4a7316" variable="uav_1/desired_trajectory_path_prime" reflectionName="uav_1/desired_trajectory_path" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="a3a3b268-0a09-4838-8e5a-3571de56dbce" ROSTypename="nav_msgs/Path"/>
+        <timeLimit xmi:id="43b6d130-4efa-4495-b0f5-2046ec7605d4" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="e5baa643-de5e-46c2-8590-82933d5145c9" name="uav_1/trajectory_commander_trajectory" componentRelativePath="uav_1/trajectory_commander_trajectory">
+      <vars xmi:id="552a66a7-0588-40f3-a085-3a0d4e447f4f" component="e5baa643-de5e-46c2-8590-82933d5145c9" variable="uav_1/ual/pose_prime" reflectionName="uav_1/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="feff3b4e-9b18-4881-abc7-4eaeaef9585c" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="adebfacb-d4d3-40fe-902e-4a852156d224" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="fadb699e-a69a-4146-9994-57eff2193d12" name="uav_1/trajectory_tracking_controller_fuzzy" componentRelativePath="uav_1/trajectory_tracking_controller_fuzzy">
+      <vars xmi:id="4c101cc0-a836-4df7-aa0f-e6641d9937ea" component="fadb699e-a69a-4146-9994-57eff2193d12" variable="uav_1/ual/pose_prime" reflectionName="uav_1/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="07f679f7-7349-4f04-b014-e9cacd9ef932" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="260e8278-e6d0-41ae-8fc7-74bbf1ed3559" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="5fcceaf5-a9e1-4646-9534-75fc6d164115" component="fadb699e-a69a-4146-9994-57eff2193d12" variable="uav_1/ual/set_velocity_prime" reflectionName="uav_1/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="229fe22b-6f9c-468e-bbe9-c8a91fe8670c" ROSTypename="geometry_msgs/TwistStamped"/>
+        <timeLimit xmi:id="38e1ba62-ec96-4cf7-afb4-94d0cdae00d7" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="11820ed8-2ecd-4886-8f99-86d0ac538106" name="uav_1/obstacle_publisher" componentRelativePath="uav_1/obstacle_publisher">
+      <vars xmi:id="c1b7a430-0d1a-4eb0-bb0c-746bf80f0f91" component="11820ed8-2ecd-4886-8f99-86d0ac538106" variable="uav_1/obstacles_static_prime" reflectionName="uav_1/obstacles_static" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="305fca0c-cb3b-4d9b-a77e-368b0ee453e4" ROSTypename="visualization_msgs/MarkerArray"/>
+        <timeLimit xmi:id="12955c02-30c6-4f72-a2de-8db075ba4640" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="390ddc3a-55e6-48e7-b687-b08653ffc701" name="uav_1/state_machine" componentRelativePath="uav_1/state_machine"/>
+    <components xmi:id="e6bf8c34-d43d-49af-a2f9-a8118e172477" name="uav_1/gazebo_world" componentRelativePath="uav_1/gazebo_world"/>
+    <components xmi:id="201c72d3-1a7e-4c35-820f-1e69028b0ffb" name="uav_1/ual" componentRelativePath="uav_1/ual">
+      <vars xmi:id="f0393429-349f-4a37-941c-04a706a2414c" component="201c72d3-1a7e-4c35-820f-1e69028b0ffb" variable="uav_1/ual/set_velocity_prime" reflectionName="uav_1/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="fe1e1f64-4781-45e6-80b7-a26b8cebdf9e" ROSTypename="geometry_msgs/TwistStamped"/>
+        <timeLimit xmi:id="24cf13e3-1034-4c2f-9694-ca43c50168b5" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="d1d76742-f4d0-4a00-aae1-7831fb8407ba" component="201c72d3-1a7e-4c35-820f-1e69028b0ffb" variable="uav_1/ual/pose_prime" reflectionName="uav_1/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="8b96c3dd-e537-4638-ae51-e37d670e2841" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="72c748ef-92dd-488a-9dde-66686f84ca44" endTime="100.0"/>
+      </vars>
+    </components>
+    <components xmi:id="d99451ee-421b-485c-b6a2-5dee815f2470" name="uav_1/ual" componentRelativePath="uav_1/ual">
+      <vars xmi:id="969535e4-60c3-4917-93b8-29c8a1718ae9" component="d99451ee-421b-485c-b6a2-5dee815f2470" variable="uav_1/ual/set_velocity_prime" reflectionName="uav_1/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="977c5fa2-8b7f-47e9-8ad5-d9b0f6450e0c" ROSTypename="geometry_msgs/TwistStamped"/>
+        <timeLimit xmi:id="3e5badd6-8cb0-4d95-a4ea-c6b3eb81bee5" endTime="100.0"/>
+      </vars>
+      <vars xmi:id="37c6d5ae-2f85-460e-8887-66f273d2d39e" component="d99451ee-421b-485c-b6a2-5dee815f2470" variable="uav_1/ual/pose_prime" reflectionName="uav_1/ual/pose" dir="OUTBOUND" vehicleSpecific="true">
+        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="1591ce3a-1835-4409-96fb-1ab3909b9d28" ROSTypename="geometry_msgs/PoseStamped"/>
+        <timeLimit xmi:id="646c98df-e1cd-4496-9110-c7071b00d2cd" endTime="100.0"/>
+      </vars>
+    </components>
+  </sims>
+</fuzzspec:FuzzingSpecification>

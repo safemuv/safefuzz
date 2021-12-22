@@ -137,7 +137,7 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			Grammar<String> g = Grammar.fromFile(new File(GRAMMAR_FILE));
 						
 			problem = new SAFEMUVEvaluationProblem(g, populationSize, problemRNG, mission, actuallyRun, exptRunTime,
-					logPath, metrics, etype, tagDated, RMKGInterface.REGENERATE_SCENARIOS);
+					logPath, metrics, etype, tagDated, RMKGInterface.REGENERATE_SCENARIOS, scenarioStr);
 
 			Algorithm<List<FuzzingSelectionsSolution>> algorithm;
 			

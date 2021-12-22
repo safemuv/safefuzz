@@ -64,8 +64,13 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met1 = new FuzzingTimeLength();
+		Metric met1 = new SpeedViolationsCount();
 		trackDistancesAndVelocities.addMetric(met1);
+		
+		
+		
+		Metric met2 = new FuzzingTimeLength();
+		trackDistancesAndVelocities.addMetric(met2);
 		
 		mission.addGoal("trackDistancesAndVelocities", trackDistancesAndVelocities);
  
@@ -96,6 +101,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
+		
+		
+		Metric met3 = new OutsideOfOuterRegionViolations();
+		StayInOuterRegion.addMetric(met3);
+		
 		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
  
  
@@ -125,8 +135,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		Metric met2 = new OutsideOfInnerRegionViolations();
-		AvoidPlaneInner.addMetric(met2);
+		Metric met4 = new OutsideOfInnerRegionViolations();
+		AvoidPlaneInner.addMetric(met4);
 		
 		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
  
@@ -156,6 +166,11 @@ public class GeneratedDSLLoader implements DSLLoader {
 		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
 		
 		
+		
+		
+		
+		Metric met5 = new AvoidanceViolationsCount();
+		AvoidOthers.addMetric(met5);
 		
 		mission.addGoal("AvoidOthers", AvoidOthers);
 	

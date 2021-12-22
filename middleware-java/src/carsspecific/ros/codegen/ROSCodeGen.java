@@ -141,7 +141,7 @@ public class ROSCodeGen extends CARSCodeGen {
 	
 	private static String getFileInTempDir(String genDir, String inputFilename) {
 		String fileInDir = Paths.get(inputFilename).getFileName().toString();
-		String newFile = genDir + "/" + fileInDir;
+		String newFile = genDir + fileInDir;
 		return newFile;
 	}
 
@@ -178,8 +178,9 @@ public class ROSCodeGen extends CARSCodeGen {
 					String genDir = generateDir.get();
 					// Transform the filename to a temporary location
 					String outputFilename = getFileInTempDir(genDir, inputFilename);
+					System.out.println("outputFilename=" + outputFilename);
 					File fOut = new File(outputFilename);
-					mapper.writeValue(fOut, specFields);
+					mapper.writeValue(fOut, res);
 					modifiedConfigFiles.add(fOut.getAbsolutePath());
 					System.out.println("Writing out config file to new path: " + fOut.getAbsolutePath());
 				}

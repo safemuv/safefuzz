@@ -98,4 +98,15 @@ public class ExptHelper {
 			System.out.println("Ignoring timeout exception when launching");
 		}
 	}
+	
+	public static void runScriptNew(String dir, String command, String [] args) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		File dirFile = new File(dir);
+		ProcBuilder pb = new ProcBuilder(command).withArgs(args).withOutputStream(output).withWorkingDirectory(dirFile);
+		try {
+		ProcResult res = pb.run();
+		} catch (org.buildobjects.process.TimeoutException e) {
+			System.out.println("Ignoring timeout exception when launching");
+		}
+	}
 }

@@ -177,7 +177,7 @@ public class GeneratedFuzzingSpec {
 		
 				
 		simMapping.addRecord("trajectory_tracking_controller_fuzzy", "/ual/set_velocity_prime", "/ual/set_velocity", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/ubuntu/catkin_ws/src/safemuv_ros//trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv_ros//trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
 		true, Optional.of(new TimeSpec(m,0.0,600.0)), Optional.of(0.5));
 	
 			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops1, "twist.linear");
@@ -190,16 +190,16 @@ public class GeneratedFuzzingSpec {
 	simMapping.setComponentFuzzingInfo("CalibrationDefinitions", FuzzingSimMapping.FuzzingNature.NO_MODIFICATIONS, Optional.empty(), Optional.empty(), true);
 		
 				
-		simMapping.addRecord("CalibrationDefinitions", "calibration_points.yaml", "", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/ubuntu/catkin_ws/src/safemuv_ros/safemuv_situational_awareness/config"), Optional.empty(),
+		simMapping.addRecord("CalibrationDefinitions", "w_calibration_points.yaml", "", 
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv_ros/safemuv_situational_awareness/config"), Optional.empty(),
 		false, Optional.empty(), Optional.of(0.5));
 	
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_0");
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_1");
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_2");
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_3");
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_4");
-			simMapping.addOperationParameterSetForVariable("calibration_points.yaml", ops3, "frameB_5");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_0");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_1");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_2");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_3");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_4");
+			simMapping.addOperationParameterSetForVariable("w_calibration_points.yaml", ops3, "frameB_5");
 	
 		
 		
@@ -209,7 +209,7 @@ public class GeneratedFuzzingSpec {
 		
 				
 		simMapping.addRecord("trajectory_planning", "/desired_path_prime", "/desired_path", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/ubuntu/catkin_ws/src/safemuv_ros/"), Optional.of("nav_msgs/Path"),
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/catkin_ws/src/safemuv_ros/"), Optional.of("nav_msgs/Path"),
 		true, Optional.of(new TimeSpec(m,0.0,600.0)), Optional.of(0.5));
 	
 			simMapping.addOperationParameterSetForVariable("/desired_path_prime", ops4, "poses");
@@ -223,7 +223,7 @@ public class GeneratedFuzzingSpec {
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV) {
-		fe.setupFromFuzzingFile("/home/ubuntu/academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
+		fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	}
 	return fe;
 	}

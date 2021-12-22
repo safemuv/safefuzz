@@ -6,9 +6,10 @@ import java.util.List;
 import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
 import fuzzingengine.FuzzingKeySelectionRecord;
 import fuzzingengine.FuzzingSelectionRecord;
+import utils.ExptHelper;
 
 public class RMKGInterface {
-	public static final boolean REGENERATE_SCENARIOS = false;
+	public static final boolean REGENERATE_SCENARIOS = true;
 	
 	// This is to bridge Argentina's script args. Gives the appropriate parameters for the
 	// scenario generation script
@@ -42,6 +43,16 @@ public class RMKGInterface {
 		return null;
 	}
 	
-	// TODO: script runner conversions to launch generate_scenarios
-	// TODO: script runner conversions to launch register_results
+	public static void generateLaunchScripts(String workingPath, String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
+		String fuzzTopicString = String.join(" ", fuzzTopicList);
+		String[] args = new String[]{scenarioName, fuzzTopicString};
+		ExptHelper.runScriptNew(workingPath, "./generate_launch_files.sh", args);
+	}
+	
+	public static void generateLaunchScriptsRMKG_ROS(String scenarioID, String workingPath, String scenarioDirName, List<String> fuzzTopicList, List<String> modifiedFiles, String fuzzConfigCSV, String tempDirName, int testNumID, String configDir) {
+		String fuzzTopicString = String.join(" ", fuzzTopicList);
+		String testNumID_s = String.valueOf(testNumID);
+		String[] args = new String[]{scenarioID, testNumID_s, fuzzTopicString, fuzzConfigCSV, configDir };
+		ExptHelper.runScriptNew(workingPath, "./generate_launch_files_rmkg.sh", args);
+	}
 }

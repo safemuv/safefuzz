@@ -1,5 +1,5 @@
 #!/bin/sh
-rm -rf /home/ubuntu/.ros/log
+rm -rf $HOME/.ros/log
 
 echo "Starting roslaunch launchers"
 xterm -e /bin/bash -l -c "roslaunch safemuv_gazebo_simulation prepare_sim.launch" &

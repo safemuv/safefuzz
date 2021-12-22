@@ -38,6 +38,10 @@ public class StartFuzzingProcesses {
 		ABS_WORKING_PATH = workingPath;
 		ABS_MIDDLEWARE_PATH = middlewarePath;
 	}
+	
+	public String getWorkingPath() {
+		return ABS_WORKING_PATH;
+	}
 
 	private void waitUntilMiddlewareTime(double time, double wallClockTimeOutSeconds)
 			throws FileNotFoundException {
@@ -107,7 +111,7 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioDirString_o, String launchBashScript)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioString_o, Optional<Integer> runNum_o, String launchBashScript)
 			throws InterruptedException, IOException {
 		double returnValue = 0;
 		
@@ -115,9 +119,17 @@ public class StartFuzzingProcesses {
 			exptLog("Starting ROS/SAFEMUV launch scripts");
 
 			//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
-			if (scenarioDirString_o.isPresent()) {
-				String scenarioDirString = scenarioDirString_o.get();
-				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_scenario_" + launchBashScript + " " + scenarioDirString);
+			if (scenarioString_o.isPresent() && runNum_o.isPresent()) {
+				String scenarioIDString = scenarioString_o.get();
+				int runNum = runNum_o.get();
+				
+				// TODO: currently the custom launcher interface needs two arguments with different case and dash/underscore
+				// the first is the dir and the second is the launch file extension
+				// e.g. ./custom_auto_launch_safemuv_exp.sh S004-1 s004_1
+				// Argentina will fix this by making these consistent
+				String dirArg = scenarioIDString.toUpperCase() + "-" + String.valueOf(runNum);
+				String launchArg = scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
+				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + dirArg + " " + launchArg);
 			} else {
 				ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
 			}
@@ -174,11 +186,6 @@ public class StartFuzzingProcesses {
 		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
 	}
 
-	public void generateLaunchScripts(String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
-		String fuzzTopicString = String.join(",", fuzzTopicList);
-		ExptHelper.runScriptNew(ABS_WORKING_PATH, "./generate_launch_files.sh", scenarioName + " " + fuzzTopicString);
-	}
-	
 	public void runExptProcesses(String exptTag, Mission baseMission, String csvFileName, double timeLimit, FuzzingSelectionsSolution solution, boolean regenerateScenarios) throws InterruptedException, IOException {
 		boolean actuallyRun = true;
 		String launchScript = baseMission.getLaunchBashScript();
@@ -193,8 +200,7 @@ public class StartFuzzingProcesses {
 			final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
 			
 			List<String> modifiedTempFiles = codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
-			// TODO: need to 
-			generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
+			RMKGInterface.generateLaunchScripts(ABS_WORKING_PATH, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
 			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName), launchScript);
 		} else {
 			// If not regenerating scenarios, we regenerate everything in place over the original launch scripts

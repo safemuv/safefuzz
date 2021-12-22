@@ -71,6 +71,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	private String logPath;
 	
 	private boolean regenerateScenarios;
+	private String scenarioID;
 	
 	private String exptTagBase;
 	
@@ -131,7 +132,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 	}
 
 	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,
-			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype, String exptTagBase, boolean regenerateScenarios) throws IOException, DSLLoadFailed {
+			String logFileDir, List<OfflineMetric> metrics, ExperimentType etype, String exptTagBase, boolean regenerateScenarios, String scenarioID) throws IOException, DSLLoadFailed {
 		this.rng = rng;
 		this.baseMission = mission;
 		this.exptRunTime = exptRunTime;
@@ -140,6 +141,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		this.etype = etype;
 		this.exptTagBase = exptTagBase;
 		this.regenerateScenarios = regenerateScenarios;
+		this.scenarioID = scenarioID;
 
 		this.variableFixedSize = mission.getFaultsAsList().size();
 		String resFileName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
@@ -176,25 +178,31 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			String exptTag = exptTagBase + (runCount++);
 			String csvFileName = solution.getCSVFileName();
 			String launchScript = baseMission.getLaunchBashScript();
+			String csvFile = solution.getCSVFileName();
+			int testNumID = solution.getFuzzingTestNum();
 
 			if (actuallyRun) {
 				if (regenerateScenarios) {
 					List<String> fuzzTopicList = RMKGInterface.getFuzzTopicListFromScen(solution);
 					
-					// TODO: set these as discussed in the meeting on Friday
 					String scenarioDirName = exptTag;
+					
 					// Generate the ROS configuration files, e.g. modified launch scripts, YAML
 					// config files etc for this CSV definition experimental run
 					final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
+					String configDir = TEMP_WRITTEN_PATH_DIR;
+					
+					String absWorkingPath = runner.getWorkingPath();
 					
 					List<String> modifiedTempFiles = runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
-					// TODO: need to 
-					runner.generateLaunchScripts(scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName), launchScript);
+					//RMKGInterface.generateLaunchScriptsRKMG_ROS(absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
+					RMKGInterface.generateLaunchScriptsRMKG_ROS(scenarioID, absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, csvFile, scenarioDirName, testNumID, configDir);
+
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioID), Optional.of(testNumID), launchScript);
 				} else {
 					// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 					runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), launchScript);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.empty(), launchScript);
 				}
 			}
 

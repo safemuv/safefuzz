@@ -26,7 +26,7 @@ public class RunJMetal_timebased extends AbstractAlgorithmRunner {
 			int populationSize = 20;
 			int offspringSize = 20;
 			
-			String scenarioStr = "S001";
+			String scenarioStr = "S004";
 			
 			ExperimentType etype = ExperimentType.FIXED_TIME_FUZZING;
 			
