@@ -1,7 +1,9 @@
 package fuzzexperiment.runner.rmkg;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
 import fuzzingengine.FuzzingKeySelectionRecord;
@@ -53,6 +55,8 @@ public class RMKGInterface {
 		String fuzzTopicString = String.join(" ", fuzzTopicList);
 		String testNumID_s = String.valueOf(testNumID);
 		String[] args = new String[]{scenarioID, testNumID_s, fuzzTopicString, fuzzConfigCSV, configDir };
+		String argsCombined = Arrays.stream(args).collect(Collectors.joining(" "));
+		System.out.println("rmkg scenario generation args - " + argsCombined);
 		ExptHelper.runScriptNew(workingPath, "./generate_launch_files_rmkg.sh", args);
 	}
 }

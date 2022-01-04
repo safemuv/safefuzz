@@ -12,32 +12,25 @@ import fuzzexperiment.runner.metrics.*;
 
 public class GeneratedDSLLoader implements DSLLoader {
 	public Mission loadMission() throws DSLLoadFailed {
-	final double MISSION_END_TIME = 600.0;
+	final double MISSION_END_TIME = 125.0;
 	final boolean STOP_ON_NO_ENERGY = false;
-	final String launchFile = "auto_launch_safemuv.sh";
+	final String launchFile = "auto_launch_safemuv_exp.sh";
 	Mission mission = new Mission(MISSION_END_TIME, STOP_ON_NO_ENERGY, launchFile);
 	
 	
 		Robot ruav_1 = new Robot("uav_1");
 		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 1.5);
+		ruav_1.setDoubleComponentProperty("maxSpeed", 1.0);
 		
 			
 		mission.addRobot(ruav_1);
-		Robot ruav_2 = new Robot("uav_2");
-		ruav_2.setPointComponentProperty("startLocation", new Point(7.0,2.0,0.0));
-		ruav_2.setDoubleComponentProperty("maxSpeed", 1.5);
-		
-			
-		mission.addRobot(ruav_2);
 	
 	
 	
 	
  
- 
 		
-		Robot [] grp1 = {ruav_1,ruav_2}; 
+		Robot [] grp1 = {ruav_1}; 
 		GoalParticipants gptrackDistancesAndVelocities = new StaticParticipants(grp1, mission);
 		
 		
@@ -74,9 +67,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("trackDistancesAndVelocities", trackDistancesAndVelocities);
  
- 
 		
-		Robot [] grp2 = {ruav_1,ruav_2}; 
+		Robot [] grp2 = {ruav_1}; 
 		GoalParticipants gpStayInOuterRegion = new StaticParticipants(grp2, mission);
 		
 		
@@ -93,8 +85,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		   
 		GoalRegion grStayInOuterRegion = new StaticGoalRegion(
-			new Region(new Point(-100.0, -50.0, 0.0),
-			           new Point(12.0, 50.0, 23.0)));
+			new Region(new Point(-1.5, -1.5, 0.0),
+			           new Point(2.0, 1.5, 3.0)));
 		
 		
 		Goal StayInOuterRegion = new Goal("StayInOuterRegion", mission, gt2, gpStayInOuterRegion, Optional.of(grStayInOuterRegion), ga2);
@@ -108,10 +100,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("StayInOuterRegion", StayInOuterRegion);
  
- 
 		
-		Robot [] grp3 = {ruav_1,ruav_2}; 
-		GoalParticipants gpAvoidPlaneInner = new StaticParticipants(grp3, mission);
+		Robot [] grp3 = {ruav_1}; 
+		GoalParticipants gpAvoidWingInner = new StaticParticipants(grp3, mission);
 		
 		
 		
@@ -120,59 +111,25 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-		GoalAction ga3 = new MaintainDistanceFrom(3.0);
+		GoalAction ga3 = new MaintainDistanceFrom(0.5);
 		
 		
 		
 		
 		
 		
-		Goal AvoidPlaneInner = new Goal("AvoidPlaneInner", mission, gt3, gpAvoidPlaneInner, Optional.empty(), ga3);
+		Goal AvoidWingInner = new Goal("AvoidWingInner", mission, gt3, gpAvoidWingInner, Optional.empty(), ga3);
 		
 			GoalVariable gvar1 = new GoalVariable("/airframe_clearance", "std_msgs/Float64", true);
-			AvoidPlaneInner.addVariable(gvar1);
+			AvoidWingInner.addVariable(gvar1);
 		
 		
 		
 		
 		Metric met4 = new OutsideOfInnerRegionViolations();
-		AvoidPlaneInner.addMetric(met4);
+		AvoidWingInner.addMetric(met4);
 		
-		mission.addGoal("AvoidPlaneInner", AvoidPlaneInner);
- 
- 
-		
-		Robot [] grp4 = {ruav_1,ruav_2}; 
-		GoalParticipants gpAvoidOthers = new StaticParticipants(grp4, mission);
-		
-		
-		
-			GoalTemporalConstraints gt4 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
-		
-		
-		GoalAction ga4 = new AvoidOthers(2.0);
-		
-		
-		
-		
-		
-		
-		   
-		GoalRegion grAvoidOthers = new StaticGoalRegion(
-			new Region(new Point(-10.0, -10.0, 0.0),
-			           new Point(10.0, 10.0, 10.0)));
-		
-		
-		Goal AvoidOthers = new Goal("AvoidOthers", mission, gt4, gpAvoidOthers, Optional.of(grAvoidOthers), ga4);
-		
-		
-		
-		
-		
-		Metric met5 = new AvoidanceViolationsCount();
-		AvoidOthers.addMetric(met5);
-		
-		mission.addGoal("AvoidOthers", AvoidOthers);
+		mission.addGoal("AvoidWingInner", AvoidWingInner);
 	
 
 	
