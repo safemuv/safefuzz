@@ -1,12 +1,14 @@
 #!/bin/sh
 
+VENV_PATH="~/academic/safemuv/knowledge_graph/safemuv/bin/activate"
+
 SCENARIO_ID=$1
 TEST_NUM=$2
 FUZZ_TOPICS=$3
 FUZZ_CONFIG=$4
 CONFIG_DIR=$5
 
-. ~/academic/safemuv/knowledge_graph/safemuv/bin/activate
+. $VENV_PATH
 cd ~/catkin_ws/src/scenario_generation
 
 if [ -z "${FUZZ_TOPICS}" ]; then
