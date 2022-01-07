@@ -61,7 +61,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		if (e instanceof ROSTopicUpdate) {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) e;
 			if (rtu.tagEquals(ATLASTag.SIMULATOR_GENERAL)) {
-				if (rtu.getTopicName().equals("/clock")) {
+				if (rtu.getTopicName().equals("/inspection_clock")) {
 					if (DEBUG_PRINT_CLOCK_MESSAGES) {
 						System.out.println("Clock msg = " + rtu.getJSON());
 					}
@@ -230,8 +230,8 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 	}
 
 	private void subscribeForSimulatorTopics() {
-		// Need the simulator time...
-		standardSubscribe("/clock", "rosgraph_msgs/Clock", ATLASTag.SIMULATOR_GENERAL);
+		// Test the new inspection clock
+		standardSubscribe("/inspection_clock", "rosgraph_msgs/Clock", ATLASTag.SIMULATOR_GENERAL);
 	}
 
 	public void setup() {

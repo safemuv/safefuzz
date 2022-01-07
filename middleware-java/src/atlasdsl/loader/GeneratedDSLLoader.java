@@ -19,8 +19,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 	
 	
 		Robot ruav_1 = new Robot("uav_1");
-		ruav_1.setPointComponentProperty("startLocation", new Point(7.0,-2.0,0.0));
-		ruav_1.setDoubleComponentProperty("maxSpeed", 1.0);
+		ruav_1.setPointComponentProperty("startLocation", new Point(-0.25,0.25,0.0));
+		ruav_1.setDoubleComponentProperty("maxSpeed", 1.1);
 		
 			
 		mission.addRobot(ruav_1);
@@ -35,7 +35,9 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		
 		
-			GoalTemporalConstraints gt1 = new GoalTemporalConstraints(0.0, MISSION_END_TIME);
+			GoalTemporalConstraints gt1 = new GoalTemporalConstraints(50.0, 125.0);
+			
+			
 		
 		
 		
@@ -47,8 +49,8 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		   
 		GoalRegion grtrackDistancesAndVelocities = new StaticGoalRegion(
-			new Region(new Point(-10.0, -10.0, 0.0),
-			           new Point(10.0, 10.0, 10.0)));
+			new Region(new Point(-1.5, -1.5, 0.0),
+			           new Point(2.0, 1.5, 3.0)));
 		
 		
 		Goal trackDistancesAndVelocities = new Goal("trackDistancesAndVelocities", mission, gt1, gptrackDistancesAndVelocities, Optional.of(grtrackDistancesAndVelocities), ga1);

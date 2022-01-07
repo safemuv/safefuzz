@@ -332,6 +332,7 @@ public class TrackDistances extends GoalAction {
 			double maxSpeed = r.getDoubleComponentProperty("maxSpeed");
 			double time = core.getTime();
 			if (currentSpeed > maxSpeed && speedViolationReadyToLog(robotName, time)) {
+				System.out.println("**** SPEED VIOLATION");
 				SpeedViolationRecord svr = new SpeedViolationRecord(robotName, currentSpeed, maxSpeed, time);
 				speedViolations.add(svr);
 			}
@@ -379,8 +380,10 @@ public class TrackDistances extends GoalAction {
 			});
 			
 			core.setupSpeedWatcher((speedReading) -> {
+				
 				String rname = speedReading.getRobotName();
 				double speed = speedReading.getSpeed();
+				System.out.println("++++ speed at " + core.getTime() +  " is " + speed);
 				checkSpeed(rname, speed);
 			});
 

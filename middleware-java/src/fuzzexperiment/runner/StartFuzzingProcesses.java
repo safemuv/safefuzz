@@ -195,7 +195,7 @@ public class StartFuzzingProcesses {
 			final String TEMP_WRITTEN_PATH_DIR = "/tmp/ROS_config_files/";
 			
 			List<String> modifiedTempFiles = codeGenerationROSFuzzing(baseMission, csvFileName, Optional.of(TEMP_WRITTEN_PATH_DIR));
-			RMKGInterface.generateLaunchScripts(ABS_WORKING_PATH, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
+			//RMKGInterface.generateLaunchScriptsRMKG_ROS(ABS_WORKING_PATH, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
 			//doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioDirName), launchScript);
 		} else {
 			// If not regenerating scenarios, we regenerate everything in place over the original launch scripts

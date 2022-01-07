@@ -6,7 +6,7 @@
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
         <opParamsType xmi:id="_F3NcQAxhEeyHaY3ebI30PA" opParam="_kqTLcAxgEeyHaY3ebI30PA" subSpec="twist.linear"/>
-        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" endTime="600.0"/>
+        <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" endTime="30.0"/>
         <probInfo xmi:id="_Nu5UgMilEeuXkJUdIAjG9g" includeVariableProbability="0.2"/>
       </vars>
     </components>
@@ -25,7 +25,7 @@
       <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_path_prime" reflectionName="/desired_path" dir="OUTBOUND" vehicleSpecific="true">
         <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
         <opParamsType xmi:id="_d4eyMNlDEeuPm8zY7fhTLg" opParam="_SRcHwM7pEeu_Qtc8Axo4IQ" subSpec="poses"/>
-        <timeLimit xmi:id="_zl7WENlDEeuPm8zY7fhTLg" endTime="600.0"/>
+        <timeLimit xmi:id="_zl7WENlDEeuPm8zY7fhTLg" endTime="30.0"/>
         <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.2"/>
       </vars>
     </components>
