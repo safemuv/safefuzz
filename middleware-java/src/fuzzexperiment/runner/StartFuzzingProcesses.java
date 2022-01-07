@@ -123,13 +123,8 @@ public class StartFuzzingProcesses {
 				String scenarioIDString = scenarioString_o.get();
 				int runNum = runNum_o.get();
 				
-				// TODO: currently the custom launcher interface needs two arguments with different case and dash/underscore
-				// the first is the dir and the second is the launch file extension
-				// e.g. ./custom_auto_launch_safemuv_exp.sh S004-1 s004_1
-				// Argentina will fix this by making these consistent
-				String dirArg = scenarioIDString.toUpperCase() + "-" + String.valueOf(runNum);
 				String launchArg = scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
-				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + dirArg + " " + launchArg);
+				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + launchArg);
 			} else {
 				ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
 			}
