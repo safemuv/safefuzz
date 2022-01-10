@@ -111,26 +111,30 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioString_o, Optional<Integer> runNum_o, String launchBashScript)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioString_o, Optional<Integer> runNum_o, String launchBashScript, boolean useLaunchers)
 			throws InterruptedException, IOException {
 		double returnValue = 0;
 		
 		if (actuallyRun) {	
 			exptLog("Starting ROS/SAFEMUV launch scripts");
 
-			//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
-			if (scenarioString_o.isPresent() && runNum_o.isPresent()) {
-				String scenarioIDString = scenarioString_o.get();
-				int runNum = runNum_o.get();
+			if (useLaunchers) {
+				//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
+				if (scenarioString_o.isPresent() && runNum_o.isPresent()) {
+					String scenarioIDString = scenarioString_o.get();
+					int runNum = runNum_o.get();
 				
-				String launchArg = scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
-				ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + launchArg);
-			} else {
-				ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
+					String launchArg = scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
+					ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + launchArg);
+				} else {
+					ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
+				}
 			}
 			
 			// TODO: can we replace this delay with checking ROS status to launch the middleware
+			// TODO: check the timing when starting a lab experiment
 			sleepHandlingInterruption(40000);
+			
 			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
 			// Version from JGEA: ExptHelper.runCommandQuitTimeout(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath, 10000);
@@ -181,7 +185,7 @@ public class StartFuzzingProcesses {
 		ExptHelper.startCmd(ABS_WORKING_PATH, "temp_clean_config_files.sh");
 	}
 
-	public void runExptProcesses(String exptTag, Mission baseMission, String csvFileName, double timeLimit, FuzzingSelectionsSolution solution, boolean regenerateScenarios) throws InterruptedException, IOException {
+	public void runExptProcesses(String exptTag, Mission baseMission, String csvFileName, double timeLimit, FuzzingSelectionsSolution solution, boolean regenerateScenarios, boolean runSimLaunchers, int runNum) throws InterruptedException, IOException {
 		boolean actuallyRun = true;
 		String launchScript = baseMission.getLaunchBashScript();
 		// TODO: do we need to call cleanRun here
@@ -200,7 +204,7 @@ public class StartFuzzingProcesses {
 		} else {
 			// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 			codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-			//doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), launchScript);
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.of(runNum), "", runSimLaunchers);
 		}
 	}
 }

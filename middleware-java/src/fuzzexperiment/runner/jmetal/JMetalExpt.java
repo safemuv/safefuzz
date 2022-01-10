@@ -174,9 +174,13 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 
 			((FuzzingSelectionsMutation)mutation).closeLog();
 			((FuzzingCrossoverOperation)crossover).closeLog();
-			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
-			((NSGAII_JRH)algorithm).logMetricsForOutput("jmetal-final-csv-results.res", "jmetal-nondom-csv-results.res");
 			
+			String nonDomFinalFile = "jmetal-nondom-csv-results.res";
+			
+			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
+			((NSGAII_JRH)algorithm).logMetricsForOutput("jmetal-final-csv-results.res", nonDomFinalFile);
+			
+			RMKGInterface.logGraphResults(nonDomFinalFile);
 			//printFinalSolutionSet(population);
 			
 			if (!referenceParetoFront.equals("")) {

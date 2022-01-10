@@ -45,6 +45,10 @@ public class RMKGInterface {
 		return null;
 	}
 	
+	public static void logGraphResults(String resultsPath) {
+
+	}
+	
 	public static void generateLaunchScripts(String workingPath, String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
 		String fuzzTopicString = String.join(" ", fuzzTopicList);
 		String[] args = new String[]{scenarioName, fuzzTopicString};

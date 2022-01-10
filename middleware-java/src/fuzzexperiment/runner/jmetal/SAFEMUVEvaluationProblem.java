@@ -181,6 +181,9 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			String csvFile = solution.getCSVFileName();
 			int testNumID = solution.getFuzzingTestNum();
 
+			// For the GA experiments, we always start the launchers
+			boolean startLaunchers = true;
+			
 			if (actuallyRun) {
 				if (regenerateScenarios) {
 					List<String> fuzzTopicList = RMKGInterface.getFuzzTopicListFromScen(solution);
@@ -198,11 +201,11 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 					//RMKGInterface.generateLaunchScriptsRKMG_ROS(absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
 					RMKGInterface.generateLaunchScriptsRMKG_ROS(scenarioID, absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, csvFile, scenarioDirName, testNumID, configDir);
 
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioID), Optional.of(testNumID), launchScript);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioID), Optional.of(testNumID), launchScript, startLaunchers);
 				} else {
 					// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 					runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.empty(), launchScript);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.empty(), launchScript, startLaunchers);
 				}
 			}
 

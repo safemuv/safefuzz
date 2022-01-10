@@ -14,13 +14,19 @@ public class RunExptRepeated_fuzzing {
 		String fuzzFileName = args[0];
 		int count = Integer.valueOf(args[1]);
 		String resFileName = args[2];
+		String startLaunchersStr = args[3];
+		boolean startLaunchers = false;
+		
+		if (startLaunchersStr.equals("yes")) {
+			startLaunchers = true;
+		}
 		
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated(fuzzFileName, count, 1);
+			ExptParams ep = new RunRepeated(fuzzFileName, count, 1, startLaunchers);
 			FuzzExptRunner r;
-			r = new FuzzExptRunner(ep, mh);
+			r = new FuzzExptRunner(ep, mh, startLaunchers);
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

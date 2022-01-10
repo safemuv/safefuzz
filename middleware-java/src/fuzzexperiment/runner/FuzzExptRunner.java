@@ -31,6 +31,8 @@ public class FuzzExptRunner {
 	private String logPath;
 	private StartFuzzingProcesses runner;
 	
+	private boolean startLaunchers;
+	
 	private int scenarioGenerationNumber = 0;
 	
 	private void readProperties() {
@@ -64,9 +66,10 @@ public class FuzzExptRunner {
 		readProperties();
 	}
 	
-	public FuzzExptRunner(ExptParams ep, MetricHandler mh) throws DSLLoadFailed, IOException {
+	public FuzzExptRunner(ExptParams ep, MetricHandler mh, boolean startLaunchers) throws DSLLoadFailed, IOException {
 		this.eparams = ep;
 		this.mh = mh;
+		this.startLaunchers = startLaunchers;
 		setup();
 	}
 	
@@ -102,7 +105,8 @@ public class FuzzExptRunner {
 				FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, exptTag, actuallyRun, timeLimit, fuzzrecs, eparams.getRunNum());
 				
 				if (actuallyRun) {
-					runner.runExptProcesses(exptTag, baseMission, file, timeLimit, sol, RMKGInterface.REGENERATE_SCENARIOS);
+					int runNum = eparams.getRunNum();
+					runner.runExptProcesses(exptTag, baseMission, file, timeLimit, sol, RMKGInterface.REGENERATE_SCENARIOS, startLaunchers, runNum);
 				}
 				
 				// Assess the metrics (which the user defined using filled-in templates)

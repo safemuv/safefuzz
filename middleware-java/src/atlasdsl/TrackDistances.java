@@ -23,9 +23,9 @@ public class TrackDistances extends GoalAction {
 	private Mission mission;
 	private double completionTime;
 	private GeometryFactory jtsGeoFactory = new GeometryFactory();
-	
+
 	private final double SPEED_VIOLATION_TIME_THRESHOLD = 1.0;
-	private HashMap<String,Double> robotLastSpeedViolationTime = new HashMap<String,Double>();
+	private HashMap<String, Double> robotLastSpeedViolationTime = new HashMap<String, Double>();
 
 	public class SpeedViolationRecord {
 		private String robotName;
@@ -311,12 +311,12 @@ public class TrackDistances extends GoalAction {
 			}
 		}
 	}
-	
+
 	public boolean speedViolationReadyToLog(String robotName, double currentTime) {
 		if (!robotLastSpeedViolationTime.containsKey(robotName)) {
 			robotLastSpeedViolationTime.put(robotName, Double.MIN_VALUE);
 		}
-		
+
 		double lastTime = robotLastSpeedViolationTime.get(robotName);
 		if ((currentTime - lastTime) >= SPEED_VIOLATION_TIME_THRESHOLD) {
 			robotLastSpeedViolationTime.put(robotName, currentTime);
@@ -353,38 +353,41 @@ public class TrackDistances extends GoalAction {
 			positionTrace = new FileWriter("logs/positionTrace-" + randomRunID + ".log");
 
 			core.setupPositionWatcher((gps) -> {
-				double x = gps.getX();
-				double y = gps.getY();
-				double z = gps.getZ();
-				//double speed = gps.getSpeed();
-				String rname = gps.getRobotName();
-				Point p = new Point(x, y, z);
-				positions.put(rname, p);
+				if (g.isReady(core.getTime())) {
+					double x = gps.getX();
+					double y = gps.getY();
+					double z = gps.getZ();
+					// double speed = gps.getSpeed();
+					String rname = gps.getRobotName();
+					Point p = new Point(x, y, z);
+					positions.put(rname, p);
 
-				try {
-					recordPositionTrace(rname, p);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					try {
+						recordPositionTrace(rname, p);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
-				// TODO: check distance to objects has been removed from
-				// the implementation as it requires a simultaneous speed 
-				//checkDistanceToObjects(rname, x, y, speed);
-				
-				try {
-					checkPointIntersection(rname, p);
-				} catch (ParseException e) {
-					e.printStackTrace();
+					// TODO: check distance to objects has been removed from
+					// the implementation as it requires a simultaneous speed
+					// checkDistanceToObjects(rname, x, y, speed);
+
+					try {
+						checkPointIntersection(rname, p);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 				}
 			});
-			
+
 			core.setupSpeedWatcher((speedReading) -> {
-				
-				String rname = speedReading.getRobotName();
-				double speed = speedReading.getSpeed();
-				System.out.println("++++ speed at " + core.getTime() +  " is " + speed);
-				checkSpeed(rname, speed);
+				if (g.isReady(core.getTime())) {
+					String rname = speedReading.getRobotName();
+					double speed = speedReading.getSpeed();
+					System.out.println("++++ speed at " + core.getTime() + " is " + speed);
+					checkSpeed(rname, speed);
+				}
 			});
 
 		} catch (IOException e2) {

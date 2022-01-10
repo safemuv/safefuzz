@@ -30,7 +30,7 @@ public class RunExptMain_feedback {
 			FuzzingExperimentModifier exptGen = new FuzzingExperimentModifier(tgen, m);
 			ExptParams ep = new RunExperimentsMetricFeedback(exptGen, resFileName, m, csvBaseName, fuzzingTestCount, populationLimit, runNumFixed);
 			
-			FuzzExptRunner r = new FuzzExptRunner(ep, mh);
+			FuzzExptRunner r = new FuzzExptRunner(ep, mh, true);
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

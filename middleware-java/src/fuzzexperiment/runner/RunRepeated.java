@@ -11,11 +11,13 @@ public class RunRepeated extends ExptParams {
 	private int runNum = 0;
 	private int limitCount;
 	private String fixedFilename;
+	private boolean startLaunchers;
 	
-	public RunRepeated(String fixedFilename, int limitCount, int runNumStart) {
+	public RunRepeated(String fixedFilename, int limitCount, int runNumStart, boolean startLaunchers) {
 		this.runNum = runNumStart;
 		this.limitCount = limitCount + runNumStart;
 		this.fixedFilename = fixedFilename;
+		this.startLaunchers = startLaunchers;
 	}
 
 	public boolean completed() {
