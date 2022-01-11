@@ -180,8 +180,9 @@ public class JMetalExpt extends AbstractAlgorithmRunner {
 			((NSGAII_JRH)algorithm).logFinalSolutionsCustom("jmetal-finalPopNonDom.res", "jmetal-finalPop.res");
 			((NSGAII_JRH)algorithm).logMetricsForOutput("jmetal-final-csv-results.res", nonDomFinalFile);
 			
-			RMKGInterface.logGraphResults(nonDomFinalFile);
-			//printFinalSolutionSet(population);
+			SAFEMUVEvaluationProblem sp = (SAFEMUVEvaluationProblem)problem;
+			String workingPath = sp.getWorkingPath();
+			RMKGInterface.logGraphResults(workingPath, nonDomFinalFile);
 			
 			if (!referenceParetoFront.equals("")) {
 				printQualityIndicators(population, referenceParetoFront);

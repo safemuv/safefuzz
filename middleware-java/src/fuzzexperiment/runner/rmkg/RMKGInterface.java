@@ -45,8 +45,9 @@ public class RMKGInterface {
 		return null;
 	}
 	
-	public static void logGraphResults(String resultsPath) {
-
+	public static void logGraphResults(String workingPath, String resultsPath) {
+		String[] args = new String[]{resultsPath};
+		ExptHelper.runScriptNew(workingPath, "./record_result_file_in_graph.sh", args);
 	}
 	
 	public static void generateLaunchScripts(String workingPath, String scenarioName, List<String> fuzzTopicList, List<String> modifiedFiles, String tempDirName) {
@@ -62,5 +63,18 @@ public class RMKGInterface {
 		String argsCombined = Arrays.stream(args).collect(Collectors.joining(" "));
 		System.out.println("rmkg scenario generation args - " + argsCombined);
 		ExptHelper.runScriptNew(workingPath, "./generate_launch_files_rmkg.sh", args);
+	}
+
+	public static String getDirForScenario(String scenarioIDString, int runNum) {
+		return scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
+	}
+	
+	public static String scenarioFuzzingFile(String scenarioIDString, int runNum) {
+		return getDirForScenario(scenarioIDString, runNum) + "_fuzzing.csv";
+	}
+	
+	public static String getScenarioFuzzFile(String scenarioID, int runNum) {
+		String scenDir = getDirForScenario(scenarioID, runNum);
+		return System.getProperty("user.home") + "/catkin_ws/src/scenario_generation/safemuv_scenarios/scenarios/" + scenDir + "/config/" + scenarioFuzzingFile(scenarioID, runNum);
 	}
 }

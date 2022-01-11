@@ -22,7 +22,7 @@ public class RunExptMain_random {
 			String csvBaseName = "/tmp/fuzzexpt";
 			FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(m, new Random());
 			ExptParams ep = new RunRandomlyGeneratedExperiments(resFileName, m, csvBaseName, missionCount, tgen, runNumFixed);
-			FuzzExptRunner r = new FuzzExptRunner(ep, mh, true);
+			FuzzExptRunner r = new FuzzExptRunner(ep, mh, true, "S004");
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

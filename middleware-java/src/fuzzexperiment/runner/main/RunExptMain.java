@@ -18,7 +18,7 @@ public class RunExptMain {
 			MetricHandler mh = new MetricHandler(mission, resFileName);
 			ExptParams ep = new RunRepeated("null-fuzzexpt.csv", 30, 1, true);
 			FuzzExptRunner r;
-			r = new FuzzExptRunner(ep, mh, true);
+			r = new FuzzExptRunner(ep, mh, true, "S004");
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

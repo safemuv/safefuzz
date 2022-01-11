@@ -29,7 +29,7 @@ public class RunExptMain_feedback_conditions {
 			FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(m, new Random());
 			FuzzingExperimentModifier exptGen = new FuzzingExperimentModifier(tgen, m);
 			ExptParams ep = new RunExperimentsMetricFeedback(exptGen, resFileName, m, csvBaseName, runCount, populationLimit, runNumFixed);
-			FuzzExptRunner r = new FuzzExptRunner(ep, mh, true);
+			FuzzExptRunner r = new FuzzExptRunner(ep, mh, true, "S004");
 			r.run();
 		} catch (DSLLoadFailed | IOException e) {
 			e.printStackTrace();

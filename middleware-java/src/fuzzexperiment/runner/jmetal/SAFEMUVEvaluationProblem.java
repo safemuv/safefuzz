@@ -102,6 +102,10 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 			ex.printStackTrace();
 		}
 	}
+	
+	public String getWorkingPath() {
+		return workingPath;
+	}
 
 	private void setup() throws DSLLoadFailed, IOException {
 		DSLLoader loader = new GeneratedDSLLoader();

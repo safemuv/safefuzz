@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import atlasdsl.Mission;
 import atlasdsl.loader.DSLLoadFailed;
@@ -17,9 +16,7 @@ import atlasdsl.loader.DSLLoader;
 import atlasdsl.loader.GeneratedDSLLoader;
 import fuzzexperiment.runner.jmetal.FuzzingSelectionsSolution;
 import fuzzexperiment.runner.metrics.*;
-import fuzzexperiment.runner.rmkg.RMKGInterface;
 import fuzzingengine.FuzzingKeySelectionRecord;
-import fuzzingengine.FuzzingSelectionRecord;
 import fuzzingengine.support.FuzzingEngineSupport;
 
 public class FuzzExptRunner {
@@ -34,6 +31,7 @@ public class FuzzExptRunner {
 	private boolean startLaunchers;
 	
 	private int scenarioGenerationNumber = 0;
+	private String scenarioID;
 	
 	private void readProperties() {
 		Properties prop = new Properties();
@@ -66,10 +64,11 @@ public class FuzzExptRunner {
 		readProperties();
 	}
 	
-	public FuzzExptRunner(ExptParams ep, MetricHandler mh, boolean startLaunchers) throws DSLLoadFailed, IOException {
+	public FuzzExptRunner(ExptParams ep, MetricHandler mh, boolean startLaunchers, String scenarioID) throws DSLLoadFailed, IOException {
 		this.eparams = ep;
 		this.mh = mh;
 		this.startLaunchers = startLaunchers;
+		this.scenarioID = scenarioID;
 		setup();
 	}
 	
@@ -96,17 +95,19 @@ public class FuzzExptRunner {
 			// in response to the metrics, or it comes from a constant list
 			Optional<String> nextFile_o = eparams.getNextFuzzingCSVFileName();
 			if (nextFile_o.isPresent()) {
-				String file = nextFile_o.get();
-				String exptTag = "exptcsv-" + file;
+				String csvFile = nextFile_o.get();
+				String exptTag = csvFile;
 				System.out.println("====================================================================================================");
-				System.out.println("Running fuzzing experiments for CSV file name " + file);
-				List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, file);
+				System.out.println("Running fuzzing experiments for CSV file name " + csvFile);
+				List<FuzzingKeySelectionRecord> fuzzrecs = FuzzingEngineSupport.loadFuzzingRecords(baseMission, csvFile);
 				System.out.println("Fuzzing records = " + fuzzrecs);
 				FuzzingSelectionsSolution sol = new FuzzingSelectionsSolution(baseMission, exptTag, actuallyRun, timeLimit, fuzzrecs, eparams.getRunNum());
 				
 				if (actuallyRun) {
 					int runNum = eparams.getRunNum();
-					runner.runExptProcesses(exptTag, baseMission, file, timeLimit, sol, RMKGInterface.REGENERATE_SCENARIOS, startLaunchers, runNum);
+					boolean regenerateScenarios = false;
+					System.out.println("csvfile = " + csvFile);
+					runner.runExptProcesses(scenarioID, baseMission, csvFile, timeLimit, sol, regenerateScenarios, startLaunchers, runNum);
 				}
 				
 				// Assess the metrics (which the user defined using filled-in templates)
@@ -115,7 +116,7 @@ public class FuzzExptRunner {
 					// Need to get the fuzzing selection records
 					System.out.println("Fuzzing records = " + fuzzrecs);
 					metricResults = mh.computeAllOffline(fuzzrecs, logPath);
-					mh.printMetricsToOutputFile(file, metricResults);
+					mh.printMetricsToOutputFile(csvFile, metricResults);
 					eparams.advance(metricResults);
 					
 					

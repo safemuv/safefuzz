@@ -177,8 +177,8 @@ public class GeneratedFuzzingSpec {
 		
 				
 		simMapping.addRecord("trajectory_tracking_controller_fuzzy", "/ual/set_velocity_prime", "/ual/set_velocity", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/pedro/academic/safemuv/integration_tools/safemuv_tools/g2m/tests///trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
-		true, Optional.of(new TimeSpec(m,0.0,600.0)), Optional.of(0.2));
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/academic/safemuv/integration_tools/safemuv_tools/g2m/tests///trajectory_tracking_controller_fuzzy"), Optional.of("geometry_msgs/TwistStamped"),
+		true, Optional.of(new TimeSpec(m,0.0,30.0)), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops1, "twist.linear");
 			simMapping.addOperationParameterSetForVariable("/ual/set_velocity_prime", ops2, "twist.linear");
@@ -191,7 +191,7 @@ public class GeneratedFuzzingSpec {
 		
 				
 		simMapping.addRecord("CalibrationDefinitions", "s004_calibration_points.yaml", "", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/pedro/academic/safemuv/integration_tools/safemuv_tools/g2m/tests//config/"), Optional.empty(),
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/academic/safemuv/integration_tools/safemuv_tools/g2m/tests//config/"), Optional.empty(),
 		false, Optional.empty(), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("s004_calibration_points.yaml", ops3, "frameB_0");
@@ -209,8 +209,8 @@ public class GeneratedFuzzingSpec {
 		
 				
 		simMapping.addRecord("trajectory_planning", "/desired_path_prime", "/desired_path", 
-		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/pedro/academic/safemuv/integration_tools/safemuv_tools/g2m/tests//"), Optional.of("nav_msgs/Path"),
-		true, Optional.of(new TimeSpec(m,0.0,600.0)), Optional.of(0.2));
+		FuzzingSimMapping.VariableDirection.OUTBOUND, Optional.of("/home/jharbin/academic/safemuv/integration_tools/safemuv_tools/g2m/tests//"), Optional.of("nav_msgs/Path"),
+		true, Optional.of(new TimeSpec(m,0.0,30.0)), Optional.of(1.0));
 	
 			simMapping.addOperationParameterSetForVariable("/desired_path_prime", ops4, "poses");
 	
@@ -223,7 +223,7 @@ public class GeneratedFuzzingSpec {
 	
 	fe.setSimMapping(simMapping);
 	if (loadCSV) {
-		fe.setupFromFuzzingFile("/home/pedro/academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
+		fe.setupFromFuzzingFile("/home/jharbin//academic/atlas/atlas-middleware/fuzz-configs/ros-fuzztest.csv", m);
 	}
 	return fe;
 	}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="125.0" launchScript="auto_launch_safemuv_exp.sh">
+<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="60.0" launchScript="auto_launch_safemuv_exp.sh">
   <robots xmi:id="_MGfmMJxZEeuXP_f35b_qpg" name="uav_1" mutable="true">
     <componentProperties xsi:type="atlas:PointProperty" xmi:id="_W24moJxZEeuXP_f35b_qpg" name="startLocation">
       <value xmi:id="_X6QvMJxZEeuXP_f35b_qpg" x="-0.25" y="0.25"/>
@@ -7,7 +7,6 @@
     <componentProperties xsi:type="atlas:DoubleProperty" xmi:id="_YB1L0NAXEeuTY9Uq5rlyZA" name="maxSpeed" value="1.1"/>
   </robots>
   <goals xmi:id="_jQ31QLsdEeute_EAlr7M3A" name="trackDistancesAndVelocities" priority="100">
-    <requirements xmi:id="_zdbH8G-9EeyMiqrarn8qag" earliestStartTime="50.0" latestFinishTime="125.0"/>
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_NQmb4LylEeu_l8YcOLqCyw" participants="_MGfmMJxZEeuXP_f35b_qpg"/>
     <action xsi:type="atlas:TrackDistances" xmi:id="_EXPZMLseEeute_EAlr7M3A"/>
     <region xsi:type="atlas:StaticGoalRegion" xmi:id="_U1XIcLySEeu_l8YcOLqCyw">
