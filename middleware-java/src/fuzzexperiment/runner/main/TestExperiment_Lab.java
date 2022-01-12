@@ -31,7 +31,7 @@ public class TestExperiment_Lab {
 		try {
 			Mission mission = new GeneratedDSLLoader().loadMission();
 			MetricHandler mh = new MetricHandler(mission, resFileName);
-			ExptParams ep = new RunRepeated(fuzzFileName, count, 1, startLaunchers);
+			ExptParams ep = new RunRepeated(fuzzFileName, count, runNum, startLaunchers);
 			FuzzExptRunner r;
 			r = new FuzzExptRunner(ep, mh, startLaunchers, scenarioID);
 			r.run();

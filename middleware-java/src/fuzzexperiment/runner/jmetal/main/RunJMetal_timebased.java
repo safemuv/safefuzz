@@ -22,9 +22,9 @@ public class RunJMetal_timebased extends AbstractAlgorithmRunner {
 			double participantProbMut = 0.333;
 			double paramProbMut = 0.333;
 			
-			int numIterations = 18;
-			int populationSize = 6;
-			int offspringSize = 6;
+			int numIterations = 40;
+			int populationSize = 10;
+			int offspringSize = 10;
 			
 			String scenarioStr = "S004";
 			
