@@ -133,7 +133,9 @@ public class StartFuzzingProcesses {
 			
 			// TODO: can we replace this delay with checking ROS status to launch the middleware
 			// TODO: check the timing when starting a lab experiment
-			sleepHandlingInterruption(30000);
+			if (useLaunchers) {
+				sleepHandlingInterruption(30000);
+			}
 			
 			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
