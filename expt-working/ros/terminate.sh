@@ -18,6 +18,16 @@ killall -9 RelocatePlane_node
 killall -9 RelocateWing_node
 killall -9 static_transform_publisher
 killall -9 mavros_node
+killall -9 trajectory_planning_manager
+killall -9 trajectory_planner_geometric_primitives_ros_3d
+killall -9 trajectory_planner_from_path_ros
+killall -9 trajectory_tracking_controller_fuzzy
+killall -9 trajectory_publisher
+killall -9 trajectory_commander_ros_trajectory
+killall -9 path_generator
+killall -9 mofs_ros
+killall -9 obstacles_static
+killall -9 relay
 
 docker stop $(docker ps -a -q)
 docker kill $(docker ps -q)
