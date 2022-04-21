@@ -1,1 +1,3 @@
 java_cmd_string
+logs/*
+*.log
