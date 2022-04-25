@@ -16,8 +16,17 @@ public class GeneratedFuzzingSpec {
 	FuzzingEngine fe = new FuzzingEngine(m);
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
+	[%
+	for (gv in GrammarVariableSpecification.allInstances()) {
+		TemplateFactory.setOutputRoot("../middleware-java/");
+		var t : Template = TemplateFactory.load("genGrammarVariableTemplate.egl");
+		var templateFile = "src/fuzzexperiment/runner/jmetal/grammar/variables/" + gv.className + ".java";
+		t.populate("variableTemplateClassName", gv.className);	
+		t.generate(templateFile);
+	}
+	%]
 	
-	
+	[* Need to generate the file SetupMiddlewareFunctionVars from the grammar variable list! *]
 	try {
 	
 	[% 	var opsNum = 0;

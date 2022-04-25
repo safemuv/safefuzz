@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import atlasdsl.SimulatorVariable.VariableTag;
 import atlasdsl.faults.Fault;
 
 public class Mission {
@@ -27,7 +28,7 @@ public class Mission {
 	private Map<String,Fault> faults = new LinkedHashMap<String,Fault>();
 	private String launchBashScript;
 	
-	private List<String> behaviourVariables = new ArrayList<String>();
+	private Map<String, SimulatorVariable> simulatorVariables = new HashMap<String, SimulatorVariable>();
 	
 	private boolean stopOnNoEnergy;
 	private double endTime;
@@ -221,12 +222,36 @@ public class Mission {
 		return obstacleRegion;
 	}
 	
-	public void addBehaviourVariable(String var) {
-		behaviourVariables.add(var);
+	public void addSimulatorVariable(SimulatorVariable sv) {
+		simulatorVariables.put(sv.getVarName(), sv);
+	}
+	
+	public Optional<SimulatorVariable> getSimulatorVariableByTag(VariableTag vt) {
+		return simulatorVariables
+				.values()
+				.stream()
+				.filter(sv -> sv.getTag() == vt)
+				.findFirst();
 	}
 
+	public List<String> getSimulatorVariableNames() {
+		return simulatorVariables.values().stream().map(sv -> sv.getVarName()).collect(Collectors.toList());
+	}
+	
+	public Optional<SimulatorVariable> getSimulatorVariableByName(String name) {
+		if (simulatorVariables.containsKey(name)) {
+			return Optional.of(simulatorVariables.get(name));
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	public List<SimulatorVariable> getSimulatorVariables() {
+		return new ArrayList<SimulatorVariable>(simulatorVariables.values());
+	}
+	
 	public List<String> getBehaviourVariableNames() {
-		return behaviourVariables;
+		return new ArrayList<String>();
 	}
 	
 	public boolean stopOnNoEnergy() {

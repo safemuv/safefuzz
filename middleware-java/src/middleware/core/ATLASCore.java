@@ -18,6 +18,7 @@ import atlasdsl.*;
 import atlasdsl.faults.*;
 import atlassharedclasses.*;
 import faultgen.FaultGenerator;
+import fuzzexperiment.runner.jmetal.grammar.variables.VariableTemplate;
 import middleware.carstranslations.CARSTranslations;
 import middleware.gui.GUITest;
 import middleware.logging.ATLASLog;
@@ -46,8 +47,9 @@ public abstract class ATLASCore {
 	protected Map<String, Boolean> vehicleBatteryFlat = new HashMap<String, Boolean>();
 
 	protected Map<String, Object> simVariables = new HashMap<String, Object>();
+	
 	// Function variables are computed directly by the middleware
-	protected Map<String, ObjectLambda> middlewareFunctionVariables = new HashMap<String, ObjectLambda>();
+	protected Map<String, VariableTemplate> middlewareFunctionVariables = new HashMap<String, VariableTemplate>();
 
 	protected GUITest gui;
 
@@ -58,6 +60,11 @@ public abstract class ATLASCore {
 	protected List<SensorDetectionLambda> sensorWatchers = new ArrayList<SensorDetectionLambda>();
 	protected List<PositionUpdateLambda> positionWatchers = new ArrayList<PositionUpdateLambda>();
 	protected List<SpeedUpdateLambda> speedWatchers = new ArrayList<SpeedUpdateLambda>();
+	
+	// If the string matches the given topic, the lambda will be called when the
+	// given simulator variable
+	// is updated
+	protected Map<String, List<SimVarUpdateLambda>> simVarWatchers = new HashMap<String, List<SimVarUpdateLambda>>();
 
 	private FaultGenerator faultGen;
 	private static ATLASCore coreRef;
@@ -162,79 +169,79 @@ public abstract class ATLASCore {
 		;
 	}
 
-	public ObjectLambda setupLambdaFromFixedPoint(String varName, Point fixedPoint) {
-		ObjectLambda resLambda = (name) -> {
-			Robot r = mission.getRobot(name);
-			try {
-				Point p = r.getPointComponentProperty("location");
-				double distance = fixedPoint.distanceTo(p);
-				return distance;
-			} catch (MissingProperty p) {
-				return Double.MAX_VALUE;
-			}
-		};
+//	public ObjectLambda setupLambdaFromFixedPoint(String varName, Point fixedPoint) {
+//		ObjectLambda resLambda = (name) -> {
+//			Robot r = mission.getRobot(name);
+//			try {
+//				Point p = r.getPointComponentProperty("location");
+//				double distance = fixedPoint.distanceTo(p);
+//				return distance;
+//			} catch (MissingProperty p) {
+//				return Double.MAX_VALUE;
+//			}
+//		};
+//
+//		middlewareFunctionVariables.put(varName, resLambda);
+//		return resLambda;
+//	}
 
-		middlewareFunctionVariables.put(varName, resLambda);
-		return resLambda;
-	}
-
-	public void setupMiddlewareFunctionVariables() {
-		ObjectLambda spdLambda = (name) -> {
-			Robot r = mission.getRobot(name);
-			try {
-				Point p = r.getPointComponentProperty("location");
-				Point orig = r.getPointComponentProperty("startLocation");
-				double distance = orig.distanceTo(p);
-				return distance;
-			} catch (MissingProperty p) {
-				return Double.MAX_VALUE;
-			}
-		};
-
-		ObjectLambda afdLambda = (name) -> {
-			Object gv = getGoalVariable(name, "/airframe_clearance");
-			if (gv != null) {
-				edu.wpi.rail.jrosbridge.messages.Message m = (edu.wpi.rail.jrosbridge.messages.Message)gv;
-				String typ = m.getMessageType();
-				JsonObject jobj = m.toJsonObject();
-				JsonNumber n = (JsonNumber)jobj.get("data");
-				double distVal = n.doubleValue();
-				return distVal;
-			} else {
-				return Double.MAX_VALUE;
-			}
-		};
-		
-		ObjectLambda irLambda = (name) -> {
-			try {
-				// ignore the name, just use the hardcoded robot distances
-				Point r1pos = mission.getRobot("uav_1").getPointComponentProperty("location");
-				Point r2pos = mission.getRobot("uav_2").getPointComponentProperty("location");
-				double irDist = r1pos.distanceTo(r2pos);
-				return irDist;
-			} catch (MissingProperty e) {
-				e.printStackTrace();
-				return Double.MAX_VALUE;
-			}
-		};
-		
-		ObjectLambda timeLambda = (name) -> {
-			double time = getTime();
-			return time;
-		};
-
-		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
-		middlewareFunctionVariables.put("airframe_clearance", afdLambda);
-		middlewareFunctionVariables.put("time", timeLambda);
-		middlewareFunctionVariables.put("interrobot_distance", irLambda);
-		
-		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14, -2.28, 5.2));
-		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14, 6.26, 5.2));
-		setupLambdaFromFixedPoint("distance_to_nose", new Point(-6.79, 2.136, 5.8772));
-	}
+//	public void setupMiddlewareFunctionVariables() {
+//		ObjectLambda spdLambda = (name) -> {
+//			Robot r = mission.getRobot(name);
+//			try {
+//				Point p = r.getPointComponentProperty("location");
+//				Point orig = r.getPointComponentProperty("startLocation");
+//				double distance = orig.distanceTo(p);
+//				return distance;
+//			} catch (MissingProperty p) {
+//				return Double.MAX_VALUE;
+//			}
+//		};
+//
+//		ObjectLambda afdLambda = (name) -> {
+//			Object gv = getGoalVariable(name, "/airframe_clearance");
+//			if (gv != null) {
+//				edu.wpi.rail.jrosbridge.messages.Message m = (edu.wpi.rail.jrosbridge.messages.Message)gv;
+//				String typ = m.getMessageType();
+//				JsonObject jobj = m.toJsonObject();
+//				JsonNumber n = (JsonNumber)jobj.get("data");
+//				double distVal = n.doubleValue();
+//				return distVal;
+//			} else {
+//				return Double.MAX_VALUE;
+//			}
+//		};
+//		
+//		ObjectLambda irLambda = (name) -> {
+//			try {
+//				// ignore the name, just use the hardcoded robot distances
+//				Point r1pos = mission.getRobot("uav_1").getPointComponentProperty("location");
+//				Point r2pos = mission.getRobot("uav_2").getPointComponentProperty("location");
+//				double irDist = r1pos.distanceTo(r2pos);
+//				return irDist;
+//			} catch (MissingProperty e) {
+//				e.printStackTrace();
+//				return Double.MAX_VALUE;
+//			}
+//		};
+//		
+//		ObjectLambda timeLambda = (name) -> {
+//			double time = getTime();
+//			return time;
+//		};
+//
+//		middlewareFunctionVariables.put("starting_point_distance", spdLambda);
+//		middlewareFunctionVariables.put("airframe_clearance", afdLambda);
+//		middlewareFunctionVariables.put("time", timeLambda);
+//		middlewareFunctionVariables.put("interrobot_distance", irLambda);
+//		
+//		setupLambdaFromFixedPoint("distance_to_left_wing_base", new Point(-29.14, -2.28, 5.2));
+//		setupLambdaFromFixedPoint("distance_to_right_wing_base", new Point(-29.14, 6.26, 5.2));
+//		setupLambdaFromFixedPoint("distance_to_nose", new Point(-6.79, 2.136, 5.8772));
+//	}
 
 	public void runMiddleware() {
-		setupMiddlewareFunctionVariables();
+		SetupMiddlewareFunctionVars.setup(this);
 
 		for (ATLASEventQueue<?> q : queues) {
 			// Since the GUI displays global status, it
@@ -359,8 +366,8 @@ public abstract class ATLASCore {
 		// Use the middleware function variables first, then the sim variables
 		String combinedName = varName;
 		if (middlewareFunctionVariables.containsKey(combinedName)) {
-			ObjectLambda l = middlewareFunctionVariables.get(combinedName);
-			Object res = l.op(robotName);
+			VariableTemplate l = middlewareFunctionVariables.get(combinedName);
+			Object res = l.getValue(robotName, this);
 			return res;
 		} else {
 			if (simVariables.containsKey(combinedName)) {
@@ -379,5 +386,31 @@ public abstract class ATLASCore {
 
 	public Object getGoalVariable(String vehicleName, String topicName) {
 		return goalVariables.get(vehicleName + "-_-" + topicName);
+	}
+	
+	public void setupSimVarWatcher(String topic, SimVarUpdateLambda lambda) {
+		List<SimVarUpdateLambda> current = simVarWatchers.get(topic);
+		if (current == null) {
+			current = new ArrayList<SimVarUpdateLambda>();
+		}
+		current.add(lambda);
+		simVarWatchers.put(topic, current);
+	}
+
+	// The boolean value indicates if this sim variable should be propagated to the CI.
+	// This allows local events a chance to override this
+	public boolean notifySimVarUpdate(SimulatorVariable sv, String robotName, Object value) {
+		boolean shouldNotify = true;
+		List<SimVarUpdateLambda> lambdas = simVarWatchers.get(sv.getVarName());
+		if (lambdas != null) {
+			for (SimVarUpdateLambda l : lambdas) {
+				shouldNotify = shouldNotify && (l.op(sv, robotName, value));
+			}
+		}
+		return shouldNotify;
+	}
+	
+	public void addMiddlewareFunctionVariables(String varName, VariableTemplate vt) {
+		middlewareFunctionVariables.put(varName, vt);
 	}
 }

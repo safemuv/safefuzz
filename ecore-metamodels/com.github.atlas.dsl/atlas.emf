@@ -359,12 +359,6 @@ class DynamicGoalRegion extends GoalRegion {
 	attr double relativeRange;
 }
 
-class GoalVariable {
-	attr String name;
-	attr String variableType;
-	attr boolean vehicleSpecific;
-}
-
 class Metric {
 	attr String name;
 	attr boolean computeOnline;
@@ -378,17 +372,29 @@ class Goal {
 	val GoalAction action;
 	val GoalRegion[0..1] region;
 	ref Behaviour[*] behaviours;
-	val GoalVariable[*] variables;
+	val SimulatorVariable[*] variables;
 	val Metric[*] metrics;
 }
 
-class BehaviourVariable {
+enum VariableTag {
+	GENERIC=0;
+  	VELOCITY=1;
+  	POSITION=2;
+  	SET_VELOCITY=3;
+  	TIME = 4;
+}
+
+class SimulatorVariable {
 	attr String varName;
+	attr String simType;
+	attr VariableTag[1] tag;
+	attr boolean isVehicleSpecific;
+	attr boolean propagateToCI;
 }
 
 class Behaviour {
 	attr String className;
-	val BehaviourVariable[*] bvars;
+	val SimulatorVariable[*] bvars;
 }
 
 class Mission {

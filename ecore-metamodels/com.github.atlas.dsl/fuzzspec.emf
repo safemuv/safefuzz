@@ -108,6 +108,7 @@ class Simulator {
 	val FuzzingComponent[*] components;
 	val ConfigScript[*] launchers;
 	ref ExecutableStartScript[1] entryPoint;
+	val GrammarVariableSpecification[*] gspecs;
 }
 
 abstract class OperationParameter {
@@ -187,3 +188,16 @@ class FuzzingSpecification {
 	val FuzzingOperation[*] operations;
 }
 
+class GrammarVariableSpecification {
+	attr String name;
+	attr String className;
+	val SimpleGrammarVariable[1..*] requiredGVars;
+	
+	// This assumes the type of these is int?
+	//attr int minValue;
+	//attr int maxValue;
+}
+
+class SimpleGrammarVariable extends Atlas.SimulatorVariable {
+
+}

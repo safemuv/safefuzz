@@ -233,7 +233,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		t.generate(templateFile);
 		%]
 		
-		
 		[% goalMetricCount++; %]
 		[* Use the metric name to specify the class created *]
 		Metric met[%= goalMetricCount %] = new [%= m.name %]();
@@ -242,8 +241,6 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		mission.addGoal("[%= g.name %]", [%= g.name %]);
 	[% } %]
-	
-
 	
 	[* Add messages - naming schema msg[name] *]
 	[% for (msg in m.messages) { %]
