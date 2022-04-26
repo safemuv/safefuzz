@@ -17,7 +17,7 @@ public class StayInRegion extends GoalAction {
 	private boolean stopOnFirstViolation = false;
 	
 	private int violationIncidents = 0;
-	private final double TIME_THRESHOLD = 5.0;
+	private final double TIME_THRESHOLD = 1.0;
 	
 	private HashMap<String,Double> robotLastViolationTime = new HashMap<String,Double>();
 	

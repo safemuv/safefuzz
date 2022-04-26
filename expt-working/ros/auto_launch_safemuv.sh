@@ -15,6 +15,6 @@ xterm -hold -e docker run --network host -v /home/$USER/catkin_ws/src/safemuv_ro
 xterm -hold -e docker run -it --network host safemuv_metrics &
 sleep 15
 echo "Starting roslaunch launchers"
-# xterm -e /bin/bash -l -c "roslaunch safemuv_rviz_visualization safemuv_simulation_visualization.launch" &
+xterm -e /bin/bash -l -c "roslaunch safemuv_rviz_visualization safemuv_simulation_visualization.launch" &
 sleep 15
 xterm -hold -e /bin/bash -l -c "roslaunch safemuv_mission multi_mission.launch"

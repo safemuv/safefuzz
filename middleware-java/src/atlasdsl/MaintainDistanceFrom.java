@@ -20,7 +20,7 @@ public class MaintainDistanceFrom extends GoalAction {
 	private final String topicName = "/airframe_clearance";
 	
 	private int violationIncidents = 0;
-	private final double TIME_THRESHOLD = 5.0;
+	private final double TIME_THRESHOLD = 1.0;
 	
 	private HashMap<String,Double> robotLastViolationTime = new HashMap<String,Double>();
 	

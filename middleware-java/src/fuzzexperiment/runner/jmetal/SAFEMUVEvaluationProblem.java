@@ -203,11 +203,11 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 					//RMKGInterface.generateLaunchScriptsRKMG_ROS(absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, scenarioDirName);
 					RMKGInterface.generateLaunchScriptsRMKG_ROS(scenarioID, absWorkingPath, scenarioDirName, fuzzTopicList, modifiedTempFiles, csvFile, scenarioDirName, testNumID, configDir);
 
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioID), Optional.of(testNumID), launchScript, startLaunchers);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(scenarioID), Optional.of(testNumID), launchScript, startLaunchers, true);
 				} else {
 					// If not regenerating scenarios, we regenerate everything in place over the original launch scripts
 					runner.codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.empty(), launchScript, startLaunchers);
+					runner.doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.empty(), Optional.empty(), launchScript, startLaunchers, false);
 				}
 			}
 

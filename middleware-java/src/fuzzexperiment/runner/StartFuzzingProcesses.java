@@ -111,7 +111,7 @@ public class StartFuzzingProcesses {
 		}
 	}
 	
-	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioString_o, Optional<Integer> runNum_o, String launchBashScript, boolean useLaunchers)
+	public double doExperimentFromFile(String exptTag, boolean actuallyRun, double timeLimit, String fuzzFilePath, Optional<String> scenarioString_o, Optional<Integer> runNum_o, String launchBashScript, boolean useLaunchers, boolean useCustomLauncher)
 			throws InterruptedException, IOException {
 		double returnValue = 0;
 		
@@ -120,7 +120,7 @@ public class StartFuzzingProcesses {
 
 			if (useLaunchers) {
 				//	If no scenario is supplied, use the original launcher, which does not generate new launch files	
-				if (scenarioString_o.isPresent() && runNum_o.isPresent()) {
+				if (scenarioString_o.isPresent() && runNum_o.isPresent() && useCustomLauncher) {
 					String scenarioIDString = scenarioString_o.get();
 					int runNum = runNum_o.get();
 				
@@ -209,7 +209,7 @@ public class StartFuzzingProcesses {
 		} else {
 			// Not regenerating scenarios
 			codeGenerationROSFuzzing(baseMission, csvFileName, Optional.empty());
-			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(exptTag), Optional.of(runNum), launchScript, runSimLaunchers);
+			doExperimentFromFile(exptTag, actuallyRun, timeLimit, csvFileName, Optional.of(exptTag), Optional.of(runNum), launchScript, runSimLaunchers, false);
 		}
 	}
 }
