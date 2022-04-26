@@ -119,7 +119,7 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		FuzzingTimeSpecificationGenerator tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
 		if (etype == ExperimentType.FIXED_TIME_FUZZING) {
 			tgen = new FuzzingTimeSpecificationGeneratorStartEnd(baseMission, new Random());
-		} 
+		}
 		
 		if (etype == ExperimentType.CONDITION_BASED_FUZZING_BOTH) {
 			GrowGrammarTreeFactory<String> gen = new GrowGrammarTreeFactory(MAX_GRAMMAR_HEIGHT, grammar);
@@ -129,10 +129,8 @@ public class SAFEMUVEvaluationProblem implements Problem<FuzzingSelectionsSoluti
 		initialGenerator = new FuzzingExperimentModifier(tgen, baseMission);
 		
 		System.out.println("initialGenerator class = " + initialGenerator.getClass().getSimpleName());
-		
 		System.out.println("SAFEMUVEvaluationProblem: Grammar rules = " + grammar.getRules());
 		System.out.println("SAFEMUVEvaluationProblem: Starting symbol = " + grammar.getStartingSymbol());
-		
 	}
 
 	public SAFEMUVEvaluationProblem(Grammar<String> g, int popSize, Random rng, Mission mission, boolean actuallyRun, double exptRunTime,

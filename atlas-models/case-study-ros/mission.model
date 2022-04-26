@@ -38,7 +38,7 @@
   <goals xmi:id="_vpVZEMj6EeuWdKT93dm6Ig" name="AvoidPlaneInner" priority="1">
     <participants xsi:type="atlas:StaticParticipants" xmi:id="_vpVZEcj6EeuWdKT93dm6Ig" participants="_MGfmMJxZEeuXP_f35b_qpg _I_DTsJzTEeun4sDYCEayRA"/>
     <action xsi:type="atlas:MaintainDistanceFrom" xmi:id="_BXDxADDjEeyw-_Y3puKT2Q" distance="3.0"/>
-    <variables xmi:id="_g78tkDEDEeyw-_Y3puKT2Q" name="/airframe_clearance" variableType="std_msgs/Float64" vehicleSpecific="true"/>
+    <variables xmi:id="_HUNooMTjEey-gp-UP6in5w" varName="/airframe_clearance" simType="std_msgs/Float64" isVehicleSpecific="true"/>
     <metrics xmi:id="_vpVZF8j6EeuWdKT93dm6Ig" name="OutsideOfInnerRegionViolations"/>
   </goals>
   <goals xmi:id="_7J7d0M7hEeu_Qtc8Axo4IQ" name="AvoidOthers" priority="1">

@@ -203,7 +203,7 @@ public class GeneratedDSLLoader implements DSLLoader {
 		[% if (goalRegion.isKindOf(StaticGoalRegion)) { %]
 		[% var sr = goalRegion.staticRegion; %]
 		   
-		GoalRegion gr[%= goalName %] = new StaticGoalRegion(
+		GoalRegion gr[%= goalName %] = new StaticGoalRegion(  
 			new Region(new Point([%= sr.corner1.x %], [%= sr.corner1.y %], [%= sr.corner1.z %]),
 			           new Point([%= sr.corner2.x %], [%= sr.corner2.y %], [%= sr.corner2.z %])));
 		[% goalRegionEntry = "Optional.of(gr" + goalName + ")"; %]
@@ -217,9 +217,10 @@ public class GeneratedDSLLoader implements DSLLoader {
 		
 		Goal [%= goalName %] = new Goal("[%= g.name %]", mission, gt[%= goalnum %], gp[%= goalName %], [%= goalRegionEntry %], ga[%= goalnum %]);
 		
+		[* JRH: This was converted - GoalVariables are now replaced with SimulatorVariables *]
 		[% for (gv in g.variables) { %]
 			[% goalVariableCount++; %]
-			GoalVariable gvar[%= goalVariableCount %] = new GoalVariable("[%= gv.name %]", "[%= gv.variableType %]", [%= gv.vehicleSpecific %]);
+			GoalVariable gvar[%= goalVariableCount %] = new GoalVariable("[%= gv.varName %]", "[%= gv.simType %]", [%= gv.isVehicleSpecific %]);
 			[%= goalName %].addVariable(gvar[%= goalVariableCount %]);
 		[% } %]
 		

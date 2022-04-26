@@ -413,4 +413,8 @@ public abstract class ATLASCore {
 	public void addMiddlewareFunctionVariables(String varName, VariableTemplate vt) {
 		middlewareFunctionVariables.put(varName, vt);
 	}
+
+	public Mission getMission() {
+		return mission;
+	}
 }

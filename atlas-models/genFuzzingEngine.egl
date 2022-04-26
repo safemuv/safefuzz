@@ -26,6 +26,13 @@ public class GeneratedFuzzingSpec {
 	}
 	%]
 	
+	[%
+	TemplateFactory.setOutputRoot("../middleware-java/");
+	var t : Template = TemplateFactory.load("genGrammarVariableList.egl");
+	var templateFile = "src/middleware/core/SetupMiddlewareFunctionVars.java";
+	t.generate(templateFile);
+	%]
+	
 	[* Need to generate the file SetupMiddlewareFunctionVars from the grammar variable list! *]
 	try {
 	

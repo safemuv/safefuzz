@@ -127,7 +127,10 @@ public class StartFuzzingProcesses {
 					String launchArg = scenarioIDString.toLowerCase() + "_" + String.valueOf(runNum);
 					ExptHelper.startCmd(ABS_WORKING_PATH, "./custom_" + launchBashScript + " " + launchArg);
 				} else {
-					ExptHelper.startScript(ABS_WORKING_PATH, launchBashScript);
+					System.out.println("ABS_WORKING_PATH = " + ABS_WORKING_PATH);
+					System.out.println("launchBashScript = " + launchBashScript);
+					//ExptHelper.runScriptNewWithBash(ABS_WORKING_PATH, "./" + launchBashScript);
+					ExptHelper.startCmd(ABS_WORKING_PATH, "./" + launchBashScript);
 				}
 			}
 			

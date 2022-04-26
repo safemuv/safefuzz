@@ -11,7 +11,7 @@ import fuzzingengine.FuzzingSelectionRecord;
 import utils.ExptHelper;
 
 public class RMKGInterface {
-	public static final boolean REGENERATE_SCENARIOS = true;
+	public static final boolean REGENERATE_SCENARIOS = false;
 	
 	// This is to bridge Argentina's script args. Gives the appropriate parameters for the
 	// scenario generation script

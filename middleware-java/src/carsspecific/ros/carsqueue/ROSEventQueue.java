@@ -3,7 +3,6 @@ package carsspecific.ros.carsqueue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 import javax.json.*;
 import atlasdsl.*;
@@ -28,6 +27,9 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 	private final boolean DEBUG_PRINT_RAW_MESSAGE = true;
 	private final boolean DEBUG_PRINT_CLOCK_MESSAGES = false;
+	
+	private final String CLOCK_TOPIC = "/clock";
+	
 	private Mission mission;
 	private Ros ros;
 	private static final long serialVersionUID = 1L;
@@ -61,7 +63,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 		if (e instanceof ROSTopicUpdate) {
 			ROSTopicUpdate rtu = (ROSTopicUpdate) e;
 			if (rtu.tagEquals(ATLASTag.SIMULATOR_GENERAL)) {
-				if (rtu.getTopicName().equals("/inspection_clock")) {
+				if (rtu.getTopicName().equals(CLOCK_TOPIC)) {
 					if (DEBUG_PRINT_CLOCK_MESSAGES) {
 						System.out.println("Clock msg = " + rtu.getJSON());
 					}
@@ -231,7 +233,7 @@ public class ROSEventQueue extends CARSLinkEventQueue<ROSEvent> {
 
 	private void subscribeForSimulatorTopics() {
 		// Test the new inspection clock
-		standardSubscribe("/inspection_clock", "rosgraph_msgs/Clock", ATLASTag.SIMULATOR_GENERAL);
+		standardSubscribe(CLOCK_TOPIC, "rosgraph_msgs/Clock", ATLASTag.SIMULATOR_GENERAL);
 	}
 
 	public void setup() {
