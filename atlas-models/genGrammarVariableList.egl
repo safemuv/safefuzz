@@ -1,0 +1,11 @@
+[% out.setContentType("Java"); %]
+package middleware.core;
+import fuzzexperiment.runner.jmetal.grammar.variables.*;
+
+public class SetupMiddlewareFunctionVars {
+	public static void setup(ATLASCore core) {
+	[% for (gv in GrammarVariableSpecification.allInstances()) { %]
+		core.addMiddlewareFunctionVariables("[%= gv.name %]", new [%= gv.className %]());
+	[% } %]
+	}
+}
