@@ -139,6 +139,12 @@ public class StartFuzzingProcesses {
 			if (useLaunchers) {
 				sleepHandlingInterruption(30000);
 			}
+
+			String[] paths = fuzzFilePath.split("/");
+			String fuzzFile = paths[paths.length - 1];
+			System.out.println("Record rosbag: " + fuzzFile);
+			String bagFile = "bag_" + fuzzFile + ".bag";
+			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./record_rosbag.sh", bagFile);
 			
 			System.out.println("Running middleware with " + fuzzFilePath);
 			ExptHelper.runScriptNew(ABS_WORKING_PATH, "./start_middleware.sh", fuzzFilePath);
