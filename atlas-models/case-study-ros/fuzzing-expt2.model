@@ -2,8 +2,7 @@
 <fuzzspec:FuzzingSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fuzzspec="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec" xsi:schemaLocation="http://www.github.com/jrharbin-york/atlas-middleware/dsl/fuzzspec ../../com.github.atlas.dsl/fuzzspec.ecore" xmi:id="_sYO_MLsZEeute_EAlr7M3A">
   <sims xmi:id="_xZ0CsLsZEeute_EAlr7M3A" name="ROS" baseDirectory="/home/ubuntu/catkin_ws/src/safemuv_ros">
     <components xmi:id="_11NP8LsZEeute_EAlr7M3A" name="trajectory_tracking_controller_fuzzy" componentRelativePath="/trajectory_tracking_controller_fuzzy">
-      <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/set_velocity_prime" reflectionName="/ual/set_velocity" dir="OUTBOUND" vehicleSpecific="true">
-        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_7GsXUMcEEeumT524tcEZIQ" ROSTypename="geometry_msgs/TwistStamped"/>
+      <vars xmi:id="_2EyjsMcEEeumT524tcEZIQ" simType="geometry_msgs/TwistStamped" isVehicleSpecific="true" component="_11NP8LsZEeute_EAlr7M3A" variable="/ual/set_velocity_prime" reflectionName="/ual/set_velocity" dir="OUTBOUND">
         <opParamsType xmi:id="_9diS4McEEeumT524tcEZIQ" opParam="_h-bxUL8gEeuxyMr3nK2BCQ" subSpec="twist.linear"/>
         <opParamsType xmi:id="_F3NcQAxhEeyHaY3ebI30PA" opParam="_kqTLcAxgEeyHaY3ebI30PA" subSpec="twist.linear"/>
         <timeLimit xmi:id="_RpzTcMerEeuSQfDXSpD4CA" endTime="600.0"/>
@@ -22,15 +21,14 @@
       </vars>
     </components>
     <components xmi:id="_Ix39YM7mEeu_Qtc8Axo4IQ" name="trajectory_planning">
-      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_path_prime" reflectionName="/desired_path" dir="OUTBOUND" vehicleSpecific="true">
-        <vtype xsi:type="fuzzspec:ROSVariableType" xmi:id="_uHWwoM7nEeu_Qtc8Axo4IQ" ROSTypename="nav_msgs/Path"/>
+      <vars xmi:id="_jWM7MM7nEeu_Qtc8Axo4IQ" simType="nav_msgs/Path" isVehicleSpecific="true" component="_Ix39YM7mEeu_Qtc8Axo4IQ" variable="/desired_path_prime" reflectionName="/desired_path" dir="OUTBOUND">
         <opParamsType xmi:id="_d4eyMNlDEeuPm8zY7fhTLg" opParam="_SRcHwM7pEeu_Qtc8Axo4IQ" subSpec="poses"/>
         <timeLimit xmi:id="_zl7WENlDEeuPm8zY7fhTLg" endTime="600.0"/>
         <probInfo xmi:id="_y7J20M7nEeu_Qtc8Axo4IQ" includeVariableProbability="0.5"/>
       </vars>
     </components>
     <gspecs xmi:id="_091WwMI7Eeyb4qAtYHtkpA" name="airframe_clearance" className="AirframeClearance">
-      <requiredGVars xmi:id="_2dJNYMI7Eeyb4qAtYHtkpA" varName="/airframe_clearance" isVehicleSpecific="true"/>
+      <requiredVars xmi:id="_2dJNYMI7Eeyb4qAtYHtkpA" varName="/airframe_clearance" isVehicleSpecific="true"/>
     </gspecs>
     <gspecs xmi:id="_vSyasMUIEeynr4JxoMeFcg" name="time" className="Time"/>
     <gspecs xmi:id="_9eay8MUIEeynr4JxoMeFcg" name="starting_point_distance" className="StartingPointDistance"/>

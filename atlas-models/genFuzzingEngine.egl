@@ -17,7 +17,7 @@ public class GeneratedFuzzingSpec {
 	FuzzingSimMapping simMapping = new FuzzingSimMapping();
 	
 	[%
-	for (gv in GrammarVariableSpecification.allInstances()) {
+	for (gv in GrammarVariable.allInstances()) {
 		TemplateFactory.setOutputRoot("../middleware-java/");
 		var t : Template = TemplateFactory.load("genGrammarVariableTemplate.egl");
 		var templateFile = "src/fuzzexperiment/runner/jmetal/grammar/variables/" + gv.className + ".java";
@@ -113,31 +113,34 @@ public class GeneratedFuzzingSpec {
 	[% for (vspec in comp.vars) { %]
 		[% 
 			var c = comp;
-			var vt = vspec.vtype; 
+			//var vt = vspec.vtype; 
 			var typename = "Optional.empty()";
 			var timespec = "Optional.empty()";
 			var fuzzProb = "Optional.empty()";
 			
-			if (vt.isKindOf(RegexpVariableType)) {
-				typename = "Optional.of()";
-			}
+
+//			if (vt.isKindOf(RegexpVariableType)) {
+//				typename = "Optional.of()";
+//			}
+			
 				
-			if (vt.isKindOf(ROSVariableType)) {
-				typename = "Optional.of(\"" + vt.ROSTypename + "\")";
-			}
+//			if (vt.isKindOf(ROSVariableType)) {
+				typename = "Optional.of(\"" + vspec.simType + "\")";
+//
+//			}
 			
-			if (vspec.timeLimit != null) {
-				timespec = "Optional.of(new TimeSpec(m," + vspec.timeLimit.startTime + "," + vspec.timeLimit.endTime + "))";
-			}
+//			if (vspec.timeLimit != null) {
+//				timespec = "Optional.of(new TimeSpec(m," + vspec.timeLimit.startTime + "," + vspec.timeLimit.endTime + "))";
+//			}
 			
-			if (vspec.probInfo != null) {
-				fuzzProb = "Optional.of(" + vspec.probInfo.includeVariableProbability + ")"; 
-			}
+//			if (vspec.probInfo != null) {
+//				fuzzProb = "Optional.of(" + vspec.probInfo.includeVariableProbability + ")"; 
+//			}
 		%]
 				
 		simMapping.addRecord("[%= c.name %]", "[%= vspec.variable %]", "[%= vspec.reflectionName %]", 
 		FuzzingSimMapping.VariableDirection.[%= vspec.dir %], Optional.of("[%= baseDir %]/[%= c.componentRelativePath %]"), [%= typename %],
-		[%= vspec.vehicleSpecific %], [%= timespec %], [%= fuzzProb %]);
+		[%= vspec.isVehicleSpecific %], [%= timespec %], [%= fuzzProb %]);
 	
 		[% for (oppreft in vspec.opParamsType) { %]
 			[% var oppref = oppreft.opParam; 

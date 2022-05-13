@@ -4,7 +4,7 @@ import fuzzexperiment.runner.jmetal.grammar.variables.*;
 
 public class SetupMiddlewareFunctionVars {
 	public static void setup(ATLASCore core) {
-	[% for (gv in GrammarVariableSpecification.allInstances()) { %]
+	[% for (gv in GrammarVariable.allInstances()) { %]
 		core.addMiddlewareFunctionVariables("[%= gv.name %]", new [%= gv.className %]());
 	[% } %]
 	}

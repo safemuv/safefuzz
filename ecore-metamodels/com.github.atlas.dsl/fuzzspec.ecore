@@ -11,27 +11,12 @@
     <eLiterals name="STRING" value="2"/>
     <eLiterals name="DOUBLE" value="3"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableType" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="TimingSpec">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariableType" eSuperTypes="#//VariableType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vt" eType="#//BasicVariableType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ROSVariableType" eSuperTypes="#//VariableType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ROSTypename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="constant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RegexpVariableType" eSuperTypes="#//VariableType">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regexp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupNumToReplace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subtypes" upperBound="-1"
-        eType="#//VariableType" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuzzingNature" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryFuzzing" eSuperTypes="#//FuzzingNature"/>
@@ -62,16 +47,13 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification">
+  <eClassifiers xsi:type="ecore:EClass" name="VariableSpecification" eSuperTypes="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas#//SimulatorVariable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//FuzzingComponent"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" eType="#//VariableType"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dir" eType="#//VariableDirection"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="opParamsType" lowerBound="1"
         upperBound="-1" eType="#//OperationParameterSetTypes" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vehicleSpecific" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeLimit" lowerBound="1"
         eType="#//TimingSpec" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="probInfo" eType="#//FuzzProbabilityInfo"
@@ -94,7 +76,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="entryPoint" lowerBound="1"
         eType="#//ExecutableStartScript"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="gspecs" upperBound="-1"
-        eType="#//GrammarVariableSpecification" containment="true"/>
+        eType="#//GrammarVariable" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationParameter" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -159,11 +141,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
         eType="#//FuzzingOperation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariableSpecification">
+  <eClassifiers xsi:type="ecore:EClass" name="GrammarVariable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredGVars" lowerBound="1"
-        upperBound="-1" eType="#//SimpleGrammarVariable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredVars" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas#//SimulatorVariable"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleGrammarVariable" eSuperTypes="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas#//SimulatorVariable"/>
 </ecore:EPackage>

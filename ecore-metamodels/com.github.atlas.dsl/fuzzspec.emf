@@ -14,9 +14,9 @@ enum BasicVariableType {
 	DOUBLE = 3;
 }
 
-abstract class VariableType {
-
-}
+//abstract class VariableType {
+//
+//}
 
 class TimingSpec {
 	attr double startTime;
@@ -24,26 +24,26 @@ class TimingSpec {
 }
 
 // Info for the grammar
-class SimpleVariableType extends VariableType {
-	attr BasicVariableType vt;
-}
+//class SimpleVariableType extends VariableType {
+//	attr BasicVariableType vt;
+//}
 
-class ROSVariableType extends VariableType {
-	attr String ROSTypename;
-}
+//class ROSVariableType extends VariableType {
+//	attr String ROSTypename;
+//}
 
 class ConstantType {
 	attr String constant;
 }
 
-class RegexpVariableType extends VariableType {
-	attr String regexp;
-	attr int groupNumToReplace;
-} 
+//class RegexpVariableType extends VariableType {
+//	attr String regexp;
+//	attr int groupNumToReplace;
+//} 
 
-class GrammarVariableType {
-	val VariableType[*] subtypes;
-}
+//class GrammarVariableType {
+//	val VariableType[*] subtypes;
+//}
 
 abstract class FuzzingNature {
 	
@@ -84,14 +84,13 @@ class FuzzProbabilityInfo {
 	attr int maxCount;
 }
 
-class VariableSpecification {
+class VariableSpecification extends Atlas.SimulatorVariable {
 	ref FuzzingComponent[0..1] component;
 	attr String variable;
 	attr String reflectionName; //May be optional
-	val VariableType vtype;
+	//val VariableType vtype;
 	attr VariableDirection dir; 	
 	val OperationParameterSetTypes[1..*] opParamsType;
-	attr boolean vehicleSpecific;
 	val TimingSpec[1] timeLimit;
 	val FuzzProbabilityInfo[0..1] probInfo;
 }
@@ -108,7 +107,7 @@ class Simulator {
 	val FuzzingComponent[*] components;
 	val ConfigScript[*] launchers;
 	ref ExecutableStartScript[1] entryPoint;
-	val GrammarVariableSpecification[*] gspecs;
+	val GrammarVariable[*] gspecs;
 }
 
 abstract class OperationParameter {
@@ -188,16 +187,12 @@ class FuzzingSpecification {
 	val FuzzingOperation[*] operations;
 }
 
-class GrammarVariableSpecification {
+class GrammarVariable {
 	attr String name;
 	attr String className;
-	val SimpleGrammarVariable[1..*] requiredGVars;
+	val Atlas.SimulatorVariable[1..*] requiredVars;
 	
 	// This assumes the type of these is int?
 	//attr int minValue;
 	//attr int maxValue;
-}
-
-class SimpleGrammarVariable extends Atlas.SimulatorVariable {
-
 }
