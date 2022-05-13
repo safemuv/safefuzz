@@ -17,4 +17,6 @@ sleep 15
 echo "Starting roslaunch launchers"
 xterm -e /bin/bash -l -c "roslaunch safemuv_rviz_visualization safemuv_simulation_visualization.launch" &
 sleep 15
+#echo "RANDOM delay"
+#sleep $[ ( $RANDOM % 3 )  + 1 ]s
 xterm -hold -e /bin/bash -l -c "roslaunch safemuv_mission multi_mission.launch"

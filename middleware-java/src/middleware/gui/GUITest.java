@@ -117,14 +117,21 @@ public class GUITest {
 	    	JLabel l2 = new JLabel();
 	    	JLabel l3 = new JLabel();
 	    	JLabel l4 = new JLabel();
+	    	JLabel l5 = new JLabel();
+	    	JLabel l6 = new JLabel();
+
 	    	condVarLabels.put(r.getName() + ",airframe_clearance", l1);
 	    	condVarLabels.put(r.getName() + ",starting_point_distance", l2);
 	    	condVarLabels.put(r.getName() + ",distance_to_left_wing_base", l3);
 	    	condVarLabels.put(r.getName() + ",distance_to_right_wing_base", l4);
+	    	condVarLabels.put(r.getName() + ",distance_to_nose", l5);
+	    	condVarLabels.put(r.getName() + ",interrobot_distance", l6);
 	    	fuzzingPanel.add(l1);
 	    	fuzzingPanel.add(l2);
 	    	fuzzingPanel.add(l3);
 	    	fuzzingPanel.add(l4);
+	    	fuzzingPanel.add(l5);
+	    	fuzzingPanel.add(l6);
     	}
     	
     	Map <String,Goal> goals = mission.getGoalsAndNames();
