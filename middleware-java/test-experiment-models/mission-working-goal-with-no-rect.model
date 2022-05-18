@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<atlas:Mission xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atlas="http://www.github.com/jrharbin-york/atlas-middleware/dsl/atlas" xmi:id="_8OLx8HP4Eeqc6cv9mBHIKw" endTime="1200.0">
-  <goals xmi:id="_w17VgJF3EeusxeWFr8YSlQ" name="testGoal">
-    <requirements xmi:id="_CJuYkJF4EeusxeWFr8YSlQ" latestFinishTime="1200.0"/>
-    <participants xsi:type="atlas:StaticParticipants" xmi:id="_pREngJF4EeusxeWFr8YSlQ"/>
-    <action xsi:type="atlas:AvoidOthers" xmi:id="_0e2kAJF3EeusxeWFr8YSlQ" clearance="10.0"/>
-    <region xsi:type="atlas:StaticGoalRegion" xmi:id="_u-67IJF4EeusxeWFr8YSlQ"/>
-  </goals>
-</atlas:Mission>

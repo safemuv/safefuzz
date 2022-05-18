@@ -1,6 +1,0 @@
-ID,OutsideOfOuterRegionViolation,OutsideOfInnerRegionViolations,AvoidanceViolation,FuzzingTimeLength,SpeedViolationsCount,RunID
-1,19.0,0.0,0.0,54.46159361380356,4827.0,18
-2,0.0,0.0,0.0,19.91738107144755,265.0,56
-3,0.0,0.0,0.0,1.2104046503618378,44.0,
-4,4.0,0.0,0.0,19.91738107144755,301.0,114
-5,0.0,0.0,0.0,19.91738107144755,1960.0,115

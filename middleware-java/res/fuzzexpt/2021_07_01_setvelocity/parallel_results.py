@@ -1,1 +1,0 @@
-../plot_scripts/parallel_results.py
