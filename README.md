@@ -34,9 +34,26 @@ establish the dependability levels of a robotic system under test
 while providing simulation independence and the permitting test
 engineers to implement custom scenario-specific fuzzing operations.
 
+## Video Demonstration
+
+A video demonstration of SAFEFuzz, showing the platform and its
+operation is presented [here](video-demos/safefuzz-demo.mp4). This
+demonstration shows the specification of the mission and the fuzzing
+tests to be performed, followed by an example of launching the fuzzing
+for a time-based experiment. 
+
 ## Repository Structure
 
-TODO: describe repository structure
+The directories contained in the repository are as follows:
+
+* middleware-java: contains the code
+* ecore-metamodels: contains the atlas.emf and fuzzspec.emf metamodel definition files
+* grammar: the BNF definition of the grammar for the condition-based fuzzing experiments
+* expt-results-extra: contains additional discussion of the result files from the paper
+* fuzzing-configs: some example fuzzing configuration CSV files used in system testing
+* video-demos: an example MP4 video demonstrating the SafeFuzz platform
+* results: contains result files produced from the experiments discussed in the paper
 
 ## Results
-TODO: add results from the remaining experiments here
+The additional result discussion in the paper experimental evaluation
+are presented [here](expt-results-extra/index.html)
