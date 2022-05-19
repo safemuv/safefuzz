@@ -12,7 +12,7 @@ available fuzzing points (set_velocity, calibration points and
 desired_path). This was continued for 200 iterations, with a
 population of 20, consisted of 10 generations for the GA. The
 non-dominated solution in the output population results are shown in
-Table \ref{tab:4-metrics-ga}. 
+the table below:
 
 From: 2022_04_29_12_14_timebased/jmetal-intermediate-nondom-eval200.csv
 
