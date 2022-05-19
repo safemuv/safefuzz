@@ -17,6 +17,7 @@ Table \ref{tab:4-metrics-ga}.
 From: 2022_04_29_12_14_timebased/jmetal-intermediate-nondom-eval200.csv
 
 | ScenID | FuzzingTestNum | ORegionV | SpeedV | TimeLen | AvoidV | IRegionV |
+| ------ | -------------- | -------- | ------ | ------- | ------ | -------- |
 |F004 | 3 | 870.0 | 371.0 | 1071.34 | 7.0 | 21.0|
 |F004 | 20 | 0.0 | 22.0 | 632.09 | 0.0 | 492.0|
 |F004 | 156 | 0.0 | 0.0 | 15.13 | 0.0 | 0.0|
