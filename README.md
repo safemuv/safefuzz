@@ -34,6 +34,11 @@ establish the dependability levels of a robotic system under test
 while providing simulation independence and the permitting test
 engineers to implement custom scenario-specific fuzzing operations.
 
+## Howto
+
+Installation instructions and usage instructions for the platform are available
+[here](howto/README.md).
+
 ## Video Demonstration
 
 A video demonstration of SAFEFuzz, showing the platform and its
