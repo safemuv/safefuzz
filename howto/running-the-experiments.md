@@ -63,16 +63,18 @@ To run the middleware to connect to a live version of the experiment,
 activate the "ROS-Middleware" run configuration when ROS live
 experiments are started.
 
-To run the time-based fuzzing GA experiments and evolve a solution, go to the directory
-**~/academic/atlas/atlas-middleware/expt-working/ros/**
+To run the time-based fuzzing GA experiments and evolve solutions, go to the directory under the root
+of the repository
+**./expt-working/ros/**
 
 and run:
 ```
 ./run_feedback_experiment_jmetal.sh
 ```
 
-To run the condition-based fuzzing GA experiments and evolve a solution, go to the directory
-**~/academic/atlas/atlas-middleware/expt-working/ros/**
+To run the condition-based fuzzing GA experiments and evolve solutions, go to the directory under the root
+of the repository:
+**./expt-working/ros/**
 
 and run:
 ```
