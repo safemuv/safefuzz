@@ -2,7 +2,7 @@
 
 ## Dependencies
 - The Eclipse setup instructions
-- Setup [safemuv_metrics Docker container](https://github.com/safemuv/safemuv_ros/blob/devel/safemuv_dockers/safemuv_metrics/README.md)
+- Setup [XXXXXX_metrics Docker container](https://github.com/safemuv/safemuv_ros/blob/devel/safemuv_dockers/safemuv_metrics/README.md)
 - Setup [metrics_test Docker container](https://github.com/safemuv/safemuv_ros/tree/aerolab-experiments/safemuv_dockers/safemuv_metrics/README.md)
 
 ## How to run the experiments
