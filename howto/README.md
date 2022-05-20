@@ -1,7 +1,8 @@
 ## SAFEFuzz installation and usage instructions
 
 This repository presents the installation and use instructions for SAFEFuzz.
-**Please note that these installation instructions may not work due to changes to scripts to ensure anonymity **
+
+**Please note that these installation instructions may not currently work due to changes to scripts to ensure anonymity**
 
 ## Installation
 The instructions for the installation of the platform are present in [INSTALL.md](./INSTALL.md)

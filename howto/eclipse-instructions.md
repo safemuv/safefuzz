@@ -1,4 +1,4 @@
-# USERNAME Middleware and Installation Instructions
+# Middleware and Installation Instructions
 
 ## Prerequisties
 
