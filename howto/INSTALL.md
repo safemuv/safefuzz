@@ -23,7 +23,7 @@ Would you like to install needed dependencies, enter "Y"
 Following the completion of the previous script,
 download the AFI image file and place it under ~/afi_images/afi_core.tar
 
-The AFI image file is present [here](https://dropit.uni.lu/invitations?share=68bf0077edb41b541037&dl=0)
+**Link to XXX image file removed for anonymity**
 
 Then please log out and log in again before continuing 
 (this is needed to refresh the permissions so Docker can run)
