@@ -34,10 +34,12 @@ establish the dependability levels of a robotic system under test
 while providing simulation independence and the permitting test
 engineers to implement custom scenario-specific fuzzing operations.
 
-## Howto
+## How To Installation and Usage Instructions
 
 Installation instructions and usage instructions for the platform are available
 [here](howto/README.md).
+
+**Please note that these installation instructions may not currently work due to changes to scripts/paths to ensure anonymity**
 
 ## Video Demonstration
 
