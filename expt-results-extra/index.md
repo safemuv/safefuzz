@@ -14,8 +14,6 @@ population of 20, consisted of 10 generations for the GA. The
 non-dominated solution in the output population results are shown in
 the table below:
 
-From: 2022_04_29_12_14_timebased/jmetal-intermediate-nondom-eval200.csv
-
 | ScenID | FuzzingTestNum | ORegionV | SpeedV | TimeLen | AvoidV | IRegionV |
 | ------ | -------------- | -------- | ------ | ------- | ------ | -------- |
 |F004 | 3 | 870.0 | 371.0 | 1071.34 | 7.0 | 21.0|
@@ -96,4 +94,38 @@ The overspeed occurs on vehicle **UAV 2** first, which flies out
 of the permitted area at high speed, and later **UAV 1** joins
 it. This accounts for the also high **ORegionV** value.
 
-TODO: Additional Discussion for RQ2 as specified in paper
+# Research Question 2
+## Five Metrics Multi-Objective Optimisation
+
+An experiment was performed involving multi-objective optimisation
+upon all five metrics, using the condition-based fuzzing, and all the
+available fuzzing points (set_velocity, calibration_points and
+desired_path). This was continued for 200 iterations, with a
+population of 20, consisted of 10 generations for the GA. The
+condition-based fuzzing used does not permit logic operations (AND or
+OR) to be used in the conditions.  The results are shown in the table
+below.
+
+| ScenID | FuzzingTestNum | ORegionV | SpeedV | TimeLen | AvoidV | IRegionV |
+| ------ | -------------- | -------- | ------ | ------- | ------ | -------- |
+| F004 | 20 | 0.0 | 0.0 | 606.0 | 54.0 | 0.0 |
+| F004 | 102 | 0.0 | 23.0 | 62.0 | 3.0 | 476.0 |
+| F004 | 134 | 0.0 | 0.0 | 0.0 | 0.0 | 6.0 |
+| F004 | 138 | 1007.0 | 0.0 | 1086.0 | 0.0 | 0.0|
+| F004 | 152 | 966.0 | 112.0 | 1087.0 | 0.0 | 0.0|
+| F004 | 158 | 846.0 | 509.0 | 512.0 | 9.0 | 19.0|
+| F004 | 188 | 899.0 | 220.0 | 1459.0 | 4.0 | 0.0|
+| F004 | 194 | 0.0 | 0.0 | 36.0 | 3.0 | 13.0|
+| F004 | 198 | 0.0 | 12.0 | 6.0 | 0.0 | 3.0|
+| F004 | 154 | 621.0 | 16.0 | 420.0 | 0.0 | 153.0|
+| F004 | 146 | 232.0 | 57.0 | 1252.0 | 12.0 | 68.0|
+| F004 | 162 | 377.0 | 0.0 | 419.0 | 0.0 | 416.0|
+| F004 | 189 | 825.0 | 330.0 | 503.0 | 2.0 | 0.0|
+| F004 | 84 | 473.0 | 164.0 | 510.0 | 10.0 | 0.0|
+| F004 | 145 | 864.0 | 406.0 | 793.0 | 8.0 | 0.0|
+| F004 | 61 | 0.0 | 0.0 | 575.0 | 48.0 | 14.0|
+| F004 | 101 | 0.0 | 4.0 | 575.0 | 30.0 | 8.0|
+| F004 | 99 | 0.0 | 8.0 | 625.0 | 27.0 | 3.0|
+| F004 | 180 | 142.0 | 14.0 | 106.0 | 0.0 | 418.0|
+| F004 | 139 | 887.0 | 486.0 | 975.0 | 0.0 | 6.0|
+| -----| --- |------ | ----- |-------| ----| ---|

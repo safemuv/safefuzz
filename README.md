@@ -52,7 +52,6 @@ The directories contained in the repository are as follows:
 * expt-results-extra: contains additional discussion of the result files from the paper
 * fuzzing-configs: some example fuzzing configuration CSV files used in system testing
 * video-demos: an example MP4 video demonstrating the SafeFuzz platform
-* results: contains result files produced from the experiments discussed in the paper
 
 ## Results
 The additional result discussion in the paper experimental evaluation
